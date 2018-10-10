@@ -20,7 +20,7 @@
 
             <td class="alignAngka">{{number_format($detail->s_qty,0,',','.')}} </td>
 
-          <td class="alignAngka">{{number_format($detail->terjual,0,',','.')}}</td>
+          <td class="alignAngka">{{number_format($detail->idt_terjual,0,',','.')}}</td>
 
 
           <td class="alignAngka">{{number_format($detail->idt_return_titip,0,',','.')}}

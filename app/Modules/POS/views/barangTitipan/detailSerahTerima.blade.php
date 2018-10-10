@@ -115,9 +115,9 @@
               <table class="table tabelan table-bordered table-hover dt-responsive" id="tSalesDetail">
                <thead align="right">
                 <tr>                 
-                 <th width="23%">Nama</th>                 
-                 <th width="4%">Jumlah</th>                 
-                 <th width="4%">Sisa</th>                 
+                 <th width="20%">Nama</th>                 
+                 <th width="5%">Jumlah</th>                 
+                 <th width="5%">Sisa</th>                 
                  <th width="4%">Terjual</th>                 
                  <th width="6%">Return</th>                 
                  <th width="5%">Satuan</th>
@@ -141,8 +141,8 @@
                <td>
 
 
-              <input value="{{$detail->idt_comp}}" style="width:100%" type="" name="comp[]">
-              <input value="{{$detail->idt_position}}" style="width:100%" type="" name="position[]">
+              <input value="{{$detail->idt_comp}}" style="width:100%" type="hidden" name="comp[]">
+              <input value="{{$detail->idt_position}}" style="width:100%" type="hidden" name="position[]">
 
 
                <input style="width:100%" type="hidden" name="idt_itemtitipan[]" value="{{$detail->idt_itemtitipan}}">
@@ -169,7 +169,7 @@
 
 
           <td><input onblur=";setQty(event,'return{{$detail->i_id}}')" onclick="setAwal(event,'return{{$detail->i_id}}')" class="return return{{$detail->i_id}} form-control" name="idt_return_titip[]"           
-           value="{{number_format($detail->idt_return_titip,0,',','.')}}" style="width:100%;text-align:right;border:none" >
+           value="{{number_format($detail->idt_return_titip,0,',','.')}}" style="width:100%;text-align:right;border:none" readonly="" >
           </td>
 
           
@@ -179,8 +179,8 @@
 
 
           <td><input style="width:100%;" name="idt_total[]" class="totalPerItem alignAngka totalPerItem{{$detail->i_id}} form-control" readonly value="{{number_format($detail->idt_qty*$detail->idt_price,0,',','.')}}"></td>
-          <td>
-               <select class="form-control" name="idt_action[]">
+          <td>               
+               <select class="form-control setReturn{{$detail->i_id}}" name="idt_action[]" onchange="setReturn('{{$detail->i_id}}')" >
                     <option @if( $detail->idt_action=='-') selected="" @endif >-</option>
                     <option @if( $detail->idt_action=='Diambil') selected="" @endif >Diambil</option>
                     <option @if( $detail->idt_action=='Ditukar Harga') selected="" @endif >Ditukar Harga</option>
@@ -255,14 +255,17 @@
 
       
                   <div class="col-md-12 col-sm-12 col-xs-12" align="right">
-                    <button class="btn btn-danger " type="button" onclick="batal()">Batal</button>
-                    <button class="btn btn-primary draft" type="button" onclick="simpan()" >Simpan</button>
+                    <button class="btn btn-danger btn-disabled " type="button" onclick="batal()">Batal</button>
+                    <button class="btn btn-primary draft btn-disabled" type="button" onclick="simpan()" >Simpan</button>
                   </div>
              
         
       </div>
   </form>
 </div>
+
+@endsection
+@section("extra_scripts")
 
 <script type="text/javascript">
   function simpan(){
@@ -276,30 +279,30 @@
           success : function(response){    
                     
                     if(response.status=='sukses'){
+                      $("#tSalesDetail").find("input,button,textarea,select").attr("disabled", "disabled");
+                            iziToast.success({
+                                      position: "center",
+                                      title: '', 
+                                      timeout: 1000,
+                                      message: 'Data berhasil disimpan.'
+                            });
+                            $('.btn-disabled').attr('disabled','disabled');
                         }
                     
           }
       });
   }
+
+  function setReturn(id){
+    var setReturn=$('.setReturn'+id).val();    
+    if(setReturn!='-'){      
+      var a=$('.sisa'+id).val();
+        $('.return'+id).val(a);
+    }
+    if(setReturn=='-'){            
+        $('.return'+id).val(0);
+    }
+  }
+  
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            </div> <!-- End div general-content -->
-                    
-            </div>
-          </div>
-
 @endsection

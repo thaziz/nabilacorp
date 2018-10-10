@@ -205,6 +205,7 @@ static function chekQtyReturn($item,$comp,$position){
 }
 static function serahTerimaStore($request){  
   return DB::transaction(function () use ($request) {  
+    
      $lanjut=false;
      $chekTitipanBayar=d_item_titipan::where('it_supplier',$request->id_supplier);
     if($chekTitipanBayar->where('it_status','=','lunas')->count()==0){
@@ -224,7 +225,7 @@ static function serahTerimaStore($request){
     // stock mutasi hanya untuk barang kembali.
     for ($i=0; $i <count($request->idt_item) ; $i++) { 
 
-      $updateTitipanDt=d_itemtitipan_dt::where('idt_itemtitipan',$request->idt_itemtitipan[$i])->where('idt_detailid',$request->idt_detailid[$i])->where('idt_item',$request->idt_item);
+      $updateTitipanDt=d_itemtitipan_dt::where('idt_itemtitipan',$request->idt_itemtitipan[$i])->where('idt_detailid',$request->idt_detailid[$i])->where('idt_item',$request->idt_item[$i]);
       $comp=$request->comp[$i];
       $position=$request->position[$i];
       $idt_terjual= format::format($request->idt_terjual[$i]);  
@@ -235,8 +236,7 @@ static function serahTerimaStore($request){
       $permintaan=format::format($request->idt_return_titip[$i])-format::format($request->idt_return_lama[$i]);
 
 
-      if($request->idt_action[$i]=='Ditukar Harga'){        
-
+      if($request->idt_action[$i]=='Ditukar Harga'){  
         if($idt_return_lama!=$idt_return_titip){
           $simpanMutasi=mutasi::updateMutasi($request->idt_item[$i],$permintaan,$comp,$position,$flag='BARANG TITIPAN',$request->it_id,$request->idt_action[$i]);
 
@@ -247,10 +247,6 @@ static function serahTerimaStore($request){
               $data=['status'=>'gagal'];
               return json_encode($data);
           }
-
-
-
-
 
 
         } 
