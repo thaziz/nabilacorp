@@ -127,7 +127,7 @@
         var formInput=$('.login100-form').serialize();        
          $.ajax({
           url     :  baseUrl+'/login',
-          type    : 'POST', 
+          type    : 'get', 
           data    :  formInput,
           dataType: 'json',
           success : function(response){    
