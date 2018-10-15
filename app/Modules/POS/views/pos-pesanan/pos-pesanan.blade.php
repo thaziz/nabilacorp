@@ -95,6 +95,8 @@ $(document).ready(function(){
         $('#searchitem').val(ui.item.label);
         $('#itemName').val(ui.item.item);
         $('#i_price').val(ui.item.i_price);
+        $('#fComp').val(ui.item.comp);
+        $('#fPosition').val(ui.item.position);
         
         $('#s_satuan').val(ui.item.satuan);
         var jumlah=0;
@@ -184,7 +186,9 @@ ctrl = 17;
         $('#searchitem').val(response[0].label);
         $('#itemName').val(response[0].item);
         $('#i_price').val(response[0].i_price);
-        
+        $('#fComp').val(ui.item.comp);
+        $('#fPosition').val(ui.item.position);
+
         $('#s_satuan').val(response[0].satuan);        
         var jumlah=0;
         if($('.jumlahAwal'+i_id.val()).val()!=undefined){
@@ -320,8 +324,10 @@ function table(){
           /*iSalesDetail+='<tr>';        */
           iSalesDetail+='<tr class="detail'+i_id.val()+'">';
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="sd_item[]" value='+i_id.val()+'>'; 
-          iSalesDetail+='<input style="width:100%" type="hidden" name="sd_sales[]" value="">';
-          iSalesDetail+='<input style="width:100%" type="hidden" name="sd_detailid[]" value="">';
+          iSalesDetail+='<input style="width:100%" type="" name="sd_sales[]" value="">';
+          iSalesDetail+='<input style="width:100%" type="" name="sd_detailid[]" value="">';          
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="hidden" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="hidden" name="position[]">';
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
           iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
@@ -338,7 +344,7 @@ function table(){
 
           iSalesDetail+='<td width="3%"><input class="move up3 alignAngka discP'+i_id.val()+'" onkeyup="hapus(event,'+i_id.val()+');;hitungTotalPerItemPesanan(\'' + i_id.val() + '\')" style="width:100%;border:none" name="sd_disc_percent[]" id="discP" value="0" autocomplete="off"></td>'; 
 
-          iSalesDetail+='<td width="2%" style="display:none"><input class="alignAngka discPV'+i_id.val()+'" onkeyup="hitungTotalPerItemPesanan(\'' + i_id.val() + '\')" style="width:100%;border:none" name="sd_disc_percentvalue[]" id="discPV"></td>'; 
+          iSalesDetail+='<td width="2%" style="display:none"><input class="alignAngka discPV'+i_id.val()+'" onkeyup="hitungTotalPerItemPesanan(\'' + i_id.val() + '\')" style="width:100%;border:none" name="sd_disc_percentvalue[]" id="discPV" autocomplete="off"></td>'; 
           
 
           iSalesDetail+='<td width="10%" style="display:none"><input style="width:100%;border:none" name="sd_total[]" class="totalPerItem alignAngka totalPerItem'+i_id.val()+'" readonly></td>';                   
@@ -694,6 +700,8 @@ function simpanPos(status=''){
   
 
 function perbaruiData(){
+  
+  $('#s_date').removeAttr('disabled');
   $('#kembalian').removeAttr('disabled');
   $('#totalBayar').removeAttr('disabled');
   $('#btn-disabled').attr('disabled','disabled');
@@ -705,6 +713,7 @@ function perbaruiData(){
           data    :  formPos+'&hapusdt='+hapusSalesDt,
           dataType: 'json',
           success : function(response){    
+            $('#s_date').attr('disabled','disabled');
                     $('.tr_clone').html('');    
                     payment();                          
                     tamp=[];

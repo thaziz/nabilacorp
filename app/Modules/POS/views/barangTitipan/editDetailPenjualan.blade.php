@@ -8,8 +8,8 @@
      <tr class="detail{{$detail->i_id}}">     
           <td width="23%">
                <input style="width:100%" type="hidden" name="idt_item[]" value="{{$detail->i_id}}">
-               <input value="{{$detail->idt_comp}}" style="width:100%" type="" name="comp[]">
-               <input value="{{$detail->idt_position}}" style="width:100%" type="" name="position[]">
+               <input value="{{$detail->idt_comp}}" style="width:100%" type="hidden" name="comp[]">
+               <input value="{{$detail->idt_position}}" style="width:100%" type="hidden" name="position[]">
                <input style="width:100%" type="hidden" name="idt_itemtitipan[]" value="{{$detail->idt_itemtitipan}}">
                <input style="width:100%" type="hidden" name="idt_detailid[]" value="{{$detail->idt_detailid}}">
                <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div>
@@ -32,7 +32,7 @@
           </td>
 
           <td width="4%">
-               <input class="return return{{$detail->i_id}} form-control" name="idt_return_titip_lama[]"           
+               <input type="hidden" class="return return{{$detail->i_id}} form-control" name="idt_return_titip_lama[]"           
                value="{{number_format($detail->idt_return_,0,',','.')}}" style="width:100%;text-align:right;border:none" readonly="">
 
                <input onblur=";setQty(event,'return{{$detail->i_id}}')" onclick="setAwal(event,'return{{$detail->i_id}}')" class="return return{{$detail->i_id}} form-control" name="idt_return_titip[]"           

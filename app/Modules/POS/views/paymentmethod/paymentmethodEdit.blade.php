@@ -18,7 +18,7 @@
         <input  style="width:90%" type="" name="" value="{{date('d-m-Y')}}">
       </td>
       <td>        
-        <button type="button" class="btn btn-sm btn-danger hapus" onclick="btnHapusPayment(this)"  ><i class="fa fa-trash-o"></i></button>
+        <button type="button" class="btn btn-sm btn-danger hapus" onclick="btnHapusPayment(this)"  disabled=""><i class="fa fa-trash-o"></i></button>
       </td>
     </tr>
 @endforeach

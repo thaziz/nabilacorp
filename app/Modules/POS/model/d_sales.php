@@ -71,17 +71,15 @@ class d_sales extends Model
                     's_bulat'=>$s_bulat,
             ]);
 
-  
+          $jumlahJurnalHpp=0;
           for ($i=0; $i <count($request->sd_item); $i++) {  
               if($request->status=='final'){
                   $sd_qty = format::format($request->sd_qty[$i]); 
                   $comp=$request->comp[$i];
                   $position=$request->position[$i];                  
                   $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$s_id);   
-                  $jurnalSales=d_sales::where('s_id',$s_id);               
-                  $jurnalSales->update([
-                              's_jurnal'=>$simpanMutasi['totalHpp']
-                              ]);
+
+                  
                   if($simpanMutasi['true']){
                   $sd_detailid=d_sales_dt::
                               where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
@@ -112,9 +110,13 @@ class d_sales extends Model
                             'sd_disc_percentvalue'=>$sd_disc_percentvalue,
                             'sd_total'=>$sd_total-$sd_disc_value-$sd_disc_percentvalue,
                   ]);
-                }
 
-            else{
+
+                  
+                              $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
+                              
+
+          }else{
               DB::rollBack();
                $data=['status'=>'gagal','data'=>'gagal'];
               return json_encode($data);
@@ -155,6 +157,11 @@ class d_sales extends Model
 
           }
         }
+
+        $jurnalSales=d_sales::where('s_id',$s_id);               
+        $jurnalSales->update([
+             's_jurnal'=>$jumlahJurnalHpp
+        ]);
 /*kembalian*/
           $totalBayar=0;
           $bayar=count($request->sp_nominal);
@@ -234,9 +241,10 @@ class d_sales extends Model
                       if($status=='final'){
                         $comp = $request->comp[$i];
                         $position = $request->position[$i];
-                        if(mutasi::updateMutasi($hapusItem,-$permintaan,$comp,$position,$flag='',$request->s_id)){
-                          $hapus_sales_dt->delete();
-                        }
+                        $simpanMutasi=mutasi::updateMutasi($hapusItem,-$permintaan,$comp,$position,$flag='',$request->s_id);
+                          if($simpanMutasi['true']){
+                            $hapus_sales_dt->delete();
+                          }
                         }else if($status='draft'){
                           $hapus_sales_dt->delete();
                         }
@@ -260,7 +268,8 @@ class d_sales extends Model
                 }
                 $comp = $request->comp[$i];
                 $position = $request->position[$i];
-              if(mutasi::updateMutasi($request->sd_item[$i],$permintaan,$comp,$position,$flag='',$request->sd_sales[$i])){
+                $simpanMutasi=mutasi::updateMutasi($request->sd_item[$i],$permintaan,$comp,$position,$flag='',$request->sd_sales[$i]);
+                if($simpanMutasi['true']){                
 
                 $upadte_sales_dt=d_sales_dt::where('sd_sales',$request->sd_sales[$i])
                                   ->where('sd_detailid',$request->sd_detailid[$i])
@@ -294,13 +303,17 @@ class d_sales extends Model
           
                 $sd_qty=format::format($request->sd_qty[$i]);
               
-                $s_id=$updateSales->first()->s_id;
-                /*dd(mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp=1,$position=1,$flag='',$s_id));*/
+                $s_id=$updateSales->first()->s_id;                
                   $comp = $request->comp[$i];
                   $position = $request->position[$i];
-                  if(mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='',$s_id)){
+                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='',$s_id);
+                  if($simpanMutasi['true']){                  
                   $sd_detailid=d_sales_dt::
                               where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
+
+                  $comp=$request->comp[$i];
+
+                  $position=$request->position[$i];
 
                   $sd_price = format::format($request->sd_price[$i]);
 
@@ -314,7 +327,8 @@ class d_sales extends Model
                             'sd_sales' =>$s_id ,
                             'sd_detailid'=>$sd_detailid,     
                             'sd_date'    =>date('Y-m-d',strtotime($request->s_date)),               
-                            'sd_comp'=>Session::get('user_comp'),                    
+                            'sd_comp'=>$comp,                    
+                            'sd_position'=>$position,                 
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
@@ -602,7 +616,7 @@ if($d_sales->s_status!='lunas'){
             $data=['status'=>'gagal','data'=>'Nama pelanggan harus di isi'];
             return $data;
           }
-          
+
           $s_gross = format::format($request->s_gross);
           $s_ongkir = format::format($request->s_ongkir);          
           $s_disc_value = format::format($request->s_disc_value);
@@ -644,9 +658,14 @@ if($d_sales->s_status!='lunas'){
 
   
           for ($i=0; $i <count($request->sd_item); $i++) {  
-        
+                
                $sd_detailid=d_sales_dt::
                               where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
+
+                  $comp=$request->comp[$i];
+
+                  $position=$request->position[$i];
+                  
 
                   $sd_price = format::format($request->sd_price[$i]);
 
@@ -661,8 +680,9 @@ if($d_sales->s_status!='lunas'){
                   d_sales_dt::create([
                             'sd_sales' =>$s_id ,
                             'sd_detailid'=>$sd_detailid,   
-                            'sd_date'    =>date('Y-m-d',strtotime($request->s_date)), 
-                            'sd_comp'=>Session::get('user_comp'),                                    
+                            'sd_date'    =>date('Y-m-d',strtotime($request->s_date)),                             
+                            'sd_comp'=>$comp,                    
+                            'sd_position'=>$position,                            
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
@@ -779,6 +799,10 @@ $totalBayar=0;
                 $sd_detailid=d_sales_dt::
                               where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
 
+                  $comp=$request->comp[$i];
+                  
+                  $position=$request->position[$i];
+
                   $sd_price = format::format($request->sd_price[$i]);
 
                   $sd_total = format::format($request->sd_total[$i]);
@@ -789,11 +813,16 @@ $totalBayar=0;
 
                   $sd_qty= format::format($request->sd_qty[$i]);
 
+                  $comp=$request->comp[$i];
+
+                  $position=$request->position[$i];
+
                   d_sales_dt::create([
                             'sd_sales' =>$s_id ,
                             'sd_detailid'=>$sd_detailid, 
-                            'sd_date'    =>date('Y-m-d',strtotime($request->s_date)),
-                            'sd_comp'=>Session::get('user_comp'),                                       
+                            'sd_date'    =>date('Y-m-d',strtotime($request->s_date)),                            
+                            'sd_comp'=>$comp,                    
+                            'sd_position'=>$position,                                       
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
@@ -849,22 +878,32 @@ $totalBayar=0;
     }
 
     static function serahTerima($request){      
-      return DB::transaction(function () use ($request) {
-
+      return DB::transaction(function () use ($request) {        
+          $jumlahJurnalHpp=0;
           $updateSales=d_sales::where('s_id',$request->s_id);  
           $status=$updateSales->first()->s_status;
           $updateSales->update([                    
                     's_status'=>'Terima',
                     ]);       
         for ($i=0; $i <count($request->sd_item); $i++) { 
-            if(mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp=1,$position=1,$flag='',$request->s_id)){
 
+          $comp=$request->comp[$i];
+          $position=$request->position[$i];   
+          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_id);
+            if($simpanMutasi['true']){     
+            $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
             }else{
               $data=['status'=>'gagal','data'=>'Stok tidak mencukupi.' ,'s_id'=>$request->s_id,'s_status'=>$updateSales->first()->s_status];
               DB::rollBack();     
               return $data;      
             }
         }
+
+
+        $jurnalSales=d_sales::where('s_id',$request->s_id);               
+        $jurnalSales->update([
+             's_jurnal'=>$jumlahJurnalHpp
+        ]);
 
         $data=['status'=>'sukses','data'=>'Stok berhasil disimpan.' ,'s_id'=>$request->s_id,'s_status'=>$updateSales->first()->s_status];
         return $data;

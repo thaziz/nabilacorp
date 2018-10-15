@@ -415,8 +415,8 @@ function table(){
           /*iSalesDetail+='<tr>';        */
           iSalesDetail+='<tr class="detail'+i_id.val()+'">';
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="idt_item[]" value='+i_id.val()+'>'; 
-          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
-          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="hidden" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="hidden" name="position[]">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="idt_itemtitipan[]" value="">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="idt_detailid[]" value="">';
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
@@ -695,6 +695,7 @@ ctrl = 17;
 }
 
 
+
 function simpanPos(status=''){
   $('#totalBayar').removeAttr('disabled');
   $('#kembalian').removeAttr('disabled');
@@ -780,14 +781,20 @@ function perbaruiData(){
                         $('#s_date').val('{{date("d-m-Y")}}');                        
                         $('#s_created_by').val('{{Auth::user()->m_name}}');
                         $('#proses').modal('hide');
-                        $('.perbarui').css('display','none');  
+                        /*$('.perbarui').css('display','none');  */
+                        
                         /*$('.perbarui').attr('disabled');*/
                         $('.final').css('display','');
-                        $('.draft').css('display','');
+                        /*$('.draft').css('display','');*/
 
-                         if(response.s_status=='final'){
-                       var childwindow= window.open(baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,'_blank');                    
-                        }
+                       
+                        iziToast.success({
+                        position: "center",
+                        title: '', 
+                        timeout: 1000,
+                        message: 'Data berhasil diperbarui.'});
+
+                        
 
                     }else if(response.status=='gagal'){
                       $('.btn-disabled').removeAttr('disabled');
@@ -904,16 +911,23 @@ function serahterima(id){
 }
 
 
-function edit(id,tgl,nota,supplier,id_supplier,keterangan){
+function edit(id,tgl,nota,supplier,id_supplier,keterangan,total){
   $('#it_id').val(id);
   $('#it_date').val(tgl);
   $('#it_code').val(nota);
   $('#supplier').val(supplier);
   $('#id_supplier').val(id_supplier);
   $('#it_keterangan').val(keterangan);
+  $('#s_gross').val(total);
   detail_dt(id);
   $('#penjualan').tab('show');
 
+
+}
+
+function tambah(){
+  $('#penjualan').tab('show');
+  $('.reset-seach').val('');      
 }
 
 $('#fQty').keyup(function(e) {    

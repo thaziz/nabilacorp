@@ -1150,7 +1150,10 @@ function buttonSimpanPos($status){
         }
 }
 
-
+function tambah(){
+  $('#penjualan').tab('show');
+  $('.reset-seach').val('');      
+}
 
 
       </script>

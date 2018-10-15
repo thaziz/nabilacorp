@@ -80,8 +80,8 @@
                   <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
                   <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
                   <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
-                  <input type="" class="fComp form-control input-sm reset-seach" name="" id="fComp">
-                  <input type="" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
+                  <input type="hidden" class="fComp form-control input-sm reset-seach" name="" id="fComp">
+                  <input type="hidden" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
               </div>
           </div>      
           <div class="col-md-3">

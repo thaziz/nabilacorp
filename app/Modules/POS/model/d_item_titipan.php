@@ -66,21 +66,27 @@ class d_item_titipan extends Model
                                                 \''.$itemTitipan->it_code.'\',
                                                 \''.$itemTitipan->s_company.'\',
                                                 \''.$itemTitipan->s_id.'\',
-                                                \''.$itemTitipan->it_keterangan.'\'        
+                                                \''.$itemTitipan->it_keterangan.'\',
+                                                \''.number_format($itemTitipan->it_total,0,',','.').'\'
                           )" '.$disable.'><i class="fa fa-edit"></i>
                           </button>
-                          <button type="button" class="btn btn-sm btn-danger" title="Hapus" onclick="delete(
+                      
+                          </div>';
+                            return $html;
+                        })
+                        ->rawColumns(['action'])
+                      ->make(true);    
+
+
+
+
+                          /*<button type="button" class="btn btn-sm btn-danger" title="Hapus" onclick="delete(
                                                '.$itemTitipan->it_id.',          
                                                 \''.date('d-m-Y',strtotime($itemTitipan->it_date)).'\',   
                                                 \''.$itemTitipan->it_code.'\',
                                                 \''.$itemTitipan->it_keterangan.'\'  
                           )" '.$disable.' ><i class="fa fa-times"></i>
-                          </button>
-                          </div>';
-                            return $html;
-                        })
-                        ->rawColumns(['action'])
-                      ->make(true);                                  
+                          </button>*/                              
     }
     static function dataTitipan($id){      
              $itemTitipan=d_item_titipan::join('m_supplier','s_id','=','it_supplier')->where('it_comp',Session::get('user_comp'))->where('it_id',$id)->first();                          
@@ -154,8 +160,9 @@ class d_item_titipan extends Model
         $idt_qty= format::format($request->idt_qty[$i]); 
         $jumlahQty=$idt_return+$idt_qty;
 
-        $hpp= format::format($request->idt_price[$i]);         
-        if(mutasi::tambahmutasi($request->idt_item[$i],$jumlahQty,$comp,$position,'BARANG TITIPAN',12,$it_id,'','',$hpp)){
+        $hpp= format::format($request->idt_price[$i]);   
+        $simpanMutasi=mutasi::tambahmutasi($request->idt_item[$i],$jumlahQty,$comp,$position,'BARANG TITIPAN',12,$it_id,'','',$hpp);
+        if($simpanMutasi['true']){              
             $idt_detailid=d_itemtitipan_dt::where('idt_itemtitipan',$it_id)
                                ->max('idt_detailid')+1;                                           
             d_itemtitipan_dt::create([
@@ -266,12 +273,22 @@ static function serahTerimaStore($request){
   }
 
   static function updateTitipan($request){
+    
+    $it_total= format::format($request->it_total); 
+    $itemTitipanUpdate=d_item_titipan::where('it_id',$request->it_id);
+    $itemTitipanUpdate->update([
+        'it_total'=>$it_total
+      ]);
     for ($i=0; $i <count($request->idt_item) ; $i++) { 
   $qty= format::format($request->idt_qty[$i]); 
+  
+
+
 
   $permintaan=format::format($request->idt_qty[$i])-format::format($request->jumlahLama[$i]);
   
-  if(mutasi::perbaruimutasi($request->idt_item[$i],$permintaan,$request->comp,$request->position,'','',$request->it_id,'','','')){
+  $simpanMutasi=mutasi::perbaruimutasi($request->idt_item[$i],$permintaan,$request->comp,$request->position,'','',$request->it_id,'','','');
+  if($simpanMutasi['true']){              
         $updateDt=d_itemtitipan_dt::where('idt_itemtitipan',$request->it_id)
               ->where('idt_detailid',$request->idt_detailid[$i])
                ->where('idt_item',$request->idt_item[$i]);
@@ -283,7 +300,8 @@ static function serahTerimaStore($request){
 }
     }
     
-
+$data=['status'=>'sukses','data'=>'sukses'];
+          return json_encode($data);
       
   }
    

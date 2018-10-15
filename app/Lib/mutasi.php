@@ -10,7 +10,8 @@ use DB;
 class mutasi{
     public static function tambahmutasi($item,$totalPermintaan,$comp,$position,$flag,$mutcat,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
         return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$mutcat,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp) {              
-
+                $totalHpp='';
+                    
                 $updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);
                 if(!$updateStock->first()){
 
@@ -50,8 +51,9 @@ class mutasi{
                 'sm_hpp'=>$hpp,
                 'sm_reff'=>$sm_reff,            
             ]);
-  
-            return true;
+            $totalHpp=$hpp*$totalPermintaan;
+            $data=['true'=>true,'totalHpp'=>$totalHpp];
+            return $data;
     });
 
 
@@ -61,6 +63,7 @@ class mutasi{
 
       public static function perbaruimutasi($item,$totalPermintaan,$comp,$position,$flag,$idFlag,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
     return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$idFlag,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
+                $totalHpp='';
                 $updateMutasi=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty','>',0); 
 
 
@@ -83,7 +86,9 @@ class mutasi{
                 'sm_hpp'=>$hpp,                     
             ]);
   
-            return true;
+            $totalHpp=$hpp*($updateMutasi->first()->sm_qty+$totalPermintaan);
+            $data=['true'=>true,'totalHpp'=>$totalHpp];
+            return $data;
         
     });
 
@@ -130,7 +135,11 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     					]);				
     			}else{				
     				/*DB::rollBack();         */
-    				return false;
+    				
+            
+            $data=['true'=>false,'totalHpp'=>$totalHpp];
+            return $data;
+        
     			}
             }
 		 	$getBarang=d_stock_mutation::where('sm_qty_sisa','>',0)->where('sm_item',$item)->where('sm_comp',$comp)
@@ -239,6 +248,8 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                        ->orderBy('sm_detailid','DESC')->where('sm_qty','<',0)->get();
                        
             //mencari harga sebelum di hapus
+            $totalHpp=0;
+
             $sm_hpp=[];
             $updateMutasi=[];
             $hapusMutasi=[];
@@ -335,8 +346,10 @@ $totalPermintaan=abs($awaltotalPermintaan);
                     's_qty'=>$qty
                 ]);
 
-                       
-            return true;
+            $totalHpp=$awaltotalPermintaan*5;
+            $data=['true'=>true,'totalHpp'=>$totalHpp];
+            return $data;           
+            
         }
     });
 
