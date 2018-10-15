@@ -16,6 +16,9 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 		Route::get('/produksi/monitoringprogress/monitoring', 'ProduksiController@monitoring')->middleware('auth');
 		Route::get('/produksi/o_produksi/tambah_produksi', 'ProduksiController@tambah_produksi')->middleware('auth');
 
+		//ITEM PRODUKSI
+		Route::get('/seach-item-Produksi', 'hasilProduksiController@seachItemProduksi');
+
 		Route::get('/produksi/hasil-produksi/index', 'hasilProduksiController@index')->middleware('auth');
 		Route::get('/produksi/hasil-produksi/data', 'hasilProduksiController@data')->middleware('auth');
 		Route::get('/produksi/hasil-produksi/create', 'hasilProduksiController@create')->middleware('auth');

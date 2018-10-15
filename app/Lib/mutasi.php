@@ -67,9 +67,11 @@ class mutasi{
                 $updateMutasi=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty','>',0); 
 
 
+
                 
 
                 $updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);
+                
                         $qty=$updateStock->first()->s_qty+$totalPermintaan;                                     
                         
                         $updateStock->update([

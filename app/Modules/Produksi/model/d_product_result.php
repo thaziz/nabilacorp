@@ -74,7 +74,12 @@ class d_product_result extends Model
     static function editDetail($id){
           return DB::table('d_productresult_dt')->join('m_item','prdt_item','=','i_id')
                  ->join('m_satuan','s_id','=','i_satuan')
-                 ->join('d_stock','s_item','=','i_id')
+                 /*->join('d_stock','s_item','=','i_id')*/
+                  ->join('d_stock',function($join){
+                  $join->on('s_item','=','i_id');
+                  $join->on('s_comp','=','prdt_comp');
+                  $join->on('s_position','=','prdt_position');
+                  })
                  ->where('prdt_productresult',$id)                 
                  ->orderBy('prdt_detailid','ASC')               
                  ->get();                 
@@ -122,16 +127,19 @@ class d_product_result extends Model
               $prdt_hpp= format::format($request->prdt_hpp[$i]);
               $prdt_qty= format::format($request->prdt_qty[$i]);
               $detailid=d_productresult_dt::where('prdt_productresult',$pr_id)->max('prdt_detailid')+1;
-         
+              $comp=$request->comp[$i];
+              $position=$request->position[$i]; 
                d_productresult_dt::create([
                                 'prdt_productresult'=>$pr_id,
                                 'prdt_detailid'=>$detailid,
                                 'prdt_comp'=>Session::get('user_comp'),
                                 'prdt_item'=>$request->prdt_item[$i],
                                 'prdt_qty'=>$prdt_qty,  
-                                'prdt_hpp'=>$prdt_hpp
+                                'prdt_hpp'=>$prdt_hpp,
+                                'prdt_comp'=>$comp,
+                                'prdt_position'=>$position,
                                  ]);
-                mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,1,1,'Hasil Produksi','',$pr_id,'','',$prdt_hpp);
+                mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp);
              }
 
           $data=['status'=>'sukses','data'=>'sukses'];
@@ -190,8 +198,9 @@ class d_product_result extends Model
 
               $permintaan=format::format($request->prdt_qty[$i])-format::format($request->jumlahAwal[$i]);                
               $prdt_hpp= format::format($request->prdt_hpp[$i]);
-
-              if(mutasi::perbaruimutasi($request->prdt_item[$i],$permintaan,$comp=1,$position=1,$flag='Hasil Produksi',$idFlag=1,$sm_reff=$id,$flagTujuan='',$idMutasiTujuan='',$prdt_hpp)){
+              $comp=$request->comp[$i];
+              $position=$request->position[$i]; 
+              if(mutasi::perbaruimutasi($request->prdt_item[$i],$permintaan,$comp,$position,$flag='Hasil Produksi',$idFlag=1,$sm_reff=$id,$flagTujuan='',$idMutasiTujuan='',$prdt_hpp)){
               
               $prdt_qty= format::format($request->prdt_qty[$i]);
 
@@ -209,16 +218,20 @@ class d_product_result extends Model
               $prdt_hpp= format::format($request->prdt_hpp[$i]);
               $prdt_qty= format::format($request->prdt_qty[$i]);
               $detailid=d_productresult_dt::where('prdt_productresult',$id)->max('prdt_detailid')+1;
-         
+              $comp=$request->comp[$i];
+              $position=$request->position[$i]; 
+
                d_productresult_dt::create([
                                 'prdt_productresult'=>$id,
                                 'prdt_detailid'=>$detailid,
-                                'prdt_comp'=>Session::get('user_comp'),
+                                'prdt_comp'=>$comp,
+                                'prdt_position'=>$position,
                                 'prdt_item'=>$request->prdt_item[$i],
                                 'prdt_qty'=>$prdt_qty,  
                                 'prdt_hpp'=>$prdt_hpp
                                  ]);
-                 mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,1,1,'Hasil Produksi','',$id,'','',$prdt_hpp);
+
+                 mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi','3',$id,'','',$prdt_hpp);
          }
 
 

@@ -58,6 +58,9 @@
                   <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
                   <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
                   <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
+
+                  <input type="" class="fComp form-control input-sm reset-seach" name="" id="fComp">
+                  <input type="" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
               </div>
           </div>      
           <div class="col-md-3">
@@ -146,7 +149,7 @@ $(document).ready(function(){
 
 
        $("#searchitem").autocomplete({
-        source: baseUrl+'/item',
+        source: baseUrl+'/seach-item-Produksi',
         minLength: 1,
         dataType: 'json',
         select: function(event, ui) 
@@ -157,6 +160,9 @@ $(document).ready(function(){
         $('#itemName').val(ui.item.item);
         $('#i_price').val(ui.item.i_price);
         
+        $('#fComp').val(ui.item.comp);
+        $('#fPosition').val(ui.item.position);
+
         $('#s_satuan').val(ui.item.satuan);
         
          $('#stock').val(ui.item.stok);   
@@ -246,7 +252,11 @@ ctrl = 17;
       var iSalesDetail='';  //isi
           /*iSalesDetail+='<tr>';        */
           iSalesDetail+='<tr class="detail'+i_id.val()+'">';
-          iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="prdt_item[]" value='+i_id.val()+'>'; 
+          iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="prdt_item[]" value='+i_id.val()+'>';
+
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
+
           iSalesDetail+='<input style="width:100%" type="hidden" name="prdt_productresult[]" value="">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="prdt_detailid[]" value="">';
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';

@@ -26,14 +26,8 @@
                             <li><a href="#"><i class="fa fa-tasks"></i>My Tasks<span class="badge badge-success">7</span></a></li>
                             <li class="divider"></li>
                             <li><a href="#"><i class="fa fa-lock"></i>Lock Screen</a></li>
-                            <li><a 
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i>Logout
-                                        </a>
-
-                                        <form id="logout-form"  method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+                            <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i>Logout
+                                </a>
                             </li>
                         </ul>
                     </li>

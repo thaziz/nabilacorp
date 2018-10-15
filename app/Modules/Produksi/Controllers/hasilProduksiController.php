@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Modules\Produksi\model\d_product_result;
+use App\m_itemm;
+
 
 
 
@@ -35,6 +37,12 @@ class hasilProduksiController extends Controller
          $detail=view('Produksi::hasilProduksi/modal-detail');  
          return view('Produksi::hasilProduksi/index',compact('dataProduksi','form','detail'));  
     }   
+
+    
+    public function seachItemProduksi(Request $request)
+    {        
+        return m_itemm::seachItemProduksi($request);
+    }
 
     public function data(Request $request)
     {        
