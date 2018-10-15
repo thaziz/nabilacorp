@@ -97,15 +97,15 @@ $(document).ready(function(){
         $('#s_satuan').val(ui.item.satuan);
         var jumlah=0;
         
-        alert($('.jumlahAwal'+i_id.val()).val());
+        
         if($('.jumlahAwal'+i_id.val()).val()!=undefined && $('.jumlahAwal'+i_id.val()).val()!=0){
             /*jumlah=parseFloat(ui.item.stok)+parseFloat($('.jumlahAwal'+i_id.val()).val());*/
             if($('#s_status').val()=='final'){
                 jumlah=parseFloat(angkaDesimal(ui.item.stok))+parseFloat(angkaDesimal($('.jumlahAwal'+i_id.val()).val()));
-                alert(jumlah);
+                
                 $('#stock').val(SetFormRupiah(jumlah));        
               }else if($('#s_status').val()=='draft'){
-                alert(ui.item.stok);
+                
                 $('#stock').val(ui.item.stok);
               }
 
@@ -114,7 +114,7 @@ $(document).ready(function(){
 
         }else{
             $('#stock').val(ui.item.stok);
-            alert(ui.item.stok);
+            
         }
         
         fQty.val(1);
