@@ -8,5 +8,6 @@ return  [
        'Produksi',
        'Master',
        'System',
+       'Inventory',
     ]
 ];
