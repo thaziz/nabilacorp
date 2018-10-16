@@ -44,6 +44,12 @@ class hasilProduksiController extends Controller
         return m_itemm::seachItemProduksi($request);
     }
 
+    public function seachItemMutasi(Request $request)
+    {        
+        return m_itemm::seachItemMutasi($request);
+    }
+
+    
     public function data(Request $request)
     {        
         return d_product_result::data($request);

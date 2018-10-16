@@ -18,6 +18,8 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 
 		//ITEM PRODUKSI
 		Route::get('/seach-item-Produksi', 'hasilProduksiController@seachItemProduksi');
+		Route::get('/seach-item-mutasi', 'hasilProduksiController@seachItemMutasi');
+		
 
 		Route::get('/produksi/hasil-produksi/index', 'hasilProduksiController@index')->middleware('auth');
 		Route::get('/produksi/hasil-produksi/data', 'hasilProduksiController@data')->middleware('auth');

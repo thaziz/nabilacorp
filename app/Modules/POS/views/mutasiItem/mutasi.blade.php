@@ -81,7 +81,7 @@ $(document).ready(function(){
 
 
        $("#searchitem").autocomplete({
-        source: baseUrl+'/item',
+        source: baseUrl+'/seach-item-mutasi',
         minLength: 1,
         dataType: 'json',
         select: function(event, ui) 
@@ -91,7 +91,8 @@ $(document).ready(function(){
         $('#searchitem').val(ui.item.label);
         $('#itemName').val(ui.item.item);
         $('#i_price').val(ui.item.i_price);
-        
+        $('#fComp').val(ui.item.comp);
+        $('#fPosition').val(ui.item.position);
         $('#s_satuan').val(ui.item.satuan);
         var jumlah=0;
 
@@ -391,6 +392,12 @@ ctrl = 17;
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="mp_item[]" value='+i_id.val()+'>'; 
           iSalesDetail+='<input style="width:100%" type="hidden" name="mp_mutationitem[]" value="">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="mp_detailid[]" value="">';
+
+
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
+
+
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
           iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
@@ -673,6 +680,10 @@ $('#tanggal2').datepicker({
 }).datepicker( "setDate", new Date());
 
 
+  $('#searchitem').click(function(){    
+    $('.reset-seach').val('');      
+    
+});
 
 </script>
       </script>

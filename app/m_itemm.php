@@ -319,14 +319,77 @@ class m_itemm extends Model
           }
         } 
         return Response::json($results);
-
-
-
-
-
-
-
     }
+
+
+
+
+//cari barang mutasi item
+    public static function seachItemMutasi($item) {      
+
+
+        $search = $item->term;
+
+        $cabang=Session::get('user_comp');                
+
+        $position=DB::table('d_gudangcabang')
+                      ->where('gc_gudang',DB::raw("'GUDANG PENJUALAN'"))
+                      ->where('gc_comp',$cabang)
+                      ->select('gc_id')->first();   
+        $comp=$position->gc_id;
+        $position=$position->gc_id;
+
+
+        $groupName=['Barang PRODUKSI','Barang Jual'];
+
+
+            
+
+        $sql=DB::table('m_item')
+             ->leftjoin('d_stock',function($join) use ($comp,$position) {
+                  $join->on('s_item','=','i_id');
+                  $join->where('s_comp',$comp); 
+                  $join->where('s_position',$position);
+
+
+             })
+             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
+             ->join('m_group','g_id','=','i_group')
+             ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','s_qty','i_code');
+             
+
+        if($search!=''){          
+            $sql->where(function ($query) use ($search,$groupName) {
+                  $query->where('i_name','like','%'.$search.'%');                                    
+                  $query->whereIn('g_name',$groupName);                                     
+
+                  $query->orWhere('i_code','like','%'.$search.'%');                                    
+                  $query->whereIn('g_name',$groupName); 
+                  });
+                  }                                  
+        else{
+          $results[] = [ 'id' => null, 'label' =>'Data belum lengkap'];
+          return Response::json($results);
+        }
+               
+        $sql=$sql->get();
+        
+        
+
+        $results = array();
+                        
+        if (count($sql)==0) {
+          $results[] = [ 'id' => null, 'label' =>'tidak di temukan data terkait'];
+        } else {
+          foreach ($sql as $data)
+          {
+            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->i_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->i_price,0,',','.'),'item' => $data->i_name ,'position'=>$position,
+              'comp'=>$comp];
+          }
+        } 
+        return Response::json($results);
+    }
+
 
 
 }
