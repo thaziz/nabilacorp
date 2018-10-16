@@ -35,15 +35,16 @@
                                     <div id="alert-tab" class="tab-pane fade in active">
                                       <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-
+                                          <form id="formdata">
+                                            <input type="hidden" name="nota">
                                           <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
                                             <div class="col-md-6 col-sm-12 col-xs-12">
                                               <label class="tebal">No Nota :</label>
                                             </div>
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
                                               <div class="input-group">
-                                                <select class="form-control input-sm" id="cariId" name="CariId" onchange="getdata()">
-                                                  <option> - Pilih Nomor Nota</option>
+                                                <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
+                                                  <option value=""> - Pilih Nomor Nota</option>
                                                   @foreach ($data as $key => $value)
                                                     <option value="{{$value->pr_id}}">{{$value->pr_code}}</option>
                                                   @endforeach
@@ -53,7 +54,47 @@
                                                 </span>
                                               </div>
                                             </div>
+                                          </div>
 
+                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <label class="tebal">Tujuan :</label>
+                                            </div>
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                              <div class="input-group">
+                                                <select class="form-control input-sm select2" name="tujuan">
+                                                  <option value=""> - Pilih Tujuan - </option>
+                                                  @foreach ($tujuan as $key => $value)
+                                                    <option value="{{$value->gc_id}}">{{$value->gc_gudang}}</option>
+                                                  @endforeach
+                                                </select>
+                                                <span class="input-group-btn">
+                                                  <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <label class="tebal">Keterangan :</label>
+                                            </div>
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                              <div class="input-group">
+                                                <textarea name="keterangan" rows="4" cols="50"></textarea>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <label class="tebal">Tanggal Transfer :</label>
+                                            </div>
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                              <div class="input-group">
+                                                <input id="tanggaltransfer" class="form-control date input-sm" type="text" name="p_tanggal_transfer">
+                                              </div>
+                                            </div>
                                           </div>
 
                                           <div class="table-responsive">
@@ -64,6 +105,7 @@
                                                   <th>No Product Result</th>
                                                   <th>Nama Barang</th>
                                                   <th>Qty</th>
+                                                  <th>Dikirim</th>
                                                   <th>Sisa</th>
                                                   <th width="5%">Status</th>
                                                   <th width="10%">Kirim</th>
@@ -73,10 +115,11 @@
 
                                               </tbody>
                                             </table>
+                                          </form>
                                           </div>
                                           <br>
                                           <br>
-                                          <button type="button" class="btn btn-primary pull-right" name="button">Simpan</button>
+                                          <button type="button" class="btn btn-primary pull-right" onclick="simpan()" name="button">Simpan</button>
                                         </div>
 
                                       </div>
@@ -87,8 +130,9 @@
 @section("extra_scripts")
     <script type="text/javascript">
      $(document).ready(function() {
-
-       $('#cariId').select2();
+       var data;
+       $('.select2').select2();
+       $( "#tanggaltransfer" ).datepicker();
 
     var extensions = {
          "sFilterInput": "form-control input-sm",
@@ -168,6 +212,11 @@
       });
 
       function getdata(){
+        swal({
+              title: 'Loading!',
+              showCancelButton: false,
+              showConfirmButton: false
+            });
           var id = $('#cariId').val();
           var html = '';
           $.ajax({
@@ -176,26 +225,67 @@
             dataType: 'json',
             url: baseUrl + '/inventory/pengirimanproduksi/getdata',
             success : function(result){
+              data = result;
               for (var i = 0; i < result.length; i++) {
-                if (result[i].prdt_sisa == 0) {
-                  var status = '<span class="label label-success">Lunas</span>';
-                } else if (result[i].prdt_kirim > 0) {
-                  var status = '<span class="label label-warning">Belum lunas</span>';
+                var sisa = parseInt(result[i].prdt_qty) - parseInt(result[i].prdt_kirim);
+                if (sisa == 0) {
+                  var status = '<span class="label label-success">Terkirim</span>';
+                } else if (sisa != 0) {
+                  var status = '<span class="label label-warning">Belum Terkirim</span>';
                 }
                 html += '<tr>'+
-                        '<td>'+i + 1+'</td>'+
+                        '<td>'+(i + 1)+'</td>'+
                         '<td>'+result[i].pr_code+'</td>'+
                         '<td>'+result[i].i_name+'</td>'+
-                        '<td>'+result[i].prdt_qty - result[i].prdt_kirim+'</td>'+
-                        '<td>'+result[i].prdt_sisa+'</td>'+
+                        '<td>'+result[i].prdt_qty+'</td>'+
+                        '<td>'+result[i].prdt_kirim+'</td>'+
+                        '<td>'+sisa+'</td>'+
                         '<td>'+status+'</td>'+
-                        '<td><input type="number" class="form-control" name="kirim[]"></td>'+
+                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+')" name="kirim[]"></td>'+
+                        '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
                         '</tr>';
               }
               $('#showdata').html(html);
+              $('input[name=nota]').val(result[0].pr_code);
+              swal.close();
             }
           });
       }
+
+      function filter(id){
+        var kirim = $('#kirim'+id).val();
+            if (kirim > data[id].prdt_qty) {
+              swal("Info!", "Tidak boleh melebihi qty!");
+              $('#kirim'+id).val(0);
+              i = data.length + 1;
+            }
+      }
+
+      function simpan(){
+        $.ajax({
+          type: 'get',
+          data: $('#formdata').serialize(),
+          dataType: 'json',
+          url: baseUrl + '/inventory/pengirimanproduksi/simpan',
+          success : function(result){
+            if (result.status == 'berhasil') {
+              swal({
+                    title: 'Berhasil!',
+                    text: 'Berhasil Disimpan!'
+                  });
+            }
+          }
+        });
+      }
+
+      function isNumberKey(evt)
+          {
+             var charCode = (evt.which) ? evt.which : event.keyCode
+             if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+
+             return true;
+          }
 
       </script>
 @endsection
