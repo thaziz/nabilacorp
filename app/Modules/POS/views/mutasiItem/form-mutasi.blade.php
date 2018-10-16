@@ -83,33 +83,40 @@
             </div>
             </div>
 
-          <!-- <div class="input-hasil"  style="display: none;">
+
+
+              <div class="input-hasil" style="display: none;">
            <div class="col-md-6">
-             <label class="control-label tebal" for="">Masukan Kode / Nama</label>
+             <label class="control-label tebal" for="">Masukan hasil / Nama</label>
                 <div class="input-group input-group-sm" style="width: 100%;">
                     <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">1 result is available, use up and down arrow keys to navigate.</span>
-                    <input  class="move up1 form-control input-sm reset-seach" id="searchitem" >
-                    <input type="hidden" class="form-control input-sm reset-seach" id="itemName">
-                    <input type="hidden" class="form-control input-sm " name="i_id" id="i_id">
-                    <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
-                    <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
-                    <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
+                    <input  class="move up1 form-control input-sm reset-seach" id="mp_searchitem" >
+                    <input type="hidden" class="form-control input-sm reset-seach" id="mp_itemName">
+                    <input type="hidden" class="form-control input-sm " name="i_id" id="mp_i_id">
+                    <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="mp_i_code">
+                    <input type="hidden" class="form-control input-sm reset-seach" id="mp_i_price">
+                    <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="mp_s_satuan">
+
+                    <input type="" class="fComp form-control input-sm reset-seach" name="" id="mp_fComp">
+                  <input type="" class="fPosition form-control input-sm reset-seach" name="" id="mp_fPosition">
                 </div>
             </div>      
             <div class="col-md-2">
-             <label class="control-label tebal" name="qty">Stok</label>
+             <label class="control-label tebal" name="mp_qty">Stok hasil</label>
                 <div class="input-group input-group-sm" style="width: 100%;">
-                    <input type="number" class="form-control input-sm alignAngka reset reset-seach" name="stock" id="stock" disabled="">  
+                    <input type="number" class="form-control input-sm alignAngka reset reset-seach" name="stock" id="mp_stock" disabled="">  
                 </div>
             </div>
             <div class="col-md-2">
-             <label class="control-label tebal" name="qty">Jumlah</label>
+             <label class="control-label tebal" name="qty">Jumlah hasil</label>
                 <div class="input-group input-group-sm" style="width: 100%;">
-                   <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="fQty">   
-                   <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" >   
+                   <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="mp_fQty">   
+                   <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="mp_cQty" >   
                 </div>
             </div>
-            </div> -->
+            </div>
+
+
 
       </div>
     </div>
@@ -206,7 +213,7 @@
       }
       else if(jenis=='Hasil Jadi'){
         $('#tab-hasil').tab('show');
-        /*$('.input-Bahan').css('display','none');*/
+        $('.input-Bahan').css('display','none');
         $('.input-hasil').css('display','');
       }
     
@@ -219,7 +226,7 @@
         $('#jenis').val('Bahan');
       }
       else if(jenis=='Hasil Jadi'){        
-        /*$('.input-Bahan').css('display','none');*/
+        $('.input-Bahan').css('display','none');
         $('.input-hasil').css('display','');
         $('#jenis').val('Hasil Jadi');
       }

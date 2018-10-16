@@ -14,7 +14,7 @@ class d_mutationitem_material extends Model
     const CREATED_AT = 'mm_create';
     const UPDATED_AT = 'mm_update';
 
-      protected $fillable = ['mm_mutationitem','mm_comp','mm_detailid','mm_item','mm_qty','mm_hpp'];
+      protected $fillable = ['mm_mutationitem','mm_comp','mm_position','mm_detailid','mm_item','mm_qty','mm_hpp'];
 
       static function mutasiItemDt($id){
       	 $mm=d_mutationitem_material::join('m_item','mm_item','=','i_id')

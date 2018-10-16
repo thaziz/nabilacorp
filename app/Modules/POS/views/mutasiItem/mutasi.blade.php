@@ -57,10 +57,31 @@
   var fQty              = $("#fQty");  
   var cQty              = $("#cQty");  
   
+
+
   var s_satuan          =$('#s_satuan') ;
   var dBahan            = $(".dBahan");
   var dHasil            = $(".dHasil");
   var i_price           =$('#i_price');
+
+
+// hasil
+  var mp_searchitem        =$("#mp_searchitem");      
+  var mp_i_id              = $("#mp_i_id");      
+  var mp_i_code            = $("#mp_i_code");
+  var mp_itemName          = $("#mp_itemName");    
+  var mp_fQty              = $("#mp_fQty");  
+  var mp_cQty              = $("#mp_cQty");  
+  
+  var mp_s_satuan          =$('#mp_s_satuan') ;
+  var mp_i_price           =$('#mp_i_price');
+
+
+
+
+//selesai hasil
+
+
 
   var index             =0;
   var tampBahan         =[];
@@ -150,6 +171,66 @@ ctrl = 17;
 
      });
 
+//hasil 
+
+$(document).ready(function(){      
+
+
+       $("#mp_searchitem").autocomplete({
+        source: baseUrl+'/seach-item-Produksi',
+        minLength: 1,
+        dataType: 'json',
+        select: function(event, ui) 
+        { 
+        $('#mp_i_id').val(ui.item.i_id);        
+        $('#mp_i_code').val(ui.item.i_code);     
+        $('#mp_searchitem').val(ui.item.label);
+        $('#mp_itemName').val(ui.item.item);
+        $('#mp_i_price').val(ui.item.i_price);
+        
+        $('#mp_fComp').val(ui.item.comp);
+        $('#mp_fPosition').val(ui.item.position);
+
+        $('#mp_s_satuan').val(ui.item.satuan);
+        
+         $('#mp_stock').val(ui.item.stok);   
+        
+        mp_fQty.val(1);
+        mp_cQty.val(1);
+        mp_fQty.focus();
+        
+        }
+      });
+
+var arrow = {
+    left: 37,
+    up: 38,
+    right: 39,
+    down: 40
+},
+
+ctrl = 17;
+ $('.minu').keydown(function(e) {         
+                      if (e.ctrlKey && e.which === arrow.right) {
+                        
+                         var index = $('.minu').index(this) + 1;                         
+                         $('.minu').eq(index).focus();
+                         
+                      }
+                       if (e.ctrlKey && e.which === arrow.left) {
+                      /*if (e.keyCode == ctrl && arrow.left) {*/
+                         var index = $('.minu').index(this) - 1;
+                         $('.minu').eq(index).focus();
+                      }
+    });
+
+
+     });
+
+//selesai hasil 
+
+
+
 
  //fungsi barcode
    $('#searchitem').keypress(function(e) {        
@@ -187,18 +268,6 @@ ctrl = 17;
   });   
 
 
-   /* fQty.keypress(function(e) {        
-      if(e.which == 13 || e.keyCode == 13){  
-            if($('#jenis').val()=='Bahan'){
-               setFormDetailBahan();          
-            }else if($('#jenis').val()=='Hasil Jadi'){
-                setFormDetailHasil();          
-            }
-           
-      }
-    });
-
-*/
 
     fQty.keypress(function(e) {        
       if(e.which == 13 || e.keyCode == 13){   
@@ -236,6 +305,18 @@ ctrl = 17;
 
 
 
+
+    //bahan hasil
+
+    mp_fQty.keypress(function(e) {        
+      if(e.which == 13 || e.keyCode == 13){  
+          setFormDetailHasil();          
+      }
+    });
+    //hasil selesai
+
+
+
  
 
     function setFormDetailBahan(){
@@ -259,6 +340,12 @@ ctrl = 17;
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="mm_item[]" value='+i_id.val()+'>'; 
           iSalesDetail+='<input style="width:100%" type="hidden" name="mm_mutationitem[]" value="">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="mm_detailid[]" value="">';
+
+
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="mm_comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="mm_position[]">';
+
+
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
           iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
@@ -373,7 +460,7 @@ ctrl = 17;
 
     function setFormDetailHasil(){
       console.log('sebelum' + tampHasil);
-      if(fQty.val()<=0){
+      if(mp_fQty.val()<=0){
           iziToast.error({
                 position:'topRight',
                 timeout: 2000,
@@ -382,33 +469,33 @@ ctrl = 17;
               });
           return false;
       }
-      var index = tampHasil.indexOf(i_id.val());      
+      var index = tampHasil.indexOf(mp_i_id.val());      
        if ( index == -1){                
-      var Hapus = '<button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButtonHasil('+i_id.val()+')"><i class="fa fa-trash-o"></i></button>';                  
-      var vTotalPerItem = angkaDesimal(fQty.val())*angkaDesimal(i_price.val());
+      var Hapus = '<button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButtonHasil('+mp_i_id.val()+')"><i class="fa fa-trash-o"></i></button>';                  
+      var vTotalPerItem = angkaDesimal(mp_fQty.val())*angkaDesimal(mp_i_price.val());
       var iSalesDetail='';  //isi
           /*iSalesDetail+='<tr>';        */
-          iSalesDetail+='<tr class="detailHasil'+i_id.val()+'">';
-          iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="mp_item[]" value='+i_id.val()+'>'; 
+          iSalesDetail+='<tr class="detailHasil'+mp_i_id.val()+'">';
+          iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="mp_item[]" value='+mp_i_id.val()+'>'; 
           iSalesDetail+='<input style="width:100%" type="hidden" name="mp_mutationitem[]" value="">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="mp_detailid[]" value="">';
 
 
-          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
-          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="mp_comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="mp_position[]">';
 
 
-          iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
+          iSalesDetail+='<div style="padding-top:6px">'+mp_i_code.val()+' - '+mp_itemName.val()+'</div></td>';
 
-          iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
+          iSalesDetail+='<td width="4%"><input class="stock stock'+mp_i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
 
-          iSalesDetail+='<td width="4%" style="display:none"><input class="jumlahAwal'+i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwalHasil[]" value="0"></td>';
+          iSalesDetail+='<td width="4%" style="display:none"><input class="jumlahAwal'+mp_i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwalHasil[]" value="0"></td>';
 
-          iSalesDetail+='<td width="4%"><input  onblur="validationFormHasil();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapusHasilH(event,'+i_id.val()+');" class="move up1  alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="mp_qty[]" value="'+SetFormRupiah(angkaDesimal(fQty.val()))+'" autocomplete="off"></td>';
+          iSalesDetail+='<td width="4%"><input  onblur="validationFormHasil();setQty(event,\'fQty' + mp_i_id.val() + '\')" onkeyup="hapusHasilH(event,'+mp_i_id.val()+');" class="move up1  alignAngka jumlah fQty'+mp_i_id.val()+'" style="width:100%;border:none" name="mp_qty[]" value="'+SetFormRupiah(angkaDesimal(mp_fQty.val()))+'" autocomplete="off"></td>';
 
-          iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';   
+          iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+mp_s_satuan.val()+'</div></td>';   
 
-            iSalesDetail+='<td width="4%"><input class="move up2 alignAngka discRp'+i_id.val()+'" style="width:100%;border:none" name="mp_hpp[]" id="discRp" onkeyup="hapusHasilH(event,'+i_id.val()+');rege(event,\'discRp' + i_id.val() + '\')" onblur="setRupiah(event,\'discRp' + i_id.val() + '\')" onclick="setAwal(event,\'discRp' + i_id.val() + '\')" onfocus="setAwal(event,\'discRp' + i_id.val() + '\')" value="0" autocomplete="off"></td>';        
+            iSalesDetail+='<td width="4%"><input class="move up2 alignAngka discRp'+mp_i_id.val()+'" style="width:100%;border:none" name="mp_hpp[]" id="discRp" onkeyup="hapusHasilH(event,'+mp_i_id.val()+');rege(event,\'discRp' + mp_i_id.val() + '\')" onblur="setRupiah(event,\'discRp' + mp_i_id.val() + '\')" onclick="setAwal(event,\'discRp' + mp_i_id.val() + '\')" onfocus="setAwal(event,\'discRp' + mp_i_id.val() + '\')" value="0" autocomplete="off"></td>';        
                  
           iSalesDetail+='<td width="3%">'+Hapus+'</td>'                            
           iSalesDetail+='</tr>';        
@@ -417,13 +504,13 @@ ctrl = 17;
           dHasil.append(iSalesDetail);     
 
      
-          searchitem.focus();
-          itemName.val('');
-          searchitem.val('');
-          fQty.val('');
+          mp_searchitem.focus();
+          mp_itemName.val('');
+          mp_searchitem.val('');
+          mp_fQty.val('');
            $('#stock').val('');
           
-          tampHasil.push(i_id.val());
+          tampHasil.push(mp_i_id.val());
 
           $('.reset-seach').val('');
 
@@ -478,34 +565,25 @@ ctrl = 17;
       }else{                  
         var updateQty=0;        
         var updateTotalPerItem=0;
-        var fStok=parseFloat($('.stock'+i_id.val()).val());
+        var mp_fStok=parseFloat(angkaDesimal($('.stock'+mp_i_id.val()).val()));
         var a=0;
         var b=0;
         
-        a=angkaDesimal($('.fQty'+i_id.val()).val()) || 0;
+        a=angkaDesimal($('.fQty'+mp_i_id.val()).val()) || 0;
 
-        b=angkaDesimal(fQty.val()) || 0;
-        
+        b=angkaDesimal(mp_fQty.val()) || 0;
 
+        updateQty=SetFormRupiah(parseFloat(a)+parseFloat(b));     
 
-        updateQty=parseFloat(a)+parseFloat(b);                          
-        if(fStok>=updateQty){        
-          $('.fQty'+i_id.val()).val(updateQty)
-          itemName.val('');
-          fQty.val('');
+              
+          $('.fQty'+mp_i_id.val()).val(updateQty)
+          mp_itemName.val('');
+          mp_fQty.val('');
           $('#stock').val('');
-          searchitem.val('');
-          searchitem.focus();  
-        
+          mp_searchitem.val('');
+          mp_searchitem.focus();           
         $('.reset-seach').val('');      
-        }else{            
-              iziToast.error({
-                position:'topRight',
-                timeout: 2000,
-                title: '',
-                message: "Ma'af, jumlah sdsds.",
-              });
-        }
+      
       }
 
     }

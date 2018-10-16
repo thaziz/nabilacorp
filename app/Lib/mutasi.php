@@ -99,7 +99,7 @@ class mutasi{
 public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_reff){
     return DB::transaction(function () use ($item,$permintaan,$comp,$position,$flag,$sm_reff) {   
           $totalHpp=0;
-          
+
           $updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);                                
                         $qty=$updateStock->first()->s_qty-$permintaan;             
                         $updateStock->update([
@@ -153,7 +153,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
             }
 		 	$getBarang=d_stock_mutation::where('sm_qty_sisa','>',0)->where('sm_item',$item)->where('sm_comp',$comp)
 		 			   ->where('sm_position',$position)->get();		 	
-
+            
             /*$totalPermintaan = 35;*/
             $newMutasi=[];
             $updateMutasi=[];

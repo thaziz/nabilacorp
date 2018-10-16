@@ -40,8 +40,7 @@ class mutasiItemController extends Controller
     
    
     public function mutasiItemIndex()
-    { 
-      
+    {       
       $mutasiItem=view('POS::mutasiItem/mutasi_item');      
       $form=view('POS::mutasiItem/form-mutasi');      
       return view('POS::mutasiItem/mutasi',compact('mutasiItem','form'));

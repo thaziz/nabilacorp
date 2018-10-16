@@ -65,8 +65,7 @@ class d_mutasi_item extends Model
     }
 
      static function store($request){
-         return DB::transaction(function () use ($request) {               
-          
+         return DB::transaction(function () use ($request) {                         
     $mi_id=d_mutasi_item::max('mi_id')+1;
 
 
@@ -102,15 +101,19 @@ class d_mutasi_item extends Model
 
       $jumlah=count($request->mm_item);      
     for ($i=0; $i <$jumlah ; $i++) { 
+        $mm_comp=$request->mm_comp[$i];
+        $mm_position=$request->mm_position[$i];
 
-        if(mutasi::mutasiStok($request->mm_item[$i],format::format($request->mm_qty[$i]),$comp=1,$position=1,$flag='',$mi_id,$flagTujuan='Mutasi Item',$idMutasiTujuan='')){
+        if(mutasi::mutasiStok($request->mm_item[$i],format::format($request->mm_qty[$i]),$mm_comp,$mm_position,$flag='',$mi_id,$flagTujuan='Mutasi Item',$idMutasiTujuan='')){
+
             $mm_detailid=d_mutationitem_material::where('mm_mutationitem',$mi_id)
                                ->max('mm_detailid')+1;     
             $mm_qty= format::format($request->mm_qty[$i]);                           
             d_mutationitem_material::create([
                 'mm_mutationitem'=>$mi_id,
                 'mm_detailid'=>$mm_detailid,
-                'mm_comp'=>Session::get('user_comp'),
+                'mm_comp'=>$mm_comp,
+                'mm_position'=>$mm_position,
                 'mm_item'=>$request->mm_item[$i],
                 'mm_qty'=>$mm_qty              
             ]);
@@ -126,7 +129,9 @@ class d_mutasi_item extends Model
 
     
     $jumlah=count($request->mp_item);
-    for ($s=0; $s <$jumlah ; $s++) {            
+    for ($s=0; $s <$jumlah ; $s++) {     
+        $mp_comp=$request->mp_comp[$s];
+        $mp_position=$request->mp_position[$s];       
         $mp_hpp= format::format($request->mp_hpp[$s]);       
         $mp_detailid=d_mutationitem_product::where('mp_mutationitem',$mi_id)
                                      ->max('mp_detailid')+1;     
@@ -134,12 +139,13 @@ class d_mutasi_item extends Model
             d_mutationitem_product::create([
                     'mp_mutationitem'=>$mi_id,
                     'mp_detailid'=>$mp_detailid,
-                    'mp_comp'=>Session::get('user_comp'),
+                    'mp_comp'=>$mm_comp,
+                    'mp_position'=>$mm_position,
                     'mp_item'=>$request->mp_item[$s],
                     'mp_qty'=>$mp_qty,
                     'mp_hpp'=>$mp_hpp,
               ]);
-          mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,1,1,'Mutasi Item','',$mi_id,'','',$mp_hpp);
+          mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,$mp_comp,$mp_position,'Mutasi Item',15,$mi_id,'','',$mp_hpp);
         }
 
           $data=['status'=>'sukses','data'=>'sukses'];
@@ -164,8 +170,12 @@ class d_mutasi_item extends Model
                 if(count($hapus_material_dt->first())!=0){
                   $permintaan=$hapus_material_dt->first()->mm_qty;
 
-                  if($permintaan>0){                                        
-                        if(mutasi::updateMutasi($hapusItem,-$permintaan,$comp=1,$position=1,$flag='',$id)){
+                  if($permintaan>0){                         
+
+                         $mm_comp=$request->mm_comp[$i];
+                         $mm_position=$request->mm_position[$i];
+
+                        if(mutasi::updateMutasi($hapusItem,-$permintaan,$mm_comp,$mm_position,$flag='',$id)){
                           $hapus_material_dt->delete();
                         }
                     }

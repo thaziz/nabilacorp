@@ -13,7 +13,7 @@ class d_mutationitem_product extends Model
     const CREATED_AT = 'mp_create';
     const UPDATED_AT = 'mp_update';
 
-    protected $fillable = ['mp_mutationitem','mp_detailid','mp_comp','mp_item','mp_qty','mp_hpp'];
+    protected $fillable = ['mp_mutationitem','mp_detailid','mp_comp','mp_position','mp_item','mp_qty','mp_hpp'];
 
     static function mutasiItemDt($id){
     	
