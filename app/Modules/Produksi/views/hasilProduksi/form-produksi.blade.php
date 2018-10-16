@@ -59,8 +59,8 @@
                   <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
                   <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
 
-                  <input type="" class="fComp form-control input-sm reset-seach" name="" id="fComp">
-                  <input type="" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
+                  <input type="hidden" class="fComp form-control input-sm reset-seach" name="" id="fComp">
+                  <input type="hidden" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
               </div>
           </div>      
           <div class="col-md-3">
@@ -254,8 +254,8 @@ ctrl = 17;
           iSalesDetail+='<tr class="detail'+i_id.val()+'">';
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="prdt_item[]" value='+i_id.val()+'>';
 
-          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
-          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="hidden" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="hidden" name="position[]">';
 
           iSalesDetail+='<input style="width:100%" type="hidden" name="prdt_productresult[]" value="">';
           iSalesDetail+='<input style="width:100%" type="hidden" name="prdt_detailid[]" value="">';
