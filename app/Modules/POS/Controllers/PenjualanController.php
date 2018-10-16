@@ -100,13 +100,14 @@ class PenjualanController extends Controller
     
     public function posToko()
     { 
+      $printPl=view('Produksi::sam');
       $flag='Toko';
       $paymentmethod=m_paymentmethod::pm();       
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
       $machine=m_machine::showMachine($flag);      
       $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine'));      
       $data['listtoko']=view('POS::POSpenjualanToko/listtoko');   
-      return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm'));
+      return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm','printPl'));
     }
 
     function create(Request $request){

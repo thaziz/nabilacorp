@@ -177,7 +177,7 @@ $(document).ready(function(){
 
 
        $("#mp_searchitem").autocomplete({
-        source: baseUrl+'/seach-item-Produksi',
+        source: baseUrl+'/seach-item-mutasi',
         minLength: 1,
         dataType: 'json',
         select: function(event, ui) 
@@ -481,13 +481,13 @@ ctrl = 17;
           iSalesDetail+='<input style="width:100%" type="hidden" name="mp_detailid[]" value="">';
 
 
-          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="mp_comp[]">';
-          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="mp_position[]">';
+          iSalesDetail+='<input value="'+$('#mp_fComp').val()+'" style="width:100%" type="" name="mp_comp[]">';
+          iSalesDetail+='<input value="'+$('#mp_fPosition').val()+'" style="width:100%" type="" name="mp_position[]">';
 
 
           iSalesDetail+='<div style="padding-top:6px">'+mp_i_code.val()+' - '+mp_itemName.val()+'</div></td>';
 
-          iSalesDetail+='<td width="4%"><input class="stock stock'+mp_i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
+          iSalesDetail+='<td width="4%"><input class="stock stock'+mp_i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#mp_stock').val()+' readonly></td>';
 
           iSalesDetail+='<td width="4%" style="display:none"><input class="jumlahAwal'+mp_i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwalHasil[]" value="0"></td>';
 
@@ -650,6 +650,15 @@ $('#fQty').keyup(function(e) {
     }    
   })
 
+$('#mp_fQty').keyup(function(e) {    
+
+    if($('#mp_cQty').val()==='1' &&  e.which != 13){      
+        $('#mp_cQty').val('');
+        $('#mp_fQty').val($('#mp_fQty').val().substring(1));
+    }    
+  })
+
+
 
 
 
@@ -759,6 +768,12 @@ $('#tanggal2').datepicker({
 
 
   $('#searchitem').click(function(){    
+    $('.reset-seach').val('');      
+    
+});
+
+
+$('#mp_searchitem').click(function(){    
     $('.reset-seach').val('');      
     
 });

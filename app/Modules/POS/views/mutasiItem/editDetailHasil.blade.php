@@ -15,7 +15,7 @@
           <td><input onblur="validationFormHasil();" onkeyup="hapusHasilH(event,'{{$detail->i_id}}');validationFormHasil()" class="jumlah fQty{{$detail->i_id}}" style="width:100%;text-align:right;border:none" name="mp_qty[]" value="{{number_format($detail->mp_qty,0,',','.')}}"></td>
 
           <td><div style="padding-top:6px">{{$detail->s_name}}</div></td>
-          <td><input class="harga{{$detail->i_id}} alignAngka" style="width:100%;border:none" name="mp_hpp[]" value="{{number_format($detail->sd_price,0,',','.')}}" ></td>
+          <td><input class="harga{{$detail->i_id}} alignAngka" style="width:100%;border:none" name="mp_hpp[]" value="{{number_format($detail->mp_hpp,0,',','.')}}" ></td>
 
    
 

@@ -1,5 +1,6 @@
 @extends('main')
 @section('content')
+{!!$printPl!!}
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -654,13 +655,53 @@ function simpanPos(status=''){
                         timeout: 1000,
                         message: 'Data berhasil disimpan.'});
 
-                        }
+                        
                         $('#s_date').val('{{date("d-m-Y")}}');                        
                         $('#s_created_by').val('{{Auth::user()->m_name}}');
                         $('#s_date').focus();
                         if(response.s_status=='final'){
-                        window.open(baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,'_blank');               
-                    }else if(response.status=='gagal'){
+                        
+
+
+
+
+
+
+
+ qz.findPrinter("POS-80");
+        window['qzDoneFinding'] = function() {
+            var p = document.getElementById('printer');
+            var printer = qz.getPrinter();
+            window['qzDoneFinding'] = null;
+        };
+
+alert('d');
+ $.ajax({
+    url : baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,
+    type: 'get',
+    success:function (response){
+        
+                qz.appendHTML(
+            '<html>' +response +'</html>'
+    );
+    qz.printHTML();
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+                  }
+                    else if(response.status=='gagal'){
                       $('.btn-disabled').removeAttr('disabled');
                       $('#kembalian').attr('disabled','disabled');
                       $('#totalBayar').attr('disabled','disabled');
