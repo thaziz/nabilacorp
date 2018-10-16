@@ -324,8 +324,8 @@ function table(){
           /*iSalesDetail+='<tr>';        */
           iSalesDetail+='<tr class="detail'+i_id.val()+'">';
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="sd_item[]" value='+i_id.val()+'>'; 
-          iSalesDetail+='<input style="width:100%" type="" name="sd_sales[]" value="">';
-          iSalesDetail+='<input style="width:100%" type="" name="sd_detailid[]" value="">';          
+          iSalesDetail+='<input style="width:100%" type="hidden" name="sd_sales[]" value="">';
+          iSalesDetail+='<input style="width:100%" type="hidden" name="sd_detailid[]" value="">';          
           iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="hidden" name="comp[]">';
           iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="hidden" name="position[]">';
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';

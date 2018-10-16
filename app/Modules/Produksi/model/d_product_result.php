@@ -135,11 +135,21 @@ class d_product_result extends Model
                                 'prdt_comp'=>Session::get('user_comp'),
                                 'prdt_item'=>$request->prdt_item[$i],
                                 'prdt_qty'=>$prdt_qty,  
+                                'prdt_qty_sisa'=>$prdt_qty,
                                 'prdt_hpp'=>$prdt_hpp,
                                 'prdt_comp'=>$comp,
                                 'prdt_position'=>$position,
                                  ]);
-                mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp);
+                $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp);
+                if($simpanMutasi['true']){
+
+                }else{
+
+                  DB::rollBack();
+                  $data=['status'=>'gagal','data'=>'gagal'];
+                  return json_encode($data);
+
+                }
              }
 
           $data=['status'=>'sukses','data'=>'sukses'];
@@ -175,10 +185,31 @@ class d_product_result extends Model
                 if(count($hapus_product_dt->first())!=0){
                   $permintaan=$hapus_product_dt->first()->prdt_qty;
 
-                  if($permintaan>0){                                        
-                        if(mutasi::hapusMutasi($hapusItem,$permintaan,$comp=1,$position=1,$flag='Hasil Produksi',$sm_reff=$id)){
-                          $hapus_product_dt->delete();
-                        }
+                  if($permintaan>0){      
+
+              $comp=$request->comp[$h];
+              $position=$request->position[$h];                                                 
+        $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$comp,$position,$flag='Hasil Produksi',$sm_reff=$id);
+
+              if($simpanMutasi['true']){
+                    $hapus_product_dt->delete();
+              }else{
+
+                  DB::rollBack();
+                  $data=['status'=>'gagal','data'=>'gagal'];
+                  return json_encode($data);
+
+              }
+
+
+
+
+
+
+
+
+
+
                     }
                 }
           }
@@ -200,17 +231,29 @@ class d_product_result extends Model
               $prdt_hpp= format::format($request->prdt_hpp[$i]);
               $comp=$request->comp[$i];
               $position=$request->position[$i]; 
-              if(mutasi::perbaruimutasi($request->prdt_item[$i],$permintaan,$comp,$position,$flag='Hasil Produksi',$idFlag=1,$sm_reff=$id,$flagTujuan='',$idMutasiTujuan='',$prdt_hpp)){
+              $simpanMutasi=mutasi::perbaruimutasi($request->prdt_item[$i],$permintaan,$comp,$position,$flag='Hasil Produksi',$idFlag=3,$sm_reff=$id,$flagTujuan='',$idMutasiTujuan='',$prdt_hpp);
               
-              $prdt_qty= format::format($request->prdt_qty[$i]);
 
-              $productresult_dt=d_productresult_dt::where('prdt_productresult',$id)->where('prdt_detailid',$request->prdt_detailid[$i]);
+              if($simpanMutasi['true']){
+                    
+                  $prdt_qty= format::format($request->prdt_qty[$i]);
+
+                  $productresult_dt=d_productresult_dt::where('prdt_productresult',$id)->where('prdt_detailid',$request->prdt_detailid[$i]);
               
-               $productresult_dt->update([                                
-                                'prdt_qty'=>$prdt_qty,  
-                                'prdt_hpp'=>$prdt_hpp
-                                 ]);
+                   $productresult_dt->update([                                
+                                    'prdt_qty'=>$prdt_qty,  
+                                    'prdt_qty_sisa'=>$prdt_qty,
+                                    'prdt_hpp'=>$prdt_hpp
+                                     ]);
+
+              }else{
+                  DB::rollBack();
+                  $data=['status'=>'gagal','data'=>'gagal'];
+                  return json_encode($data);
               }
+
+              
+              
 
              }else{
           
@@ -228,10 +271,27 @@ class d_product_result extends Model
                                 'prdt_position'=>$position,
                                 'prdt_item'=>$request->prdt_item[$i],
                                 'prdt_qty'=>$prdt_qty,  
+                                'prdt_qty_sisa'=>$prdt_qty,
                                 'prdt_hpp'=>$prdt_hpp
                                  ]);
 
-                 mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi','3',$id,'','',$prdt_hpp);
+$simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi','3',$id,'','',$prdt_hpp);
+
+              if($simpanMutasi['true']){
+                    
+
+              }else{
+                  DB::rollBack();
+                  $data=['status'=>'gagal','data'=>'gagal'];
+                  return json_encode($data);
+              }
+
+
+
+
+
+
+
          }
 
 
@@ -265,10 +325,29 @@ class d_product_result extends Model
                 if(count($hapus->first())!=0){
                   $permintaan=$hapus->first()->prdt_qty;
 
-                  if($permintaan>0){                                        
-                        if(mutasi::hapusMutasi($hapusItem,$permintaan,$comp=1,$position=1,$flag='Hasil Produksi',$sm_reff=$id)){
-                          $hapus->delete();
-                        }
+                  if($permintaan>0){   
+
+
+
+              $comp=$request->comp[$h];
+              $position=$request->position[$h];                                 
+
+      $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$comp,$position,$flag='Hasil Produksi',$sm_reff=$id);
+
+
+              if($simpanMutasi['true']){
+                $hapus->delete();
+
+              }else{
+                  DB::rollBack();
+                  $data=['status'=>'gagal','data'=>'gagal'];
+                  return json_encode($data);
+              }
+
+
+
+
+
                     }
                 }
           }

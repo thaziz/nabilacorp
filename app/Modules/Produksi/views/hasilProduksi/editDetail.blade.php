@@ -7,7 +7,7 @@
           <input value="{{$detail->prdt_position}}" style="width:100%" type="" name="position[]">
           <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
 
-          <td><input class="stock stock{{$detail->i_id}}" style="width:100%;text-align:right;border:none" value="{{number_format($detail->s_qty,0,',','.')}}" readonly=""></td>
+          <td><input class="stock stock{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" value="{{number_format($detail->s_qty,0,',','.')}}" readonly=""></td>
 
             <td style="display:none"><input class="jumlahAwal{{$detail->i_id}}" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="{{number_format($detail->prdt_qty,'0',',','.')}}"></td>
 

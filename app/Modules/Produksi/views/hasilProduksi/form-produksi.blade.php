@@ -261,7 +261,7 @@ ctrl = 17;
           iSalesDetail+='<input style="width:100%" type="hidden" name="prdt_detailid[]" value="">';
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
-          iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
+          iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+' form-control" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
 
           iSalesDetail+='<td width="4%" style="display:none"><input class="jumlahAwal'+i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="0"></td>';
 
@@ -269,7 +269,7 @@ ctrl = 17;
 
           iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';
           
-          iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka" style="width:100%;border:none" name="prdt_hpp[]" value="'+i_price.val()+'"" ></td>';
+          iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka form-control" style="width:100%;border:none" name="prdt_hpp[]" value="'+i_price.val()+'"" ></td>';
                  
 
         /*  iSalesDetail+='<td width="10%""><input style="width:100%;border:none" name="sd_total_disc[]" class="totalPerItemDisc alignAngka totalPerItemDisc'+i_id.val()+'" readonly></td>';  */
@@ -484,6 +484,7 @@ function btnSimpan(){
 function simpan(){
   $('.btn-disabled').attr('disabled','disabled');
   var formPos=$('#kirimData').serialize();
+  
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/create',
           type    : 'GET', 
