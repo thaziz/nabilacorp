@@ -114,7 +114,7 @@ class d_product_result extends Model
 
       $pr_code = "PR-".date('ym')."-".$kd;
 /*dd($request->all());*/
-  dd(Session::get('user_comp'));
+  
               d_product_result::create([
                       'pr_id'=>$pr_id,
                       'pr_comp'=>Session::get('user_comp'),
