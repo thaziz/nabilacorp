@@ -264,7 +264,8 @@ class m_itemm extends Model
         $cabang=Session::get('user_comp');                
 
         $position=DB::table('d_gudangcabang')
-                      ->where('gc_gudang',DB::raw("'GUDANG PRODUKSI'"))
+                      ->where('gc_gudang',DB::raw("'GUDANG PENJUALAN'"))//sementara              
+                      /*->where('gc_gudang',DB::raw("'GUDANG PRODUKSI'"))*/
                       ->where('gc_comp',$cabang)
                       ->select('gc_id')->first();   
         $comp=$position->gc_id;

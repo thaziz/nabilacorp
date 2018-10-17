@@ -20,12 +20,16 @@ class pengirimanproduksiController extends Controller {
 						->get();
 
 		$tujuan = DB::table('d_gudangcabang')
-							->get();
+				  ->join('m_comp','gc_comp','=','c_id')
+				  ->where('gc_gudang','GUDANG PENJUALAN')
+				  ->get();
+
 
 		return view('Inventory::pengirimanproduksi', compact('data', 'tujuan'));
 	}
 
 	public function simpan(Request $request){
+		dd($request->all());
 		DB::beginTransaction();
 		try {
 

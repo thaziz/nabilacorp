@@ -675,7 +675,7 @@ function simpanPos(status=''){
             window['qzDoneFinding'] = null;
         };
 
-alert('d');
+
  $.ajax({
     url : baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,
     type: 'get',

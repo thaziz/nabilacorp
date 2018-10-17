@@ -733,7 +733,43 @@ function perbaruiData(){
                         $('.draft').css('display','');
 
                          if(response.s_status=='final'){
-                       var childwindow= window.open(baseUrl+'/penjualan/pos-pesanan/printNota/'+response.s_id,'_blank');      
+                       
+
+
+
+ qz.findPrinter("POS-80");
+
+        // Automatically gets called when "qz.findPrinter()" is finished.
+        window['qzDoneFinding'] = function() {
+            var p = document.getElementById('printer');
+            var printer = qz.getPrinter();
+
+            // Alert the printer name to user      
+
+            // Remove reference to this function
+            window['qzDoneFinding'] = null;
+        };
+
+
+ $.ajax({
+    url : baseUrl+'/penjualan/pos-pesanan/printNota/'+response.s_id,
+    type: 'get',
+    success:function (response){
+        
+                qz.appendHTML(
+            '<html>' +response +'</html>'
+    );
+                   
+
+    qz.printHTML();
+        }
+    })
+
+
+
+
+
+
                         }
                                     resetFrom();  
 

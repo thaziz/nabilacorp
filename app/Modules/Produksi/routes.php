@@ -1,10 +1,7 @@
 <?php
 
 Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>['web','auth']], function () {
-	/*Produksi*/
-/*	Route::get('/produksi/rencanaproduksi/produksi', function () {
-	return view('auth.login');
-})->name('auth');*/
+	
 
 		Route::get('/produksi/rencanaproduksi/produksi', 'produksiController@produksi')->middleware('auth');
 		Route::get('/produksi/spk/spk', 'ProduksiController@spk')->middleware('auth');
