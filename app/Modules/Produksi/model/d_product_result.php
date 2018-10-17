@@ -113,7 +113,7 @@ class d_product_result extends Model
       }
 
       $pr_code = "PR-".date('ym')."-".$kd;
-dd($request->all());
+
   
               d_product_result::create([
                       'pr_id'=>$pr_id,
@@ -140,7 +140,7 @@ dd($request->all());
                                 'prdt_comp'=>$comp,
                                 'prdt_position'=>$position,
                                  ]);
-               dd($request->all());
+               
                 $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp);
                 if($simpanMutasi['true']){
 
