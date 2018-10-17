@@ -211,7 +211,7 @@ class d_sales extends Model
           }
           $status=$updateSales->first()->s_status;
           $updateSales->update([
-                    's_machine'=>$request->s_machine,
+                    /*'s_machine'=>$request->s_machine,*/
                     's_create_by'=>Auth::user()->m_id,
                     's_customer'=>$request->s_customer,
                     's_gross' =>$s_gross,
