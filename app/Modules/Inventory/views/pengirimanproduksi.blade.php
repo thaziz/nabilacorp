@@ -65,7 +65,7 @@
                                                 <select class="form-control input-sm select2" name="tujuan">
                                                   <option value=""> - Pilih Tujuan - </option>
                                                   @foreach ($tujuan as $key => $value)
-                                                    <option value="{{$value->gc_id}}">{{$value->c_name}} - {{$value->gc_gudang}}</option>
+                                                    <option value="{{$value->gc_id}}">{{$value->gc_gudang}}</option>
                                                   @endforeach
                                                 </select>
                                                 <span class="input-group-btn">

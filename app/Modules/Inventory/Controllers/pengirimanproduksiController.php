@@ -20,16 +20,12 @@ class pengirimanproduksiController extends Controller {
 						->get();
 
 		$tujuan = DB::table('d_gudangcabang')
-				  ->join('m_comp','gc_comp','=','c_id')
-				  ->where('gc_gudang','GUDANG PENJUALAN')
-				  ->get();
-
+							->get();
 
 		return view('Inventory::pengirimanproduksi', compact('data', 'tujuan'));
 	}
 
 	public function simpan(Request $request){
-		dd($request->all());
 		DB::beginTransaction();
 		try {
 
@@ -74,7 +70,8 @@ class pengirimanproduksiController extends Controller {
 			DB::table('d_pengiriman')
 				->insert([
 					'p_id' => $id + 1,
-					'p_pr' => $finalkode,
+					'p_pr' => $produksi[0]->pr_code,
+					'p_code' => $finalkode,
 					'p_tanggal_produksi' => $produksi[0]->pr_date,
 					'p_tanggal_transfer' => Carbon::parse($request->p_tanggal_transfer)->format('Y-m-d'),
 					'p_keterangan' => $request->keterangan,
@@ -95,6 +92,9 @@ class pengirimanproduksiController extends Controller {
 							'pd_id' => $iddt + 1,
 							'pd_pengiriman' => $finalkode,
 							'pd_qty' => $request->kirim[$i],
+							'pd_comp' => $produksi[0]->pr_comp,
+							'pd_position' => $request->tujuan,
+							'pd_item' => $request->item[$i],
 							'pd_insert' => Carbon::now('Asia/Jakarta')
 						]);
 
@@ -120,7 +120,7 @@ class pengirimanproduksiController extends Controller {
 												->where('prdt_item', $request->item[$i])
 												->update([
 													'prdt_kirim' => $kurang
-												]);											
+												]);
 						}
 				}
 			}
