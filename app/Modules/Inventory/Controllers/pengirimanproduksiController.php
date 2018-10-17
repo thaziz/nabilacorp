@@ -148,4 +148,11 @@ class pengirimanproduksiController extends Controller {
 		return response()->json($data);
 	}
 
+	public function indexfix(){
+		$data = DB::table('d_pengiriman')
+						->get();
+
+		return view('Inventory::index', compact('data'));
+	}
+
 }
