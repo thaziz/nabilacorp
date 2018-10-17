@@ -32,95 +32,40 @@
                         </ul>
                          <div id="generalTabContent" class="tab-content responsive">
 
-                                    <div id="alert-tab" class="tab-pane fade in active">
-                                      <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                          <form id="formdata">
-                                            <input type="hidden" name="nota">
-                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                              <label class="tebal">No Nota :</label>
-                                            </div>
-                                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                              <div class="input-group">
-                                                <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
-                                                  <option value=""> - Pilih Nomor Nota</option>
-                                                  @foreach ($data as $key => $value)
-                                                    <option value="{{$value->pr_id}}">{{$value->pr_code}}</option>
-                                                  @endforeach
-                                                </select>
-                                                <span class="input-group-btn">
-                                                  <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
-                                                </span>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                              <label class="tebal">Tujuan :</label>
-                                            </div>
-                                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                              <div class="input-group">
-                                                <select class="form-control input-sm select2" name="tujuan">
-                                                  <option value=""> - Pilih Tujuan - </option>
-                                                  @foreach ($tujuan as $key => $value)
-                                                    <option value="{{$value->gc_id}}">{{$value->gc_gudang}}</option>
-                                                  @endforeach
-                                                </select>
-                                                <span class="input-group-btn">
-                                                  <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
-                                                </span>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                              <label class="tebal">Keterangan :</label>
-                                            </div>
-                                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                              <div class="input-group">
-                                                <textarea name="keterangan" rows="4" cols="50"></textarea>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
-                                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                              <label class="tebal">Tanggal Transfer :</label>
-                                            </div>
-                                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                              <div class="input-group">
-                                                <input id="tanggaltransfer" class="form-control date input-sm" type="text" name="p_tanggal_transfer">
-                                              </div>
-                                            </div>
-                                          </div>
-
+                           <button type="button" onclick="tambah()" class="btn btn-primary pull-right" name="button"> <i class="fa fa-plus"></i> Tambah</button>
+                            <br>
+                            <br>
+                            <br>
                                           <div class="table-responsive">
                                             <table class="table tabelan table-hover table-bordered" id="data2">
                                               <thead>
                                                 <tr>
                                                   <th width="5%">No</th>
-                                                  <th>No Product Result</th>
-                                                  <th>Nama Barang</th>
-                                                  <th>Qty</th>
-                                                  <th>Dikirim</th>
-                                                  <th>Sisa</th>
-                                                  <th width="5%">Status</th>
-                                                  <th width="10%">Kirim</th>
+                                                  <th>No Pengiriman</th>
+                                                  <th>Tanggal Transfer</th>
+                                                  <th>Keterangan</th>
+                                                  <th width="15%">Aksi</th>
                                                 </tr>
                                               </thead>
-                                              <tbody id="showdata">
-
+                                              <tbody>
+                                                @foreach ($data as $key => $value)
+                                                  <tr>
+                                                    <td>{{$key + 1}}</td>
+                                                    <td>{{$value->p_code}}</td>
+                                                    <td>{{Carbon\Carbon::parse($value->p_tanggal_transfer)->format('d-m-Y')}}</td>
+                                                    <td>{{$value->p_keterangan}}</td>
+                                                    <td>
+                                                      <button type="button" class="btn btn-info btn-sm" title="Detail" name="button"> <i class="fa fa-folder"></i> </button>
+                                                      <button type="button" class="btn btn-warning btn-sm" title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
+                                                      <button type="button" class="btn btn-danger btn-sm" title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
+                                                    </td>
+                                                  </tr>
+                                                @endforeach
                                               </tbody>
                                             </table>
                                           </form>
                                           </div>
-                                          <br>
-                                          <br>
-                                          <a href="{{url('/inventory/pengirimanproduksi/pengirimanproduksi')}}" class="btn btn-default pull-right">Cancel</a>&nbsp;
-                                          <button type="button" class="btn btn-primary pull-right" style="margin-right:10px;" onclick="simpan()" name="button">Simpan</button>
+
                                         </div>
 
                                       </div>
@@ -274,9 +219,6 @@
                     title: 'Berhasil!',
                     text: 'Berhasil Disimpan!'
                   });
-              setTimeout(function () {
-                window.location.href = baseUrl + '/inventory/pengirimanproduksi/tambah';
-              }, 500);
             }
           }
         });
@@ -289,6 +231,10 @@
                 return false;
 
              return true;
+          }
+
+          function tambah(){
+            window.location.href = baseUrl + '/inventory/pengirimanproduksi/tambah';
           }
 
       </script>
