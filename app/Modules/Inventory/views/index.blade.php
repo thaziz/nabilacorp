@@ -278,5 +278,9 @@
               });
           }
 
+          function edit(id){
+            window.location.href = baseUrl + '/inventory/pengirimanproduksi/edit?id='+id;
+          }
+
       </script>
 @endsection
