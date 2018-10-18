@@ -55,13 +55,13 @@
                                                     <td>{{$value->p_code}}</td>
                                                     <td>{{Carbon\Carbon::parse($value->p_tanggal_transfer)->format('d-m-Y')}}</td>
                                                     <td>{{$value->p_keterangan}}</td>
-                                                    @if ($value->p_status_penerimaan == 'N')
+                                                    @if ($value->pd_status_diterima == 'N')
                                                       <td align="center"> <span class="label label-warning">Belum Diterima</span> </td>
                                                       <td align="center">
                                                         <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
                                                         <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
                                                       </td>
-                                                    @elseif ($value->p_status_penerimaan == 'Y')
+                                                    @elseif ($value->pd_status_diterima == 'Y')
                                                       <td align="center"> <span class="label label-success">Sudah Diterima</span> </td>
                                                       <td align="center">
                                                         <button type="button" onclick="detail({{$value->p_id}})" class="btn btn-info btn-sm" title="Detail" name="button"> <i class="fa fa-folder"></i> </button>

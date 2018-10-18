@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="col-md-8 col-sm-12 col-xs-12">
                                               <div class="input-group">
-                                                <textarea name="keterangan" rows="4" cols="50"></textarea>
+                                                <textarea name="keterangan" class="form-control" rows="4" cols="50"></textarea>
                                               </div>
                                             </div>
                                           </div>
@@ -300,7 +300,7 @@
                 return false;
 
              return true;
-          }
+          }          
 
       </script>
 @endsection

@@ -23,7 +23,7 @@ class pengirimanproduksiController extends Controller {
 		$tujuan = DB::table('d_gudangcabang')
 							->get();
 
-		return view('Inventory::pengirimanproduksi', compact('data', 'tujuan'));
+		return view('Inventory::pengiriman.pengirimanproduksi', compact('data', 'tujuan'));
 	}
 
 	public function simpan(Request $request){
@@ -89,6 +89,13 @@ class pengirimanproduksiController extends Controller {
 						}
 
 				if ($request->kirim[$i] != 0 || $request->kirim[$i] != null || $request->kirim[$i] != '') {
+					$item = DB::table('m_item')
+									->where('i_id', $request->item[$i])
+									->get();
+
+					$item[0]->i_hpp = str_replace('.','',$item[0]->i_hpp);
+					$item[0]->i_hpp = str_replace(',','',$item[0]->i_hpp);
+
 					DB::table('d_pengiriman_dt')
 						->insert([
 							'pd_id' => $iddt + 1,
@@ -97,6 +104,7 @@ class pengirimanproduksiController extends Controller {
 							'pd_comp' => $produksi[$i]->prdt_comp,
 							'pd_position' => $request->tujuan,
 							'pd_item' => $request->item[$i],
+							'pd_hpp' => $item[0]->i_hpp,
 							'pd_insert' => Carbon::now('Asia/Jakarta')
 						]);
 
@@ -152,9 +160,11 @@ class pengirimanproduksiController extends Controller {
 
 	public function indexfix(){
 		$data = DB::table('d_pengiriman')
+						->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+						->groupBy('p_id')
 						->get();
 
-		return view('Inventory::index', compact('data'));
+		return view('Inventory::pengiriman.index', compact('data'));
 	}
 
 	public function hapus(Request $request){
@@ -229,7 +239,7 @@ class pengirimanproduksiController extends Controller {
 		$tujuan = DB::table('d_gudangcabang')
 							->get();
 
-		return view('Inventory::edit', compact('data', 'tujuan', 'pengiriman', 'produkhasil', 'id'));
+		return view('Inventory::pengiriman.edit', compact('data', 'tujuan', 'pengiriman', 'produkhasil', 'id'));
 	}
 
 	public function update(Request $request){
