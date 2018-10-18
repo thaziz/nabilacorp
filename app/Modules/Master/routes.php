@@ -3,6 +3,8 @@
 Route::group(['namespace' => 'App\Modules\Master\Controllers', 'middleware'=>['web','auth']], function () {
 
 Route::get('/master/item/index', 'itemController@index');
+Route::get('/master/item/data-barang', 'itemController@dataBarang');
+
 
 Route::get('/master/item/tambah', 'itemController@tambah');
 

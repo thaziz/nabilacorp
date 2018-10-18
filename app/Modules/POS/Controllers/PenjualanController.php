@@ -9,6 +9,7 @@ use Carbon\carbon;
 use DB;
 
 use App\m_itemm;
+use App\d_stock;
 
 use App\Http\Controllers\Controller;
 
@@ -52,6 +53,14 @@ class PenjualanController extends Controller
       $printer -> close();
 
     }*/
+    
+    public function indexStok(){
+        return view('POS::penjualanStock/index',compact('d'));
+    }
+    public function dataStok(){
+      $stok=d_stock::dataStok();
+      return $stok;      
+    }
     public function s(){
       $d='data';
       return view('POS::POSpenjualanToko/s',compact('d'));

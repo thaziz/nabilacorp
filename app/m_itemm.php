@@ -8,6 +8,8 @@ use DB;
 
 use Response;
 
+use Datatables;
+
 use Session;
 
 class m_itemm extends Model
@@ -21,6 +23,19 @@ class m_itemm extends Model
     //public $timestamps = false;
     const CREATED_AT = 'i_insert';
     const UPDATED_AT = 'i_update';
+    public static function dataBarang(){
+        $data = DB::table('m_item')
+              ->join('m_group', 'g_id', '=', 'i_group')
+              ->join('m_satuan', 's_id', '=', 'i_satuan')
+              ->where('i_active', 'Y')
+              ->get();
+         return Datatables::of($data)  ->editColumn('action', function ($data) {                            
+                                return '<div class="">
+                                        <a href="#" class="btn btn-warning btn-xs" title="Edit" onclick="edit('.$data->i_id.')"><i class="glyphicon glyphicon-pencil"></i></a>
+                                        <a href="#" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus('.$data->i_id.')"><i class="glyphicon glyphicon-trash"></i></a>
+                                      </div>';
+                        })->make(true);        
+    }
 
      public static function seachItem($item) {      
 //cari barang jual

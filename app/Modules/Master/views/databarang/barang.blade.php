@@ -51,31 +51,21 @@
 
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="table-responsive">
-                          <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0" id="data">
+                          <table  class="table table-stripped tabelan table-bordered table-hover dt-responsive data-table tableListToko"  width="100%" cellspacing="0" id="dataBarang">
                             <thead>
                                 <tr>
-                                  <th class="wd-15p" width="5%">Kode Barang</th>
-                                  <th class="wd-15p">Nama Barang</th>
+                                <th class="wd-15p" width="3%">No.</th>
+                                  <th class="wd-15p" width="5%">Kode</th>
+                                  <th class="wd-15p" width="24%">Nama Barang</th>
                                   <th class="wd-15p" width="5%">Satuan</th>
-                                  <th class="wd-15p">Kelompok Barang</th>
-                                  <th class="wd-15p" width="10%">Aksi</th>
+                                  <th class="wd-15p" width="8%">Harga HPP</th>
+                                  <th class="wd-15p" width="8%">Harga Jual</th>
+                                  <th class="wd-15p" width="10%">Kelompok </th>
+                                  <th class="wd-15p" width="7%">Aksi</th>
                                 </tr>
                               </thead>
                               <tbody>
-                                @foreach ($data as $key => $value)
-                                  <tr>
-                                    <td>{{$value->i_code}}</td>
-                                    <td>{{$value->i_name}}</td>
-                                    <td>{{$value->s_name}}</td>
-                                    <td>{{$value->g_name}}</td>
-                                    <td>
-                                      <div class="">
-                                        <a href="#" class="btn btn-warning btn-sm" title="Edit" onclick="edit({{$value->i_id}})"><i class="glyphicon glyphicon-pencil"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm" title="Hapus" onclick="hapus({{$value->i_id}})"><i class="glyphicon glyphicon-trash"></i></a>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                @endforeach
+                                
                               </tbody>
 
                           </table>
@@ -112,81 +102,55 @@
 @endsection
 @section("extra_scripts")
     <script type="text/javascript">
-     $(document).ready(function() {
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
 
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
+var tablex;
+setTimeout(function () {
+        table();
 
+    tablex.on('draw.dt', function () {
+            var info = tablex.page.info();
+            tablex.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1 + info.start;
         });
-    $('#data2').dataTable({
-          "responsive":true,
+    });
 
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
+      }, 1500);
 
-        });
-    $('#data3').dataTable({
-          "responsive":true,
+function table(){
+    $('#dataBarang').dataTable().fnDestroy();
+    tablex = $("#dataBarang").DataTable({        
+         
+        "language": dataTableLanguage,
+    processing: true,
+            serverSide: true,
+            ajax: {
+              "url": "{{ url("master/item/data-barang") }}",
+              "type": "get",              
+              },
+            columns: [
+            {data: 'i_code', name: 'i_code'}, 
+            {data: 'i_code', name: 'i_code'}, 
+            {data: 'i_name', name: 'i_name'},
+            {data: 's_name', name: 's_name'},            
+            {data: 'i_hpp', name: 'i_hpp'},      
+            {data: 'i_price', name: 'i_price'},      
+            {data: 'g_name', name: 'g_name'},            
+            {data: 'action', name: 'action'},            
+           
+            ],             
+            responsive: false,
 
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
+            "pageLength": 10,
+            "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+             
+           
+    });
+  }     
+                                  
+                                      
+                                    
+                                
 
-        });
-});
-      $('.datepicker').datepicker({
-        format: "mm",
-        viewMode: "months",
-        minViewMode: "months"
-      });
-      $('.datepicker2').datepicker({
-        format:"dd/mm/yyyy"
-      });
 
 
     function edit(id){

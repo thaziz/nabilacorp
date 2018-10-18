@@ -1,10 +1,10 @@
  
-    <table class="border-none" width="155px">
+    <table class="border-none" width="200">
       <td>
-        <img src="{{ asset('/assets/logo.jpg') }}"  width="5px" height="5px">
+        <img src="{{ asset('/assets/logo1.png') }}"  width="40" height="40">
       </td>
         <td style="margin-left: 5px; font-size: 6.8px;font-family: consolas ">
-          Nabila Cake Bakery & Pastry<br>
+          Nabila Cake Bakery & Pastry <br>
           Jl. Gajah Mada No.22 Ponorogo<br>
           uuenaknya pake buuanget
       </td>
