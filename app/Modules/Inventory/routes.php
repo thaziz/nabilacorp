@@ -5,4 +5,5 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/pengirimanproduksi/tambah', 'pengirimanproduksiController@index');
 	Route::get('/inventory/pengirimanproduksi/getdata', 'pengirimanproduksiController@getdata');
 	Route::get('/inventory/pengirimanproduksi/simpan', 'pengirimanproduksiController@simpan');
+	Route::get('/inventory/pengirimanproduksi/hapus', 'pengirimanproduksiController@hapus');
 });

@@ -97,6 +97,17 @@
                                             </div>
                                           </div>
 
+                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <label class="tebal">Nota Pengiriman :</label>
+                                            </div>
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                              <div class="input-group">
+                                                <input id="notapengiriman" class="form-control date input-sm" disabled type="text" name="p_tanggal_transfer" placeholder="( Auto )">
+                                              </div>
+                                            </div>
+                                          </div>
+
                                           <div class="table-responsive">
                                             <table class="table tabelan table-hover table-bordered" id="data2">
                                               <thead>
@@ -242,7 +253,7 @@
                         '<td>'+result[i].prdt_kirim+'</td>'+
                         '<td>'+sisa+'</td>'+
                         '<td>'+status+'</td>'+
-                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+')" name="kirim[]"></td>'+
+                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
                         '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
                         '</tr>';
               }
@@ -253,11 +264,11 @@
           });
       }
 
-      function filter(id){
+      function filter(id, sisa){
         var kirim = $('#kirim'+id).val();
             if (kirim > data[id].prdt_qty) {
               swal("Info!", "Tidak boleh melebihi qty!");
-              $('#kirim'+id).val(0);
+              $('#kirim'+id).val(sisa);
               i = data.length + 1;
             }
       }
@@ -275,7 +286,7 @@
                     text: 'Berhasil Disimpan!'
                   });
               setTimeout(function () {
-                window.location.href = baseUrl + '/inventory/pengirimanproduksi/tambah';
+                window.location.href = baseUrl + '/inventory/pengirimanproduksi/pengirimanproduksi';
               }, 500);
             }
           }
