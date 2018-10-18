@@ -131,8 +131,7 @@ class d_product_result extends Model
               $position=$request->position[$i]; 
                d_productresult_dt::create([
                                 'prdt_productresult'=>$pr_id,
-                                'prdt_detailid'=>$detailid,
-                                'prdt_comp'=>Session::get('user_comp'),
+                                'prdt_detailid'=>$detailid,                                
                                 'prdt_item'=>$request->prdt_item[$i],
                                 'prdt_qty'=>$prdt_qty,  
                                 'prdt_qty_sisa'=>$prdt_qty,

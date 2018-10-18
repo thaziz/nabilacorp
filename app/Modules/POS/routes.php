@@ -108,5 +108,8 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 
 Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanController@penjualanmobile')->middleware('auth');
 
+Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
+Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
+
 });
 

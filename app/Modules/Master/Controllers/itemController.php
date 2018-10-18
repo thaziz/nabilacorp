@@ -5,6 +5,7 @@ namespace App\Modules\Master\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\m_customer;
+use App\m_itemm;
 use Carbon\carbon;
 use App\Http\Controllers\Controller;
 
@@ -45,14 +46,12 @@ class itemController extends Controller
 
     }*/
     public function index(){
-      $data = DB::table('m_item')
-              ->join('m_group', 'g_id', '=', 'i_group')
-              ->join('m_satuan', 's_id', '=', 'i_satuan')
-              ->where('i_active', 'Y')
-              ->get();
-
-      return view('Master::databarang/barang', compact('data'));
+      return view('Master::databarang/barang');
     }
+    public function dataBarang(){
+      return m_itemm::dataBarang();      
+    }
+
 
     public function tambah(){
       $kelompok = DB::table('m_group')
