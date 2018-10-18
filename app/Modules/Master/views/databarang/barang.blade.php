@@ -54,12 +54,14 @@
                           <table  class="table table-stripped tabelan table-bordered table-hover dt-responsive data-table tableListToko"  width="100%" cellspacing="0" id="dataBarang">
                             <thead>
                                 <tr>
-                                <th class="wd-15p" width="5%">No.</th>
-                                  <th class="wd-15p" width="5%">Kode Barang</th>
-                                  <th class="wd-15p">Nama Barang</th>
+                                <th class="wd-15p" width="3%">No.</th>
+                                  <th class="wd-15p" width="5%">Kode</th>
+                                  <th class="wd-15p" width="24%">Nama Barang</th>
                                   <th class="wd-15p" width="5%">Satuan</th>
-                                  <th class="wd-15p">Kelompok Barang</th>
-                                  <th class="wd-15p" width="10%">Aksi</th>
+                                  <th class="wd-15p" width="8%">Harga HPP</th>
+                                  <th class="wd-15p" width="8%">Harga Jual</th>
+                                  <th class="wd-15p" width="10%">Kelompok </th>
+                                  <th class="wd-15p" width="7%">Aksi</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -130,6 +132,8 @@ function table(){
             {data: 'i_code', name: 'i_code'}, 
             {data: 'i_name', name: 'i_name'},
             {data: 's_name', name: 's_name'},            
+            {data: 'i_hpp', name: 'i_hpp'},      
+            {data: 'i_price', name: 'i_price'},      
             {data: 'g_name', name: 'g_name'},            
             {data: 'action', name: 'action'},            
            
