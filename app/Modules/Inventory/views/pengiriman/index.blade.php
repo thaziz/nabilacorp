@@ -44,6 +44,7 @@
                                                   <th>No Pengiriman</th>
                                                   <th>Tanggal Transfer</th>
                                                   <th>Keterangan</th>
+                                                  <th>Status</th>
                                                   <th width="15%">Aksi</th>
                                                 </tr>
                                               </thead>
@@ -54,11 +55,18 @@
                                                     <td>{{$value->p_code}}</td>
                                                     <td>{{Carbon\Carbon::parse($value->p_tanggal_transfer)->format('d-m-Y')}}</td>
                                                     <td>{{$value->p_keterangan}}</td>
-                                                    <td>
-                                                      <button type="button" class="btn btn-info btn-sm" title="Detail" name="button"> <i class="fa fa-folder"></i> </button>
-                                                      <button type="button" class="btn btn-warning btn-sm" title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
-                                                      <button type="button" class="btn btn-danger btn-sm" title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
-                                                    </td>
+                                                    @if ($value->pd_status_diterima == 'N')
+                                                      <td align="center"> <span class="label label-warning">Belum Diterima</span> </td>
+                                                      <td align="center">
+                                                        <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
+                                                        <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
+                                                      </td>
+                                                    @elseif ($value->pd_status_diterima == 'Y')
+                                                      <td align="center"> <span class="label label-success">Sudah Diterima</span> </td>
+                                                      <td align="center">
+                                                        <button type="button" onclick="detail({{$value->p_id}})" class="btn btn-info btn-sm" title="Detail" name="button"> <i class="fa fa-folder"></i> </button>
+                                                      </td>
+                                                    @endif
                                                   </tr>
                                                 @endforeach
                                               </tbody>
@@ -71,6 +79,8 @@
                                       </div>
                                     </div>
                                      <!-- End div #alert-tab  -->
+
+                                     <!-- Large modal -->
 
 @endsection
 @section("extra_scripts")
@@ -235,6 +245,41 @@
 
           function tambah(){
             window.location.href = baseUrl + '/inventory/pengirimanproduksi/tambah';
+          }
+
+          function hapus(id){
+            swal({
+                title: "Ingin menghapus data?",
+                text: "Data tidak bisa dikembalikan!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+              },
+              function(isConfirm){
+                if (isConfirm) {
+                  $.ajax({
+                    type: 'get',
+                    data: {id:id},
+                    dataType: 'json',
+                    url: baseUrl + '/inventory/pengirimanproduksi/hapus',
+                    success : function(result){
+                      if (result.status == 'berhasil') {
+                        swal("Deleted!", "Berhasil dihapus.", "success");
+                      }
+                    }
+                  });        // submitting the form when user press yes
+                } else {
+                  swal.close();
+                }
+              });
+          }
+
+          function edit(id){
+            window.location.href = baseUrl + '/inventory/pengirimanproduksi/edit?id='+id;
           }
 
       </script>

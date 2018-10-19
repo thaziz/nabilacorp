@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\mMember;
 use DB;
 use Carbon\Carbon;
+use DateTime;
 
 class pengirimanproduksiController extends Controller {
 	public function __construct(){
@@ -22,7 +23,7 @@ class pengirimanproduksiController extends Controller {
 		$tujuan = DB::table('d_gudangcabang')
 							->get();
 
-		return view('Inventory::pengirimanproduksi', compact('data', 'tujuan'));
+		return view('Inventory::pengiriman.pengirimanproduksi', compact('data', 'tujuan'));
 	}
 
 	public function simpan(Request $request){
@@ -58,6 +59,7 @@ class pengirimanproduksiController extends Controller {
         $finalkode = 'PB-' . $kode . '/' . date('m') . date('Y');
 
 				$produksi = DB::table('d_productresult')
+										->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
 										->where('pr_code', $request->nota)
 										->get();
 
@@ -87,14 +89,22 @@ class pengirimanproduksiController extends Controller {
 						}
 
 				if ($request->kirim[$i] != 0 || $request->kirim[$i] != null || $request->kirim[$i] != '') {
+					$item = DB::table('m_item')
+									->where('i_id', $request->item[$i])
+									->get();
+
+					$item[0]->i_hpp = str_replace('.','',$item[0]->i_hpp);
+					$item[0]->i_hpp = str_replace(',','',$item[0]->i_hpp);
+
 					DB::table('d_pengiriman_dt')
 						->insert([
 							'pd_id' => $iddt + 1,
 							'pd_pengiriman' => $finalkode,
 							'pd_qty' => $request->kirim[$i],
-							'pd_comp' => $produksi[0]->pr_comp,
+							'pd_comp' => $produksi[$i]->prdt_comp,
 							'pd_position' => $request->tujuan,
 							'pd_item' => $request->item[$i],
+							'pd_hpp' => $item[0]->i_hpp,
 							'pd_insert' => Carbon::now('Asia/Jakarta')
 						]);
 
@@ -150,9 +160,213 @@ class pengirimanproduksiController extends Controller {
 
 	public function indexfix(){
 		$data = DB::table('d_pengiriman')
+						->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+						->groupBy('p_id')
 						->get();
 
-		return view('Inventory::index', compact('data'));
+		return view('Inventory::pengiriman.index', compact('data'));
+	}
+
+	public function hapus(Request $request){
+		DB::beginTransaction();
+		try {
+
+			$data = DB::table('d_pengiriman')
+					->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+					->where('p_id', $request->id)
+					->get();
+
+					DB::table('d_pengiriman')
+							->where('p_id', $request->id)
+							->delete();
+
+					DB::table('d_pengiriman_dt')
+							->where('pd_pengiriman', $data[0]->p_code)
+							->delete();
+
+				$product = DB::table('d_productresult')
+							->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+							->where('pr_code', $data[0]->p_pr)
+							->get();
+
+							DB::table('d_productresult')
+										->where('pr_code', $data[0]->p_pr)
+										->update([
+											'pr_status' => null
+										]);
+
+				for ($i=0; $i < count($data); $i++) {
+					DB::table('d_productresult_dt')
+							->where('prdt_productresult', '=', $product[$i]->prdt_productresult)
+							->where('prdt_item', '=', $data[$i]->pd_item)
+							->update([
+								'prdt_kirim' => $product[$i]->prdt_kirim - $data[$i]->pd_qty
+							]);
+				}
+
+			DB::commit();
+			return response()->json([
+				'status' => 'berhasil'
+			]);
+		} catch (\Exception $e) {
+			DB::rollback();
+			return response()->json([
+				'status' => 'gagal'
+			]);
+		}
+
+	}
+
+	public function edit(Request $request){
+		$id = $request->id;
+
+		$pengiriman = DB::table('d_pengiriman')
+									->join('d_productresult', 'pr_code', '=', 'p_pr')
+									->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+									->join('m_item', 'i_id', '=', 'pd_item')
+									->where('p_id', $request->id)
+									->get();
+
+		$produkhasil = DB::table('d_productresult')
+										->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+										->join('m_item', 'i_id', '=', 'prdt_item')
+										->where('pr_code', '=', $pengiriman[0]->p_code)
+										->get();
+
+		$data = DB::table('d_productresult')
+						->get();
+
+		$tujuan = DB::table('d_gudangcabang')
+							->get();
+
+		return view('Inventory::pengiriman.edit', compact('data', 'tujuan', 'pengiriman', 'produkhasil', 'id'));
+	}
+
+	public function update(Request $request){
+		DB::beginTransaction();
+		try {
+
+			$data = DB::table('d_pengiriman')
+					->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+					->where('p_id', $request->id)
+					->get();
+
+					DB::table('d_pengiriman')
+							->where('p_id', $request->id)
+							->delete();
+
+					DB::table('d_pengiriman_dt')
+							->where('pd_pengiriman', $data[0]->p_code)
+							->delete();
+
+				$product = DB::table('d_productresult')
+							->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+							->where('pr_code', $data[0]->p_pr)
+							->get();
+
+							DB::table('d_productresult')
+										->where('pr_code', $data[0]->p_pr)
+										->update([
+											'pr_status' => null
+										]);
+
+				for ($i=0; $i < count($data); $i++) {
+					DB::table('d_productresult_dt')
+							->where('prdt_productresult', '=', $product[$i]->prdt_productresult)
+							->where('prdt_item', '=', $data[$i]->pd_item)
+							->update([
+								'prdt_kirim' => $product[$i]->prdt_kirim - $data[$i]->pd_qty
+							]);
+				}
+
+				$id = DB::table('d_pengiriman')
+							->max('p_id');
+
+				if ($id < 0) {
+					$id = 0;
+				}
+
+	        $finalkode = $request->p_code;
+
+					$produksi = DB::table('d_productresult')
+											->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+											->where('pr_code', $request->nota)
+											->get();
+
+				DB::table('d_productresult')
+										->where('pr_code', $request->nota)
+										->update([
+											'pr_status' => 'Dikirim'
+										]);
+
+				DB::table('d_pengiriman')
+					->insert([
+						'p_id' => $id + 1,
+						'p_pr' => $produksi[0]->pr_code,
+						'p_code' => $finalkode,
+						'p_tanggal_produksi' => $produksi[0]->pr_date,
+						'p_tanggal_transfer' => Carbon::parse(date($request->p_tanggal_transfer))->format('Y-m-d'),
+						'p_keterangan' => $request->keterangan,
+						'p_insert' => Carbon::now('Asia/Jakarta')
+					]);
+
+				for ($i=0; $i < count($request->kirim); $i++) {
+					$iddt = DB::table('d_pengiriman_dt')
+									->max('pd_id');
+
+							if ($iddt < 0) {
+								$iddt = 0;
+							}
+
+					if ($request->kirim[$i] != 0 || $request->kirim[$i] != null || $request->kirim[$i] != '') {
+						DB::table('d_pengiriman_dt')
+							->insert([
+								'pd_id' => $iddt + 1,
+								'pd_pengiriman' => $finalkode,
+								'pd_qty' => $request->kirim[$i],
+								'pd_comp' => $produksi[$i]->prdt_comp,
+								'pd_position' => $request->tujuan,
+								'pd_item' => $request->item[$i],
+								'pd_insert' => Carbon::now('Asia/Jakarta')
+							]);
+
+							$update = DB::table('d_productresult')
+												->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+												->where('pr_code', $request->nota)
+												->where('prdt_item', $request->item[$i])
+												->get();
+
+							if ($update[0]->prdt_kirim == 0) {
+								DB::table('d_productresult_dt')
+													->where('prdt_productresult', $update[0]->pr_id)
+													->where('prdt_detailid', $update[0]->prdt_detailid)
+													->where('prdt_item', $request->item[$i])
+													->update([
+														'prdt_kirim' => $request->kirim[$i]
+													]);
+							} else {
+								$kurang = $request->kirim[$i] + $update[0]->prdt_kirim;
+								DB::table('d_productresult_dt')
+													->where('prdt_productresult', $update[0]->pr_id)
+													->where('prdt_detailid', $update[0]->prdt_detailid)
+													->where('prdt_item', $request->item[$i])
+													->update([
+														'prdt_kirim' => $kurang
+													]);
+							}
+					}
+				}
+
+			DB::commit();
+			return response()->json([
+				'status' => 'berhasil'
+			]);
+		} catch (\Exception $e) {
+			DB::rollback();
+			return response()->json([
+				'status' => 'gagal'
+			]);
+		}
 	}
 
 }

@@ -37,6 +37,8 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                           <form id="formdata">
                                             <input type="hidden" name="nota">
+                                            <input type="hidden" name="p_code" value="{{$pengiriman[0]->p_code}}">
+                                            <input type="hidden" name="id" value="{{$id}}">
                                           <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
                                             <div class="col-md-6 col-sm-12 col-xs-12">
                                               <label class="tebal">No Nota :</label>
@@ -45,9 +47,7 @@
                                               <div class="input-group">
                                                 <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
                                                   <option value=""> - Pilih Nomor Nota</option>
-                                                  @foreach ($data as $key => $value)
-                                                    <option value="{{$value->pr_id}}">{{$value->pr_code}}</option>
-                                                  @endforeach
+                                                    <option value="{{$pengiriman[0]->pr_id}}" selected>{{$pengiriman[0]->pr_code}}</option>
                                                 </select>
                                                 <span class="input-group-btn">
                                                   <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
@@ -65,7 +65,9 @@
                                                 <select class="form-control input-sm select2" name="tujuan">
                                                   <option value=""> - Pilih Tujuan - </option>
                                                   @foreach ($tujuan as $key => $value)
-                                                    <option value="{{$value->gc_id}}">{{$value->gc_gudang}}</option>
+                                                    <option value="{{$value->gc_id}}" @if ($value->gc_id == $pengiriman[0]->pd_position)
+                                                      selected
+                                                    @endif>{{$value->gc_gudang}}</option>
                                                   @endforeach
                                                 </select>
                                                 <span class="input-group-btn">
@@ -81,7 +83,7 @@
                                             </div>
                                             <div class="col-md-8 col-sm-12 col-xs-12">
                                               <div class="input-group">
-                                                <textarea name="keterangan" rows="4" cols="50"></textarea>
+                                                <textarea name="keterangan" rows="4" cols="50">{{$pengiriman[0]->p_keterangan}}</textarea>
                                               </div>
                                             </div>
                                           </div>
@@ -92,7 +94,18 @@
                                             </div>
                                             <div class="col-md-8 col-sm-12 col-xs-12">
                                               <div class="input-group">
-                                                <input id="tanggaltransfer" class="form-control date input-sm" type="text" name="p_tanggal_transfer">
+                                                <input id="tanggaltransfer" class="form-control date input-sm" type="text" name="p_tanggal_transfer" value="{{Carbon\Carbon::parse($pengiriman[0]->p_tanggal_transfer)->format('d/m/Y')}}">
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <label class="tebal">Nota Pengiriman :</label>
+                                            </div>
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                              <div class="input-group">
+                                                <input id="notapengiriman" class="form-control date input-sm" disabled type="text" name="p_tanggal_transfer" placeholder="( Auto )">
                                               </div>
                                             </div>
                                           </div>
@@ -112,7 +125,24 @@
                                                 </tr>
                                               </thead>
                                               <tbody id="showdata">
-
+                                                @foreach ($produkhasil as $key => $value)
+                                                  {{$sisa = $value->prdt_qty - $value->prdt_kirim}}
+                                                  <tr>
+                                                          <td>{{$key + 1}}</td>
+                                                          <td>{{$value->pr_code}}</td>
+                                                          <td>{{$value->i_name}}</td>
+                                                          <td>{{$value->prdt_qty}}</td>
+                                                          <td>{{$value->prdt_kirim}}</td>
+                                                          <td>{{$sisa}}</td>
+                                                          @if ($sisa == 0)
+                                                            <td><span class="label label-success">Terkirim</span></td>
+                                                          @else
+                                                            <td><span class="label label-warning">Belum Terkirim</span></td>
+                                                          @endif
+                                                          <td><input type="text" id="kirim{{$key}}" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter({{$key}},{{$sisa}})" name="kirim[]" value="{{$sisa}}"></td>
+                                                          <input type="hidden" name="item[]" value="{{$value->prdt_item}}">
+                                                  </tr>
+                                                @endforeach
                                               </tbody>
                                             </table>
                                           </form>
@@ -134,6 +164,7 @@
        var data;
        $('.select2').select2();
        $( "#tanggaltransfer" ).datepicker();
+
 
     var extensions = {
          "sFilterInput": "form-control input-sm",
@@ -200,6 +231,40 @@
           }
 
         });
+
+        var id = $('#cariId').val();
+        var html = '';
+        $.ajax({
+          type: 'get',
+          data: {id:id},
+          dataType: 'json',
+          url: baseUrl + '/inventory/pengirimanproduksi/getdata',
+          success : function(result){
+            data = result;
+            for (var i = 0; i < result.length; i++) {
+              var sisa = parseInt(result[i].prdt_qty) - parseInt(result[i].prdt_kirim);
+              if (sisa == 0) {
+                var status = '<span class="label label-success">Terkirim</span>';
+              } else if (sisa != 0) {
+                var status = '<span class="label label-warning">Belum Terkirim</span>';
+              }
+              html += '<tr>'+
+                      '<td>'+(i + 1)+'</td>'+
+                      '<td>'+result[i].pr_code+'</td>'+
+                      '<td>'+result[i].i_name+'</td>'+
+                      '<td>'+result[i].prdt_qty+'</td>'+
+                      '<td>'+result[i].prdt_kirim+'</td>'+
+                      '<td>'+sisa+'</td>'+
+                      '<td>'+status+'</td>'+
+                      '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
+                      '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
+                      '</tr>';
+            }
+            $('#showdata').html(html);
+            $('input[name=nota]').val(result[0].pr_code);
+            swal.close();
+          }
+        })
 });
       $('.datepicker').datepicker({
         format: "mm",
@@ -242,7 +307,7 @@
                         '<td>'+result[i].prdt_kirim+'</td>'+
                         '<td>'+sisa+'</td>'+
                         '<td>'+status+'</td>'+
-                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+')" name="kirim[]"></td>'+
+                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
                         '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
                         '</tr>';
               }
@@ -253,11 +318,11 @@
           });
       }
 
-      function filter(id){
+      function filter(id, sisa){
         var kirim = $('#kirim'+id).val();
             if (kirim > data[id].prdt_qty) {
               swal("Info!", "Tidak boleh melebihi qty!");
-              $('#kirim'+id).val(0);
+              $('#kirim'+id).val(sisa);
               i = data.length + 1;
             }
       }
@@ -267,7 +332,7 @@
           type: 'get',
           data: $('#formdata').serialize(),
           dataType: 'json',
-          url: baseUrl + '/inventory/pengirimanproduksi/simpan',
+          url: baseUrl + '/inventory/pengirimanproduksi/update',
           success : function(result){
             if (result.status == 'berhasil') {
               swal({
@@ -275,7 +340,7 @@
                     text: 'Berhasil Disimpan!'
                   });
               setTimeout(function () {
-                window.location.href = baseUrl + '/inventory/pengirimanproduksi/tambah';
+                window.location.href = baseUrl + '/inventory/pengirimanproduksi/pengirimanproduksi';
               }, 500);
             }
           }
