@@ -56,6 +56,12 @@ class loginController extends Controller {
                 return json_encode($dataInfo);
         } else {
 
+          if($req->akses==0){
+              $dataInfo=['status'=>'gagal','data'=>"Ma'af anda belum memilih kasir"];            
+              return json_encode($dataInfo);
+            }
+
+
             $username = $req->username;
             $password = $req->password;
             //$user = mMember::where("m_username  = '$req->username'")->first();
@@ -75,6 +81,7 @@ class loginController extends Controller {
                     Auth::login($user);
 
                     Session::put('user_comp', mMember::perusahaan()[0]->c_id);
+                    Session::put('kasir', $req->akses);
                     
                     
 

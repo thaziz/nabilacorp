@@ -33,27 +33,55 @@
              </div>
            </div>
 
+
            <div class="col-md-3 col-sm-6 col-xs-12">
              <label>Pengguna</label>
            </div>     
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input type="text" id="s_created_by" class="form-control input-sm reset" name="s_created_by" readonly="" value="{{Auth::user()->m_name}}">
+               <input type="text" id="s_created_by" class="form-control input-sm reset" name="s_created_by" disabled="" value="{{Auth::user()->m_name}}">
+             </div>
+           </div>
+
+           <div class="col-md-3 col-sm-6 col-xs-12">
+             <label>Kasir</label>
+           </div>     
+
+           <div class="col-md-3 col-sm-6 col-xs-12">
+             <div class="form-group">
+               <input class="form-control" type="" name="" value="{{$machine->m_name}}" disabled="">
+             </div>
+           </div>
+
+          <div class="col-md-3 col-sm-6 col-xs-12">
+             <label>Nama Pelanggan</label>
+           </div>     
+
+           <div class="col-md-3 col-sm-6 col-xs-12">
+             <div class="form-group">               
+               <input type="text" class="move up1 form-control input-sm reset" id="s_nama_cus" name="s_nama_cus">
              </div>
            </div>
 
             <div class="col-md-3 col-sm-6 col-xs-12">
-             <label>Nama Pelanggan</label>
+             <label>Alamat Pelanggan</label>
            </div>     
 
+           <div class="col-md-3 col-sm-6 col-xs-12">
+             <div class="form-group">               
+               <input type="text" class="move up2 form-control input-sm reset" id="s_alamat_cus" name="s_alamat_cus">
+               
+             </div>
+           </div>
+<!-- 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
                <input class="move up2 form-control input-sm reset ui-autocomplete-input" id="customer" autocomplete="off">
                <input type="hidden" class="form-control input-sm reset" id="s_customer" name="s_customer" value="0">
                
              </div>
-           </div>
+           </div> -->
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <label>Pembayaran</label>

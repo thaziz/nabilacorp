@@ -114,11 +114,11 @@ class d_product_result extends Model
 
       $pr_code = "PR-".date('ym')."-".$kd;
 
-  
+    $pr_date=date('Y-m-d',strtotime($request->pr_date));
               d_product_result::create([
                       'pr_id'=>$pr_id,
                       'pr_comp'=>Session::get('user_comp'),
-                      'pr_date'=>date('Y-m-d',strtotime($request->pr_date)),
+                      'pr_date'=>$pr_date,
                       'pr_code'=>$pr_code,
                       'pr_note'=>$request->pr_note,
                 ]);
@@ -140,7 +140,7 @@ class d_product_result extends Model
                                 'prdt_position'=>$position,
                                  ]);
                
-                $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp);
+                $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp,$pr_date);
                 if($simpanMutasi['true']){
 
                 }else{
@@ -161,6 +161,7 @@ class d_product_result extends Model
 
  static function perbarui($id,$request){   
     return DB::transaction(function () use ($id,$request) {  
+              $pr_date=date('Y-m-d',strtotime($request->pr_date));
               $updateProductresult=
                           d_product_result::where('pr_id',$id);
               $updateProductresult->update([
@@ -275,7 +276,7 @@ class d_product_result extends Model
                                 'prdt_hpp'=>$prdt_hpp
                                  ]);
 
-$simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi','3',$id,'','',$prdt_hpp);
+$simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi','3',$id,'','',$prdt_hpp,$pr_date);
 
               if($simpanMutasi['true']){
                     

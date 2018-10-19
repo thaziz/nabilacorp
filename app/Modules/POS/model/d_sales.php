@@ -29,7 +29,7 @@ class d_sales extends Model
     const CREATED_AT = 's_insert';
     const UPDATED_AT = 's_update';
     
-      protected $fillable = ['s_id','s_comp','s_jenis_bayar','s_channel','s_machine','s_date','s_finishdate','s_duedate','s_note','s_create_by','s_customer','s_gross','s_disc_percent','s_disc_value','s_tax','s_ongkir','s_bulat','s_net','s_status','s_bayar','s_kembalian','s_jurnal'];
+      protected $fillable = ['s_id','s_comp','s_jenis_bayar','s_channel','s_machine','s_date','s_finishdate','s_duedate','s_note','s_create_by','s_customer','s_gross','s_disc_percent','s_disc_value','s_tax','s_ongkir','s_bulat','s_net','s_status','s_bayar','s_kembalian','s_jurnal','s_nama_cus','s_alamat_cus'];
 
       static function simpan($request){        
         return DB::transaction(function () use ($request) {      
@@ -50,15 +50,18 @@ class d_sales extends Model
           if($request->s_customer==''){
             $request->s_customer=0;
           }
+          $s_date=date('Y-m-d',strtotime($request->s_date));
           d_sales::create([
                     's_id' =>$s_id ,
                     's_comp'=>Session::get('user_comp'),
                     's_channel'=>'Toko',                    
-                    's_date'=>date('Y-m-d',strtotime($request->s_date)),
+                    's_date'=>$s_date,
                     's_note'=>$note,
-                    's_machine'=>$request->s_machine,
+                    's_machine'=>Session::get('kasir'),
                     's_create_by'=>Auth::user()->m_id,
-                    's_customer'=>$request->s_customer,
+                    /*'s_customer'=>$request->s_customer,*/
+                    's_nama_cus'=>$request->s_nama_cus,
+                    's_alamat_cus'=>$request->s_alamat_cus,
                     's_gross' =>$s_gross,
                     's_disc_percent'=>$s_disc_percent,
                     's_disc_value'=>$s_disc_value,
@@ -77,7 +80,7 @@ class d_sales extends Model
                   $sd_qty = format::format($request->sd_qty[$i]); 
                   $comp=$request->comp[$i];
                   $position=$request->position[$i];                  
-                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$s_id);   
+                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$s_id,$ket='',$s_date);   
 
                   
                   if($simpanMutasi['true']){
@@ -174,12 +177,18 @@ class d_sales extends Model
             if($jmlBayar==$n && $s_kembalian>0){              
               $sp_nominal=$sp_nominal-$s_kembalian;
             }            
+            if($request->sp_date[$n]==0){
+              $sp_date=date('Y-m-d');
+            }else{
+              $sp_date=$request->sp_date[$n];
+            }
               d_sales_payment::create([
                   'sp_sales'=>$s_id,
                   'sp_paymentid'=>$sp_paymentid,
                   'sp_comp'=>Session::get('user_comp'),                    
                   'sp_method'=>$request->sp_method[$n],
                   'sp_nominal'=>$sp_nominal,
+                  'sp_date'=>$sp_date,
                 ]);
               $totalBayar+=$sp_nominal;
 
@@ -197,6 +206,7 @@ class d_sales extends Model
       return DB::transaction(function () use ($request) {           
         $updateSales=d_sales::where('s_id',$request->s_id);
           $permintaan=0;
+          $s_date=date('Y-m-d',strtotime($request->s_date));
           $s_gross = format::format($request->s_gross);
           $s_ongkir = format::format($request->s_ongkir);          
           $s_disc_value = format::format($request->s_disc_value);
@@ -213,7 +223,9 @@ class d_sales extends Model
           $updateSales->update([
                     /*'s_machine'=>$request->s_machine,*/
                     's_create_by'=>Auth::user()->m_id,
-                    's_customer'=>$request->s_customer,
+                    /*'s_customer'=>$request->s_customer,*/
+                    's_nama_cus'=>$request->s_nama_cus,
+                    's_alamat_cus'=>$request->s_alamat_cus,
                     's_gross' =>$s_gross,
                     's_disc_percent'=>$s_disc_percent,
                     's_disc_value'=>$s_disc_value,                    
@@ -306,7 +318,7 @@ class d_sales extends Model
                 $s_id=$updateSales->first()->s_id;                
                   $comp = $request->comp[$i];
                   $position = $request->position[$i];
-                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='',$s_id);
+                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='',$s_id,$ket='',$s_date);
                   if($simpanMutasi['true']){                  
                   $sd_detailid=d_sales_dt::
                               where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
@@ -368,13 +380,18 @@ class d_sales extends Model
             if($jmlBayar==$n){              
               $sp_nominal=$sp_nominal-$s_kembalian;              
             }            
-
+            if($request->sp_date[$n]==0){
+              $sp_date=date('Y-m-d');
+            }else{
+              $sp_date=$request->sp_date[$n];
+            }
               d_sales_payment::create([
                   'sp_sales'=> $updateSales->first()->s_id,
                   'sp_paymentid'=>$sp_paymentid,
                   'sp_comp'=>Session::get('user_comp'),                    
                   'sp_method'=>$request->sp_method[$n],
                   'sp_nominal'=>$sp_nominal,
+                  'sp_date' => $sp_date,
                 ]);
               $totalBayar+=$sp_nominal;
       } 
@@ -397,7 +414,9 @@ class d_sales extends Model
       $to=date('Y-m-d',strtotime($request->tanggal2));
 
              
-      $d_sales = DB::table('d_sales')->leftJoin('m_customer','s_customer','=','c_id')->where('s_channel',$request->type)
+      $d_sales = DB::table('d_sales')
+                ->join('m_machine','m_id','=','s_machine')
+                ->where('s_channel',$request->type)
                  ->whereBetween('s_date', [$from, $to])->where('s_comp',Session::get('user_comp'))->get();
       
         
@@ -421,10 +440,12 @@ class d_sales extends Model
                                                 \''.number_format($d_sales->s_bayar,0,',','.').'\',
                                                 \''.number_format($d_sales->s_kembalian,0,',','.').'\',
                                                 \''.$d_sales->s_customer.'\',
-                                                \''.$d_sales->c_name.'\',
+                                                \''.$d_sales->s_nama_cus.'\',
                                                 \''.$d_sales->s_status.'\',                                                
                                                 '.($d_sales->s_net-$d_sales->s_bayar).',
                                                 \''.$d_sales->s_jenis_bayar.'\',
+                                                
+                                                \''.$d_sales->s_alamat_cus.'\',
                             ) class="btn btn-outlined btn-info btn-xs" type="button"        data-target="#detail" data-toggle="modal">Detail</button>';
                         })                         
                       ->editColumn('s_status', function ($d_sales) {
@@ -480,10 +501,12 @@ class d_sales extends Model
                                                 \''.number_format($d_sales->s_bayar,0,',','.').'\',
                                                 \''.number_format($d_sales->s_kembalian,0,',','.').'\',
                                                 \''.$d_sales->s_customer.'\',
-                                                \''.$d_sales->c_name.'\',
+                                                \''.$d_sales->s_nama_cus.'\',
                                                 \''.$d_sales->s_status.'\',                                                
                                                 '.($d_sales->s_net-$d_sales->s_bayar).',
                                                 \''.$d_sales->s_jenis_bayar.'\',
+                                                
+                                                \''.$d_sales->s_alamat_cus.'\',
                                                 )" ><i class="fa fa-eye"></i> 
                           </button>
                           <button type="button" class="btn btn-xs btn-warning" title="Edit"onclick="editPenjualan(
@@ -504,10 +527,12 @@ class d_sales extends Model
                                                 \''.number_format($d_sales->s_bayar,0,',','.').'\',
                                                 \''.number_format($d_sales->s_kembalian,0,',','.').'\',
                                                 \''.$d_sales->s_customer.'\',
-                                                \''.$d_sales->c_name.'\',
+                                                \''.$d_sales->s_nama_cus.'\',
                                                 \''.$d_sales->s_status.'\',                                                
                                                 '.($d_sales->s_net-$d_sales->s_bayar).',
                                                 \''.$d_sales->s_jenis_bayar.'\',
+                                                
+                                                \''.$d_sales->s_alamat_cus.'\',
                                                 )" '.$disable.' ><i class="fa fa-edit"></i>
                           </button>
                           <button type="button" class="btn btn-xs btn-danger" title="Hapus" onclick="deleteProduksi(
@@ -528,67 +553,10 @@ class d_sales extends Model
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-                        ->addColumn('action', function ($d_sales) {
-                            $html='';                            
-                                $html.=' <div class="dropdown">                                
-                                            <button class="btn btn-primary btn-flat btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                Kelola
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
-if($d_sales->s_status=='lunas'){ 
- $html.='<li><a><i class="fa fa-pencil" aria-hidden="true"></i>-</a></li>';   
-
-}
-if($d_sales->s_status!='lunas'){  
-                                $html.='<li><a onclick="editPenjualan(
-                                                '.$d_sales->s_id.',
-                                                \''.$d_sales->s_note.'\',
-                                                \''.$d_sales->s_machine.'\',
-                                                
-                                                \''.date('d-m-Y',strtotime($d_sales->s_date)).'\',
-                                                \''.date('d-m-Y',strtotime($d_sales->s_duedate)).'\',
-                                                \''.date('d-m-Y',strtotime($d_sales->s_finishdate)).'\',
-                                                \''.number_format($d_sales->s_gross,0,',','.').'\',
-                                                '.$d_sales->s_disc_percent.',
-                                                '.$d_sales->s_disc_value.',
-                                                \''.number_format($d_sales->s_gross-$d_sales->s_disc_percent-$d_sales->s_disc_value,0,',','.').'\',
-                                                \''.number_format($d_sales->s_ongkir,0,',','.').'\',
-                                                \''.number_format($d_sales->s_bulat,0,',','.').'\',
-                                                \''.number_format($d_sales->s_net,0,',','.').'\',
-                                                \''.number_format($d_sales->s_bayar,0,',','.').'\',
-                                                \''.number_format($d_sales->s_kembalian,0,',','.').'\',
-                                                \''.$d_sales->s_customer.'\',
-                                                \''.$d_sales->c_name.'\',
-                                                \''.$d_sales->s_status.'\',                                                
-                                                '.($d_sales->s_net-$d_sales->s_bayar).',
-                                                \''.$d_sales->s_jenis_bayar.'\',
-                                                )" ><i class="fa fa-pencil" aria-hidden="true"></i>Edit Data</a></li>';                                            
-}
-                                                 
-                                                
-                             $html.=    '</ul>                                            
-                                    </div>';
-                            return $html;
-                        })*/
                         ->rawColumns(['item','action','s_status'])
                         ->make(true);            
     }
-    /*<li role="separator" class="divider"></li>                                                                        
-                                                <li><a class="btn-delete" onclick="hapusPenjualan('.$d_sales->s_id.')"></i>Hapus Data</a></li>                                                */
+                                              
 
     static function printNota($s_id){
           $sales=DB::table('d_sales')->leftJoin('m_customer','s_customer','=','c_id')
@@ -612,8 +580,12 @@ if($d_sales->s_status!='lunas'){
 
       static function simpanPesanan($request){        
         return DB::transaction(function () use ($request) {   
-          if($request->s_customer=="0" || $request->s_customer==""){
+          if($request->s_nama_cus==""){
             $data=['status'=>'gagal','data'=>'Nama pelanggan harus di isi'];
+            return $data;
+          }
+          if($request->s_alamat_cus==""){
+            $data=['status'=>'gagal','data'=>'Alamat pelanggan harus di isi'];
             return $data;
           }
 
@@ -641,9 +613,11 @@ if($d_sales->s_status!='lunas'){
                     's_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
                     's_finishdate'=>date('Y-m-d',strtotime($request->s_finishdate)),
                     's_note'=>$note,
-                    's_machine'=>$request->s_machine,
+                    's_machine'=>Session::get('kasir'),
                     's_create_by'=>Auth::user()->m_id,
-                    's_customer'=>$request->s_customer,
+                    /*'s_customer'=>$request->s_customer,*/
+                    's_nama_cus'=>$request->s_nama_cus,
+                    's_alamat_cus'=>$request->s_alamat_cus,
                     's_gross' =>$s_gross,
                     's_disc_percent'=>$s_disc_percent,
                     's_disc_value'=>$s_disc_value,
@@ -706,13 +680,21 @@ $totalBayar=0;
             $s_kembalian = format::format($request->kembalian);
             if($jmlBayar==$n && $s_kembalian>0){              
               $sp_nominal=$sp_nominal-$s_kembalian;
-            }            
+            }        
+
+            if($request->sp_date[$n]==0){
+              $sp_date=date('Y-m-d');
+            }else{
+              $sp_date=$request->sp_date[$n];
+            }
+
               d_sales_payment::create([
                   'sp_sales'=>$s_id,
                   'sp_paymentid'=>$sp_paymentid,
                   'sp_comp'=>Session::get('user_comp'),                    
                   'sp_method'=>$request->sp_method[$n],
                   'sp_nominal'=>$sp_nominal,
+                  'sp_date'=>$sp_date,
                 ]);
 
           $totalBayar+=$sp_nominal;
@@ -751,6 +733,8 @@ $totalBayar=0;
                     /*'s_machine'=>$request->s_machine,*/
                     's_create_by'=>Auth::user()->m_id,
                     /*'s_customer'=>$request->s_customer,*/
+                    's_nama_cus'=>$request->s_nama_cus,
+                    's_alamat_cus'=>$request->s_alamat_cus,
                     's_gross' =>$s_gross,
                     's_disc_percent'=>$s_disc_percent,
                     's_disc_value'=>$s_disc_value,                    
@@ -852,12 +836,19 @@ $totalBayar=0;
               $sp_nominal=$sp_nominal-$s_kembalian;
             }            
 
+
+            if($request->sp_date[$n]==0){
+              $sp_date=date('Y-m-d');
+            }else{
+              $sp_date=$request->sp_date[$n];
+            }
               d_sales_payment::create([
                   'sp_sales'=> $updateSales->first()->s_id,
                   'sp_paymentid'=>$sp_paymentid,
                   'sp_comp'=>Session::get('user_comp'),                    
                   'sp_method'=>$request->sp_method[$n],
                   'sp_nominal'=>$sp_nominal,
+                  'sp_date' =>$sp_date
                 ]);
 
       $totalBayar+=$sp_nominal;
@@ -878,7 +869,8 @@ $totalBayar=0;
     }
 
     static function serahTerima($request){      
-      return DB::transaction(function () use ($request) {        
+      return DB::transaction(function () use ($request) {   
+          $s_date=date('Y-m-d',strtotime($request->s_date));     
           $jumlahJurnalHpp=0;
           $updateSales=d_sales::where('s_id',$request->s_id);  
           $status=$updateSales->first()->s_status;
@@ -889,7 +881,7 @@ $totalBayar=0;
 
           $comp=$request->comp[$i];
           $position=$request->position[$i];   
-          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_id);
+          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_id,$ket='',$s_date);
             if($simpanMutasi['true']){     
             $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
             }else{

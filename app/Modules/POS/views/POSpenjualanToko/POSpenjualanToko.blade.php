@@ -278,8 +278,8 @@ function table(){
             columns: [
             {data: 's_date', name: 's_date'},
             {data: 's_note', name: 's_note'},            
-            {data: 'c_name', name: 'c_name'},            
-            {data: 's_kasir', name: 's_kasir'},                        
+            /*{data: 'c_name', name: 'c_name'}, */           
+            {data: 'm_name', name: 'm_name'},                        
             {data: 's_gross', name: 's_gross'}, 
             {data: 's_disc_percent', name: 's_disc_percent'}, 
             {data: 's_ongkir', name: 's_ongkir'},
@@ -405,30 +405,27 @@ var arrow = {
 ctrl = 17;
          $('.move').keydown(function (e) {              
                     if (e.ctrlKey && e.which === arrow.right) {
-                        
+                        setDatePicker();
                          var index = $('.move').index(this) + 1;                         
                          $('.move').eq(index).focus();                         
                          
                       }
                        if (e.ctrlKey && e.which === arrow.left) {
-                      /*if (e.keyCode == ctrl && arrow.left) {*/
+                        setDatePicker();
                          var index = $('.move').index(this) - 1;
                          $('.move').eq(index).focus();
                       }
                       if (e.ctrlKey && e.which === arrow.up) {
-                         
+                          setDatePicker(); 
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) - 1;
                          $('.'+upd).eq(index).focus();
                       }
                       if (e.ctrlKey && e.which === arrow.down) {
-                         
+                         setDatePicker();
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) + 1;
-                         $('.'+upd).eq(index).focus();
-                         
+                         $('.'+upd).eq(index).focus();                         
                       }
                       
      });
@@ -679,6 +676,7 @@ function simpanPos(status=''){
  $.ajax({
     url : baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,
     type: 'get',
+    data    :  formPos+'&status='+status,
     success:function (response){
         
                 qz.appendHTML(
@@ -931,33 +929,32 @@ var arrow = {
 ctrl = 17;
          $('.move').keydown(function (e) {                       
                     if (e.ctrlKey && e.which === arrow.right) {
-                        
+                        setDatePicker();
                          var index = $('.move').index(this) + 1;                         
-                         $('.move').eq(index).focus();
-                         
+                         $('.move').eq(index).focus();                         
                       }
                        if (e.ctrlKey && e.which === arrow.left) {
-                      /*if (e.keyCode == ctrl && arrow.left) {*/
+                         setDatePicker();
                          var index = $('.move').index(this) - 1;
                          $('.move').eq(index).focus();
                       }
                       if (e.ctrlKey && e.which === arrow.up) {
-                         
+                         setDatePicker();
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) - 1;
                          $('.'+upd).eq(index).focus();
                       }
                       if (e.ctrlKey && e.which === arrow.down) {
-                         
+                         setDatePicker();                         
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) + 1;
                          $('.'+upd).eq(index).focus();
-                         
                       }                    
      });
 
+function setDatePicker(){
+  $('#s_date').datepicker('hide');  
+}
 
 function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
   $('#txt_span_status').text(s_status);
@@ -995,7 +992,7 @@ function modalShow(){
 
   
   $('#proses').on("shown.bs.modal", function(e) {    
-            $('#customer').focus();
+            $('#biaya_kirim').focus();
             
   });  
   $('#proses').modal('show');

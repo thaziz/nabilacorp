@@ -126,6 +126,7 @@ function table(){
                     "className": "text-center",
                }
                ],
+            /*"order": [[ 2, "desc" ]],*/
             //responsive: true,
 
             "pageLength": 10,

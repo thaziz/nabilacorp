@@ -18,6 +18,7 @@ use App\Modules\POS\model\d_sales;
 use App\Modules\POS\model\d_sales_dt;
 use App\Modules\POS\model\m_machine;
 use Datatables;
+use App\Lib\format;
 
 
 
@@ -78,7 +79,7 @@ class PenjualanPesananController extends Controller
       $flag='Pesanan';
       $paymentmethod=m_paymentmethod::pm();       
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
-      $machine=m_machine::showMachine($flag);      
+      $machine=m_machine::showMachineActive();      
       $data['toko']=view('POS::pos-pesanan/pesanan',compact('machine'));      
       $data['listtoko']=view('POS::pos-pesanan/listpesanan');   
       return view('POS::pos-pesanan/pos-pesanan',compact('data','pm','printPl'));
@@ -144,9 +145,19 @@ class PenjualanPesananController extends Controller
       }*/
       
     }
-  function printNotaPesanan($id){
+  function printNotaPesanan($id, Request $request){
+      $sp_nominal=[];
+      for ($i=0; $i <count($request->sp_nominal) ; $i++) { 
+        $sp_nominal['nominal'][$i]=$request->sp_nominal[$i];
+        $sp_nominal['date'][$i]=date('d-m-Y',strtotime($request->sp_date[$i]));
+      }            
+      $ttlBayar=$s_gross = format::format($request->s_bayar);      
+      $jumlah=count(($request->sd_item));      
+      $bayar=$request->s_bayar;
+      $kembalian=$request->kembalian;
+
       $data=d_sales::printNota($id);
-      return view('POS::pos-pesanan/printNota',compact('data'));
+      return view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','sp_nominal','ttlBayar'));
    
   }
 

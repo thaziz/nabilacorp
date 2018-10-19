@@ -8,8 +8,8 @@ use App\d_stock;
 use DB;
 
 class mutasi{
-    public static function tambahmutasi($item,$totalPermintaan,$comp,$position,$flag,$mutcat,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
-        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$mutcat,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp) {              
+    public static function tambahmutasi($item,$totalPermintaan,$comp,$position,$flag,$mutcat,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp,$date){
+        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$mutcat,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp,$date) {              
                 $totalHpp='';
                     
                 $updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);
@@ -38,7 +38,7 @@ class mutasi{
             d_stock_mutation::create([
                 'sm_stock'=>$updateStock->first()->s_id,
                 'sm_detailid'=>$sm_detailid,
-                'sm_date' =>date('Y-m-d'),
+                'sm_date' =>$date,
                 'sm_comp' =>$comp,
                 'sm_position'=>$position,                
                 'sm_mutcat'=>$mutcat,
@@ -120,8 +120,8 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     });
 }
 
-	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket=''){	
-        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket) {   
+	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date){	
+        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date) {   
 
             $totalPermintaan= format::format($totalPermintaan);
             $totalHpp=0;
@@ -190,7 +190,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
 
                         	$newMutasi[$k]['sm_stock']=$getBarang[$k]->sm_stock;
                             $newMutasi[$k]['sm_detailid'] = $sm_detailidInsert;
-                            $newMutasi[$k]['sm_date'] = date('Y-m-d');
+                            $newMutasi[$k]['sm_date'] = $date;
                             $newMutasi[$k]['sm_comp'] = $comp;
                             $newMutasi[$k]['sm_position'] = $position;
                             $newMutasi[$k]['sm_item'] = $item;
@@ -220,7 +220,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
 
                         	$newMutasi[$k]['sm_stock']=$getBarang[$k]->sm_stock;
                             $newMutasi[$k]['sm_detailid'] = $sm_detailidInsert;
-                            $newMutasi[$k]['sm_date'] = date('Y-m-d');
+                            $newMutasi[$k]['sm_date'] = $date;
                             $newMutasi[$k]['sm_comp'] = $comp;
                             $newMutasi[$k]['sm_position'] = $position;
                             $newMutasi[$k]['sm_item'] = $item;

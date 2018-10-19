@@ -56,6 +56,7 @@
                  <th width="10%">Tanggal</th>
                  <th width="20%">No Nota</th>
                  <th width="20%">Pelangan</th>
+                 <th width="20%">Alamat</th>
                  <th width="10%">Kasir</th>  
                  <!-- <th width="10%">Item</th>      -->
                  <th width="10%">Gross</th>     
@@ -297,13 +298,14 @@ function resetData(){
   table();
 }
                                                 
-    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {
-
+    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar,s_alamat_cus) {      
             $('.reset').val('');
             $('#s_created_by').val('{{Auth::user()->m_name}}')
             $('#s_id').val(s_id);
             $('#s_status').val(s_status);
             $('#s_date').val(s_date);
+            $('#s_nama_cus').val(c_name);
+            $('#s_alamat_cus').val(s_alamat_cus);
             $('#s_note').val(s_note);            
             $('#s_machine').val(s_machine);
             $('#s_gross').val(s_gross);        

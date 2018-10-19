@@ -269,7 +269,7 @@ ctrl = 17;
 
           iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';
           
-          iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka form-control" style="width:100%;border:none" name="prdt_hpp[]" value="'+i_price.val()+'"" ></td>';
+          iSalesDetail+='<td width="6%"><input class="move up2 harga'+i_id.val()+' alignAngka form-control" onblur="validationForm();setRupiah(event,\'harga' + i_id.val() + '\')" onkeyup="hapusTrDt(event,'+i_id.val()+');hitungTotalHpp(\'' + i_id.val() + '\')" onclick="setAwal(event,\'harga' + i_id.val() + '\')"  style="width:100%;border:none" name="prdt_hpp[]" value="'+i_price.val()+'"" ></td>';
                  
 
         /*  iSalesDetail+='<td width="10%""><input style="width:100%;border:none" name="sd_total_disc[]" class="totalPerItemDisc alignAngka totalPerItemDisc'+i_id.val()+'" readonly></td>';  */
@@ -435,7 +435,7 @@ $('#perbarui').css('display','none');
 
 
 function hapusTrDt(e,a){
-  alert(e.which===46 && e.ctrlKey);
+  
     if(e.which===46 && e.ctrlKey){
       hapusDt.push(a);
         $('.detail'+a).remove();

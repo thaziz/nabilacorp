@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use DB;
 
+use Session;
+
 class m_machine extends Model
 {  
 
@@ -16,10 +18,21 @@ class m_machine extends Model
     
       protected $fillable = ['m_id','m_name','m_active','m_type'];
 
-      static function showMachine($type){
-      	$sql=m_machine::select('m_id','m_name','m_active','m_type')->where('m_type',$type)->get();        
+      static function showMachine(){
+      	$sql=m_machine::select('m_id','m_name','m_active','m_type')
+            /*->where('m_type',$type)*/
+            ->get();        
         return $sql;
       }
+      static function showMachineActive(){
+
+        $sql=m_machine::select('m_id','m_name','m_active','m_type')
+            ->where('m_id',Session::get('kasir'))
+            ->first();        
+            
+        return $sql;
+      }
+      
       static function editMachine($id='',$flag=''){
             $data['sales_pm']=DB::table('d_sales_payment')->where('sp_sales','=',$id)                           
                   ->get();    

@@ -22,6 +22,12 @@
 <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/login-v18/css/util.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/login-v18/css/main.css')}}">
+
+    <style type="text/css">
+        select.input100#akses {
+            border: none;
+        }
+    </style>
 <!--===============================================================================================-->
 
 <body style="background-color: #666666;">
@@ -49,7 +55,19 @@
                         <span class="label-input100">Password</span>
                     </div>
 
-                    <div class="flex-sb-m w-full p-t-3 p-b-32">
+                    <div class="wrap-input100 validate-input">
+                        <!-- <input class="input100" type="password" name="password" name="password"> -->
+                        <select class="input100" name="akses" id="akses">
+                            <option value="0">Pilih Kasir</option>
+                        @foreach(App\Modules\POS\model\m_machine::showMachine() as $data) 
+                            <option value="{{$data->m_id}}">{{$data->m_name}}</option>
+                        @endforeach
+                        </select>
+                        <span class="focus-input100"></span>
+                        <!-- <span class="label-input100">Pilih Kasir</span> -->
+                    </div>
+
+                    <!-- <div class="flex-sb-m w-full p-t-3 p-b-32">
                         <div class="contact100-form-checkbox">
                             <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember">
                             <label class="label-checkbox100" for="ckb1">
@@ -57,12 +75,12 @@
                             </label>
                         </div>
 
-                        <!-- <div>
+                        <div>
                             <a href="#" class="txt1">
                                 Forgot Password?
                             </a>
-                        </div> -->
-                    </div>
+                        </div>
+                    </div> -->
             
 
                     <div class="container-login100-form-btn">

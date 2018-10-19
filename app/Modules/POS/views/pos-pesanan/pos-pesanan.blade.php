@@ -254,7 +254,8 @@ function table(){
             columns: [
             {data: 's_date', name: 's_date'},
             {data: 's_note', name: 's_note'},            
-            {data: 'c_name', name: 'c_name'},            
+            {data: 's_nama_cus', name: 's_nama_cus'},            
+            {data: 's_alamat_cus', name: 's_alamat_cus'},            
             {data: 's_kasir', name: 's_kasir'},            
             /*{data: 'item', name: 'item'}, */
             {data: 's_gross', name: 's_gross'}, 
@@ -377,31 +378,27 @@ var arrow = {
 
 ctrl = 17;
          $('.move').keydown(function (e) {              
-                    if (e.ctrlKey && e.which === arrow.right) {
-                        
+                    if (e.ctrlKey && e.which === arrow.right) {                
+                          setDatePicker();        
                          var index = $('.move').index(this) + 1;                         
-                         $('.move').eq(index).focus();                         
-                         
+                         $('.move').eq(index).focus();                                                  
                       }
-                       if (e.ctrlKey && e.which === arrow.left) {
-                      /*if (e.keyCode == ctrl && arrow.left) {*/
+                       if (e.ctrlKey && e.which === arrow.left) {                      
+                         setDatePicker();
                          var index = $('.move').index(this) - 1;
-                         $('.move').eq(index).focus();
+                         $('.move').eq(index).focus();                         
                       }
-                      if (e.ctrlKey && e.which === arrow.up) {
-                         
+                      if (e.ctrlKey && e.which === arrow.up) {                         
+                          setDatePicker();
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) - 1;
-                         $('.'+upd).eq(index).focus();
+                         $('.'+upd).eq(index).focus();                         
                       }
-                      if (e.ctrlKey && e.which === arrow.down) {
-                         
+                      if (e.ctrlKey && e.which === arrow.down) {                         
+                          setDatePicker();
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) + 1;
-                         $('.'+upd).eq(index).focus();
-                         
+                         $('.'+upd).eq(index).focus();                         
                       }
                       
      });
@@ -501,6 +498,7 @@ function payment(){
   $html='';
   $html+={!!$pm!!};
   $html+='<td>'+
+         '<input type="" name="sp_date[]" value="0">'+
          '<input class="minu mx f2 nominal alignAngka nominal'+dataIndex+'" style="width:90%" type="" name="sp_nominal[]"'+
     'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' +dataIndex+'\');rege(event,\'nominal' +dataIndex+'\')"'+  'onblur="setRupiah(event,\'nominal' +dataIndex+'\')" onclick="setAwal(event,\'nominal' +dataIndex+'\')"'+
     'autocomplete="off">'+
@@ -655,6 +653,7 @@ function simpanPos(status=''){
  $.ajax({
     url : baseUrl+'/penjualan/pos-pesanan/printNota/'+response.s_id,
     type: 'get',
+    data    :  formPos+'&status='+status,
     success:function (response){
         
                 qz.appendHTML(
@@ -898,7 +897,7 @@ function batal(){
             $('.final').css('display','');
             $('.draft').css('display','');
             dataIndex=1;            
-            resetFrom();
+            
             $('#s_date').focus();
 }
 
@@ -1021,35 +1020,36 @@ var arrow = {
 
 ctrl = 17;
          $('.move').keydown(function (e) {                       
-                    if (e.ctrlKey && e.which === arrow.right) {
-                        
+                    if (e.ctrlKey && e.which === arrow.right) {                        
+                         setDatePicker();
                          var index = $('.move').index(this) + 1;                         
-                         $('.move').eq(index).focus();
-                         
+                         $('.move').eq(index).focus();                         
                       }
-                       if (e.ctrlKey && e.which === arrow.left) {
-                      /*if (e.keyCode == ctrl && arrow.left) {*/
+                       if (e.ctrlKey && e.which === arrow.left) {                      
+                        setDatePicker();
                          var index = $('.move').index(this) - 1;
-                         $('.move').eq(index).focus();
+                         $('.move').eq(index).focus();                         
                       }
-                      if (e.ctrlKey && e.which === arrow.up) {
-                         
+                      if (e.ctrlKey && e.which === arrow.up) {                         
+                          setDatePicker();
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) - 1;
-                         $('.'+upd).eq(index).focus();
+                         $('.'+upd).eq(index).focus();                         
                       }
-                      if (e.ctrlKey && e.which === arrow.down) {
-                         
+                      if (e.ctrlKey && e.which === arrow.down) {                         
+                         setDatePicker();
                          var upd=$(this).attr('class').split(' ')[ 1 ];
-
                          var index = $('.'+upd).index(this) + 1;
-                         $('.'+upd).eq(index).focus();
+                         $('.'+upd).eq(index).focus();                         
                          
                       }                    
      });
 
-
+function setDatePicker(){
+  $('#s_date').datepicker('hide');  
+  $('#s_finishdate').datepicker('hide');  
+  $('#s_duedate').datepicker('hide');  
+}
 
 function modalShow(){  
   $('#proses').on("shown.bs.modal", function() {
@@ -1057,7 +1057,7 @@ function modalShow(){
   });
   $('#proses').modal('show');
 }
-$(document).keydown(function(e){        
+$(document).keydown(function(e){          
   if(e.which==121 && e.ctrlKey){    
         if($('#proses').is(':visible')==false){           
           if($('#grand_biaya').val()!='' && $('#grand_biaya').val()!='0'){
@@ -1073,9 +1073,10 @@ $(document).keydown(function(e){
                 
           }
         }else if($('#proses').is(':visible')==true){
-            $chekTotal=angkaDesimal($('#akumulasiTotal').val())-angkaDesimal($('#totalBayar').val());
-                   if($('#s_jenis_bayar').val()=='1'){
-                  if($chekTotal>=0){                      
+               $chekTotal=angkaDesimal($('#akumulasiTotal').val())-angkaDesimal($('#totalBayar').val());            
+            
+              if($('#s_jenis_bayar').val()=='1'){
+                  if($chekTotal<=0){                 
 
                             if($('#s_id').val()==''){
                               simpanPos('final');
@@ -1096,7 +1097,7 @@ $(document).keydown(function(e){
 
 
                  if($('#s_jenis_bayar').val()=='2'){
-                  if($chekTotal>=0){                      
+                  if($chekTotal>=0){                     
 
                             if($('#s_id').val()==''){
                               simpanPos('final');
@@ -1227,16 +1228,20 @@ function buttonSimpanPos($status){
 
  function disabled(){
             $("#s_date").attr('disabled','disabled');
-            $("#customer").attr('disabled','disabled');
+            /*$("#customer").attr('disabled','disabled');*/
             $("#s_finishdate").attr('disabled','disabled');
             $("#s_duedate").attr('disabled','disabled');
+            $("#s_nama_cus").attr('disabled','disabled');
+            $("#s_alamat_cus").attr('disabled','disabled');
     }
     function nondisabled(){
             $("#s_date").removeAttr('disabled');
-            $("#customer").removeAttr('disabled');
+            /*$("#customer").removeAttr('disabled');*/
             $("#s_finishdate").removeAttr('disabled');
             $("#s_duedate").removeAttr('disabled');
             $("#s_jenis_bayar").removeAttr('disabled');
+            $("#s_nama_cus").attr('disabled','disabled');
+            $("#s_alamat_cus").attr('disabled','disabled');
     }
 
     function resetFrom(){
@@ -1244,7 +1249,8 @@ function buttonSimpanPos($status){
             $('.reset').val('');
             $('#s_created_by').val('{{Auth::user()->m_name}}');
             $("#s_date").val('{{date("d-m-Y")}}');
-            $("#customer").val('');
+            $("#s_nama_cus").val('');
+            $("#s_alamat_cus").val('');
             $("#s_finishdate").val('');
             $("#s_duedate").val('');
             $("#s_jenis_bayar").val(1).change();
@@ -1274,7 +1280,7 @@ function buttonSimpanPos($status){
                 position:'topRight',
                 timeout: 2000,
                 title: '',
-                message: "Ma'af, data inputan belum sesuai",
+                message: "Ma'af, data inputan tanggal masih kosong",
               });
               return false;
           }

@@ -97,7 +97,7 @@ class PenjualanController extends Controller
       return $x;
     }
     function paymentmethodEdit($id,$flag){
-      $data=m_paymentmethod::paymentmethodEdit($id,$flag);        
+      $data=m_paymentmethod::paymentmethodEdit($id,$flag);              
       $jumlah=count($data['sales_pm']);
        $data =view('POS::paymentmethod/paymentmethodEdit',compact('data','jumlah'));    
        $a='';
@@ -113,7 +113,7 @@ class PenjualanController extends Controller
       $flag='Toko';
       $paymentmethod=m_paymentmethod::pm();       
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
-      $machine=m_machine::showMachine($flag);      
+      $machine=m_machine::showMachineActive();      
       $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine'));      
       $data['listtoko']=view('POS::POSpenjualanToko/listtoko');   
       return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm','printPl'));
@@ -171,10 +171,13 @@ class PenjualanController extends Controller
       }*/
       
     }
-  function printNota($id){
+  function printNota($id, Request $request){
+      $jumlah=count(($request->sd_item));      
+      $bayar=$request->s_bayar;
+      $kembalian=$request->kembalian;
       $data=d_sales::printNota($id);
       
-      return view('POS::POSpenjualanToko/printNota',compact('data'));
+      return view('POS::POSpenjualanToko/printNota',compact('data','kembalian','bayar','jumlah'));
    
   }
    public function POSpenjualanPesanan()
