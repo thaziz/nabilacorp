@@ -70,7 +70,10 @@ table.dataTable tfoot th, table.dataTable tfoot td {
 .tabelan-noborder > thead > tr > th, .tabelan-noborder > tbody > tr > th , .tabelan-noborder > thead > tr > td , .tabelan-noborder > tbody > tr > td{
   border:0 !important;
 }
-
+input#nav-search:focus{
+  transition: 0.2s;
+  box-shadow: none !important;
+}
 .dataTables_filter input{
   border:1px solid #dedede;
   transition: 0.2s;
