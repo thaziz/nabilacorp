@@ -82,7 +82,11 @@ table.dataTable tfoot th, table.dataTable tfoot td {
   border:1px solid #ADF;
   transition: 0.2s;
 }
-table input.input-error,table input.input-error:focus{
+table input.input-error,input.input-error{
+  border:1px solid #F44;
+  transition: 0.2s;
+}
+table input.input-error:focus,input.input-error:focus{
   border:1px solid #F44;
   box-shadow: 0 0 5px 3px #FF7C19FF;
   transition: 0.2s;
