@@ -17,13 +17,24 @@ class pengirimanproduksiController extends Controller {
 	public function index()
 	{
 		$data = DB::table('d_productresult')
-						->where('pr_status', null)
+						->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+						->groupBy('pr_id')
 						->get();
+
+		$datafix = [];
+
+		for ($i=0; $i < count($data); $i++) {
+			if ($data[$i]->prdt_qty == $data[$i]->prdt_kirim) {
+
+			} else {
+				$datafix[0] = $data[$i];
+			}
+		}
 
 		$tujuan = DB::table('d_gudangcabang')
 							->get();
 
-		return view('Inventory::pengiriman.pengirimanproduksi', compact('data', 'tujuan'));
+		return view('Inventory::pengiriman.pengirimanproduksi', compact('datafix', 'tujuan'));
 	}
 
 	public function simpan(Request $request){

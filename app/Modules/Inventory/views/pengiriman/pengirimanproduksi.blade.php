@@ -45,7 +45,7 @@
                                               <div class="input-group">
                                                 <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
                                                   <option value=""> - Pilih Nomor Nota</option>
-                                                  @foreach ($data as $key => $value)
+                                                  @foreach ($datafix as $key => $value)
                                                     <option value="{{$value->pr_id}}">{{$value->pr_code}}</option>
                                                   @endforeach
                                                 </select>
@@ -300,7 +300,7 @@
                 return false;
 
              return true;
-          }          
+          }
 
       </script>
 @endsection
