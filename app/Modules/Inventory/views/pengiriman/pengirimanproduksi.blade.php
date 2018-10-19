@@ -249,9 +249,9 @@
                         '<td>'+(i + 1)+'</td>'+
                         '<td>'+result[i].pr_code+'</td>'+
                         '<td>'+result[i].i_name+'</td>'+
-                        '<td>'+result[i].prdt_qty+'</td>'+
-                        '<td>'+result[i].prdt_kirim+'</td>'+
-                        '<td>'+sisa+'</td>'+
+                        '<td align="right">'+accounting.formatMoney(result[i].prdt_qty, "", 0, ".", ",")+'</td>'+
+                        '<td align="right">'+accounting.formatMoney(result[i].prdt_kirim, "", 0, ".", ",")+'</td>'+
+                        '<td align="right">'+accounting.formatMoney(sisa, "", 0, ".", ",")+'</td>'+
                         '<td>'+status+'</td>'+
                         '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
                         '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
