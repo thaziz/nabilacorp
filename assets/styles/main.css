@@ -79,7 +79,12 @@ table.dataTable tfoot th, table.dataTable tfoot td {
   padding-bottom: 10px;
 }
 .form-control:hover{
-  border:1px solid #555;
+  border:1px solid #ADF;
+  transition: 0.2s;
+}
+table input.input-error,table input.input-error:focus{
+  border:1px solid #F44;
+  box-shadow: 0 0 5px 3px #FF7C19FF;
   transition: 0.2s;
 }
 .dataTables_wrapper .dataTables_paginate{
@@ -4071,6 +4076,7 @@ body.sidebar-icons #wrapper #page-wrapper {
   line-height: 13px;
 }
 textarea:focus,
+input:focus,select:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="datetime"]:focus,
@@ -4086,8 +4092,9 @@ input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
 .uneditable-input:focus {
-  border-color: #555;
-  box-shadow: none;
+  border:1px solid #79F;
+  box-shadow: 0 0 5px 3px #ADF !important;
+  transition: 0.2s;
   outline: 0 none;
 }
 a:focus,
