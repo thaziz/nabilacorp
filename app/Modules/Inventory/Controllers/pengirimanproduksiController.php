@@ -115,23 +115,27 @@ class pengirimanproduksiController extends Controller {
 											->get();
 
 						if ($update[0]->prdt_kirim == 0) {
-							DB::table('d_productresult_dt')
-												->where('prdt_productresult', $update[0]->pr_id)
-												->where('prdt_detailid', $update[0]->prdt_detailid)
-												->where('prdt_item', $request->item[$i])
-												->update([
-													'prdt_kirim' => $request->kirim[$i]
-												]);
-						} else {
-							$kurang = $request->kirim[$i] + $update[0]->prdt_kirim;
-							DB::table('d_productresult_dt')
-												->where('prdt_productresult', $update[0]->pr_id)
-												->where('prdt_detailid', $update[0]->prdt_detailid)
-												->where('prdt_item', $request->item[$i])
-												->update([
-													'prdt_kirim' => $kurang
-												]);
+						$prdtkirim = $request->kirim[$i]; 	} else {
+							$prdtkirim = $request->kirim[$i] + $update[0]->prdt_kirim;
 						}
+
+						DB::table('d_productresult_dt')
+											->where('prdt_productresult', $update[0]->pr_id)
+											->where('prdt_detailid', $update[0]->prdt_detailid)
+											->where('prdt_item', $request->item[$i])
+											->update([
+												'prdt_kirim' => $prdtkirim
+							]);
+						// } else {
+						// 	$kurang = $request->kirim[$i] + $update[0]->prdt_kirim;
+						// 	DB::table('d_productresult_dt')
+						// 						->where('prdt_productresult', $update[0]->pr_id)
+						// 						->where('prdt_detailid', $update[0]->prdt_detailid)
+						// 						->where('prdt_item', $request->item[$i])
+						// 						->update([
+						// 							'prdt_kirim' => $kurang
+						// 						]);
+						// }
 				}
 			}
 

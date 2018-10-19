@@ -64,7 +64,8 @@
                                                     @elseif ($value->pd_status_diterima == 'Y')
                                                       <td align="center"> <span class="label label-success">Sudah Diterima</span> </td>
                                                       <td align="center">
-                                                        <button type="button" onclick="detail({{$value->p_id}})" class="btn btn-info btn-sm" title="Detail" name="button"> <i class="fa fa-folder"></i> </button>
+                                                        <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" disabled title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
+                                                        <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" disabled title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
                                                       </td>
                                                     @endif
                                                   </tr>
