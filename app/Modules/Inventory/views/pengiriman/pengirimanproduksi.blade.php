@@ -45,7 +45,7 @@
                                               <div class="input-group">
                                                 <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
                                                   <option value=""> - Pilih Nomor Nota</option>
-                                                  @foreach ($datafix as $key => $value)
+                                                  @foreach ($data as $key => $value)
                                                     <option value="{{$value->pr_id}}">{{$value->pr_code}}</option>
                                                   @endforeach
                                                 </select>
@@ -146,8 +146,8 @@
        $('.select2').select2();
        $( "#tanggaltransfer" ).datepicker();
 
-   
-  
+
+
 });
       $('.datepicker').datepicker({
         format: "mm",
@@ -190,18 +190,19 @@
                         '<td style="display:none"><input type="text" name="prdt_hpp[]" value="'+result[i].prdt_hpp+'"></td>'+
                         '<td style="display:none"><input type="text" name="prdt_comp[]" value="'+result[i].prdt_comp+'"></td>'+
                         '<td style="display:none"><input type="text" name="prdt_position[]" value="'+result[i].prdt_position+'"></td>'+
-                        
+
 
                         '<td align="right">'+accounting.formatMoney(result[i].prdt_qty, "", 0, ".", ",")+'</td>'+
                         '<td align="right">'+accounting.formatMoney(result[i].prdt_kirim, "", 0, ".", ",")+'</td>'+
                         '<td align="right">'+accounting.formatMoney(sisa, "", 0, ".", ",")+'</td>'+
 
                         '<td>'+status+'</td>'+
-                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
+                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeyup="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
                         '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
                         '</tr>';
               }
               $('#showdata').html(html);
+              $('.number').maskMoney({thousands:'.', decimal:',', precision:0});
               $('input[name=nota]').val(result[0].pr_code);
               swal.close();
             }
@@ -210,7 +211,7 @@
 
       function filter(id, sisa){
         var kirim = $('#kirim'+id).val();
-            if (kirim > data[id].prdt_qty) {
+            if (parseInt(kirim) > parseInt(data[id].prdt_qty)) {
               swal("Info!", "Tidak boleh melebihi qty!");
               $('#kirim'+id).val(sisa);
               i = data.length + 1;
@@ -232,6 +233,11 @@
               setTimeout(function () {
                 window.location.href = baseUrl + '/inventory/pengirimanproduksi/pengirimanproduksi';
               }, 500);
+            } else if (result.status == 'Tujuan Tidak Boleh Kosong') {
+              swal({
+                    title: 'Info!',
+                    text: 'Tujuan Tidak Boleh Kosong!'
+                  });
             }
           }
         });

@@ -50,7 +50,7 @@
                                                   <option value="{{$value->p_id}}">{{$value->p_code}}</option>
                                                   @endforeach
                                                 </select>
-                                                <input type="" name="" id="id">
+                                                <input type="hidden" name="id" id="id">
                                                 <span class="input-group-btn">
                                                   <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
                                                 </span>
@@ -79,7 +79,7 @@
 
                                           <div class="modal-footer">
                               <button type="button" class="minu mx btn btn-danger" >Batal</button>
-                              <button class="btn final btn-primary minu mx" type="button" onclick="simpan('final')"> Simpan</button>                              
+                              <button class="btn final btn-primary minu mx" type="button" onclick="simpan('final')"> Simpan</button>
                             </div>
 
                                         </div>
@@ -91,7 +91,8 @@
 @endsection
 @section("extra_scripts")
     <script type="text/javascript">
- 
+      $('.select2').select2();
+
       $('.datepicker').datepicker({
         format: "mm",
         viewMode: "months",
@@ -159,7 +160,9 @@
               if (result.status == 'berhasil') {
                 swal("Success!", "Berhasil Diterima.", "success");
               }
-              swal.close();
+              setTimeout(function(){
+                window.location.reload();
+              }, 500);
             }
           });
       }
