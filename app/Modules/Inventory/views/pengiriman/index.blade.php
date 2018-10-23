@@ -45,7 +45,7 @@
                                                   <th>Tanggal Transfer</th>
                                                   <th>Keterangan</th>
                                                   <th>Status</th>
-                                                  <th width="15%">Aksi</th>
+                                                  <!-- <th width="15%">Aksi</th> -->
                                                 </tr>
                                               </thead>
                                               <tbody>
@@ -57,16 +57,16 @@
                                                     <td>{{$value->p_keterangan}}</td>
                                                     @if ($value->pd_status_diterima == 'N')
                                                       <td align="center"> <span class="label label-warning">Belum Diterima</span> </td>
-                                                      <td align="center">
+                                                     <!--  <td align="center">
                                                         <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
                                                         <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
-                                                      </td>
+                                                      </td> -->
                                                     @elseif ($value->pd_status_diterima == 'Y')
                                                       <td align="center"> <span class="label label-success">Sudah Diterima</span> </td>
-                                                      <td align="center">
+                                                     <!--  <td align="center">
                                                         <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" disabled title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
                                                         <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" disabled title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
-                                                      </td>
+                                                      </td> -->
                                                     @endif
                                                   </tr>
                                                 @endforeach

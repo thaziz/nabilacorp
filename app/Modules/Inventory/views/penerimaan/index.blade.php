@@ -50,6 +50,7 @@
                                                   <option value="{{$value->p_id}}">{{$value->p_code}}</option>
                                                   @endforeach
                                                 </select>
+                                                <input type="" name="" id="id">
                                                 <span class="input-group-btn">
                                                   <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
                                                 </span>
@@ -63,11 +64,11 @@
                                               <thead>
                                                 <tr>
                                                   <th width="5%">No</th>
-                                                  <th>No Pengiriman</th>
+                                                  <!-- <th>No Pengiriman</th> -->
                                                   <th>Item</th>
                                                   <th>QTY</th>
                                                   <th>Status</th>
-                                                  <th>Aksi</th>
+                                                  <!-- <th>Aksi</th> -->
                                                 </tr>
                                               </thead>
                                               <tbody id="showdata">
@@ -75,6 +76,11 @@
                                               </tbody>
                                             </table>
                                           </div>
+
+                                          <div class="modal-footer">
+                              <button type="button" class="minu mx btn btn-danger" >Batal</button>
+                              <button class="btn final btn-primary minu mx" type="button" onclick="simpan('final')"> Simpan</button>                              
+                            </div>
 
                                         </div>
 
@@ -85,75 +91,7 @@
 @endsection
 @section("extra_scripts")
     <script type="text/javascript">
-     $(document).ready(function() {
-    $('.select2').select2();
-
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data2').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data3').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-});
+ 
       $('.datepicker').datepicker({
         format: "mm",
         viewMode: "months",
@@ -166,6 +104,7 @@
       });
 
       function getdata(){
+        $("#id").val('');
         swal({
               title: 'Loading!',
               showCancelButton: false,
@@ -179,21 +118,23 @@
           data: {id:id},
           url: baseUrl + '/inventory/p_hasilproduksi/getdata',
           success : function(result){
+            $("#id").val(result[0].pd_pengiriman);
             for (var i = 0; i < result.length; i++) {
+
               if (result[i].pd_status_diterima == 'N') {
                 var status = '<span class="badge badge-warning">Belum DIterima</span>';
-                var button = '<td align="center"><button type="button" class="btn btn-info btn-sm" onclick="terima('+result[i].pd_id+')" name="button">Terima</button></td>';
+                /*var button = '<td align="center"><button type="button" class="btn btn-info btn-sm" onclick="terima('+result[i].pd_id+')" name="button">Terima</button></td>';*/
               } else if (result[i].pd_status_diterima == 'Y') {
                 var status = '<span class="badge badge-success">Sudah DIterima</span>';
-                var button = '<td align="center"><button type="button" class="btn btn-info btn-sm" onclick="terima('+result[i].pd_id+')" disabled name="button">Terima</button></td>';
+                /*var button = '<td align="center"><button type="button" class="btn btn-info btn-sm" onclick="terima('+result[i].pd_id+')" disabled name="button">Terima</button></td>';*/
               }
               html += '<tr>'+
                       '<td>'+(i + 1)+'</td>'+
-                      '<td>'+result[i].p_code+'</td>'+
+                      /*'<td>'+result[i].p_code+'</td>'+*/
                       '<td>'+result[i].i_name+'</td>'+
                       '<td>'+result[i].pd_qty+'</td>'+
                       '<td align="center">'+status+'</td>'+
-                      button+
+                      /*button+*/
                       '</tr>';
             }
             $('#showdata').html(html);
@@ -202,7 +143,8 @@
         });
       }
 
-      function terima(id){
+      function simpan(){
+        var id=$("#id").val();
         swal({
               title: 'Loading!',
               showCancelButton: false,

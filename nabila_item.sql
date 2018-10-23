@@ -642,14 +642,16 @@ DELETE FROM `d_mutationitem_product`;
 
 -- Dumping structure for table bisnis_tamma.d_pengiriman
 CREATE TABLE IF NOT EXISTS `d_pengiriman` (
-  `p_id` int(11) DEFAULT NULL,
+  `p_id` int(11) NOT NULL,
   `p_pr` varchar(100) DEFAULT NULL,
   `p_code` varchar(100) DEFAULT NULL,
   `p_tanggal_produksi` date DEFAULT NULL,
   `p_tanggal_transfer` date DEFAULT NULL,
   `p_keterangan` varchar(100) DEFAULT NULL,
   `p_insert` datetime DEFAULT NULL,
-  `p_update` datetime DEFAULT NULL
+  `p_update` datetime DEFAULT NULL,
+  `p_status_diterima` enum('Y','N','T') DEFAULT 'Y' COMMENT 'N=''Belum di kirim , Y=Kirim'' ,T=''Terima''',
+  PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table bisnis_tamma.d_pengiriman: ~0 rows (approximately)
@@ -660,8 +662,8 @@ DELETE FROM `d_pengiriman`;
 
 -- Dumping structure for table bisnis_tamma.d_pengiriman_dt
 CREATE TABLE IF NOT EXISTS `d_pengiriman_dt` (
-  `pd_id` int(11) DEFAULT NULL,
-  `pd_pengiriman` varchar(100) DEFAULT NULL,
+  `pd_pengiriman` int(11) NOT NULL,
+  `pd_detailid` int(11) NOT NULL,
   `pd_comp` int(11) DEFAULT NULL,
   `pd_position` int(11) DEFAULT NULL,
   `pd_item` int(11) DEFAULT NULL,
@@ -671,7 +673,9 @@ CREATE TABLE IF NOT EXISTS `d_pengiriman_dt` (
   `pd_status_diterima` enum('Y','N') DEFAULT 'N',
   `pd_hpp` decimal(10,2) DEFAULT NULL,
   `pd_insert` datetime DEFAULT NULL,
-  `pd_update` datetime DEFAULT NULL
+  `pd_update` datetime DEFAULT NULL,
+  PRIMARY KEY (`pd_pengiriman`,`pd_detailid`),
+  CONSTRAINT `FK_d_pengiriman_dt_d_pengiriman` FOREIGN KEY (`pd_pengiriman`) REFERENCES `d_pengiriman` (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table bisnis_tamma.d_pengiriman_dt: ~0 rows (approximately)
@@ -720,13 +724,9 @@ CREATE TABLE IF NOT EXISTS `d_productresult` (
   CONSTRAINT `FK_d_productresult_m_comp` FOREIGN KEY (`pr_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table bisnis_tamma.d_productresult: ~3 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_productresult: ~1 rows (approximately)
 DELETE FROM `d_productresult`;
 /*!40000 ALTER TABLE `d_productresult` DISABLE KEYS */;
-INSERT INTO `d_productresult` (`pr_id`, `pr_comp`, `pr_code`, `pr_spk`, `pr_date`, `pr_item`, `pr_note`, `pr_status`, `pr_created`, `pr_updated`) VALUES
-	(1, 1, 'PR-1810-00001', 0, '2018-10-19', NULL, NULL, NULL, '2018-10-19 00:43:31', '2018-10-19 00:43:31'),
-	(2, 1, 'PR-1810-00002', 0, '2018-10-20', NULL, 'coba', NULL, '2018-10-19 00:44:51', '2018-10-19 00:54:22'),
-	(3, 1, 'PR-1810-00003', 0, '2018-10-19', NULL, NULL, NULL, '2018-10-19 00:57:30', '2018-10-19 00:57:30');
 /*!40000 ALTER TABLE `d_productresult` ENABLE KEYS */;
 
 
@@ -751,14 +751,9 @@ CREATE TABLE IF NOT EXISTS `d_productresult_dt` (
   CONSTRAINT `FK_d_productresult_dt_d_productresult` FOREIGN KEY (`prdt_productresult`) REFERENCES `d_productresult` (`pr_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table bisnis_tamma.d_productresult_dt: ~4 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_productresult_dt: ~2 rows (approximately)
 DELETE FROM `d_productresult_dt`;
 /*!40000 ALTER TABLE `d_productresult_dt` DISABLE KEYS */;
-INSERT INTO `d_productresult_dt` (`prdt_productresult`, `prdt_detailid`, `prdt_comp`, `prdt_position`, `prdt_date`, `prdt_item`, `prdt_qty`, `prdt_qty_sisa`, `prdt_kirim`, `prdt_status`, `prdt_hpp`, `prdt_time`, `prdt_created`, `prdt_updated`) VALUES
-	(1, 1, 1, 1, NULL, 45, 100, 100, 0, NULL, 19000.00, NULL, '2018-10-19 00:43:32', '2018-10-19 00:43:32'),
-	(2, 1, 1, 1, NULL, 6, 1000, 1000, 0, NULL, 4000.00, NULL, '2018-10-19 00:44:51', '2018-10-19 00:54:22'),
-	(2, 2, 1, 1, NULL, 48, 300, 300, 0, NULL, 9500.00, NULL, '2018-10-19 00:54:22', '2018-10-19 00:54:22'),
-	(3, 1, 1, 1, NULL, 45, 1000, 1000, 0, NULL, 19000.00, NULL, '2018-10-19 00:57:30', '2018-10-19 00:57:30');
 /*!40000 ALTER TABLE `d_productresult_dt` ENABLE KEYS */;
 
 
@@ -1131,9 +1126,9 @@ CREATE TABLE IF NOT EXISTS `d_sales` (
   KEY `FK_sales_customer` (`s_customer`),
   KEY `FK_d_sales_m_comp` (`s_comp`),
   CONSTRAINT `FK_d_sales_m_comp` FOREIGN KEY (`s_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table bisnis_tamma.d_sales: ~1 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_sales: ~0 rows (approximately)
 DELETE FROM `d_sales`;
 /*!40000 ALTER TABLE `d_sales` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_sales` ENABLE KEYS */;
@@ -1160,7 +1155,7 @@ CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   CONSTRAINT `FK_d_sales_dt_m_comp` FOREIGN KEY (`sd_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table bisnis_tamma.d_sales_dt: ~1 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_sales_dt: ~0 rows (approximately)
 DELETE FROM `d_sales_dt`;
 /*!40000 ALTER TABLE `d_sales_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_sales_dt` ENABLE KEYS */;
@@ -1180,7 +1175,7 @@ CREATE TABLE IF NOT EXISTS `d_sales_payment` (
   CONSTRAINT `FK_d_sales_payment_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table bisnis_tamma.d_sales_payment: ~1 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_sales_payment: ~0 rows (approximately)
 DELETE FROM `d_sales_payment`;
 /*!40000 ALTER TABLE `d_sales_payment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_sales_payment` ENABLE KEYS */;
@@ -1225,9 +1220,9 @@ CREATE TABLE IF NOT EXISTS `d_stock` (
   KEY `FK_d_stock_d_gudangcabang_2` (`s_position`),
   CONSTRAINT `FK_d_stock_d_gudangcabang` FOREIGN KEY (`s_comp`) REFERENCES `d_gudangcabang` (`gc_id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_d_stock_d_gudangcabang_2` FOREIGN KEY (`s_position`) REFERENCES `d_gudangcabang` (`gc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table bisnis_tamma.d_stock: ~3 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_stock: ~5 rows (approximately)
 DELETE FROM `d_stock`;
 /*!40000 ALTER TABLE `d_stock` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_stock` ENABLE KEYS */;
@@ -1261,7 +1256,7 @@ CREATE TABLE IF NOT EXISTS `d_stock_mutation` (
   CONSTRAINT `FK_d_stock_mutation_d_stock_mutcat` FOREIGN KEY (`sm_mutcat`) REFERENCES `d_stock_mutcat` (`smc_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table bisnis_tamma.d_stock_mutation: ~5 rows (approximately)
+-- Dumping data for table bisnis_tamma.d_stock_mutation: ~8 rows (approximately)
 DELETE FROM `d_stock_mutation`;
 /*!40000 ALTER TABLE `d_stock_mutation` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_stock_mutation` ENABLE KEYS */;

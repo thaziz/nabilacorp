@@ -111,7 +111,7 @@
                                           </div>
 
                                           <div class="table-responsive">
-                                            <table class="table tabelan table-hover table-bordered" id="data2">
+                                            <table class="table tabelan table-hover table-bordered" >
                                               <thead>
                                                 <tr>
                                                   <th width="5%">No</th>

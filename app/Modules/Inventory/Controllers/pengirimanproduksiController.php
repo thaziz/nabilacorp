@@ -8,6 +8,7 @@ use App\mMember;
 use DB;
 use Carbon\Carbon;
 use DateTime;
+use App\Lib\mutasi;
 
 class pengirimanproduksiController extends Controller {
 	public function __construct(){
@@ -17,25 +18,26 @@ class pengirimanproduksiController extends Controller {
 	public function index()
 	{
 		$data = DB::table('d_productresult')
-						->where('pr_status', null)
+						->where('pr_status', 'N')
 						->get();
 
 		$tujuan = DB::table('d_gudangcabang')
+				  ->join('m_comp','c_id','=','gc_comp')
+				  ->where('gc_gudang','GUDANG PENJUALAN')
 							->get();
 
 		return view('Inventory::pengiriman.pengirimanproduksi', compact('data', 'tujuan'));
 	}
 
 	public function simpan(Request $request){
-		DB::beginTransaction();
-		try {
+		return DB::transaction(function () use ($request) {    
 
+		if($request->tujuan=='') {
+			return 'tujuan Tidak Boleh Kosong';
+		}
 			$id = DB::table('d_pengiriman')
-						->max('p_id');
+						->max('p_id')+1;
 
-			if ($id < 0) {
-				$id = 0;
-			}
 
 			$kode = "";
 
@@ -63,30 +65,27 @@ class pengirimanproduksiController extends Controller {
 										->where('pr_code', $request->nota)
 										->get();
 
-			DB::table('d_productresult')
+		/*	DB::table('d_productresult')
 									->where('pr_code', $request->nota)
 									->update([
 										'pr_status' => 'Dikirim'
-									]);
+									]);*/
 
 			DB::table('d_pengiriman')
 				->insert([
-					'p_id' => $id + 1,
-					'p_pr' => $produksi[0]->pr_code,
+					'p_id' => $id,
+					'p_pr' => $request->nota,
 					'p_code' => $finalkode,
-					'p_tanggal_produksi' => $produksi[0]->pr_date,
+					/*'p_tanggal_produksi' => $produksi[0]->pr_date,*/
 					'p_tanggal_transfer' => Carbon::parse($request->p_tanggal_transfer)->format('Y-m-d'),
 					'p_keterangan' => $request->keterangan,
 					'p_insert' => Carbon::now('Asia/Jakarta')
 				]);
 
+
 			for ($i=0; $i < count($request->kirim); $i++) {
 				$iddt = DB::table('d_pengiriman_dt')
-								->max('pd_id');
-
-						if ($iddt < 0) {
-							$iddt = 0;
-						}
+								->max('pd_detailid')+1;
 
 				if ($request->kirim[$i] != 0 || $request->kirim[$i] != null || $request->kirim[$i] != '') {
 					$item = DB::table('m_item')
@@ -98,15 +97,34 @@ class pengirimanproduksiController extends Controller {
 
 					DB::table('d_pengiriman_dt')
 						->insert([
-							'pd_id' => $iddt + 1,
-							'pd_pengiriman' => $finalkode,
+							'pd_pengiriman' => $id,
+							'pd_detailid' => $iddt,
+							
 							'pd_qty' => $request->kirim[$i],
-							'pd_comp' => $produksi[$i]->prdt_comp,
-							'pd_position' => $request->tujuan,
+							'pd_comp' => $request->tujuan,
+							'pd_position' => $request->prdt_position[$i],
 							'pd_item' => $request->item[$i],
-							'pd_hpp' => $item[0]->i_hpp,
+							'pd_hpp' => $request->prdt_hpp[$i],
 							'pd_insert' => Carbon::now('Asia/Jakarta')
 						]);
+
+					$comp= $request->prdt_comp[$i];
+					$position=$request->prdt_position[$i];
+
+					$compTujuan=$request->tujuan;
+					$positionTujuan=$request->prdt_position[$i];
+					$mutcatTujuan=11;
+					$detailTujuan='pengiriman Produksi';
+					$date=Carbon::parse($request->p_tanggal_transfer)->format('Y-m-d');
+
+/*dd($request->item[$i].' + '.$request->kirim[$i].' + '.$comp.' + '.$position.' + '.$flag='Penjualan Toko'.' + '.$finalkode.' + '.$ket=''.' + '.$date.' + '.$compTujuan.' + '.$positionTujuan.' + '.$mutcatTujuan.' + '.$detailTujuan);*/
+
+
+						$simpanMutasi=mutasi::simpanTranferMutasi($request->item[$i],$request->kirim[$i],$comp,$position,$flag='Penjualan Toko',$finalkode,$ket='e',$date,$compTujuan,$positionTujuan,$mutcatTujuan,$detailTujuan);
+
+						
+						
+
 
 						$update = DB::table('d_productresult')
 											->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
@@ -126,29 +144,32 @@ class pengirimanproduksiController extends Controller {
 											->update([
 												'prdt_kirim' => $prdtkirim
 							]);
-						// } else {
-						// 	$kurang = $request->kirim[$i] + $update[0]->prdt_kirim;
-						// 	DB::table('d_productresult_dt')
-						// 						->where('prdt_productresult', $update[0]->pr_id)
-						// 						->where('prdt_detailid', $update[0]->prdt_detailid)
-						// 						->where('prdt_item', $request->item[$i])
-						// 						->update([
-						// 							'prdt_kirim' => $kurang
-						// 						]);
-						// }
+						
 				}
 			}
 
-			DB::commit();
+			
+
+			$produksi = DB::table('d_productresult')
+										->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
+										->where('pr_code', $request->nota)
+										->select(DB::raw('sum(prdt_qty) as prdt_qty,sum(prdt_kirim) as prdt_kirim'))
+										->first();
+			if($produksi->prdt_qty==$produksi->prdt_kirim){
+
+						$produksi = DB::table('d_productresult')										
+										->where('pr_code', $request->nota)
+										->update([
+										'pr_status' => 'Y'
+										]);
+			}
+
 			return response()->json([
 				'status' => 'berhasil'
 			]);
-		} catch (\Exception $e) {
-			DB::rollback();
-			return response()->json([
-				'status' => 'gagal'
-			]);
-		}
+
+		});
+		
 
 	}
 

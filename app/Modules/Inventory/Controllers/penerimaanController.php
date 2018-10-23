@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use DateTime;
 use Yajra\Datatables\Datatables;
 use Session;
+use App\Lib\mutasi;
 
 class penerimaanController extends Controller {
 	public function __construct(){
@@ -19,16 +20,16 @@ class penerimaanController extends Controller {
 	public function index()
 	{
 		$data = DB::table('d_pengiriman')
-							->where('p_status_diterima', 'N')
+							->where('p_status_diterima', 'Y')
 							->select('p_code', 'p_id')
 							->get();
 
 		return view('Inventory::Penerimaan.index', compact('data'));
 	}
 
-	public function getdata(Request $request){
+	public function getdata(Request $request){		
 			$data = DB::table('d_pengiriman')
-							->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+							->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_id')
 							->join('m_item', 'i_id', '=', 'pd_item')
 							->where('p_id', $request->id)
 							->get();
@@ -43,31 +44,51 @@ class penerimaanController extends Controller {
 	}
 
 	public function terima(Request $request){
-		DB::beginTransaction();
-		try {
+/*		DB::beginTransaction();
+		try {*/
 
-			$data = DB::table('d_pengiriman_dt')
-								->where('pd_id', $request->id)
-								->get();
+
+			
 
 			DB::table('d_pengiriman_dt')
-					->where('pd_id', $request->id)
-					->update([
-						'pd_diterima' => $data[0]->pd_qty,
+					->where('pd_pengiriman', $request->id)
+					->update([						
 						'pd_penerima' => Session::get('user_comp'),
 						'pd_status_diterima' => 'Y',
 					]);
+
+
+			DB::table('d_pengiriman')
+					->where('p_id', $request->id)
+					->update([			
+						'p_status_diterima' => 'T',
+					]);
+
+
+			$getPengiriman=DB::table('d_pengiriman_dt')
+						   ->where('pd_pengiriman', $request->id)->get();
+
+			$date=date('Y-m-d');
+			foreach ($getPengiriman as $data) {
+				$simpanMutasi=mutasi::simpanTranferMutasi($data->pd_item,$data->pd_qty,$data->pd_comp,$data->pd_position,$flag='Penerimaan',$data->pd_pengiriman,$ket='e',$date,$data->pd_comp,$data->pd_comp,1,'Penerimaan Penjualan');
+			}
+
+
+			
+						
+
 
 			DB::commit();
 			return response()->json([
 				'status' => 'berhasil'
 			]);
-		} catch (\Exception $e) {
+		/*} catch (\Exception $e) {
+
 			DB::rollback();
 			return response()->json([
 				'status' => 'gagal'
 			]);
-		}
+		}*/
 
 	}
 

@@ -65,7 +65,7 @@
                                                 <select class="form-control input-sm select2" name="tujuan">
                                                   <option value=""> - Pilih Tujuan - </option>
                                                   @foreach ($tujuan as $key => $value)
-                                                    <option value="{{$value->gc_id}}">{{$value->gc_gudang}}</option>
+                                                    <option value="{{$value->gc_id}}">{{$value->c_name}} ( {{$value->gc_gudang}} )</option>
                                                   @endforeach
                                                 </select>
                                                 <span class="input-group-btn">
@@ -146,71 +146,8 @@
        $('.select2').select2();
        $( "#tanggaltransfer" ).datepicker();
 
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data2').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data3').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
+   
+  
 });
       $('.datepicker').datepicker({
         format: "mm",
@@ -249,6 +186,9 @@
                         '<td>'+(i + 1)+'</td>'+
                         '<td>'+result[i].pr_code+'</td>'+
                         '<td>'+result[i].i_name+'</td>'+
+                        '<td style="display:none"><input type="text" name="prdt_hpp[]" value="'+result[i].prdt_hpp+'"></td>'+
+                        '<td style="display:none"><input type="text" name="prdt_comp[]" value="'+result[i].prdt_comp+'"></td>'+
+                        '<td style="display:none"><input type="text" name="prdt_position[]" value="'+result[i].prdt_position+'"></td>'+
                         '<td>'+result[i].prdt_qty+'</td>'+
                         '<td>'+result[i].prdt_kirim+'</td>'+
                         '<td>'+sisa+'</td>'+
