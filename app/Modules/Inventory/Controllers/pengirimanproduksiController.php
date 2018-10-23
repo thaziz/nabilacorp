@@ -41,15 +41,18 @@ class pengirimanproduksiController extends Controller {
 				  ->where('gc_gudang','GUDANG PENJUALAN')
 							->get();
 
-		return view('Inventory::pengiriman.pengirimanproduksi', compact('datafix', 'tujuan'));
+		return view('Inventory::pengiriman.pengirimanproduksi', compact('data', 'tujuan'));
 	}
 
 	public function simpan(Request $request){
-		return DB::transaction(function () use ($request) {    
+		return DB::transaction(function () use ($request) {
 
 		if($request->tujuan=='') {
-			return 'tujuan Tidak Boleh Kosong';
+			return response()->json([
+				'status' => 'Tujuan Tidak Boleh Kosong'
+			]);
 		}
+
 			$id = DB::table('d_pengiriman')
 						->max('p_id')+1;
 
@@ -114,7 +117,7 @@ class pengirimanproduksiController extends Controller {
 						->insert([
 							'pd_pengiriman' => $id,
 							'pd_detailid' => $iddt,
-							
+
 							'pd_qty' => $request->kirim[$i],
 							'pd_comp' => $request->tujuan,
 							'pd_position' => $request->prdt_position[$i],
@@ -137,8 +140,8 @@ class pengirimanproduksiController extends Controller {
 
 						$simpanMutasi=mutasi::simpanTranferMutasi($request->item[$i],$request->kirim[$i],$comp,$position,$flag='Penjualan Toko',$finalkode,$ket='e',$date,$compTujuan,$positionTujuan,$mutcatTujuan,$detailTujuan);
 
-						
-						
+
+
 
 
 						$update = DB::table('d_productresult')
@@ -159,11 +162,11 @@ class pengirimanproduksiController extends Controller {
 											->update([
 												'prdt_kirim' => $prdtkirim
 							]);
-						
+
 				}
 			}
 
-			
+
 
 			$produksi = DB::table('d_productresult')
 										->join('d_productresult_dt', 'prdt_productresult', '=', 'pr_id')
@@ -172,7 +175,7 @@ class pengirimanproduksiController extends Controller {
 										->first();
 			if($produksi->prdt_qty==$produksi->prdt_kirim){
 
-						$produksi = DB::table('d_productresult')										
+						$produksi = DB::table('d_productresult')
 										->where('pr_code', $request->nota)
 										->update([
 										'pr_status' => 'Y'
@@ -184,7 +187,7 @@ class pengirimanproduksiController extends Controller {
 			]);
 
 		});
-		
+
 
 	}
 
@@ -200,7 +203,7 @@ class pengirimanproduksiController extends Controller {
 
 	public function indexfix(){
 		$data = DB::table('d_pengiriman')
-						->join('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_code')
+						->leftjoin('d_pengiriman_dt', 'pd_pengiriman', '=', 'p_id')
 						->groupBy('p_id')
 						->get();
 
