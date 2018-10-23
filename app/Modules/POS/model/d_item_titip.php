@@ -112,12 +112,12 @@ class d_item_titip extends Model
       $it_code = "TTN-".date('ym')."-".$kd;
 
       $it_total= format::format($request->it_total);        
-        
+      $date=date('Y-m-d',strtotime($request->it_date));
       d_item_titip::create([
             'it_id'=>$it_id,            
             'it_comp'=>Session::get('user_comp'),
             'it_code'=>$it_code,
-            'it_date'=>date('Y-m-d',strtotime($request->it_date)),
+            'it_date'=>$date,
             'it_keterangan'=>$request->it_keterangan,
             'it_total' =>$it_total,
         ]);
@@ -128,7 +128,7 @@ class d_item_titip extends Model
       
         $idt_qty= format::format($request->idt_qty[$i]); 
         $hpp= format::format($request->idt_price[$i]);         
-        if(mutasi::tambahmutasi($request->idt_item[$i],$idt_qty,1,1,'Barang Titip',1,$it_id,'','',$hpp)){
+        if(mutasi::tambahmutasi($request->idt_item[$i],$idt_qty,1,1,'Barang Titip',1,$it_id,'','',$hpp,$date)){
             $idt_detailid=d_itemTitip_dt::where('idt_itemTitip',$it_id)
                                ->max('idt_detailid')+1;                                           
 

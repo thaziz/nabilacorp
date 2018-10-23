@@ -140,7 +140,7 @@ class d_product_result extends Model
                                 'prdt_position'=>$position,
                                  ]);
                
-                $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi',3,$pr_id,'','',$prdt_hpp,$pr_date);
+                $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'TAMBAH BARANG HASIL PRODUKSI',5,$pr_code,'','',$prdt_hpp,$pr_date);
                 if($simpanMutasi['true']){
 
                 }else{
@@ -190,7 +190,7 @@ class d_product_result extends Model
 
               $comp=$request->comp[$h];
               $position=$request->position[$h];                                                 
-        $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$comp,$position,$flag='Hasil Produksi',$sm_reff=$id);
+        $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$comp,$position,$flag='Hasil Produksi',$request->pr_note);
 
               if($simpanMutasi['true']){
                     $hapus_product_dt->delete();
