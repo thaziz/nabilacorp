@@ -45,7 +45,7 @@
                                               <div class="input-group">
                                                 <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
                                                   <option value=""> - Pilih Nomor Nota</option>
-                                                  @foreach ($data as $key => $value)
+                                                  @foreach ($datafix as $key => $value)
                                                     <option value="{{$value->pr_id}}">{{$value->pr_code}}</option>
                                                   @endforeach
                                                 </select>
@@ -186,12 +186,16 @@
                         '<td>'+(i + 1)+'</td>'+
                         '<td>'+result[i].pr_code+'</td>'+
                         '<td>'+result[i].i_name+'</td>'+
+
                         '<td style="display:none"><input type="text" name="prdt_hpp[]" value="'+result[i].prdt_hpp+'"></td>'+
                         '<td style="display:none"><input type="text" name="prdt_comp[]" value="'+result[i].prdt_comp+'"></td>'+
                         '<td style="display:none"><input type="text" name="prdt_position[]" value="'+result[i].prdt_position+'"></td>'+
-                        '<td>'+result[i].prdt_qty+'</td>'+
-                        '<td>'+result[i].prdt_kirim+'</td>'+
-                        '<td>'+sisa+'</td>'+
+                        
+
+                        '<td align="right">'+accounting.formatMoney(result[i].prdt_qty, "", 0, ".", ",")+'</td>'+
+                        '<td align="right">'+accounting.formatMoney(result[i].prdt_kirim, "", 0, ".", ",")+'</td>'+
+                        '<td align="right">'+accounting.formatMoney(sisa, "", 0, ".", ",")+'</td>'+
+
                         '<td>'+status+'</td>'+
                         '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+','+sisa+')" name="kirim[]" value="'+sisa+'"></td>'+
                         '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
@@ -240,7 +244,7 @@
                 return false;
 
              return true;
-          }          
+          }
 
       </script>
 @endsection

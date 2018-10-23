@@ -11,7 +11,8 @@
     <script src="{{ asset ('assets/script/jquery.slimscroll.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.cookie.js') }}"></script>
     <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
-    <script src="{{ asset ('assets/script/custom.min.js') }}"></script>    
+    <script src="{{ asset ('assets/script/custom.min.js') }}"></script>
+    <script src="{{ asset ('assets/script/accounting/accounting.js') }}"></script>   
     <script src="{{ asset ('assets/script/jquery.menu.js') }}"></script>
     <script src="{{ asset ('assets/script/pace.min.js') }}"></script>
     <script src="{{ asset ('assets/script/holder.js') }}"></script>
@@ -20,13 +21,13 @@
     <script src="{{ asset ('assets/script/jquery.flot.categories.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.tooltip.js') }}"></script>
-    
+
     <script src="{{ asset ('assets/script/jquery.flot.fillbetween.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.stack.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.spline.js') }}"></script>
     <script src="{{ asset ('assets/script/zabuto_calendar.min.js') }}"></script>
     <script src="{{ asset ('assets/script/index.js') }}"></script>
-    
+
     <script src="{{ asset ('assets/script/jquery.dataTables.js') }}"></script>
     <script src="{{ asset ('assets/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
@@ -35,7 +36,7 @@
     <script src="{{ asset ('assets/sliptree-multiselect/bootstrap-tokenfield.js') }}"></script>
 
     <!--LOADING SCRIPTS FOR CHARTS-->
-    
+
     <script src="{{ asset ('assets/script/data.js') }}"></script>
     <script src="{{ asset ('assets/script/drilldown.js') }}"></script>
     <script src="{{ asset ('assets/script/exporting.js') }}"></script>
@@ -51,7 +52,7 @@
 
 <!--     <script src="{{ asset ('assets/c/qz-websocket.js') }}"></script>
     <script src="{{ asset ('assets/c/3rdparty/deployJava.js') }}"></script>
-   
+
     <script src="{{ asset ('assets/c/3rdparty/html2canvas.js') }}"></script>
     <script src="{{ asset ('assets/c/3rdparty/jquery.plugin.html2canvas.js') }}"></script> -->
 
@@ -72,7 +73,7 @@
     </script>
 
     <script type="text/javascript">
-      
+
         function numberOnly(){
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -91,7 +92,7 @@
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
             e.preventDefault();
         }
-    
+
         }
         $(document).ready(function(){
             var extensions = {
@@ -153,7 +154,7 @@
              }
           }
 
-    function regeneratedSession(){        
+    function regeneratedSession(){
         $.ajax({
             url: baseUrl+'/session-set-comp/'+$('.mem_comp').val(),
             type: 'get',
@@ -163,5 +164,5 @@
             }
         })
     }
-     
+
     </script>
