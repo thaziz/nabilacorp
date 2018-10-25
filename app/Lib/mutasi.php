@@ -100,6 +100,7 @@ class mutasi{
       public static function perbaruimutasi($item,$totalPermintaan,$comp,$position,$flag,$idFlag,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
     return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$idFlag,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
                 $totalHpp='';
+
                 $updateMutasi=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty','>',0); 
 
 

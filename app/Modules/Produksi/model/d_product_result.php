@@ -163,6 +163,7 @@ class d_product_result extends Model
 
  static function perbarui($id,$request){
     return DB::transaction(function () use ($id,$request) {
+              $pr_code=$request->pr_code;
               $pr_date=date('Y-m-d',strtotime($request->pr_date));
               $updateProductresult=
                           d_product_result::where('pr_id',$id);
@@ -237,7 +238,8 @@ class d_product_result extends Model
               $prdt_hpp= format::format($request->prdt_hpp[$i]);
               $comp=$request->comp[$i];
               $position=$request->position[$i];
-              $simpanMutasi=mutasi::perbaruimutasi($request->prdt_item[$i],$permintaan,$comp,$position,$flag='Hasil Produksi',$idFlag=3,$sm_reff=$id,$flagTujuan='',$idMutasiTujuan='',$prdt_hpp);
+
+              $simpanMutasi=mutasi::perbaruimutasi($request->prdt_item[$i],$permintaan,$comp,$position,$flag='Hasil Produksi',$idFlag=3,$pr_code,$flagTujuan='',$idMutasiTujuan='',$prdt_hpp);
 
 
               if($simpanMutasi['true']){
@@ -280,7 +282,7 @@ class d_product_result extends Model
                                 'prdt_hpp'=>$prdt_hpp
                                  ]);
 
-$simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'Hasil Produksi','3',$id,'','',$prdt_hpp,$pr_date);
+$simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$position,'TAMBAH BARANG HASIL PRODUKSI','5',$pr_code,'','',$prdt_hpp,$pr_date);
 
               if($simpanMutasi['true']){
 

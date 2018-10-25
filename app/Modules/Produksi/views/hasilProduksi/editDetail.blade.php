@@ -3,8 +3,8 @@
           <td width="23%"><input style="width:100%" type="hidden" name="prdt_item[]" value='{{$detail->prdt_item}}'>
           <input style="width:100%" type="hidden" name="prdt_productresult[]" value="{{$detail->prdt_productresult}}">
           <input style="width:100%" type="hidden" name="prdt_detailid[]" value="{{$detail->prdt_detailid}}">
-          <input value="{{$detail->prdt_comp}}" style="width:100%" type="hidden" name="comp[]">
-          <input value="{{$detail->prdt_position}}" style="width:100%" type="hidden" name="position[]">
+          <input value="{{$detail->prdt_comp}}" style="width:100%" type="" name="comp[]">
+          <input value="{{$detail->prdt_position}}" style="width:100%" type="" name="position[]">
           <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
 
           <td><input class="stock stock{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" value="{{number_format($detail->s_qty,0,',','.')}}" readonly=""></td>
