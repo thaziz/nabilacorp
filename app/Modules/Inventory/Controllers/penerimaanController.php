@@ -24,7 +24,7 @@ class penerimaanController extends Controller {
 							->select('p_code', 'p_id')
 							->get();
 
-		return view('Inventory::Penerimaan.index', compact('data'));
+		return view('Inventory::penerimaan.index', compact('data'));
 	}
 
 	public function getdata(Request $request){		
