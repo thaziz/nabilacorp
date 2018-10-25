@@ -963,6 +963,13 @@ function caraxx(hutang_id){
 }
 
 function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
+  var status='';
+  if(s_status=='final'){
+    status='<span class="label label-primary">Final</span>';
+  }
+  if(s_status=='Terima'){
+    status='<span class="label label-success">Diterima</span>';
+  }
   $('#txt_span_status').text(s_status);
   $('#lCode').text(s_note);
   $('#lTgl').text(s_date);
