@@ -80,7 +80,7 @@ class d_sales extends Model
                   $sd_qty = format::format($request->sd_qty[$i]); 
                   $comp=$request->comp[$i];
                   $position=$request->position[$i];                  
-                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$s_id,$ket='',$s_date);   
+                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$note,$ket='',$s_date);   
 
                   
                   if($simpanMutasi['true']){
@@ -203,7 +203,9 @@ class d_sales extends Model
     }
     static function perbarui ($request){
       
-      return DB::transaction(function () use ($request) {           
+      return DB::transaction(function () use ($request) {   
+
+
         $updateSales=d_sales::where('s_id',$request->s_id);
           $permintaan=0;
           $s_date=date('Y-m-d',strtotime($request->s_date));
@@ -881,7 +883,7 @@ $totalBayar=0;
 
           $comp=$request->comp[$i];
           $position=$request->position[$i];   
-          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_id,$ket='',$s_date);
+          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_note,$ket='',$s_date);
             if($simpanMutasi['true']){     
             $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
             }else{
