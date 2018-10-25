@@ -329,7 +329,7 @@ $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$posi
 
                 $hapus=d_productresult_dt::where('prdt_productresult',$id)->where('prdt_item',$hapusItem);
 
-                if(count($hapus->first())!=0){
+                if($hapus->first()){
                   $permintaan=$hapus->first()->prdt_qty;
 
                   if($permintaan>0){
