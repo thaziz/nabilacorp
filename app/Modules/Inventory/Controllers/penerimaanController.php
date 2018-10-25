@@ -44,8 +44,8 @@ class penerimaanController extends Controller {
 	}
 
 	public function terima(Request $request){
-/*		DB::beginTransaction();
-		try {*/
+		DB::beginTransaction();
+		try {
 
 
 			
@@ -64,13 +64,18 @@ class penerimaanController extends Controller {
 						'p_status_diterima' => 'T',
 					]);
 
+			$p_code=DB::table('d_pengiriman')
+					->where('p_id', $request->id)
+					->select('p_code')
+					->first();
+
 
 			$getPengiriman=DB::table('d_pengiriman_dt')
 						   ->where('pd_pengiriman', $request->id)->get();
 
 			$date=date('Y-m-d');
 			foreach ($getPengiriman as $data) {
-				$simpanMutasi=mutasi::simpanTranferMutasi($data->pd_item,$data->pd_qty,$data->pd_comp,$data->pd_position,$flag='Penerimaan',$data->pd_pengiriman,$ket='e',$date,$data->pd_comp,$data->pd_comp,1,'Penerimaan Penjualan');
+				$simpanMutasi=mutasi::simpanTranferMutasi($data->pd_item,$data->pd_qty,$data->pd_comp,$data->pd_position,$flag='Penerimaan',$p_code->p_code,$ket='e',$date,$data->pd_comp,$data->pd_comp,1,'Penerimaan Penjualan');
 			}
 
 
@@ -82,13 +87,13 @@ class penerimaanController extends Controller {
 			return response()->json([
 				'status' => 'berhasil'
 			]);
-		/*} catch (\Exception $e) {
+		} catch (\Exception $e) {
 
 			DB::rollback();
 			return response()->json([
 				'status' => 'gagal'
 			]);
-		}*/
+		}
 
 	}
 
