@@ -345,7 +345,7 @@ ctrl = 17;
 
         updateQty=SetFormRupiah(parseFloat(a)+parseFloat(b));
 
-        if(fStok>=updateQty){
+        /*if(fStok>=updateQty){*/
           $('.fQty'+i_id.val()).val(updateQty)
           itemName.val('');
           fQty.val('');
@@ -354,14 +354,14 @@ ctrl = 17;
           searchitem.focus();
          hitungTotalHpp(i_id.val());
         $('.reset-seach').val('');
-        }else{
+        /*}else{
               iziToast.error({
                 position:'topRight',
                 timeout: 2000,
                 title: '',
                 message: "Ma'af, jumlah sdsds.",
               });
-        }
+        }*/
       }
 console.log('setelah' + tamp);
     }
