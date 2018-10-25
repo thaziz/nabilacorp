@@ -334,7 +334,7 @@ $simpanMutasi=mutasi::tambahmutasi($request->prdt_item[$i],$prdt_qty,$comp,$posi
 
                   if($permintaan>0){
 
-      $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$hapus_product_dt[0]->prdt_comp,$hapus_product_dt[0]->prdt_position,$flag='Hasil Produksi',$sm_reff=$id);
+      $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$hapus_product_dt[0]->prdt_comp,$hapus_product_dt[0]->prdt_position,$flag='Hasil Produksi',$updateProductresult->first()->pr_code);
 
 
               if($simpanMutasi['true']){
