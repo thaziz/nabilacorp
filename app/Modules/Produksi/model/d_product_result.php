@@ -179,7 +179,7 @@ class d_product_result extends Model
           if($request->hapusdtHasil!=null){
             $hapusdtHasil = explode(',',$request->hapusdtHasil);
           }
-
+dd($hapusdtHasil);
 
   //Hapus Material
         for ($h=0; $h <count($hapusdtHasil) ; $h++) {
