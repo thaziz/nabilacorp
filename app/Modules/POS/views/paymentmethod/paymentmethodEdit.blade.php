@@ -4,7 +4,7 @@
 @foreach($data['sales_pm'] as $in => $s_pm)
 <tr >
       <td>
-        <input type="" name="sp_date[]" id="sp_date" value="{{$s_pm->sp_date}}">
+        <input type="hidden" name="sp_date[]" id="sp_date" value="{{$s_pm->sp_date}}">
         <select style="width:90%" class="minu mx" name="sp_method[]" id="cara{{$in+1}}" >
             @foreach($data['pm'] as $pm)
             <option value="{{$pm->pm_id}}" @if($pm->pm_id==$s_pm->sp_method) selected="" @endif>{{$pm->pm_name}}</option>

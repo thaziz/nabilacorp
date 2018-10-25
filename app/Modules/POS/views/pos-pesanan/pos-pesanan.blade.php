@@ -498,7 +498,7 @@ function payment(){
   $html='';
   $html+={!!$pm!!};
   $html+='<td>'+
-         '<input type="" name="sp_date[]" value="0">'+
+         '<input type="hidden" name="sp_date[]" value="0">'+
          '<input class="minu mx f2 nominal alignAngka nominal'+dataIndex+'" style="width:90%" type="" name="sp_nominal[]"'+
     'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' +dataIndex+'\');rege(event,\'nominal' +dataIndex+'\')"'+  'onblur="setRupiah(event,\'nominal' +dataIndex+'\')" onclick="setAwal(event,\'nominal' +dataIndex+'\')"'+
     'autocomplete="off">'+
