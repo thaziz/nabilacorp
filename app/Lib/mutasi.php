@@ -145,7 +145,9 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
             
 
 
-        $d_stock_mutation=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty',$permintaan);    
+        $d_stock_mutation=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty',$permintaan);
+
+        
         $d_stock_mutation->delete(); 
 
             $data=['true'=>true,'totalHpp'=>$totalHpp];

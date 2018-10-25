@@ -194,7 +194,7 @@ class d_product_result extends Model
               $comp=$request->comp[$h];
 
               $position=$request->position[$h];                                                 
-        $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$comp,$position,$flag='Hasil Produksi',$request->pr_note);
+        $simpanMutasi=mutasi::hapusMutasi($hapusItem,$permintaan,$comp,$position,$flag='Hasil Produksi',$pr_code);
 
               
 
