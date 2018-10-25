@@ -970,7 +970,7 @@ function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gr
   if(s_status=='Terima'){
     status='<span class="label label-success">Diterima</span>';
   }
-  $('#txt_span_status').text(s_status);
+  $('#txt_span_status').text(status);
   $('#lCode').text(s_note);
   $('#lTgl').text(s_date);
   $('#lCustomer').text(c_name);
