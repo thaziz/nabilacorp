@@ -179,14 +179,14 @@ class d_product_result extends Model
           if($request->hapusdtHasil!=null){
             $hapusdtHasil = explode(',',$request->hapusdtHasil);
           }
-dd($hapusdtHasil);
+
 
   //Hapus Material
         for ($h=0; $h <count($hapusdtHasil) ; $h++) {
                 $hapusItem=$hapusdtHasil[$h];
                 $hapus_product_dt=d_productresult_dt::where('prdt_productresult',$id)->where('prdt_item',$hapusItem);
 
-                if(count($hapus_product_dt->first())!=0){
+                if($hapus_product_dt->first()){
                   $permintaan=$hapus_product_dt->first()->prdt_qty;
 
                   if($permintaan>0){
