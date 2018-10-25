@@ -53,6 +53,7 @@
               <div class="input-group input-group-sm" style="width: 100%;">
                   <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">1 result is available, use up and down arrow keys to navigate.</span>
                   <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="move up1 form-control input-sm reset-seach ui-autocomplete-input" id="searchitem" autocomplete="off">
+                  {{ csrf_field() }}
                   <input type="hidden" class="form-control input-sm reset-seach" id="itemName">
                   <input type="hidden" class="form-control input-sm " name="i_id" id="i_id">
                   <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
@@ -487,7 +488,7 @@ function simpan(){
 
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/create',
-          type    : 'GET',
+          type    : 'POST',
           data    :  formPos+'&status='+status,
           dataType: 'json',
           success : function(response){
@@ -531,7 +532,7 @@ function perbarui(){
   var formPos=$('#kirimData').serialize();
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/update/'+id,
-          type    : 'GET',
+          type    : 'POST',
           data    :  formPos+'&hapusdtHasil='+hapusDt,
           dataType: 'json',
           success : function(response){

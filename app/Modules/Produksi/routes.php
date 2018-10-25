@@ -22,10 +22,14 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 		Route::get('/produksi/hasil-produksi/data', 'hasilProduksiController@data')->middleware('auth');
 		Route::get('/produksi/hasil-produksi/create', 'hasilProduksiController@create')->middleware('auth');
 
+		Route::POST('/produksi/hasil-produksi/create', 'hasilProduksiController@create')->middleware('auth');
+
 		Route::get('/produksi/hasil-produksi/edit-detail/{id}/edit', 'hasilProduksiController@editDetail')->middleware('auth');		
 
 
 		Route::get('/produksi/hasil-produksi/detail/{id}', 'hasilProduksiController@detail')->middleware('auth');		
+
+		Route::POST('/produksi/hasil-produksi/update/{id}', 'hasilProduksiController@updateData')->middleware('auth');
 
 		Route::get('/produksi/hasil-produksi/update/{id}', 'hasilProduksiController@updateData')->middleware('auth');
 
