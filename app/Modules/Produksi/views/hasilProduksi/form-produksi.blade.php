@@ -488,7 +488,8 @@ function simpan(){
 
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/create',
-          type    : 'POST',
+          /*type    : 'POST',*/
+          type    : 'GET',
           data    :  formPos+'&status='+status,
           dataType: 'json',
           success : function(response){
@@ -532,7 +533,8 @@ function perbarui(){
   var formPos=$('#kirimData').serialize();
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/update/'+id,
-          type    : 'POST',
+          /*type    : 'POST',*/
+          type    : 'GET',
           data    :  formPos+'&hapusdtHasil='+hapusDt,
           dataType: 'json',
           success : function(response){
