@@ -668,7 +668,8 @@ function simpanPos(status=''){
 
 
 
-
+batal();
+resetFrom();        
 
 
                             /*window.open(baseUrl+'/penjualan/pos-pesanan/printNota/'+response.s_id,'_blank');*/               
@@ -770,7 +771,8 @@ function perbaruiData(){
 
 
                         }
-                                    resetFrom();  
+batal();
+resetFrom();        
 
                     }else if(response.status=='gagal'){
                       $('#serah_terima').attr('disabled','disabled');
@@ -1240,8 +1242,8 @@ function buttonSimpanPos($status){
             $("#s_finishdate").removeAttr('disabled');
             $("#s_duedate").removeAttr('disabled');
             $("#s_jenis_bayar").removeAttr('disabled');
-            $("#s_nama_cus").attr('disabled','disabled');
-            $("#s_alamat_cus").attr('disabled','disabled');
+            $("#s_nama_cus").removeAttr('disabled','disabled');
+            $("#s_alamat_cus").removeAttr('disabled','disabled');
     }
 
     function resetFrom(){
@@ -1253,8 +1255,16 @@ function buttonSimpanPos($status){
             $("#s_alamat_cus").val('');
             $("#s_finishdate").val('');
             $("#s_duedate").val('');
+            $("#s_note").val('');
             $("#s_jenis_bayar").val(1).change();
 
+
+    }
+
+    function tambah(){
+        batal();
+        resetFrom();        
+        $('#penjualan').tab('show');
 
     }
 
