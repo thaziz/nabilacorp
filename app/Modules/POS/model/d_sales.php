@@ -882,8 +882,9 @@ $totalBayar=0;
         for ($i=0; $i <count($request->sd_item); $i++) { 
 
           $comp=$request->comp[$i];
-          $position=$request->position[$i];   
-          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_note,$ket='',$s_date);
+          $position=$request->position[$i]; 
+          $s_note=$updateSales->first()->s_note;
+          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$s_note,$ket='',$s_date);
             if($simpanMutasi['true']){     
             $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
             }else{
