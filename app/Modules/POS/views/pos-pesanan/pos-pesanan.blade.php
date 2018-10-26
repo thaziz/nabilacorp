@@ -498,7 +498,7 @@ function payment(){
   $html='';
   $html+={!!$pm!!};
   $html+='<td>'+
-         '<input type="" name="sp_date[]" value="0">'+
+         '<input type="hidden" name="sp_date[]" value="0">'+
          '<input class="minu mx f2 nominal alignAngka nominal'+dataIndex+'" style="width:90%" type="" name="sp_nominal[]"'+
     'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' +dataIndex+'\');rege(event,\'nominal' +dataIndex+'\')"'+  'onblur="setRupiah(event,\'nominal' +dataIndex+'\')" onclick="setAwal(event,\'nominal' +dataIndex+'\')"'+
     'autocomplete="off">'+
@@ -668,7 +668,8 @@ function simpanPos(status=''){
 
 
 
-
+batal();
+resetFrom();        
 
 
                             /*window.open(baseUrl+'/penjualan/pos-pesanan/printNota/'+response.s_id,'_blank');*/               
@@ -770,7 +771,8 @@ function perbaruiData(){
 
 
                         }
-                                    resetFrom();  
+batal();
+resetFrom();        
 
                     }else if(response.status=='gagal'){
                       $('#serah_terima').attr('disabled','disabled');
@@ -961,7 +963,14 @@ function caraxx(hutang_id){
 }
 
 function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
-  $('#txt_span_status').text(s_status);
+  var status='';
+  if(s_status=='final'){
+    status='<span class="label label-primary">Final</span>';
+  }
+  if(s_status=='Terima'){
+    status='<span class="label label-success">Diterima</span>';
+  }
+  $('#txt_span_status').html(status);
   $('#lCode').text(s_note);
   $('#lTgl').text(s_date);
   $('#lCustomer').text(c_name);
@@ -1240,8 +1249,8 @@ function buttonSimpanPos($status){
             $("#s_finishdate").removeAttr('disabled');
             $("#s_duedate").removeAttr('disabled');
             $("#s_jenis_bayar").removeAttr('disabled');
-            $("#s_nama_cus").attr('disabled','disabled');
-            $("#s_alamat_cus").attr('disabled','disabled');
+            $("#s_nama_cus").removeAttr('disabled','disabled');
+            $("#s_alamat_cus").removeAttr('disabled','disabled');
     }
 
     function resetFrom(){
@@ -1253,8 +1262,16 @@ function buttonSimpanPos($status){
             $("#s_alamat_cus").val('');
             $("#s_finishdate").val('');
             $("#s_duedate").val('');
+            $("#s_note").val('');
             $("#s_jenis_bayar").val(1).change();
 
+
+    }
+
+    function tambah(){
+        batal();
+        resetFrom();        
+        $('#penjualan').tab('show');
 
     }
 

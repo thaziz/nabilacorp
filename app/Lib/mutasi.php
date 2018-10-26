@@ -100,6 +100,7 @@ class mutasi{
       public static function perbaruimutasi($item,$totalPermintaan,$comp,$position,$flag,$idFlag,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
     return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$idFlag,$sm_reff,$flagTujuan,$idMutasiTujuan,$hpp){
                 $totalHpp='';
+
                 $updateMutasi=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty','>',0); 
 
 
@@ -144,7 +145,9 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
             
 
 
-        $d_stock_mutation=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty',$permintaan);    
+        $d_stock_mutation=d_stock_mutation::where('sm_reff',$sm_reff)->where('sm_item',$item)->where('sm_qty',$permintaan);
+
+        
         $d_stock_mutation->delete(); 
 
             $data=['true'=>true,'totalHpp'=>$totalHpp];
@@ -422,6 +425,7 @@ $totalPermintaan=abs($awaltotalPermintaan);
             $totalHpp=0;
 
             $updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);      
+            
             if(!$updateStock->first()->s_qty){
                 $idStock=d_stock::max('s_id')+1;
                 d_stock::create([

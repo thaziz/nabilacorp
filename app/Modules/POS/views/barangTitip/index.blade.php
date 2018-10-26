@@ -110,6 +110,10 @@
         $('#searchitem').val(ui.item.label);
         $('#itemName').val(ui.item.item);
         $('#i_price').val(ui.item.i_price);
+
+
+        $('#fComp').val(ui.item.comp);
+        $('#fPosition').val(ui.item.position);
         
         $('#s_satuan').val(ui.item.satuan);
         var jumlah=0;
@@ -193,6 +197,7 @@
         $('#searchitem').val(response[0].label);
         $('#itemName').val(response[0].item);
         $('#i_price').val(response[0].i_price);
+
         
         $('#s_satuan').val(response[0].satuan);        
         var jumlah=0;
@@ -218,8 +223,9 @@
 
 
    fQty.keypress(function(e) {        
-   	if(e.which == 13 || e.keyCode == 13){                   
-   		if(parseFloat(angkaDesimal($('#stock').val()))<0){         
+   	if(e.which == 13 || e.keyCode == 13){      
+      if(parseFloat(angkaDesimal(fQty.val())) > parseFloat(angkaDesimal($('#stock').val())) || 
+        parseFloat(angkaDesimal($('#stock').val()))<=0){                  		       
    			alert(1);
    			iziToast.error({
    				position:'topRight',
@@ -363,17 +369,19 @@
       iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="idt_item[]" value='+i_id.val()+'>'; 
       iSalesDetail+='<input style="width:100%" type="hidden" name="idt_itemtitipan[]" value="">';
       iSalesDetail+='<input style="width:100%" type="hidden" name="idt_detailid[]" value="">';
+      iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
       iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
       iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
 
       iSalesDetail+='<td width="4%" style="display:none"><input class="jumlahAwal'+i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="0"></td>';
 
-      iSalesDetail+='<td width="4%"><input  onblur="validationForm();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');" onclick="setAwal(event,\'fQty' + i_id.val() + '\')" class="move up1  alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="idt_qty[]" value="'+SetFormRupiah(angkaDesimal(fQty.val()))+'" autocomplete="off" ></td>';
+      iSalesDetail+='<td width="4%"><input  onblur="validationForm();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');chekJumlah(\'' + i_id.val() + '\')" onclick="setAwal(event,\'fQty' + i_id.val() + '\')" class="move up1  alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="idt_qty[]" value="'+SetFormRupiah(angkaDesimal(fQty.val()))+'" autocomplete="off" ></td>';
 
       iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';
 
-      iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka" style="width:100%;border:none" name="idt_price[]" value="'+i_price.val()+'" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');"  onblur="validationForm();setRupiah(event,\'harga' + i_id.val() + '\')" onclick="setAwal(event,\'harga' + i_id.val() + '\')"></td>';
+      iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka" style="width:100%;border:none" name="idt_price[]" value="'+i_price.val()+'" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');"  onblur="validationForm();setRupiah(event,\'harga' + i_id.val() + '\')" onclick="setAwal(event,\'harga' + i_id.val() + '\')" readonly></td>';
 
 
       iSalesDetail+='<td width="10%""><input style="width:100%;border:none" name="idt_total[]" class="totalPerItemDisc alignAngka totalPerItemDisc'+i_id.val()+'" readonly></td>';  
@@ -459,8 +467,27 @@
 	a=angkaDesimal($('.fQty'+i_id.val()).val()) || 0;
 
 	b=angkaDesimal(fQty.val()) || 0;        
-	updateQty=SetFormRupiah(parseFloat(a)+parseFloat(b));                                  
-	if(updateQty>0){        
+	updateQty=SetFormRupiah(parseFloat(a)+parseFloat(b));     
+
+
+   /*if(fStok>=updateQty){
+          $('.fQty'+i_id.val()).val(updateQty)
+          itemName.val('');
+          fQty.val('');
+          $('#stock').val('');
+          searchitem.val('');
+          searchitem.focus();
+         hitungTotalHpp(i_id.val());
+        $('.reset-seach').val('');
+        }else{
+              iziToast.error({
+                position:'topRight',
+                timeout: 2000,
+                title: '',
+                message: "Ma'af, jumlah sdsds.",
+              });
+        }*/                             
+	if(fStok>=updateQty){
 		$('.fQty'+i_id.val()).val(updateQty)
 		itemName.val('');
 		fQty.val('');
@@ -515,12 +542,34 @@ function hapusButton(a){
 
 
 
+function chekJumlah(id){    
 
-/*$('#add').live('click',function(e){ 
-    $(this).closest('tr').remove();    
-    
-})*/
+    var fQty=angkaDesimal($('.fQty'+id).val());    
+  if(isNaN(fQty)){    
+    return false;
+  }
 
+  var stock=angkaDesimal($('.stock'+id).val());
+
+  if(stock<fQty){             
+
+            
+                    iziToast.error({
+                      position:'topRight',
+                      timeout: 2000,
+                      title: '',
+                      message: "Ma'af, jumlah permintaan melebihi stok gudang.",
+                    });
+
+        $('.fQty'+id).val(1);        
+        var fQty=angkaDesimal($('.fQty'+id).val());    
+        update=(fQty*harga)-nilaiDiscP- nilaiDiscV;        
+        $('.totalPerItem'+id).val(SetFormRupiah(update));
+        $('.totalPerItemDisc'+id).val(SetFormRupiah(update));        
+        return false;
+    }
+
+  }
 
 
 function nextFocus(e,id){

@@ -80,7 +80,7 @@ class d_sales extends Model
                   $sd_qty = format::format($request->sd_qty[$i]); 
                   $comp=$request->comp[$i];
                   $position=$request->position[$i];                  
-                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$s_id,$ket='',$s_date);   
+                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$note,$ket='',$s_date);   
 
                   
                   if($simpanMutasi['true']){
@@ -203,7 +203,9 @@ class d_sales extends Model
     }
     static function perbarui ($request){
       
-      return DB::transaction(function () use ($request) {           
+      return DB::transaction(function () use ($request) {   
+
+
         $updateSales=d_sales::where('s_id',$request->s_id);
           $permintaan=0;
           $s_date=date('Y-m-d',strtotime($request->s_date));
@@ -733,8 +735,8 @@ $totalBayar=0;
                     /*'s_machine'=>$request->s_machine,*/
                     's_create_by'=>Auth::user()->m_id,
                     /*'s_customer'=>$request->s_customer,*/
-                    's_nama_cus'=>$request->s_nama_cus,
-                    's_alamat_cus'=>$request->s_alamat_cus,
+                /*    's_nama_cus'=>$request->s_nama_cus,
+                    's_alamat_cus'=>$request->s_alamat_cus,*/
                     's_gross' =>$s_gross,
                     's_disc_percent'=>$s_disc_percent,
                     's_disc_value'=>$s_disc_value,                    
@@ -880,8 +882,9 @@ $totalBayar=0;
         for ($i=0; $i <count($request->sd_item); $i++) { 
 
           $comp=$request->comp[$i];
-          $position=$request->position[$i];   
-          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$request->s_id,$ket='',$s_date);
+          $position=$request->position[$i]; 
+          $s_note=$updateSales->first()->s_note;
+          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$s_note,$ket='',$s_date);
             if($simpanMutasi['true']){     
             $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
             }else{

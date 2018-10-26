@@ -18,7 +18,7 @@
         <td><input class="harga{{$detail->i_id}} alignAngka" style="width:100%;border:none" name="prdt_hpp[]" value="{{number_format($detail->prdt_hpp,0,',','.')}}" ></td>
                  
 
-          <td width="3%">
+          <td width="3%" align="center">
                <button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButton('{{$detail->prdt_item}}')"><i class="fa fa-trash-o"></i></button>
           </td>                            
 </tr>

@@ -119,11 +119,11 @@
                  <th width="4%">Jumlah</th>                                              
                  <th width="4%">Terjual</th>                                   
                  <th width="6%">Return</th>                 
-                 <th width="4%">Sisa</th>    
+                 <!-- <th width="4%">Sisa</th>     -->
                  <th width="5%">Satuan</th>
                  <th width="6%">Harga</th>                                
                  <th width="7%">Total</th>                                                
-                 <th width="7%">Aksi</th>                 
+                 <!-- <th width="7%">Aksi</th>      -->            
                 </tr>
                </thead> 
                <tbody class="bSalesDetail">
@@ -146,32 +146,34 @@
                     <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
 
 
-          <td ><input class="jumlahAwal{{$detail->i_id}}" style="width:100%;text-align:right;border:none" name="jumlah[]" value="{{number_format($detail->idt_qty,0,',','.')}}" autocomplete="off"  readonly=""></td>
+          <td ><input class="jumlahAwal{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" name="jumlah[]" value="{{number_format($detail->idt_qty,0,',','.')}}" autocomplete="off"  readonly=""></td>
 
           
-          <td ><input class="terjual{{$detail->i_id}}" style="width:100%;text-align:right;border:none" name="idt_terjual[]" value="{{number_format($detail->terjual,0,',','.')}}" autocomplete="off" onblur=";setQty(event,'terjual{{$detail->i_id}}')" onclick="setAwal(event,'terjual{{$detail->i_id}}')"></td>
-
-
-   <td><input onblur=";setQty(event,'return{{$detail->i_id}}')" onclick="setAwal(event,'return{{$detail->i_id}}')" class="return return{{$detail->i_id}}" name="idt_return[]" value="{{number_format($detail->idt_return,0,',','.')}}" style="width:100%;text-align:right;border:none" readonly="">
+          <td >
+          <input class="terjual{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" name="idt_terjual[]" value="{{number_format($detail->terjual,0,',','.')}}" autocomplete="off" onblur=";setQty(event,'terjual{{$detail->i_id}}')" onclick="setAwal(event,'terjual{{$detail->i_id}}')" onkeyup="setReturn('{{$detail->i_id}}')">
           </td>
 
 
-  <td ><input class="sisa{{$detail->i_id}}" style="width:100%;text-align:right;border:none" name="idt_sisa[]"  autocomplete="off" readonly="" value="{{number_format($detail->s_qty,0,',','.')}}"></td>
+   <td><input onblur=";setQty(event,'return{{$detail->i_id}}')" onclick="setAwal(event,'return{{$detail->i_id}}')" class="return return{{$detail->i_id}} form-control" name="idt_return[]" value="{{number_format($detail->idt_return,0,',','.')}}" style="width:100%;text-align:right;border:none" readonly="">
+          </td>
+
+
+  <!-- <td ><input class="sisa{{$detail->i_id}}" style="width:100%;text-align:right;border:none" name="idt_sisa[]"  autocomplete="off" readonly="" value="{{number_format($detail->s_qty,0,',','.')}}"></td> -->
 
           
           <td><div style="padding-top:6px">{{$detail->s_name}}</div></td>
-          <td><input class="harga{{$detail->i_id}} alignAngka" style="width:100%;border:none" name="idt_price[]" value="{{number_format($detail->idt_price,0,',','.')}}"" readonly></td>
+          <td><input class="harga{{$detail->i_id}} alignAngka form-control" style="width:100%;border:none" name="idt_price[]" value="{{number_format($detail->idt_price,0,',','.')}}"" readonly></td>
 
 
 
-          <td><input style="width:100%;" name="idt_total[]" class="totalPerItem alignAngka totalPerItem{{$detail->i_id}}" readonly value="{{number_format($detail->idt_qty*$detail->idt_price,0,',','.')}}"></td>
-          <td>
+          <td><input style="width:100%;" name="idt_total[]" class="totalPerItem alignAngka totalPerItem{{$detail->i_id}} form-control" readonly value="{{number_format($detail->idt_qty*$detail->idt_price,0,',','.')}}"></td>
+         <!--  <td>
                <select class="" name="idt_action[]">
                     <option>-</option>
                     <option>Diambil</option>
                     <option>Ditukar Harga</option>
                </select>
-          </td>
+          </td> -->
 
              
           </td>
@@ -266,6 +268,19 @@
                     
           }
       });
+  }
+  function setReturn(id){
+
+    var jumlahAwal = $('.jumlahAwal'+id).val();
+    var terjual = $('.terjual'+id).val();
+
+    var totalReturn= jumlahAwal - terjual;
+    $('.return'+id).val(totalReturn);
+
+    if(totalReturn<0){
+        $('.terjual'+id).val(345);      
+    }
+
   }
 </script>
 

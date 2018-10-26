@@ -111,11 +111,15 @@ class d_item_titip extends Model
 
       $it_code = "TTN-".date('ym')."-".$kd;
 
+      $cabang=Session::get('user_comp');
+      $tujuan=DB::table('d_gudangcabang')->where('gc_gudang','GUDANG TITIP')->where('gc_comp',$cabang)->first();
+      
+
       $it_total= format::format($request->it_total);        
       $date=date('Y-m-d',strtotime($request->it_date));
       d_item_titip::create([
             'it_id'=>$it_id,            
-            'it_comp'=>Session::get('user_comp'),
+            'it_comp'=>$cabang,
             'it_code'=>$it_code,
             'it_date'=>$date,
             'it_keterangan'=>$request->it_keterangan,
@@ -127,8 +131,22 @@ class d_item_titip extends Model
     for ($i=0; $i <$jumlah ; $i++) { 
       
         $idt_qty= format::format($request->idt_qty[$i]); 
-        $hpp= format::format($request->idt_price[$i]);         
-        if(mutasi::tambahmutasi($request->idt_item[$i],$idt_qty,1,1,'Barang Titip',1,$it_id,'','',$hpp,$date)){
+        $hpp= format::format($request->idt_price[$i]);   
+
+        
+
+        $comp=$request->comp[$i];
+        $position=$request->position[$i];
+        $compTujuan=$tujuan->gc_id;
+        $positionTujuan=$request->position[$i];
+        $detailTujuan='TAMBAH BARANG TITIP';
+        $simpanMutasi=mutasi::simpanTranferMutasi($request->idt_item[$i],$idt_qty,$comp,$position,$flag='TAMBAH BARANG TITIP',$it_code,$ket='e',$date,$compTujuan,$positionTujuan,1,$detailTujuan);
+
+
+
+
+
+        if($simpanMutasi['true']){
             $idt_detailid=d_itemTitip_dt::where('idt_itemTitip',$it_id)
                                ->max('idt_detailid')+1;                                           
 
@@ -141,7 +159,7 @@ class d_item_titip extends Model
                 'idt_qty'=>$idt_qty,
                 'idt_price'=>$hpp    
             ]);
-      }
+        }
     }  
 
           $data=['status'=>'sukses','data'=>'sukses'];

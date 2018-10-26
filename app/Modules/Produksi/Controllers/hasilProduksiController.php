@@ -32,6 +32,7 @@ class hasilProduksiController extends Controller
     public function index()
     {        
         
+        
          $dataProduksi=view('Produksi::hasilProduksi/data-produksi');  
          $form=view('Produksi::hasilProduksi/form-produksi');  
          $detail=view('Produksi::hasilProduksi/modal-detail');  

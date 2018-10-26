@@ -53,6 +53,7 @@
               <div class="input-group input-group-sm" style="width: 100%;">
                   <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">1 result is available, use up and down arrow keys to navigate.</span>
                   <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="move up1 form-control input-sm reset-seach ui-autocomplete-input" id="searchitem" autocomplete="off">
+                  {{ csrf_field() }}
                   <input type="hidden" class="form-control input-sm reset-seach" id="itemName">
                   <input type="hidden" class="form-control input-sm " name="i_id" id="i_id">
                   <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
@@ -345,7 +346,7 @@ ctrl = 17;
 
         updateQty=SetFormRupiah(parseFloat(a)+parseFloat(b));
 
-        if(fStok>=updateQty){
+        /*if(fStok>=updateQty){*/
           $('.fQty'+i_id.val()).val(updateQty)
           itemName.val('');
           fQty.val('');
@@ -354,14 +355,14 @@ ctrl = 17;
           searchitem.focus();
          hitungTotalHpp(i_id.val());
         $('.reset-seach').val('');
-        }else{
+        /*}else{
               iziToast.error({
                 position:'topRight',
                 timeout: 2000,
                 title: '',
                 message: "Ma'af, jumlah sdsds.",
               });
-        }
+        }*/
       }
 console.log('setelah' + tamp);
     }
@@ -487,6 +488,7 @@ function simpan(){
 
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/create',
+          /*type    : 'POST',*/
           type    : 'GET',
           data    :  formPos+'&status='+status,
           dataType: 'json',
@@ -531,6 +533,7 @@ function perbarui(){
   var formPos=$('#kirimData').serialize();
      $.ajax({
           url     :  baseUrl+'/produksi/hasil-produksi/update/'+id,
+          /*type    : 'POST',*/
           type    : 'GET',
           data    :  formPos+'&hapusdtHasil='+hapusDt,
           dataType: 'json',
