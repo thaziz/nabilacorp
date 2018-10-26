@@ -30,8 +30,9 @@
 
     <script src="{{ asset ('assets/script/jquery.dataTables.js') }}"></script>
     <script src="{{ asset ('assets/toastr/toastr.min.js') }}"></script>
-    <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+    {{-- <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>
+     --}}    
     <script src="{{ asset ('assets/bootstrap-live-search/js/bootstrap-select.js') }}"></script>
     <script src="{{ asset ('assets/sliptree-multiselect/bootstrap-tokenfield.js') }}"></script>
 
