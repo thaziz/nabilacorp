@@ -167,3 +167,52 @@
     }
 
     </script>
+
+    <script>
+    function myFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("nav-search");
+        filter = input.value.toLowerCase();
+        ul = document.getElementById("side-menu");
+        li = ul.getElementsByTagName("li");
+        button = document.getElementById('btn-reset');
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
+
+                li[i].style.display = "";
+
+            } else {
+
+                li[i].style.display = "none";
+
+            }
+
+        }
+        
+        if (input.value != 0 ) {
+                button.classList.remove('hidden');
+            } else {
+                button.classList.add('hidden');
+            }
+            
+        }
+
+        function btnReset() {
+            var input = document.getElementById("filterInput");
+            input.value = null;
+            input.focus();
+        }
+
+    // $('#side-menu').searchable({
+    //     searchField: '#nav-search',
+    //     selector: 'li',
+    //     childSelector: '.submenu-title',
+    //     show: function( elem ) {
+    //         elem.slideDown(100);
+    //     },
+    //     hide: function( elem ) {
+    //         elem.slideUp( 100 );
+    //     }
+    // })
+    </script>

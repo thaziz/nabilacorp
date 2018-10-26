@@ -6,7 +6,11 @@
             <div class="topbar-main"><a id="menu-toggle" href="#" class="hidden-xs"><i class="fa fa-bars"></i></a>
 
                 <form id="topbar-search" action="#" method="" class="hidden-sm hidden-xs">
-                    <div class="input-icon right text-white"><a href="#"><i class="fa fa-search"></i></a><input type="text" placeholder="Search here..." onkeyup="myFunction()" id="nav-search" class="form-control text-white"/></div>
+                    <div class="input-icon right text-white">
+                        <a href="#" class="hidden" id="btn-reset" onclick="btnReset()"><i class="fa fa-times"></i></a>
+                        
+                        <input type="text" placeholder="Search here..." onkeyup="myFunction()" id="nav-search" class="form-control text-white"/>
+                    </div>
                 </form>
                 <div class="news-update-box hidden-xs"><span class="text-uppercase mrm pull-left text-white">News:</span>
                 </div>
@@ -18,7 +22,7 @@
                        @endforeach
                     </select>
                     </li>
-                    <li class="dropdown topbar-user"><a data-hover="dropdown" href="#" class="dropdown-toggle"><img src="{{ asset('assets/images/avatar/48.jpg')}}" alt="" class="img-responsive img-circle">&nbsp;<span class="hidden-xs">{{ Auth::user()->name }}</span>&nbsp;<span class="caret"></span></a>
+                    <li class="dropdown topbar-user"><a data-hover="dropdown" href="#" class="dropdown-toggle"><img src="{{ asset('assets/images/avatar/48.jpg')}}" alt="" class="img-responsive img-circle">&nbsp;<span class="hidden-xs">{{ Auth::user()->m_name }}</span>&nbsp;<span class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-user pull-right">
                             <li><a href="#"><i class="fa fa-user"></i>My Profile</a></li>
                             <li><a href="#"><i class="fa fa-calendar"></i>My Calendar</a></li>
@@ -460,38 +464,4 @@
                 </div>
             </div>
             <!--END CHAT FORM-->
-<script>
-function myFunction() {
-    var input, filter, ul, li, a, i;
-    input = document.getElementById("nav-search");
-    filter = input.value.toLowerCase();
-    ul = document.getElementById("side-menu");
-    li = ul.getElementsByTagName("li");
 
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
-
-            li[i].style.display = "";
-
-        } else {
-
-            li[i].style.display = "none";
-
-        }
-
-    }
-}
-
-// $('#side-menu').searchable({
-//     searchField: '#nav-search',
-//     selector: 'li',
-//     childSelector: '.submenu-title',
-//     show: function( elem ) {
-//         elem.slideDown(100);
-//     },
-//     hide: function( elem ) {
-//         elem.slideUp( 100 );
-//     }
-// })
-</script>
