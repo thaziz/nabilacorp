@@ -49,7 +49,7 @@ class itemController extends Controller
       return view('Master::databarang/barang');
     }
     public function dataBarang(){
-      return m_itemm::dataBarang();      
+      return m_itemm::dataBarang();
     }
 
 
@@ -77,12 +77,9 @@ class itemController extends Controller
         $id = DB::table('m_item')
               ->max('i_id');
 
-        $kode = DB::table('m_item')
-                ->max('i_code');
+        $tmp = $id + 1;
 
-        $tmp = $kode + 1;
-
-        $kode = sprintf("%05s", $tmp);
+        $kode = sprintf("%04s", $tmp);
 
         $type = '';
 
@@ -95,6 +92,8 @@ class itemController extends Controller
         } elseif ($request->kelompok == 4) {
           $type = 'BPJ';
         }
+
+      $finalkode = $type . $kode;
 
       if (!empty($request->supplier)) {
         for ($i=0; $i < count($request->supplier); $i++) {
@@ -126,7 +125,7 @@ class itemController extends Controller
         DB::table('m_item')
           ->insert([
             'i_id' => $id + 1,
-            'i_code' => $kode,
+            'i_code' => $finalkode,
             'i_group' => $request->kelompok,
             'i_type' => $type,
             'i_name' => $request->nama,
@@ -148,7 +147,7 @@ class itemController extends Controller
         DB::table('m_item')
           ->insert([
             'i_id' => $id + 1,
-            'i_code' => $kode,
+            'i_code' => $finalkode,
             'i_group' => $request->kelompok,
             'i_type' => $type,
             'i_name' => $request->nama,
@@ -228,6 +227,8 @@ class itemController extends Controller
           $type = 'BPJ';
         }
 
+        $finalkode = $type . $kode;
+
       if (!empty($request->supplier)) {
         for ($i=0; $i < count($request->supplier); $i++) {
           $tmp = str_replace('.', '', $request->hargasupplier[$i]);
@@ -258,7 +259,7 @@ class itemController extends Controller
         DB::table('m_item')
           ->insert([
             'i_id' => $id,
-            'i_code' => $kode,
+            'i_code' => $finalkode,
             'i_group' => $request->kelompok,
             'i_type' => $type,
             'i_name' => $request->nama,
@@ -280,7 +281,7 @@ class itemController extends Controller
         DB::table('m_item')
           ->insert([
             'i_id' => $id,
-            'i_code' => $kode,
+            'i_code' => $finalkode,
             'i_group' => $request->kelompok,
             'i_type' => $type,
             'i_name' => $request->nama,
