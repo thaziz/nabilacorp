@@ -53,20 +53,14 @@ class d_item_titip extends Model
                                                 \''.$itemTitip->it_keterangan.'\'  
                           )"  '.$disable.' ><i class="fa fa-folder-open-o"></i>
                           </button>
-                          <button type="button" class="btn btn-sm btn-success" title="Detail" onclick="detailMutasi(
+                          <button type="button" class="btn btn-sm btn-success" title="Detail" onclick="showDetail(
                                                 '.$itemTitip->it_id.',          
                                                 \''.date('d-m-Y',strtotime($itemTitip->it_date)).'\',   
                                                 \''.$itemTitip->it_code.'\',
                                                 \''.$itemTitip->it_keterangan.'\'                                                
                           )"><i class="fa fa-eye"></i> 
                           </button>
-                          <button class="btn btn-sm btn-warning" title="Edit" onclick="editMutasi(
-                                               '.$itemTitip->it_id.',          
-                                                \''.date('d-m-Y',strtotime($itemTitip->it_date)).'\',   
-                                                \''.$itemTitip->it_code.'\',
-                                                \''.$itemTitip->it_keterangan.'\'        
-                          )" ><i class="fa fa-edit"></i>
-                          </button>
+                          
                           <button type="button" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteMutasi(
                                                '.$itemTitip->it_id.',          
                                                 \''.date('d-m-Y',strtotime($itemTitip->it_date)).'\',   
@@ -79,6 +73,16 @@ class d_item_titip extends Model
                         })
                         ->rawColumns(['action'])
                       ->make(true);                                  
+
+
+                      /*<button class="btn btn-sm btn-warning" title="Edit" onclick="editMutasi(
+                                               '.$itemTitip->it_id.',          
+                                                \''.date('d-m-Y',strtotime($itemTitip->it_date)).'\',   
+                                                \''.$itemTitip->it_code.'\',
+                                                \''.$itemTitip->it_keterangan.'\'        
+                          )" ><i class="fa fa-edit"></i>
+                          </button>
+                          */
     }
     static function dataTitip($id){      
              $itemTitip=d_item_titip::where('it_comp',Session::get('user_comp'))->where('it_id',$id)->first();             
@@ -154,7 +158,8 @@ class d_item_titip extends Model
                 'idt_itemtitip'=>$it_id,
                 'idt_detailid'=>$idt_detailid,
                 'idt_date'    => date('Y-m-d',strtotime($request->it_date)),
-                'idt_comp'=>Session::get('user_comp'),
+                'idt_comp'=>$comp,
+                'idt_position'=>$position,
                 'idt_item'=>$request->idt_item[$i],
                 'idt_qty'=>$idt_qty,
                 'idt_price'=>$hpp    
@@ -181,28 +186,45 @@ static function chekQtyReturn($item,$comp,$position){
   
   return json_encode($data);
 }
-static function serahTerimaStore($request){  
-  return DB::transaction(function () use ($request) {      
-    $updateTitipan=d_item_titipan::where('it_id',$request->it_id);
+
+
+static function searchItemTitip($request){  
+  return DB::transaction(function () use ($request) {     
+  
+    $updateTitipan=d_item_titip::where('it_id',$request->it_id);
     $updateTitipan->update([
                       'it_status'=>'terima'
                     ]);
+    $dataTitip=$updateTitipan->first();
+    $cabang=Session::get('user_comp');
+    $tujuan=DB::table('d_gudangcabang')->where('gc_gudang','GUDANG TITIP')->where('gc_comp',$cabang)->first();
+    $comp=$tujuan->gc_id;
     // stock mutasi hanya untuk barang kembali.
     for ($i=0; $i <count($request->idt_item) ; $i++) { 
-      $updateTitipanDt=d_itemTitip_dt::where('idt_itemTitip',$request->idt_itemTitip)->where('idt_detailid',$request->idt_detailid);
+
+      $updateTitipanDt=d_itemTitip_dt::where('idt_itemTitip',$request->idt_itemtitip[$i])->where('idt_detailid',$request->idt_detailid[$i]);
+      
       $idt_terjual= format::format($request->idt_terjual[$i]);  
       $sisa= format::format($request->idt_sisa[$i]);  
 
       $idt_return= format::format($request->idt_return[$i]);  
 
+
       $updateTitipanDt->update([
-            'idt_terjual'=>$idt_terjual,
-            'idt_sisa'=>$sisa,
-            'idt_return'=>$idt_return,
-            'idt_action'=>$request->idt_action[$i]
+            'idt_terjual'=>$idt_terjual,            
+            'idt_return'=>$idt_return,            
         ]);
+      
+
+      $position=$request->position[$i];
+
+      $simpanMutasi=mutasi::mutasiStok($request->idt_item[$i],$idt_terjual,$comp,$position,$flag='PENJUALAN TITIP',$dataTitip->it_code,$ket='',$dataTitip->it_date);   
+      
     }
-    return 'sukses';
+    
+      $data=['status'=>'sukses','data'=>'sukses'];
+      return json_encode($data);
+
     });  
   }
 

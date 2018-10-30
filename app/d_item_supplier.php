@@ -10,15 +10,18 @@ use Response;
 
 class d_item_supplier extends Model
 {
-	protected $table = 'm_item';
-    protected $primaryKey = 'i_id';
-    protected $fillable = ['i_id', 'i_code', 'i_type', 'i_group', 'i_name', 'i_unit','i_price'];
+
+   
+
+	protected $table = 'd_item_supplier';
+    protected $primaryKey = 'is_id';
+    protected $fillable = ['is_id', 'is_item', 'is_supplier', 'is_price', 'is_active'];
 
     public $incrementing = false;
     public $remember_token = false;
     //public $timestamps = false;
-    const CREATED_AT = 'i_insert';
-    const UPDATED_AT = 'i_update';
+    const CREATED_AT = 'is_created';
+    const UPDATED_AT = 'is_updated';
 
      public static function seachItem($item) {      
 

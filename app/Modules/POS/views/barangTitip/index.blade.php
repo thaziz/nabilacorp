@@ -46,12 +46,58 @@
                             	<!-- @include('penjualan.POSpenjualanToko.listtoko') -->                               
                             	{!!$data['list']!!}
                             	<!-- end div #listoko -->
-                            	{!!$data['modal']!!}
+                            	
 
                             </div> <!-- End div general-content -->
 
                         </div>
                     </div>
+
+
+
+ <!-- Modal -->
+
+          <div class="modal fade" id="detail-titipan" role="dialog">
+  <div class="modal-dialog modal-lg">
+      
+    
+      <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #e77c38;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" style="color: white;">Data</h4>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="table-responsive">
+              <table class="table tabelan table-hover table-bordered" cellspacing="0">
+                 <table class="table tabelan table-bordered table-hover dt-responsive">
+               <thead align="right">
+                <tr>                 
+                 <th width="23%">Nama</th>                 
+                 <th width="4%">Jumlah</th>                                               
+                 <th width="4%">Terjual</th>                 
+                 <th width="6%">Return</th>                 
+                 <th width="5%">Satuan</th>
+                 <th width="6%">Harga</th>                                
+                 <th width="12%">Total</th>                                                                 
+                </tr>
+               </thead> 
+               <tbody class="detail-titipan">
+               </tbody>
+              </table>
+            </div>
+            
+            
+          </div>
+      
+      
+        </div>
+         
+    </div>
+</div>
+
 
                     @endsection
                     @section("extra_scripts")
@@ -74,6 +120,56 @@
   var dataIndex         =1;
 
   var hapusSalesDt =[];
+
+function tambah(){
+  $('#penjualan').tab('show');
+  $('.reset-seach').val('');      
+}
+
+
+
+
+function showDetail($id){  
+    $('#detail-titipan').modal('show');
+     $.ajax({
+          url     :  baseUrl+'/penjualan/barang-titip/detail/'+$id,
+          type    : 'GET',                     
+          success : function(response){  
+            $('.detail-titipan').html(''); 
+            $('.detail-titipan').append(response);  
+                  
+          },
+
+          error: function(jqXHR, exception) {
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            } else if (jqXHR.status == 401) {
+                var txt;
+                var r = confirm("Anda telah logout, Apakah anda ingin login kembali ?");
+                if (r == true) {
+                    location.reload();
+                } else {
+                    alert("Anda menekan tombol batal");
+                }                 
+            } else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText);
+            }
+        }
+
+      });
+}
+
+
 
   $("#supplier").autocomplete({
   	source: baseUrl+'/seach-supplier',
@@ -373,18 +469,18 @@
           iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
       iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
-      iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
+      iSalesDetail+='<td width="4%"><input class="form-control stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
 
-      iSalesDetail+='<td width="4%" style="display:none"><input class="jumlahAwal'+i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="0"></td>';
+      iSalesDetail+='<td width="4%" style="display:none"><input class="form-control jumlahAwal'+i_id.val()+'" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="0"></td>';
 
-      iSalesDetail+='<td width="4%"><input  onblur="validationForm();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');chekJumlah(\'' + i_id.val() + '\')" onclick="setAwal(event,\'fQty' + i_id.val() + '\')" class="move up1  alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="idt_qty[]" value="'+SetFormRupiah(angkaDesimal(fQty.val()))+'" autocomplete="off" ></td>';
+      iSalesDetail+='<td width="4%"><input  onblur="validationForm();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');chekJumlah(\'' + i_id.val() + '\')" onclick="setAwal(event,\'fQty' + i_id.val() + '\')" class="move up1  form-control alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="idt_qty[]" value="'+SetFormRupiah(angkaDesimal(fQty.val()))+'" autocomplete="off" ></td>';
 
       iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';
 
-      iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka" style="width:100%;border:none" name="idt_price[]" value="'+i_price.val()+'" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');"  onblur="validationForm();setRupiah(event,\'harga' + i_id.val() + '\')" onclick="setAwal(event,\'harga' + i_id.val() + '\')" readonly></td>';
+      iSalesDetail+='<td width="6%"><input class="harga'+i_id.val()+' alignAngka form-control" style="width:100%;border:none" name="idt_price[]" value="'+i_price.val()+'" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');"  onblur="validationForm();setRupiah(event,\'harga' + i_id.val() + '\')" onclick="setAwal(event,\'harga' + i_id.val() + '\')" readonly></td>';
 
 
-      iSalesDetail+='<td width="10%""><input style="width:100%;border:none" name="idt_total[]" class="totalPerItemDisc alignAngka totalPerItemDisc'+i_id.val()+'" readonly></td>';  
+      iSalesDetail+='<td width="10%""><input style="width:100%;border:none" name="idt_total[]" class="totalPerItemDisc alignAngka totalPerItemDisc'+i_id.val()+' form-control" readonly></td>';  
       iSalesDetail+='<td width="3%">'+Hapus+'</td>'                            
       iSalesDetail+='</tr>';        
       if(validationForm()){

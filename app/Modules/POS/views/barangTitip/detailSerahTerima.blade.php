@@ -139,11 +139,14 @@
           <tr class="detail{{$detail->i_id}}">
 
                <td>
-               <input style="width:100%" type="hidden" name="idt_itemtitipan[]" value="{{$detail->idt_itemtitipan}}">
+               <input style="width:100%" type="hidden" name="idt_itemtitip[]" value="{{$detail->idt_itemtitip}}">
                <input style="width:100%" type="hidden" name="idt_detailid[]" value="{{$detail->idt_detailid}}">
                   
                <input style="width:100%" type="hidden" name="idt_item[]" value="{{$detail->i_id}}">
-                    <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
+                    <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div>
+              <input style="width:100%" type="" name="comp[]" value="{{$detail->idt_comp}}">
+              <input style="width:100%" type="" name="position[]" value="{{$detail->idt_position}}">
+                    </td>
 
 
           <td ><input class="jumlahAwal{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" name="jumlah[]" value="{{number_format($detail->idt_qty,0,',','.')}}" autocomplete="off"  readonly=""></td>
@@ -257,7 +260,7 @@
       var formPos=$('#dataPos').serialize();
 
      $.ajax({
-          url     :  baseUrl+'/penjualan/barang-titipan/serah-terima/store',
+          url     :  baseUrl+'/penjualan/barang-titip/search-item-titip',
           type    : 'GET', 
           data    :  formPos,
           dataType: 'json',
@@ -278,7 +281,8 @@
     $('.return'+id).val(totalReturn);
 
     if(totalReturn<0){
-        $('.terjual'+id).val(345);      
+        $('.terjual'+id).val(0);      
+        $('.return'+id).val(0);
     }
 
   }

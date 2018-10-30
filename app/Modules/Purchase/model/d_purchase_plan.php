@@ -8,6 +8,8 @@ use App\Lib\format;
 
 use App\m_item;
 
+use App\d_item_supplier;
+
 use DB;
 
 use Auth;
@@ -16,6 +18,7 @@ use Datatables;
 
 use Carbon\Carbon;
 
+use Session;
 
 
 class d_purchase_plan extends Model
@@ -54,13 +57,13 @@ class d_purchase_plan extends Model
 
               d_purchase_plan::create([
                       'p_id'=>$p_id,
+                      'p_comp'=>Session::get('user_comp'),
                       'p_date'=>date('Y-m-d',strtotime($request->p_date)),
                       'p_code'=>$p_code,
                       'p_supplier'=>$request->id_supplier,
                       'p_mem'=>Auth::user()->m_id,                      
                 ]);
               for ($i=0; $i <count($request->ppdt_item); $i++) {  
-
               $ppdt_prevcost= format::format($request->is_price[$i]);
               $detailid=d_purchaseplan_dt::where('ppdt_pruchaseplan',$p_id)->max('ppdt_detailid')+1;
                d_purchaseplan_dt::create([
@@ -70,6 +73,24 @@ class d_purchase_plan extends Model
                                 'ppdt_qty'=>$request->ppdt_qty[$i],  
                                 'ppdt_prevcost'=>$ppdt_prevcost
                                  ]);
+               $chekItemSupplier=d_item_supplier::where('is_supplier',$request->id_supplier)->where('is_item',$request->ppdt_item[$i])->where('is_active','Y');
+
+               if(!$chekItemSupplier->first()){
+                    $is_id=d_item_supplier::max('is_id')+1;
+                    d_item_supplier::create([
+                      'is_id'       =>$is_id,
+                      'is_item'     =>$request->ppdt_item[$i],
+                      'is_supplier' =>$request->id_supplier,
+                      'is_price'    =>$ppdt_prevcost,
+                      'is_active'   =>'Y',
+                      ]);
+                 }else{
+                   $chekItemSupplier->update([
+                      'is_price'    =>$ppdt_prevcost,
+                    ]);
+                 }
+
+
              }
 
           $data=['status'=>'sukses'];
@@ -237,7 +258,7 @@ class d_purchase_plan extends Model
       
         $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -369,7 +390,7 @@ class d_purchase_plan extends Model
     {
         $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -423,6 +444,7 @@ class d_purchase_plan extends Model
   {    
     DB::beginTransaction();
     try {
+      
         //update table d_purchasingplan
         $plan = d_purchase_plan::where('p_id',$request->idPlan);
         if ($request->statusConfirm != "WT") 

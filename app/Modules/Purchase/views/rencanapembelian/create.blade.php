@@ -311,14 +311,22 @@ $(document).ready(function(){
           iSalesDetail+='<input style="width:100%" type="hidden" name="ppdt_detailid[]" value="">';
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
-          iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
+          iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+' form-control" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
 
 
-          iSalesDetail+='<td width="4%"><input  onblur="validationForm();" onkeyup="hapus(event,'+i_id.val()+');" class="move up1  alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="ppdt_qty[]" value="'+angkaDesimal(fQty.val())+'" autocomplete="off"></td>';
+          iSalesDetail+='<td width="4%"><input  onblur="validationForm();" onkeyup="hapus(event,'+i_id.val()+');" class="move up1 form-control alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="ppdt_qty[]" value="'+angkaDesimal(fQty.val())+'" autocomplete="off"></td>';
 
           iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';
 
-          iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="is_price alignAngka is_price'+i_id.val()+'" name="is_price[]" value='+i_price.val()+' readonly></td>';
+
+            iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="is_price alignAngka is_price'+i_id.val()+'" name="is_price[]" value='+i_price.val()+' readonly></td>';
+          
+          
+
+          /*iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="is_price alignAngka form-control is_price'+i_id.val()+'" name="is_price[]" value='+i_price.val()+'  onblur="validationForm();setRupiah(event,\'is_price' + i_id.val() + '\')" onclick="setAwal(event,\'is_price' + i_id.val() + '\')"  ></td>';
+*/
+
+            
           
 
 
@@ -399,7 +407,7 @@ ctrl = 17;
 
 
         updateQty=parseFloat(a)+parseFloat(b);                          
-        if(fStok>=updateQty){        
+        
           $('.fQty'+i_id.val()).val(updateQty)
           itemName.val('');
           fQty.val('');
@@ -407,14 +415,7 @@ ctrl = 17;
           searchitem.val('');
           searchitem.focus();          
         $('.reset-seach').val('');      
-        }else{            
-              iziToast.error({
-                position:'topRight',
-                timeout: 2000,
-                title: '',
-                message: "Ma'af, jumlah sdsds.",
-              });
-        }
+        
       }
 console.log('setelah' + tamp);
     }
@@ -559,6 +560,21 @@ function simpan(){
           }
       });
 }
+
+
+
+
+$('#fQty').keyup(function(e) {    
+
+    if($('#cQty').val()==='1' &&  e.which != 13){      
+        $('#cQty').val('');
+        $('#fQty').val($('#fQty').val().substring(1));
+    }    
+  })
+
+$('#searchitem').click(function(){    
+    $('.reset-seach').val('');      
+});
 
     </script>
 @endsection()

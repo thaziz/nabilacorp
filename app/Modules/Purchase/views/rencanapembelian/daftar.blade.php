@@ -225,11 +225,15 @@ function editPlan(id,code,supplier,date,statusLabel,mem)
         $('#lblSupplierEdit').text(supplier);
         $('#id_plan').val(id);
         $('#p_status').val(statusLabel);        
+        var s_stock=0;
         Object.keys(data.data_isi).forEach(function(){
+          if(data.data_isi[key-1].s_qty!=null){
+            s_stock=data.data_isi[key-1].s_qty;
+          }
           $('#tabel-edit').append('<tr class="tbl_modal_edit_row">'
                           +'<td>'+key+'</td>'
                           +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                          +'<td class="alignAngka">'+data.data_isi[key-1].s_qty+'</td>'
+                          +'<td class="alignAngka">'+s_stock+'</td>'
                           +'<td><input type="hidden" value="'+data.data_isi[key-1].ppdt_qty+'" name="oldppdt_qty[]" class="form-control numberinput input-sm alignAngka" autocomplete="off" />'
                           +'<input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="ppdt_qty[]" class="form-control numberinput input-sm alignAngka" autocomplete="off" />'
                           +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="ppdt_detailid[]" class="form-control"/></td>'                          

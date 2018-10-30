@@ -159,18 +159,39 @@ class m_itemm extends Model
 
         $search = $item->term;
         $id_supplier =$item->id_supplier;
-        $sql=DB::table('m_item')->join('d_item_supplier','is_item','=','i_id')
-             ->join('m_supplier','s_id','=','is_supplier')
-             ->join('d_stock','s_item','=','i_id')
+
+        $groupName=['Barang PEMBELIAN'];
+        $cabang=Session::get('user_comp');                
+        $position=DB::table('d_gudangcabang')
+                      ->where('gc_gudang',DB::raw("'GUDANG PEMBELIAN'"))
+                      ->where('gc_comp',$cabang)
+                      ->select('gc_id')->first();   
+        $comp=$position->gc_id;
+        $position=$position->gc_id;
+
+
+        $sql=DB::table('m_item')
+            ->leftjoin('d_item_supplier',function($join) use ($id_supplier) {
+                  $join->on('is_item','=','i_id');
+                  $join->where('is_supplier',$id_supplier); 
+             })
+             ->leftjoin('m_supplier','s_id','=','is_supplier')
+             ->join('m_group','g_id','=','i_group')
+             
+             ->leftjoin('d_stock',function($join) use ($comp,$position) {
+                  $join->on('s_item','=','i_id');
+                  $join->where('s_comp',$comp); 
+                  $join->where('s_position',$position);
+             })
              ->join('m_satuan','m_satuan.s_id','=','i_satuan')
              ->select('i_id','i_name','m_satuan.s_name as s_name','is_price','s_qty','i_code');
-
         if($search!='' && $id_supplier!=''){          
-            $sql->where(function ($query) use ($search,$id_supplier) {
+            $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                  
-                  $query->where('is_supplier',$id_supplier); 
+                  $query->whereIn('g_name',$groupName);                          
                   $query->orWhere('i_code','like','%'.$search.'%');
-                  $query->where('is_supplier',$id_supplier); 
+                  $query->whereIn('g_name',$groupName);        
+                  
                   });
                   }                                  
         else{
@@ -180,6 +201,7 @@ class m_itemm extends Model
 
                
         $sql=$sql->get();
+        
 
 
 

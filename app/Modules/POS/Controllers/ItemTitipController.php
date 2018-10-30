@@ -79,8 +79,17 @@ class ItemTitipController extends Controller
       return view('POS::barangTitip/detailSerahTerima',compact('data','master'));      
     }
 
-    function searchItemTitipan(Request $request){
+function searchItemTitipan(Request $request){
       return m_itemm::searchItemTitipan($request);
+}
+
+    function searchItemTitip(Request $request){
+      return d_item_titip::searchItemTitip($request);
     }
 
+  function titipDt($id){
+        $data=d_itemtitip_dt::itemTitipDt($id);
+        
+        return view('POS::barangTitip/modal',compact('data'));                  
+  }
 }

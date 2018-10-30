@@ -9,7 +9,7 @@ Route::get('/purcahse-plan/get-detail-plan/{id}/{type}', 'purchasePlanController
 Route::get('/purcahse-plan/get-edit-plan/{id}', 'purchasePlanController@getEditPlan')->middleware('auth');
 
 Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->middleware('auth');
-Route::delete('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
+Route::get('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
 
 //keuangan
 Route::get('/konfirmasi-purchase/index', 'PurchaseConfirmController@confirmIndex')->middleware('auth');

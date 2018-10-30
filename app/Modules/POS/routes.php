@@ -61,6 +61,8 @@ Route::get('/penjualan/barang-titipan/serah-terima/store', 'itemTitipanControlle
 Route::get('/penjualan/barang-titipan/detail/{id}', 'itemTitipanController@titipanDt');
 
 
+
+
 Route::get('/penjualan/barang-titipan/chek-qty-return/{item}/{comp}/{position}', 'itemTitipanController@chekQtyReturn');
 
 
@@ -75,7 +77,9 @@ Route::get('/penjualan/barang-titip/update', 'itemTitipController@update');
 
 Route::get('/penjualan/barang-titip/serahTerima/{id}', 'itemTitipController@serahTerima');
 
-Route::get('/penjualan/barang-titip/search-item-titipan', 'itemTitipController@searchItemTitipan');
+Route::get('/penjualan/barang-titip/search-item-titip', 'itemTitipController@searchItemTitip');
+
+Route::get('/penjualan/barang-titip/detail/{id}', 'itemTitipController@titipDt');
 
 
 
