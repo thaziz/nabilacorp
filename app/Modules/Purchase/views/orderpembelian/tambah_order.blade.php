@@ -346,7 +346,12 @@
           var key = 1;
           i = randString(5);
           //loop data
-          Object.keys(data.data_isi).forEach(function(){     
+          var s_stock=0;
+          Object.keys(data.data_isi).forEach(function(){                 
+            $('#tabel-form-po').html('');
+            if(data.data_isi[key-1].s_qty!=null){
+              s_stock=data.data_isi[key-1].s_qty;
+            }
           var i_id=data.data_isi[key-1].i_id;       
             $('#tabel-form-po').append('<tr class="tbl_form_row" id="row'+i_id+'">'
                             +'<td style="text-align:center">'+key+'</td>'
@@ -355,14 +360,14 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_pruchaseplan+'" name="podt_purchaseorder[]" class="form-control input-sm"/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="podt_detailid[]" class="form-control input-sm"/>'
                             +'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'         
 
 
                             +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
                             +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].s_qty+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+s_stock+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');
                             tamp.push(i_id);

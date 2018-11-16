@@ -237,8 +237,8 @@
                             +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
                             +'<td>'+data.data_isi[key-1].s_qty+'</td>'
                             +'<td class="alignAngka">'+data.data_isi[key-1].ppdt_qty+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="ppdt_qtyconfirm[]" class="form-control numberinput alignAngka input-sm crfmField" autocomplete="off" />'
-                            +'<input type="" value="'+data.data_isi[key-1].ppdt_pruchaseplan+'" name="ppdt_pruchaseplan[]" class="form-control"/> <input type="" value="'+data.data_isi[key-1].ppdt_detailid+'" name="ppdt_detailid[]" class="form-control"/>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldConfirm[]" class="form-control numberinput alignAngka input-sm crfmField" autocomplete="off" />'
+                            +'<input type="" value="'+data.data_isi[key-1].ppdt_pruchaseplan+'" name="ppdt_pruchaseplan[]" class="form-control"/> <input type="" value="'+data.data_isi[key-1].ppdt_detailid+'" name="fieldIdDt[]" class="form-control"/>'
                             +'</td>'
                             +'<td>'+data.data_isi[key-1].s_name+'</td>'
                             +'<td class="alignAngka">'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'</td>'
@@ -270,17 +270,33 @@
         
         $('#modal-confirm').modal('show');
       },
-      error: function (jqXHR, textStatus, errorThrown)
-      {
-          alert('Error get data from ajax');
-      }
+          error: function(jqXHR, exception) {          
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            }if (jqXHR.status === 401) {
+                alert("Ma'af, anda telah logout silahkan login kembali.");
+                window.location.reload();
+            }else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText.error);
+            }
+        }
       });
   }
    
   function konfirmasiPlan(id) 
   {
       $.ajax({
-      url : baseUrl + "/keuangan/konfirmasipembelian/confirm-plan/"+id+"/confirmed",
+      url : baseUrl + "/konfirmasi-purchase/purchase-plane/data/confirm-plan/"+id+"/confirmed",
       type: "GET",
       dataType: "JSON",
       success: function(data)
@@ -290,26 +306,33 @@
         //ambil data ke json->modal
         $('#txt_span_status_confirm').text(data.spanTxt);
         $("#txt_span_status_confirm").addClass('label'+' '+data.spanClass);
-        $("#id_plan").val(data.header[0].d_pcsp_id);
-        $("#status_confirm").val(data.header[0].d_pcsp_status);
-        $('#lblCodeConfirm').text(data.header[0].d_pcsp_code);
-        $('#lblTglConfirm').text(data.header[0].d_pcsp_datecreated);
+        $("#id_plan").val(data.header[0].p_id);
+        $("#status_confirm").val(data.header[0].p_status);
+        $('#lblCodeConfirm').text(data.header[0].p_code);
+        $('#lblTglConfirm').text(data.header[0].p_date);
         $('#lblStaffConfirm').text(data.header[0].m_name);
         $('#lblSupplierConfirm').text(data.header[0].s_company);
-        
+        var s_stock=0;
         if ($("#status_confirm").val() != "FN") 
         {
           //loop data
+          $('#div_item').html('');          
           Object.keys(data.data_isi).forEach(function(){
+            if(data.data_isi[key-1].s_qty!=null){
+                s_stock=data.data_isi[key-1].s_qty;
+            }
             $('#tabel-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                             +'<td>'+key+'</td>'
                             +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                            +'<td>'+data.data_isi[key-1].d_pcspdt_qty+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].d_pcspdt_qtyconfirm+'" name="fieldConfirm[]" class="form-control numberinput input-sm crfmField"/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcspdt_id+'" name="fieldIdDt[]" class="form-control"/></td>'
-                            +'<td>'+data.data_isi[key-1].m_sname+'</td>'
-                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcspdt_prevcost)+'</td>'
-                            +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
+                            +'<td>'+s_stock+'</td>'
+                            +'<td>'+data.data_isi[key-1].ppdt_qty+''
+                            +'<input type="" value="'+data.data_isi[key-1].ppdt_detailid+'" name="fieldIdDt[]" class="form-control"/></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldConfirm[]" class="form-control numberinput input-sm crfmField"/>'
+                            +'</td>'
+
+                            +'<td>'+data.data_isi[key-1].s_name+'</td>'
+                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].ppdt_prevcost)+'</td>'
+                            /*+'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'*/
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row btn-sm" disabled>X</button></td>'
                             +'</tr>');
             i = randString(5);
@@ -319,16 +342,23 @@
         else
         {
           //loop data
+
           Object.keys(data.data_isi).forEach(function(){
+            if(data.data_isi[key-1].s_qty!=null){
+                s_stock=data.data_isi[key-1].s_qty;
+            }
             $('#tabel-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                             +'<td>'+key+'</td>'
                             +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                            +'<td>'+data.data_isi[key-1].d_pcspdt_qty+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].d_pcspdt_qtyconfirm+'" name="fieldConfirm[]" class="form-control numberinput input-sm crfmField"/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcspdt_id+'" name="fieldIdDt[]" class="form-control"/></td>'
-                            +'<td>'+data.data_isi[key-1].m_sname+'</td>'
-                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcspdt_prevcost)+'</td>'
-                            +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
+                            +'<td>'+s_stock+'</td>'
+                            +'<td>'+data.data_isi[key-1].ppdt_qty+'</td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldConfirm[]" class="form-control numberinput input-sm crfmField"/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="fieldIdDt[]" class="form-control"/>'
+                            +'</td>'
+
+                            +'<td>'+data.data_isi[key-1].s_name+'</td>'
+                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].ppdt_prevcost)+'</td>'
+                            /*+'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'*/
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row btn-sm">X</button></td>'
                             +'</tr>');
             i = randString(5);
@@ -338,10 +368,26 @@
         
         $('#modal-confirm').modal('show');
       },
-      error: function (jqXHR, textStatus, errorThrown)
-      {
-          alert('Error get data from ajax');
-      }
+        error: function(jqXHR, exception) {          
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            }if (jqXHR.status === 401) {
+                alert("Ma'af, anda telah logout silahkan login kembali.");
+                window.location.reload();
+            }else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText.error);
+            }
+        }
       });
   }
 
@@ -462,6 +508,7 @@
       dataType: "JSON",
       success: function(data)
       {
+
         var key = 1;
         var i = randString(5);
         //ambil data ke json->modal
@@ -470,7 +517,7 @@
         $("#id_order").val(data.header[0].d_pcs_id);
         $("#status_order_confirm").val(data.header[0].d_pcs_status);
         $('#lblCodeOrderConfirm').text(data.header[0].d_pcs_code);
-        $('#lblTglOrderConfirm').text(data.header[0].d_pcs_date_created);
+        $('#lblTglOrderConfirm').text(data.header[0].p_date);
         $('#lblStaffOrderConfirm').text(data.header[0].m_name);
         $('#lblSupplierOrderConfirm').text(data.header[0].s_company);
         if (data.header[0].d_pcs_method != "CASH") 
@@ -548,10 +595,26 @@
         
         $('#modal-confirm-order').modal('show');
       },
-      error: function (jqXHR, textStatus, errorThrown)
-      {
-        alert('Error get data from ajax');
-      }
+          error: function(jqXHR, exception) {          
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            }if (jqXHR.status === 401) {
+                alert("Ma'af, anda telah logout silahkan login kembali.");
+                window.location.reload();
+            }else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText.error);
+            }
+        }
     });
   }
 
@@ -620,10 +683,26 @@
         
         $('#modal-confirm-return').modal('show');
       },
-      error: function (jqXHR, textStatus, errorThrown)
-      {
-          alert('Error get data from ajax');
-      }
+          error: function(jqXHR, exception) {          
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            }if (jqXHR.status === 401) {
+                alert("Ma'af, anda telah logout silahkan login kembali.");
+                window.location.reload();
+            }else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText.error);
+            }
+        }
     });
   }
 
@@ -693,10 +772,26 @@
         
         $('#modal-confirm-belanjaharian').modal('show');
       },
-      error: function (jqXHR, textStatus, errorThrown)
-      {
-          alert('Error get data from ajax');
-      }
+          error: function(jqXHR, exception) {          
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            }if (jqXHR.status === 401) {
+                alert("Ma'af, anda telah logout silahkan login kembali.");
+                window.location.reload();
+            }else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText.error);
+            }
+        }
     });
   }
 
@@ -867,10 +962,26 @@
                 $('#tbl-return').DataTable().ajax.reload();
             }
           },
-          error: function (jqXHR, textStatus, errorThrown)
-          {
-            alert('Error updating data');
-          }
+         error: function(jqXHR, exception) {          
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            }if (jqXHR.status === 401) {
+                alert("Ma'af, anda telah logout silahkan login kembali.");
+                window.location.reload();
+            }else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText.error);
+            }
+        }
       });
     }
   }

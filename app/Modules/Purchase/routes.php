@@ -9,7 +9,7 @@ Route::get('/purcahse-plan/get-detail-plan/{id}/{type}', 'purchasePlanController
 Route::get('/purcahse-plan/get-edit-plan/{id}', 'purchasePlanController@getEditPlan')->middleware('auth');
 
 Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->middleware('auth');
-Route::get('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
+Route::delete('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
 
 //keuangan
 Route::get('/konfirmasi-purchase/index', 'PurchaseConfirmController@confirmIndex')->middleware('auth');
@@ -19,7 +19,7 @@ Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-plan/{id}/{type}', 
 Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-purchase-plan', 'PurchaseConfirmController@konfirmasiPurchasePlan')->middleware('auth');
 
 
-
+/*keuangan/konfirmasi-purchase/confirm-plan/4/confirmed*/
 
 	/*Purchasing order*/	
 Route::get('/purcahse-order/order-index', 'purchaseOrderController@orderIndex')->middleware('auth');
@@ -31,9 +31,9 @@ Route::get('/purcahse-order/seach-supplier', 'purchaseOrderController@seachSuppl
 
 
 
-Route::get('/purcahse-plan/get-detail-plan/{id}/{type}', 'purchasePlanController@getDetailPlan')->middleware('auth');
-Route::get('/purcahse-plan/get-edit-plan/{id}', 'purchasePlanController@getEditPlan')->middleware('auth');
-Route::delete('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
+
+
+
 
 
 
@@ -52,9 +52,20 @@ Route::get('/purchasing/belanjaproduk/produk', 'PurchasingController@produk')->m
 Route::get('/purchasing/belanjaharian/belanja', 'PurchasingController@belanja')->middleware('auth');
 Route::get('/purchasing/belanjaharian/tambah_belanja', 'PurchasingController@tambah_belanja')->middleware('auth');
 Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchasingController@tambah_pembelian')->middleware('auth');
-Route::get('/purchasing/rencanabahanbaku/bahan', 'PurchasingController@bahan')->middleware('auth');
 /* ricky */
 Route::get('/purchasing/belanjapasar/pasar', 'PurchasingController@pasar')->middleware('auth');
 /*----*/
+
+//purchasing dari spk
+Route::get('/purchasing/rencanabahanbaku/bahan', 'RencanaBahanController@index');
+//selesai purchasing dari spk
+
+// pembelian bahan baku spk
+Route::get('/purchasing/rencanabahanbaku/get-rencana-bytgl/{tgl1}/{tgl2}', 'RencanaBahanController@getRencanaByTgl');
+Route::get('/purchasing/rencanabahanbaku/proses-purchase-plan', 'RencanaBahanController@prosesPurchasePlan');
+Route::get('/purchasing/rencanabahanbaku/suggest-item', 'RencanaBahanController@suggestItem');
+Route::get('/purchasing/rencanabahanbaku/lookup-data-supplier', 'RencanaBahanController@lookupSupplier');
+Route::get('/purchasing/rencanabahanbaku/submit-data', 'RencanaBahanController@submitData');
+// pembelian bahan baku spk selesai
 });
 

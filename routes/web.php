@@ -141,7 +141,7 @@ Route::get('/keuangan/analisaindex/analisa5', 'KeuanganController@analisa5')->mi
 Route::get('/keuangan/analisarasio/analisa6', 'KeuanganController@analisa6')->middleware('auth');
 Route::get('/keuangan/analisabottom/analisa7', 'KeuanganController@analisa7')->middleware('auth');
 Route::get('/keuangan/analisaroe/analisa8', 'KeuanganController@analisa8')->middleware('auth');
-Route::get('/keuangan/spk/spk', 'KeuanganController@spk')->middleware('auth');
+
 
 /*System*/
 Route::get('/system/hakuser/user', 'SystemController@user')->middleware('auth');

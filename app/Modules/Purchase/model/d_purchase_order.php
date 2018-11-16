@@ -192,7 +192,7 @@ class d_purchase_order extends Model
     {    
           $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',

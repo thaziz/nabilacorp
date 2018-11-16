@@ -543,6 +543,7 @@ function simpan(){
                         timeout: 1000,
                         message: 'Data berhasil disimpan.'});
                         validationHeader();
+                         window.location = baseUrl+'/purcahse-plan/plan-index';
                         }
                         
                      else if(response.status=='gagal'){                      

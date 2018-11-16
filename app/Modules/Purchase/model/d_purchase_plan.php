@@ -31,7 +31,7 @@ class d_purchase_plan extends Model
     const CREATED_AT = 'p_created';
     const UPDATED_AT = 'p_updated';
     
-      protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date'];
+      protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp'];
 
      static function simpan ($request){      
       return DB::transaction(function () use ($request) {           
@@ -130,12 +130,13 @@ class d_purchase_plan extends Model
 
      
     
-    static function dataPlan($request){                
+    static function dataPlan($request){                      
       $from=date('Y-m-d',strtotime($request->tanggal1));
       $to=date('Y-m-d',strtotime($request->tanggal2));
       $d_purchase_plan = d_purchase_plan::join('m_supplier','s_id','=','p_supplier')
                           ->join('d_mem','m_id','=','p_mem')
                           ->select('p_id', 'p_code', 'p_status_date','p_date', 's_name as supplier','p_status','m_name')
+                          ->where('p_comp',Session::get('user_comp'))
                           ->whereBetween('p_date', [$from, $to])->get();
                          
           
@@ -158,10 +159,16 @@ class d_purchase_plan extends Model
                         })
                         ->addColumn('action', function ($d_purchase_plan) {
                             $disable='';
+                            $disableDE='';
+
                             if($d_purchase_plan->p_status=='FN'){
                               $disable='disabled';
+                              $disableDE='disabled';
+                            }elseif ($d_purchase_plan->p_status == "DE") {
+                              $disableDE='disabled';
                             }else{
                               $disable='';
+                              $disableDE='';
                             }
 
 
@@ -192,7 +199,7 @@ class d_purchase_plan extends Model
                           </button>
                           <button class="btn btn-sm btn-danger" title="Hapus" onclick="deletePlan(
                           '.$d_purchase_plan->p_id.'
-                          )" '.$disable.'><i class="fa fa-times"></i>
+                          )" '.$disableDE.'><i class="fa fa-times"></i>
                           </button>
                           </div>';
 
@@ -209,7 +216,7 @@ class d_purchase_plan extends Model
       {
         $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -294,7 +301,7 @@ class d_purchase_plan extends Model
     static function getDataRencanaPembelian()
   {
     $data = d_purchase_plan::join('m_supplier','p_supplier','=','s_id')
-            ->join('d_mem','p_mem','=','m_id')
+            ->leftjoin('d_mem','p_mem','=','m_id')
             ->select('p_id','p_code','p_date','s_company','p_status','p_created','p_confirm', 'm_id','m_name')
             ->orderBy('p_created', 'DESC')
             ->get();    
@@ -364,13 +371,15 @@ class d_purchase_plan extends Model
 
     static function confirmRencanaPembelian($id,$type)
   {
+
     $dataHeader = d_purchase_plan::join('m_supplier','p_supplier','=','s_id')
-                            ->join('d_mem','p_mem','=','m_id')
+                            ->leftjoin('d_mem','p_mem','=','m_id')
                             ->select('p_id','p_code','s_company','p_date', 'p_status','p_confirm','m_id', 'm_name')
                             ->where('p_id', '=', $id)
                             ->orderBy('p_date', 'DESC')
                             ->get();
     $statusLabel = $dataHeader[0]->p_status;
+    $dataHeader[0]->p_date=date('d-m-Y',strtotime($dataHeader[0]->p_date));
     if ($statusLabel == "WT") 
     {
         $spanTxt = 'Waiting';
@@ -388,6 +397,7 @@ class d_purchase_plan extends Model
     }
     if ($type == "all") 
     {
+      
         $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
@@ -409,9 +419,10 @@ class d_purchase_plan extends Model
     }
     else
     {
+
        $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -428,6 +439,7 @@ class d_purchase_plan extends Model
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
       
+
     }
    
     return Response()->json([
@@ -444,11 +456,14 @@ class d_purchase_plan extends Model
   {    
     DB::beginTransaction();
     try {
+      /*dd($request->all());*/
       
         //update table d_purchasingplan
         $plan = d_purchase_plan::where('p_id',$request->idPlan);
+
         if ($request->statusConfirm != "WT") 
         {   
+
           $plan->update([
             'p_confirm' => date('Y-m-d',strtotime(Carbon::now())),
             'p_status' => $request->statusConfirm,
@@ -456,13 +471,15 @@ class d_purchase_plan extends Model
             ]);
             
             //update table d_purchasingplan_dt
-            $hitung_field = count($request->ppdt_qtyconfirm);
+            $hitung_field = count($request->fieldConfirm);
+            
             for ($i=0; $i < $hitung_field; $i++) 
             {
-                $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->ppdt_pruchaseplan[$i])
-                          ->where('ppdt_detailid',$request->ppdt_detailid[$i]);
+                $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->idPlan)
+                          ->where('ppdt_detailid',$request->fieldIdDt[$i]);
+
                 $plandt->update([
-                'ppdt_qtyconfirm' => $request->ppdt_qtyconfirm[$i],
+                'ppdt_qtyconfirm' => $request->fieldConfirm[$i],
                 'ppdt_updated' => Carbon::now(),
                 'ppdt_isconfirm' => "TRUE",
                 ]);
@@ -476,18 +493,20 @@ class d_purchase_plan extends Model
             'p_updated' => Carbon::now(),
             ]);
             //update table d_purchasingplan_dt
-            $hitung_field = count($request->ppdt_qtyconfirm);
+            $hitung_field = count($request->fieldConfirm);
             for ($i=0; $i < $hitung_field; $i++) 
             {
-                 $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->ppdt_pruchaseplan[$i])
-                          ->where('ppdt_detailid',$request->ppdt_detailid[$i]);
+                 $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->idPlan)
+                          ->where('ppdt_detailid',$request->fieldIdDt[$i]);
+                   
                 $plandt->update([
-                'ppdt_qtyconfirm' => $request->ppdt_qtyconfirm[$i],
+                'ppdt_qtyconfirm' => $request->fieldConfirm[$i],
                 'ppdt_updated' => Carbon::now(),
                 'ppdt_isconfirm' => "FALSE",
                 ]);
             }
         }
+        
         DB::commit();
         return response()->json([
             'status' => 'sukses',

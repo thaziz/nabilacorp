@@ -2,9 +2,23 @@
 
 Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>['web','auth']], function () {
 	
+/* Rencana Produksi */
+    Route::get('/produksi/rencanaproduksi/tabel','RencanaProduksiController@tabel');
+    Route::get('/produksi/rencanaproduksi/produksi','RencanaProduksiController@produksi');
+    Route::get('/produksi/rencanaproduksi/save','RencanaProduksiController@save');
+    Route::get('/produksi/rencanaproduksi/hapus_rencana/{id}','RencanaProduksiController@hapus_rencana');
+    Route::patch('/produksi/rencanaproduksi/produksi/edit_rencana','RencanaProduksiController@edit_rencana');
+    Route::get('/produksi/rencanaproduksi/produksi/autocomplete','RencanaProduksiController@autocomplete');
+/* Hasil Rencana Produksi */
 
-		Route::get('/produksi/rencanaproduksi/produksi', 'produksiController@produksi')->middleware('auth');
-		Route::get('/produksi/spk/spk', 'ProduksiController@spk')->middleware('auth');
+	/*spk*/
+		Route::get('/produksi/spk/spk', 'spkProductionController@spk');
+		Route::get('/produksi/spk/get_spk_by_tgl/{tgl1}/{tgl2}', 'spkProductionController@getSpkByTgl');
+		Route::get('/produksi/spk/get_spk_by_tglCL/{tgl1}/{tgl2}', 'spkProductionController@getSpkByTglCL');
+	/* selesai spk*/
+
+		/*Route::get('/produksi/rencanaproduksi/produksi', 'produksiController@produksi')->middleware('auth');*/
+		
 		Route::get('/produksi/bahanbaku/baku', 'ProduksiController@baku')->middleware('auth');
 		Route::get('/produksi/sdm/sdm', 'ProduksiController@sdm')->middleware('auth');
 		Route::get('/produksi/produksi/produksi2', 'ProduksiController@produksi2')->middleware('auth');
