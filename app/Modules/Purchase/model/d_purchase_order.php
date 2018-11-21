@@ -57,7 +57,7 @@ class d_purchase_order extends Model
     static function dataOrder($request)
     {
         $data = d_purchase_order::join('m_supplier','s_id','=','po_supplier')
-                ->join('d_mem','po_mem','=','m_id')
+                ->leftjoin('d_mem','po_mem','=','m_id')
                 ->select(
                               'po_id',
                               'po_date',

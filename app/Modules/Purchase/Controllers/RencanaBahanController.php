@@ -197,8 +197,8 @@ class RencanaBahanController extends Controller
           $aa = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $list_sup[$i]->d_bs_supid)->first();
 
           $d_sup[] = array('sup_id' => $aa->s_id, 'sup_txt'=> $aa->s_company);
-        }
 
+        }
         $dataHeader = d_spk::join('spk_formula', 'd_spk.spk_id', '=', 'spk_formula.fr_spk')
                       ->join('m_item','spk_formula.fr_formula','=','m_item.i_id')
                       ->join('m_satuan', 'm_item.i_sat1', '=', 'm_satuan.s_id')
@@ -280,7 +280,7 @@ class RencanaBahanController extends Controller
       else
       {
         $request->session()->flash('gagal', 'Tidak terdapat relasi supplier pada barang tersebut');
-        return redirect('Purchase::rencanabahanbaku/bahan');
+        return redirect('purchasing/rencanabahanbaku/bahan');
       }
     }
 
@@ -439,16 +439,17 @@ class RencanaBahanController extends Controller
       DB::beginTransaction();
       try 
       {
-        $kode_plan = $this->kodeRencanaPembelian();
+        $kode_plan = $this->kodeRencanaPembelian();        
         /*$id_peg = Auth::User()->m_id;*/
 
         //insert to table d_purchasingplan
         $plan = new d_purchase_plan;
         $plan->p_code = $kode_plan;
         $plan->p_supplier = $request->i_sup;
+        $plan->p_comp=Session::get('user_comp');
         /*$plan->d_pcsp_mid = $id_peg;*/
-        /*$plan->d_pcsp_datecreated = Carbon::now('Asia/Jakarta')->format('Y-m-d');
-        $plan->d_pcsp_created = Carbon::now('Asia/Jakarta');*/
+        $plan->p_date= Carbon::now('Asia/Jakarta')->format('Y-m-d');
+        /*$plan->d_pcsp_created = Carbon::now('Asia/Jakarta');*/
         $plan->save();
 
         //get last id plan then insert id to d_purchasingplan_dt

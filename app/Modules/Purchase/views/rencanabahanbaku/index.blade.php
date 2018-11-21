@@ -223,7 +223,7 @@
 
   function proses(id,tgl1,tgl2) 
   {
-    alert('s');
+    
     $.ajax({
       url : baseUrl + "/purchasing/rencanabahanbaku/proses-purchase-plan",
       data : {id:id, tgl1:tgl1, tgl2:tgl2},
