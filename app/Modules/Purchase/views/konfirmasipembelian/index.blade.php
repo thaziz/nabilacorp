@@ -238,7 +238,7 @@
                             +'<td>'+data.data_isi[key-1].s_qty+'</td>'
                             +'<td class="alignAngka">'+data.data_isi[key-1].ppdt_qty+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldConfirm[]" class="form-control numberinput alignAngka input-sm crfmField" autocomplete="off" />'
-                            +'<input type="" value="'+data.data_isi[key-1].ppdt_pruchaseplan+'" name="ppdt_pruchaseplan[]" class="form-control"/> <input type="" value="'+data.data_isi[key-1].ppdt_detailid+'" name="fieldIdDt[]" class="form-control"/>'
+                          
                             +'</td>'
                             +'<td>'+data.data_isi[key-1].s_name+'</td>'
                             +'<td class="alignAngka">'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'</td>'

@@ -251,7 +251,8 @@ class d_purchase_plan extends Model
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
       }
-    
+     
+
       return Response()->json([
           'status' => 'sukses',          
           'data_isi' => $dataIsi
@@ -374,7 +375,15 @@ class d_purchase_plan extends Model
 
     $dataHeader = d_purchase_plan::join('m_supplier','p_supplier','=','s_id')
                             ->leftjoin('d_mem','p_mem','=','m_id')
-                            ->select('p_id','p_code','s_company','p_date', 'p_status','p_confirm','m_id', 'm_name')
+                            ->select(
+                                'p_id',
+                                'p_code',
+                                's_company',
+                                'p_date', 
+                                'p_status',
+                                DB::raw('IFNULL(p_confirm, "") AS p_confirm'),
+                                DB::raw('IFNULL(m_id, "") AS m_id'),
+                                DB::raw('IFNULL(m_name, "") AS m_name'))
                             ->where('p_id', '=', $id)
                             ->orderBy('p_date', 'DESC')
                             ->get();
@@ -407,7 +416,7 @@ class d_purchase_plan extends Model
                                          's_name',                                         
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
-                                         's_qty',
+                                         DB::raw('IFNULL(s_qty, 0) AS s_qty'),
                                          'ppdt_prevcost',
                                          'ppdt_pruchaseplan',
                                           'ppdt_detailid'
