@@ -90,7 +90,7 @@ Route::get('/produksi/o_produksi/tambah_produksi', 'ProduksiController@tambah_pr
 Route::get('/penjualan/manajemenharga/harga', 'PenjualanController@harga')->middleware('auth');
 Route::get('/penjualan/manajemenpromosi/promosi', 'PenjualanController@promosi')->middleware('auth');
 Route::get('/penjualan/layananpesanan/layananpesanan', 'PenjualanController@layananpesanan')->middleware('auth');
-Route::get('/penjualan/rencanapenjualan/rencana', 'PenjualanController@rencana')->middleware('auth');
+
 Route::get('/penjualan/POSpenjualan/POSpenjualan', 'PenjualanController@POSpenjualan')->middleware('auth');
 Route::get('/penjualan/manajemenreturn/r_penjualan', 'PenjualanController@r_penjualan')->middleware('auth');
 Route::get('/penjualan/monitorprogress/progress', 'PenjualanController@progress')->middleware('auth');

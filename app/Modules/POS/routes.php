@@ -95,7 +95,7 @@ Route::get('/penjualan/barang-titip/detail/{id}', 'itemTitipController@titipDt')
 Route::get('/penjualan/manajemenharga/harga', 'PenjualanController@harga')->middleware('auth');
 Route::get('/penjualan/manajemenpromosi/promosi', 'PenjualanController@promosi')->middleware('auth');
 Route::get('/penjualan/layananpesanan/layananpesanan', 'PenjualanController@layananpesanan')->middleware('auth');
-Route::get('/penjualan/rencanapenjualan/rencana', 'PenjualanController@rencana')->middleware('auth');
+
 Route::get('/penjualan/POSpenjualan/POSpenjualan', 'PenjualanController@POSpenjualan')->middleware('auth');
 Route::get('/penjualan/manajemenreturn/r_penjualan', 'PenjualanController@r_penjualan')->middleware('auth');
 Route::get('/penjualan/monitorprogress/progress', 'PenjualanController@progress')->middleware('auth');
@@ -115,5 +115,10 @@ Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanController@pe
 Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
 Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 
+
+//rencana penjualan
+Route::get('/penjualan/rencanapenjualan/rencana', 'rencanaPenjualanController@index')->middleware('auth');
+Route::get('/penjualan/rencanapenjualan/tambah_rencana', 'rencanaPenjualanController@tambah_rencana')->middleware('auth');
+//rencana penjualan selesai
 });
 
