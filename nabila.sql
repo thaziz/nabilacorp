@@ -2400,13 +2400,15 @@ CREATE TABLE IF NOT EXISTS `d_productplan` (
   `pp_insert` timestamp NULL DEFAULT NULL,
   `pp_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productplan: ~1 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productplan: ~3 rows (approximately)
 DELETE FROM `d_productplan`;
 /*!40000 ALTER TABLE `d_productplan` DISABLE KEYS */;
 INSERT INTO `d_productplan` (`pp_id`, `pp_date`, `pp_item`, `pp_qty`, `pp_isspk`, `pp_insert`, `pp_update`) VALUES
-	(1, '2018-11-16', 396, 100, 'Y', NULL, '2018-11-16 09:49:13');
+	(1, '2018-11-16', 396, 100, 'Y', NULL, '2018-11-16 09:49:13'),
+	(2, '2018-11-22', 5, 30, 'N', NULL, '2018-11-22 08:10:00'),
+	(3, '2018-11-22', 396, 120, 'Y', NULL, '2018-11-22 08:15:30');
 /*!40000 ALTER TABLE `d_productplan` ENABLE KEYS */;
 
 
@@ -2499,13 +2501,18 @@ CREATE TABLE IF NOT EXISTS `d_purchaseplan_dt` (
   `ppdt_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ppdt_pruchaseplan`,`ppdt_detailid`),
   CONSTRAINT `FK_d_purchaseplan_dt_d_purchase_plan` FOREIGN KEY (`ppdt_pruchaseplan`) REFERENCES `d_purchase_plan` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchaseplan_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchaseplan_dt: ~6 rows (approximately)
 DELETE FROM `d_purchaseplan_dt`;
 /*!40000 ALTER TABLE `d_purchaseplan_dt` DISABLE KEYS */;
 INSERT INTO `d_purchaseplan_dt` (`ppdt_pruchaseplan`, `ppdt_detailid`, `ppdt_item`, `ppdt_qty`, `ppdt_prevcost`, `ppdt_qtyconfirm`, `ppdt_isconfirm`, `ppdt_ispo`, `ppdt_poid`, `ppdt_created`, `ppdt_updated`) VALUES
-	(5, 0, 19, 160, 57000.00, 5, 'FALSE', 'FALSE', 0, '2018-11-15 14:34:28', '2018-11-15 08:21:40');
+	(5, 0, 19, 160, 57000.00, 5, 'FALSE', 'FALSE', 0, '2018-11-15 14:34:28', '2018-11-15 08:21:40'),
+	(6, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-16 14:29:51', '2018-11-16 07:29:51'),
+	(7, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-16 15:34:56', '2018-11-16 08:34:56'),
+	(8, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-21 10:13:16', '2018-11-21 03:13:16'),
+	(9, 0, 48, 400, 32615.38, 400, 'FALSE', 'FALSE', 0, '2018-11-21 10:13:49', '2018-11-21 03:17:20'),
+	(10, 0, 73, 2100, 120.00, 2100, 'TRUE', 'FALSE', 0, '2018-11-21 10:24:25', '2018-11-21 03:24:59');
 /*!40000 ALTER TABLE `d_purchaseplan_dt` ENABLE KEYS */;
 
 
@@ -2554,13 +2561,18 @@ CREATE TABLE IF NOT EXISTS `d_purchase_plan` (
   `p_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `p_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchase_plan: ~1 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchase_plan: ~6 rows (approximately)
 DELETE FROM `d_purchase_plan`;
 /*!40000 ALTER TABLE `d_purchase_plan` DISABLE KEYS */;
 INSERT INTO `d_purchase_plan` (`p_id`, `p_date`, `p_comp`, `p_code`, `p_supplier`, `p_mem`, `p_confirm`, `p_status`, `p_status_date`, `p_created`, `p_updated`) VALUES
-	(5, '2018-11-15', 1, 'ROR-1811-00001', 1, '', NULL, 'WT', NULL, '2018-11-15 07:34:28', '2018-11-15 08:21:40');
+	(5, '2018-11-15', 1, 'ROR-1811-00001', 1, '', NULL, 'WT', NULL, '2018-11-15 07:34:28', '2018-11-15 08:21:40'),
+	(6, '2018-11-15', 0, 'ROR-1811-00002', 1, '', NULL, 'WT', NULL, '2018-11-16 07:29:51', '2018-11-16 07:29:51'),
+	(7, '2018-11-15', 0, 'ROR-1811-00003', 1, '', NULL, 'WT', NULL, '2018-11-16 08:34:56', '2018-11-16 08:34:56'),
+	(8, '2018-11-15', 1, 'ROR-1811-00004', 1, '', NULL, 'WT', NULL, '2018-11-21 03:13:16', '2018-11-21 03:13:16'),
+	(9, '2018-11-15', 1, 'ROR-1811-00005', 1, '', NULL, 'WT', NULL, '2018-11-21 03:13:49', '2018-11-21 03:17:20'),
+	(10, '2018-11-21', 1, 'ROR-1811-00006', 1, '', '2018-11-21', 'FN', NULL, '2018-11-21 03:24:25', '2018-11-21 03:24:59');
 /*!40000 ALTER TABLE `d_purchase_plan` ENABLE KEYS */;
 
 
@@ -2827,6 +2839,23 @@ DELETE FROM `d_sales`;
 /*!40000 ALTER TABLE `d_sales` ENABLE KEYS */;
 
 
+-- Dumping structure for table alamrayasite_nabila.d_salesplan_dt
+CREATE TABLE IF NOT EXISTS `d_salesplan_dt` (
+  `spdt_salesplan` int(11) NOT NULL,
+  `spdt_detailid` int(11) NOT NULL,
+  `spdt_item` int(11) DEFAULT NULL,
+  `spdt_qty` int(11) DEFAULT NULL,
+  `spdt_created` datetime DEFAULT NULL,
+  `spdt_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`spdt_salesplan`,`spdt_detailid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_salesplan_dt: ~0 rows (approximately)
+DELETE FROM `d_salesplan_dt`;
+/*!40000 ALTER TABLE `d_salesplan_dt` DISABLE KEYS */;
+/*!40000 ALTER TABLE `d_salesplan_dt` ENABLE KEYS */;
+
+
 -- Dumping structure for table alamrayasite_nabila.d_sales_dt
 CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   `sd_sales` int(11) NOT NULL,
@@ -2874,6 +2903,26 @@ DELETE FROM `d_sales_payment`;
 /*!40000 ALTER TABLE `d_sales_payment` ENABLE KEYS */;
 
 
+-- Dumping structure for table alamrayasite_nabila.d_sales_plan
+CREATE TABLE IF NOT EXISTS `d_sales_plan` (
+  `sp_id` int(11) NOT NULL,
+  `sp_code` varchar(50) DEFAULT NULL,
+  `sp_comp` int(11) DEFAULT NULL,
+  `sp_mem` int(11) DEFAULT NULL,
+  `sp_date` date DEFAULT NULL,
+  `sp_created` datetime DEFAULT NULL,
+  `sp_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`sp_id`),
+  KEY `FK_d_sales_plan_m_comp` (`sp_comp`),
+  CONSTRAINT `FK_d_sales_plan_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_sales_plan: ~0 rows (approximately)
+DELETE FROM `d_sales_plan`;
+/*!40000 ALTER TABLE `d_sales_plan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `d_sales_plan` ENABLE KEYS */;
+
+
 -- Dumping structure for table alamrayasite_nabila.d_spk
 CREATE TABLE IF NOT EXISTS `d_spk` (
   `spk_id` int(11) NOT NULL,
@@ -2890,11 +2939,12 @@ CREATE TABLE IF NOT EXISTS `d_spk` (
   CONSTRAINT `FK_d_spk_d_productplan` FOREIGN KEY (`spk_ref`) REFERENCES `d_productplan` (`pp_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_spk: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_spk: ~1 rows (approximately)
 DELETE FROM `d_spk`;
 /*!40000 ALTER TABLE `d_spk` DISABLE KEYS */;
 INSERT INTO `d_spk` (`spk_id`, `spk_comp`, `spk_ref`, `spk_code`, `spk_date`, `spk_item`, `spk_status`, `spk_insert`, `spk_update`) VALUES
-	(1, 1, 1, 'SPK1811161', '2018-11-16', 396, 'DR', '2018-11-16 02:49:13', '2018-11-16 02:49:13');
+	(1, 1, 1, 'SPK1811161', '2018-11-16', 396, 'DR', '2018-11-16 02:49:13', '2018-11-16 02:49:13'),
+	(2, 1, 3, 'SPK1811222', '2018-11-22', 396, 'DR', '2018-11-22 01:15:30', '2018-11-22 01:15:30');
 /*!40000 ALTER TABLE `d_spk` ENABLE KEYS */;
 
 
@@ -4972,7 +5022,7 @@ CREATE TABLE IF NOT EXISTS `spk_formula` (
   CONSTRAINT `FK_spk_formula_d_spk` FOREIGN KEY (`fr_spk`) REFERENCES `d_spk` (`spk_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.spk_formula: ~6 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.spk_formula: ~12 rows (approximately)
 DELETE FROM `spk_formula`;
 /*!40000 ALTER TABLE `spk_formula` DISABLE KEYS */;
 INSERT INTO `spk_formula` (`fr_spk`, `fr_detailid`, `fr_formula`, `fr_value`, `fr_scale`) VALUES
@@ -4981,7 +5031,13 @@ INSERT INTO `spk_formula` (`fr_spk`, `fr_detailid`, `fr_formula`, `fr_value`, `f
 	(1, 3, 48, 400.00, '4'),
 	(1, 4, 60, 100.00, '4'),
 	(1, 5, 71, 800.00, '4'),
-	(1, 6, 73, 2100.00, '4');
+	(1, 6, 73, 2100.00, '4'),
+	(2, 1, 3, 96000.00, '3'),
+	(2, 2, 49, 14400.00, '4'),
+	(2, 3, 48, 480.00, '4'),
+	(2, 4, 60, 120.00, '4'),
+	(2, 5, 71, 960.00, '4'),
+	(2, 6, 73, 2520.00, '4');
 /*!40000 ALTER TABLE `spk_formula` ENABLE KEYS */;
 
 

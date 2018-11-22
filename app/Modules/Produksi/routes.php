@@ -23,8 +23,7 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 		Route::get('/produksi/sdm/sdm', 'ProduksiController@sdm')->middleware('auth');
 		Route::get('/produksi/produksi/produksi2', 'ProduksiController@produksi2')->middleware('auth');
 		
-		Route::get('/produksi/waste/waste', 'ProduksiController@waste')->middleware('auth');
-		Route::get('/produksi/monitoringprogress/monitoring', 'ProduksiController@monitoring')->middleware('auth');
+		Route::get('/produksi/waste/waste', 'ProduksiController@waste')->middleware('auth');		
 		Route::get('/produksi/o_produksi/tambah_produksi', 'ProduksiController@tambah_produksi')->middleware('auth');
 
 		//ITEM PRODUKSI
@@ -49,9 +48,12 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 
 		Route::get('/produksi/hasil-produksi/destroy/{id}', 'hasilProduksiController@destroy')->middleware('auth');
 
-		
-		
-
+		//monitoring order
+		Route::get('/produksi/monitoringprogress/monitoring', 'MonitoringProgressController@monitoring');
+		Route::get('/produksi/monitoringprogress/tabel', 'MonitoringProgressController@tabel');
+		Route::get('/produksi/monitoringprogress/nota/{id}', 'MonitoringProgressController@bukaNota');
+		Route::get('/penjualan/monitoringorder/nota/tabel/{id}', 'MonitoringOrderController@nota');
+		//monitoring order selesai
 
 		
 		
