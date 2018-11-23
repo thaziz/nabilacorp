@@ -29,14 +29,6 @@ Route::get('/purcahse-order/get-data-form/{id}', 'purchaseOrderController@getDat
 Route::get('/purcahse-order/get-data-code-plan', 'purchaseOrderController@getDataCodePlan')->middleware('auth');
 Route::get('/purcahse-order/seach-supplier', 'purchaseOrderController@seachSupplier')->middleware('auth');
 
-
-
-
-
-
-
-
-
 Route::get('/purcahse-plan/store-plan', 'purchasePlanController@storePlan')->middleware('auth');
 
 Route::get('/purcahse-plan/form-plan', 'purchasePlanController@formPlan')->middleware('auth');

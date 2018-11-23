@@ -17,11 +17,6 @@ use App\Modules\Purchase\model\d_purchase_plan;
 
 use Datatables;
 
-
-
-
-
-
 class purchaseConfirmController extends Controller
 {
     /**
@@ -61,9 +56,77 @@ class purchaseConfirmController extends Controller
      
      return view('Purchase::konfirmasipembelian/index',compact('tbh','td','to','tr','mcb','mco','mcr','mc'));
    }
-   public function getDataRencanaPembelian(Request $request){     
-      return d_purchase_plan::getDataRencanaPembelian($request);
-   }
+public function getDataRencanaPembelian(Request $request)
+  {
+    $data = d_purchase_plan::join('m_supplier','d_purchase_plan.p_supplier','=','m_supplier.s_id')
+              // ->join('d_mem','d_purchase_plan.p_mem','=','d_mem.m_id')
+            // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
+            // ->orderBy('d_pcsp_datecreated', 'DESC')
+            ->get();
+    // return $data;    
+    return DataTables::of($data)
+    ->addIndexColumn()
+    ->editColumn('status', function ($data)
+      {
+      if ($data->p_status == "WT") 
+      {
+        return '<span class="label label-info">Waiting</span>';
+      }
+      elseif ($data->p_status == "DE") 
+      {
+        return '<span class="label label-warning">Dapat diedit</span>';
+      }
+      elseif ($data->p_status == "FN") 
+      {
+        return '<span class="label label-success">Finish</span>';
+      }
+    })
+    ->editColumn('tglBuat', function ($data) 
+    {
+        if ($data->p_date == null) 
+        {
+            return '-';
+        }
+        else 
+        {
+            return $data->p_date ? with(new Carbon($data->p_date))->format('d M Y') : '';
+        }
+    })
+    ->editColumn('tglConfirm', function ($data) 
+    {
+        if ($data->p_confirm == null) 
+        {
+            return '-';
+        }
+        else 
+        {
+            return $data->p_confirm ? with(new Carbon($data->p_confirm))->format('d M Y') : '';
+        }
+    })
+    ->addColumn('action', function($data)
+      {
+        if ($data->p_status == "WT") 
+        {
+            return '<div class="text-center">
+                      <button class="btn btn-sm btn-primary" title="Ubah Status"
+                          onclick=konfirmasiPlanAll("'.$data->p_id.'")><i class="fa fa-check"></i>
+                      </button>
+                  </div>'; 
+        }
+        else 
+        {
+            return '<div class="text-center">
+                      <button class="btn btn-sm btn-primary" title="Ubah Status"
+                          onclick=konfirmasiPlan("'.$data->p_id.'")><i class="fa fa-check"></i>
+                      </button>
+                  </div>'; 
+        }
+      })
+    ->rawColumns(['status', 'action'])
+    ->make(true);
+  }
+
+
    public function confirmRencanaPembelian($id,$type){
       return d_purchase_plan::confirmRencanaPembelian($id,$type);
    }

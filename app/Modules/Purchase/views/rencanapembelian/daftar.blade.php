@@ -98,10 +98,10 @@ function table(){
             columns: [
             {data: 'p_date', name: 'p_date'},
             {data: 'p_code', name: 'p_code'},            
-            {data: 'supplier', name: 'supplier'},                        
-            {data: 'p_status', name: 'p_status'}, 
-            {data: 'p_status_date', name: 'p_status_date'},                         
-            {data: 'action', name: 'action'},
+            {data: 's_company', name: 's_company'},                        
+            {data: 'status', name: 'status'}, 
+            {data: 'tglConfirm', name: 'tglConfirm'},                         
+            {data: 'aksi', name: 'aksi'},
            
             ],
              'columnDefs': [
