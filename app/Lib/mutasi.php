@@ -241,6 +241,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;      
                             $totalHpp+=$totalPermintaan*$getBarang[$k]->sm_hpp;        
                             $k = count($getBarang);
+                            
                         } elseif ($totalPermintaan > $totalQty) {
                         	$qty_used=$getBarang[$k]->sm_qty_used+$totalQty;
                         	$qty_sisa =$getBarang[$k]->sm_qty_sisa-$totalQty;                        	

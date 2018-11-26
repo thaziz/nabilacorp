@@ -134,15 +134,37 @@
                             <li class="menu-sekunder {{ Request::is('purcahse-order/order-index') ? 'active' : '' || Request::is('purchasing/order/*') ? 'active' : '' }}">
                             <a href="{{ url('/purcahse-order/order-index') }}"><span class="submenu-title">Order Pembelian</span><span class="hidden">Purchasing</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('purchasing/orderpembelian/order') ? 'active' : '' || Request::is('purchasing/orderpembelian/*') ? 'active' : '' }}">
+                            <!-- <li class="menu-sekunder {{ Request::is('purchasing/orderpembelian/order') ? 'active' : '' || Request::is('purchasing/orderpembelian/*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/orderpembelian/order') }}"><span class="submenu-title">Order Pembelian Barang Stok</span><span class="hidden">Purchasing</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('purchasing/belanjaharian/belanja') ? 'active' : '' || Request::is('purchasing/belanjaharian/*') ? 'active' : '' }}">
+                            </li> -->
+                            <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjaharian/belanja') ? 'active' : '' || Request::is('purchasing/belanjaharian/*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/belanjaharian/belanja') }}"><span class="submenu-title">Belanja Harian Barang Non Stok</span><span class="hidden">Purchasing</span></a>
-                            </li>
+                            </li> -->
+                            @if(Auth::user()->punyaAkses('Belanja Harian','ma_read'))
+                                    <li class="{{ Request::is('purchasing/belanjaharian/belanja') ? 'active' : '' || Request::is('purchasing/belanjaharian/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/purchasing/belanjaharian/belanja') }}"><span
+                                                    class="submenu-title">Belanja Harian</span><span class="hidden">Purchasing</span></a>
+                                    </li>
+                            @endif
                             <li class="menu-sekunder {{ Request::is('purchasing/returnpembelian/pembelian') ? 'active' : '' || Request::is('purchasing/returnpembelian/*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/returnpembelian/pembelian') }}"><span class="submenu-title">Return Pembelian</span><span class="hidden">Purchasing</span></a>
                             </li>
+
+
+
+
+                                @if(Auth::user()->punyaAkses('Laporan Pembelian','ma_read'))
+                                    <li class="{{ Request::is('purchasing/lap-pembelian/index') ? 'active' : '' || Request::is('purchasing/lap-pembelian/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/purchasing/lap-pembelian/index') }}"><span
+                                                    class="submenu-title">Laporan Pembelian</span><span class="hidden">Purchasing</span></a>
+                                    </li>
+                                @endif
+
+                                {{-- @if(Auth::user()->punyaAkses('Return Pembelian','ma_read')) --}}
+                                <li class="{{ Request::is('purchasing/pembayaran_hutang') ? 'active' : '' || Request::is('purchasing/pembayaran_hutang/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/purchasing/pembayaran_hutang') }}"><span
+                                                    class="submenu-title">Pelunasan Hutang</span><span class="hidden">Purchasing</span></a>
+                                </li>
                             <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjasuplier/suplier') ? 'active' : '' || Request::is('purchasing/belanjasuplier/suplier*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/belanjasuplier/suplier') }}"><span class="submenu-title">Belanja Suplier</span></a>
                             </li> -->

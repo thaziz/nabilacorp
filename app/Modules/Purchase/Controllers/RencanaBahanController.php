@@ -199,7 +199,9 @@ class RencanaBahanController extends Controller
 
       // $sup = DB::table('m_item')->select('i_sup_list')->where('i_id', $request->id)->first();
       // $list_sup = explode(',', $sup->i_sup_list);
+
       $list_sup = DB::table('d_barang_sup')->select('d_bs_supid')->where('d_bs_itemid', $request->id)->get();
+
 
       if (count($list_sup) > 0) 
       {
@@ -304,6 +306,8 @@ class RencanaBahanController extends Controller
       $tanggalMenit2 = date('Y-m-d '.$menit ,strtotime($request->tgl2));
 
       $list_item = DB::table('d_supplier_brg')->select('d_sb_itemid')->where('d_sb_supid', $request->idsup)->get();
+      
+
       if (count($list_item) > 0) 
       {
         $d_item = [];
