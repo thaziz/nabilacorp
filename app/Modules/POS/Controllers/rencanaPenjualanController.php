@@ -16,8 +16,8 @@ use App\Http\Controllers\Controller;
 use App\mMember;
 use App\Modules\POS\model\m_paymentmethod;
 use App\Modules\POS\model\m_machine;
-use App\Modules\POS\model\d_sales;
-use App\Modules\POS\model\d_sales_dt;
+use App\Modules\POS\model\d_sales_plan;
+
 
 use Datatables;
 
@@ -35,128 +35,51 @@ class rencanaPenjualanController extends Controller
         $this->middleware('auth');
     }
 
- 
-    public function indexStok(){
-        return view('POS::penjualanStock/index',compact('d'));
-    }
-    public function dataStok(){
-      $stok=d_stock::dataStok();
-      return $stok;      
-    }
+     
     
     
-    public function item(Request $item)
-    { 
-      return m_itemm::seachItem($item);
+    public function index() { 
+        $printPl=view('Produksi::sam');
+        $flag='Toko';
+        $paymentmethod=m_paymentmethod::pm();       
+        $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
+        $machine=m_machine::showMachineActive();      
+        $data['toko']=view('POS::rencanapenjualan/toko',compact('machine'));      
+        $data['listtoko']=view('POS::rencanapenjualan/listtoko');   
+        return view('POS::rencanapenjualan/POSpenjualanToko',compact('data','pm','printPl'));
     }
-    public function searchItemCode(Request $item)
-    { 
+
+    function simpan(Request $request){
+      return d_sales_plan::simpan($request);
+    }
+
+    function perbarui(Request $request){
       
-      return m_itemm::searchItemCode($item);
-    }
-    
-    //auto complete customer
-    public function customer(Request $customer){
-      return m_customer::customer($customer);     
+      return d_sales_plan::perbarui($request);
     }
 
-    function paymentmethod (Request $request){
-      $jumlah=$request->dataIndex;
-      $paymentmethod=m_paymentmethod::pm();       
-      $data =view('POS::paymentmethod/paymentmethod',compact('paymentmethod','jumlah'));    
-      $a='';
-      $a.=$data;
-      $x=['view'=>$a,'jumlah'=>$jumlah];
-      return $x;
-    }
-    function paymentmethodEdit($id,$flag){
-      $data=m_paymentmethod::paymentmethodEdit($id,$flag);              
-      $jumlah=count($data['sales_pm']);
-       $data =view('POS::paymentmethod/paymentmethodEdit',compact('data','jumlah'));    
-       $a='';
-      $a.=$data;
-      $x=['view'=>$a,'jumlah'=>$jumlah];
-      return $x;
-
-    }
-    
-    public function index()
-    { 
-      $printPl=view('Produksi::sam');
-      $flag='Toko';
-      $paymentmethod=m_paymentmethod::pm();       
-      $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
-      $machine=m_machine::showMachineActive();      
-      $data['toko']=view('POS::rencanapenjualan/toko',compact('machine'));      
-      $data['listtoko']=view('POS::rencanapenjualan/listtoko');   
-      return view('POS::rencanapenjualan/POSpenjualanToko',compact('data','pm','printPl'));
-    }
-
-    function create(Request $request){
-      return d_sales::simpan($request);
-    }
-
-     function update(Request $request){
-      
-      return d_sales::perbarui($request);
-    }
-
-    function penjualanDtToko($id,Request $request){      
-      $status=$request->s_status;
-      $data=d_sales_dt::penjualanDt($id);
-      $tamp=[];
-      foreach ($data as $key => $value) {
-          $tamp[$key]=$value->i_id;
-      }      
-      $tamp=array_map("strval",$tamp);      
-      return view('POS::rencanapenjualan/editDetailPenjualan',compact('data','tamp','status'));
-      
-    }
-
-    
+    function find_d_sales_plan() {
+       $data = array();
+       $rows = d_sales_plan::all();
 
 
-    function penjualanViewDtToko($id){            
-      $data=d_sales_dt::penjualanDt($id);
-      $tamp=[];
-      foreach ($data as $key => $value) {
-          $tamp[$key]=$value->i_id;
-      }      
-      $tamp=array_map("strval",$tamp);      
-      return view('POS::rencanapenjualan/viewDetailPenjualan',compact('data','tamp'));
-      
+       foreach ($rows as $row) {
+         $new_row = $row;
+         $new_row['i_price'] = 0;
+         $new_row['total_harga'] = 0;
+         if($row->d_salesplan_dt != null) {
+            $qty = $row->d_salesplan_dt->sum('spdt_qty');
+            if($row->d_salesplan_dt->m_item != null) {
+                $new_row['total_harga'] = $qty * $row->d_salesplan_dt->m_item->sum('i_price');
+            }
+         }
+         array_push($data, $new_row);
+       }
+
+       $res = array('data' => $data);
+       return response()->json($res);
     }
 
-
-    function listPenjualan(Request $request){
-      if($request->ajax()){
-        return view('POS::rencanapenjualan/tableListToko');
-      }else{
-        return 'f';
-      }
-        
-    }
-    function listPenjualanData(Request $request){
-      /*if($request->ajax()){*/
-        return d_sales::listPenjualanData($request);
-      /*}else{
-        return 'f';
-      }*/
-      
-    }
-  function printNota($id, Request $request){
-      $jumlah=count(($request->sd_item));      
-      $bayar=$request->s_bayar;
-      $kembalian=$request->kembalian;
-      $data=d_sales::printNota($id);
-      
-      return view('POS::rencanapenjualan/printNota',compact('data','kembalian','bayar','jumlah'));
-   
-  }
-   public function POSpenjualanPesanan()
-    {
-      return view('/penjualan/POSpenjualanPesanan/POSpenjualanPesanan');
-    }
     
    
 }
