@@ -19,12 +19,12 @@
                     <div id="tab-general">
                         <div class="row mbl">
                             <div class="col-lg-12">
-                                
+
                                             <div class="col-md-12">
                                                 <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
                                                 </div>
                                             </div>
-                                 
+
                             <ul id="generalTab" class="nav nav-tabs">
                               <li class="active"><a href="#alert-tab" data-toggle="tab">Edit Data Customer</a></li>
                             <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
@@ -46,311 +46,204 @@
 
                             <form method="get" id="form_cust" action="#">
                               <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top:20px; ">
-                                <div class="col-md-2 col-sm-3 col-xs-12"> 
-                                  
-                                      <label class="tebal">ID Customer</label>
-                                  
-                                </div>
-                                <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" class="form-control input-sm" readonly="true" name="id_cus_ut" value="{{$edit_cust->id_cus}}">
-                                      <input type="hidden" name="id_cus_ut" value="{{$edit_cust->id_cus_ut}}">
-                                      <input type="hidden" name="id_cus" value="{{$edit_cust->id_cus}}">
+                                      <input type="hidden" class="form-control input-sm" readonly="true" name="id_cus_ut" value="{{ $edit_cust->c_code }}">
+                                      <input type="hidden" name="id_cus_ut" value="{{$edit_cust->c_id}}">
+                                      <input type="hidden" name="id_cus" value="{{$edit_cust->c_id}}">
                                   </div>
-                                </div>
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                  
-                                    
-                                      <label class="tebal">Nama Customer</label>
-                                  
+
+
+                                      <label class="tebal">Nama Customer<font color="red">*</font></label>
+
                                 </div>
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                     <div class="input-icon right">
                                       <i class="glyphicon glyphicon-user"></i>
-                                      <input type="text" id="nama_cus" name="nama_cus" class="form-control input-sm" value="{{ $edit_cust->nama_cus }}"> 
-                                      @if ($errors->has('nama_cus'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('nama_cus') }}</strong>
-                                        </span>
-                                      @endif      
-                                    </div>                           
+                                      <input type="text" id="nama_cus" name="nama_cus" class="form-control input-sm" value="{{ $edit_cust->c_name }}">
+
+                                    </div>
                                   </div>
                                 </div>
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                  
+
                                       <label class="tebal">Tanggal Lahir</label>
-                                  
+
                                 </div>
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                     <div class="input-icon right">
                                       <i class="glyphicon glyphicon-calendar"></i>
-                                      <input maxlength="10" type="text" id="tgl_lahir" name="tgl_lahir" class="form-control input-sm datepicker2" value="{{ $edit_cust->tgl_lahir}}"> 
-                                      @if ($errors->has('tgl_lahir'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('tgl_lahir') }}</strong>
-                                        </span>
-                                      @endif     
-                                    </div>                            
+                                      <input  type="text" id="tgl_lahir" name="tgl_lahir" class="form-control input-sm datepicker_strip" value="{{ $edit_cust->c_birthday}}">
+
+                                    </div>
                                   </div>
                                 </div>
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                  
+
                                       <label class="tebal">E-mail</label>
-                                  
+
                                 </div>
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                     <div class="input-icon right">
                                       <i class="glyphicon glyphicon-envelope"></i>
-                                      <input type="email" id="email" name="email" class="form-control input-sm"  value="{{ $edit_cust->email }}">
-                                      @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                      @endif  
-                                    </div>                                
+                                      <input type="email" id="email" name="email" class="form-control input-sm"  value="{{ $edit_cust->c_email }}">
+
+                                    </div>
                                   </div>
                                 </div>
 
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                  
+
                                       <label class="tebal">Tipe Customer</label>
-                                  
+
                                 </div>
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                    
+
                                       <select name="tipe_cust" id="tipe_cust" class="form-control input-sm">
-                                        @if($edit_cust->tipe_cust=="retail")
-                                             <option value="retail" selected="true">Retail</option>
-                                             <option value="online">Online</option>
-                                        @elseif($edit_cust->tipe_cust=="online")
-                                             <option value="retail">Retail</option>
-                                             <option value="online" selected="true" >Online</option>
-                                        @else
-                                            <option value="retail">Retail</option>
-                                            <option value="online">Online</option>
-                                        @endif
-
+                                      @if ( $edit_cust->c_type  == 'RT')
+                                        <option value="RT" selected="">Retail</option>
+                                        <option value="GR">Online</option>
+                                      @elseif ($edit_cust->c_type  == 'GR')
+                                        <option value="RT">Retail</option>
+                                        <option value="GR" selected="">Online</option>
+                                      @else
+                                        <option value="GR">Online</option>
+                                        <option value="RT">Retail</option>
+                                       @endif
                                       </select>
-                                      @if ($errors->has('tipe_cust'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('tipe_cust') }}</strong>
-                                        </span>
-                                      @endif  
-                                                                  
+
                                   </div>
                                 </div>
-                                <div class="col-md-6 col-sm-0 col-xs-0" style="height: 45px;">
-                                  <!-- empty -->
+                                <div class="col-md-2 col-sm-3 col-xs-12">
+
+                                      <label class="tebal">Kelas Customer</label>
+
+                                </div>
+                                <div class="col-md-4 col-sm-9 col-xs-12">
+                                  <div class="form-group">
+
+                                      <select name="c_class" id="c_class" class="form-control input-sm">
+                                        @if ( $edit_cust->c_class  == 'A')
+                                          <option value="C">C</option>
+                                          <option value="B">B</option>
+                                          <option value="A" selected="">A</option>
+                                        @elseif ($edit_cust->c_type  == 'B')
+                                          <option value="C">C</option>
+                                          <option value="B" selected="">B</option>
+                                          <option value="A">A</option>
+                                        @elseif ($edit_cust->c_type  == 'C')
+                                          <option value="C" selected="">C</option>
+                                          <option value="B">B</option>
+                                          <option value="A">A</option>
+                                        @else
+                                          <option value="C">C</option>
+                                          <option value="B">B</option>
+                                          <option value="A">A</option>
+                                        @endif
+                                      </select>
+
+                                  </div>
                                 </div>
 
+                                
+                                
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                  
-                                    
-                                      <label class="tebal">Nomor HP</label>
-                                  
+
+
+                                      <label class="tebal">Nomor HP<font color="red">*</font></label>
+
                                 </div>
-                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                    <div class="input-icon right">
-                                      <i class="glyphicon glyphicon-earphone"></i>
-                                      <input type="text" id="no_hp" name="no_hp" class="form-control input-sm"  value="{{ $edit_cust->no_hp }}">
-                                      @if ($errors->has('no_hp'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('no_hp') }}</strong>
-                                        </span>
-                                      @endif   
-                                    </div>                               
+                                  <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">+62</span>
+                                    <input type="text" id="no_hp" name="no_hp1" class="form-control input-sm"  value="{{str_replace('+62', '', $edit_cust->c_hp1) }}">
+
+                                    <span class="input-group-addon" id="basic-addon1">+62</span>
+                                    <input type="text" id="no_hp" name="no_hp2" class="form-control input-sm"  value="{{str_replace('+62', '', $edit_cust->c_hp2) }}">
                                   </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                  
-                                    
+
+
                                       <label class="tebal">Alamat</label>
-                                  
+
                                 </div>
-                                <div class="col-md-10 col-sm-9 col-xs-12">
+                                <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                     <div class="input-icon right">
                                       <i class="glyphicon glyphicon-home"></i>
-                                      <textarea id="alamat" name="alamat" class="form-control input-sm">{{ $edit_cust->alamat}}</textarea>
-                                      @if ($errors->has('alamat'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('alamat') }}</strong>
-                                        </span>
-                                    @endif                              
-                                    </div>    
+                                      <textarea id="alamat" name="alamat" class="form-control input-sm">{{ $edit_cust->c_address}}</textarea>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
 
                               <div align="right">
                                 <div class="form-group">
-                                  <button type="button" name="tambah_data" value="Update Data" class="btn btn-danger" onclick="update()">Update Data</button>
-                                </div> 
+                                  <button type="button" name="tambah_data" value="Update Data" class="btn btn-primary" onclick="update()">Update Data</button>
+                                </div>
                               </div>
-                             
+
                             </form>
-                        
 
 
-                </div>                                       
+
+                </div>
                     </div>
                         </div>
-                                
+
                                     </div>
                                          </div>
                             </div>
-                            
+
 @endsection
 @section("extra_scripts")
-<script type="text/javascript">     
-    
+<script type="text/javascript">
+
   function update (){
       var a = $('#form_cust').serialize();
 
-       var nama = $("#nama_cus").val();
+      var nama = $("#nama_cus").val();
       var tgl_lahir = $("#tgl_lahir").val();
       var email = $("#email").val();
       var no_hp = $("#no_hp").val();
       var alamat = $("#alamat").val();
-
       if(nama == '' || nama == null ){
 
-      Command: toastr["error"]('Kolom "Nama Customer" tidak boleh kosong ', "Peringatan !")
-
-      toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        }
-        return false;
-      }
-
-      if(tgl_lahir == '' || tgl_lahir == null ){
-
-      Command: toastr["error"]('Kolom "Tanggal Lahir" tidak boleh kosong ', "Peringatan !")
-
-      toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        }
-        return false;
-      }
-
-      if(email == '' || email == null ){
-
-      Command: toastr["error"]('Kolom "E-mail" tidak boleh kosong ', "Peringatan !")
-
-      toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        }
+       toastr.warning('Data Harus nama Diisi!','Peringatan')
         return false;
       }
 
       if(no_hp == '' || no_hp == null ){
 
-      Command: toastr["error"]('Kolom "Nomor HP" tidak boleh kosong ', "Peringatan !")
-
-      toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        }
-        return false;
-      }
-
-      if(alamat == '' || alamat == null ){
-
-      Command: toastr["error"]('Kolom "Alamat" tidak boleh kosong ', "Peringatan !")
-
-      toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        }
+       toastr.warning('Data Harus no hp Diisi!','Peringatan')
         return false;
       }
 
       $.ajax({
-        url : baseUrl + "/master/datacust/cust_edit/cust_edit_proses/{{$id_cus_ut}}",
+        url : '{{ route('update_cust') }}',
         type:'get',
         data: a,
         success:function(response){
-          window.location = (baseUrl+'/master/datacust/cust')
+         if (response.status=='sukses') {
+            toastr.info('Data berhasil di update.');
+            window.location = (baseUrl+'/master/datacust/cust')
+          }else{
+            toastr.error('Data gagal di simpan.');
+          }
         }
       })
 
     }
 
     $(document).on("click","input[name='tambah_data']",function(e){
-     
+
 
       });
 
@@ -364,9 +257,9 @@
       });
       $('.datepicker2').datepicker({
         format: "dd/mm/yyyy",
-        
+
       });
 
 
 </script>
-@endsection                            
+@endsection

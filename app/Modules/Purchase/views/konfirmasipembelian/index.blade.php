@@ -86,14 +86,14 @@
           type: 'GET'
         },
         "columns" : [
-          {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-          {"data" : "tglBuat", "width" : "10%"},
-          {"data" : "p_code", "width" : "10%"},
-          {"data" : "m_name", "width" : "15%"},
-          {"data" : "s_company", "width" : "25%"},
-          {"data" : "tglConfirm", "width" : "15%"},
-          {"data" : "status", "width" : "10%"},
-          {"data" : "action", orderable: false, searchable: false, "width" : "5%"}
+          {"data" : "DT_Row_Index",  orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
+          {"data" : "tglBuat",  "width" : "10%"},
+          {"data" : "p_code",  "width" : "10%"},
+          {"data" : "m_name",  "width" : "15%"},
+          {"data" : "s_company",  "width" : "25%"},
+          {"data" : "tglConfirm",  "width" : "15%"},
+          {"data" : "status",  "width" : "10%"},
+          {"data" : "action",  orderable: false, searchable: false, "width" : "5%"}
         ],
         "language": {
           "searchPlaceholder": "Cari Data",

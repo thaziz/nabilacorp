@@ -36,7 +36,7 @@ class RencanaBahanController extends Controller
     public function getRencanaByTgl($tgl1, $tgl2)
     {
       $menit = Carbon::now('Asia/Jakarta')->format('H:i:s');
-      $cabang=Session::get('user_comp');               
+      $cabang=  Session::get('user_comp');               
       //dd(Carbon::createFromFormat('Y-m-d H:i:s', $tgl2, 'Asia/Jakarta'));
       $tanggal1 = date('Y-m-d',strtotime($tgl1));
       $tanggal2 = date('Y-m-d',strtotime($tgl2));
@@ -68,13 +68,14 @@ class RencanaBahanController extends Controller
                                 as qtyOrderPlan")
                 )
                 ->where('d_spk.spk_status', '=', 'DR')
+                ->where('spk_formula.fr_status', '=', 'tidak')
+                // ->where('d_spk.spk_status', '!=', 'AP')  
                 ->whereBetween('d_spk.spk_date', [$tanggal1, $tanggal2])
                 ->groupBy('i_id')
                 ->orderBy('i_name', 'ASC')
                 ->get();
 
-
-
+      // return $dataHeader;
       if (count($dataHeader) > 0) 
       {
         foreach ($dataHeader as $val) 
@@ -84,20 +85,29 @@ class RencanaBahanController extends Controller
           //get satuan utama
           $sat1[] = $val->i_sat1;
         }
+        // return $sat1;
+        // return $itemType;
         $counter = 0;
         for ($i=0; $i <count($itemType); $i++) 
         { 
           if ($itemType[$i]->i_type == "BJ") //brg jual
           {
-
-         
             $position=DB::table('d_gudangcabang')
                       ->where('gc_gudang',DB::raw("'GUDANG PENJUALAN'"))
                       ->where('gc_comp',$cabang)
-                      ->select('gc_id')->first();   
+                      ->select('gc_id')
+                      ->first();
+
             $position=$position->gc_id;
+            
+            // return $position;
+            //CARI STOCK BARANG
             $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock where s_item = '".$itemType[$i]->i_id."' AND s_comp = '$position' AND s_position = '$position' limit 1) ,'0') as qtyStok"));
+            
+            // return $query;
+            // CARI SATUAN
             $satUtama = DB::table('m_item')->join('m_satuan', 'm_item.i_sat1', '=', 'm_satuan.s_id')->select('m_satuan.s_name')->where('m_item.i_sat1', '=', $sat1[$counter])->first();
+            // return json_encode($satUtama);
             
             $data['stok'][$i] = $query[0]->qtyStok;
             $data['satuan'][$i] = $satUtama->s_name;
@@ -145,8 +155,7 @@ class RencanaBahanController extends Controller
           $dataHeader[$j]['tanggal2'] = $tanggal2;
         }
       }
-
-      //return Response::json($dataHeader);
+      // return Response::json($dataHeader);
 
       return DataTables::of($dataHeader)
         ->addIndexColumn()
@@ -160,7 +169,11 @@ class RencanaBahanController extends Controller
         })
         ->editColumn('kekurangan', function ($data) 
         {
-          return number_format((int)$data->selisih,0,",",".");
+          if ($data->selisih > 0) {
+            return 0;
+          }else{
+            return number_format((int)$data->selisih,0,",",".");
+          }
         })
         ->editColumn('qtyorderplan', function ($data) 
         {
@@ -186,7 +199,9 @@ class RencanaBahanController extends Controller
 
       // $sup = DB::table('m_item')->select('i_sup_list')->where('i_id', $request->id)->first();
       // $list_sup = explode(',', $sup->i_sup_list);
+
       $list_sup = DB::table('d_barang_sup')->select('d_bs_supid')->where('d_bs_itemid', $request->id)->get();
+
 
       if (count($list_sup) > 0) 
       {
@@ -291,6 +306,8 @@ class RencanaBahanController extends Controller
       $tanggalMenit2 = date('Y-m-d '.$menit ,strtotime($request->tgl2));
 
       $list_item = DB::table('d_supplier_brg')->select('d_sb_itemid')->where('d_sb_supid', $request->idsup)->get();
+      
+
       if (count($list_item) > 0) 
       {
         $d_item = [];
@@ -410,10 +427,13 @@ class RencanaBahanController extends Controller
         $term = trim($request->q);
         if (empty($term)) 
         {
-          $list_sup = DB::table('d_barang_sup')->select('d_bs_supid')->where('d_bs_itemid', $request->itemid)->get();
+          // return $request->itemid;
+          $list_sup = DB::table('d_item_supplier')->select('is_supplier')->where('is_item', $request->itemid)->groupBy('is_supplier')->get();
+          // $list_sup = DB::table('d_barang_sup')->select('d_bs_supid')->where('d_bs_itemid', $request->itemid)->get();
           foreach ($list_sup as $val) 
           {
-            $sup = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $val->d_bs_supid)->first();
+            // return $val->is_supplier;
+            $sup = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $val->is_supplier)->first();
             $formatted_tags[] = ['id' => $sup->s_id, 'text' => $sup->s_company];
           }
           return Response::json($formatted_tags);
@@ -440,14 +460,14 @@ class RencanaBahanController extends Controller
       try 
       {
         $kode_plan = $this->kodeRencanaPembelian();        
-        /*$id_peg = Auth::User()->m_id;*/
+        $id_peg = Auth::User()->m_id;
 
         //insert to table d_purchasingplan
         $plan = new d_purchase_plan;
         $plan->p_code = $kode_plan;
         $plan->p_supplier = $request->i_sup;
         $plan->p_comp=Session::get('user_comp');
-        /*$plan->d_pcsp_mid = $id_peg;*/
+        $plan->p_mem = $id_peg;
         $plan->p_date= Carbon::now('Asia/Jakarta')->format('Y-m-d');
         /*$plan->d_pcsp_created = Carbon::now('Asia/Jakarta');*/
         $plan->save();

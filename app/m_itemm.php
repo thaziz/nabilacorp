@@ -52,7 +52,7 @@ class m_itemm extends Model
         $position=$position->gc_id;
 
 
-        $groupName=['BTPN','BJ'];
+        $groupName=['BTPN','BJ','BP'];
 
 
             

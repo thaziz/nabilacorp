@@ -15,6 +15,7 @@ use Auth;
 use Response;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Session;
 
 class MonitoringProgressController extends Controller
 {
@@ -28,7 +29,12 @@ class MonitoringProgressController extends Controller
   }
 
   public function tabel(){
-   
+    $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
+               ->where('sp_status',DB::raw("'N'"))
+              ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item');
+
+
+
     $pp = DB::Table('d_productplan')
       ->where(function($query){
         $query->where('pp_isspk',DB::raw("'N'"))
@@ -39,15 +45,25 @@ class MonitoringProgressController extends Controller
       ->groupBy('pp_item');
 
     $sales = DB::Table('d_sales')
-      ->where('s_channel', DB::raw("'GR'"))
+      ->where('s_channel', DB::raw("'Pesanan'"))
       ->where(function ($query) {
-          $query->where('s_status',DB::raw("'PR'"));
+          $query->where('s_status',DB::raw("'final'"));
         })
       ->leftjoin('d_sales_dt','d_sales.s_id', '=' , 'd_sales_dt.sd_sales');
+    /*dd($sales->toSql());*/
+
+  $cabang=Session::get('user_comp');            
+  $position=DB::table('d_gudangcabang')
+                      ->whereIn('gc_gudang',['GUDANG PENJUALAN','GUDANG PRODUKSI'])
+                      ->where('gc_comp',$cabang)
+                      ->select('gc_id')->get();    
+
+
+
 
     $stock = DB::Table('d_stock')
-      ->select('s_item',DB::raw("sum(s_qty) as s_qty"))
-      ->where(function($query){
+      ->select('s_item',DB::raw("sum(s_qty) as s_qty"));
+      /*->where(function($query){
           $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'2'"));
         })
       ->orWhere(function($query){
@@ -55,17 +71,28 @@ class MonitoringProgressController extends Controller
         })
       ->orWhere(function($query){
           $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'5'"));
-        })
-      ->groupBy('s_item');
+        });*/
+
+      for ($i=0; $i <count($position) ; $i++) { 
+        $stock->orWhere(function($query) use ($position,$i){
+                    $query->where('s_comp',DB::raw("'1'"))->where('s_position',DB::raw($position[$i]->gc_id));
+                }); 
+      }
+      $stock->groupBy('s_item');
+      
+
 
 
      $mon = DB::Table('m_item')
-        ->select('i_id','i_code','i_name','s_qty','pp_qty', 
+        ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty',
             DB::raw("sum(sd_qty) as jumlah"), 
             DB::raw("count(sd_sales) as nota"), 
             DB::raw("max(s_date) as s_date"))
         ->leftjoin(DB::raw( sprintf( '(%s) d_stock', $stock->toSql() ) ), function ($join){
             $join->on('m_item.i_id','=','d_stock.s_item');
+          })
+        ->leftjoin(DB::raw( sprintf( '(%s) d_sales_plan', $salesPlan->toSql() ) ), function ($join){
+            $join->on('i_id','=','spdt_item');
           })
         ->leftjoin(DB::raw( sprintf( '(%s) d_productplan', $pp->toSql() ) ), function ($join){
             $join->on('m_item.i_id','=','d_productplan.pp_item');
@@ -78,6 +105,8 @@ class MonitoringProgressController extends Controller
         ->groupBy('i_id')
         ->get();
 
+        
+
      //return $mon;
     $dat = array();
     foreach ($mon as $r) {
@@ -85,12 +114,22 @@ class MonitoringProgressController extends Controller
     }
     $i=0;
     $data = array();
-    foreach ($dat as $key) {
+    foreach ($dat as $key) {      
         $data[$i]['pp_item'] = $key['i_code'];
         $data[$i]['i_name'] = $key['i_name'];
+        
+        if(($key['jumlah']+$key['spdt_qty'])==0){
+          $data[$i]['jumlah'] =0;          
+        }
+        if(($key['jumlah']+$key['spdt_qty'])!=0){
+          $data[$i]['jumlah'] =$key['jumlah']+$key['spdt_qty'];          
+        }
+        
+
+
         $data[$i]['pp_qty'] = $key['pp_qty'] == null ? 0 : $key['pp_qty'];
         $data[$i]['s_qty'] = $key['s_qty'] == null ? 0 : $key['s_qty'];
-        $data[$i]['jumlah'] = $key['jumlah'] == null ? 0 : $key['jumlah'];
+        /*$data[$i]['jumlah'] = $key['jumlah'] == null ? 0 : $key['jumlah'];*/
         $key['s_date'] = $key['s_date'] == null ? '1945-08-17' : $key['s_date'];
         $data[$i]['nota'] = '<span class="hide">'.$key['s_date'].'</span><button id="nota" class="btn btn-info btn-sm nota" 
                                                           data-toggle="modal" 

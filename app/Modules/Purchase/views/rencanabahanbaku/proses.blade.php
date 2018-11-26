@@ -83,7 +83,7 @@
                             <th style="text-align: center; width: 15%;">Satuan</th>
                             <th style="text-align: center; width: 15%;">Stok</th>
                             <th style="text-align: center; width: 15%;">Kekurangan</th>
-                            <th style="text-align: center; width: 15%;">Qty</th>
+                            {{-- <th style="text-align: center; width: 15%;">Qty</th> --}}
                             <th style="text-align: center; width: 5%;">Aksi</th>
                           </tr>
                         </thead>
@@ -108,8 +108,8 @@
                               <input type="text" class="form-control input-sm" readonly="" name="remaining[]" value="{{number_format($data[0]['selisih'],0,",",".")}}" style="text-align:right;">
                               <input type="hidden" class="form-control input-sm" readonly="" name="remainingRaw[]" value="{{$data[0]['selisih']}}">
                             </td>
-                            <td>
-                              <input type="text" class="form-control input-sm currency" name="qtyreq[]" value="{{abs($data[0]['selisih'])}}" style="text-align:right;">
+                            <td hidden="">
+                              <input type="hidden" class="form-control input-sm currency" name="qtyreq[]" value="{{abs($data[0]['selisih'])}}" style="text-align:right;">
                             </td>
                             <td align="center">
                               -
