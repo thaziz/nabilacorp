@@ -70,7 +70,7 @@ Route::get('/inventory/p_returncustomer/cust', 'InventoryController@cust')->midd
 Route::get('/inventory/b_digunakan/barang', 'InventoryController@barang')->middleware('auth');
 Route::get('/inventory/stockopname/opname', 'InventoryController@opname')->middleware('auth');
 Route::get('/inventory/p_suplier/cari_nota', 'InventoryController@cari_nota_sup')->middleware('auth');
-Route::get('/inventory/p_hasilproduksi/cari_nota', 'InventoryController@cari_nota_produksi')->middleware('auth'); 
+Route::get('/inventory/p_hasilproduksi/cari_nota', 'InventoryController@cari_nota_produksi')->middleware('auth');
 Route::get('/inventory/p_returncustomer/cari_nota', 'InventoryController@cari_nota_cust')->middleware('auth');
 Route::get('/inventory/b_digunakan/tambah_barang', 'InventoryController@tambah_barang')->middleware('auth');
 Route::get('/inventory/stockopname/tambah_opname', 'InventoryController@tambah_opname')->middleware('auth');
