@@ -9,13 +9,15 @@ use Response;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\m_itemm;
-
+use Session;
 class RencanaProduksiController extends Controller
 {
   public function tabel(){
+    $pp_comp=Session::get('user_comp');
     $pp = DB::Table('m_item')
           ->join('d_productplan','m_item.i_id','=','d_productplan.pp_item')
           ->where('pp_isspk','N')
+          ->where('pp_comp',$pp_comp)
           ->get();
 
     $datax = $this->setData($pp);
@@ -52,9 +54,11 @@ class RencanaProduksiController extends Controller
         }
 
     $date = carbon::now()->format('Y-m-d');
+    $pp_comp=Session::get('user_comp');
     $data = array(
               'pp_id'   => $maxid,
               'pp_date' => $date,
+              'pp_comp' => $pp_comp,
               'pp_item' => $request->iditem,
               'pp_qty'  => $request->pp_qty,
             );
@@ -83,7 +87,7 @@ class RencanaProduksiController extends Controller
 
   }
 
-  public function hapus_rencana($id){
+  public function hapus_rencana($id){      
     $hapus = DB::Table('d_productplan')
             ->where('d_productplan.pp_id',$id)
             ->delete();
@@ -132,11 +136,13 @@ class RencanaProduksiController extends Controller
                                                   data-target="#myModal"
                                                   data-name="'.$key['i_name'].'"
                                                   data-id="'.$key['pp_id'].'"
+                                                  data-iditem="'.$key['i_id'].'"
                                                   data-qty="'.$key['pp_qty'].'">
                                       </button>
                                       <button id="hapus"
                                                   data-name="'.$key['i_name'].'"
                                                   data-id="'.$key['pp_id'].'"
+                                                  data-iditem="'.$key['i_id'].'"
                                                   class="fa fa-trash-o hapus btn btn-danger btn-sm">
                                       </button>
                               </div> ';

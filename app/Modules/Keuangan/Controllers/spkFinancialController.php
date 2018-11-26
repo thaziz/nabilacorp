@@ -41,9 +41,11 @@ class spkFinancialController extends Controller
 
   public function getDataTabelIndex()
   {
+    $pp_comp=Session::get('user_comp');
     $productplan =DB::table('d_productplan')
                   ->join('m_item','pp_item','=','i_id')
                   ->where('pp_isspk','N')
+                  ->where('pp_comp',$pp_comp)
                   ->orderBy('pp_date','ASC')
                   ->get();
      
