@@ -37,7 +37,7 @@
 
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input type="text" id="d_mem" class="form-control input-sm reset" name="d_mem" readonly="" value="{{Auth::user()->m_id}}">
+               <input type="hidden" id="sp_mem" class="form-control input-sm reset" name="sp_mem" readonly="" value="{{Auth::user()->m_id}}">
                <input type="text" id="s_created_by" class="form-control input-sm reset" name="s_created_by" readonly="" value="{{Auth::user()->m_name}}">
              </div>
            </div>

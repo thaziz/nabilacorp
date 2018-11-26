@@ -378,23 +378,7 @@
 
     $('#s_date').focus();
   }
-
-  listPenjualan();
-
-  function listPenjualan() {
-    $.ajax({
-      url: "{{ url('') }}" + '/penjualan/pos-toko/listPenjualan',
-      type: 'POST',
-      data: {
-        "_token": "{{ csrf_token() }}"
-      },
-      success: function (response) {
-        $('#listPenjualan').html(response);
-
-      }
-    });
-
-  }
+  
 
   function hapusPayment(e, a) {
     if (e.which === 46 && e.ctrlKey) {
@@ -460,14 +444,13 @@
 
 
   function table() {
-    $('#tableListToko').dataTable().fnDestroy();
     tablex = $("#tableListToko").DataTable({
       responsive: true,
       "language": dataTableLanguage,
       processing: true,
       serverSide: true,
       ajax: {
-        "url": "{{ url(" penjualan / pos - toko / listPenjualan / data ") }}",
+        "url": "{{ url('/penjualan/rencanapenjualan/find_d_sales_plan') }}",
         "type": "get",
         data: {
           "_token": "{{ csrf_token() }}",
@@ -476,67 +459,18 @@
           "tanggal2": $('#tanggal2').val(),
         },
       },
-      columns: [{
-          data: 's_date',
-          name: 's_date'
-        },
-        {
-          data: 's_note',
-          name: 's_note'
-        },
-        /*{data: 'c_name', name: 'c_name'}, */
-        {
-          data: 'm_name',
-          name: 'm_name'
-        },
-        {
-          data: 's_gross',
-          name: 's_gross'
-        },
-        {
-          data: 's_disc_percent',
-          name: 's_disc_percent'
-        },
-        {
-          data: 's_ongkir',
-          name: 's_ongkir'
-        },
-        {
-          data: 's_net',
-          name: 's_net'
-        },
-        {
-          data: 's_status',
-          name: 's_status'
-        },
-        {
-          data: 'action',
-          name: 'action'
-        },
+      columns: [
+        { data : 'sp_date' },
+        { data : 'sp_code' },
+        { data : 'total_harga' },
+        { 
+            data : null,
+            render : function(res) {
+              var content = '<div class="center"><button id="edit" onclick="edit(this)" class="btn btn-warning btn-xs" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
 
-      ],
-      'columnDefs': [
-
-        {
-          "targets": 5,
-          "className": "text-right",
-        }, {
-          "targets": 6,
-          "className": "text-right",
-        }, {
-          "targets": 7,
-          "className": "text-right",
-        }, {
-          "targets": 8,
-          "className": "text-right",
+              return content;
+            }
         }
-      ],
-      //responsive: true,
-
-      "pageLength": 10,
-      "lengthMenu": [
-        [10, 20, 50, -1],
-        [10, 20, 50, "All"]
       ],
 
       "rowCallback": function (row, data, index) {
@@ -694,18 +628,50 @@
   }
 
 
-  function hapus(e, a) {
-    if (e.which === 46 && e.ctrlKey) {
-      hapusSalesDt.push(a);
-      $('.detail' + a).remove();
-      var index = tamp.indexOf('' + a);
-      if (index !== -1)
-        tamp.splice(index, 1);
-      totalPerItem();
-      buttonDisable();
+  function hapus(id) {
+          iziToast.show({
+            color: 'red',
+            title: 'Peringatan',
+            message: 'Apakah anda yakin!',
+            position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+            progressBarColor: 'rgb(0, 255, 184)',
+            buttons: [
+              [
+                '<button>Ok</button>',
+                function (instance, toast) {
+                  instance.hide({
+                    transitionOut: 'fadeOutUp'
+                  }, toast);
+                  
+                  $.ajax({
+                       type: "get",
+                       url: '{{ url("/penjualan/rencanapenjualan/hapus") }}/' + id,
+                       success: function(response){
+                            if (response.status =='sukses') {
+                              toastr.info('Data berhasil di hapus.');
+                              tablex.ajax.reload();
+                            }
+                            else {
 
-    }
-  }
+                              toastr.error('Data gagal di simpan.');
+                            }
+                          }
+                       })
+                }
+              ],
+              [
+                '<button>Close</button>',
+                 function (instance, toast) {
+                  instance.hide({
+                    transitionOut: 'fadeOutUp'
+                  }, toast);
+                }
+              ]
+            ]
+          });
+
+        }
+
 
 
   function hapusButton(a) {

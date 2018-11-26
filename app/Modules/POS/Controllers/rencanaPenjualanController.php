@@ -17,6 +17,7 @@ use App\mMember;
 use App\Modules\POS\model\m_paymentmethod;
 use App\Modules\POS\model\m_machine;
 use App\Modules\POS\model\d_sales_plan;
+use App\Modules\POS\model\d_salesplan_dt;
 
 
 use Datatables;
@@ -57,6 +58,26 @@ class rencanaPenjualanController extends Controller
       
       return d_sales_plan::perbarui($request);
     }
+
+    public function hapus($id = '') {
+        $transaction = DB::transaction(function() use ($id){
+          $status = "gagal";
+          if($id != '' ){
+            $d_sales_plan = d_sales_plan::find($id);
+            $d_sales_plan->delete();
+            $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $id);
+            $d_salesplan_dt->delete(); 
+            $status = "sukses";
+          }   
+
+          $res = array( 'status' => $status );
+          return response()->json($res);
+
+        });
+
+        return $transaction;
+        
+      }
 
     function find_d_sales_plan() {
        $data = array();

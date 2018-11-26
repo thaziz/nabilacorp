@@ -122,6 +122,7 @@ Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 Route::get('/penjualan/rencanapenjualan/rencana', 'rencanaPenjualanController@index')->middleware('auth');
 Route::get('/penjualan/rencanapenjualan/simpan', 'rencanaPenjualanController@simpan')->middleware('auth');
 Route::get('/penjualan/rencanapenjualan/find_d_sales_plan', 'rencanaPenjualanController@find_d_sales_plan')->middleware('auth');
+Route::get('/penjualan/rencanapenjualan/hapus/{id}', 'rencanaPenjualanController@hapus')->middleware('auth');
 //rencana penjualan selesai
 });
 

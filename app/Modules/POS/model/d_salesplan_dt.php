@@ -18,7 +18,7 @@
        const CREATED_AT = 'spdt_created';
        const UPDATED_AT = 'spdt_updated';
        
-       protected $fillable = ['spdt_salesplan', 'spdt_item', 'spdt_qty'];
+       protected $fillable = ['spdt_salesplan', 'spdt_detailid', 'spdt_item', 'spdt_qty'];
    
        public function m_item() {
         $res = $this->belongsTo('App\m_itemm', 'spdt_item', 'i_id');
