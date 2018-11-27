@@ -10,7 +10,7 @@
         <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
             <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
             <li><i></i>&nbsp;Purchasing&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-            <li class="active">Rencana Pembelian</li>
+            <li class="active">Rencana Pembasdelian</li>
         </ol>
         <div class="clearfix">
         </div>
@@ -39,7 +39,7 @@
                                 <div id="note-tab" class="tab-pane fade">
                                   <div class="row">
                                     <div class="panel-body">
-                                      <!-- Isi Content -->we we we
+                                      <!-- Isi Content -->
                                     </div>
                                   </div>
                                 </div><!--/div note-tab -->
@@ -49,7 +49,7 @@
                                 <div id="label-badge-tab" class="tab-pane fade">
                                   <div class="row">
                                     <div class="panel-body">
-                                      <!-- Isi content -->we
+                                      <!-- Isi content -->
                                     </div>
                                   </div>
                                 </div><!-- /div label-badge-tab -->

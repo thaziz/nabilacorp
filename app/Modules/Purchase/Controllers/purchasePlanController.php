@@ -43,7 +43,7 @@ class purchasePlanController extends Controller
 
    
    public function seachItemPurchase(Request $request){
-         return   m_itemm::seachItemPurchase($request);
+         return m_itemm::seachItemPurchase($request);
    }
    public function storePlan(Request $request){
       return d_purchase_plan::simpan($request);
@@ -118,13 +118,13 @@ class purchasePlanController extends Controller
         {
           return '<div class="text-center">
                       <button class="btn btn-sm btn-success" title="Detail"
-                          onclick=detailPlanAll("'.$data->d_id.'")><i class="fa fa-eye"></i> 
+                          onclick=detailPlanAll("'.$data->p_id.'")><i class="fa fa-eye"></i> 
                       </button>
                       <button class="btn btn-sm btn-warning" title="Edit"
-                          onclick=editPlanAll("'.$data->d_id.'")><i class="fa fa-edit"></i>
+                          onclick=editPlanAll("'.$data->p_id.'")><i class="fa fa-edit"></i>
                       </button>
                       <button class="btn btn-sm btn-danger" title="Hapus"
-                          onclick=deletePlan("'.$data->d_id.'")><i class="fa fa-times"></i>
+                          onclick=deletePlan("'.$data->p_id.'")><i class="fa fa-times"></i>
                       </button>
                   </div>'; 
         }
@@ -132,13 +132,13 @@ class purchasePlanController extends Controller
         {
           return '<div class="text-center">
                       <button class="btn btn-sm btn-success" title="Detail"
-                          onclick=detailPlan("'.$data->d_id.'")><i class="fa fa-eye"></i> 
+                          onclick=detailPlan("'.$data->p_id.'")><i class="fa fa-eye"></i> 
                       </button>
                       <button class="btn btn-sm btn-warning" title="Edit"
-                          onclick=editPlan("'.$data->d_id.'")><i class="fa fa-edit"></i>
+                          onclick=editPlan("'.$data->p_id.'")><i class="fa fa-edit"></i>
                       </button>
                       <button class="btn btn-sm btn-danger" title="Hapus"
-                          onclick=deletePlan("'.$data->d_id.'") disabled><i class="fa fa-times"></i>
+                          onclick=deletePlan("'.$data->p_id.'") disabled><i class="fa fa-times"></i>
                       </button>
                   </div>'; 
         }
@@ -146,13 +146,13 @@ class purchasePlanController extends Controller
         {
           return '<div class="text-center">
                       <button class="btn btn-sm btn-success" title="Detail"
-                          onclick=detailPlan("'.$data->d_id.'")><i class="fa fa-eye"></i> 
+                          onclick=detailPlan("'.$data->p_id.'")><i class="fa fa-eye"></i> 
                       </button>
                       <button class="btn btn-sm btn-warning" title="Edit"
-                          onclick=editPlan("'.$data->d_id.'") disabled><i class="fa fa-edit"></i>
+                          onclick=editPlan("'.$data->p_id.'") disabled><i class="fa fa-edit"></i>
                       </button>
                       <button class="btn btn-sm btn-danger" title="Hapus"
-                          onclick=deletePlan("'.$data->d_id.'") disabled><i class="fa fa-times"></i>
+                          onclick=deletePlan("'.$data->p_id.'") disabled><i class="fa fa-times"></i>
                       </button>
                   </div>'; 
         }
