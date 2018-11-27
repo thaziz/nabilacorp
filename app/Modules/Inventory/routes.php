@@ -22,4 +22,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/mutasiitembaku/perbarui/{id}', 'mutasiitembakuController@perbarui');
 	Route::get('/inventory/mutasiitembaku/mutasi-item-detail/{id}', 'mutasiitembakuController@mutasiItemDt');
 	Route::get('/inventory/mutasiitembaku/destroy/{id}', 'mutasiitembakuController@destroy');
+
+//mahmud opnme
+	Route::get('/inventory/stockopname/opname', 'stockOpnameController@index');
+	Route::get('/inventory/namaitem/autocomplite/{comp}/{position}', 'stockOpnameController@tableOpname');
+	Route::get('/inventory/namaitem/simpanopname', 'stockOpnameController@saveOpname');
 });
