@@ -182,7 +182,7 @@
       serverSide: true,
         ajax: {
             url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah,
-             error: function (jqXHR, textStatus, errorThrown) {
+             error: function (jqXHR, textStatus, errorThrown) {              
                 $('#create-data').modal('hide');
                 iziToast.error({
                     position: "topRight",

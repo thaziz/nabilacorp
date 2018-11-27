@@ -525,10 +525,9 @@
   function simpanPo()
   {
     var IsValid = $("form[name='formCreatePo']").valid();
-    alert('d');
+    
     if(IsValid)
-    {
-      alert('db');
+    {      
       var countRow = $('#tabel-form-po tr').length;
       (countRow > 1);
       if(countRow > 1)
