@@ -8,7 +8,7 @@
                 <form id="topbar-search" action="#" method="" class="hidden-sm hidden-xs">
                     <div class="input-icon right text-white">
                         <a href="#" class="hidden" id="btn-reset" onclick="btnReset()"><i class="fa fa-times"></i></a>
-                        
+
                         <input type="text" placeholder="Search here..." onkeyup="myFunction()" id="nav-search" class="form-control text-white"/>
                     </div>
                 </form>
@@ -190,6 +190,8 @@
                             <li class="menu-sekunder {{ Request::is('inventory/b_digunakan/barang') ? 'active' : '' || Request::is('inventory/b_digunakan/*') ? 'active' : '' }}"><a href="{{ url('/inventory/b_digunakan/barang') }}"><span class="submenu-title">Barang Digunakan</span><span class="hidden">Inventory</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/stockopname/opname') ? 'active' : '' || Request::is('inventory/stockopname/*') ? 'active' : '' }}"><a href="{{ url('/inventory/stockopname/opname') }}"><span class="submenu-title">Stock Opname</span><span class="hidden">Inventory</span></a>
+                            </li>
+                            <li class="menu-sekunder {{ Request::is('inventory/mutasiitembaku') ? 'active' : '' || Request::is('inventory/mutasiitembaku/*') ? 'active' : '' }}"><a href="{{ url('/inventory/mutasiitembaku/index') }}"><span class="submenu-title">Mutasi Item Bahan Baku</span><span class="hidden">Inventory</span></a>
                             </li>
                         </ul>
                     </li>
@@ -486,4 +488,3 @@
                 </div>
             </div>
             <!--END CHAT FORM-->
-

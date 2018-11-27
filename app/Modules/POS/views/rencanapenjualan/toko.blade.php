@@ -3,7 +3,7 @@
 
 </style>
 <div id="toko" class="tab-pane fade in active">
-  <form method="post" id="dataPos">
+  <form method="post" id="form_sales_plan">
       <div class="row">
         {{ csrf_field() }}
         <div class="col-md-12">
@@ -37,6 +37,7 @@
 
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
+               <input type="hidden" id="sp_mem" class="form-control input-sm reset" name="sp_mem" readonly="" value="{{Auth::user()->m_id}}">
                <input type="text" id="s_created_by" class="form-control input-sm reset" name="s_created_by" readonly="" value="{{Auth::user()->m_name}}">
              </div>
            </div>
@@ -347,8 +348,8 @@
                     <button class="btn btn-warning btn-disabled draft" type="button" onclick="simpanPos('draft')" disabled="">Draft</button>
                     <button type="button" class="btn-primary btn btn-disabled perbarui" data-toggle="modal" disabled="" style="display: none;" id="perbarui" 
                     onclick="modalShow()">Perbarui</button>
-                    <button onclick="modalShow()"
-                     type="button" class="move btn-primary btn btn-disabled final" data-toggle="modal" disabled="" >Proses</button>
+                    <button onclick="insert_sales_plan()"
+                     type="button" class="move btn-primary btn btn-disabled final" disabled="" >Proses</button>
                   </div>
              
         

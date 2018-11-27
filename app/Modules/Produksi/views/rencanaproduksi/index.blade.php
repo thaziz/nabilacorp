@@ -214,18 +214,21 @@
       $("input[name='crud']").val('tambah');
       $("input[name='namaitem']").val('');
       $("input[name='pp_qty']").val('');
-      $("input[name='namaitem']").prop('readonly', false);
+      $("input[name='namaitem']").prop('disabled', false);
   });
 
   $(document).on('click','.edit',function(){
       var pp_id = $(this).data('id'),
           i_name = $(this).data('name'),
           pp_qty = $(this).data('qty');
+          iditem = $(this).data('iditem');
+          
       $("input[name='namaitem']").val(i_name);
       $("input[name='pp_qty']").val(pp_qty);
       $("input[name='pp_id']").val(pp_id);
+      $("#iditem").val(iditem);
       $("input[name='crud']").val('edit');
-      $("input[name='namaitem']").prop('readonly',true);
+      $("input[name='namaitem']").prop('disabled',true);
   });
 
   $(document).on('click','.hapus',function(){

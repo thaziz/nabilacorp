@@ -177,7 +177,6 @@ INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_
 	(7, 24, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 25, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 26, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
-	(7, 27, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 28, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 29, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 30, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
@@ -928,6 +927,7 @@ INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_
 	(57, 109, 1, '2018-11-01 10:54:44', NULL),
 	(57, 110, 1, '2018-11-01 10:54:44', NULL),
 	(57, 111, 1, '2018-11-01 10:54:44', NULL),
+	(60, 27, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(70, 1, 1, '2018-10-29 17:15:25', NULL),
 	(70, 2, 1, '2018-10-29 17:15:25', NULL),
 	(70, 3, 1, '2018-10-29 17:15:25', NULL),
@@ -2400,15 +2400,17 @@ CREATE TABLE IF NOT EXISTS `d_productplan` (
   `pp_insert` timestamp NULL DEFAULT NULL,
   `pp_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productplan: ~3 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productplan: ~5 rows (approximately)
 DELETE FROM `d_productplan`;
 /*!40000 ALTER TABLE `d_productplan` DISABLE KEYS */;
 INSERT INTO `d_productplan` (`pp_id`, `pp_date`, `pp_item`, `pp_qty`, `pp_isspk`, `pp_insert`, `pp_update`) VALUES
-	(1, '2018-11-16', 396, 100, 'Y', NULL, '2018-11-16 09:49:13'),
-	(2, '2018-11-22', 5, 30, 'N', NULL, '2018-11-22 08:10:00'),
-	(3, '2018-11-22', 396, 120, 'Y', NULL, '2018-11-22 08:15:30');
+	(1, '2018-11-16', 396, 100, 'C', NULL, '2018-11-23 13:23:55'),
+	(2, '2018-11-22', 5, 30, 'C', NULL, '2018-11-23 13:23:57'),
+	(3, '2018-11-22', 396, 120, 'C', NULL, '2018-11-23 13:24:00'),
+	(4, '2018-11-23', 396, 30, 'Y', NULL, '2018-11-23 13:42:39'),
+	(5, '2018-11-23', 396, 100, 'N', NULL, '2018-11-23 13:42:37');
 /*!40000 ALTER TABLE `d_productplan` ENABLE KEYS */;
 
 
@@ -2430,9 +2432,11 @@ CREATE TABLE IF NOT EXISTS `d_productresult` (
   CONSTRAINT `FK_d_productresult_m_comp` FOREIGN KEY (`pr_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productresult: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productresult: ~1 rows (approximately)
 DELETE FROM `d_productresult`;
 /*!40000 ALTER TABLE `d_productresult` DISABLE KEYS */;
+INSERT INTO `d_productresult` (`pr_id`, `pr_comp`, `pr_code`, `pr_spk`, `pr_date`, `pr_item`, `pr_note`, `pr_status`, `pr_created`, `pr_updated`) VALUES
+	(1, 1, 'PR-1811-00001', 0, '2018-11-26', NULL, 'coba', 'N', '2018-11-26 03:54:39', '2018-11-26 03:54:39');
 /*!40000 ALTER TABLE `d_productresult` ENABLE KEYS */;
 
 
@@ -2457,9 +2461,11 @@ CREATE TABLE IF NOT EXISTS `d_productresult_dt` (
   CONSTRAINT `FK_d_productresult_dt_d_productresult` FOREIGN KEY (`prdt_productresult`) REFERENCES `d_productresult` (`pr_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productresult_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productresult_dt: ~1 rows (approximately)
 DELETE FROM `d_productresult_dt`;
 /*!40000 ALTER TABLE `d_productresult_dt` DISABLE KEYS */;
+INSERT INTO `d_productresult_dt` (`prdt_productresult`, `prdt_detailid`, `prdt_comp`, `prdt_position`, `prdt_date`, `prdt_item`, `prdt_qty`, `prdt_qty_sisa`, `prdt_kirim`, `prdt_status`, `prdt_hpp`, `prdt_time`, `prdt_created`, `prdt_updated`) VALUES
+	(1, 1, 5, 5, NULL, 226, 100, NULL, 0, NULL, 186.00, NULL, '2018-11-26 03:54:39', '2018-11-26 03:54:39');
 /*!40000 ALTER TABLE `d_productresult_dt` ENABLE KEYS */;
 
 
@@ -2519,6 +2525,7 @@ INSERT INTO `d_purchaseplan_dt` (`ppdt_pruchaseplan`, `ppdt_detailid`, `ppdt_ite
 -- Dumping structure for table alamrayasite_nabila.d_purchase_order
 CREATE TABLE IF NOT EXISTS `d_purchase_order` (
   `po_id` int(11) NOT NULL AUTO_INCREMENT,
+  `po_comp` int(11) NOT NULL DEFAULT '0',
   `po_date` date DEFAULT NULL,
   `po_purchaseplan` int(11) NOT NULL COMMENT 'PURCHASING PLAN',
   `po_supplier` int(11) NOT NULL COMMENT 'SUPPLIER',
@@ -2603,17 +2610,12 @@ CREATE TABLE IF NOT EXISTS `d_purchasing` (
   CONSTRAINT `FK_d_purchasing_d_supplier` FOREIGN KEY (`s_id`) REFERENCES `m_supplier` (`s_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasing: ~9 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasing: ~4 rows (approximately)
 DELETE FROM `d_purchasing`;
 /*!40000 ALTER TABLE `d_purchasing` DISABLE KEYS */;
 INSERT INTO `d_purchasing` (`d_pcs_id`, `d_pcsp_id`, `s_id`, `d_pcs_code`, `d_pcs_staff`, `d_pcs_method`, `d_pcs_total_gross`, `d_pcs_discount`, `d_pcs_disc_percent`, `d_pcs_disc_value`, `d_pcs_tax_percent`, `d_pcs_tax_value`, `d_pcs_total_net`, `d_pcs_date_created`, `d_pcs_date_received`, `d_pcs_date_confirm`, `d_pcs_duedate`, `d_pcs_status`, `d_pcs_created`, `d_pcs_updated`) VALUES
-	(1, 5, 1, 'PO-061808-00001', 'Jamilah', 'CASH', 100000.00, 0.00, 10, 10000.00, 0, 0.00, 90000.00, '2018-06-08', NULL, '2018-06-10', '2018-05-30', 'CF', '2018-06-08 23:28:31', '2018-06-10 21:29:34'),
-	(4, 5, 1, 'PO-061810-00002', 'Jamilah', 'CASH', 457500.00, 0.00, 12, 54900.00, 0, 0.00, 402600.00, '2018-06-10', NULL, NULL, NULL, 'WT', '2018-06-10 01:23:35', '2018-06-10 14:47:04'),
-	(10, 2, 1, 'PO-061810-00003', 'Jamilah', 'CASH', 7500.00, 1000.00, 0, 0.00, 0, 0.00, 6500.00, '2018-06-10', NULL, NULL, NULL, 'WT', '2018-06-10 22:00:19', '2018-06-10 22:00:19'),
-	(11, 2, 1, 'PO-061810-00004', 'Jamilah', 'CASH', 210000.00, 0.00, 10, 21000.00, 0, 0.00, 189000.00, '2018-06-10', NULL, NULL, NULL, 'WT', '2018-06-10 22:01:05', '2018-06-10 22:01:05'),
 	(12, 9, 21, 'PO-061812-00005', 'Jamilah', 'DEPOSIT', 365000.00, 0.00, 10, 36500.00, 0, 0.00, 328500.00, '2018-06-12', NULL, NULL, NULL, 'WT', '2018-06-12 07:22:07', '2018-06-12 07:22:07'),
 	(13, 11, 21, 'PO-061821-00006', 'Jamilah', 'CASH', 260000.00, 0.00, 0, 0.00, 0, 0.00, 260000.00, '2018-06-21', NULL, NULL, NULL, 'WT', '2018-06-21 13:34:35', '2018-06-21 13:34:35'),
-	(14, 12, 1, 'PO-061822-00007', 'Jamilah', 'CASH', 23100.00, 3000.00, 15, 3465.00, 10, 2310.00, 18298.00, '2018-06-22', NULL, '2018-06-22', '2018-07-02', 'CF', '2018-06-22 14:01:48', '2018-06-22 14:02:33'),
 	(15, 13, 21, 'PO-061824-00008', 'Jamilah', 'CASH', 630000.00, 2000.00, 15, 94500.00, 10, 53350.00, 586850.00, '2018-06-24', NULL, '2018-06-26', '2018-07-02', 'CF', '2018-06-24 00:07:50', '2018-06-26 23:00:35'),
 	(17, 15, 21, 'PO-061826-00009', 'Jamilah', 'CASH', 99500.00, 4525.00, 5, 4975.00, 0, 0.00, 90000.00, '2018-06-26', NULL, '2018-06-26', '2018-07-02', 'CF', '2018-06-26 23:07:55', '2018-06-26 23:08:18');
 /*!40000 ALTER TABLE `d_purchasing` ENABLE KEYS */;
@@ -2831,11 +2833,14 @@ CREATE TABLE IF NOT EXISTS `d_sales` (
   KEY `FK_sales_customer` (`s_customer`),
   KEY `FK_d_sales_m_comp` (`s_comp`),
   CONSTRAINT `FK_d_sales_m_comp` FOREIGN KEY (`s_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales: ~1 rows (approximately)
 DELETE FROM `d_sales`;
 /*!40000 ALTER TABLE `d_sales` DISABLE KEYS */;
+INSERT INTO `d_sales` (`s_id`, `s_comp`, `s_channel`, `s_jenis_bayar`, `s_date`, `s_finishdate`, `s_duedate`, `s_note`, `s_kasir`, `s_machine`, `s_create_by`, `s_update_by`, `s_customer`, `s_nama_cus`, `s_alamat_cus`, `s_gross`, `s_disc_percent`, `s_disc_value`, `s_tax`, `s_ongkir`, `s_bulat`, `s_net`, `s_bayar`, `s_kembalian`, `s_jurnal`, `s_status`, `s_insert`, `s_update`) VALUES
+	(1, 1, 'Pesanan', '2', '2018-11-23', '1970-01-01', '2018-11-20', 'PESANAN-1/2018.11.23', NULL, '2', '1', NULL, NULL, 'mahmus', 'bjn', 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 0.00, NULL, NULL, 'final', '2018-11-23 03:36:50', '2018-11-23 03:36:50'),
+	(2, 1, 'Toko', NULL, '2018-11-26', NULL, NULL, 'TOKO-2/2018.11.26', NULL, '2', '1', NULL, NULL, NULL, NULL, 2800000.00, 0.00, 0.00, 0, 0.00, 0.00, 2800000.00, 2800000.00, NULL, 1860.00, 'final', '2018-11-26 03:57:30', '2018-11-26 03:57:30');
 /*!40000 ALTER TABLE `d_sales` ENABLE KEYS */;
 
 
@@ -2853,6 +2858,8 @@ CREATE TABLE IF NOT EXISTS `d_salesplan_dt` (
 -- Dumping data for table alamrayasite_nabila.d_salesplan_dt: ~0 rows (approximately)
 DELETE FROM `d_salesplan_dt`;
 /*!40000 ALTER TABLE `d_salesplan_dt` DISABLE KEYS */;
+INSERT INTO `d_salesplan_dt` (`spdt_salesplan`, `spdt_detailid`, `spdt_item`, `spdt_qty`, `spdt_created`, `spdt_updated`) VALUES
+	(1, 0, 75, 10, '2018-11-26 04:24:40', '2018-11-26 04:24:40');
 /*!40000 ALTER TABLE `d_salesplan_dt` ENABLE KEYS */;
 
 
@@ -2877,9 +2884,12 @@ CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   CONSTRAINT `FK_d_sales_dt_m_comp` FOREIGN KEY (`sd_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales_dt: ~1 rows (approximately)
 DELETE FROM `d_sales_dt`;
 /*!40000 ALTER TABLE `d_sales_dt` DISABLE KEYS */;
+INSERT INTO `d_sales_dt` (`sd_sales`, `sd_detailid`, `sd_date`, `sd_comp`, `sd_position`, `sd_item`, `sd_qty`, `sd_price`, `sd_disc_percent`, `sd_disc_percentvalue`, `sd_disc_value`, `sd_total_disc`, `sd_total`) VALUES
+	(1, 1, '2018-11-23', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(2, 1, '2018-11-26', 1, 1, 226, 10, 280000, 0, 0.00, 0.00, NULL, 2800000.00);
 /*!40000 ALTER TABLE `d_sales_dt` ENABLE KEYS */;
 
 
@@ -2897,29 +2907,35 @@ CREATE TABLE IF NOT EXISTS `d_sales_payment` (
   CONSTRAINT `FK_d_sales_payment_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales_payment: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales_payment: ~1 rows (approximately)
 DELETE FROM `d_sales_payment`;
 /*!40000 ALTER TABLE `d_sales_payment` DISABLE KEYS */;
+INSERT INTO `d_sales_payment` (`sp_sales`, `sp_paymentid`, `sp_date`, `sp_comp`, `sp_method`, `sp_nominal`) VALUES
+	(1, 1, '2018-11-23', 1, 1, 0.00),
+	(2, 1, '2018-11-26', 1, 1, 2800000.00);
 /*!40000 ALTER TABLE `d_sales_payment` ENABLE KEYS */;
 
 
 -- Dumping structure for table alamrayasite_nabila.d_sales_plan
 CREATE TABLE IF NOT EXISTS `d_sales_plan` (
-  `sp_id` int(11) NOT NULL,
+  `sp_id` int(11) NOT NULL AUTO_INCREMENT,
   `sp_code` varchar(50) DEFAULT NULL,
   `sp_comp` int(11) DEFAULT NULL,
   `sp_mem` int(11) DEFAULT NULL,
   `sp_date` date DEFAULT NULL,
   `sp_created` datetime DEFAULT NULL,
   `sp_updated` datetime DEFAULT NULL,
+  `sp_status` enum('Y','N') DEFAULT 'N',
   PRIMARY KEY (`sp_id`),
   KEY `FK_d_sales_plan_m_comp` (`sp_comp`),
   CONSTRAINT `FK_d_sales_plan_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table alamrayasite_nabila.d_sales_plan: ~0 rows (approximately)
 DELETE FROM `d_sales_plan`;
 /*!40000 ALTER TABLE `d_sales_plan` DISABLE KEYS */;
+INSERT INTO `d_sales_plan` (`sp_id`, `sp_code`, `sp_comp`, `sp_mem`, `sp_date`, `sp_created`, `sp_updated`, `sp_status`) VALUES
+	(1, 'RENCANAPENJUALAN-1/2018.11.26', 1, 0, '2018-11-26', '2018-11-26 04:24:39', '2018-11-26 04:24:39', 'N');
 /*!40000 ALTER TABLE `d_sales_plan` ENABLE KEYS */;
 
 
@@ -2939,12 +2955,14 @@ CREATE TABLE IF NOT EXISTS `d_spk` (
   CONSTRAINT `FK_d_spk_d_productplan` FOREIGN KEY (`spk_ref`) REFERENCES `d_productplan` (`pp_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_spk: ~1 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_spk: ~4 rows (approximately)
 DELETE FROM `d_spk`;
 /*!40000 ALTER TABLE `d_spk` DISABLE KEYS */;
 INSERT INTO `d_spk` (`spk_id`, `spk_comp`, `spk_ref`, `spk_code`, `spk_date`, `spk_item`, `spk_status`, `spk_insert`, `spk_update`) VALUES
 	(1, 1, 1, 'SPK1811161', '2018-11-16', 396, 'DR', '2018-11-16 02:49:13', '2018-11-16 02:49:13'),
-	(2, 1, 3, 'SPK1811222', '2018-11-22', 396, 'DR', '2018-11-22 01:15:30', '2018-11-22 01:15:30');
+	(2, 1, 3, 'SPK1811222', '2018-11-22', 396, 'DR', '2018-11-22 01:15:30', '2018-11-22 01:15:30'),
+	(3, 1, 4, 'SPK1811233', '2018-11-23', 396, 'DR', '2018-11-23 02:45:16', '2018-11-23 02:45:16'),
+	(4, 1, 5, 'SPK1811234', '2018-11-23', 396, 'DR', '2018-11-23 03:26:43', '2018-11-23 03:26:43');
 /*!40000 ALTER TABLE `d_spk` ENABLE KEYS */;
 
 
@@ -2963,11 +2981,13 @@ CREATE TABLE IF NOT EXISTS `d_stock` (
   KEY `FK_d_stock_d_gudangcabang_2` (`s_position`),
   CONSTRAINT `FK_d_stock_d_gudangcabang` FOREIGN KEY (`s_comp`) REFERENCES `d_gudangcabang` (`gc_id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_d_stock_d_gudangcabang_2` FOREIGN KEY (`s_position`) REFERENCES `d_gudangcabang` (`gc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_stock: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_stock: ~1 rows (approximately)
 DELETE FROM `d_stock`;
 /*!40000 ALTER TABLE `d_stock` DISABLE KEYS */;
+INSERT INTO `d_stock` (`s_id`, `s_comp`, `s_position`, `s_item`, `s_qty`, `s_qty_min`, `s_insert`, `s_update`) VALUES
+	(1, 1, 1, 226, 90.00, 0.00, '2018-11-26 03:54:39', '2018-11-26 03:57:30');
 /*!40000 ALTER TABLE `d_stock` ENABLE KEYS */;
 
 
@@ -2999,9 +3019,12 @@ CREATE TABLE IF NOT EXISTS `d_stock_mutation` (
   CONSTRAINT `FK_d_stock_mutation_d_stock_mutcat` FOREIGN KEY (`sm_mutcat`) REFERENCES `d_stock_mutcat` (`smc_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table alamrayasite_nabila.d_stock_mutation: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_stock_mutation: ~2 rows (approximately)
 DELETE FROM `d_stock_mutation`;
 /*!40000 ALTER TABLE `d_stock_mutation` DISABLE KEYS */;
+INSERT INTO `d_stock_mutation` (`sm_stock`, `sm_detailid`, `sm_date`, `sm_comp`, `sm_position`, `sm_mutcat`, `sm_item`, `sm_qty`, `sm_qty_used`, `sm_qty_sisa`, `sm_qty_expired`, `sm_detail`, `sm_keterangan`, `sm_hpp`, `sm_sell`, `sm_reff`, `sm_insert`, `sm_update`) VALUES
+	(1, 1, '2018-11-26', 1, 1, 5, 226, 100.00, 10.00, 90.00, 0.00, 'TAMBAH BARANG HASIL PRODUKSI', NULL, 186.00, NULL, 'PR-1811-00001', '2018-11-26 03:54:39', '2018-11-26 03:57:30'),
+	(1, 2, '2018-11-26', 1, 1, 5, 226, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 186.00, NULL, 'TOKO-2/2018.11.26', NULL, NULL);
 /*!40000 ALTER TABLE `d_stock_mutation` ENABLE KEYS */;
 
 
@@ -3054,6 +3077,7 @@ CREATE TABLE IF NOT EXISTS `d_supplier_brg` (
 DELETE FROM `d_supplier_brg`;
 /*!40000 ALTER TABLE `d_supplier_brg` DISABLE KEYS */;
 INSERT INTO `d_supplier_brg` (`d_sb_supid`, `d_sb_detailid`, `d_sb_itemid`, `d_sb_created`, `d_sb_updated`) VALUES
+	(1, 9, 60, '2018-10-29 17:19:46', '2018-11-01 10:59:25'),
 	(26, 1, 7, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
 	(26, 2, 646, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
 	(26, 3, 70, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
@@ -3069,8 +3093,7 @@ INSERT INTO `d_supplier_brg` (`d_sb_supid`, `d_sb_detailid`, `d_sb_itemid`, `d_s
 	(120, 5, 75, '2018-10-29 17:19:46', '2018-11-01 10:59:25'),
 	(120, 6, 73, '2018-10-29 17:19:46', '2018-11-01 10:59:25'),
 	(120, 7, 18, '2018-10-29 17:19:46', '2018-11-01 10:59:25'),
-	(120, 8, 54, '2018-10-29 17:19:46', '2018-11-01 10:59:25'),
-	(120, 9, 3, '2018-10-29 17:19:46', '2018-11-01 10:59:25');
+	(120, 8, 54, '2018-10-29 17:19:46', '2018-11-01 10:59:25');
 /*!40000 ALTER TABLE `d_supplier_brg` ENABLE KEYS */;
 
 
@@ -3349,7 +3372,8 @@ CREATE TABLE IF NOT EXISTS `m_customer` (
   `c_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `c_birthday` date DEFAULT NULL,
   `c_email` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `c_hp` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `c_hp1` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `c_hp2` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `c_address` text COLLATE utf8_unicode_ci,
   `c_class` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'A | B | C',
   `c_type` varchar(2) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'RT: Retail | GR: Grosir',
@@ -3357,18 +3381,19 @@ CREATE TABLE IF NOT EXISTS `m_customer` (
   `c_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`c_id`),
   UNIQUE KEY `c_code` (`c_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table alamrayasite_nabila.m_customer: ~6 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_customer: ~7 rows (approximately)
 DELETE FROM `m_customer`;
 /*!40000 ALTER TABLE `m_customer` DISABLE KEYS */;
-INSERT INTO `m_customer` (`c_id`, `c_code`, `c_name`, `c_birthday`, `c_email`, `c_hp`, `c_address`, `c_class`, `c_type`, `c_insert`, `c_update`) VALUES
-	(1, 'CUS0618/C001/001', 'mahmud', '0000-00-00', 'mahmud1@gmail.com', '4545454', NULL, 'A', 'RT', '2018-06-28 02:48:07', '2018-06-28 09:48:07'),
-	(2, 'CUS0618/C001/002', 'aya', NULL, NULL, '454545', NULL, 'C', 'RT', '2018-06-28 04:17:33', '2018-06-28 11:17:33'),
-	(3, 'CUS0618/C001/003', 'ed', '0000-00-00', NULL, '454545', NULL, 'B', 'RT', '2018-06-28 07:20:37', '2018-06-28 14:22:53'),
-	(4, 'CUS0618/C001/004', 'meli', '0000-00-00', 'mahmudbojonegoro@gmail.com', '676767', NULL, NULL, 'GR', '2018-06-29 03:49:30', '2018-06-29 10:49:30'),
-	(5, 'CUS0718/C001/005', 'ggg', '0000-00-00', 'demo.user@justinc.me', '4546456', '444', NULL, 'GR', '2018-07-02 02:52:33', '2018-07-02 09:52:33'),
-	(6, 'CUS0718/C001/006', 'cius', NULL, 'mahmud1@gmail.com', '343434', NULL, 'B', 'GR', '2018-07-02 03:04:26', '2018-07-02 10:04:26');
+INSERT INTO `m_customer` (`c_id`, `c_code`, `c_name`, `c_birthday`, `c_email`, `c_hp1`, `c_hp2`, `c_address`, `c_class`, `c_type`, `c_insert`, `c_update`) VALUES
+	(1, 'CUS0618/C001/001', 'mahmud', '1970-01-01', 'mahmud1@gmail.com', '+624545454', '+62', NULL, 'A', 'RT', '2018-06-28 02:48:07', '2018-11-22 10:10:09'),
+	(2, 'CUS0618/C001/002', 'aya', NULL, NULL, '454545', '', NULL, 'C', 'RT', '2018-06-28 04:17:33', '2018-06-28 11:17:33'),
+	(3, 'CUS0618/C001/003', 'ed', '0000-00-00', NULL, '454545', '', NULL, 'B', 'RT', '2018-06-28 07:20:37', '2018-06-28 14:22:53'),
+	(4, 'CUS0618/C001/004', 'meli', '0000-00-00', 'mahmudbojonegoro@gmail.com', '676767', '', NULL, NULL, 'GR', '2018-06-29 03:49:30', '2018-06-29 10:49:30'),
+	(5, 'CUS0718/C001/005', 'ggg', '0000-00-00', 'demo.user@justinc.me', '4546456', '', '444', NULL, 'GR', '2018-07-02 02:52:33', '2018-07-02 09:52:33'),
+	(6, 'CUS0718/C001/006', 'cius', NULL, 'mahmud1@gmail.com', '343434', '', NULL, 'B', 'GR', '2018-07-02 03:04:26', '2018-07-02 10:04:26'),
+	(7, 'CUS1118/C001/7', 'mahm', '2018-11-05', 'taziz704@gmail.com', '+6285233526818', '+6285233526818', 'wewe', 'C', 'RT', '2018-11-22 10:10:44', '2018-11-22 17:10:44');
 /*!40000 ALTER TABLE `m_customer` ENABLE KEYS */;
 
 
@@ -4824,22 +4849,29 @@ CREATE TABLE IF NOT EXISTS `m_supplier` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_company` varchar(100) DEFAULT NULL,
   `s_name` varchar(100) DEFAULT NULL,
+  `s_npwp` varchar(100) DEFAULT NULL,
   `s_address` varchar(100) DEFAULT NULL,
-  `s_phone` varchar(50) DEFAULT NULL,
+  `s_phone1` varchar(50) DEFAULT NULL,
+  `s_phone2` varchar(50) DEFAULT NULL,
+  `s_rekening` varchar(25) DEFAULT NULL,
+  `s_bank` varchar(25) DEFAULT NULL,
   `s_fax` varchar(50) DEFAULT NULL,
   `s_note` text,
-  `s_created` timestamp NULL DEFAULT NULL,
-  `s_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `s_active` enum('Y','N') DEFAULT 'Y',
+  `s_top` date DEFAULT NULL COMMENT 'termin of payment (tgl jatuh tempo bayar hutang)',
+  `s_deposit` date DEFAULT NULL COMMENT 'tanggal jatuh tempo pengiriman barang',
+  `s_limit` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT 'limit hutang supplier',
+  `s_hutang` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT 'hutang supplier',
+  `s_item_list` varchar(150) DEFAULT NULL COMMENT 'array item list',
+  `s_insert` timestamp NULL DEFAULT NULL,
+  `s_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`s_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_supplier: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_supplier: ~0 rows (approximately)
 DELETE FROM `m_supplier`;
 /*!40000 ALTER TABLE `m_supplier` DISABLE KEYS */;
-INSERT INTO `m_supplier` (`s_id`, `s_company`, `s_name`, `s_address`, `s_phone`, `s_fax`, `s_note`, `s_created`, `s_updated`, `s_active`) VALUES
-	(1, 'Dealer Honda', 'Supadi', 'Sumberejo Bojonegoro', '089765345678', '1234', NULL, NULL, '2018-11-15 13:25:00', ''),
-	(21, 'ttt', 'fgfgfgf', 'bnbnbnb', '5454545', '43434', 'bvbvbvbvb', '2018-06-29 06:20:55', '2018-06-29 13:20:55', NULL);
+INSERT INTO `m_supplier` (`s_id`, `s_company`, `s_name`, `s_npwp`, `s_address`, `s_phone1`, `s_phone2`, `s_rekening`, `s_bank`, `s_fax`, `s_note`, `s_top`, `s_deposit`, `s_limit`, `s_hutang`, `s_item_list`, `s_insert`, `s_update`) VALUES
+	(1, 'sd', 'sd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-11-23 10:12:41');
 /*!40000 ALTER TABLE `m_supplier` ENABLE KEYS */;
 
 
@@ -5017,27 +5049,40 @@ CREATE TABLE IF NOT EXISTS `spk_formula` (
   `fr_formula` int(12) DEFAULT NULL,
   `fr_value` decimal(10,2) DEFAULT NULL,
   `fr_scale` varchar(50) DEFAULT NULL,
+  `fr_status` enum('Y','N') DEFAULT NULL,
   KEY `FK_spk_formula_d_spk` (`fr_spk`),
   KEY `fr_detailid` (`fr_detailid`),
   CONSTRAINT `FK_spk_formula_d_spk` FOREIGN KEY (`fr_spk`) REFERENCES `d_spk` (`spk_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.spk_formula: ~12 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.spk_formula: ~24 rows (approximately)
 DELETE FROM `spk_formula`;
 /*!40000 ALTER TABLE `spk_formula` DISABLE KEYS */;
-INSERT INTO `spk_formula` (`fr_spk`, `fr_detailid`, `fr_formula`, `fr_value`, `fr_scale`) VALUES
-	(1, 1, 3, 80000.00, '3'),
-	(1, 2, 49, 12000.00, '4'),
-	(1, 3, 48, 400.00, '4'),
-	(1, 4, 60, 100.00, '4'),
-	(1, 5, 71, 800.00, '4'),
-	(1, 6, 73, 2100.00, '4'),
-	(2, 1, 3, 96000.00, '3'),
-	(2, 2, 49, 14400.00, '4'),
-	(2, 3, 48, 480.00, '4'),
-	(2, 4, 60, 120.00, '4'),
-	(2, 5, 71, 960.00, '4'),
-	(2, 6, 73, 2520.00, '4');
+INSERT INTO `spk_formula` (`fr_spk`, `fr_detailid`, `fr_formula`, `fr_value`, `fr_scale`, `fr_status`) VALUES
+	(1, 1, 3, 80000.00, '3', 'N'),
+	(1, 2, 49, 12000.00, '4', 'N'),
+	(1, 3, 48, 400.00, '4', 'N'),
+	(1, 4, 60, 100.00, '4', 'N'),
+	(1, 5, 71, 800.00, '4', 'N'),
+	(1, 6, 73, 2100.00, '4', 'N'),
+	(2, 1, 3, 96000.00, '3', 'N'),
+	(2, 2, 49, 14400.00, '4', 'N'),
+	(2, 3, 48, 480.00, '4', 'N'),
+	(2, 4, 60, 120.00, '4', 'N'),
+	(2, 5, 71, 960.00, '4', 'N'),
+	(2, 6, 73, 2520.00, '4', 'N'),
+	(3, 1, 3, 24000.00, '3', 'N'),
+	(3, 2, 49, 3600.00, '4', 'N'),
+	(3, 3, 48, 120.00, '4', 'N'),
+	(3, 4, 60, 30.00, '4', 'N'),
+	(3, 5, 71, 240.00, '4', 'N'),
+	(3, 6, 73, 630.00, '4', 'N'),
+	(4, 1, 3, 80000.00, '3', 'N'),
+	(4, 2, 49, 12000.00, '4', 'N'),
+	(4, 3, 48, 400.00, '4', 'N'),
+	(4, 4, 60, 100.00, '4', 'N'),
+	(4, 5, 71, 800.00, '4', 'N'),
+	(4, 6, 73, 2100.00, '4', 'N');
 /*!40000 ALTER TABLE `spk_formula` ENABLE KEYS */;
 
 

@@ -111,9 +111,9 @@ class MonitoringOrderController extends Controller
               )
             ->where('sd_item',$id)
             ->join('d_sales','d_sales.s_id','=','d_sales_dt.sd_sales')
-            ->join('m_customer','m_customer.c_id','=','d_sales.s_customer')
-            ->where('s_channel','GR')
-            ->where('s_status','PR')
+            ->LEFTjoin('m_customer','m_customer.c_id','=','d_sales.s_customer')
+            ->where('s_channel','Pesanan')
+            ->where('s_status','fINAL')
             ->orderBy('s_date','asc')
             ->get();
 

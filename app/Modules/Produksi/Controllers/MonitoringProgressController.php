@@ -31,7 +31,7 @@ class MonitoringProgressController extends Controller
   public function tabel(){
     $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
                ->where('sp_status',DB::raw("'N'"))
-              ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item');
+              ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
 
 
 

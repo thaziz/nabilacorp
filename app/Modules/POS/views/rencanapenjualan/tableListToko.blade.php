@@ -52,14 +52,9 @@
                <thead align="right">
                 <tr>
                  <th width="10%">Tanggal</th>
-                 <th width="20%">No Nota</th>
+                 <th width="20%">Kode</th>
                  <!-- <th width="20%">Pelangan</th> -->
-                 <th width="10%">Kasir</th>                   
-                 <th width="10%">Gross</th>     
-                 <th width="10%">Disc</th>                      
-                 <th width="10%">Ongkir</th>     
-                 <th width="10%">Net</th>                        
-                 <th width="10%">Status</th> 
+                 <th>Total harga</th>
                  <th width="10%">Action</th>
                 </tr>
                </thead> 
