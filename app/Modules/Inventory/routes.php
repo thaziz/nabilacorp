@@ -27,4 +27,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/stockopname/opname', 'stockOpnameController@index');
 	Route::get('/inventory/namaitem/autocomplite/{comp}/{position}', 'stockOpnameController@tableOpname');
 	Route::get('/inventory/namaitem/simpanopname', 'stockOpnameController@saveOpname');
+	Route::get('/inventory/namaitem/history/{tgl1}/{tgl2}', 'stockOpnameController@history');
+	Route::get('/inventory/namaitem/detail', 'stockOpnameController@getOPname');
+	Route::get('/inventory/stockopname/print_stockopname/{id}', 'stockOpnameController@print_stockopname');
+	
+
 });

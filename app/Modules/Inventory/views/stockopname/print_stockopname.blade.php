@@ -266,7 +266,7 @@
 					<td>{{ $opname->i_code }} - {{ $opname->i_name }}</td>
 					<td>{{ $opname->i_type }}</td>
 					<td align="right">{{ (int)$opname->od_opname }}</td>
-					<td>{{ $opname->m_sname }}</td>
+					<td>{{ $opname->s_name }}</td>
 				</tr>
 				@endforeach
 				

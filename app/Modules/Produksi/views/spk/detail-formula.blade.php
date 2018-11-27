@@ -94,8 +94,8 @@
 </div>
 
 <div class="modal-footer">
-    <a class="btn btn-primary" target="_blank" href="{{route('spk_print', ['spk_id' => $item->spk_id])}}"><i
-                class="fa fa-print"></i>&nbsp;Print</a>
+ {{--    <a class="btn btn-primary" target="_blank" href="{{route('spk_print', ['spk_id' => $item->spk_id])}}"><i
+                class="fa fa-print"></i>&nbsp;Print</a> --}}
     <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
     @if ($ket == 'AP')
             <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="ubahStatus({{ $id }})">Proses</button>

@@ -25,7 +25,7 @@
                                  {{ number_format($opname->od_opname,0,',','.')}}
                              </span>
                          </td>
-                         <td>{{$opname->m_sname}}</td>
+                         <td>{{$opname->s_name}}</td>
                      </tr>
                   @endforeach
 

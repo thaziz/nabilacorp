@@ -44,11 +44,26 @@
                         <!-- End Div #alert-tab -->
 
                         <!-- Div #note-tab -->
-                        @include('inventory.stockopname.history')
+                        {!!$history!!}
                         <!-- End Div #note-tab -->
 
                         <!-- Div #detail-opname -->
-                     {{--    @include('inventory.stockopname.modal-opname') --}}
+                        <div class="modal fade" id="myModalView" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                          <form id="myForm">
+                            <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header" style="background-color: #e77c38;">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title" style="color: white;">Form Detail Opname</h4>
+                                </div>
+                                <div id="view-formula">
+
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                      </div>
                         <!-- End Div #detail-opname -->
 
                             <!-- Div #label-badge-tab -->
@@ -206,7 +221,7 @@
 
             '<input type="number" name="real" id="real" class="form-control text-right qty-real-' + i_id + '" onkeyup="hitungOpname(\'' + i_id + '\', \'' + s_qty + '\')" value="'+qtyReal+'">',
 
-            '<input type="text" name="opname[]" id="opname" class="form-control text-right opname-' + i_id + '" readonly value="'+opname+'"><input type="hidden" name="" id="opnameKw" class="form-control text-right opnameKw-' + i_id + '" readonly value="'+opnameKw+'">',
+            '<input type="hidden" name="opname[]" id="opname" class="form-control text-right opname-' + i_id + '" readonly value="'+opname+'"><input type="text" name="" id="opnameKw" class="form-control text-right opnameKw-' + i_id + '" readonly value="'+opnameKw+'">',
 
             Hapus
             ]);
@@ -325,8 +340,8 @@
 
         function OpnameDet(id) {
           $.ajax({
-              url: baseUrl + "/inventory/namaitem/detail/",
-              type: "get",
+              url: baseUrl + "/nabilacorp/inventory/namaitem/detail/",
+              type: "GET",
               data: {x: id},
               success: function (response) {
                   $('#view-formula').html(response);
