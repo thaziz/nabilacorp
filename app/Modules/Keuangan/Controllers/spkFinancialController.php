@@ -14,6 +14,7 @@ use App\spk_formula;
 use App\m_itemm;
 use App\d_stock;
 use App\d_stock_mutation;
+use App\d_gudangcabang;
 
 use App\Modules\Keuangan\model\d_productplan;
 
@@ -70,7 +71,7 @@ class spkFinancialController extends Controller
     ->make(true);
   }
 
-  public function getDataTabelSpk($tgl1,$tgl2,$tampil="semua"){
+  public function getDataTabelSpk($tgl1,$tgl2,$tampil="semua",$comp){
     $y = substr($tgl1, -4);
     $m = substr($tgl1, -7,-5);
     $d = substr($tgl1,0,2);
@@ -86,6 +87,7 @@ class spkFinancialController extends Controller
                   ->join('d_productplan','pp_id','=','spk_ref')
                   ->select('spk_id', 'spk_date','i_name','pp_qty','spk_code','spk_status','pp_item')
                   ->whereBetween('spk_date', [$tanggal1, $tanggal2])
+                  ->where('spk_comp',$comp)
                   ->orderBy('spk_date', 'DESC')
                   ->get();
     }elseif ($tampil == 'draft') {
@@ -219,8 +221,13 @@ class spkFinancialController extends Controller
     ]);
   }
 
-  public function tabelFormula( $id, $qty){
-
+  public function tabelFormula( $id, $qty, $comp){
+    $gc_id = d_gudangcabang::select('gc_id')
+      ->where('gc_gudang','GUDANG BAHAN BAKU')
+      ->where('gc_comp',$comp)
+      ->first();
+    $gudang = $gc_id->gc_id;
+    // dd($gudang);
     $hasil = d_formula_result::
         where('fr_adonan',$id)
         ->first();
@@ -242,11 +249,11 @@ class spkFinancialController extends Controller
         ->join('m_item','m_item.i_id','=','d_formula.f_bb')
         ->join('d_formula_result','d_formula_result.fr_id','=','f_id')
         ->join('m_satuan','s_id','=','f_scale')
-        ->leftJoin('d_stock', function($q){
+        ->leftJoin('d_stock', function($q) use($gudang){
           $q->on('s_item', '=', 'i_id');
           $q->on('s_item', '=', 'f_bb');
-          $q->on('s_comp', '=', DB::raw('3'));
-          $q->on('s_position', '=', DB::raw('3'));
+          $q->on('s_comp', '=', DB::raw($gudang));
+          $q->on('s_position', '=', DB::raw($gudang));
         })
         ->where('fr_adonan','=',$id)
         ->get();
@@ -452,10 +459,10 @@ class spkFinancialController extends Controller
                                     's_name')
       ->where('fr_spk',$request->x)
       ->join('m_item','i_id','=','fr_formula')
-      ->join('m_satuan','m_sid','=','fr_scale')
+      ->join('m_satuan','s_id','=','fr_scale')
       ->get();
 
-    return view('keuangan.spk.detail-formula',compact('spk','formula'));
+    return view('keuangan::spk.detail-formula',compact('spk','formula'));
   }
 
   public function updateStatus(Request $request, $id){
