@@ -115,6 +115,10 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('master/item/index') ? 'active' : '' || Request::is('/master/item/*') ? 'active' : '' }}"><a href="{{ url('/master/item/index') }}"><span class="submenu-title">Master Data Barang</span></a>
                             </li>
+                            <li class="{{ Request::is('master/datajabatan') ? 'active' : '' || Request::is('master/datajabatan/*') ? 'active' : '' }}"><a href="{{ url('/master/datajabatan')}}"><span class="submenu-title">Data Jabatan</span></a>
+                            </li>
+                            <li class="{{ Request::is('master/datapegawai/pegawai') ? 'active' : '' || Request::is('master/datapegawai/*') ? 'active' : '' }}"><a href="{{ url('/master/datapegawai/pegawai') }}"><span class="submenu-title">Data Pegawai</span><span class="hidden">Master</span></a>
+                            </li>
                         </ul>
                     </li>
 
