@@ -83,6 +83,7 @@ class stockOpnameController extends Controller
       $akun_first = [];
       $err = true;
       //end Nota
+      dd('d');
       d_opname::insert([
           'o_id' => $o_id,
           'o_nota' => $nota,
