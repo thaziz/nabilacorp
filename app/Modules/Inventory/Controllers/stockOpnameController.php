@@ -71,8 +71,8 @@ class stockOpnameController extends Controller
 
     public function saveOpname(Request $request){
       // dd($request->all());
-      DB::beginTransaction();
-    	try {
+      /*DB::beginTransaction();
+    	try {*/
       $o_id = d_opname::max('o_id') + 1;
       //nota
       $year = carbon::now()->format('y');
@@ -194,18 +194,18 @@ class stockOpnameController extends Controller
       	}
       	$nota = d_opname::where('o_id',$o_id)
           ->first();
-        DB::commit();
+        /*DB::commit();*/
 	    return response()->json([
 	          'status' => 'sukses',
 	          'nota' => $nota
 	      ]);
-	    } catch (\Exception $e) {
+	    /*} catch (\Exception $e) {
 	    DB::rollback();
 	    return response()->json([
 	        'status' => 'gagal',
 	        'data' => $e
 	      ]);
-	    }
+	    }*/
     }
 
     public function history($tgl1, $tgl2){
