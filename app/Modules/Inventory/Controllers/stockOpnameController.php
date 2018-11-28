@@ -105,9 +105,10 @@ class stockOpnameController extends Controller
                 ->where('s_comp', $request->o_comp)
                 ->where('s_position', $request->o_comp)
                 ->first();
-                dd('d');
+                echo 'a';
         // dd($cek);
         if ($cek == null) {
+          dd('n');
           $s_id = d_stock::select('s_id')->max('s_id')+1;
           d_stock::create([
             's_id' => $s_id,
@@ -136,6 +137,7 @@ class stockOpnameController extends Controller
             ]);
 
         }else{
+          dd('db');
           $hasil = $cek->s_qty + $request->opname[$i];
           $sm_detailid = d_stock_mutation::select('sm_detailid')
             ->where('sm_item', $request->i_id[$i])
