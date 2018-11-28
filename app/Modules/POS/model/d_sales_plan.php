@@ -69,15 +69,17 @@
       
       static function perbarui($request) {
         return DB::transaction(function() use ($request) {
-          $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $spdt_salesplan);
+          $sp_id = $request->sp_id;
+
+          $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id);
           $d_salesplan_dt->delete();
-          $spdt_item = $request->spdt_item;
-          $spdt_item = $spdt_item != null ? $spdt_item : array();
-          if(count($spdt_item) > 0) {
-            for($x = 0;$x < count($spdt_item);$x++) {
-                $sd_qty = format::format($request->sd_qty[$i]);
-                  $sd_item = format::format($request->sd_item[$i]);
-                  $spdt_detailid = $i + 1;             
+          $sd_items = $request->sd_item;
+          $sd_items = $sd_items != null ? $sd_items : array();
+          if(count($sd_items) > 0) {
+            for($x = 0;$x < count($sd_items);$x++) {
+                $sd_qty = format::format($request->sd_qty[$x]);
+                  $sd_item = $sd_items[$x];
+                  $spdt_detailid = $x + 1;             
 
                   d_salesplan_dt::create([
                       'spdt_salesplan' => $sp_id,
@@ -87,6 +89,9 @@
                   ]);
             }
           }
+
+          $data=['status'=>'sukses','data'=>'sukses' ,'sp_id'=>$sp_id,'s_status'=>$request->status];
+          return response()->json($data);
         });
 
       }  

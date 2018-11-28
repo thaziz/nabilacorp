@@ -12,7 +12,7 @@
 
           <td style="display:none"><input class="jumlahAwal{{$detail->m_item->i_id}}" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="{{number_format($detail->spdt_qty,0,',','.')}}" autocomplete="off"></td>
           
-          <td><input onblur="validationForm();setQty(event,'fQty{{$detail->m_item->i_id}}')" onclick="setAwal(event,'fQty{{$detail->m_item->i_id}}')" onkeyup="hapus(event,'{{$detail->m_item->i_id}}');validationForm();hitungTotalPerItem('{{$detail->m_item->i_id}}')" class="jumlah fQty{{$detail->m_item->i_id}}" style="width:100%;text-align:right;border:none" name="spdt_qty[]" value="{{number_format($detail->spdt_qty,0,',','.')}}" autocomplete="off"></td>
+          <td><input onblur="validationForm();setQty(event,'fQty{{$detail->m_item->i_id}}')" onclick="setAwal(event,'fQty{{$detail->m_item->i_id}}')" onkeyup="hapus(event,'{{$detail->m_item->i_id}}');validationForm();hitungTotalPerItem('{{$detail->m_item->i_id}}')" class="jumlah fQty{{$detail->m_item->i_id}}" style="width:100%;text-align:right;border:none" name="sd_qty[]" value="{{number_format($detail->spdt_qty,0,',','.')}}" autocomplete="off"></td>
 
           <td><div style="padding-top:6px">{{$detail->s_name}}</div></td>
           <td><input class="harga{{$detail->m_item->i_id}} alignAngka" style="width:100%;border:none" name="spdt_price[]" value="{{number_format($detail->spdt_price,0,',','.')}}"" readonly></td>

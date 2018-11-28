@@ -26,6 +26,33 @@
     });
   }
 
+  function perbarui_sales_plan() {
+    var data = $('#form_sales_plan').serialize();
+    $.ajax({
+      url: "{{ url('/penjualan/rencanapenjualan/perbarui') }}",
+      type: 'GET',
+      data: data,
+      dataType: 'json',
+      success: function (response) {
+        if(response.data == 'sukses') {
+          
+          iziToast.success({
+            position: "center",
+            title: '',
+            timeout: 1000,
+            message: 'Data berhasil diperbarui',
+            onClosing : function() {
+              location.href = "{{ url('/penjualan/rencanapenjualan/rencana') }}";
+            }
+          });
+
+        }
+      }
+    });
+  }
+
+
+
   function buttonSimpanPos($status) {
 
     if ($('#s_id').val() != '' && $status == 'draft') {

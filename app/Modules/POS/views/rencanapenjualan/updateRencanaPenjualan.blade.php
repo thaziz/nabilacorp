@@ -26,7 +26,7 @@
       </div>
       <ul id="generalTab" class="nav nav-tabs">
          <li class="active"><a id="penjualan" href="#toko" data-toggle="tab">Rencana Penjualan</a></li>
-         <li><a id="list" href="#listtoko" data-toggle="tab">List Rencana Penjualan</a></li>
+         <li><a id="list" href="{{ url('/penjualan/rencanapenjualan/rencana') }}">List Rencana Penjualan</a></li>
          <!-- 
             <li><a href="#mobil" data-toggle="tab">Penjualan Mobil</a></li>
             <li><a href="#listmobil" data-toggle="tab">List Mobil</a></li> -->
@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                            <div class="form-group">
-                              <input type="text"  name="sp_id" id="sp_id" value="{{ $d_sales_plan->sp_id }}" disabled="">
+                              <input type="hidden"  name="sp_id" id="sp_id" value="{{ $d_sales_plan->sp_id }}">
                               <input type="text" class="form-control input-sm reset" name="s_note" id="s_note" value="{{ $d_sales_plan->sp_code }}" disabled="">
                            </div>
                         </div>
@@ -320,8 +320,7 @@
                   <div class="col-md-12 col-sm-12 col-xs-12" align="right">
                      <button class="btn btn-danger " type="button" onclick="batal()">Batal</button>
                      <!--   <button style="display: none;" class="btn btn-warning btn-disabled terima" type="button" onclick="Terima('draft')">Terima</button>     -->                          
-                     <button type="button" class="btn-primary btn btn-disabled perbarui" data-toggle="modal" disabled="" style="display: none;" id="perbarui" 
-                        onclick="modalShow()">Perbarui</button>
+                     <button type="button" class="btn-primary btn perbarui" id="perbarui" onclick="perbarui_sales_plan()">Perbarui</button>
                      
                   </div>
                </div>
