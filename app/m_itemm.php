@@ -183,8 +183,10 @@ class m_itemm extends Model
                   $join->where('s_comp',$comp); 
                   $join->where('s_position',$position);
              })
-             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->select('i_id','i_name','m_satuan.s_name as s_name','is_price','s_qty','i_code');
+             ->join('m_satuan as ms_1','ms_1.s_id','=','i_satuan')
+             ->join('m_satuan as ms_2','ms_2.s_id','=','i_sat2')
+             ->join('m_satuan as ms_3','ms_3.s_id','=','i_sat3')
+             ->select('i_id','i_name','i_satuan','i_sat2','i_sat3','ms_1.s_name as satuan_1','ms_2.s_name as satuan_2','ms_3.s_name as satuan_3','is_price','s_qty','i_code');
         if($search!='' && $id_supplier!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                  
@@ -201,8 +203,6 @@ class m_itemm extends Model
 
                
         $sql=$sql->get();
-        
-
 
 
         $results = array();
@@ -212,7 +212,7 @@ class m_itemm extends Model
         } else {
           foreach ($sql as $data)
           {
-            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price,0,',','.'),'item' => $data->i_name];
+            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price,0,',','.').')', 'i_id' => $data->i_id,'satuan_1' =>$data->satuan_1,'satuan_2' =>$data->satuan_2,'satuan_3' =>$data->satuan_3,'sat1_id' =>$data->i_satuan,'sat2_id' =>$data->i_sat2,'sat3_id' =>$data->i_sat3,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price,0,',','.'),'item' => $data->i_name];
           }
         } 
         return Response::json($results);

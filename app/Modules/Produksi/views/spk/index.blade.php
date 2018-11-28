@@ -105,12 +105,13 @@
                     function cariTanggal() {
                         var tgl1 = $('#tanggal1').val();
                         var tgl2 = $('#tanggal2').val();
+                        var comp = $('.mem_comp').val();
                         var indexTable = $('#data1').DataTable({
                             "destroy": true,
                             "processing": true,
                             "serverside": true,
                             "ajax": {
-                                url: baseUrl + "/produksi/spk/get_spk_by_tgl/" + tgl1 + '/' + tgl2,
+                                url: baseUrl + "/produksi/spk/get_spk_by_tgl/" + tgl1 + '/' + tgl2 + '/' + comp,
                                 type: 'GET'
                             },
                             "columns": [
@@ -224,7 +225,7 @@
                     function detailManSpk(id) {
 
                         $.ajax({
-                            url: baseUrl + "/produksi/spk/lihat-detail/",
+                            url: baseUrl + "/nabilacorp/produksi/spk/lihat-detail/",
                             type: "get",
                             data: {x: id},
                             success: function (response) {

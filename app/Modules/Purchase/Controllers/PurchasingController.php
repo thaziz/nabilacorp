@@ -51,11 +51,10 @@ class PurchasingController extends Controller
 
     }*/
    public function seachItemPurchase(Request $request){
-         return   m_item::seachItemPurchase($request);
+         return m_item::seachItemPurchase($request);
    }
    public function createPlan(Request $request){
     dd($request->all());
-
    }
    public function order()
     {

@@ -35,8 +35,8 @@ Route::get('/purcahse-plan/form-plan', 'purchasePlanController@formPlan')->middl
 
 
 
-Route::get('/purchasing/rencanapembelian/rencana', 'PurchasingController@rencana')->middleware('auth');
-Route::get('/purchasing/rencanapembelian/create', 'PurchasingController@create')->middleware('auth');
+Route::get('/purchasing/rencanapembelian/rencana', 'rencanapembelianController@rencana')->middleware('auth');
+Route::get('/purchasing/rencanapembelian/create', 'rencanapembelianController@create')->middleware('auth');
 Route::get('/purchasing/returnpembelian/pembelian', 'PurchasingController@pembelian')->middleware('auth');
 Route::get('/purchasing/belanjasuplier/suplier', 'PurchasingController@suplier')->middleware('auth');
 Route::get('/purchasing/belanjalangsung/langsung', 'PurchasingController@langsung')->middleware('auth');

@@ -22,7 +22,7 @@
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="form-group">  
                   <input type="text" class="form-control input-sm" name="namaitem" id="namaitem">
-                  <input type="text" class="form-control input-sm" name="iditem" id="iditem">
+                  <input type="hidden" class="form-control input-sm" name="iditem" id="iditem">
                 </div>
               </div>
 

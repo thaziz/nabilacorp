@@ -153,6 +153,7 @@
   }
 
   function BuatSpk(id,tgl,jumlah,iditem){
+    var comp = $('.mem_comp').val();
     $.ajax({
       url         : baseUrl+'/produksi/spk/create-id/'+iditem,
       type        : 'get',
@@ -167,13 +168,13 @@
           $('#iditem').val(iditem);
           $('#item').val(response.i_name.i_name);
           $('#jumlah').val(jumlah);
-          tabelFormula(iditem, jumlah);
+          tabelFormula(iditem, jumlah, comp);
         }
       }
     });
   }
 
-  function tabelFormula(iditem, jumlah){
+  function tabelFormula(iditem, jumlah, comp){
     $('#tableFormula').dataTable().fnDestroy();
     $('#tableFormula').DataTable({
       responsive:true,
@@ -181,8 +182,8 @@
       processing: true,
       serverSide: true,
         ajax: {
-            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah,
-             error: function (jqXHR, textStatus, errorThrown) {
+            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah+'/'+comp,
+             error: function (jqXHR, textStatus, errorThrown) {              
                 $('#create-data').modal('hide');
                 iziToast.error({
                     position: "topRight",
@@ -317,12 +318,13 @@
     var tgl1 = $('#tanggal1').val();
     var tgl2 = $('#tanggal2').val();
     var tampil = $('#tampil_data').val();
+    var comp = $('.mem_comp').val();
     spkTable = $('#table-spk').DataTable({
       "destroy": true,
       "processing" : true,
       "serverside" : true,
       "ajax": {
-          url : baseUrl + "/keuangan/spk/get-data-tabel-spk/"+tgl1+"/"+tgl2+"/"+tampil,
+          url : baseUrl + "/keuangan/spk/get-data-tabel-spk/"+tgl1+"/"+tgl2+"/"+tampil+"/"+comp,
           type: 'GET'
       },
       "columns": [
@@ -364,7 +366,7 @@
 
   function detailManSpk(id){
     $.ajax({
-      url : baseUrl + "/keuangan/spk/lihat-detail/",
+      url : baseUrl + "/nabilacorp/keuangan/spk/lihat-detail/",
       type: "get",
       data: {x:id},
       success: function(response){

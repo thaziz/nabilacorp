@@ -31,12 +31,16 @@ class d_purchase_plan extends Model
     const CREATED_AT = 'p_created';
     const UPDATED_AT = 'p_updated';
     
-      protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp'];
+     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp'];
 
      static function simpan ($request){      
-      return DB::transaction(function () use ($request) {           
-              $p_id=d_purchase_plan::max('p_id')+1;
-               $query = DB::select(DB::raw("SELECT MAX(RIGHT(p_code,4)) as kode_max from d_purchase_plan WHERE DATE_FORMAT(p_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+      // return DB::transaction(function () use ($request) {     
+
+      // return 'a';      
+      $p_id=d_purchase_plan::max('p_id')+1;
+     
+      $query = DB::select(DB::raw("SELECT MAX(RIGHT(p_code,4)) as kode_max from d_purchase_plan WHERE DATE_FORMAT(p_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+     
       $kd = "";
 
       if(count($query)>0)
@@ -52,51 +56,51 @@ class d_purchase_plan extends Model
         $kd = "00001";
       }
       
-
       $p_code = "PO-".date('ym')."-".$kd;
 
-              d_purchase_plan::create([
-                      'p_id'=>$p_id,
-                      'p_comp'=>Session::get('user_comp'),
-                      'p_date'=>date('Y-m-d',strtotime($request->p_date)),
-                      'p_code'=>$p_code,
-                      'p_supplier'=>$request->id_supplier,
-                      'p_mem'=>Auth::user()->m_id,                      
+      d_purchase_plan::create([
+              'p_id'=>$p_id,
+              'p_comp'=>Session::get('user_comp'),
+              'p_date'=>date('Y-m-d',strtotime($request->p_date)),
+              'p_code'=>$p_code,
+              'p_supplier'=>$request->id_supplier,
+              'p_mem'=>Auth::user()->m_id,                      
+        ]);
+        // dd($request->all());
+        for ($i=0; $i <count($request->ppdt_item); $i++) {  
+
+        $ppdt_prevcost= format::format($request->is_price[$i]);
+        $detailid=d_purchaseplan_dt::where('ppdt_pruchaseplan',$p_id)->max('ppdt_detailid')+1;
+         d_purchaseplan_dt::create([
+                          'ppdt_pruchaseplan'=>$p_id,
+                          'ppdt_detailid'=>$detailid,
+                          'ppdt_item'=>$request->ppdt_item[$i],
+                          'ppdt_qty'=>$request->ppdt_qty[$i],  
+                          'ppdt_totalcost'=>$request->harga_total[$i],
+                          'ppdt_prevcost'=>$ppdt_prevcost,
+                          'ppdt_satuan'=>$request->satuan_pilih[$i],
+                           ]);
+         $chekItemSupplier=d_item_supplier::where('is_supplier',$request->id_supplier)->where('is_item',$request->ppdt_item[$i])->where('is_active','Y');
+
+         if(!$chekItemSupplier->first()){
+              $is_id=d_item_supplier::max('is_id')+1;
+              d_item_supplier::create([
+                'is_id'       =>$is_id,
+                'is_item'     =>$request->ppdt_item[$i],
+                'is_supplier' =>$request->id_supplier,
+                'is_price'    =>$ppdt_prevcost,
+                'is_active'   =>'Y',
                 ]);
-              for ($i=0; $i <count($request->ppdt_item); $i++) {  
-              $ppdt_prevcost= format::format($request->is_price[$i]);
-              $detailid=d_purchaseplan_dt::where('ppdt_pruchaseplan',$p_id)->max('ppdt_detailid')+1;
-               d_purchaseplan_dt::create([
-                                'ppdt_pruchaseplan'=>$p_id,
-                                'ppdt_detailid'=>$detailid,
-                                'ppdt_item'=>$request->ppdt_item[$i],
-                                'ppdt_qty'=>$request->ppdt_qty[$i],  
-                                'ppdt_prevcost'=>$ppdt_prevcost
-                                 ]);
-               $chekItemSupplier=d_item_supplier::where('is_supplier',$request->id_supplier)->where('is_item',$request->ppdt_item[$i])->where('is_active','Y');
+           }else{
+             $chekItemSupplier->update([
+                'is_price'    =>$ppdt_prevcost,
+              ]);
+           }
+       }
 
-               if(!$chekItemSupplier->first()){
-                    $is_id=d_item_supplier::max('is_id')+1;
-                    d_item_supplier::create([
-                      'is_id'       =>$is_id,
-                      'is_item'     =>$request->ppdt_item[$i],
-                      'is_supplier' =>$request->id_supplier,
-                      'is_price'    =>$ppdt_prevcost,
-                      'is_active'   =>'Y',
-                      ]);
-                 }else{
-                   $chekItemSupplier->update([
-                      'is_price'    =>$ppdt_prevcost,
-                    ]);
-                 }
+        $data=['status'=>'sukses'];
+        return json_encode($data);
 
-
-             }
-
-          $data=['status'=>'sukses'];
-          return json_encode($data);
-
-         });
       }
 
 
@@ -130,7 +134,8 @@ class d_purchase_plan extends Model
 
      
     
-    static function dataPlan($request){                      
+    static function dataPlan($request){   
+    // return 'a';                   
       $from=date('Y-m-d',strtotime($request->tanggal1));
       $to=date('Y-m-d',strtotime($request->tanggal2));
       $d_purchase_plan = d_purchase_plan::join('m_supplier','s_id','=','p_supplier')
@@ -138,7 +143,7 @@ class d_purchase_plan extends Model
                           ->select('p_id', 'p_code', 'p_status_date','p_date', 's_name as supplier','p_status','m_name')
                           ->where('p_comp',Session::get('user_comp'))
                           ->whereBetween('p_date', [$from, $to])->get();
-                         
+             // return $d_purchase_plan;            
           
           return Datatables::of($d_purchase_plan)                       
                       ->editColumn('p_status', function ($d_purchase_plan) {
@@ -158,26 +163,19 @@ class d_purchase_plan extends Model
                                 return date('d-m-Y',strtotime($d_purchase_plan->p_status_date));                           
                         })
                         ->addColumn('action', function ($d_purchase_plan) {
+                          $disable='';
+                          $disableDE='';
+
+                          if($d_purchase_plan->p_status=='FN'){
+                            $disable='disabled';
+                            $disableDE='disabled';
+                          }elseif ($d_purchase_plan->p_status == "DE") {
+                            $disableDE='disabled';
+                          }else{
                             $disable='';
                             $disableDE='';
-
-                            if($d_purchase_plan->p_status=='FN'){
-                              $disable='disabled';
-                              $disableDE='disabled';
-                            }elseif ($d_purchase_plan->p_status == "DE") {
-                              $disableDE='disabled';
-                            }else{
-                              $disable='';
-                              $disableDE='';
-                            }
-
-
-                            $html='';  
-
-
-
-
-
+                          }
+                          $html='';  
                           $html.='<div class="text-center">
                           <button class="btn btn-sm btn-success" title="Detail" onclick="detailPlan(
                                                 '.$d_purchase_plan->p_id.',
