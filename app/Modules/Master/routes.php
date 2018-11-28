@@ -53,7 +53,17 @@ Route::get('/master/item/hapus', 'itemController@hapus');
     Route::get('/master/datacust/datatable_cust', 'custController@datatable_cust')->name('datatable_cust');
 //customer selesai
 
-
+//Master Formula Mahmud
+    Route::get('/master/masterproduksi/index', 'MasterFormulaController@index');
+    Route::get('/produksi/masterformula/table', 'MasterFormulaController@table');
+    Route::get('/produksi/masterformula/autocomplete', 'MasterFormulaController@autocompFormula');
+    Route::get('/produksi/namaitem/autocomplete', 'MasterFormulaController@autocompNamaItem');
+    Route::post('/produksi/namaitem/save/formula', 'MasterFormulaController@saveFormula');
+    Route::get('/produksi/namaitem/distroy/formula/{id}', 'MasterFormulaController@distroyFormula');
+    Route::get('/produksi/namaitem/view/formula', 'MasterFormulaController@viewFormula');
+    Route::get('/produksi/namaitem/edit/formula', 'MasterFormulaController@editFormula');
+    Route::post('/produksi/namaitem/update/formula', 'MasterFormulaController@updateFormula');
+//End Master Formula
 
 
 });

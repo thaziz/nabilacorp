@@ -115,6 +115,15 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('master/item/index') ? 'active' : '' || Request::is('/master/item/*') ? 'active' : '' }}"><a href="{{ url('/master/item/index') }}"><span class="submenu-title">Master Data Barang</span></a>
                             </li>
+
+
+                            @if(Auth::user()->punyaAkses('Master Formula','ma_read'))
+                                    <li class="{{ Request::is('master/masterproduksi/index') ? 'active' : '' || Request::is('master/masterproduksi/*') ? 'active' : '' }}">
+                                        <a href="{{ url('master/masterproduksi/index') }}"><span
+                                                    class="submenu-title">Master Formula</span><span
+                                                    class="hidden">Master</span></a>
+                                    </li>
+                            @endif
                         </ul>
                     </li>
 
