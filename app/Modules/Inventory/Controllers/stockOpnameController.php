@@ -108,7 +108,7 @@ class stockOpnameController extends Controller
                 echo 'a';
         // dd($cek);
         if ($cek == null) {
-          dd('n');
+          
           $s_id = d_stock::select('s_id')->max('s_id')+1;
           d_stock::create([
             's_id' => $s_id,
@@ -146,11 +146,11 @@ class stockOpnameController extends Controller
             ->max('sm_detailid')+1;
         // dd($sm_detailid);
           if ( $request->opname[$i] <= 0) {//+
-            dd('h');
+            
             if(mutasi::mutasiStok(  $request->i_id[$i],
-                                    - $request->opname[$i],
-                                    $comp=$request->o_comp,
-                                    $position=$request->o_comp,
+                                    -$request->opname[$i],
+                                    $request->o_comp,
+                                    $request->o_comp,
                                     $flag='MENGURANGI OPNAME',
                                     $nota,
                                     '',

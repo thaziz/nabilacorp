@@ -167,6 +167,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
             $totalHpp=0;
 
 			$updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);		
+            dd($updateStock->first());
             if(!$updateStock->first()->s_qty){
                 $idStock=d_stock::max('s_id')+1;
                 d_stock::create([
