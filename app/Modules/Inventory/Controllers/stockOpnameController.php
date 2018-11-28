@@ -83,7 +83,7 @@ class stockOpnameController extends Controller
       $akun_first = [];
       $err = true;
       //end Nota
-      dd('d');
+
       d_opname::insert([
           'o_id' => $o_id,
           'o_nota' => $nota,
@@ -105,6 +105,7 @@ class stockOpnameController extends Controller
                 ->where('s_comp', $request->o_comp)
                 ->where('s_position', $request->o_comp)
                 ->first();
+                dd('d');
         // dd($cek);
         if ($cek == null) {
           $s_id = d_stock::select('s_id')->max('s_id')+1;
