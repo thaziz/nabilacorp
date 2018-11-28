@@ -162,7 +162,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
 	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date,$mutcat=null){	
         return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date,
             $mutcat) {   
-
+            dd('mut');
             $totalPermintaan= format::format($totalPermintaan);
             $totalHpp=0;
 
