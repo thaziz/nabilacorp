@@ -338,9 +338,9 @@
           
         }
 
-        function OpnameDet(id) {
+        function OpnameDet(id) {          
           $.ajax({
-              url: baseUrl + "/nabilacorp/inventory/namaitem/detail/",
+              url : baseUrl + "/inventory/namaitem/detail",
               type: "GET",
               data: {x: id},
               success: function (response) {
