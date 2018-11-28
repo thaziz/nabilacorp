@@ -97,7 +97,6 @@
 
   function payment() {
     $html = '';
-    $html += {!!$pm!!};
     $html += '<td>' +
       '<input class="minu mx f2 nominal alignAngka nominal' + dataIndex + '" style="width:90%" type="" name="sp_nominal[]"' +
       'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' + dataIndex + '\');rege(event,\'nominal' + dataIndex + '\')"' + 'onblur="setRupiah(event,\'nominal' + dataIndex + '\')" onclick="setAwal(event,\'nominal' + dataIndex + '\')"' +
@@ -460,13 +459,24 @@
         },
       },
       columns: [
-        { data : 'sp_date' },
+        { 
+          data : null,
+          render : function(res) {
+            var date = new Date(res.sp_date);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            var content = day + '/' + month + '/' + year;
+            return content;
+          } 
+        },
         { data : 'sp_code' },
         { data : 'total_harga' },
         { 
             data : null,
             render : function(res) {
-              var content = '<div class="center"><button id="edit" onclick="edit(this)" class="btn btn-warning btn-xs" title="Edit"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
+              var content = '<div class="center"><button id="edit" onclick="location.href=\'{{ url("/penjualan/rencanapenjualan/form_perbarui") }}/' + res.sp_id + '\'" class="btn btn-warning btn-xs" title="Edit" type="button"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
 
               return content;
             }
@@ -700,12 +710,23 @@
     bSalesDetail = $(".bSalesDetail");
     i_price = $('#i_price');
 
-    var index = 0;
+    index = 0;
     tamp = [];
-    var flag = 'TOKO';
-    var dataIndex = 1;
+    flag = 'TOKO';
+    dataIndex = 1;
 
-    var hapusSalesDt = [];
+    hapusSalesDt = [];
+
+
+      /*d.toLocaleString();*/
+      $('#tanggal1').datepicker({
+            format:"dd-mm-yyyy",        
+            autoclose: true,
+      });
+      $('#tanggal2').datepicker({
+            format:"dd-mm-yyyy",        
+            autoclose: true,
+      });
 
     $("#searchitem").autocomplete({
       source: "{{ url('') }}" + '/item',

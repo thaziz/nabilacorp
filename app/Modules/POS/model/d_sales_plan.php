@@ -75,7 +75,16 @@
           $spdt_item = $spdt_item != null ? $spdt_item : array();
           if(count($spdt_item) > 0) {
             for($x = 0;$x < count($spdt_item);$x++) {
-              
+                $sd_qty = format::format($request->sd_qty[$i]);
+                  $sd_item = format::format($request->sd_item[$i]);
+                  $spdt_detailid = $i + 1;             
+
+                  d_salesplan_dt::create([
+                      'spdt_salesplan' => $sp_id,
+                      'spdt_detailid' => $spdt_detailid,
+                      'spdt_item' => $sd_item,
+                      'spdt_qty' => $sd_qty
+                  ]);
             }
           }
         });
@@ -88,15 +97,7 @@
         return $res;
       }
 
-      public function hapus($id = '') {
-        $status = "gagal";
-        if($id != '' ){
-          $d_sales_plan = d_sales_plan::find($id);
-          $d_sales_plan->delete();
-          $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $id);
-          $d_salesplan_dt->delete(); 
-        } 
-      }
+      
 
 
    }
