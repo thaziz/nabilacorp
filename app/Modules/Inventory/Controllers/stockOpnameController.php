@@ -137,7 +137,7 @@ class stockOpnameController extends Controller
             ]);
 
         }else{
-          dd('db');
+          
           $hasil = $cek->s_qty + $request->opname[$i];
           $sm_detailid = d_stock_mutation::select('sm_detailid')
             ->where('sm_item', $request->i_id[$i])
@@ -146,6 +146,7 @@ class stockOpnameController extends Controller
             ->max('sm_detailid')+1;
         // dd($sm_detailid);
           if ( $request->opname[$i] <= 0) {//+
+            dd('h');
             if(mutasi::mutasiStok(  $request->i_id[$i],
                                     - $request->opname[$i],
                                     $comp=$request->o_comp,
@@ -160,7 +161,7 @@ class stockOpnameController extends Controller
             $cek->update([
               's_qty' => $hasil
             ]);
-
+dd('db');
             d_stock_mutation::create([
               'sm_stock' => $cek->s_id,
               'sm_detailid' => $sm_detailid,
