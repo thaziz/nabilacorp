@@ -162,12 +162,11 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
 	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date,$mutcat=null){	
         return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date,
             $mutcat) {   
-            dd('mut');
+
             $totalPermintaan= format::format($totalPermintaan);
             $totalHpp=0;
 
 			$updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);		
-            dd($updateStock->first());
             if(!$updateStock->first()->s_qty){
                 $idStock=d_stock::max('s_id')+1;
                 d_stock::create([
@@ -290,16 +289,13 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     public static function updateMutasi($item,$totalPermintaan,$comp,$position,$flag='',$sm_reff=''){
         return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff) {   
 
-        if ($totalPermintaan>0) {            
-            
+        if ($totalPermintaan>0) {                        
              $mutasiStok=new mutasi;
              return $mutasiStok->mutasiStok($item,$totalPermintaan,$comp,$position,$flag,$sm_reff);
-        }else{               
-            
+        }else{                           
             $getBarang=d_stock_mutation::where('sm_item',$item)->where('sm_comp',$comp)
                        ->where('sm_position',$position)->where('sm_reff',$sm_reff)
-                       ->orderBy('sm_detailid','DESC')->where('sm_qty','<',0)->get();
-                       
+                       ->orderBy('sm_detailid','DESC')->where('sm_qty','<',0)->get();                       
             //mencari harga sebelum di hapus
             $totalHpp=0;
 

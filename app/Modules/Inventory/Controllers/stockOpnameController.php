@@ -71,8 +71,8 @@ class stockOpnameController extends Controller
 
     public function saveOpname(Request $request){
       // dd($request->all());
-      /*DB::beginTransaction();
-    	try {*/
+      DB::beginTransaction();
+    	try {
       $o_id = d_opname::max('o_id') + 1;
       //nota
       $year = carbon::now()->format('y');
@@ -83,7 +83,6 @@ class stockOpnameController extends Controller
       $akun_first = [];
       $err = true;
       //end Nota
-
       d_opname::insert([
           'o_id' => $o_id,
           'o_nota' => $nota,
@@ -105,10 +104,8 @@ class stockOpnameController extends Controller
                 ->where('s_comp', $request->o_comp)
                 ->where('s_position', $request->o_comp)
                 ->first();
-                echo 'a';
         // dd($cek);
         if ($cek == null) {
-          
           $s_id = d_stock::select('s_id')->max('s_id')+1;
           d_stock::create([
             's_id' => $s_id,
@@ -137,7 +134,6 @@ class stockOpnameController extends Controller
             ]);
 
         }else{
-          
           $hasil = $cek->s_qty + $request->opname[$i];
           $sm_detailid = d_stock_mutation::select('sm_detailid')
             ->where('sm_item', $request->i_id[$i])
@@ -146,27 +142,13 @@ class stockOpnameController extends Controller
             ->max('sm_detailid')+1;
         // dd($sm_detailid);
           if ( $request->opname[$i] <= 0) {//+
-            echo 'b';
-            dd(mutasi::mutasiStok(  $request->i_id[$i],
-                                    -$request->opname[$i],
-                                    $request->o_comp,
-                                    $request->o_comp,
-                                    $flag='MENGURANGI OPNAME',
-                                    $nota,
-                                    '',
-                                    date('Y-m-d'),
-                                    70
-                                  ));
-            if(mutasi::mutasiStok(  $request->i_id[$i],
-                                    -$request->opname[$i],
-                                    $request->o_comp,
-                                    $request->o_comp,
-                                    $flag='MENGURANGI OPNAME',
-                                    $nota,
-                                    '',
-                                    date('Y-m-d'),
-                                    70
-                                  )){}
+
+            $simpanMutasi=mutasi::mutasiStok($request->i_id[$i],-$request->opname[$i],$request->o_comp,$request->o_comp,
+                                    $flag='MENGURANGI OPNAME',$nota,'',date('Y-m-d'),70);   
+            
+            if($simpanMutasi['true']==true){
+
+            }
           } else {
             $cek->update([
               's_qty' => $hasil
@@ -194,18 +176,18 @@ class stockOpnameController extends Controller
       	}
       	$nota = d_opname::where('o_id',$o_id)
           ->first();
-        /*DB::commit();*/
+        DB::commit();
 	    return response()->json([
 	          'status' => 'sukses',
 	          'nota' => $nota
 	      ]);
-	    /*} catch (\Exception $e) {
+	    } catch (\Exception $e) {
 	    DB::rollback();
 	    return response()->json([
 	        'status' => 'gagal',
 	        'data' => $e
 	      ]);
-	    }*/
+	    }
     }
 
     public function history($tgl1, $tgl2){
