@@ -1,16 +1,23 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versi server:                 10.1.19-MariaDB - mariadb.org binary distribution
--- OS Server:                    Win32
--- HeidiSQL Versi:               9.3.0.4984
+-- Server version:               10.1.36-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win32
+-- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table alamrayasite_nabila.d_access
+
+-- Dumping database structure for nabila
+CREATE DATABASE IF NOT EXISTS `nabila` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `nabila`;
+
+-- Dumping structure for table nabila.d_access
+DROP TABLE IF EXISTS `d_access`;
 CREATE TABLE IF NOT EXISTS `d_access` (
   `a_id` int(11) NOT NULL AUTO_INCREMENT,
   `a_name` varchar(50) DEFAULT NULL,
@@ -19,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `d_access` (
   PRIMARY KEY (`a_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_access: ~67 rows (approximately)
+-- Dumping data for table nabila.d_access: ~67 rows (approximately)
 DELETE FROM `d_access`;
 /*!40000 ALTER TABLE `d_access` DISABLE KEYS */;
 INSERT INTO `d_access` (`a_id`, `a_name`, `a_parrent`, `a_order`) VALUES
@@ -92,8 +99,8 @@ INSERT INTO `d_access` (`a_id`, `a_name`, `a_parrent`, `a_order`) VALUES
 	(67, 'Tahun Finansial', 4, 67);
 /*!40000 ALTER TABLE `d_access` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_akun
+-- Dumping structure for table nabila.d_akun
+DROP TABLE IF EXISTS `d_akun`;
 CREATE TABLE IF NOT EXISTS `d_akun` (
   `id_akun` varchar(50) NOT NULL,
   `nama_akun` varchar(255) NOT NULL,
@@ -107,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `d_akun` (
   PRIMARY KEY (`id_akun`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_akun: ~5 rows (approximately)
+-- Dumping data for table nabila.d_akun: ~5 rows (approximately)
 DELETE FROM `d_akun`;
 /*!40000 ALTER TABLE `d_akun` DISABLE KEYS */;
 INSERT INTO `d_akun` (`id_akun`, `nama_akun`, `kelompok_akun`, `posisi_akun`, `type_akun`, `group_neraca`, `group_laba_rugi`, `created_at`, `updated_at`) VALUES
@@ -118,8 +125,8 @@ INSERT INTO `d_akun` (`id_akun`, `nama_akun`, `kelompok_akun`, `posisi_akun`, `t
 	('1.878787.78', 'usaha', 'KAS', 'D', 'DETAIL', 'code01', 'edoc01', '2018-06-28 16:50:42', '2018-06-28 16:50:42');
 /*!40000 ALTER TABLE `d_akun` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_akun_saldo
+-- Dumping structure for table nabila.d_akun_saldo
+DROP TABLE IF EXISTS `d_akun_saldo`;
 CREATE TABLE IF NOT EXISTS `d_akun_saldo` (
   `id_akun` varchar(50) NOT NULL,
   `bulan` varchar(20) NOT NULL,
@@ -128,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `d_akun_saldo` (
   PRIMARY KEY (`id_akun`,`bulan`,`tahun`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_akun_saldo: ~2 rows (approximately)
+-- Dumping data for table nabila.d_akun_saldo: ~2 rows (approximately)
 DELETE FROM `d_akun_saldo`;
 /*!40000 ALTER TABLE `d_akun_saldo` DISABLE KEYS */;
 INSERT INTO `d_akun_saldo` (`id_akun`, `bulan`, `tahun`, `saldo`) VALUES
@@ -136,8 +143,8 @@ INSERT INTO `d_akun_saldo` (`id_akun`, `bulan`, `tahun`, `saldo`) VALUES
 	('1.878787.78', '06', '2018', 7999);
 /*!40000 ALTER TABLE `d_akun_saldo` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_barang_sup
+-- Dumping structure for table nabila.d_barang_sup
+DROP TABLE IF EXISTS `d_barang_sup`;
 CREATE TABLE IF NOT EXISTS `d_barang_sup` (
   `d_bs_itemid` int(11) NOT NULL,
   `d_bs_detailid` int(11) NOT NULL,
@@ -147,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `d_barang_sup` (
   PRIMARY KEY (`d_bs_itemid`,`d_bs_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabel handle data relasi barang dan supplier';
 
--- Dumping data for table alamrayasite_nabila.d_barang_sup: ~1.332 rows (approximately)
+-- Dumping data for table nabila.d_barang_sup: ~1,332 rows (approximately)
 DELETE FROM `d_barang_sup`;
 /*!40000 ALTER TABLE `d_barang_sup` DISABLE KEYS */;
 INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_created`, `d_bs_updated`) VALUES
@@ -1485,8 +1492,8 @@ INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_
 	(646, 111, 1, '2018-10-29 17:15:10', '2018-10-29 17:20:21');
 /*!40000 ALTER TABLE `d_barang_sup` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_delivery_order
+-- Dumping structure for table nabila.d_delivery_order
+DROP TABLE IF EXISTS `d_delivery_order`;
 CREATE TABLE IF NOT EXISTS `d_delivery_order` (
   `do_id` int(11) NOT NULL AUTO_INCREMENT,
   `do_nota` varchar(50) DEFAULT NULL,
@@ -1498,7 +1505,7 @@ CREATE TABLE IF NOT EXISTS `d_delivery_order` (
   PRIMARY KEY (`do_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_delivery_order: ~3 rows (approximately)
+-- Dumping data for table nabila.d_delivery_order: ~3 rows (approximately)
 DELETE FROM `d_delivery_order`;
 /*!40000 ALTER TABLE `d_delivery_order` DISABLE KEYS */;
 INSERT INTO `d_delivery_order` (`do_id`, `do_nota`, `do_date_send`, `do_time`, `do_date_received`, `do_insert`, `do_update`) VALUES
@@ -1507,8 +1514,8 @@ INSERT INTO `d_delivery_order` (`do_id`, `do_nota`, `do_date_send`, `do_time`, `
 	(3, 'DO180624-000-3', '2018-06-24', '20:49:10', NULL, '2018-06-24 20:49:10', NULL);
 /*!40000 ALTER TABLE `d_delivery_order` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_delivery_orderdt
+-- Dumping structure for table nabila.d_delivery_orderdt
+DROP TABLE IF EXISTS `d_delivery_orderdt`;
 CREATE TABLE IF NOT EXISTS `d_delivery_orderdt` (
   `dod_do` int(11) NOT NULL,
   `dod_detailid` tinyint(4) NOT NULL,
@@ -1528,7 +1535,7 @@ CREATE TABLE IF NOT EXISTS `d_delivery_orderdt` (
   CONSTRAINT `FK_d_delivery_orderdt_d_delivery_order` FOREIGN KEY (`dod_do`) REFERENCES `d_delivery_order` (`do_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_delivery_orderdt: ~4 rows (approximately)
+-- Dumping data for table nabila.d_delivery_orderdt: ~4 rows (approximately)
 DELETE FROM `d_delivery_orderdt`;
 /*!40000 ALTER TABLE `d_delivery_orderdt` DISABLE KEYS */;
 INSERT INTO `d_delivery_orderdt` (`dod_do`, `dod_detailid`, `dod_prdt_productresult`, `dod_prdt_detail`, `dod_item`, `dod_qty_send`, `dod_date_send`, `dod_time_send`, `dod_qty_received`, `dod_date_received`, `dod_time_received`, `dod_status`, `dod_insert`, `dod_update`) VALUES
@@ -1538,8 +1545,8 @@ INSERT INTO `d_delivery_orderdt` (`dod_do`, `dod_detailid`, `dod_prdt_productres
 	(3, 1, 1, 1, 326, 60, '2018-06-24', '20:49:10', 0, NULL, NULL, 'WT', '2018-06-24 20:49:10', NULL);
 /*!40000 ALTER TABLE `d_delivery_orderdt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_formula
+-- Dumping structure for table nabila.d_formula
+DROP TABLE IF EXISTS `d_formula`;
 CREATE TABLE IF NOT EXISTS `d_formula` (
   `f_id` int(11) DEFAULT NULL,
   `f_detailid` int(11) DEFAULT NULL,
@@ -1552,7 +1559,7 @@ CREATE TABLE IF NOT EXISTS `d_formula` (
   CONSTRAINT `FK_d_formula_m_item` FOREIGN KEY (`f_bb`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_formula: ~296 rows (approximately)
+-- Dumping data for table nabila.d_formula: ~298 rows (approximately)
 DELETE FROM `d_formula`;
 /*!40000 ALTER TABLE `d_formula` DISABLE KEYS */;
 INSERT INTO `d_formula` (`f_id`, `f_detailid`, `f_bb`, `f_value`, `f_scale`) VALUES
@@ -1856,8 +1863,8 @@ INSERT INTO `d_formula` (`f_id`, `f_detailid`, `f_bb`, `f_value`, `f_scale`) VAL
 	(33, 2, 1412, 10.00, '4');
 /*!40000 ALTER TABLE `d_formula` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_formula_result
+-- Dumping structure for table nabila.d_formula_result
+DROP TABLE IF EXISTS `d_formula_result`;
 CREATE TABLE IF NOT EXISTS `d_formula_result` (
   `fr_id` int(11) NOT NULL AUTO_INCREMENT,
   `fr_adonan` int(11) NOT NULL,
@@ -1870,7 +1877,7 @@ CREATE TABLE IF NOT EXISTS `d_formula_result` (
   CONSTRAINT `FK_d_formula_result_m_item` FOREIGN KEY (`fr_adonan`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_formula_result: ~32 rows (approximately)
+-- Dumping data for table nabila.d_formula_result: ~33 rows (approximately)
 DELETE FROM `d_formula_result`;
 /*!40000 ALTER TABLE `d_formula_result` DISABLE KEYS */;
 INSERT INTO `d_formula_result` (`fr_id`, `fr_adonan`, `fr_result`, `fr_scale`, `fr_updated`, `fr_created`) VALUES
@@ -1909,8 +1916,8 @@ INSERT INTO `d_formula_result` (`fr_id`, `fr_adonan`, `fr_result`, `fr_scale`, `
 	(33, 407, 10.00, '4', '2018-11-07 03:44:40', '2018-11-07 03:44:40');
 /*!40000 ALTER TABLE `d_formula_result` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_group
+-- Dumping structure for table nabila.d_group
+DROP TABLE IF EXISTS `d_group`;
 CREATE TABLE IF NOT EXISTS `d_group` (
   `g_id` int(11) NOT NULL,
   `g_name` varchar(30) DEFAULT NULL,
@@ -1918,15 +1925,15 @@ CREATE TABLE IF NOT EXISTS `d_group` (
   UNIQUE KEY `g_name` (`g_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='nama group';
 
--- Dumping data for table alamrayasite_nabila.d_group: ~0 rows (approximately)
+-- Dumping data for table nabila.d_group: ~0 rows (approximately)
 DELETE FROM `d_group`;
 /*!40000 ALTER TABLE `d_group` DISABLE KEYS */;
 INSERT INTO `d_group` (`g_id`, `g_name`) VALUES
 	(1, 'ke');
 /*!40000 ALTER TABLE `d_group` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_group_access
+-- Dumping structure for table nabila.d_group_access
+DROP TABLE IF EXISTS `d_group_access`;
 CREATE TABLE IF NOT EXISTS `d_group_access` (
   `ga_access` int(11) NOT NULL,
   `ga_group` int(11) NOT NULL,
@@ -1940,7 +1947,7 @@ CREATE TABLE IF NOT EXISTS `d_group_access` (
   CONSTRAINT `FK_d_group_access_d_group` FOREIGN KEY (`ga_group`) REFERENCES `d_group` (`g_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_group_access: ~67 rows (approximately)
+-- Dumping data for table nabila.d_group_access: ~67 rows (approximately)
 DELETE FROM `d_group_access`;
 /*!40000 ALTER TABLE `d_group_access` DISABLE KEYS */;
 INSERT INTO `d_group_access` (`ga_access`, `ga_group`, `ga_read`, `ga_insert`, `ga_update`, `ga_delete`) VALUES
@@ -2013,8 +2020,8 @@ INSERT INTO `d_group_access` (`ga_access`, `ga_group`, `ga_read`, `ga_insert`, `
 	(67, 1, 'N', 'N', 'N', 'N');
 /*!40000 ALTER TABLE `d_group_access` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_gudangcabang
+-- Dumping structure for table nabila.d_gudangcabang
+DROP TABLE IF EXISTS `d_gudangcabang`;
 CREATE TABLE IF NOT EXISTS `d_gudangcabang` (
   `gc_id` int(11) NOT NULL AUTO_INCREMENT,
   `gc_gudang` varchar(30) NOT NULL COMMENT 'GC : GUDANG CUSTOMER | GG : GUDANG GROSIR | GR : GUDANG RETAIL | GS : GUDANG SENDING | GP : GUDANG PRODUKSI | GB : GUDANG BAHAN BAKU',
@@ -2026,9 +2033,9 @@ CREATE TABLE IF NOT EXISTS `d_gudangcabang` (
   KEY `FK_d_gudangcabang_m_gudang` (`gc_gudang`),
   CONSTRAINT `FK_d_gudangcabang_m_comp` FOREIGN KEY (`gc_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_d_gudangcabang_m_gudang` FOREIGN KEY (`gc_gudang`) REFERENCES `m_gudang` (`g_name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_gudangcabang: ~6 rows (approximately)
+-- Dumping data for table nabila.d_gudangcabang: ~7 rows (approximately)
 DELETE FROM `d_gudangcabang`;
 /*!40000 ALTER TABLE `d_gudangcabang` DISABLE KEYS */;
 INSERT INTO `d_gudangcabang` (`gc_id`, `gc_gudang`, `gc_comp`, `gc_insert`, `gc_update`) VALUES
@@ -2038,11 +2045,12 @@ INSERT INTO `d_gudangcabang` (`gc_id`, `gc_gudang`, `gc_comp`, `gc_insert`, `gc_
 	(4, 'GUDANG PENJUALAN', 2, NULL, NULL),
 	(5, 'GUDANG PRODUKSI', 1, NULL, NULL),
 	(6, 'GUDANG PEMBELIAN', 1, NULL, NULL),
-	(7, 'GUDANG BAHAN BAKU', 1, NULL, NULL);
+	(7, 'GUDANG BAHAN BAKU', 1, NULL, NULL),
+	(8, 'GUDANG BAHAN BAKU', 2, NULL, NULL);
 /*!40000 ALTER TABLE `d_gudangcabang` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_itemtitipan_dt
+-- Dumping structure for table nabila.d_itemtitipan_dt
+DROP TABLE IF EXISTS `d_itemtitipan_dt`;
 CREATE TABLE IF NOT EXISTS `d_itemtitipan_dt` (
   `idt_itemtitipan` int(11) NOT NULL,
   `idt_detailid` int(11) NOT NULL,
@@ -2064,13 +2072,13 @@ CREATE TABLE IF NOT EXISTS `d_itemtitipan_dt` (
   CONSTRAINT `FK_d_itemtitipan_dt_d_item_titipan` FOREIGN KEY (`idt_itemtitipan`) REFERENCES `d_item_titipan` (`it_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_itemtitipan_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_itemtitipan_dt: ~0 rows (approximately)
 DELETE FROM `d_itemtitipan_dt`;
 /*!40000 ALTER TABLE `d_itemtitipan_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_itemtitipan_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_itemtitip_dt
+-- Dumping structure for table nabila.d_itemtitip_dt
+DROP TABLE IF EXISTS `d_itemtitip_dt`;
 CREATE TABLE IF NOT EXISTS `d_itemtitip_dt` (
   `idt_itemtitip` int(11) NOT NULL,
   `idt_detailid` int(11) NOT NULL,
@@ -2088,13 +2096,13 @@ CREATE TABLE IF NOT EXISTS `d_itemtitip_dt` (
   CONSTRAINT `FK_d_itemtitip_dt_d_item_titip` FOREIGN KEY (`idt_itemtitip`) REFERENCES `d_item_titip` (`it_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_itemtitip_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_itemtitip_dt: ~0 rows (approximately)
 DELETE FROM `d_itemtitip_dt`;
 /*!40000 ALTER TABLE `d_itemtitip_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_itemtitip_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_item_supplier
+-- Dumping structure for table nabila.d_item_supplier
+DROP TABLE IF EXISTS `d_item_supplier`;
 CREATE TABLE IF NOT EXISTS `d_item_supplier` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `is_item` int(11) DEFAULT NULL,
@@ -2106,7 +2114,7 @@ CREATE TABLE IF NOT EXISTS `d_item_supplier` (
   PRIMARY KEY (`is_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_item_supplier: ~5 rows (approximately)
+-- Dumping data for table nabila.d_item_supplier: ~5 rows (approximately)
 DELETE FROM `d_item_supplier`;
 /*!40000 ALTER TABLE `d_item_supplier` DISABLE KEYS */;
 INSERT INTO `d_item_supplier` (`is_id`, `is_item`, `is_supplier`, `is_price`, `is_active`, `is_created`, `is_updated`) VALUES
@@ -2117,8 +2125,8 @@ INSERT INTO `d_item_supplier` (`is_id`, `is_item`, `is_supplier`, `is_price`, `i
 	(5, 11, 20, 5000.00, 'Y', NULL, NULL);
 /*!40000 ALTER TABLE `d_item_supplier` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_item_titip
+-- Dumping structure for table nabila.d_item_titip
+DROP TABLE IF EXISTS `d_item_titip`;
 CREATE TABLE IF NOT EXISTS `d_item_titip` (
   `it_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_code` varchar(50) NOT NULL DEFAULT '0',
@@ -2134,13 +2142,13 @@ CREATE TABLE IF NOT EXISTS `d_item_titip` (
   PRIMARY KEY (`it_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_item_titip: ~0 rows (approximately)
+-- Dumping data for table nabila.d_item_titip: ~0 rows (approximately)
 DELETE FROM `d_item_titip`;
 /*!40000 ALTER TABLE `d_item_titip` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_item_titip` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_item_titipan
+-- Dumping structure for table nabila.d_item_titipan
+DROP TABLE IF EXISTS `d_item_titipan`;
 CREATE TABLE IF NOT EXISTS `d_item_titipan` (
   `it_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_comp` int(11) NOT NULL DEFAULT '0',
@@ -2165,13 +2173,13 @@ CREATE TABLE IF NOT EXISTS `d_item_titipan` (
   CONSTRAINT `FK_d_item_titipan_m_supplier` FOREIGN KEY (`it_supplier`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_item_titipan: ~0 rows (approximately)
+-- Dumping data for table nabila.d_item_titipan: ~0 rows (approximately)
 DELETE FROM `d_item_titipan`;
 /*!40000 ALTER TABLE `d_item_titipan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_item_titipan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_konversi_satuan
+-- Dumping structure for table nabila.d_konversi_satuan
+DROP TABLE IF EXISTS `d_konversi_satuan`;
 CREATE TABLE IF NOT EXISTS `d_konversi_satuan` (
   `ks_id` int(11) NOT NULL AUTO_INCREMENT,
   `ks_primary` int(11) DEFAULT NULL,
@@ -2183,13 +2191,13 @@ CREATE TABLE IF NOT EXISTS `d_konversi_satuan` (
   PRIMARY KEY (`ks_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_konversi_satuan: ~0 rows (approximately)
+-- Dumping data for table nabila.d_konversi_satuan: ~0 rows (approximately)
 DELETE FROM `d_konversi_satuan`;
 /*!40000 ALTER TABLE `d_konversi_satuan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_konversi_satuan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mem
+-- Dumping structure for table nabila.d_mem
+DROP TABLE IF EXISTS `d_mem`;
 CREATE TABLE IF NOT EXISTS `d_mem` (
   `m_id` varchar(10) NOT NULL,
   `m_username` varchar(20) DEFAULT NULL,
@@ -2205,7 +2213,7 @@ CREATE TABLE IF NOT EXISTS `d_mem` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_mem: ~4 rows (approximately)
+-- Dumping data for table nabila.d_mem: ~4 rows (approximately)
 DELETE FROM `d_mem`;
 /*!40000 ALTER TABLE `d_mem` DISABLE KEYS */;
 INSERT INTO `d_mem` (`m_id`, `m_username`, `m_passwd`, `m_name`, `m_birth_tgl`, `m_addr`, `m_reff`, `m_lastlogin`, `m_lastlogout`, `m_insert`, `m_update`) VALUES
@@ -2215,8 +2223,8 @@ INSERT INTO `d_mem` (`m_id`, `m_username`, `m_passwd`, `m_name`, `m_birth_tgl`, 
 	('4', 'mahmud', '47e3896af5f3d18dbce321283dd9af0197f8c0e4', 'sds', '2018-05-02', NULL, NULL, '2018-05-02 16:22:45', '2018-05-02 16:22:47', '2018-04-10 07:31:19', '2018-05-02 16:22:50');
 /*!40000 ALTER TABLE `d_mem` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mem_access
+-- Dumping structure for table nabila.d_mem_access
+DROP TABLE IF EXISTS `d_mem_access`;
 CREATE TABLE IF NOT EXISTS `d_mem_access` (
   `ma_id` int(11) NOT NULL AUTO_INCREMENT,
   `ma_mem` varchar(10) DEFAULT NULL,
@@ -2234,13 +2242,13 @@ CREATE TABLE IF NOT EXISTS `d_mem_access` (
   CONSTRAINT `FK_d_mem_acces_d_mem` FOREIGN KEY (`ma_mem`) REFERENCES `d_mem` (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='menampung akses user';
 
--- Dumping data for table alamrayasite_nabila.d_mem_access: ~0 rows (approximately)
+-- Dumping data for table nabila.d_mem_access: ~0 rows (approximately)
 DELETE FROM `d_mem_access`;
 /*!40000 ALTER TABLE `d_mem_access` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mem_access` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mem_comp
+-- Dumping structure for table nabila.d_mem_comp
+DROP TABLE IF EXISTS `d_mem_comp`;
 CREATE TABLE IF NOT EXISTS `d_mem_comp` (
   `mc_mem` varchar(10) NOT NULL,
   `mc_comp` int(11) NOT NULL,
@@ -2254,7 +2262,7 @@ CREATE TABLE IF NOT EXISTS `d_mem_comp` (
   CONSTRAINT `FK_d_mem_comp_m_comp` FOREIGN KEY (`mc_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_mem_comp: ~3 rows (approximately)
+-- Dumping data for table nabila.d_mem_comp: ~3 rows (approximately)
 DELETE FROM `d_mem_comp`;
 /*!40000 ALTER TABLE `d_mem_comp` DISABLE KEYS */;
 INSERT INTO `d_mem_comp` (`mc_mem`, `mc_comp`, `mc_lvl`, `mc_active`, `mc_insert`, `mc_update`) VALUES
@@ -2263,8 +2271,8 @@ INSERT INTO `d_mem_comp` (`mc_mem`, `mc_comp`, `mc_lvl`, `mc_active`, `mc_insert
 	('3', 1, NULL, 'Y', NULL, '2018-09-06 16:08:01');
 /*!40000 ALTER TABLE `d_mem_comp` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mem_gudangcomp
+-- Dumping structure for table nabila.d_mem_gudangcomp
+DROP TABLE IF EXISTS `d_mem_gudangcomp`;
 CREATE TABLE IF NOT EXISTS `d_mem_gudangcomp` (
   `mg_mem` varchar(50) NOT NULL,
   `mg_gudangcomp` int(11) NOT NULL,
@@ -2276,13 +2284,13 @@ CREATE TABLE IF NOT EXISTS `d_mem_gudangcomp` (
   CONSTRAINT `FK_d_mem_gudangcomp_d_mem` FOREIGN KEY (`mg_mem`) REFERENCES `d_mem` (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_mem_gudangcomp: ~0 rows (approximately)
+-- Dumping data for table nabila.d_mem_gudangcomp: ~0 rows (approximately)
 DELETE FROM `d_mem_gudangcomp`;
 /*!40000 ALTER TABLE `d_mem_gudangcomp` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mem_gudangcomp` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mutasi_item
+-- Dumping structure for table nabila.d_mutasi_item
+DROP TABLE IF EXISTS `d_mutasi_item`;
 CREATE TABLE IF NOT EXISTS `d_mutasi_item` (
   `mi_id` int(11) NOT NULL AUTO_INCREMENT,
   `mi_comp` int(11) NOT NULL DEFAULT '0',
@@ -2296,13 +2304,13 @@ CREATE TABLE IF NOT EXISTS `d_mutasi_item` (
   CONSTRAINT `FK_d_mutasi_item_m_comp` FOREIGN KEY (`mi_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_mutasi_item: ~0 rows (approximately)
+-- Dumping data for table nabila.d_mutasi_item: ~0 rows (approximately)
 DELETE FROM `d_mutasi_item`;
 /*!40000 ALTER TABLE `d_mutasi_item` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mutasi_item` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mutationitem_material
+-- Dumping structure for table nabila.d_mutationitem_material
+DROP TABLE IF EXISTS `d_mutationitem_material`;
 CREATE TABLE IF NOT EXISTS `d_mutationitem_material` (
   `mm_mutationitem` int(11) NOT NULL,
   `mm_detailid` int(11) NOT NULL,
@@ -2318,13 +2326,13 @@ CREATE TABLE IF NOT EXISTS `d_mutationitem_material` (
   CONSTRAINT `FK_d_mutationitem_material_d_mutasi_item` FOREIGN KEY (`mm_mutationitem`) REFERENCES `d_mutasi_item` (`mi_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_mutationitem_material: ~0 rows (approximately)
+-- Dumping data for table nabila.d_mutationitem_material: ~0 rows (approximately)
 DELETE FROM `d_mutationitem_material`;
 /*!40000 ALTER TABLE `d_mutationitem_material` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mutationitem_material` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_mutationitem_product
+-- Dumping structure for table nabila.d_mutationitem_product
+DROP TABLE IF EXISTS `d_mutationitem_product`;
 CREATE TABLE IF NOT EXISTS `d_mutationitem_product` (
   `mp_mutationitem` int(11) NOT NULL,
   `mp_detailid` int(11) NOT NULL,
@@ -2340,13 +2348,64 @@ CREATE TABLE IF NOT EXISTS `d_mutationitem_product` (
   CONSTRAINT `FK_d_mutationitem_product_d_mutasi_item` FOREIGN KEY (`mp_mutationitem`) REFERENCES `d_mutasi_item` (`mi_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_mutationitem_product: ~0 rows (approximately)
+-- Dumping data for table nabila.d_mutationitem_product: ~0 rows (approximately)
 DELETE FROM `d_mutationitem_product`;
 /*!40000 ALTER TABLE `d_mutationitem_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mutationitem_product` ENABLE KEYS */;
 
+-- Dumping structure for table nabila.d_opname
+DROP TABLE IF EXISTS `d_opname`;
+CREATE TABLE IF NOT EXISTS `d_opname` (
+  `o_id` int(11) NOT NULL AUTO_INCREMENT,
+  `o_nota` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `o_staff` int(11) DEFAULT NULL,
+  `o_comp` int(11) NOT NULL,
+  `o_position` int(11) NOT NULL,
+  `o_insert` timestamp NULL DEFAULT NULL,
+  `o_update` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`o_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping structure for table alamrayasite_nabila.d_pengiriman
+-- Dumping data for table nabila.d_opname: ~4 rows (approximately)
+DELETE FROM `d_opname`;
+/*!40000 ALTER TABLE `d_opname` DISABLE KEYS */;
+INSERT INTO `d_opname` (`o_id`, `o_nota`, `o_staff`, `o_comp`, `o_position`, `o_insert`, `o_update`) VALUES
+	(1, 'OD1811271', NULL, 1, 1, '2018-11-27 15:39:34', NULL),
+	(2, 'OD1811272', NULL, 7, 7, '2018-11-27 15:49:59', NULL),
+	(3, 'OD1811273', NULL, 7, 7, '2018-11-27 15:50:59', NULL),
+	(4, 'OD1811274', NULL, 7, 7, '2018-11-27 17:15:13', NULL);
+/*!40000 ALTER TABLE `d_opname` ENABLE KEYS */;
+
+-- Dumping structure for table nabila.d_opnamedt
+DROP TABLE IF EXISTS `d_opnamedt`;
+CREATE TABLE IF NOT EXISTS `d_opnamedt` (
+  `od_ido` int(11) NOT NULL,
+  `od_idodt` int(11) NOT NULL,
+  `od_item` int(11) NOT NULL,
+  `od_opname` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`od_ido`,`od_idodt`),
+  CONSTRAINT `FK_d_opnamedt_d_opname` FOREIGN KEY (`od_ido`) REFERENCES `d_opname` (`o_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table nabila.d_opnamedt: ~11 rows (approximately)
+DELETE FROM `d_opnamedt`;
+/*!40000 ALTER TABLE `d_opnamedt` DISABLE KEYS */;
+INSERT INTO `d_opnamedt` (`od_ido`, `od_idodt`, `od_item`, `od_opname`) VALUES
+	(1, 1, 5, 5.00),
+	(1, 2, 7, 6.00),
+	(2, 1, 3, 500.00),
+	(3, 1, 18, 500.00),
+	(4, 1, 3, 4500.00),
+	(4, 2, 19, 50.00),
+	(4, 3, 48, 5000.00),
+	(4, 4, 49, 5000.00),
+	(4, 5, 60, 5000.00),
+	(4, 6, 70, 5000.00),
+	(4, 7, 71, 5000.00);
+/*!40000 ALTER TABLE `d_opnamedt` ENABLE KEYS */;
+
+-- Dumping structure for table nabila.d_pengiriman
+DROP TABLE IF EXISTS `d_pengiriman`;
 CREATE TABLE IF NOT EXISTS `d_pengiriman` (
   `p_id` int(11) NOT NULL,
   `p_pr` varchar(100) DEFAULT NULL,
@@ -2360,13 +2419,13 @@ CREATE TABLE IF NOT EXISTS `d_pengiriman` (
   PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_pengiriman: ~0 rows (approximately)
+-- Dumping data for table nabila.d_pengiriman: ~0 rows (approximately)
 DELETE FROM `d_pengiriman`;
 /*!40000 ALTER TABLE `d_pengiriman` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_pengiriman` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_pengiriman_dt
+-- Dumping structure for table nabila.d_pengiriman_dt
+DROP TABLE IF EXISTS `d_pengiriman_dt`;
 CREATE TABLE IF NOT EXISTS `d_pengiriman_dt` (
   `pd_pengiriman` int(11) NOT NULL,
   `pd_detailid` int(11) NOT NULL,
@@ -2384,13 +2443,13 @@ CREATE TABLE IF NOT EXISTS `d_pengiriman_dt` (
   CONSTRAINT `FK_d_pengiriman_dt_d_pengiriman` FOREIGN KEY (`pd_pengiriman`) REFERENCES `d_pengiriman` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_pengiriman_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_pengiriman_dt: ~0 rows (approximately)
 DELETE FROM `d_pengiriman_dt`;
 /*!40000 ALTER TABLE `d_pengiriman_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_pengiriman_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_productplan
+-- Dumping structure for table nabila.d_productplan
+DROP TABLE IF EXISTS `d_productplan`;
 CREATE TABLE IF NOT EXISTS `d_productplan` (
   `pp_id` int(11) NOT NULL AUTO_INCREMENT,
   `pp_comp` int(11) NOT NULL DEFAULT '0',
@@ -2401,19 +2460,17 @@ CREATE TABLE IF NOT EXISTS `d_productplan` (
   `pp_insert` timestamp NULL DEFAULT NULL,
   `pp_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productplan: ~3 rows (approximately)
+-- Dumping data for table nabila.d_productplan: ~0 rows (approximately)
 DELETE FROM `d_productplan`;
 /*!40000 ALTER TABLE `d_productplan` DISABLE KEYS */;
 INSERT INTO `d_productplan` (`pp_id`, `pp_comp`, `pp_date`, `pp_item`, `pp_qty`, `pp_isspk`, `pp_insert`, `pp_update`) VALUES
-	(1, 1, '2018-11-26', 3, 70, 'N', NULL, '2018-11-26 16:53:01'),
-	(2, 1, '2018-11-27', 396, 4, 'Y', NULL, '2018-11-27 10:29:32'),
-	(3, 1, '2018-11-27', 396, 2, 'Y', NULL, '2018-11-27 10:34:10');
+	(1, 1, '2018-11-27', 3, 5, 'Y', NULL, '2018-11-28 00:18:02');
 /*!40000 ALTER TABLE `d_productplan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_productresult
+-- Dumping structure for table nabila.d_productresult
+DROP TABLE IF EXISTS `d_productresult`;
 CREATE TABLE IF NOT EXISTS `d_productresult` (
   `pr_id` int(11) NOT NULL,
   `pr_comp` int(11) NOT NULL,
@@ -2431,15 +2488,15 @@ CREATE TABLE IF NOT EXISTS `d_productresult` (
   CONSTRAINT `FK_d_productresult_m_comp` FOREIGN KEY (`pr_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productresult: ~0 rows (approximately)
+-- Dumping data for table nabila.d_productresult: ~0 rows (approximately)
 DELETE FROM `d_productresult`;
 /*!40000 ALTER TABLE `d_productresult` DISABLE KEYS */;
 INSERT INTO `d_productresult` (`pr_id`, `pr_comp`, `pr_code`, `pr_spk`, `pr_date`, `pr_item`, `pr_note`, `pr_status`, `pr_created`, `pr_updated`) VALUES
 	(1, 1, 'PR-1811-00001', 0, '2018-11-26', NULL, 'coba', 'N', '2018-11-26 03:54:39', '2018-11-26 03:54:39');
 /*!40000 ALTER TABLE `d_productresult` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_productresult_dt
+-- Dumping structure for table nabila.d_productresult_dt
+DROP TABLE IF EXISTS `d_productresult_dt`;
 CREATE TABLE IF NOT EXISTS `d_productresult_dt` (
   `prdt_productresult` int(11) NOT NULL,
   `prdt_detailid` int(11) NOT NULL,
@@ -2460,15 +2517,15 @@ CREATE TABLE IF NOT EXISTS `d_productresult_dt` (
   CONSTRAINT `FK_d_productresult_dt_d_productresult` FOREIGN KEY (`prdt_productresult`) REFERENCES `d_productresult` (`pr_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_productresult_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_productresult_dt: ~0 rows (approximately)
 DELETE FROM `d_productresult_dt`;
 /*!40000 ALTER TABLE `d_productresult_dt` DISABLE KEYS */;
 INSERT INTO `d_productresult_dt` (`prdt_productresult`, `prdt_detailid`, `prdt_comp`, `prdt_position`, `prdt_date`, `prdt_item`, `prdt_qty`, `prdt_qty_sisa`, `prdt_kirim`, `prdt_status`, `prdt_hpp`, `prdt_time`, `prdt_created`, `prdt_updated`) VALUES
 	(1, 1, 5, 5, NULL, 226, 100, NULL, 0, NULL, 186.00, NULL, '2018-11-26 03:54:39', '2018-11-26 03:54:39');
 /*!40000 ALTER TABLE `d_productresult_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchaseorder_dt
+-- Dumping structure for table nabila.d_purchaseorder_dt
+DROP TABLE IF EXISTS `d_purchaseorder_dt`;
 CREATE TABLE IF NOT EXISTS `d_purchaseorder_dt` (
   `podt_purchaseorder` int(11) NOT NULL,
   `podt_detailid` int(11) NOT NULL COMMENT 'ID PURCHASING (d_pcs_id)',
@@ -2485,13 +2542,13 @@ CREATE TABLE IF NOT EXISTS `d_purchaseorder_dt` (
   PRIMARY KEY (`podt_purchaseorder`,`podt_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchaseorder_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchaseorder_dt: ~0 rows (approximately)
 DELETE FROM `d_purchaseorder_dt`;
 /*!40000 ALTER TABLE `d_purchaseorder_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchaseorder_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchaseplan_dt
+-- Dumping structure for table nabila.d_purchaseplan_dt
+DROP TABLE IF EXISTS `d_purchaseplan_dt`;
 CREATE TABLE IF NOT EXISTS `d_purchaseplan_dt` (
   `ppdt_pruchaseplan` int(11) NOT NULL AUTO_INCREMENT,
   `ppdt_detailid` int(11) NOT NULL DEFAULT '0',
@@ -2508,7 +2565,7 @@ CREATE TABLE IF NOT EXISTS `d_purchaseplan_dt` (
   CONSTRAINT `FK_d_purchaseplan_dt_d_purchase_plan` FOREIGN KEY (`ppdt_pruchaseplan`) REFERENCES `d_purchase_plan` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchaseplan_dt: ~6 rows (approximately)
+-- Dumping data for table nabila.d_purchaseplan_dt: ~6 rows (approximately)
 DELETE FROM `d_purchaseplan_dt`;
 /*!40000 ALTER TABLE `d_purchaseplan_dt` DISABLE KEYS */;
 INSERT INTO `d_purchaseplan_dt` (`ppdt_pruchaseplan`, `ppdt_detailid`, `ppdt_item`, `ppdt_qty`, `ppdt_prevcost`, `ppdt_qtyconfirm`, `ppdt_isconfirm`, `ppdt_ispo`, `ppdt_poid`, `ppdt_created`, `ppdt_updated`) VALUES
@@ -2517,12 +2574,11 @@ INSERT INTO `d_purchaseplan_dt` (`ppdt_pruchaseplan`, `ppdt_detailid`, `ppdt_ite
 	(7, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-16 15:34:56', '2018-11-16 08:34:56'),
 	(8, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-21 10:13:16', '2018-11-21 03:13:16'),
 	(9, 0, 48, 400, 32615.38, 400, 'FALSE', 'FALSE', 0, '2018-11-21 10:13:49', '2018-11-21 03:17:20'),
-	(10, 0, 73, 2100, 120.00, 2100, 'TRUE', 'FALSE', 0, '2018-11-21 10:24:25', '2018-11-21 03:24:59'),
-	(10, 2, 77, 2100, 120.00, 2100, 'TRUE', 'FALSE', 0, '2018-11-21 10:24:25', '2018-11-27 10:51:45');
+	(10, 0, 73, 2100, 120.00, 2100, 'TRUE', 'FALSE', 0, '2018-11-21 10:24:25', '2018-11-21 03:24:59');
 /*!40000 ALTER TABLE `d_purchaseplan_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchase_order
+-- Dumping structure for table nabila.d_purchase_order
+DROP TABLE IF EXISTS `d_purchase_order`;
 CREATE TABLE IF NOT EXISTS `d_purchase_order` (
   `po_id` int(11) NOT NULL AUTO_INCREMENT,
   `po_comp` int(11) NOT NULL DEFAULT '0',
@@ -2548,13 +2604,13 @@ CREATE TABLE IF NOT EXISTS `d_purchase_order` (
   PRIMARY KEY (`po_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchase_order: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchase_order: ~0 rows (approximately)
 DELETE FROM `d_purchase_order`;
 /*!40000 ALTER TABLE `d_purchase_order` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchase_order` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchase_plan
+-- Dumping structure for table nabila.d_purchase_plan
+DROP TABLE IF EXISTS `d_purchase_plan`;
 CREATE TABLE IF NOT EXISTS `d_purchase_plan` (
   `p_id` int(11) NOT NULL AUTO_INCREMENT,
   `p_date` date NOT NULL,
@@ -2570,7 +2626,7 @@ CREATE TABLE IF NOT EXISTS `d_purchase_plan` (
   PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchase_plan: ~6 rows (approximately)
+-- Dumping data for table nabila.d_purchase_plan: ~6 rows (approximately)
 DELETE FROM `d_purchase_plan`;
 /*!40000 ALTER TABLE `d_purchase_plan` DISABLE KEYS */;
 INSERT INTO `d_purchase_plan` (`p_id`, `p_date`, `p_comp`, `p_code`, `p_supplier`, `p_mem`, `p_confirm`, `p_status`, `p_status_date`, `p_created`, `p_updated`) VALUES
@@ -2582,8 +2638,8 @@ INSERT INTO `d_purchase_plan` (`p_id`, `p_date`, `p_comp`, `p_code`, `p_supplier
 	(10, '2018-11-21', 1, 'ROR-1811-00006', 1, '', '2018-11-21', 'FN', NULL, '2018-11-21 03:24:25', '2018-11-21 03:24:59');
 /*!40000 ALTER TABLE `d_purchase_plan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasing
+-- Dumping structure for table nabila.d_purchasing
+DROP TABLE IF EXISTS `d_purchasing`;
 CREATE TABLE IF NOT EXISTS `d_purchasing` (
   `d_pcs_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsp_id` int(11) NOT NULL COMMENT 'PURCHASING PLAN',
@@ -2610,7 +2666,7 @@ CREATE TABLE IF NOT EXISTS `d_purchasing` (
   CONSTRAINT `FK_d_purchasing_d_supplier` FOREIGN KEY (`s_id`) REFERENCES `m_supplier` (`s_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasing: ~4 rows (approximately)
+-- Dumping data for table nabila.d_purchasing: ~4 rows (approximately)
 DELETE FROM `d_purchasing`;
 /*!40000 ALTER TABLE `d_purchasing` DISABLE KEYS */;
 INSERT INTO `d_purchasing` (`d_pcs_id`, `d_pcsp_id`, `s_id`, `d_pcs_code`, `d_pcs_staff`, `d_pcs_method`, `d_pcs_total_gross`, `d_pcs_discount`, `d_pcs_disc_percent`, `d_pcs_disc_value`, `d_pcs_tax_percent`, `d_pcs_tax_value`, `d_pcs_total_net`, `d_pcs_date_created`, `d_pcs_date_received`, `d_pcs_date_confirm`, `d_pcs_duedate`, `d_pcs_status`, `d_pcs_created`, `d_pcs_updated`) VALUES
@@ -2620,8 +2676,8 @@ INSERT INTO `d_purchasing` (`d_pcs_id`, `d_pcsp_id`, `s_id`, `d_pcs_code`, `d_pc
 	(17, 15, 21, 'PO-061826-00009', 'Jamilah', 'CASH', 99500.00, 4525.00, 5, 4975.00, 0, 0.00, 90000.00, '2018-06-26', NULL, '2018-06-26', '2018-07-02', 'CF', '2018-06-26 23:07:55', '2018-06-26 23:08:18');
 /*!40000 ALTER TABLE `d_purchasing` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasingharian
+-- Dumping structure for table nabila.d_purchasingharian
+DROP TABLE IF EXISTS `d_purchasingharian`;
 CREATE TABLE IF NOT EXISTS `d_purchasingharian` (
   `d_pcsh_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsh_code` varchar(15) NOT NULL,
@@ -2639,13 +2695,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingharian` (
   CONSTRAINT `FK_d_purchasingharian_d_supplier` FOREIGN KEY (`d_pcsh_supid`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasingharian: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasingharian: ~0 rows (approximately)
 DELETE FROM `d_purchasingharian`;
 /*!40000 ALTER TABLE `d_purchasingharian` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingharian` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasingharian_dt
+-- Dumping structure for table nabila.d_purchasingharian_dt
+DROP TABLE IF EXISTS `d_purchasingharian_dt`;
 CREATE TABLE IF NOT EXISTS `d_purchasingharian_dt` (
   `d_pcshdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcshdt_pcshid` int(11) NOT NULL,
@@ -2662,13 +2718,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingharian_dt` (
   CONSTRAINT `FK_d_purchasingharian_dt_m_item` FOREIGN KEY (`d_pcshdt_item`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasingharian_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasingharian_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasingharian_dt`;
 /*!40000 ALTER TABLE `d_purchasingharian_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingharian_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasingplan
+-- Dumping structure for table nabila.d_purchasingplan
+DROP TABLE IF EXISTS `d_purchasingplan`;
 CREATE TABLE IF NOT EXISTS `d_purchasingplan` (
   `d_pcsp_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsp_code` varchar(15) NOT NULL,
@@ -2684,13 +2740,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingplan` (
   CONSTRAINT `FK_d_purchasingplan_d_supplier` FOREIGN KEY (`d_pcsp_sup`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasingplan: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasingplan: ~0 rows (approximately)
 DELETE FROM `d_purchasingplan`;
 /*!40000 ALTER TABLE `d_purchasingplan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingplan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasingplan_dt
+-- Dumping structure for table nabila.d_purchasingplan_dt
+DROP TABLE IF EXISTS `d_purchasingplan_dt`;
 CREATE TABLE IF NOT EXISTS `d_purchasingplan_dt` (
   `d_pcspdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcspdt_idplan` int(11) NOT NULL DEFAULT '0',
@@ -2708,13 +2764,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingplan_dt` (
   CONSTRAINT `FK_d_purchasingplan_dt_d_purchasingplan` FOREIGN KEY (`d_pcspdt_idplan`) REFERENCES `d_purchasingplan` (`d_pcsp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasingplan_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasingplan_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasingplan_dt`;
 /*!40000 ALTER TABLE `d_purchasingplan_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingplan_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasingreturn
+-- Dumping structure for table nabila.d_purchasingreturn
+DROP TABLE IF EXISTS `d_purchasingreturn`;
 CREATE TABLE IF NOT EXISTS `d_purchasingreturn` (
   `d_pcsr_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsr_pcsid` int(11) NOT NULL COMMENT 'id_purchashing (d_purchasing)',
@@ -2737,13 +2793,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingreturn` (
   CONSTRAINT `FK_d_purchasingreturn_d_supplier` FOREIGN KEY (`d_pcsr_supid`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasingreturn: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasingreturn: ~0 rows (approximately)
 DELETE FROM `d_purchasingreturn`;
 /*!40000 ALTER TABLE `d_purchasingreturn` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingreturn` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasingreturn_dt
+-- Dumping structure for table nabila.d_purchasingreturn_dt
+DROP TABLE IF EXISTS `d_purchasingreturn_dt`;
 CREATE TABLE IF NOT EXISTS `d_purchasingreturn_dt` (
   `d_pcsrdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsrdt_idpcsr` int(11) NOT NULL,
@@ -2763,13 +2819,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingreturn_dt` (
   CONSTRAINT `FK_d_purchasingreturn_dt_m_item` FOREIGN KEY (`d_pcsrdt_item`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasingreturn_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasingreturn_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasingreturn_dt`;
 /*!40000 ALTER TABLE `d_purchasingreturn_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingreturn_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_purchasing_dt
+-- Dumping structure for table nabila.d_purchasing_dt
+DROP TABLE IF EXISTS `d_purchasing_dt`;
 CREATE TABLE IF NOT EXISTS `d_purchasing_dt` (
   `d_pcsdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcs_id` int(11) NOT NULL COMMENT 'ID PURCHASING (d_pcs_id)',
@@ -2792,13 +2848,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasing_dt` (
   CONSTRAINT `FK_d_purchasing_dt_m_item` FOREIGN KEY (`i_id`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_purchasing_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_purchasing_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasing_dt`;
 /*!40000 ALTER TABLE `d_purchasing_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasing_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_sales
+-- Dumping structure for table nabila.d_sales
+DROP TABLE IF EXISTS `d_sales`;
 CREATE TABLE IF NOT EXISTS `d_sales` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_comp` int(11) NOT NULL DEFAULT '0',
@@ -2835,7 +2891,7 @@ CREATE TABLE IF NOT EXISTS `d_sales` (
   CONSTRAINT `FK_d_sales_m_comp` FOREIGN KEY (`s_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales: ~0 rows (approximately)
+-- Dumping data for table nabila.d_sales: ~2 rows (approximately)
 DELETE FROM `d_sales`;
 /*!40000 ALTER TABLE `d_sales` DISABLE KEYS */;
 INSERT INTO `d_sales` (`s_id`, `s_comp`, `s_channel`, `s_jenis_bayar`, `s_date`, `s_finishdate`, `s_duedate`, `s_note`, `s_kasir`, `s_machine`, `s_create_by`, `s_update_by`, `s_customer`, `s_nama_cus`, `s_alamat_cus`, `s_gross`, `s_disc_percent`, `s_disc_value`, `s_tax`, `s_ongkir`, `s_bulat`, `s_net`, `s_bayar`, `s_kembalian`, `s_jurnal`, `s_status`, `s_insert`, `s_update`) VALUES
@@ -2843,8 +2899,8 @@ INSERT INTO `d_sales` (`s_id`, `s_comp`, `s_channel`, `s_jenis_bayar`, `s_date`,
 	(2, 1, 'Toko', NULL, '2018-11-26', NULL, NULL, 'TOKO-2/2018.11.26', NULL, '2', '1', NULL, NULL, NULL, NULL, 2800000.00, 0.00, 0.00, 0, 0.00, 0.00, 2800000.00, 2800000.00, NULL, 1860.00, 'final', '2018-11-26 03:57:30', '2018-11-26 03:57:30');
 /*!40000 ALTER TABLE `d_sales` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_salesplan_dt
+-- Dumping structure for table nabila.d_salesplan_dt
+DROP TABLE IF EXISTS `d_salesplan_dt`;
 CREATE TABLE IF NOT EXISTS `d_salesplan_dt` (
   `spdt_salesplan` int(11) NOT NULL,
   `spdt_detailid` int(11) NOT NULL,
@@ -2855,16 +2911,15 @@ CREATE TABLE IF NOT EXISTS `d_salesplan_dt` (
   PRIMARY KEY (`spdt_salesplan`,`spdt_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_salesplan_dt: ~2 rows (approximately)
+-- Dumping data for table nabila.d_salesplan_dt: ~0 rows (approximately)
 DELETE FROM `d_salesplan_dt`;
 /*!40000 ALTER TABLE `d_salesplan_dt` DISABLE KEYS */;
 INSERT INTO `d_salesplan_dt` (`spdt_salesplan`, `spdt_detailid`, `spdt_item`, `spdt_qty`, `spdt_created`, `spdt_updated`) VALUES
-	(1, 0, 75, 8, '2018-11-26 04:24:40', '2018-11-26 04:24:40'),
-	(4, 0, 512, 10, '2018-11-26 06:21:21', '2018-11-26 06:21:21');
+	(1, 0, 75, 10, '2018-11-26 04:24:40', '2018-11-26 04:24:40');
 /*!40000 ALTER TABLE `d_salesplan_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_sales_dt
+-- Dumping structure for table nabila.d_sales_dt
+DROP TABLE IF EXISTS `d_sales_dt`;
 CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   `sd_sales` int(11) NOT NULL,
   `sd_detailid` tinyint(4) NOT NULL,
@@ -2885,7 +2940,7 @@ CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   CONSTRAINT `FK_d_sales_dt_m_comp` FOREIGN KEY (`sd_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales_dt: ~0 rows (approximately)
+-- Dumping data for table nabila.d_sales_dt: ~2 rows (approximately)
 DELETE FROM `d_sales_dt`;
 /*!40000 ALTER TABLE `d_sales_dt` DISABLE KEYS */;
 INSERT INTO `d_sales_dt` (`sd_sales`, `sd_detailid`, `sd_date`, `sd_comp`, `sd_position`, `sd_item`, `sd_qty`, `sd_price`, `sd_disc_percent`, `sd_disc_percentvalue`, `sd_disc_value`, `sd_total_disc`, `sd_total`) VALUES
@@ -2893,8 +2948,8 @@ INSERT INTO `d_sales_dt` (`sd_sales`, `sd_detailid`, `sd_date`, `sd_comp`, `sd_p
 	(2, 1, '2018-11-26', 1, 1, 226, 10, 280000, 0, 0.00, 0.00, NULL, 2800000.00);
 /*!40000 ALTER TABLE `d_sales_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_sales_payment
+-- Dumping structure for table nabila.d_sales_payment
+DROP TABLE IF EXISTS `d_sales_payment`;
 CREATE TABLE IF NOT EXISTS `d_sales_payment` (
   `sp_sales` int(11) NOT NULL,
   `sp_paymentid` tinyint(4) NOT NULL,
@@ -2908,7 +2963,7 @@ CREATE TABLE IF NOT EXISTS `d_sales_payment` (
   CONSTRAINT `FK_d_sales_payment_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales_payment: ~0 rows (approximately)
+-- Dumping data for table nabila.d_sales_payment: ~2 rows (approximately)
 DELETE FROM `d_sales_payment`;
 /*!40000 ALTER TABLE `d_sales_payment` DISABLE KEYS */;
 INSERT INTO `d_sales_payment` (`sp_sales`, `sp_paymentid`, `sp_date`, `sp_comp`, `sp_method`, `sp_nominal`) VALUES
@@ -2916,8 +2971,8 @@ INSERT INTO `d_sales_payment` (`sp_sales`, `sp_paymentid`, `sp_date`, `sp_comp`,
 	(2, 1, '2018-11-26', 1, 1, 2800000.00);
 /*!40000 ALTER TABLE `d_sales_payment` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_sales_plan
+-- Dumping structure for table nabila.d_sales_plan
+DROP TABLE IF EXISTS `d_sales_plan`;
 CREATE TABLE IF NOT EXISTS `d_sales_plan` (
   `sp_id` int(11) NOT NULL AUTO_INCREMENT,
   `sp_code` varchar(50) DEFAULT NULL,
@@ -2930,18 +2985,17 @@ CREATE TABLE IF NOT EXISTS `d_sales_plan` (
   PRIMARY KEY (`sp_id`),
   KEY `FK_d_sales_plan_m_comp` (`sp_comp`),
   CONSTRAINT `FK_d_sales_plan_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_sales_plan: ~2 rows (approximately)
+-- Dumping data for table nabila.d_sales_plan: ~0 rows (approximately)
 DELETE FROM `d_sales_plan`;
 /*!40000 ALTER TABLE `d_sales_plan` DISABLE KEYS */;
 INSERT INTO `d_sales_plan` (`sp_id`, `sp_code`, `sp_comp`, `sp_mem`, `sp_date`, `sp_created`, `sp_updated`, `sp_status`) VALUES
-	(1, 'RENCANAPENJUALAN-1/2018.11.26', 1, 0, '2018-11-26', '2018-11-26 04:24:39', '2018-11-26 04:24:39', 'N'),
-	(4, 'RENCANAPENJUALAN-2/2018.11.26', 1, 0, '2018-11-26', '2018-11-26 06:21:21', '2018-11-26 06:21:21', 'N');
+	(1, 'RENCANAPENJUALAN-1/2018.11.26', 1, 0, '2018-11-26', '2018-11-26 04:24:39', '2018-11-26 04:24:39', 'N');
 /*!40000 ALTER TABLE `d_sales_plan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_spk
+-- Dumping structure for table nabila.d_spk
+DROP TABLE IF EXISTS `d_spk`;
 CREATE TABLE IF NOT EXISTS `d_spk` (
   `spk_id` int(11) NOT NULL,
   `spk_comp` int(11) NOT NULL,
@@ -2957,16 +3011,15 @@ CREATE TABLE IF NOT EXISTS `d_spk` (
   CONSTRAINT `FK_d_spk_d_productplan` FOREIGN KEY (`spk_ref`) REFERENCES `d_productplan` (`pp_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_spk: ~2 rows (approximately)
+-- Dumping data for table nabila.d_spk: ~0 rows (approximately)
 DELETE FROM `d_spk`;
 /*!40000 ALTER TABLE `d_spk` DISABLE KEYS */;
 INSERT INTO `d_spk` (`spk_id`, `spk_comp`, `spk_ref`, `spk_code`, `spk_date`, `spk_item`, `spk_status`, `spk_insert`, `spk_update`) VALUES
-	(1, 1, 2, 'SPK1811271', '2018-11-27', 396, 'DR', '2018-11-27 03:29:32', '2018-11-27 03:29:32'),
-	(2, 1, 3, 'SPK1811272', '2018-11-27', 396, 'DR', '2018-11-27 03:34:10', '2018-11-27 03:34:10');
+	(1, 1, 1, 'SPK1811271', '2018-11-27', 3, 'PB', '2018-11-27 17:18:02', '2018-11-27 18:27:25');
 /*!40000 ALTER TABLE `d_spk` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_stock
+-- Dumping structure for table nabila.d_stock
+DROP TABLE IF EXISTS `d_stock`;
 CREATE TABLE IF NOT EXISTS `d_stock` (
   `s_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `s_comp` int(11) NOT NULL COMMENT 'PEMILIK',
@@ -2981,17 +3034,27 @@ CREATE TABLE IF NOT EXISTS `d_stock` (
   KEY `FK_d_stock_d_gudangcabang_2` (`s_position`),
   CONSTRAINT `FK_d_stock_d_gudangcabang` FOREIGN KEY (`s_comp`) REFERENCES `d_gudangcabang` (`gc_id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_d_stock_d_gudangcabang_2` FOREIGN KEY (`s_position`) REFERENCES `d_gudangcabang` (`gc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_stock: ~1 rows (approximately)
+-- Dumping data for table nabila.d_stock: ~11 rows (approximately)
 DELETE FROM `d_stock`;
 /*!40000 ALTER TABLE `d_stock` DISABLE KEYS */;
 INSERT INTO `d_stock` (`s_id`, `s_comp`, `s_position`, `s_item`, `s_qty`, `s_qty_min`, `s_insert`, `s_update`) VALUES
-	(1, 1, 1, 226, 90.00, 0.00, '2018-11-26 03:54:39', '2018-11-26 03:57:30');
+	(1, 1, 1, 226, 90.00, 0.00, '2018-11-26 03:54:39', '2018-11-27 16:39:06'),
+	(2, 1, 1, 5, 5.00, 0.00, '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
+	(3, 1, 1, 7, 6.00, 0.00, '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
+	(4, 7, 7, 3, 5000.00, 0.00, '2018-11-27 15:49:59', '2018-11-27 17:15:13'),
+	(5, 7, 7, 18, 0.00, 0.00, '2018-11-27 15:50:59', '2018-11-27 18:27:25'),
+	(6, 7, 7, 19, 50.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(7, 7, 7, 48, 2000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
+	(8, 7, 7, 49, 5000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(9, 7, 7, 60, 4500.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
+	(10, 7, 7, 70, 5000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(11, 7, 7, 71, 1000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 18:27:25');
 /*!40000 ALTER TABLE `d_stock` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_stock_mutation
+-- Dumping structure for table nabila.d_stock_mutation
+DROP TABLE IF EXISTS `d_stock_mutation`;
 CREATE TABLE IF NOT EXISTS `d_stock_mutation` (
   `sm_stock` bigint(20) NOT NULL,
   `sm_detailid` tinyint(4) NOT NULL,
@@ -3019,23 +3082,38 @@ CREATE TABLE IF NOT EXISTS `d_stock_mutation` (
   CONSTRAINT `FK_d_stock_mutation_d_stock_mutcat` FOREIGN KEY (`sm_mutcat`) REFERENCES `d_stock_mutcat` (`smc_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table alamrayasite_nabila.d_stock_mutation: ~2 rows (approximately)
+-- Dumping data for table nabila.d_stock_mutation: ~17 rows (approximately)
 DELETE FROM `d_stock_mutation`;
 /*!40000 ALTER TABLE `d_stock_mutation` DISABLE KEYS */;
 INSERT INTO `d_stock_mutation` (`sm_stock`, `sm_detailid`, `sm_date`, `sm_comp`, `sm_position`, `sm_mutcat`, `sm_item`, `sm_qty`, `sm_qty_used`, `sm_qty_sisa`, `sm_qty_expired`, `sm_detail`, `sm_keterangan`, `sm_hpp`, `sm_sell`, `sm_reff`, `sm_insert`, `sm_update`) VALUES
 	(1, 1, '2018-11-26', 1, 1, 5, 226, 100.00, 10.00, 90.00, 0.00, 'TAMBAH BARANG HASIL PRODUKSI', NULL, 186.00, NULL, 'PR-1811-00001', '2018-11-26 03:54:39', '2018-11-26 03:57:30'),
-	(1, 2, '2018-11-26', 1, 1, 5, 226, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 186.00, NULL, 'TOKO-2/2018.11.26', NULL, NULL);
+	(2, 1, '2018-11-27', 1, 1, 60, 5, 5.00, 0.00, 5.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811271', '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
+	(3, 1, '2018-11-27', 1, 1, 60, 7, 6.00, 0.00, 6.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811271', '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
+	(4, 1, '2018-11-27', 7, 7, 60, 3, 500.00, 0.00, 500.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811272', '2018-11-27 15:49:59', '2018-11-27 15:49:59'),
+	(5, 1, '2018-11-27', 7, 7, 60, 18, 500.00, 500.00, 0.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811273', '2018-11-27 15:50:59', '2018-11-27 18:27:25'),
+	(6, 1, '2018-11-27', 7, 7, 60, 19, 50.00, 0.00, 50.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(7, 1, '2018-11-27', 7, 7, 60, 48, 5000.00, 3000.00, 2000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
+	(8, 1, '2018-11-27', 7, 7, 60, 49, 5000.00, 0.00, 5000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(9, 1, '2018-11-27', 7, 7, 60, 60, 5000.00, 500.00, 4500.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
+	(10, 1, '2018-11-27', 7, 7, 60, 70, 5000.00, 0.00, 5000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(11, 1, '2018-11-27', 7, 7, 60, 71, 5000.00, 4000.00, 1000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
+	(1, 2, '2018-11-26', 1, 1, 5, 226, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 186.00, NULL, 'TOKO-2/2018.11.26', NULL, NULL),
+	(4, 2, '2018-11-27', 7, 7, 60, 3, 4500.00, 0.00, 4500.00, 0.00, 'PENAMBAHAN', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
+	(5, 2, '2018-11-27', 7, 7, 100, 18, -500.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL),
+	(7, 2, '2018-11-27', 7, 7, 100, 48, -3000.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL),
+	(9, 2, '2018-11-27', 7, 7, 100, 60, -500.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL),
+	(11, 2, '2018-11-27', 7, 7, 100, 71, -4000.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL);
 /*!40000 ALTER TABLE `d_stock_mutation` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_stock_mutcat
+-- Dumping structure for table nabila.d_stock_mutcat
+DROP TABLE IF EXISTS `d_stock_mutcat`;
 CREATE TABLE IF NOT EXISTS `d_stock_mutcat` (
   `smc_id` tinyint(4) NOT NULL,
   `smc_note` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`smc_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_stock_mutcat: ~21 rows (approximately)
+-- Dumping data for table nabila.d_stock_mutcat: ~21 rows (approximately)
 DELETE FROM `d_stock_mutcat`;
 /*!40000 ALTER TABLE `d_stock_mutcat` DISABLE KEYS */;
 INSERT INTO `d_stock_mutcat` (`smc_id`, `smc_note`) VALUES
@@ -3062,8 +3140,8 @@ INSERT INTO `d_stock_mutcat` (`smc_id`, `smc_note`) VALUES
 	(100, 'pengurangan stock');
 /*!40000 ALTER TABLE `d_stock_mutcat` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_supplier_brg
+-- Dumping structure for table nabila.d_supplier_brg
+DROP TABLE IF EXISTS `d_supplier_brg`;
 CREATE TABLE IF NOT EXISTS `d_supplier_brg` (
   `d_sb_supid` int(11) NOT NULL,
   `d_sb_detailid` int(11) NOT NULL,
@@ -3073,7 +3151,7 @@ CREATE TABLE IF NOT EXISTS `d_supplier_brg` (
   PRIMARY KEY (`d_sb_supid`,`d_sb_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_supplier_brg: ~17 rows (approximately)
+-- Dumping data for table nabila.d_supplier_brg: ~17 rows (approximately)
 DELETE FROM `d_supplier_brg`;
 /*!40000 ALTER TABLE `d_supplier_brg` DISABLE KEYS */;
 INSERT INTO `d_supplier_brg` (`d_sb_supid`, `d_sb_detailid`, `d_sb_itemid`, `d_sb_created`, `d_sb_updated`) VALUES
@@ -3096,8 +3174,8 @@ INSERT INTO `d_supplier_brg` (`d_sb_supid`, `d_sb_detailid`, `d_sb_itemid`, `d_s
 	(120, 8, 54, '2018-10-29 17:19:46', '2018-11-01 10:59:25');
 /*!40000 ALTER TABLE `d_supplier_brg` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_transferitem
+-- Dumping structure for table nabila.d_transferitem
+DROP TABLE IF EXISTS `d_transferitem`;
 CREATE TABLE IF NOT EXISTS `d_transferitem` (
   `ti_id` int(11) NOT NULL AUTO_INCREMENT,
   `ti_time` datetime DEFAULT NULL,
@@ -3113,7 +3191,7 @@ CREATE TABLE IF NOT EXISTS `d_transferitem` (
   PRIMARY KEY (`ti_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_transferitem: ~13 rows (approximately)
+-- Dumping data for table nabila.d_transferitem: ~13 rows (approximately)
 DELETE FROM `d_transferitem`;
 /*!40000 ALTER TABLE `d_transferitem` DISABLE KEYS */;
 INSERT INTO `d_transferitem` (`ti_id`, `ti_time`, `ti_code`, `ti_order`, `ti_orderstaff`, `ti_note`, `ti_isapproved`, `ti_issent`, `ti_isreceived`, `ti_insert`, `ti_update`) VALUES
@@ -3132,8 +3210,8 @@ INSERT INTO `d_transferitem` (`ti_id`, `ti_time`, `ti_code`, `ti_order`, `ti_ord
 	(13, '2018-06-08 00:00:00', 'REQ18060813', 'GR', NULL, NULL, 'Y', 'Y', 'Y', '2018-06-08 14:30:26', '2018-06-08 14:33:33');
 /*!40000 ALTER TABLE `d_transferitem` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.d_transferitem_dt
+-- Dumping structure for table nabila.d_transferitem_dt
+DROP TABLE IF EXISTS `d_transferitem_dt`;
 CREATE TABLE IF NOT EXISTS `d_transferitem_dt` (
   `tidt_id` int(11) NOT NULL,
   `tidt_detail` tinyint(4) NOT NULL,
@@ -3152,7 +3230,7 @@ CREATE TABLE IF NOT EXISTS `d_transferitem_dt` (
   CONSTRAINT `FK_d_request_dt_d_request_item` FOREIGN KEY (`tidt_id`) REFERENCES `d_transferitem` (`ti_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.d_transferitem_dt: ~17 rows (approximately)
+-- Dumping data for table nabila.d_transferitem_dt: ~17 rows (approximately)
 DELETE FROM `d_transferitem_dt`;
 /*!40000 ALTER TABLE `d_transferitem_dt` DISABLE KEYS */;
 INSERT INTO `d_transferitem_dt` (`tidt_id`, `tidt_detail`, `tidt_item`, `tidt_qty`, `tidt_qty_appr`, `tidt_apprtime`, `tidt_apprstaff`, `tidt_qty_send`, `tidt_sendtime`, `tidt_sendstaff`, `tidt_qty_received`, `tidt_receivedtime`, `tidt_receivedstaff`) VALUES
@@ -3175,14 +3253,14 @@ INSERT INTO `d_transferitem_dt` (`tidt_id`, `tidt_detail`, `tidt_item`, `tidt_qt
 	(13, 1, 563, 20, 20, '2018-06-08 02:30:26', NULL, 20, '2018-06-08 02:30:26', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `d_transferitem_dt` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.migrations
+-- Dumping structure for table nabila.migrations
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table alamrayasite_nabila.migrations: 110 rows
+-- Dumping data for table nabila.migrations: 110 rows
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
@@ -3298,8 +3376,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 	('2018_02_12_091908_create_customer_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_acces_gudangitem
+-- Dumping structure for table nabila.m_acces_gudangitem
+DROP TABLE IF EXISTS `m_acces_gudangitem`;
 CREATE TABLE IF NOT EXISTS `m_acces_gudangitem` (
   `ag_id` int(11) NOT NULL AUTO_INCREMENT,
   `ag_gudang` varchar(50) DEFAULT NULL,
@@ -3307,7 +3385,7 @@ CREATE TABLE IF NOT EXISTS `m_acces_gudangitem` (
   PRIMARY KEY (`ag_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_acces_gudangitem: ~2 rows (approximately)
+-- Dumping data for table nabila.m_acces_gudangitem: ~2 rows (approximately)
 DELETE FROM `m_acces_gudangitem`;
 /*!40000 ALTER TABLE `m_acces_gudangitem` DISABLE KEYS */;
 INSERT INTO `m_acces_gudangitem` (`ag_id`, `ag_gudang`, `ag_fitur`) VALUES
@@ -3315,8 +3393,8 @@ INSERT INTO `m_acces_gudangitem` (`ag_id`, `ag_gudang`, `ag_fitur`) VALUES
 	(2, '4,5', 'Pembelian');
 /*!40000 ALTER TABLE `m_acces_gudangitem` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_cabang
+-- Dumping structure for table nabila.m_cabang
+DROP TABLE IF EXISTS `m_cabang`;
 CREATE TABLE IF NOT EXISTS `m_cabang` (
   `c_id` varchar(3) NOT NULL,
   `c_name` varchar(50) NOT NULL,
@@ -3325,7 +3403,7 @@ CREATE TABLE IF NOT EXISTS `m_cabang` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_cabang: ~10 rows (approximately)
+-- Dumping data for table nabila.m_cabang: ~10 rows (approximately)
 DELETE FROM `m_cabang`;
 /*!40000 ALTER TABLE `m_cabang` DISABLE KEYS */;
 INSERT INTO `m_cabang` (`c_id`, `c_name`, `c_insert`, `c_update`) VALUES
@@ -3341,8 +3419,8 @@ INSERT INTO `m_cabang` (`c_id`, `c_name`, `c_insert`, `c_update`) VALUES
 	('GS', 'GUDANG SENDING', '2018-05-02 14:38:14', '2018-05-02 14:38:15');
 /*!40000 ALTER TABLE `m_cabang` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_comp
+-- Dumping structure for table nabila.m_comp
+DROP TABLE IF EXISTS `m_comp`;
 CREATE TABLE IF NOT EXISTS `m_comp` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_code` varchar(50) DEFAULT '0',
@@ -3356,7 +3434,7 @@ CREATE TABLE IF NOT EXISTS `m_comp` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_comp: ~2 rows (approximately)
+-- Dumping data for table nabila.m_comp: ~2 rows (approximately)
 DELETE FROM `m_comp`;
 /*!40000 ALTER TABLE `m_comp` DISABLE KEYS */;
 INSERT INTO `m_comp` (`c_id`, `c_code`, `c_owner`, `c_name`, `c_address`, `c_type`, `c_control`, `c_insert`, `c_update`) VALUES
@@ -3364,8 +3442,8 @@ INSERT INTO `m_comp` (`c_id`, `c_code`, `c_owner`, `c_name`, `c_address`, `c_typ
 	(2, 'A02', 'Ponorogo', 'xxx', 'Ponorogo', NULL, NULL, NULL, '2018-09-24 10:45:27');
 /*!40000 ALTER TABLE `m_comp` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_customer
+-- Dumping structure for table nabila.m_customer
+DROP TABLE IF EXISTS `m_customer`;
 CREATE TABLE IF NOT EXISTS `m_customer` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_code` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -3383,7 +3461,7 @@ CREATE TABLE IF NOT EXISTS `m_customer` (
   UNIQUE KEY `c_code` (`c_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table alamrayasite_nabila.m_customer: ~7 rows (approximately)
+-- Dumping data for table nabila.m_customer: ~7 rows (approximately)
 DELETE FROM `m_customer`;
 /*!40000 ALTER TABLE `m_customer` DISABLE KEYS */;
 INSERT INTO `m_customer` (`c_id`, `c_code`, `c_name`, `c_birthday`, `c_email`, `c_hp1`, `c_hp2`, `c_address`, `c_class`, `c_type`, `c_insert`, `c_update`) VALUES
@@ -3396,21 +3474,21 @@ INSERT INTO `m_customer` (`c_id`, `c_code`, `c_name`, `c_birthday`, `c_email`, `
 	(7, 'CUS1118/C001/7', 'mahm', '2018-11-05', 'taziz704@gmail.com', '+6285233526818', '+6285233526818', 'wewe', 'C', 'RT', '2018-11-22 10:10:44', '2018-11-22 17:10:44');
 /*!40000 ALTER TABLE `m_customer` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_employee
+-- Dumping structure for table nabila.m_employee
+DROP TABLE IF EXISTS `m_employee`;
 CREATE TABLE IF NOT EXISTS `m_employee` (
   `e_id` smallint(6) NOT NULL AUTO_INCREMENT,
   `e_nama` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`e_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_employee: ~0 rows (approximately)
+-- Dumping data for table nabila.m_employee: ~0 rows (approximately)
 DELETE FROM `m_employee`;
 /*!40000 ALTER TABLE `m_employee` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_employee` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_group
+-- Dumping structure for table nabila.m_group
+DROP TABLE IF EXISTS `m_group`;
 CREATE TABLE IF NOT EXISTS `m_group` (
   `g_id` int(11) NOT NULL AUTO_INCREMENT,
   `g_code` varchar(50) DEFAULT NULL,
@@ -3424,7 +3502,7 @@ CREATE TABLE IF NOT EXISTS `m_group` (
   UNIQUE KEY `g_code` (`g_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_group: ~13 rows (approximately)
+-- Dumping data for table nabila.m_group: ~13 rows (approximately)
 DELETE FROM `m_group`;
 /*!40000 ALTER TABLE `m_group` DISABLE KEYS */;
 INSERT INTO `m_group` (`g_id`, `g_code`, `g_name`, `g_akun_persediaan`, `g_akun_beban`, `g_akun_penjualan`, `g_create`, `g_update`) VALUES
@@ -3443,8 +3521,8 @@ INSERT INTO `m_group` (`g_id`, `g_code`, `g_name`, `g_akun_persediaan`, `g_akun_
 	(13, '016', 'BARANG LAIN-LAIN', '120.01', NULL, NULL, '2018-08-14 03:25:13', NULL);
 /*!40000 ALTER TABLE `m_group` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_gudang
+-- Dumping structure for table nabila.m_gudang
+DROP TABLE IF EXISTS `m_gudang`;
 CREATE TABLE IF NOT EXISTS `m_gudang` (
   `g_name` varchar(30) NOT NULL,
   `g_insert` datetime DEFAULT NULL,
@@ -3452,7 +3530,7 @@ CREATE TABLE IF NOT EXISTS `m_gudang` (
   PRIMARY KEY (`g_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_gudang: ~10 rows (approximately)
+-- Dumping data for table nabila.m_gudang: ~10 rows (approximately)
 DELETE FROM `m_gudang`;
 /*!40000 ALTER TABLE `m_gudang` DISABLE KEYS */;
 INSERT INTO `m_gudang` (`g_name`, `g_insert`, `g_update`) VALUES
@@ -3468,8 +3546,8 @@ INSERT INTO `m_gudang` (`g_name`, `g_insert`, `g_update`) VALUES
 	('GUDANG TITIPAN', '2018-09-19 10:57:02', '2018-09-19 10:57:05');
 /*!40000 ALTER TABLE `m_gudang` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_item
+-- Dumping structure for table nabila.m_item
+DROP TABLE IF EXISTS `m_item`;
 CREATE TABLE IF NOT EXISTS `m_item` (
   `i_id` int(11) NOT NULL AUTO_INCREMENT,
   `i_code` varchar(12) NOT NULL,
@@ -3497,7 +3575,7 @@ CREATE TABLE IF NOT EXISTS `m_item` (
   CONSTRAINT `FK_m_item_m_group` FOREIGN KEY (`i_group`) REFERENCES `m_group` (`g_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1413 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_item: ~557 rows (approximately)
+-- Dumping data for table nabila.m_item: ~558 rows (approximately)
 DELETE FROM `m_item`;
 /*!40000 ALTER TABLE `m_item` DISABLE KEYS */;
 INSERT INTO `m_item` (`i_id`, `i_code`, `i_group`, `i_type`, `i_name`, `i_satuan`, `i_sat1`, `i_sat2`, `i_sat3`, `i_sat_isi1`, `i_sat_isi2`, `i_sat_isi3`, `i_hpp`, `i_price`, `i_status`, `i_isactive`, `i_active`, `i_det`, `i_insert`, `i_update`) VALUES
@@ -3575,7 +3653,7 @@ INSERT INTO `m_item` (`i_id`, `i_code`, `i_group`, `i_type`, `i_name`, `i_satuan
 	(72, 'BRG0072', 3, 'BJ', 'Sobek nanas', 4, 4, 4, 5, 1, 10, 100, 11.30, 13000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(73, 'BRG0073', 3, 'BJ', 'Sobek pisang', 4, 4, 4, 5, 1, 10, 100, 11.05, 14000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(74, 'BRG0074', 3, 'BJ', 'Sobek susu', 4, 4, 4, 5, 1, 10, 100, 10.34, 12000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-	(75, 'BRG0075', 3, 'BP', 'Sosis top abon', 4, 4, 4, 5, 1, 10, 100, 5.22, 8000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+	(75, 'BRG0075', 3, 'BJ', 'Sosis top abon', 4, 4, 4, 5, 1, 10, 100, 5.22, 8000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(76, 'BRG0076', 3, 'BJ', 'Strawberry', 4, 4, 4, 5, 1, 10, 100, 3.40, 6000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(77, 'BRG0077', 3, 'BJ', 'Susu', 4, 4, 4, 5, 1, 10, 100, 4.13, 6000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(78, 'BRG0078', 3, 'BJ', 'Toping cream', 4, 4, 4, 5, 1, 10, 100, 3.19, 6000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -4061,8 +4139,8 @@ INSERT INTO `m_item` (`i_id`, `i_code`, `i_group`, `i_type`, `i_name`, `i_satuan
 	(1412, 'BRG1111', 3, 'BB', 'COBA', 4, 4, 4, 6, 1, 10, 100, 455.00, 4000.00, 'Y', 'TRUE', 'Y', NULL, '2018-11-07 10:10:27', NULL);
 /*!40000 ALTER TABLE `m_item` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_machine
+-- Dumping structure for table nabila.m_machine
+DROP TABLE IF EXISTS `m_machine`;
 CREATE TABLE IF NOT EXISTS `m_machine` (
   `m_id` int(11) NOT NULL AUTO_INCREMENT,
   `m_type` char(50) DEFAULT NULL,
@@ -4073,7 +4151,7 @@ CREATE TABLE IF NOT EXISTS `m_machine` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_machine: ~2 rows (approximately)
+-- Dumping data for table nabila.m_machine: ~2 rows (approximately)
 DELETE FROM `m_machine`;
 /*!40000 ALTER TABLE `m_machine` DISABLE KEYS */;
 INSERT INTO `m_machine` (`m_id`, `m_type`, `m_name`, `m_active`, `m_insert`, `m_update`) VALUES
@@ -4081,8 +4159,8 @@ INSERT INTO `m_machine` (`m_id`, `m_type`, `m_name`, `m_active`, `m_insert`, `m_
 	(3, 'Toko', 'Kasir 2', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `m_machine` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_paymentmethod
+-- Dumping structure for table nabila.m_paymentmethod
+DROP TABLE IF EXISTS `m_paymentmethod`;
 CREATE TABLE IF NOT EXISTS `m_paymentmethod` (
   `pm_id` tinyint(4) NOT NULL,
   `pm_year` varchar(50) DEFAULT NULL,
@@ -4097,7 +4175,7 @@ CREATE TABLE IF NOT EXISTS `m_paymentmethod` (
   PRIMARY KEY (`pm_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_paymentmethod: ~6 rows (approximately)
+-- Dumping data for table nabila.m_paymentmethod: ~6 rows (approximately)
 DELETE FROM `m_paymentmethod`;
 /*!40000 ALTER TABLE `m_paymentmethod` DISABLE KEYS */;
 INSERT INTO `m_paymentmethod` (`pm_id`, `pm_year`, `pm_name`, `pm_coa_comp`, `pm_coa_year`, `pm_coa_code`, `pm_firur`, `pm_active`, `pm_insert`, `pm_update`) VALUES
@@ -4109,8 +4187,8 @@ INSERT INTO `m_paymentmethod` (`pm_id`, `pm_year`, `pm_name`, `pm_coa_comp`, `pm
 	(6, '2018', 'HUTANG', '', '2018', '', 'Penjualan', 'Y', NULL, NULL);
 /*!40000 ALTER TABLE `m_paymentmethod` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_price
+-- Dumping structure for table nabila.m_price
+DROP TABLE IF EXISTS `m_price`;
 CREATE TABLE IF NOT EXISTS `m_price` (
   `m_pid` int(11) NOT NULL AUTO_INCREMENT,
   `m_pitem` int(11) NOT NULL DEFAULT '0',
@@ -4125,7 +4203,7 @@ CREATE TABLE IF NOT EXISTS `m_price` (
   PRIMARY KEY (`m_pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=646 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_price: ~645 rows (approximately)
+-- Dumping data for table nabila.m_price: ~645 rows (approximately)
 DELETE FROM `m_price`;
 /*!40000 ALTER TABLE `m_price` DISABLE KEYS */;
 INSERT INTO `m_price` (`m_pid`, `m_pitem`, `m_pbuy1`, `m_pbuy2`, `m_pbuy3`, `m_psell1`, `m_psell2`, `m_psell3`, `m_pcreated`, `m_pupdated`) VALUES
@@ -4776,8 +4854,8 @@ INSERT INTO `m_price` (`m_pid`, `m_pitem`, `m_pbuy1`, `m_pbuy2`, `m_pbuy3`, `m_p
 	(645, 651, 1200.00, 24000.00, 24000.00, 0.00, 0.00, 0.00, '2018-07-03 04:18:37', NULL);
 /*!40000 ALTER TABLE `m_price` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_satuan
+-- Dumping structure for table nabila.m_satuan
+DROP TABLE IF EXISTS `m_satuan`;
 CREATE TABLE IF NOT EXISTS `m_satuan` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_name` varchar(50) DEFAULT NULL,
@@ -4787,7 +4865,7 @@ CREATE TABLE IF NOT EXISTS `m_satuan` (
   PRIMARY KEY (`s_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_satuan: ~12 rows (approximately)
+-- Dumping data for table nabila.m_satuan: ~12 rows (approximately)
 DELETE FROM `m_satuan`;
 /*!40000 ALTER TABLE `m_satuan` DISABLE KEYS */;
 INSERT INTO `m_satuan` (`s_id`, `s_name`, `s_detname`, `s_create`, `s_update`) VALUES
@@ -4805,15 +4883,15 @@ INSERT INTO `m_satuan` (`s_id`, `s_name`, `s_detname`, `s_create`, `s_update`) V
 	(12, 'PJK', 'PAJAK', '2018-07-04 00:57:22', NULL);
 /*!40000 ALTER TABLE `m_satuan` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_stock_cabang
+-- Dumping structure for table nabila.m_stock_cabang
+DROP TABLE IF EXISTS `m_stock_cabang`;
 CREATE TABLE IF NOT EXISTS `m_stock_cabang` (
   `sc_id` int(11) NOT NULL AUTO_INCREMENT,
   `sc_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`sc_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_stock_cabang: ~24 rows (approximately)
+-- Dumping data for table nabila.m_stock_cabang: ~24 rows (approximately)
 DELETE FROM `m_stock_cabang`;
 /*!40000 ALTER TABLE `m_stock_cabang` DISABLE KEYS */;
 INSERT INTO `m_stock_cabang` (`sc_id`, `sc_name`) VALUES
@@ -4843,8 +4921,8 @@ INSERT INTO `m_stock_cabang` (`sc_id`, `sc_name`) VALUES
 	(24, 'Gudang Sending Cabang 2');
 /*!40000 ALTER TABLE `m_stock_cabang` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_supplier
+-- Dumping structure for table nabila.m_supplier
+DROP TABLE IF EXISTS `m_supplier`;
 CREATE TABLE IF NOT EXISTS `m_supplier` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_company` varchar(100) DEFAULT NULL,
@@ -4867,15 +4945,15 @@ CREATE TABLE IF NOT EXISTS `m_supplier` (
   PRIMARY KEY (`s_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_supplier: ~0 rows (approximately)
+-- Dumping data for table nabila.m_supplier: ~0 rows (approximately)
 DELETE FROM `m_supplier`;
 /*!40000 ALTER TABLE `m_supplier` DISABLE KEYS */;
 INSERT INTO `m_supplier` (`s_id`, `s_company`, `s_name`, `s_npwp`, `s_address`, `s_phone1`, `s_phone2`, `s_rekening`, `s_bank`, `s_fax`, `s_note`, `s_top`, `s_deposit`, `s_limit`, `s_hutang`, `s_item_list`, `s_insert`, `s_update`) VALUES
 	(1, 'sd', 'sd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-11-23 10:12:41');
 /*!40000 ALTER TABLE `m_supplier` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_toko_titip
+-- Dumping structure for table nabila.m_toko_titip
+DROP TABLE IF EXISTS `m_toko_titip`;
 CREATE TABLE IF NOT EXISTS `m_toko_titip` (
   `tt_id` int(11) NOT NULL AUTO_INCREMENT,
   `tt_company` varchar(100) DEFAULT NULL,
@@ -4890,13 +4968,13 @@ CREATE TABLE IF NOT EXISTS `m_toko_titip` (
   PRIMARY KEY (`tt_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.m_toko_titip: ~0 rows (approximately)
+-- Dumping data for table nabila.m_toko_titip: ~0 rows (approximately)
 DELETE FROM `m_toko_titip`;
 /*!40000 ALTER TABLE `m_toko_titip` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_toko_titip` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.m_users
+-- Dumping structure for table nabila.m_users
+DROP TABLE IF EXISTS `m_users`;
 CREATE TABLE IF NOT EXISTS `m_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -4909,7 +4987,7 @@ CREATE TABLE IF NOT EXISTS `m_users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table alamrayasite_nabila.m_users: ~2 rows (approximately)
+-- Dumping data for table nabila.m_users: ~2 rows (approximately)
 DELETE FROM `m_users`;
 /*!40000 ALTER TABLE `m_users` DISABLE KEYS */;
 INSERT INTO `m_users` (`id`, `name`, `email`, `username`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -4917,15 +4995,15 @@ INSERT INTO `m_users` (`id`, `name`, `email`, `username`, `password`, `remember_
 	(2, 'Bravo', 'bravo@bravo.com', 'bravo', '$2y$10$ORK70cBLfoFFcXBJFNFwFeIPpUKnk3Vf3ro/0GZOGYfDLntxxFzF6', 'swMqwu1kNY36uWl56Rmsqssjtvp7I5u7QJGVVofjXNIgrkjKcB9MbHanhxjL', '2018-02-03 01:46:43', '2018-02-03 01:46:51');
 /*!40000 ALTER TABLE `m_users` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.password_resets
+-- Dumping structure for table nabila.password_resets
+DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table alamrayasite_nabila.password_resets: 110 rows
+-- Dumping data for table nabila.password_resets: 110 rows
 DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
@@ -5041,8 +5119,8 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 	('bravo@bravo.com', 'cf414a57670872d4bd8c1b0f18d3509f5deb06a0c579f51ca494b81d4dc4e8c9', '2018-02-03 01:48:46');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.spk_formula
+-- Dumping structure for table nabila.spk_formula
+DROP TABLE IF EXISTS `spk_formula`;
 CREATE TABLE IF NOT EXISTS `spk_formula` (
   `fr_spk` int(12) DEFAULT NULL,
   `fr_detailid` int(12) DEFAULT NULL,
@@ -5052,29 +5130,25 @@ CREATE TABLE IF NOT EXISTS `spk_formula` (
   `fr_status` enum('Y','N') DEFAULT NULL,
   KEY `FK_spk_formula_d_spk` (`fr_spk`),
   KEY `fr_detailid` (`fr_detailid`),
-  CONSTRAINT `FK_spk_formula_d_spk` FOREIGN KEY (`fr_spk`) REFERENCES `d_spk` (`spk_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_spk_formula_d_spk` FOREIGN KEY (`fr_spk`) REFERENCES `d_spk` (`spk_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table alamrayasite_nabila.spk_formula: ~12 rows (approximately)
+-- Dumping data for table nabila.spk_formula: ~8 rows (approximately)
 DELETE FROM `spk_formula`;
 /*!40000 ALTER TABLE `spk_formula` DISABLE KEYS */;
 INSERT INTO `spk_formula` (`fr_spk`, `fr_detailid`, `fr_formula`, `fr_value`, `fr_scale`, `fr_status`) VALUES
-	(1, 1, 3, 3200.00, '3', NULL),
-	(1, 2, 49, 480.00, '4', NULL),
-	(1, 3, 48, 16.00, '4', NULL),
-	(1, 4, 60, 4.00, '4', NULL),
-	(1, 5, 71, 32.00, '4', NULL),
-	(1, 6, 73, 84.00, '4', NULL),
-	(2, 1, 3, 1600.00, '3', NULL),
-	(2, 2, 49, 240.00, '4', NULL),
-	(2, 3, 48, 8.00, '4', NULL),
-	(2, 4, 60, 2.00, '4', NULL),
-	(2, 5, 71, 16.00, '4', NULL),
-	(2, 6, 73, 42.00, '4', NULL);
+	(1, 1, 3, 4000.00, '3', NULL),
+	(1, 2, 18, 5.00, '4', NULL),
+	(1, 3, 19, 20.00, '4', NULL),
+	(1, 4, 49, 130.00, '4', NULL),
+	(1, 5, 48, 30.00, '4', NULL),
+	(1, 6, 60, 5.00, '4', NULL),
+	(1, 7, 70, 150.00, '4', NULL),
+	(1, 8, 71, 40.00, '4', NULL);
 /*!40000 ALTER TABLE `spk_formula` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.table 68
+-- Dumping structure for table nabila.table 68
+DROP TABLE IF EXISTS `table 68`;
 CREATE TABLE IF NOT EXISTS `table 68` (
   `COL 1` varchar(4) DEFAULT NULL,
   `COL 2` varchar(7) DEFAULT NULL,
@@ -5091,7 +5165,7 @@ CREATE TABLE IF NOT EXISTS `table 68` (
   `COL 13` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table alamrayasite_nabila.table 68: ~557 rows (approximately)
+-- Dumping data for table nabila.table 68: ~557 rows (approximately)
 DELETE FROM `table 68`;
 /*!40000 ALTER TABLE `table 68` DISABLE KEYS */;
 INSERT INTO `table 68` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `COL 7`, `COL 8`, `COL 9`, `COL 10`, `COL 11`, `COL 12`, `COL 13`) VALUES
@@ -5654,8 +5728,8 @@ INSERT INTO `table 68` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `C
 	('556', 'BRG0556', 'KUE ULANG TAHUN', '', 'Tart 30*40 Kotak 3 Lps', '', ' 513.600 ', ' 657.000 ', '', '', '', '', '');
 /*!40000 ALTER TABLE `table 68` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.table 69
+-- Dumping structure for table nabila.table 69
+DROP TABLE IF EXISTS `table 69`;
 CREATE TABLE IF NOT EXISTS `table 69` (
   `COL 1` varchar(4) DEFAULT NULL,
   `COL 2` varchar(7) DEFAULT NULL,
@@ -5672,7 +5746,7 @@ CREATE TABLE IF NOT EXISTS `table 69` (
   `COL 13` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table alamrayasite_nabila.table 69: ~557 rows (approximately)
+-- Dumping data for table nabila.table 69: ~557 rows (approximately)
 DELETE FROM `table 69`;
 /*!40000 ALTER TABLE `table 69` DISABLE KEYS */;
 INSERT INTO `table 69` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `COL 7`, `COL 8`, `COL 9`, `COL 10`, `COL 11`, `COL 12`, `COL 13`) VALUES
@@ -6235,8 +6309,8 @@ INSERT INTO `table 69` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `C
 	('556', 'BRG0556', 'KUE ULANG TAHUN', '', 'Tart 30*40 Kotak 3 Lps', '', ' 513.600 ', ' 657.000 ', '', '', '', '', '');
 /*!40000 ALTER TABLE `table 69` ENABLE KEYS */;
 
-
--- Dumping structure for table alamrayasite_nabila.users
+-- Dumping structure for table nabila.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -6249,13 +6323,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table alamrayasite_nabila.users: 2 rows
+-- Dumping data for table nabila.users: 2 rows
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 	(1, 'amdin1', 'admin22@gmail.com', 'admin', '$2y$10$hFooeUmTUWV5bmY8HMPvJOEo1kGC/CqEWeWtX226xvM4qgMUBP6oe', 'P8GCWFWR07E2tnEmThy5o3WA90r9lnpzPhb7sybctW3jQKfdNvwINfay2J9s', '2017-12-19 06:20:05', '2018-03-12 07:18:22'),
 	(2, 'Bravo', 'bravo@bravo.com', 'bravo', '$2y$10$ORK70cBLfoFFcXBJFNFwFeIPpUKnk3Vf3ro/0GZOGYfDLntxxFzF6', 'swMqwu1kNY36uWl56Rmsqssjtvp7I5u7QJGVVofjXNIgrkjKcB9MbHanhxjL', '2018-02-03 01:46:43', '2018-02-03 01:46:51');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
