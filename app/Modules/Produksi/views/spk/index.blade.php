@@ -225,7 +225,7 @@
                     function detailManSpk(id) {
 
                         $.ajax({
-                            url: baseUrl + "/nabilacorp/produksi/spk/lihat-detail/",
+                            url: baseUrl + "/produksi/spk/lihat-detail",
                             type: "get",
                             data: {x: id},
                             success: function (response) {

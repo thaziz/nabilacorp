@@ -366,7 +366,7 @@
 
   function detailManSpk(id){
     $.ajax({
-      url : baseUrl + "/nabilacorp/keuangan/spk/lihat-detail/",
+      url : baseUrl + "/keuangan/spk/lihat-detail",
       type: "get",
       data: {x:id},
       success: function(response){
