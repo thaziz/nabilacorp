@@ -147,6 +147,16 @@ class stockOpnameController extends Controller
         // dd($sm_detailid);
           if ( $request->opname[$i] <= 0) {//+
             echo 'b';
+            dd(mutasi::mutasiStok(  $request->i_id[$i],
+                                    -$request->opname[$i],
+                                    $request->o_comp,
+                                    $request->o_comp,
+                                    $flag='MENGURANGI OPNAME',
+                                    $nota,
+                                    '',
+                                    date('Y-m-d'),
+                                    70
+                                  ));
             if(mutasi::mutasiStok(  $request->i_id[$i],
                                     -$request->opname[$i],
                                     $request->o_comp,
