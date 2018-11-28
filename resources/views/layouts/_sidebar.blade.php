@@ -276,12 +276,14 @@
                             </li>
 
 
-                            <li class="menu-sekunder {{ Request::is('penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') ? 'active' : '' || Request::is('penjualan/POSpenjualankonsinyasi/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') }}"><span class="submenu-title">POS Penjualan Konsinyasi</span><span class="hidden">Penjualan</span></a>
-                            </li>
+                            <!-- <li class="menu-sekunder {{ Request::is('penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') ? 'active' : '' || Request::is('penjualan/POSpenjualankonsinyasi/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') }}"><span class="submenu-title">POS Penjualan Konsinyasi</span><span class="hidden">Penjualan</span></a>
+                            </li> -->
+
                             <li class="menu-sekunder {{ Request::is('penjualan/penjualanmobile/penjualanmobile') ? 'active' : '' || Request::is('penjualan/penjualanmobile/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanmobile/penjualanmobile') }}"><span class="submenu-title">Laporan Penjualan Mobile Sales</span><span class="hidden">Penjualan</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('penjualan/mutasistok/mutasi') ? 'active' : '' || Request::is('penjualan/mutasistok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasistok/mutasi') }}"><span class="submenu-title">Mutasi Stock</span><span class="hidden">Penjualan</span></a>
-                            </li>
+                            
+                            <!-- <li class="menu-sekunder {{ Request::is('penjualan/mutasistok/mutasi') ? 'active' : '' || Request::is('penjualan/mutasistok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasistok/mutasi') }}"><span class="submenu-title">Mutasi Stock</span><span class="hidden">Penjualan</span></a>
+                            </li> -->
 
                             <li class="menu-sekunder {{ Request::is('penjualan/mutasi-item/index') ? 'active' : '' || Request::is('penjualan/mutasi-item/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasi-item/index') }}"><span class="submenu-title">Mutasi Item</span><span class="hidden">Penjualan</span></a>
                             </li>
