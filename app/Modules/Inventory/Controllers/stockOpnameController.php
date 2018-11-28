@@ -142,13 +142,17 @@ class stockOpnameController extends Controller
             ->max('sm_detailid')+1;
         // dd($sm_detailid);
           if ( $request->opname[$i] <= 0) {//+
-
-            /*$simpanMutasi=mutasi::mutasiStok($request->i_id[$i],-$request->opname[$i],$request->o_comp,$request->o_comp,
-                                    $flag='MENGURANGI OPNAME',$nota,'',date('Y-m-d'),70);   
-            
-            if($simpanMutasi['true']==true){
-
-            }*/
+            dd(mutasi::c());
+            /*if(mutasi::mutasiStok(  $request->i_id[$i],
+                                    - $request->opname[$i],
+                                    $comp=$request->o_comp,
+                                    $position=$request->o_comp,
+                                    $flag='MENGURANGI OPNAME',
+                                    $nota,
+                                    '',
+                                    date('Y-m-d'),
+                                    70
+                                  )){}*/
           } else {
             $cek->update([
               's_qty' => $hasil

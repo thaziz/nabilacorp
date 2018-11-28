@@ -289,13 +289,16 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     public static function updateMutasi($item,$totalPermintaan,$comp,$position,$flag='',$sm_reff=''){
         return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff) {   
 
-        if ($totalPermintaan>0) {                        
+        if ($totalPermintaan>0) {            
+            
              $mutasiStok=new mutasi;
              return $mutasiStok->mutasiStok($item,$totalPermintaan,$comp,$position,$flag,$sm_reff);
-        }else{                           
+        }else{               
+            
             $getBarang=d_stock_mutation::where('sm_item',$item)->where('sm_comp',$comp)
                        ->where('sm_position',$position)->where('sm_reff',$sm_reff)
-                       ->orderBy('sm_detailid','DESC')->where('sm_qty','<',0)->get();                       
+                       ->orderBy('sm_detailid','DESC')->where('sm_qty','<',0)->get();
+                       
             //mencari harga sebelum di hapus
             $totalHpp=0;
 
@@ -566,5 +569,8 @@ $mutasiStok->tambahmutasi($item,$totalPermintaan,$compTujuan,$positionTujuan,'Tr
                     $data=['true'=>true,'totalHpp'=>$totalHpp];
                     return $data;
                 });
+    }
+    static function c(){
+        return 'aku';
     }
 }
