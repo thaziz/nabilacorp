@@ -84,8 +84,8 @@
                                                         <th width="20%">Kode Item</th>
                                                         <th>Nama Item</th>
                                                         <th width="15%">Jumlah Hasil</th>
-                                                        <th width="15%">Jumlah Kirim</th>
                                                         <th width="15%">Jumlah Sisa</th>
+                                                        <th width="15%">Jumlah Kirim</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -244,8 +244,9 @@
                 {data: 'i_code', name: 'i_code'},
                 {data: 'prdt_item', name: 'prdt_item'},
                 {data: 'prdt_qty', name: 'prdt_qty', orderable: false},
-                {data: 'prdt_qtyKirim', name: 'prdt_qtyKirim', orderable: false},
                 {data: 'prdt_qtySisa', name: 'prdt_qtySisa', orderable: false},
+                {data: 'prdt_qtyKirim', name: 'prdt_qtyKirim', orderable: false},
+                
             ],
         });
 
@@ -372,10 +373,6 @@
             var kirim = $('#prdt_qtyKirim'+id).val();
             if (kirim >= qty || kirim < 0) {
                 $('#prdt_qtyKirim'+id).val(qty);
-                $('#prdt_qtySisa'+id).val(0);
-            }else{
-                var hasil = qty - kirim;
-                $('#prdt_qtySisa'+id).val(hasil); 
             }
                     
         }

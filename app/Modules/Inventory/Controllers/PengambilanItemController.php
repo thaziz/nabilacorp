@@ -28,7 +28,9 @@ class PengambilanItemController extends Controller
             'd_productresult_dt.prdt_qty',
             'd_productresult_dt.prdt_productresult',
             'd_productresult_dt.prdt_detail',
-            'd_productresult_dt.prdt_item')
+            'd_productresult_dt.prdt_item',
+            'prdt_sisa',
+            'prdt_kirim')
             ->join('d_productresult', 'd_productresult_dt.prdt_productresult', '=', 'd_productresult.pr_id')
             ->join('d_spk', 'd_productresult.pr_spk', '=', 'd_spk.spk_id')
             ->join('m_item', 'd_productresult.pr_item', '=', 'm_item.i_id')
@@ -56,24 +58,25 @@ class PengambilanItemController extends Controller
                       value="' . $data->prdt_qty . '">';
 
             })
-            ->addColumn('prdt_qtyKirim', function ($data) {
-                return '<input  id="prdt_qtyKirim'.$data->prdt_item.'" 
-                      class="form-control text-right" 
-                      type="number" 
-                      name="prdt_qtyKirim[]" 
-                      value=""
-                      onkeyup="hitungKirim('.$data->prdt_item.',' .$data->prdt_qty. ')"
-                      onclick="hitungKirim('.$data->prdt_item.',' .$data->prdt_qty. ')">';
-
-            })
+            
             ->addColumn('prdt_qtySisa', function ($data) {
                 return '<input  id="prdt_qtySisa'.$data->prdt_item.'" 
                       class="form-control text-right" 
                       type="text" 
                       readonly
                       name="prdt_qtySisa[]" 
-                      value="' . $data->prdt_qty . '">';
+                      value="' . $data->prdt_sisa . '">';
 
+            })
+            ->addColumn('prdt_qtyKirim', function ($data) {
+                return '<input  id="prdt_qtyKirim'.$data->prdt_item.'" 
+                      class="form-control text-right" 
+                      type="number" 
+                      name="prdt_qtyKirim[]" 
+                      value=""
+                      onkeyup="hitungKirim('.$data->prdt_item.',' .$data->prdt_sisa. ')"
+                      onclick="hitungKirim('.$data->prdt_item.',' .$data->prdt_sisa. ')">';
+                      
             })
             ->addColumn('prdt_item', function ($data) {
                 return '' . $data->i_name . '<input  id="prdt_productresult" 
