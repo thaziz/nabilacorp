@@ -99,7 +99,9 @@ function setQty(evt, nilai)
                 $('.' + nilai).val('');
             }
         }
-    }
+
 
     
-    
+   
+
+    }
