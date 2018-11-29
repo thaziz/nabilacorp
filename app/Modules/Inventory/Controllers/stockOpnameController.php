@@ -14,7 +14,7 @@ use Session;
 use App\d_opname;
 use App\d_opnamedt;
 use App\d_stock_mutation;
-use App\lib\mutasi;
+use App\Lib\mutasi;
 use Carbon\Carbon;
 use Datatables;
 
@@ -141,7 +141,7 @@ class stockOpnameController extends Controller
             ->where('sm_position', $request->o_comp)
             ->max('sm_detailid')+1;
         // dd($sm_detailid);
-          if ( $request->opname[$i] <= 0) {//+
+          if ( $request->opname[$i] <= 0) {//+            
             if(mutasi::mutasiStok(  $request->i_id[$i],
                                     - $request->opname[$i],
                                     $comp=$request->o_comp,

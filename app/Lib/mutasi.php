@@ -570,4 +570,7 @@ $mutasiStok->tambahmutasi($item,$totalPermintaan,$compTujuan,$positionTujuan,'Tr
                     return $data;
                 });
     }
+    static function c(){
+        return 'aku';
+    }
 }

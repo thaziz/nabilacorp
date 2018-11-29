@@ -75,10 +75,14 @@ class purchaseOrderController extends Controller
     }    
     public function getDataCodePlan(Request $request)
     {        
-         return d_purchase_order::getDataCodePlan($request);
+        // dd($request->all());
+         return 'a';
+         // return d_purchase_order::getDataCodePlan($request);
     }    
 
      public function seachSupplier(Request $request) {
+        // dd($request->all());
+      // return 'a';
         return m_supplier::seachSupplier($request);
 
      }
