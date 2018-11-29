@@ -563,14 +563,7 @@
       iSalesDetail += '<td width="5%"><div style="padding-top:6px">' + s_satuan.val() + '</div></td>';
 
       iSalesDetail += '<td width="6%"><input class="harga' + i_id.val() + ' alignAngka" style="width:100%;border:none" name="sd_price[]" value="' + i_price.val() + '"" readonly></td>';
-
-      iSalesDetail += '<td width="4%"><input class="move up2 alignAngka discRp' + i_id.val() + '" style="width:100%;border:none" name="sd_disc_value[]" id="discRp" onkeyup="hapus(event,' + i_id.val() + ');hitungTotalPerItem(\'' + i_id.val() + '\');rege(event,\'discRp' + i_id.val() + '\')" onblur="setRupiah(event,\'discRp' + i_id.val() + '\')" onclick="setAwal(event,\'discRp' + i_id.val() + '\')" onfocus="setAwal(event,\'discRp' + i_id.val() + '\')" value="0" autocomplete="off"></td>';
-
-      iSalesDetail += '<td width="3%"><input class="move up3 alignAngka discP' + i_id.val() + '" onkeyup="hapus(event,' + i_id.val() + ');;hitungTotalPerItem(\'' + i_id.val() + '\')" style="width:100%;border:none" name="sd_disc_percent[]" id="discP" value="0" autocomplete="off"></td>';
-
-      iSalesDetail += '<td width="2%" style="display:none"><input class="alignAngka discPV' + i_id.val() + '" onkeyup="hitungTotalPerItem(\'' + i_id.val() + '\')" style="width:100%;border:none" name="sd_disc_percentvalue[]" id="discPV"></td>';
-
-
+      
       iSalesDetail += '<td width="10%" style="display:none"><input style="width:100%;border:none" name="sd_total[]" class="totalPerItem alignAngka totalPerItem' + i_id.val() + '" readonly></td>';
 
       iSalesDetail += '<td width="10%""><input style="width:100%;border:none" name="sd_total_disc[]" class="totalPerItemDisc alignAngka totalPerItemDisc' + i_id.val() + '" readonly></td>';

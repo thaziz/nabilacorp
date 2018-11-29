@@ -17,8 +17,7 @@
    </td>
    <td><input class="harga{{$detail->m_item->i_id}} alignAngka" style="width:100%;border:none" name="spdt_price[]" value="{{number_format($detail->m_item->i_price,0,',','.')}}"" readonly></td>
    <td><input class="alignAngka discRp{{$detail->m_item->i_id}}" style="width:100%;border:none" name="spdt_disc_value[]" id="discRp" onkeyup="hitungTotalPerItem('{{$detail->m_item->i_id}}');rege(event,'discRp{{$detail->m_item->i_id}}')" onblur="setRupiah(event,'{{$detail->m_item->i_id}}')" onclick="setAwal(event,'{{$detail->m_item->i_id}}')" value="{{number_format($detail->spdt_disc_value,0,',','.')}}" ></td>
-   <td><input class="alignAngka discP{{$detail->m_item->i_id}}" onkeyup="hitungTotalPerItem('{{$detail->m_item->i_id}}')" style="width:100%;border:none" name="spdt_disc_percent[]" id="discP" value="{{$detail->spdt_disc_percent}}"></td>
-   <td style="display:none"><input class="alignAngka discPV{{$detail->m_item->i_id}}" onkeyup="hitungTotalPerItem('{{$detail->m_item->i_id}}')" style="width:100%;border:none" name="spdt_disc_percentvalue[]" id="discPV" value="{{number_format($detail->spdt_disc_percentvalue,0,',','.')}}"></td>
+  
    <td style="display:none"><input style="width:100%;border:none" name="spdt_total[]" class="totalPerItem alignAngka totalPerItem{{$detail->m_item->i_id}}" readonly value="{{$detail->spdt_qty*$detail->spdt_price}}"></td>
    <td>
      <script>

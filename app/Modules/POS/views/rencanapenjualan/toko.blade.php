@@ -84,8 +84,6 @@
                            <th width="4%">Jumlah</th>
                            <th width="5%">Satuan</th>
                            <th width="6%">Harga</th>
-                           <th width="4%">Disc(Rp.)</th>
-                           <th width="3%">Disc(%)</th>
                            <th width="3%" style="display:none">DiscValue(%)</th>
                            <th width="10%" style="display:none">Total+Diskon</th>
                            <th width="10%">Total</th>

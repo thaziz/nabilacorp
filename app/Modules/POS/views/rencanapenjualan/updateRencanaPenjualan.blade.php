@@ -127,8 +127,6 @@
                                     <th width="4%">Jumlah</th>
                                     <th width="5%">Satuan</th>
                                     <th width="6%">Harga</th>
-                                    <th width="4%">Disc(Rp.)</th>
-                                    <th width="3%">Disc(%)</th>
                                     <th width="3%" style="display:none">DiscValue(%)</th>
                                     <th width="10%" style="display:none">Total+Diskon</th>
                                     <th width="10%">Total</th>
@@ -144,34 +142,34 @@
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12" >
                      <div class="col-md-5 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top: 10px;">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
                            <label class="control-label tebal" for="penjualan">Sub Total</label>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
                            <div class="form-group">
                               <input type="text" id="s_gross" name="s_gross" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
                            <label class="control-label tebal" for="discount">Total Diskon(%)</label>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
                            <div class="form-group">
                               <input type="text" id="discountP" name="s_disc_percent" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
                            <label class="control-label tebal" for="discount">Total Diskon(Rp.)</label>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
                            <div class="form-group">
                               <input type="text" id="discountRp" name="s_disc_value" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
                            <label class="control-label tebal" for="discount">Total Diskon</label>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
                            <div class="form-group">
                               <input type="text" id="discount" name="discount" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                            </div>
@@ -181,23 +179,23 @@
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
                            <div class="form-group">
-                              <input type="text" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
+                              <input type="text" value="{{ $grand_total }}" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
                            <label class="control-label tebal" for="grand">Biaya Kirim</label>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
                            <div class="form-group">
                               <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
                            </div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label class="control-label tebal" for="jumlah">Grand Total + Biaya Kirim</label>
+                           <label class="control-label tebal" for="jumlah">Grand Total</label>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                            <div class="form-group">
-                              <input type="text" id="grand_biaya" name="s_net" class="form-control input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
+                              <input type="text" id="grand_biaya" name="s_net" value="{{ $grand_total }}" class="form-control input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
                            </div>
                         </div>
                         <!--      <div class="col-md-6 col-sm-6 col-xs-12">
@@ -335,4 +333,12 @@
 @endsection
 @section("extra_scripts")
 @include('POS::rencanapenjualan/js/commander')
+<script>
+   $(document).ready(function(){
+      // Memformat grand total
+      var grand_total = {{ $grand_total }};
+      var currency = get_currency(grand_total);
+      $('#grand_biaya').val(currency);
+   });
+</script>
 @endsection
