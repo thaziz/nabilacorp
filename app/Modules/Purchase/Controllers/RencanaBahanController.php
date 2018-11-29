@@ -68,7 +68,7 @@ class RencanaBahanController extends Controller
                                 as qtyOrderPlan")
                 )
                 ->where('d_spk.spk_status', '=', 'DR')
-                ->where('spk_formula.fr_status', '=', 'tidak')
+                ->where('spk_formula.fr_status', '=', 'N')
                 // ->where('d_spk.spk_status', '!=', 'AP')  
                 ->whereBetween('d_spk.spk_date', [$tanggal1, $tanggal2])
                 ->groupBy('i_id')

@@ -54,6 +54,7 @@ Route::get('/penjualan/barang-titipan/seach-supplier', 'itemTitipanController@se
 Route::get('/penjualan/barang-titipan/store', 'itemTitipanController@store');
 Route::get('/penjualan/barang-titipan/{id}/edit-titipan-dt', 'itemTitipanController@editTitipanDt');
 Route::get('/penjualan/barang-titipan/update', 'itemTitipanController@update');
+Route::get('penjualan/barang-titip/search-item-titipan', 'itemTitipanController@itemTitipan');
 
 Route::get('/penjualan/barang-titipan/serahTerima/{id}', 'itemTitipanController@serahTerima');
 Route::get('/penjualan/barang-titipan/serah-terima/store', 'itemTitipanController@serahTerimaStore');
@@ -112,8 +113,12 @@ Route::get('/penjualan/repackaging/repackaging', 'PenjualanController@repackagin
 Route::get('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi', 'PenjualanController@POSpenjualankonsinyasi')->middleware('auth');
 Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanController@POSpenjualanPesanan')->middleware('auth');
 
-Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanController@penjualanmobile')->middleware('auth');
+// Laporan penjualan mobile 
+Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanMobileController@penjualanmobile')->middleware('auth');
+Route::get('/penjualan/penjualanmobile/find_d_sales_dt', 'PenjualanMobileController@find_d_sales_dt')->middleware('auth');
+Route::get('/penjualan/penjualanmobile/print_laporan', 'PenjualanMobileController@print_laporan')->middleware('auth');
 
+// ==========================================================================================
 Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
 Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 
@@ -123,6 +128,8 @@ Route::get('/penjualan/rencanapenjualan/rencana', 'rencanaPenjualanController@in
 Route::get('/penjualan/rencanapenjualan/simpan', 'rencanaPenjualanController@simpan')->middleware('auth');
 Route::get('/penjualan/rencanapenjualan/find_d_sales_plan', 'rencanaPenjualanController@find_d_sales_plan')->middleware('auth');
 Route::get('/penjualan/rencanapenjualan/hapus/{id}', 'rencanaPenjualanController@hapus')->middleware('auth');
+Route::get('/penjualan/rencanapenjualan/form_perbarui/{id}', 'rencanaPenjualanController@form_perbarui')->middleware('auth');
+Route::get('/penjualan/rencanapenjualan/perbarui', 'rencanaPenjualanController@perbarui')->middleware('auth');
 //rencana penjualan selesai
 });
 

@@ -1,287 +1,381 @@
 @extends('main')
 @section('content')
-            <!--BEGIN PAGE WRAPPER-->
-            <div id="page-wrapper">
-                <!--BEGIN TITLE & BREADCRUMB PAGE-->
-                <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-                    <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-                        <div class="page-title">Pengiriman Barang Hasil Produksi</div>
-                    </div>
-                    <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
-                        <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li><i></i>&nbsp;Inventory&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Pengiriman Barang Hasil Produksi</li>
-                    </ol>
-                    <div class="clearfix">
-                    </div>
-                </div>
-                <div class="page-content fadeInRight">
-                    <div id="tab-general">
-                        <div class="row mbl">
-                            <div class="col-lg-12">
+    <!--BEGIN PAGE WRAPPER-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style type="text/css">
+        .ui-autocomplete {
+            z-index: 2147483647;
+        }
 
-                                            <div class="col-md-12">
-                                                <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
+        .btn span.glyphicon {
+            opacity: 0;
+        }
+
+        .btn.active span.glyphicon {
+            opacity: 1;
+        }
+    </style>
+    <div id="page-wrapper">
+        <!--BEGIN TITLE & BREADCRUMB PAGE-->
+        <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+            <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
+                <div class="page-title">Pembuatan Pengambilan Item</div>
+            </div>
+            <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
+                <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i
+                            class="fa fa-angle-right"></i>&nbsp;&nbsp;
+                </li>
+                <li><i></i>&nbsp;Produksi&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+                <li class="active">Rencana Produksi</li>
+            </ol>
+            <div class="clearfix">
+            </div>
+        </div>
+        <div class="page-content fadeInRight">
+            <div id="tab-general">
+                <div class="row mbl">
+                    <div class="col-lg-12">
+
+                        <div class="col-md-12">
+                            <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
+                            </div>
+                        </div>
+                        <ul id="generalTab" class="nav nav-tabs">
+                            <li class="active"><a href="#alert-tab" data-toggle="tab">Item Siap Kirim</a></li>
+                            <li><a href="#alert-tab-itemkirim" data-toggle="tab" onclick="cariTanggalJual()">Item
+                                    Terkirim</a></li>
+                        </ul>
+                        <div id="generalTabContent" class="tab-content responsive">
+
+                            <div id="alert-tab" class="tab-pane fade in active">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <form id="formDelivery1">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg"
+                                                 style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
+
+
+                                                <div class="col-md-3 col-sm-12 col-xs-12">
+                                                    <label class="tebal">Tujuan Gudang<font color="red">*</font></label>
                                                 </div>
+                                                <div class="col-md-3 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <select class="form-control input-sm" id="prdt_produksi"
+                                                                name="prdt_produksi" style="width: 100%;">
+                                                            <option class="form-control" value="">- Pilih Tujuan
+                                                            </option>
+                                                            @foreach ($gudang as $data)
+                                                                <option class="form-control"
+                                                                        value="{{ $data->gc_id }}">
+                                                                    {{ $data->c_name }} - {{ $data->gc_gudang }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
-                            <ul id="generalTab" class="nav nav-tabs">
-                              <li class="active"><a href="#alert-tab" data-toggle="tab">Pengiriman Barang Hasil Produksi</a></li>
-                            <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
-                            <li><a href="#label-badge-tab-tab" data-toggle="tab">3</a></li> -->
-                        </ul>
-                         <div id="generalTabContent" class="tab-content responsive">
+                                            <div class="table-responsive">
+                                                <table class="table tabelan table-hover table-bordered" width="100%"
+                                                       id="tableSuratJalan">
+                                                    <thead>
+                                                    <tr>
+                                                        {{--    <th width="5%">No</th> --}}
+                                                        <th width="20%">Kode Item</th>
+                                                        <th>Nama Item</th>
+                                                        <th width="15%">Jumlah Hasil</th>
+                                                        <th width="15%">Jumlah Sisa</th>
+                                                        <th width="15%">Jumlah Kirim</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
 
-                           <button type="button" onclick="tambah()" class="btn btn-primary pull-right" name="button"> <i class="fa fa-plus"></i> Tambah</button>
-                            <br>
-                            <br>
-                            <br>
-                                          <div class="table-responsive">
-                                            <table class="table tabelan table-hover table-bordered" id="data2">
-                                              <thead>
-                                                <tr>
-                                                  <th width="5%">No</th>
-                                                  <th>No Pengiriman</th>
-                                                  <th>Tanggal Transfer</th>
-                                                  <th>Keterangan</th>
-                                                  <th>Status</th>
-                                                  <!-- <th width="15%">Aksi</th> -->
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                @foreach ($data as $key => $value)
-                                                  <tr>
-                                                    <td>{{$key + 1}}</td>
-                                                    <td>{{$value->p_code}}</td>
-                                                    <td>{{Carbon\Carbon::parse($value->p_tanggal_transfer)->format('d-m-Y')}}</td>
-                                                    <td>{{$value->p_keterangan}}</td>
-                                                    @if ($value->pd_status_diterima == 'N')
-                                                      <td align="center"> <span class="label label-warning">Belum Diterima</span> </td>
-                                                     <!--  <td align="center">
-                                                        <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
-                                                        <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
-                                                      </td> -->
-                                                    @elseif ($value->pd_status_diterima == 'Y')
-                                                      <td align="center"> <span class="label label-success">Sudah Diterima</span> </td>
-                                                     <!--  <td align="center">
-                                                        <button type="button" onclick="edit({{$value->p_id}})" class="btn btn-warning btn-sm" disabled title="Edit" name="button"> <i class="fa fa-edit"></i> </button>
-                                                        <button type="button" onclick="hapus({{$value->p_id}})" class="btn btn-danger btn-sm" disabled title="Hapus" name="button"> <i class="glyphicon glyphicon-trash"></i> </button>
-                                                      </td> -->
-                                                    @endif
-                                                  </tr>
-                                                @endforeach
-                                              </tbody>
-                                            </table>
-                                          </form>
-                                          </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </form>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <a style="margin-top: 20px; margin-right:10px; "
+                                               class="btn btn-primary pull-right"
+                                       {{--         href="{{url('produksi/suratjalan/print')}}" target="_blank" --}}
+                                               onclick="saveDelevery()"><i class="fa fa-print"></i>&nbsp;Cetak</a>
+                                            {{-- <button style="margin-top: 20px; margin-right:10px; " class="btn btn-warning pull-right kirim" type="button" onclick="saveDelevery()">Cetak
+                                              <i class="fa fa-print"></i>
+                                            </button> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- div alert-tab-itemkirim -->
+                            <div id="alert-tab-itemkirim" class="tab-pane fade">
+                                <div class="row">
+                                    <div class="panel-body">
+
+                                        <div class="col-md-2 col-sm-3 col-xs-12">
+                                            <label class="tebal">Tanggal Pengiriman</label>
                                         </div>
 
-                                      </div>
-                                    </div>
-                                     <!-- End div #alert-tab  -->
+                                        <div class="col-md-4 col-sm-6 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="input-daterange input-group">
+                                                    <input id="tanggal1" class="form-control input-sm datepicker1"
+                                                           name="tanggal" type="text">
+                                                    <span class="input-group-addon">-</span>
+                                                    <input id="tanggal2" class="input-sm form-control datepicker2"
+                                                           name="tanggal" type="text" value="{{ date('d-m-Y') }}">
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                     <!-- Large modal -->
+
+                                        <div class="col-md-3 col-sm-3 col-xs-12" align="center">
+                                            <button class="btn btn-primary btn-sm btn-flat autoCari" type="button"
+                                                    onclick="cariTanggalJual()">
+                                                <strong>
+                                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                                </strong>
+                                            </button>
+                                            <button class="btn btn-info btn-sm btn-flat" type="button">
+                                                <strong>
+                                                    <i class="fa fa-undo" aria-hidden="true"></i>
+                                                </strong>
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table tabelan table-bordered table-striped"
+                                                   id="tabelPengirimanDo" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Tanggal Pengiriman</th>
+                                                    <th>Nota DO</th>
+                                                    <th>Waktu Pengiriman</th>
+                                                    <th>Waktu Penerimaan</th>
+                                                    <th>Detail</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end div alert-tab-itemkirim -->
+                            <!--Modal Detail Belum Terkirim -->
+                            <div class="modal fade" id="modalDetailProduksi" role="dialog">
+                                <div class="modal-dialog modal-lg"
+                                     style="width: 90%;margin-left: auto;margin-top: 30px;">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #e77c38;">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title" style="color: white;">Nama Item</h4>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="detailProduksi">
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Modal Detail Belum Terkirim -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section("extra_scripts")
+    <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
     <script type="text/javascript">
-     $(document).ready(function() {
-       var data;
-       $('.select2').select2();
-       $( "#tanggaltransfer" ).datepicker();
-
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
+        $(document).ready(function () {
+            var extensions = {
+                "sFilterInput": "form-control input-sm",
+                "sLengthSelect": "form-control input-sm"
+            }
+            // Used when bJQueryUI is false
+            $.extend($.fn.dataTableExt.oStdClasses, extensions);
+            // Used when bJQueryUI is true
+            $.extend($.fn.dataTableExt.oJUIClasses, extensions);
 
         });
-    $('#data2').dataTable({
-          "responsive":true,
 
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
+        var date = new Date();
+        var newdate = new Date(date);
 
+        newdate.setDate(newdate.getDate() - 3);
+        var nd = new Date(newdate);
+        $('.datepicker').datepicker({
+            format: "mm",
+            viewMode: "months",
+            minViewMode: "months"
         });
-    $('#data3').dataTable({
-          "responsive":true,
+        $('.datepicker1').datepicker({
+            autoclose: true,
+            format: "dd-mm-yyyy",
+            endDate: 'today'
+        }).datepicker("setDate", nd);
+        $('.datepicker2').datepicker({
+            autoclose: true,
+            format: "dd-mm-yyyy",
+            endDate: 'today'
+        });//.datepicker("setDate", "0");
 
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
+        var comp = $('.mem_comp').val();
+        var tableSuratJalan = $('#tableSuratJalan').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: baseUrl + "/produksi/suratjalan/create/delivery/" + comp,
+            },
+            columns: [
+                // {data: 'DT_Row_Index', name: 'DT_Row_Index', orderable: false},
+                {data: 'i_code', name: 'i_code'},
+                {data: 'prdt_item', name: 'prdt_item'},
+                {data: 'prdt_qty', name: 'prdt_qty', orderable: false},
+                {data: 'prdt_qtySisa', name: 'prdt_qtySisa', orderable: false},
+                {data: 'prdt_qtyKirim', name: 'prdt_qtyKirim', orderable: false},
+                
+            ],
         });
-});
-      $('.datepicker').datepicker({
-        format: "mm",
-        viewMode: "months",
-        minViewMode: "months"
-      });
-      $('.datepicker2').datepicker({
-        format:"dd-mm-yyyy",
-        autoclose:true,
-        endDate:"today"
-      });
 
-      function getdata(){
-        swal({
-              title: 'Loading!',
-              showCancelButton: false,
-              showConfirmButton: false
+        function question() {
+            iziToast.question({
+                timeout: false,
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: '<i class="fa fa-print"></i>',
+                message: 'Print sudah selesai?',
+                position: 'center',
+                buttons: [
+                    ['<button onclick="saveDelevery()"><b>Sudah</b></button>', function (instance, toast) {
+
+                        instance.hide({transitionOut: 'fadeOut'}, toast, 'button');
+
+                    }, true],
+                    ['<button>Belum</button>', function (instance, toast) {
+
+                        instance.hide({transitionOut: 'fadeOut'}, toast, 'button');
+
+                    }],
+                ],
+                onClosing: function (instance, toast, closedBy) {
+                    console.info('Closing | closedBy: ' + closedBy);
+                },
+                onClosed: function (instance, toast, closedBy) {
+                    console.info('Closed | closedBy: ' + closedBy);
+                }
             });
-          var id = $('#cariId').val();
-          var html = '';
-          $.ajax({
-            type: 'get',
-            data: {id:id},
-            dataType: 'json',
-            url: baseUrl + '/inventory/pengirimanproduksi/getdata',
-            success : function(result){
-              data = result;
-              for (var i = 0; i < result.length; i++) {
-                var sisa = parseInt(result[i].prdt_qty) - parseInt(result[i].prdt_kirim);
-                if (sisa == 0) {
-                  var status = '<span class="label label-success">Terkirim</span>';
-                } else if (sisa != 0) {
-                  var status = '<span class="label label-warning">Belum Terkirim</span>';
+        }
+
+        function saveDelevery() {
+            $('.kirim').attr('disabled', 'disabled');
+            var formDelivery1 = $('#formDelivery1').serialize();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-                html += '<tr>'+
-                        '<td>'+(i + 1)+'</td>'+
-                        '<td>'+result[i].pr_code+'</td>'+
-                        '<td>'+result[i].i_name+'</td>'+
-                        '<td align="right">'+accounting.formatMoney(result[i].prdt_qty, "", 0, ".", ",")+'</td>'+
-                        '<td align="right">'+accounting.formatMoney(result[i].prdt_kirim, "", 0, ".", ",")+'</td>'+
-                        '<td align="right">'+accounting.formatMoney(sisa, "", 0, ".", ",")+'</td>'+
-                        '<td>'+status+'</td>'+
-                        '<td><input type="text" id="kirim'+i+'" class="form-control number" onkeypress="return isNumberKey(event)" onkeydown="filter('+i+')" name="kirim[]"></td>'+
-                        '<input type="hidden" name="item[]" value="'+result[i].prdt_item+'">'+
-                        '</tr>';
-              }
-              $('#showdata').html(html);
-              $('input[name=nota]').val(result[0].pr_code);
-              swal.close();
-            }
-          });
-      }
-
-      function filter(id){
-        var kirim = $('#kirim'+id).val();
-            if (kirim > data[id].prdt_qty) {
-              swal("Info!", "Tidak boleh melebihi qty!");
-              $('#kirim'+id).val(0);
-              i = data.length + 1;
-            }
-      }
-
-      function simpan(){
-        $.ajax({
-          type: 'get',
-          data: $('#formdata').serialize(),
-          dataType: 'json',
-          url: baseUrl + '/inventory/pengirimanproduksi/simpan',
-          success : function(result){
-            if (result.status == 'berhasil') {
-              swal({
-                    title: 'Berhasil!',
-                    text: 'Berhasil Disimpan!'
-                  });
-            }
-          }
-        });
-      }
-
-      function isNumberKey(evt)
-          {
-             var charCode = (evt.which) ? evt.which : event.keyCode
-             if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-
-             return true;
-          }
-
-          function tambah(){
-            window.location.href = baseUrl + '/inventory/pengirimanproduksi/tambah';
-          }
-
-          function hapus(id){
-            swal({
-                title: "Ingin menghapus data?",
-                text: "Data tidak bisa dikembalikan!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                closeOnConfirm: false,
-                closeOnCancel: false
-              },
-              function(isConfirm){
-                if (isConfirm) {
-                  $.ajax({
-                    type: 'get',
-                    data: {id:id},
-                    dataType: 'json',
-                    url: baseUrl + '/inventory/pengirimanproduksi/hapus',
-                    success : function(result){
-                      if (result.status == 'berhasil') {
-                        swal("Deleted!", "Berhasil dihapus.", "success");
-                      }
+            });
+            $.ajax({
+                url: baseUrl + "/produksi/suratjalan/save",
+                type: 'get',
+                data: formDelivery1,
+                success: function (response) {
+                    if (response.status == 'sukses') {
+                        tableSuratJalan.ajax.reload(null, false);
+                        iziToast.success({
+                            timeout: 5000,
+                            position: "topRight",
+                            icon: 'fa fa-chrome',
+                            title: '',
+                            message: 'Item terkirim.'
+                        });
+                        $('.kirim').removeAttr('disabled', 'disabled');
+                    } else {
+                        iziToast.error({
+                            position: "topRight",
+                            title: '',
+                            message: 'Item gagal terkirim.'
+                        });
+                        $('.kirim').removeAttr('disabled', 'disabled');
                     }
-                  });        // submitting the form when user press yes
-                } else {
-                  swal.close();
                 }
-              });
-          }
+            })
+        }
 
-          function edit(id){
-            window.location.href = baseUrl + '/inventory/pengirimanproduksi/edit?id='+id;
-          }
+        var tgl1 = $('#tanggal1').val();
+        var tgl2 = $('#tanggal2').val();
+        var tabelPengirimanDo = $('#tabelPengirimanDo').DataTable({
+            responsive: true,
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: baseUrl + "/produksi/pengambilanitem/kirim/tabel/" + tgl1 + '/' + tgl2 + '/' + comp,
+            },
+            columns: [
+                {data: 'do_date_send', name: 'do_date_send'},
+                {data: 'do_nota', name: 'do_nota'},
+                {data: 'do_time', name: 'do_time', orderable: false},
+                {data: 'do_date_received', name: 'do_date_received', orderable: false},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+        });
 
-      </script>
-@endsection
+        function cariTanggalJual() {
+            var comp = $('.mem_comp').val();
+            var tgl1 = $('#tanggal1').val();
+            var tgl2 = $('#tanggal2').val();
+            $('#tabelPengirimanDo').DataTable({
+                responsive: true,
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: baseUrl + "/produksi/pengambilanitem/cari/tabel/" + tgl1 + '/' + tgl2 + '/' + comp,
+                },
+                columns: [
+                    {data: 'do_date_send', name: 'do_date_send'},
+                    {data: 'do_nota', name: 'do_nota'},
+                    {data: 'do_time', name: 'do_time', orderable: false},
+                    {data: 'do_date_received', name: 'do_date_received', orderable: false},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ],
+            });
+        }
+
+        function lihatItem(id) {
+            $.ajax({
+                url: baseUrl + "/produksi/pengambilanitem/lihat/id",
+                type: 'get',
+                data: {x: id},
+                success: function (response) {
+                    $('#detailProduksi').html(response);
+                }
+            })
+        }
+
+        function hitungKirim(id, qty){
+            var kirim = $('#prdt_qtyKirim'+id).val();
+            if (kirim >= qty || kirim < 0) {
+                $('#prdt_qtyKirim'+id).val(qty);
+            }
+                    
+        }
+
+    </script>
+@endsection()

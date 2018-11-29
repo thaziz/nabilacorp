@@ -138,21 +138,26 @@
     $('input.f_value:text').each(function(evt){
       var getIndex = a;
       var dataValue = $('input.f_value:text:eq('+getIndex+')').val();
-      var dataStok = $('input.d_stock:text:eq('+getIndex+')').val();
-      dataStok = parseFloat(dataStok);
-      dataValue = parseFloat(dataValue);
-      var hasil = dataStok - dataValue;
-      hasil = parseFloat(hasil);
+      var dataStok = $('input.d_stock:text:eq('+getIndex+')').val();      
+      dataStok = parseFloat(dataStok).toFixed(2);
+      dataValue = parseFloat(dataValue).toFixed(2);
+      var hasil = dataStok - dataValue;      
+      hasil = parseFloat(hasil).toFixed(2);
       if (hasil < 0.00) {
          $('.final').attr('disabled','disabled');
       }
-      var convHasil = convertToRupiah(hasil);
+
+      if(hasil<0){
+        $simbol='-';
+      }
+      var convHasil = ubahFormat(hasil);
       $('input.hasil:text:eq('+getIndex+')').val(convHasil);
     a++;
     })
   }
 
   function BuatSpk(id,tgl,jumlah,iditem){
+    var comp = $('.mem_comp').val();
     $.ajax({
       url         : baseUrl+'/produksi/spk/create-id/'+iditem,
       type        : 'get',
@@ -167,13 +172,13 @@
           $('#iditem').val(iditem);
           $('#item').val(response.i_name.i_name);
           $('#jumlah').val(jumlah);
-          tabelFormula(iditem, jumlah);
+          tabelFormula(iditem, jumlah, comp);
         }
       }
     });
   }
 
-  function tabelFormula(iditem, jumlah){
+  function tabelFormula(iditem, jumlah, comp){
     $('#tableFormula').dataTable().fnDestroy();
     $('#tableFormula').DataTable({
       responsive:true,
@@ -181,8 +186,8 @@
       processing: true,
       serverSide: true,
         ajax: {
-            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah,
-             error: function (jqXHR, textStatus, errorThrown) {
+            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah+'/'+comp,
+             error: function (jqXHR, textStatus, errorThrown) {              
                 $('#create-data').modal('hide');
                 iziToast.error({
                     position: "topRight",
@@ -194,9 +199,9 @@
         },
         columns: [
         {data: 'f_bb', name: 'f_bb'},
+        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'f_value', name: 'f_value'},
         {data: 's_name', name: 's_name'},
-        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'purchesing', name: 'purchesing', orderable: false},
         ],
       });
@@ -226,20 +231,21 @@
   }
 
   function tabelDraftFormula(iditem, jumlah){
+    var comp = $('.mem_comp').val();
     var formulaDraft = $('#tabelDraftFormula').DataTable({
       responsive:true,
       destroy: true,
       processing: true,
       serverSide: true,
         ajax: {
-            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah,
+            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah+'/'+comp,
         },
         columns: [
         // {data : 'DT_Row_Index', orderable: true, searchable: false},
         {data: 'f_bb', name: 'f_bb'},
+        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'f_value', name: 'f_value'},
         {data: 's_name', name: 's_name'},
-        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'purchesing', name: 'purchesing', orderable: false},
         ],
       });
@@ -317,12 +323,13 @@
     var tgl1 = $('#tanggal1').val();
     var tgl2 = $('#tanggal2').val();
     var tampil = $('#tampil_data').val();
+    var comp = $('.mem_comp').val();
     spkTable = $('#table-spk').DataTable({
       "destroy": true,
       "processing" : true,
       "serverside" : true,
       "ajax": {
-          url : baseUrl + "/keuangan/spk/get-data-tabel-spk/"+tgl1+"/"+tgl2+"/"+tampil,
+          url : baseUrl + "/keuangan/spk/get-data-tabel-spk/"+tgl1+"/"+tgl2+"/"+tampil+"/"+comp,
           type: 'GET'
       },
       "columns": [
@@ -364,7 +371,7 @@
 
   function detailManSpk(id){
     $.ajax({
-      url : baseUrl + "/keuangan/spk/lihat-detail/",
+      url : baseUrl + "/keuangan/spk/lihat-detail",
       type: "get",
       data: {x:id},
       success: function(response){
@@ -401,6 +408,43 @@
       }
     });
   }
+
+
+ //SetFormRupiah
+    function ubahFormat(uang)
+    {        
+      
+        var pisah = new Array();
+        var chekArray;        
+        chekArray = uang.toString().split('.');
+        
+        if ($.isArray(chekArray)) {
+            var rev = parseInt(chekArray[0], 10).toString().split('').reverse().join('');
+            var rev2 = '';
+            for (var w = 0; w < rev.length; w++) {
+                rev2 += rev[w];
+                if ((w+ 1) % 3 === 0 && w !== (rev.length - 1)) {
+                    rev2 += '.';
+                }
+            }
+            
+            if(uang!='NaN'){                
+              if(chekArray[1]==undefined){
+                  return rev2.split('').reverse().join('') + ',' +'00';            
+              }else if(chekArray[1]!=undefined){
+                return rev2.split('').reverse().join('') + ',' +chekArray[1];            
+                }
+            }
+            else if(uang=='NaN'){
+               //return 'Rp. 0,00'
+            }
+           
+            else if(uang=='undefined'){
+               return 'Rp. 0,00'
+            }
+        } 
+    }
+
 
   function convertToRupiah(angka) {
             var rupiah = '';

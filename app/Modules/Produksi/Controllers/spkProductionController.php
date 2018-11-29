@@ -13,9 +13,10 @@ use App\d_send_product;
 use App\d_productplan;
 use App\spk_formula;
 use App\spk_actual;
+use App\d_gudangcabang;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\lib\mutasi;
+use App\Lib\mutasi;
 
 class spkProductionController extends Controller
 {
@@ -74,8 +75,8 @@ class spkProductionController extends Controller
     }
 
 
-    public function getSpkByTgl($tgl1, $tgl2)
-    {
+    public function getSpkByTgl($tgl1, $tgl2, $comp)
+    {   
         $y = substr($tgl1, -4);
         $m = substr($tgl1, -7, -5);
         $d = substr($tgl1, 0, 2);
@@ -89,11 +90,15 @@ class spkProductionController extends Controller
         $spk = d_spk::join('m_item', 'spk_item', '=', 'i_id')
             ->join('d_productplan', 'pp_id', '=', 'spk_ref')
             ->select('spk_id', 'spk_date', 'i_name', 'pp_qty', 'spk_code', 'spk_status')
-            ->where('spk_status', 'AP')
-            ->orWhere('spk_status', 'PB')
+            ->where('spk_comp',$comp)
+            ->where(function ($query) {
+                $query->where('spk_status', 'AP')
+                      ->orWhere('spk_status', 'PB');
+            })
             ->where('spk_date', '>=', $tanggal1)
             ->where('spk_date', '<=', $tanggal2)
             ->orderBy('spk_date', 'DESC')
+
             ->get();
 
         return DataTables::of($spk)
@@ -220,153 +225,34 @@ class spkProductionController extends Controller
 
     public function ubahStatusSpk($spk_id)
     {
-        // return json_encode("asd");
-
-        d_productplan::where('pp_id', $spk_id)
-            ->update([
-                'pp_isspk' => 'C'
-            ]);
-
-        $hpp = []; $err = true; $acc_temp = []; $acc_temp2 = [];
-        $spk = d_spk::find($spk_id);
-
-        if(!$spk){
-            return response()->json([
-                'status' => 'gagal',
-                'pesan'  => 'Gagal! Barang Yang Akan Diproduksi Tidak Bisa Ditemukan....'
-            ]);
-        }
-
+        DB::beginTransaction();
+        try {
+        //cek spk
+        $spk = d_spk::where('spk_id', $spk_id)->first();
+        $gc_id = d_gudangcabang::select('gc_id')
+          ->where('gc_gudang','GUDANG BAHAN BAKU')
+          ->where('gc_comp',$spk->spk_comp)
+          ->first();
+        $gudang = $gc_id->gc_id;
+        //end spk
         $spkDt = spk_formula::where('fr_spk', $spk->spk_id)
             ->get();
-
-
-        // return json_encode($spkDt);
-
-        // cek jurnal
-
-        if(jurnal_setting()->allow_jurnal_to_execute){
-            $akun_1;
-            for ($i=0; $i <count($spkDt) ; $i++) { 
-
-                $item = m_item::where('i_id', $spkDt[$i]->fr_formula)
-                            ->join('m_group', 'm_item.i_code_group', '=', 'm_group.m_gcode')
-                            ->select('i_code_group', 'm_akun_persediaan', 'm_akun_beban')
-                            ->first();
-
-                $cek2 = DB::table('d_akun')->where('id_akun', $item->m_akun_persediaan)->first();
-                $cek3 = DB::table('d_akun')->where('id_akun', $item->m_akun_beban)->first();
-
-                if(!$item || !$item->m_akun_persediaan || !$item->m_akun_beban || !$cek2 || !$cek3){
-                    $err = false;
-                }else{
-                    $prevCost = DB::table('d_stock_mutation')
-                        // ->select(DB::raw('MAX(sm_hpp) as hargaPrev'))
-                        ->select('sm_hpp')
-                        ->where('sm_item', '=', $spkDt[$i]->fr_formula)
-                        ->where('sm_mutcat', '=', "14")
-                        ->orderBy('sm_date', 'desc')
-                        ->limit(1)
-                        ->first();
-
-                    // foreach ($prevCost as $value) {
-                    if (empty($prevCost->sm_hpp)) 
-                      {
-                        $default_cost = DB::table('m_price')->select('m_pbuy1')->where('m_pitem', $spkDt[$i]->fr_formula)->first();
-
-                        if(!$default_cost){
-                            return response()->json([
-                                        'status' => 'gagal',
-                                        'pesan'  => 'Tidak Bisa Melakukan Jurnal Pada SPK Ini Karena Salah Satu Dari Item Tidak Memiliki Harga.'
-                                    ]);
-                        }
-
-                        if(array_key_exists($item->m_akun_persediaan, $acc_temp)){
-                            $acc_temp[$item->m_akun_persediaan] = [
-                                'td_acc'      => $item->m_akun_persediaan,
-                                'td_posisi'   => "K",
-                                'value'       => $acc_temp[$item->m_akun_persediaan]['value'] + ($default_cost->m_pbuy1 * $spkDt[$i]->fr_value)
-                            ];
-                        }else{
-                            $acc_temp[$item->m_akun_persediaan] = [
-                                'td_acc'      => $item->m_akun_persediaan,
-                                'td_posisi'   => "K",
-                                'value'       => ($default_cost->m_pbuy1 * $spkDt[$i]->fr_value)
-                            ];
-                        }
-
-                        if(array_key_exists($item->m_akun_beban, $acc_temp2)){
-                            $acc_temp2[$item->m_akun_beban] = [
-                                'td_acc'      => $item->m_akun_beban,
-                                'td_posisi'   => "D",
-                                'value'       => $acc_temp2[$item->m_akun_beban]['value'] + ($default_cost->m_pbuy1 * $spkDt[$i]->fr_value)
-                            ];
-                        }else{
-                            $acc_temp2[$item->m_akun_beban] = [
-                                'td_acc'      => $item->m_akun_beban,
-                                'td_posisi'   => "D",
-                                'value'       => ($default_cost->m_pbuy1 * $spkDt[$i]->fr_value)
-                            ];
-                        }
-                      }
-                      else
-                      {
-                        if(array_key_exists($item->m_akun_persediaan, $acc_temp)){
-                            $acc_temp[$item->m_akun_persediaan] = [
-                                'td_acc'      => $item->m_akun_persediaan,
-                                'td_posisi'   => "K",
-                                'value'       => $acc_temp[$item->m_akun_persediaan]['value'] + ($prevCost->sm_hpp * $spkDt[$i]->fr_value)
-                            ];
-                        }else{
-                            $acc_temp[$item->m_akun_persediaan] = [
-                                'td_acc'      => $item->m_akun_persediaan,
-                                'td_posisi'   => "K",
-                                'value'       => ($prevCost->sm_hpp * $spkDt[$i]->fr_value)
-                            ];
-                        }
-
-                        if(array_key_exists($item->m_akun_beban, $acc_temp2)){
-                            $acc_temp2[$item->m_akun_beban] = [
-                                'td_acc'      => $item->m_akun_beban,
-                                'td_posisi'   => "D",
-                                'value'       => $acc_temp2[$item->m_akun_beban]['value'] + ($prevCost->sm_hpp * $spkDt[$i]->fr_value)
-                            ];
-                        }else{
-                            $acc_temp2[$item->m_akun_beban] = [
-                                'td_acc'      => $item->m_akun_beban,
-                                'td_posisi'   => "D",
-                                'value'       => ($prevCost->sm_hpp * $spkDt[$i]->fr_value)
-                            ];
-                        }
-                      }
-                }
-
-            }
-        }
-
-        // return json_encode(array_merge($acc_temp, $acc_temp2));
-
-        if(!$err){
-            return response()->json([
-                'status' => 'gagal',
-                'pesan'  => 'Tidak Bisa Melakukan Jurnal Pada SPK Ini Karena Salah Satu Dari Item Belum Berelasi Dengan Akun Persediaan Atau Akun Beban.'
-            ]);
-        }
-
-        // return json_encode(array_merge($acc, $acc_2));
-
-        // cek jurnal end
-
+        // dd($spkDt);
         if ($spk->spk_status == "AP") {
+            // dd($spkDt);
             //update status to PB
             for ($i=0; $i <count($spkDt) ; $i++) { 
                 $a[] = $spkDt[$i]->fr_value;
+                
                 if(mutasi::mutasiStok(  $spkDt[$i]->fr_formula,
-                                        $spkDt[$i]->fr_value,
-                                        $comp=3,
-                                        $position=3,
+                                        number_format($spkDt[$i]->fr_value,2,',','.'),
+                                        $comp=$gudang,
+                                        $position=$gudang,
                                         $flag=2,
-                                        $spk->spk_code)){}
+                                        $spk->spk_code,
+                                        'MENGURANGI',
+                                        Carbon::now(),
+                                        100)){}
             }
 
             $spk = d_spk::find($spk_id);
@@ -378,25 +264,17 @@ class spkProductionController extends Controller
             $spk->spk_status = 'FN';
             $spk->save();
         }
-
-        if(jurnal_setting()->allow_jurnal_to_execute){
-            $item_spk = m_item::where('i_id', $spk->spk_item)->first();
-
-            if($item_spk){
-                // return "aa";
-                $state_jurnal = _initiateJournal_self_detail($spk->spk_code, 'MM', date('Y-m-d', strtotime($spk->spk_date)), 'Proses Produksi '.$item_spk->i_name.' '.date('Y/m/d', strtotime($spk->spk_date)), array_merge($acc_temp, $acc_temp2));
-            }else{
-                return response()->json([
-                    'status' => 'gagal',
-                    'pesan'  => 'Tidak Bisa Melakukan Jurnal Pada SPK Ini Karena Barang Yang Akan Diproduksi Tidak Bisa Ditemukan....'
-                ]);
-            }
-        }
-
+        DB::commit();
         return response()->json([
-            'status' => 'sukses',
-            'pesan' => 'Status SPK telah berhasil diubah',
-        ]);
+              'status' => 'sukses'
+          ]);
+        } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+            'status' => 'gagal',
+            'data' => $e
+          ]);
+        }
 
     }
 
@@ -418,70 +296,70 @@ class spkProductionController extends Controller
             'fr_value',
             'i_id',
             'i_type',
-            'm_sname')
+            's_name')
             ->where('fr_spk', $request->x)
             ->join('m_item', 'i_id', '=', 'fr_formula')
-            ->join('m_satuan', 'm_sid', '=', 'fr_scale')
+            ->join('m_satuan', 's_id', '=', 'fr_scale')
             ->get();
 
-        foreach ($formula as $val) {
-            //cek type barang
-            if ($val->i_type == "BJ") //brg jual
-            {
-                //ambil stok berdasarkan type barang
-                $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
-                  where s_item = '$val->i_id'
-                  AND s_comp = '2'
-                  AND s_position = '2' limit 1) ,'0') as qtyStok"));
-                $stok = $query[0]->qtyStok;
-            } elseif ($val->i_type == "BB") //bahan baku
-            {
-                //ambil stok berdasarkan type barang
-                $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
-                  where s_item = '$val->i_id'
-                  AND s_comp = '3'
-                  AND s_position = '3' limit 1) ,'0') as qtyStok"));
-                $stok = $query[0]->qtyStok;
-            }
+        // foreach ($formula as $val) {
+        //     //cek type barang
+        //     if ($val->i_type == "BJ") //brg jual
+        //     {
+        //         //ambil stok berdasarkan type barang
+        //         $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
+        //           where s_item = '$val->i_id'
+        //           AND s_comp = '2'
+        //           AND s_position = '2' limit 1) ,'0') as qtyStok"));
+        //         $stok = $query[0]->qtyStok;
+        //     } elseif ($val->i_type == "BB") //bahan baku
+        //     {
+        //         //ambil stok berdasarkan type barang
+        //         $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
+        //           where s_item = '$val->i_id'
+        //           AND s_comp = '3'
+        //           AND s_position = '3' limit 1) ,'0') as qtyStok"));
+        //         $stok = $query[0]->qtyStok;
+        //     }
 
-            //get prev cost
-            $idItem = $val->i_id;
-            $prevCost = DB::table('d_stock_mutation')
-                // ->select(DB::raw('MAX(sm_hpp) as hargaPrev'))
-                ->select('sm_hpp', 'sm_qty','sm_item')
-                ->where('sm_item', '=', $idItem)
-                ->where('sm_mutcat', '=', "14")
-                ->orderBy('sm_date', 'desc')
-                ->limit(1)
-                ->first();
+        //     //get prev cost
+        //     $idItem = $val->i_id;
+        //     $prevCost = DB::table('d_stock_mutation')
+        //         // ->select(DB::raw('MAX(sm_hpp) as hargaPrev'))
+        //         ->select('sm_hpp', 'sm_qty','sm_item')
+        //         ->where('sm_item', '=', $idItem)
+        //         ->where('sm_mutcat', '=', "14")
+        //         ->orderBy('sm_date', 'desc')
+        //         ->limit(1)
+        //         ->first();
 
-             // foreach ($prevCost as $value) {
-                if (empty($prevCost->sm_hpp)) 
-                  {
-                    $default_cost = DB::table('m_price')->select('m_pbuy1')->where('m_pitem', $idItem)->first();
-                    $hargaLalu[] = $default_cost->m_pbuy1;
-                    $qty[] = 0;
-                    $sm_item[] = $idItem;
-                  }
-                  else
-                  {
-                    $hargaLalu[] = $prevCost->sm_hpp;
-                    $qty[] = $prevCost->sm_qty;
-                    $sm_item[] = $prevCost->sm_item;
-                  }
+        //      // foreach ($prevCost as $value) {
+        //         if (empty($prevCost->sm_hpp)) 
+        //           {
+        //             $default_cost = DB::table('m_price')->select('m_pbuy1')->where('m_pitem', $idItem)->first();
+        //             $hargaLalu[] = $default_cost->m_pbuy1;
+        //             $qty[] = 0;
+        //             $sm_item[] = $idItem;
+        //           }
+        //           else
+        //           {
+        //             $hargaLalu[] = $prevCost->sm_hpp;
+        //             $qty[] = $prevCost->sm_qty;
+        //             $sm_item[] = $prevCost->sm_item;
+        //           }
 
-        }
+        // }
 
-        for ($i = 0; $i < count($hargaLalu); $i++) {
-            $cabangPurnama = $hargaLalu[$i];
-            $bambang[] = $formula[$i]['fr_value'] * $cabangPurnama;
-        }
+        // for ($i = 0; $i < count($hargaLalu); $i++) {
+        //     $cabangPurnama = $hargaLalu[$i];
+        //     $bambang[] = $formula[$i]['fr_value'] * $cabangPurnama;
+        // }
 
         $ket = $spk[0]->spk_status;
         $id = $spk[0]->spk_id;
 
         // return json_encode($bambang);
-        return view('produksi.spk.detail-formula', compact('spk', 'formula', 'bambang','ket','id'));
+        return view('Produksi::spk.detail-formula', compact('spk', 'formula', 'bambang','ket','id'));
 
     }
 

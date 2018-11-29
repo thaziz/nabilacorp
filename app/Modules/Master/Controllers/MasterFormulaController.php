@@ -15,12 +15,13 @@ use DB;
 class MasterFormulaController extends Controller
 {
   public function index(){
+
     $modalFormula=view('Master::MasterFormula.modal');
     return view('Master::MasterFormula.index',compact('modalFormula'));
   }
 
   public function table(){
-    $data = d_formula_result::select( 'i_code',
+  $data = d_formula_result::select( 'i_code',
                                 'i_name',
                                 'fr_result',
                                 's_name',
@@ -39,7 +40,7 @@ class MasterFormulaController extends Controller
 
     ->addColumn('fr_result', function ($data) {
     return '<div class="text-right">
-              '.$data->fr_result.'
+              '.(int)$data->fr_result.'
             </div>';
 
     })
@@ -154,8 +155,6 @@ class MasterFormulaController extends Controller
           try { 
     $i_id = $request->i_id;
     $fr_id = d_formula_result::max('fr_id') + 1;
-    //dd($fr_id);34
-    //dd($request->id_item);407
     d_formula_result::insert([
         'fr_id' => $fr_id,
         'fr_adonan' => $request->id_item,
@@ -223,7 +222,8 @@ class MasterFormulaController extends Controller
       ->where('f_id',$request->x)
       ->get();
 
-    return view('Master::MasterFormula.modal-formula',compact('data','formula'));
+    
+        return view('Master::MasterFormula.modal-formula',compact('data','formula'));
   }
 
   public function editFormula(Request $request){
@@ -250,9 +250,8 @@ class MasterFormulaController extends Controller
       ->join('m_satuan','s_id','=','f_scale')
       ->where('f_id',$request->x)
       ->get();
-      
 
-    return view('Master::MasterFormula.modal-edit',compact('data','formula'));
+     return view('Master::MasterFormula.modal-edit',compact('data','formula'));
   }
 
   public function updateFormula(Request $request){

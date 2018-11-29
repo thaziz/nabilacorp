@@ -21,7 +21,7 @@ use App\Modules\POS\model\d_salesplan_dt;
 
 
 use Datatables;
-
+use Session;
 use Auth;
 
 
@@ -54,6 +54,27 @@ class rencanaPenjualanController extends Controller
       return d_sales_plan::simpan($request);
     }
 
+    // Menampilkan form untuk mengupdate data
+    function form_perbarui($sp_id) {
+      $d_sales_plan = d_sales_plan::findOrFail($sp_id)->first();
+      $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id)->get();
+      
+      foreach($d_salesplan_dt as $item) {
+        $item['m_item'] = $item->m_item;
+        $item['satuan'] = '';
+        $item['subtotal'] = '';
+        if($item->m_item->m_satuan != null) {
+          $item['satuan'] = $item->m_item->m_satuan->s_detname;
+          $item['subtotal'] = $item->spdt_qty * $item->m_item->i_price; 
+        }
+      }
+
+      $d_sales_plan['d_salesplan_dt'] = $d_salesplan_dt;
+      $data = array('d_sales_plan' => $d_sales_plan);
+      return view('POS::rencanapenjualan/updateRencanaPenjualan', $data);
+    }
+
+    // Mengupdate data ke database
     function perbarui(Request $request){
       
       return d_sales_plan::perbarui($request);
@@ -79,11 +100,23 @@ class rencanaPenjualanController extends Controller
         
       }
 
-    function find_d_sales_plan() {
+    function find_d_sales_plan(Request $req) {
        $data = array();
-       $rows = d_sales_plan::all();
+       $sp_comp = Session::get('user_comp');
+       $rows = d_sales_plan::where('sp_comp', $sp_comp);
 
+       // Filter berdasarkan tanggal
+       $tgl_awal = $req->tgl_awal;
+       $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
+       $tgl_akhir = $req->tgl_akhir;
+       $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
+       if($tgl_awal != '' && $tgl_akhir != '') {
+        $tgl_awal = date('Y-m-d', strtotime($tgl_awal));
+        $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
+        $rows = $rows->whereBetween('sp_date', array($tgl_awal, $tgl_akhir));
+       }
 
+       $rows = $rows->get();
        foreach ($rows as $row) {
          $new_row = $row;
          $new_row['i_price'] = 0;

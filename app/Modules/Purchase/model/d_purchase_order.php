@@ -21,12 +21,13 @@ use Response;
 
 
 class d_purchase_order extends Model
-{  
+{
+
     protected $table = 'd_purchase_order';
     protected $primaryKey = 'po_id';
     const CREATED_AT = 'po_created';
     const UPDATED_AT = 'po_updated';
-    
+
       protected $fillable =  ['po_id',
                               'po_date',
                               'po_purchaseplan',
@@ -47,7 +48,7 @@ class d_purchase_order extends Model
                               'po_status',
                               'po_created',
                               'po_updated'];
-  
+
     static function dataOrder($request)
     {
         $data = d_purchase_order::join('m_supplier','s_id','=','po_supplier')
@@ -82,20 +83,20 @@ class d_purchase_order extends Model
                 //->where('po_status', '=', 'FN')
                 ->orderBy('po_date', 'DESC')
                 ->get();
-        
+
         return DataTables::of($data)
         ->addIndexColumn()
         ->editColumn('status', function ($data)
           {
-          if ($data->po_status == "WT") 
+          if ($data->po_status == "WT")
           {
             return '<span class="label label-default">Waiting</span>';
           }
-          elseif ($data->po_status == "DE") 
+          elseif ($data->po_status == "DE")
           {
             return '<span class="label label-warning">Dapat diedit</span>';
           }
-          elseif ($data->po_status == "CF") 
+          elseif ($data->po_status == "CF")
           {
             return '<span class="label label-info">Disetujui</span>';
           }
@@ -104,39 +105,39 @@ class d_purchase_order extends Model
             return '<span class="label label-success">Selesai</span>';
           }
         })
-        ->editColumn('tglOrder', function ($data) 
+        ->editColumn('tglOrder', function ($data)
         {
-            if ($data->po_date == null) 
+            if ($data->po_date == null)
             {
                 return '-';
             }
-            else 
+            else
             {
                 return $data->po_date ? with(new Carbon($data->po_date))->format('d M Y') : '';
             }
         })
-        ->editColumn('hargaTotalNet', function ($data) 
+        ->editColumn('hargaTotalNet', function ($data)
         {
           return 'Rp. '.number_format($data->po_total_net,0,",",".");
         })
-        ->editColumn('tglMasuk', function ($data) 
+        ->editColumn('tglMasuk', function ($data)
         {
-          if ($data->po_date_received == null) 
+          if ($data->po_date_received == null)
           {
               return '-';
           }
-          else 
+          else
           {
               return $data->po_date_received ? with(new Carbon($data->po_date_received))->format('d M Y') : '';
           }
         })
         ->addColumn('action', function($data)
           {
-            if ($data->po_status == "WT") 
+            if ($data->po_status == "WT")
             {
               return '<div class="text-center">
                           <button class="btn btn-sm btn-success" title="Detail"
-                              onclick=detailOrder("'.$data->po_id.'")><i class="fa fa-eye"></i> 
+                              onclick=detailOrder("'.$data->po_id.'")><i class="fa fa-eye"></i>
                           </button>
                           <button class="btn btn-sm btn-warning" title="Edit"
                               onclick=editOrder("'.$data->po_id.'")><i class="glyphicon glyphicon-edit"></i>
@@ -144,13 +145,13 @@ class d_purchase_order extends Model
                           <button class="btn btn-sm btn-danger" title="Delete"
                               onclick=deleteOrder("'.$data->po_id.'")><i class="glyphicon glyphicon-trash"></i>
                           </button>
-                      </div>'; 
+                      </div>';
             }
-            elseif ($data->po_status == "DE") 
+            elseif ($data->po_status == "DE")
             {
               return '<div class="text-center">
                           <button class="btn btn-sm btn-success" title="Detail"
-                              onclick=detailOrder("'.$data->po_id.'")><i class="fa fa-eye"></i> 
+                              onclick=detailOrder("'.$data->po_id.'")><i class="fa fa-eye"></i>
                           </button>
                           <button class="btn btn-sm btn-warning" title="Edit"
                               onclick=editOrder("'.$data->po_id.'")><i class="glyphicon glyphicon-edit"></i>
@@ -158,13 +159,13 @@ class d_purchase_order extends Model
                           <button class="btn btn-sm btn-danger" title="Delete"
                               onclick=deleteOrder("'.$data->po_id.'") disabled><i class="glyphicon glyphicon-trash"></i>
                           </button>
-                      </div>'; 
+                      </div>';
             }
             else
             {
               return '<div class="text-center">
                           <button class="btn btn-sm btn-success" title="Detail"
-                              onclick=detailOrder("'.$data->po_id.'")><i class="fa fa-eye"></i> 
+                              onclick=detailOrder("'.$data->po_id.'")><i class="fa fa-eye"></i>
                           </button>
                           <button class="btn btn-sm btn-warning" title="Edit"
                               onclick=editOrder("'.$data->po_id.'") disabled><i class="glyphicon glyphicon-edit"></i>
@@ -172,9 +173,9 @@ class d_purchase_order extends Model
                           <button class="btn btn-sm btn-danger" title="Delete"
                               onclick=deleteOrder("'.$data->po_id.'") disabled><i class="glyphicon glyphicon-trash"></i>
                           </button>
-                      </div>'; 
+                      </div>';
             }
-            
+
           })
         ->rawColumns(['status', 'action'])
         ->make(true);
@@ -183,7 +184,7 @@ class d_purchase_order extends Model
 
 
      static function getDataForm($id)
-    {    
+    {
           $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
@@ -191,7 +192,7 @@ class d_purchase_order extends Model
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          'm_item.i_price',
-                                         's_name',                                         
+                                         's_name',
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
                                          'ppdt_prevcost',
@@ -200,24 +201,25 @@ class d_purchase_order extends Model
                                          'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('ppdt_ispo', '=', "FALSE")                                
+                                ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
 
-      
+
         return response()->json([
             'status' => 'sukses',
-            'data_isi' => $dataIsi,                        
+            'data_isi' => $dataIsi,
         ]);
     }
-    
+
 
      static function getDataCodePlan($request)
     {
-
+      // return 'a';
         $formatted_tags = array();
-        $term = $request->term;      
+        $term = $request->term;
+
         if (empty($term)) {
             $sup = DB::table('d_purchase_plan')
                      ->select('p_code', 'p_id','s_id','s_company')
@@ -233,7 +235,7 @@ class d_purchase_order extends Model
             return Response::json($formatted_tags);
         }
         else
-        {            
+        {
           // return 'a';
             $sup = DB::table('d_purchase_plan')
                      ->select('p_code', 'p_id','s_id','s_company')
@@ -248,7 +250,7 @@ class d_purchase_order extends Model
             foreach ($sup as $val) {
                 $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
             }
-            return Response::json($formatted_tags);  
+            return Response::json($formatted_tags);
         }
     }
 
@@ -271,9 +273,9 @@ class d_purchase_order extends Model
       $discValue = $totalGross * $replaceCharDisc / 100;
 
       $p_id=d_purchase_order::max('po_id')+1;
-     
+
       $query = DB::select(DB::raw("SELECT MAX(RIGHT(po_code,4)) as kode_max from d_purchase_order WHERE DATE_FORMAT(po_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
-     
+
       $kd = "";
 
       if(count($query)>0)
@@ -288,7 +290,7 @@ class d_purchase_order extends Model
       {
         $kd = "00001";
       }
-      
+
       $p_code = "PO-".date('ym')."-".$kd;
 
       $dataHeader = new d_purchase_order;
@@ -315,7 +317,7 @@ class d_purchase_order extends Model
       $dataHeader->save();
 
 
-      for ($i=0; $i <count($request->fieldNamaItem) ; $i++) { 
+      for ($i=0; $i <count($request->fieldNamaItem) ; $i++) {
         $dataDetail = new d_purchaseorder_dt;
         $dataDetail->podt_purchaseorder = $p_id;
         $dataDetail->podt_detailid = $i+1;
@@ -339,14 +341,12 @@ class d_purchase_order extends Model
 
 
 
-     } 
+     }
 
 
 
 
-    
 
-  
+
+
 }
-	
-	
