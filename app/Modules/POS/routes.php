@@ -112,8 +112,12 @@ Route::get('/penjualan/repackaging/repackaging', 'PenjualanController@repackagin
 Route::get('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi', 'PenjualanController@POSpenjualankonsinyasi')->middleware('auth');
 Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanController@POSpenjualanPesanan')->middleware('auth');
 
-Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanController@penjualanmobile')->middleware('auth');
+// Laporan penjualan mobile 
+Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanMobileController@penjualanmobile')->middleware('auth');
+Route::get('/penjualan/penjualanmobile/find_d_sales_dt', 'PenjualanMobileController@find_d_sales_dt')->middleware('auth');
+Route::get('/penjualan/penjualanmobile/print_laporan', 'PenjualanMobileController@print_laporan')->middleware('auth');
 
+// ==========================================================================================
 Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
 Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 

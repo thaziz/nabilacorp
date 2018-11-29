@@ -484,6 +484,11 @@ class m_itemm extends Model
 
   }
 
+  function m_satuan() {
+    $res = $this->belongsTo('App\m_satuan', 'i_satuan', 's_id');
+
+        return $res;
+  }
 
 }
 	

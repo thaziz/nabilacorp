@@ -503,7 +503,7 @@
         { 
             data : null,
             render : function(res) {
-              var content = '<div class="center"><button id="edit" onclick="location.href=\'{{ url("/penjualan/rencanapenjualan/form_perbarui") }}/' + res.sp_id + '\'" class="btn btn-warning btn-xs" title="Edit" type="button"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
+              var content = '<div style="display:flex;justify-content:center"><button id="edit" style="margin-right:1mm" onclick="location.href=\'{{ url("/penjualan/rencanapenjualan/form_perbarui") }}/' + res.sp_id + '\'" class="btn btn-warning btn-xs" title="Edit" type="button"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
 
               return content;
             }
