@@ -477,15 +477,6 @@ class spkFinancialController extends Controller
       'spk_status' => 'AP'
     ]);
 
-    for ($i=0; $i < count($formula) ; $i++) {
-    // if(mutasi::mutasiStok(  $formula[$i],
-    //                         $value[$i],
-    //                         $comp=3,
-    //                         $position=3,
-    //                         $flag=2,
-    //                         $data->spk_code)){}
-    }
-
     DB::commit();
     return response()->json([
         'status' => 'sukses'
