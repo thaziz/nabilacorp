@@ -275,7 +275,7 @@ for ($s=0; $s <$jumlah ; $s++) {
 		$cabang=Session::get('user_comp');
 
 		$position=DB::table('d_gudangcabang')
-									->where('gc_gudang',DB::raw("'GUDANG PENJUALAN'"))
+									->where('gc_gudang',DB::raw("'GUDANG PRODUKSI'"))
 									->where('gc_comp',$cabang)
 									->select('gc_id')->first();
 

@@ -58,9 +58,15 @@ class rencanaPenjualanController extends Controller
     function form_perbarui($sp_id) {
       $d_sales_plan = d_sales_plan::findOrFail($sp_id)->first();
       $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id)->get();
+      
       foreach($d_salesplan_dt as $item) {
         $item['m_item'] = $item->m_item;
+        $item['satuan'] = '';
+        if($item->m_item->m_satuan != null) {
+          $item['satuan'] = item->m_item->s_detname;
+        }
       }
+
       $d_sales_plan['d_salesplan_dt'] = $d_salesplan_dt;
       $data = array('d_sales_plan' => $d_sales_plan);
       return view('POS::rencanapenjualan/updateRencanaPenjualan', $data);

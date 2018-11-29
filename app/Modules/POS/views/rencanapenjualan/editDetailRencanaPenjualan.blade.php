@@ -15,7 +15,7 @@
           <td><input onblur="validationForm();setQty(event,'fQty{{$detail->m_item->i_id}}')" onclick="setAwal(event,'fQty{{$detail->m_item->i_id}}')" onkeyup="hapus(event,'{{$detail->m_item->i_id}}');validationForm();hitungTotalPerItem('{{$detail->m_item->i_id}}')" class="jumlah fQty{{$detail->m_item->i_id}}" style="width:100%;text-align:right;border:none" name="sd_qty[]" value="{{number_format($detail->spdt_qty,0,',','.')}}" autocomplete="off"></td>
 
           <td><div style="padding-top:6px">{{$detail->s_name}}</div></td>
-          <td><input class="harga{{$detail->m_item->i_id}} alignAngka" style="width:100%;border:none" name="spdt_price[]" value="{{number_format($detail->spdt_price,0,',','.')}}"" readonly></td>
+          <td><input class="harga{{$detail->m_item->i_id}} alignAngka" style="width:100%;border:none" name="spdt_price[]" value="{{number_format($detail->m_item->i_price,0,',','.')}}"" readonly></td>
 
           <td><input class="alignAngka discRp{{$detail->m_item->i_id}}" style="width:100%;border:none" name="spdt_disc_value[]" id="discRp" onkeyup="hitungTotalPerItem('{{$detail->m_item->i_id}}');rege(event,'discRp{{$detail->m_item->i_id}}')" onblur="setRupiah(event,'{{$detail->m_item->i_id}}')" onclick="setAwal(event,'{{$detail->m_item->i_id}}')" value="{{number_format($detail->spdt_disc_value,0,',','.')}}" ></td>
 

@@ -23,11 +23,6 @@ use Response;
 class d_purchase_order extends Model
 {  
 
-
-
-
-
-
     protected $table = 'd_purchase_order';
     protected $primaryKey = 'po_id';
     const CREATED_AT = 'po_created';
@@ -220,8 +215,10 @@ class d_purchase_order extends Model
 
      static function getDataCodePlan($request)
     {
+      // return 'a';
         $formatted_tags = array();
-        $term = $request->term;        
+        $term = $request->term;       
+
         if (empty($term)) {
             $sup = DB::table('d_purchase_plan')
                      ->select('p_code', 'p_id','s_id','s_company')
