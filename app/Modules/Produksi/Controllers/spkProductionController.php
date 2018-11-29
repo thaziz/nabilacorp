@@ -300,58 +300,58 @@ class spkProductionController extends Controller
             ->join('m_satuan', 's_id', '=', 'fr_scale')
             ->get();
 
-        foreach ($formula as $val) {
-            //cek type barang
-            if ($val->i_type == "BJ") //brg jual
-            {
-                //ambil stok berdasarkan type barang
-                $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
-                  where s_item = '$val->i_id'
-                  AND s_comp = '2'
-                  AND s_position = '2' limit 1) ,'0') as qtyStok"));
-                $stok = $query[0]->qtyStok;
-            } elseif ($val->i_type == "BB") //bahan baku
-            {
-                //ambil stok berdasarkan type barang
-                $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
-                  where s_item = '$val->i_id'
-                  AND s_comp = '3'
-                  AND s_position = '3' limit 1) ,'0') as qtyStok"));
-                $stok = $query[0]->qtyStok;
-            }
+        // foreach ($formula as $val) {
+        //     //cek type barang
+        //     if ($val->i_type == "BJ") //brg jual
+        //     {
+        //         //ambil stok berdasarkan type barang
+        //         $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
+        //           where s_item = '$val->i_id'
+        //           AND s_comp = '2'
+        //           AND s_position = '2' limit 1) ,'0') as qtyStok"));
+        //         $stok = $query[0]->qtyStok;
+        //     } elseif ($val->i_type == "BB") //bahan baku
+        //     {
+        //         //ambil stok berdasarkan type barang
+        //         $query = DB::select(DB::raw("SELECT IFNULL( (SELECT s_qty FROM d_stock
+        //           where s_item = '$val->i_id'
+        //           AND s_comp = '3'
+        //           AND s_position = '3' limit 1) ,'0') as qtyStok"));
+        //         $stok = $query[0]->qtyStok;
+        //     }
 
-            //get prev cost
-            $idItem = $val->i_id;
-            $prevCost = DB::table('d_stock_mutation')
-                // ->select(DB::raw('MAX(sm_hpp) as hargaPrev'))
-                ->select('sm_hpp', 'sm_qty','sm_item')
-                ->where('sm_item', '=', $idItem)
-                ->where('sm_mutcat', '=', "14")
-                ->orderBy('sm_date', 'desc')
-                ->limit(1)
-                ->first();
+        //     //get prev cost
+        //     $idItem = $val->i_id;
+        //     $prevCost = DB::table('d_stock_mutation')
+        //         // ->select(DB::raw('MAX(sm_hpp) as hargaPrev'))
+        //         ->select('sm_hpp', 'sm_qty','sm_item')
+        //         ->where('sm_item', '=', $idItem)
+        //         ->where('sm_mutcat', '=', "14")
+        //         ->orderBy('sm_date', 'desc')
+        //         ->limit(1)
+        //         ->first();
 
-             // foreach ($prevCost as $value) {
-                if (empty($prevCost->sm_hpp)) 
-                  {
-                    $default_cost = DB::table('m_price')->select('m_pbuy1')->where('m_pitem', $idItem)->first();
-                    $hargaLalu[] = $default_cost->m_pbuy1;
-                    $qty[] = 0;
-                    $sm_item[] = $idItem;
-                  }
-                  else
-                  {
-                    $hargaLalu[] = $prevCost->sm_hpp;
-                    $qty[] = $prevCost->sm_qty;
-                    $sm_item[] = $prevCost->sm_item;
-                  }
+        //      // foreach ($prevCost as $value) {
+        //         if (empty($prevCost->sm_hpp)) 
+        //           {
+        //             $default_cost = DB::table('m_price')->select('m_pbuy1')->where('m_pitem', $idItem)->first();
+        //             $hargaLalu[] = $default_cost->m_pbuy1;
+        //             $qty[] = 0;
+        //             $sm_item[] = $idItem;
+        //           }
+        //           else
+        //           {
+        //             $hargaLalu[] = $prevCost->sm_hpp;
+        //             $qty[] = $prevCost->sm_qty;
+        //             $sm_item[] = $prevCost->sm_item;
+        //           }
 
-        }
+        // }
 
-        for ($i = 0; $i < count($hargaLalu); $i++) {
-            $cabangPurnama = $hargaLalu[$i];
-            $bambang[] = $formula[$i]['fr_value'] * $cabangPurnama;
-        }
+        // for ($i = 0; $i < count($hargaLalu); $i++) {
+        //     $cabangPurnama = $hargaLalu[$i];
+        //     $bambang[] = $formula[$i]['fr_value'] * $cabangPurnama;
+        // }
 
         $ket = $spk[0]->spk_status;
         $id = $spk[0]->spk_id;
