@@ -19,9 +19,9 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="form-group">
                   <div class="input-daterange input-group">
-                    <input id="tanggal1" class="form-control input-sm datepicker2" name="tanggal1" type="text">
+                    <input id="tanggal1" class="form-control input-sm datepicker2" name="tgl_awal" type="text">
                     <span class="input-group-addon">-</span>
-                    <input id="tanggal2"" class="input-sm form-control datepicker2" name="tanggal2" type="text">
+                    <input id="tanggal2"" class="input-sm form-control datepicker2" name="tgl_akhir" type="text">
                   </div>
                 </div>
               </div>
@@ -247,29 +247,17 @@
                 <!-- End Modal Proses -->
           <script type="text/javascript">
  function cari(){
-  table();
- }
-
-dateAwal();
-function dateAwal(){
-      var d = new Date();
-      d.setDate(d.getDate()-7);
-
-      /*d.toLocaleString();*/
-      $('#tanggal1').datepicker({
-            format:"dd-mm-yyyy",        
-            autoclose: true,
-      }).datepicker( "setDate", d);
-      $('#tanggal2').datepicker({
-            format:"dd-mm-yyyy",        
-            autoclose: true,
-      }).datepicker( "setDate", new Date());
+  var tgl_awal = $('#tanggal1').val();
+  var tgl_akhir = $('#tanggal2').val();
+  var url_target = '{{ url("/penjualan/rencanapenjualan/find_d_sales_plan/?") }}tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir + '&_token={{ csrf_token() }}'; 
+  tablex.ajax.url(url_target).load();
 }
 
 
+
 function resetData(){  
-  dateAwal();
-  table();
+  $('#tanggal1, #tanggal2').val('');
+  tablex.ajax.url('{{ url("/penjualan/rencanapenjualan/find_d_sales_plan") }}').load();
 }
   
 

@@ -123,6 +123,8 @@ Route::get('/penjualan/rencanapenjualan/rencana', 'rencanaPenjualanController@in
 Route::get('/penjualan/rencanapenjualan/simpan', 'rencanaPenjualanController@simpan')->middleware('auth');
 Route::get('/penjualan/rencanapenjualan/find_d_sales_plan', 'rencanaPenjualanController@find_d_sales_plan')->middleware('auth');
 Route::get('/penjualan/rencanapenjualan/hapus/{id}', 'rencanaPenjualanController@hapus')->middleware('auth');
+Route::get('/penjualan/rencanapenjualan/form_perbarui/{id}', 'rencanaPenjualanController@form_perbarui')->middleware('auth');
+Route::get('/penjualan/rencanapenjualan/perbarui', 'rencanaPenjualanController@perbarui')->middleware('auth');
 //rencana penjualan selesai
 });
 

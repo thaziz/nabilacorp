@@ -159,8 +159,9 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     });
 }
 
-	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date){	
-        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date) {   
+	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date,$mutcat=null){	
+        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date,
+            $mutcat) {   
 
             $totalPermintaan= format::format($totalPermintaan);
             $totalHpp=0;
@@ -238,7 +239,8 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_detail'] =$flag;
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
                             $newMutasi[$k]['sm_reff'] = $sm_reff;  
-                            $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;      
+                            // $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;
+                            $newMutasi[$k]['sm_mutcat'] =$mutcat;      
                             $totalHpp+=$totalPermintaan*$getBarang[$k]->sm_hpp;        
                             $k = count($getBarang);
                             
@@ -269,7 +271,8 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_detail'] =$flag;
                             $newMutasi[$k]['sm_reff'] = $sm_reff; 
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
-                            $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;    
+                            // $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;    
+                            $newMutasi[$k]['sm_mutcat'] =$mutcat;
                             $totalHpp+=$totalQty*$getBarang[$k]->sm_hpp;        
                             
                             $totalPermintaan = $totalPermintaan - $totalQty;
@@ -566,5 +569,8 @@ $mutasiStok->tambahmutasi($item,$totalPermintaan,$compTujuan,$positionTujuan,'Tr
                     $data=['true'=>true,'totalHpp'=>$totalHpp];
                     return $data;
                 });
+    }
+    static function c(){
+        return 'aku';
     }
 }

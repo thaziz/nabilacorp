@@ -345,7 +345,7 @@
                   <div class="col-md-12 col-sm-12 col-xs-12" align="right">
                     <button class="btn btn-danger " type="button" onclick="batal()">Batal</button>
                    <!--   <button style="display: none;" class="btn btn-warning btn-disabled terima" type="button" onclick="Terima('draft')">Terima</button>     -->                          
-                    <button class="btn btn-warning btn-disabled draft" type="button" onclick="simpanPos('draft')" disabled="">Draft</button>
+                    
                     <button type="button" class="btn-primary btn btn-disabled perbarui" data-toggle="modal" disabled="" style="display: none;" id="perbarui" 
                     onclick="modalShow()">Perbarui</button>
                     <button onclick="insert_sales_plan()"
