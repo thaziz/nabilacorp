@@ -272,6 +272,7 @@ class ManOutputProduksiController extends Controller
                     'prdt_detail' => $maxid1,
                     'prdt_item' => $request->spk_item,
                     'prdt_qty' => $request->spk_qty,
+                    'prdt_sisa' => $request->spk_qty,
                     'prdt_produksi' => $request->prdt_produksi,
                     'prdt_status' => 'RD',
                     'prdt_date' => Carbon::now(),
@@ -288,16 +289,16 @@ class ManOutputProduksiController extends Controller
                     ->where('prdt_status', 'RD')
                     ->first();
 
-                $ref = $pr[0]->pr_id;
-
                 if ($prdt != null) {
 
                     $hasil = $prdt->prdt_qty + $request->spk_qty;
+                    $sisa = $prdt->prdt_sisa + $request->spk_qty;
 
                     d_productresult_dt::where('prdt_productresult', $pr[0]->pr_id)
                         ->where('prdt_status', 'RD')
                         ->update([
                             'prdt_qty' => $hasil,
+                            'prdt_sisa' => $sisa,
                         ]);
 
                 } else {
