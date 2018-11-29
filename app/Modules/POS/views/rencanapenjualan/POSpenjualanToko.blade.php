@@ -50,6 +50,7 @@
 @endsection
 @section("extra_scripts")
 
+@include('POS::rencanapenjualan/js/format_currency')
 @include('POS::rencanapenjualan/js/commander')
 
 @endsection
