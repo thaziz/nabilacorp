@@ -82,18 +82,11 @@ Route::get('/penjualan/barang-titip/search-item-titip', 'itemTitipController@sea
 
 Route::get('/penjualan/barang-titip/detail/{id}', 'itemTitipController@titipDt');
 
-
-
-
-
-
-
-
-
-
-
-
+// Routing untuk modul manajemen harga 
 Route::get('/penjualan/manajemenharga/harga', 'PenjualanController@harga')->middleware('auth');
+Route::get('/penjualan/manajemenharga/find_m_price', 'PenjualanController@find_m_price')->middleware('auth');
+
+// =============================================
 Route::get('/penjualan/manajemenpromosi/promosi', 'PenjualanController@promosi')->middleware('auth');
 Route::get('/penjualan/layananpesanan/layananpesanan', 'PenjualanController@layananpesanan')->middleware('auth');
 

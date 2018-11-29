@@ -491,5 +491,11 @@ class m_itemm extends Model
         return $res;
   }
 
+  function m_group() {
+    $res = $this->belongsTo('App\m_group', 'i_group', 'g_id');
+
+        return $res;
+  }
+
 }
 	

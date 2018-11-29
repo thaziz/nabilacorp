@@ -59,6 +59,7 @@ class rencanaPenjualanController extends Controller
       $d_sales_plan = d_sales_plan::findOrFail($sp_id)->first();
       $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id)->get();
       
+      $grand_total = 0;
       foreach($d_salesplan_dt as $item) {
         $item['m_item'] = $item->m_item;
         $item['satuan'] = '';
@@ -66,11 +67,12 @@ class rencanaPenjualanController extends Controller
         if($item->m_item->m_satuan != null) {
           $item['satuan'] = $item->m_item->m_satuan->s_detname;
           $item['subtotal'] = $item->spdt_qty * $item->m_item->i_price; 
+          $grand_total += $item['subtotal'];
         }
       }
 
       $d_sales_plan['d_salesplan_dt'] = $d_salesplan_dt;
-      $data = array('d_sales_plan' => $d_sales_plan);
+      $data = array('d_sales_plan' => $d_sales_plan, 'grand_total' => $grand_total);
       return view('POS::rencanapenjualan/updateRencanaPenjualan', $data);
     }
 
