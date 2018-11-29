@@ -22,12 +22,6 @@ use Response;
 
 class d_purchase_order extends Model
 {  
-
-
-
-
-
-
     protected $table = 'd_purchase_order';
     protected $primaryKey = 'po_id';
     const CREATED_AT = 'po_created';
@@ -196,6 +190,7 @@ class d_purchase_order extends Model
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
+                                         'm_item.i_price',
                                          's_name',                                         
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
@@ -220,8 +215,9 @@ class d_purchase_order extends Model
 
      static function getDataCodePlan($request)
     {
+
         $formatted_tags = array();
-        $term = $request->term;        
+        $term = $request->term;      
         if (empty($term)) {
             $sup = DB::table('d_purchase_plan')
                      ->select('p_code', 'p_id','s_id','s_company')
@@ -238,6 +234,7 @@ class d_purchase_order extends Model
         }
         else
         {            
+          // return 'a';
             $sup = DB::table('d_purchase_plan')
                      ->select('p_code', 'p_id','s_id','s_company')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
@@ -247,12 +244,102 @@ class d_purchase_order extends Model
                      ->where('p_code', 'LIKE', '%'.$term.'%')
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
+            // return $sup;
             foreach ($sup as $val) {
                 $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
             }
             return Response::json($formatted_tags);  
         }
-    } 
+    }
+
+    public function konvertRp($value)
+    {
+      $value = str_replace(['Rp', '\\', '.', ' '], '', $value);
+      return (int)str_replace(',', '.', $value);
+    }
+
+    static function savePo($request)
+     {
+      // dd($request->all());
+      $totalGross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
+      // $totalGross = $this->konvertRp();
+      $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
+      $replaceCharPPN = (int)str_replace("%","",$request->ppnHarga);
+      // $diskonPotHarga = $this->konvertRp($request->potonganHarga);
+      $prev_harga = str_replace(['Rp', '\\', '.', ' '], '', $request->prev_harga);
+      $diskonPotHarga = str_replace(['Rp', '\\', '.', ' '], '', $request->potonganHarga);
+      $discValue = $totalGross * $replaceCharDisc / 100;
+
+      $p_id=d_purchase_order::max('po_id')+1;
+     
+      $query = DB::select(DB::raw("SELECT MAX(RIGHT(po_code,4)) as kode_max from d_purchase_order WHERE DATE_FORMAT(po_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+     
+      $kd = "";
+
+      if(count($query)>0)
+      {
+        foreach($query as $k)
+        {
+          $tmp = ((int)$k->kode_max)+1;
+          $kd = sprintf("%05s", $tmp);
+        }
+      }
+      else
+      {
+        $kd = "00001";
+      }
+      
+      $p_code = "PO-".date('ym')."-".$kd;
+
+      $dataHeader = new d_purchase_order;
+      $dataHeader->po_id = $p_id;
+      $dataHeader->po_date = date('Y-m-d',strtotime($request->tanggal));
+      $dataHeader->po_purchaseplan = $request->cariKodePlan;
+      $dataHeader->po_supplier = $request->supplier;
+      $dataHeader->po_code = $p_code;
+      $dataHeader->po_mem = $request->idStaff;
+      $dataHeader->po_method = $request->methodBayar;
+      $dataHeader->po_total_gross = $totalGross;
+      $dataHeader->po_discount = $diskonPotHarga;
+      $dataHeader->po_disc_percent = $replaceCharDisc;
+      $dataHeader->po_disc_value = $discValue;
+      $dataHeader->po_tax_percent = $replaceCharPPN;
+      $dataHeader->po_tax_value = ($totalGross - $diskonPotHarga - $discValue) * $replaceCharPPN / 100;
+      $dataHeader->po_total_net = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
+      $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
+      $dataHeader->po_date_confirm = date('Y-m-d',strtotime($request->tanggal));
+      $dataHeader->po_duedate = date('Y-m-d',strtotime($request->tanggal));
+      $dataHeader->po_status = 'WT';
+      $dataHeader->po_created = date('Y-m-d');
+      $dataHeader->po_updated =  date('Y-m-d');
+      $dataHeader->save();
+
+
+      for ($i=0; $i <count($request->fieldNamaItem) ; $i++) { 
+        $dataDetail = new d_purchaseorder_dt;
+        $dataDetail->podt_purchaseorder = $p_id;
+        $dataDetail->podt_detailid = $i+1;
+        $dataDetail->podt_item = $request->podt_item[$i];
+        $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
+        $dataDetail->podt_qty = $request->fieldQty[$i];
+        $dataDetail->podt_qtyconfirm = 1;
+        $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
+        $dataDetail->podt_price = $request->podt_prevprice[$i];
+        $dataDetail->podt_isconfirm = 1;
+        $dataDetail->podt_created = date('Y-m-d');
+        $dataDetail->podt_updated = date('Y-m-d');
+        $dataDetail->save();
+
+        $dataBrg = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
+          'i_price'=> str_replace('.', '', $request->podt_prevprice[$i]),
+        ]);
+
+
+      }
+
+
+
+     } 
 
 
 

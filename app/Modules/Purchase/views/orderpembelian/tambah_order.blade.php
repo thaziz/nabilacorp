@@ -124,8 +124,8 @@
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <div class="form-group" id="divSelectSup">
-                            <input type="" name=""class="form-control input-sm" id="cari_sup" name="cariSup" style="width: 100%;">
-                            <input type="hidden" name=""class="form-control input-sm" id="id_supplier" name="id_supplier" style="width: 100%;">
+                            <input type="" class="form-control input-sm" id="cari_sup" name="cariSup" style="width: 100%;">
+                            <input type="hidden" class="form-control input-sm" id="id_supplier" name="supplier" style="width: 100%;">
                           </div>
                         </div>
 
@@ -141,13 +141,14 @@
                                 <th width="25%">Kode | Barang</th>
                                 <th width="7%">Qty</th>
                                 <th width="7%">Satuan</th>                                
+                                <th width="15%">Harga Prev</th>
                                 <th width="15%">Harga Satuan</th>
                                 <th width="15%">Total</th>
                                 <th width="8%">Stok Gudang</th>
                                 <th style="text-align: center;" width="5%">Aksi</th>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="drop_here">
                             </tbody>
                           </table>
                       </div>
@@ -342,18 +343,23 @@
         dataType: "JSON",
         success: function(data)
         {
+          // console.log(data);
           var totalHarga = 0;
           var key = 1;
           i = randString(5);
           //loop data
           var s_stock=0;
           Object.keys(data.data_isi).forEach(function(){                 
-            $('#tabel-form-po').html('');
+            // $('.drop_here').html('');
             if(data.data_isi[key-1].s_qty!=null){
               s_stock=data.data_isi[key-1].s_qty;
             }
-          var i_id=data.data_isi[key-1].i_id;       
-            $('#tabel-form-po').append('<tr class="tbl_form_row" id="row'+i_id+'">'
+            console.log(data.data_isi[key-1].ppdt_detailid + ' detil id');
+            console.log(data.data_isi[key-1].i_name);
+            var i_id=data.data_isi[key-1].i_id;       
+
+            $('.drop_here').append(
+                            '<tr class="tbl_form_row" id="row'+i_id+'">'
                             +'<td style="text-align:center">'+key+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'" name="fieldNamaItem[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="podt_item[]" class="form-control input-sm"/>'
@@ -361,8 +367,9 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="podt_detailid[]" class="form-control input-sm"/>'
                             +'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'         
+                            +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>' 
 
+                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
                             +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
@@ -370,7 +377,7 @@
                             +'<td><input type="text" value="'+s_stock+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');
-                            tamp.push(i_id);
+            tamp.push(i_id);
             i = randString(5);
             key++;
           });
@@ -525,22 +532,22 @@
   function simpanPo()
   {
     var IsValid = $("form[name='formCreatePo']").valid();
-    alert('d');
+    // alert('d');
     if(IsValid)
     {
-      alert('db');
+      // alert('db');
       var countRow = $('#tabel-form-po tr').length;
       (countRow > 1);
       if(countRow > 1)
       {
-        alert('kl')
+        // alert('kl')
         $('#divSelectSup').removeClass('has-error');
         $('#divSelectPlan').removeClass('has-error');
         $('#button_save').text('Menyimpan...');
         $('#button_save').attr('disabled',true); 
         $.ajax({
-            url : baseUrl + "/purchasing/orderpembelian/simpan-po",
-            type: "POST",
+            url : baseUrl + "/purcahse-order/save-po",
+            type: "get",
             dataType: "JSON",
             data: $('#form_create_po').serialize(),
             success: function(response)

@@ -461,21 +461,21 @@ class d_purchase_plan extends Model
 
     static function konfirmasiPurchasePlan($request)
   {    
-    DB::beginTransaction();
-    try {
-      /*dd($request->all());*/
+    // DB::beginTransaction();
+    // try {
+      // dd($request->all());
       
         //update table d_purchasingplan
-        $plan = d_purchase_plan::where('p_id',$request->idPlan);
-
+        $plan = d_purchase_plan::where('p_id',$request->idPlan)->first();
+        // return json_encode($plan);
         if ($request->statusConfirm != "WT") 
         {   
 
           $plan->update([
-            'p_confirm' => date('Y-m-d',strtotime(Carbon::now())),
-            'p_status' => $request->statusConfirm,
-            'p_updated' => Carbon::now(),
-            ]);
+              'p_confirm' => date('Y-m-d',strtotime(Carbon::now())),
+              'p_status' => $request->statusConfirm,
+              'p_updated' => Carbon::now(),
+          ]);
             
             //update table d_purchasingplan_dt
             $hitung_field = count($request->fieldConfirm);
@@ -483,14 +483,16 @@ class d_purchase_plan extends Model
             for ($i=0; $i < $hitung_field; $i++) 
             {
                 $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->idPlan)
-                          ->where('ppdt_detailid',$request->fieldIdDt[$i]);
+                          ->where('ppdt_detailid',$i+1);
 
                 $plandt->update([
-                'ppdt_qtyconfirm' => $request->fieldConfirm[$i],
-                'ppdt_updated' => Carbon::now(),
-                'ppdt_isconfirm' => "TRUE",
+                  'ppdt_qtyconfirm' => $request->fieldConfirm[$i],
+                  'ppdt_updated' => Carbon::now(),
+                  'ppdt_isconfirm' => "TRUE",
                 ]);
             }
+            // return  $plandt;
+            // return $request->fieldIdDt;
         }
         else
         {
@@ -519,15 +521,15 @@ class d_purchase_plan extends Model
             'status' => 'sukses',
             'pesan' => 'Data Rencana Order Berhasil Diupdate'
         ]);
-    } 
-    catch (\Exception $e) 
-    {
-        DB::rollback();
-        return response()->json([
-            'status' => 'gagal',
-            'pesan' => $e->getMessage()."\n at file: ".$e->getFile()."\n line: ".$e->getLine()
-        ]);
-    }
+    // } 
+    // catch (\Exception $e) 
+    // {
+    //     DB::rollback();
+    //     return response()->json([
+    //         'status' => 'gagal',
+    //         'pesan' => $e->getMessage()."\n at file: ".$e->getFile()."\n line: ".$e->getLine()
+    //     ]);
+    // }
   }
 
   

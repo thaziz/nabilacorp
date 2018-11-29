@@ -42,7 +42,11 @@ class purchaseOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-   
+   public function konvertRp($value)
+    {
+      $value = str_replace(['Rp', '\\', '.', ' '], '', $value);
+      return (int)str_replace(',', '.', $value);
+    }
    public function seachItemPurchase(Request $request){
          return   m_itemm::seachItemPurchase($request);
    }
@@ -75,12 +79,20 @@ class purchaseOrderController extends Controller
     }    
     public function getDataCodePlan(Request $request)
     {        
+      // return 'a';
          return d_purchase_order::getDataCodePlan($request);
     }    
 
      public function seachSupplier(Request $request) {
         return m_supplier::seachSupplier($request);
 
+     }
+     public function savePo(Request $request)
+     {
+       // dd($request->all());
+
+      return d_purchase_order::savePo($request);
+    
      }
    
 }
