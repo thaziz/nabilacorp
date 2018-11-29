@@ -163,10 +163,12 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
         return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date,
             $mutcat) {   
 
+
             $totalPermintaan= format::format($totalPermintaan);
             $totalHpp=0;
 
 			$updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);		
+
             if(!$updateStock->first()->s_qty){
                 $idStock=d_stock::max('s_id')+1;
                 d_stock::create([
@@ -183,8 +185,6 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     						's_qty'=>$qty
     					]);				
     			}else{				
-    				/*DB::rollBack();         */
-    				
             
             $data=['true'=>false,'totalHpp'=>$totalHpp];
             return $data;
