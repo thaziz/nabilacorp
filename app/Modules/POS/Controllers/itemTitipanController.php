@@ -105,9 +105,11 @@ class itemTitipanController extends Controller
         return 'data tidak ada';      
       }
     }
-    function serahTerimaStore(Request $request){
-      
+    function serahTerimaStore(Request $request){      
       return  d_item_titipan::serahTerimaStore($request);
+    }
+    function itemTitipan(Request $request){
+      return m_itemm::searchItemTitipan($request);
     }
 
 }

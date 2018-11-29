@@ -245,26 +245,27 @@ class m_itemm extends Model
 
 
 
-        $sql=DB::table('m_item')->join('d_item_supplier','is_item','=','i_id')
-             ->join('m_supplier','s_id','=','is_supplier')
+        $sql=DB::table('m_item')->LEFTjoin('d_item_supplier','is_item','=','i_id')
+             ->leftjoin('m_supplier','s_id','=','is_supplier')
              ->leftjoin('d_stock',function($join) use ($comp,$position) {
                     $join->on('s_item','=','i_id');
                     $join->where('s_comp',$comp); 
                     $join->where('s_position',$position); 
              })
-             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->join('m_group','g_id','=','i_group')
+             ->LEFTjoin('m_satuan','m_satuan.s_id','=','i_satuan')
+             /*->join('m_group','g_id','=','i_group')*/
              ->select('i_id','i_name','m_satuan.s_name as s_name','is_price','s_qty','i_code');
 
         if($search!='' && $id_supplier!=''){          
-            $sql->where(function ($query) use ($search,$id_supplier,$comp,$position) {
+
+            $sql->where(function ($query) use ($search,$id_supplier) {
                   $query->where('i_name','like','%'.$search.'%');                  
-                  $query->where('is_supplier',$id_supplier); 
-                  $query->where('g_name',DB::raw("'Barang Titipan'"));    
+                  /*$query->where('is_supplier',$id_supplier); */
+                  $query->where('i_type',DB::raw("'BTPN'"));    
 
                   $query->orWhere('i_code','like','%'.$search.'%');
-                  $query->where('is_supplier',$id_supplier); 
-                  $query->where('g_name',DB::raw("'Barang Titipan'")); 
+                  /*$query->where('is_supplier',$id_supplier); */
+                  $query->where('i_type',DB::raw("'BTPN'")); 
 
 
                   });
@@ -274,7 +275,7 @@ class m_itemm extends Model
           return Response::json($results);
         }
              
-        $sql=$sql->get();
+        $sql=$sql->get();        
 
         $results = array();
                         
