@@ -278,7 +278,7 @@ class spkFinancialController extends Controller
               <input  name=""
                       readonly
                       class="form-control text-right"
-                      value="'.number_format( $data->butuh ,0,',','.').'">';
+                      value="'.number_format( $data->butuh ,2,',','.').'">';
                       
     })
 
