@@ -54,6 +54,7 @@ Route::get('/penjualan/barang-titipan/seach-supplier', 'itemTitipanController@se
 Route::get('/penjualan/barang-titipan/store', 'itemTitipanController@store');
 Route::get('/penjualan/barang-titipan/{id}/edit-titipan-dt', 'itemTitipanController@editTitipanDt');
 Route::get('/penjualan/barang-titipan/update', 'itemTitipanController@update');
+Route::get('penjualan/barang-titip/search-item-titipan', 'itemTitipanController@itemTitipan');
 
 Route::get('/penjualan/barang-titipan/serahTerima/{id}', 'itemTitipanController@serahTerima');
 Route::get('/penjualan/barang-titipan/serah-terima/store', 'itemTitipanController@serahTerimaStore');

@@ -64,10 +64,10 @@
                                                                 name="prdt_produksi" style="width: 100%;">
                                                             <option class="form-control" value="">- Pilih Tujuan
                                                             </option>
-                                                            @foreach ($data as $gudang)
+                                                            @foreach ($gudang as $data)
                                                                 <option class="form-control"
-                                                                        value="{{ $gudang->cg_id }}">
-                                                                    - {{ $gudang->cg_cabang }}</option>
+                                                                        value="{{ $data->gc_id }}">
+                                                                    {{ $data->c_name }} - {{ $data->gc_gudang }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -83,7 +83,9 @@
                                                         {{--    <th width="5%">No</th> --}}
                                                         <th width="20%">Kode Item</th>
                                                         <th>Nama Item</th>
-                                                        <th width="15%">Jumlah Item</th>
+                                                        <th width="15%">Jumlah Hasil</th>
+                                                        <th width="15%">Jumlah Kirim</th>
+                                                        <th width="15%">Jumlah Sisa</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -95,8 +97,8 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <a style="margin-top: 20px; margin-right:10px; "
                                                class="btn btn-primary pull-right"
-                                               href="{{url('produksi/suratjalan/print')}}" target="_blank"
-                                               onclick="question()"><i class="fa fa-print"></i>&nbsp;Cetak</a>
+                                       {{--         href="{{url('produksi/suratjalan/print')}}" target="_blank" --}}
+                                               onclick="saveDelevery()"><i class="fa fa-print"></i>&nbsp;Cetak</a>
                                             {{-- <button style="margin-top: 20px; margin-right:10px; " class="btn btn-warning pull-right kirim" type="button" onclick="saveDelevery()">Cetak
                                               <i class="fa fa-print"></i>
                                             </button> --}}
@@ -230,17 +232,20 @@
             endDate: 'today'
         });//.datepicker("setDate", "0");
 
+        var comp = $('.mem_comp').val();
         var tableSuratJalan = $('#tableSuratJalan').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: baseUrl + "/produksi/suratjalan/create/delivery",
+                url: baseUrl + "/produksi/suratjalan/create/delivery/" + comp,
             },
             columns: [
                 // {data: 'DT_Row_Index', name: 'DT_Row_Index', orderable: false},
                 {data: 'i_code', name: 'i_code'},
                 {data: 'prdt_item', name: 'prdt_item'},
                 {data: 'prdt_qty', name: 'prdt_qty', orderable: false},
+                {data: 'prdt_qtyKirim', name: 'prdt_qtyKirim', orderable: false},
+                {data: 'prdt_qtySisa', name: 'prdt_qtySisa', orderable: false},
             ],
         });
 
@@ -319,7 +324,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: baseUrl + "/produksi/pengambilanitem/kirim/tabel/" + tgl1 + '/' + tgl2,
+                url: baseUrl + "/produksi/pengambilanitem/kirim/tabel/" + tgl1 + '/' + tgl2 + '/' + comp,
             },
             columns: [
                 {data: 'do_date_send', name: 'do_date_send'},
@@ -331,6 +336,7 @@
         });
 
         function cariTanggalJual() {
+            var comp = $('.mem_comp').val();
             var tgl1 = $('#tanggal1').val();
             var tgl2 = $('#tanggal2').val();
             $('#tabelPengirimanDo').DataTable({
@@ -339,7 +345,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: baseUrl + "/produksi/pengambilanitem/cari/tabel/" + tgl1 + '/' + tgl2,
+                    url: baseUrl + "/produksi/pengambilanitem/cari/tabel/" + tgl1 + '/' + tgl2 + '/' + comp,
                 },
                 columns: [
                     {data: 'do_date_send', name: 'do_date_send'},
@@ -360,6 +366,18 @@
                     $('#detailProduksi').html(response);
                 }
             })
+        }
+
+        function hitungKirim(id, qty){
+            var kirim = $('#prdt_qtyKirim'+id).val();
+            if (kirim >= qty || kirim < 0) {
+                $('#prdt_qtyKirim'+id).val(qty);
+                $('#prdt_qtySisa'+id).val(0);
+            }else{
+                var hasil = qty - kirim;
+                $('#prdt_qtySisa'+id).val(hasil); 
+            }
+                    
         }
 
     </script>

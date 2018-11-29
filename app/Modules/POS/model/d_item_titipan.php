@@ -161,7 +161,18 @@ class d_item_titipan extends Model
         $jumlahQty=$idt_return+$idt_qty;
 
         $hpp= format::format($request->idt_price[$i]);   
-        $simpanMutasi=mutasi::tambahmutasi($request->idt_item[$i],$jumlahQty,$comp,$position,'BARANG TITIPAN',12,$it_id,'','',$hpp);
+        $simpanMutasi=mutasi::tambahmutasi(
+          $request->idt_item[$i],
+          $jumlahQty,
+          $comp,$position,
+          'BARANG TITIPAN',
+          12,
+          $it_id,
+          '',
+          '',
+          $hpp,
+          date('Y-m-d',strtotime($request->it_date))
+          );        
         if($simpanMutasi['true']){              
             $idt_detailid=d_itemtitipan_dt::where('idt_itemtitipan',$it_id)
                                ->max('idt_detailid')+1;                                           

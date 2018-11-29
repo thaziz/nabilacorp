@@ -74,9 +74,9 @@
                 <thead>
                   <tr>
                     <th>Bahan Baku</th>
-                    <th>Kebutuhan</th>
-                    <th width="5%">Satuan</th>
                     <th>Stok</th>
+                    <th width="5%">Kebutuhan</th>
+                    <th>Satuan</th>
                     <th>Sisa</th>
                   </tr>
                 </thead>
