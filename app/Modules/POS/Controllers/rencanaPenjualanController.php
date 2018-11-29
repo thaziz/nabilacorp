@@ -62,8 +62,10 @@ class rencanaPenjualanController extends Controller
       foreach($d_salesplan_dt as $item) {
         $item['m_item'] = $item->m_item;
         $item['satuan'] = '';
+        $item['subtotal'] = '';
         if($item->m_item->m_satuan != null) {
-          $item['satuan'] = item->m_item->s_detname;
+          $item['satuan'] = $item->m_item->m_satuan->s_detname;
+          $item['subtotal'] = $item->spdt_qty * $item->m_item->i_price; 
         }
       }
 

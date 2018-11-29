@@ -193,29 +193,29 @@
   }
 
   function validationForm() {
-    $chekDetail = 0;
-    for (var i = 0; i < tamp.length; i++) {
-      if ($('.fQty' + tamp[0]).val() == '' || $('.fQty' + tamp[0]).val() == '0') {
-        $chekDetail++;
-      }
-    }
-    if ($chekDetail > 0) {
-      iziToast.error({
-        position: 'topRight',
-        timeout: 2000,
-        title: '',
-        message: "Maaf, data detail belum sesuai.",
-      });
-      $('.btn-disabled').attr('disabled', 'disabled');
-      $('.fQty' + tamp[0]).focus();
-      $('.fQty' + tamp[0]).css('border', '2px solid red');
-      return false;
-    } else {
-      $('.fQty' + tamp[0]).css('border', 'none');
-      $('.btn-disabled').removeAttr('disabled');
-      return true;
-    }
-
+    // $chekDetail = 0;
+    // for (var i = 0; i < tamp.length; i++) {
+    //   if ($('.fQty' + tamp[0]).val() == '' || $('.fQty' + tamp[0]).val() == '0') {
+    //     $chekDetail++;
+    //   }
+    // }
+    // if ($chekDetail > 0) {
+    //   iziToast.error({
+    //     position: 'topRight',
+    //     timeout: 2000,
+    //     title: '',
+    //     message: "Maaf, data detail belum sesuai.",
+    //   });
+    //   $('.btn-disabled').attr('disabled', 'disabled');
+    //   $('.fQty' + tamp[0]).focus();
+    //   $('.fQty' + tamp[0]).css('border', '2px solid red');
+    //   return false;
+    // } else {
+    //   $('.fQty' + tamp[0]).css('border', 'none');
+    //   $('.btn-disabled').removeAttr('disabled');
+    //   return true;
+    // }
+    return true;
   }
 
 
@@ -474,7 +474,6 @@
       responsive: true,
       "language": dataTableLanguage,
       processing: true,
-      serverSide: true,
       ajax: {
         "url": "{{ url('/penjualan/rencanapenjualan/find_d_sales_plan') }}",
         "type": "get",
@@ -499,7 +498,14 @@
           } 
         },
         { data : 'sp_code' },
-        { data : 'total_harga' },
+        { 
+          data : null,
+          render : function(res) {
+            var currency = get_currency( res.total_harga );
+            var content = 'RP ' + currency;
+            return content;
+          }
+        },
         { 
             data : null,
             render : function(res) {
@@ -643,23 +649,16 @@
 
 
       updateQty = SetFormRupiah(parseFloat(a) + parseFloat(b));
-      if (fStok >= updateQty) {
+      
         $('.fQty' + i_id.val()).val(updateQty)
         itemName.val('');
         fQty.val('');
         $('#stock').val('');
         searchitem.val('');
         searchitem.focus();
-        hitungTotalPerItem(i_id.val());
+        // hitungTotalPerItem(i_id.val());
         $('.reset-seach').val('');
-      } else {
-        iziToast.error({
-          position: 'topRight',
-          timeout: 2000,
-          title: '',
-          message: "Ma'af, jumlah permintaan melebihi stok gudang.",
-        });
-      }
+      
     }
     console.log('setelah' + tamp);
   }
@@ -892,31 +891,8 @@
 
   $('#fQty').keypress(function (e) {
     if (e.which == 13 || e.keyCode == 13) {
-      if(false) {
-      // if (parseFloat(angkaDesimal(fQty.val())) > parseFloat(angkaDesimal($('#stock').val())) || parseFloat(angkaDesimal($('#stock').val())) <= 0) {
-        iziToast.error({
-          position: 'topRight',
-          timeout: 2000,
-          title: '',
-          message: "Ma'af, jumlah permintaan melebihi stok gudang.",
-        });
-        return false;
-      } else if ($('#stock').val() == '') {
-        iziToast.error({
-          position: 'topRight',
-          timeout: 2000,
-          title: '',
-          message: "Ma'af, barang harus dipilih.",
-        });
-        $('.reset-seach').val('');
-        searchitem.focus();
-        $('#fQty').val('');
-        $('#cQty').val('');
-
-      } else {
-        setFormDetail();
-        totalPerItem();
-      }
+      setFormDetail();
+      totalPerItem();
     }
   });
 

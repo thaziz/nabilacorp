@@ -199,9 +199,9 @@
         },
         columns: [
         {data: 'f_bb', name: 'f_bb'},
+        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'f_value', name: 'f_value'},
         {data: 's_name', name: 's_name'},
-        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'purchesing', name: 'purchesing', orderable: false},
         ],
       });
@@ -231,20 +231,21 @@
   }
 
   function tabelDraftFormula(iditem, jumlah){
+    var comp = $('.mem_comp').val();
     var formulaDraft = $('#tabelDraftFormula').DataTable({
       responsive:true,
       destroy: true,
       processing: true,
       serverSide: true,
         ajax: {
-            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah,
+            url : baseUrl + "/produksi/lihatadonan/tabel/"+iditem+'/'+jumlah+'/'+comp,
         },
         columns: [
         // {data : 'DT_Row_Index', orderable: true, searchable: false},
         {data: 'f_bb', name: 'f_bb'},
+        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'f_value', name: 'f_value'},
         {data: 's_name', name: 's_name'},
-        {data: 'd_stock', name: 'd_stock', orderable: false},
         {data: 'purchesing', name: 'purchesing', orderable: false},
         ],
       });

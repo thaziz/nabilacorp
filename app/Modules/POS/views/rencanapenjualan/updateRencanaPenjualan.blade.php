@@ -1,5 +1,6 @@
    @extends('main')
 @section('content')
+@include('POS::rencanapenjualan/js/format_currency')
 <!--BEGIN PAGE WRAPPER-->
 <div id="page-wrapper">
 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -25,7 +26,7 @@
          </div>
       </div>
       <ul id="generalTab" class="nav nav-tabs">
-         <li class="active"><a id="penjualan" href="#toko" data-toggle="tab">Rencana Penjualan</a></li>
+         <li class="active"><a id="penjualan" href="#toko" data-toggle="tab">Update Rencana Penjualan</a></li>
          <li><a id="list" href="{{ url('/penjualan/rencanapenjualan/rencana') }}">List Rencana Penjualan</a></li>
          <!-- 
             <li><a href="#mobil" data-toggle="tab">Penjualan Mobil</a></li>

@@ -16,7 +16,7 @@ use App\spk_actual;
 use App\d_gudangcabang;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\lib\mutasi;
+use App\Lib\mutasi;
 
 class spkProductionController extends Controller
 {
@@ -239,11 +239,13 @@ class spkProductionController extends Controller
             ->get();
         // dd($spkDt);
         if ($spk->spk_status == "AP") {
+            // dd($spkDt);
             //update status to PB
             for ($i=0; $i <count($spkDt) ; $i++) { 
                 $a[] = $spkDt[$i]->fr_value;
+                
                 if(mutasi::mutasiStok(  $spkDt[$i]->fr_formula,
-                                        $spkDt[$i]->fr_value,
+                                        number_format($spkDt[$i]->fr_value,2,',','.'),
                                         $comp=$gudang,
                                         $position=$gudang,
                                         $flag=2,
