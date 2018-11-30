@@ -40,6 +40,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/namaitem/history/{tgl1}/{tgl2}', 'stockOpnameController@history');
 	Route::get('/inventory/namaitem/detail', 'stockOpnameController@getOPname');
 	Route::get('/inventory/stockopname/print_stockopname/{id}', 'stockOpnameController@print_stockopname');
+//stok gudang
+	Route::get('/inventory/stockgudang/index', 'stockGudangController@index');
+	Route::get('/inventory/namaitem/tablegudang/{x}', 'stockGudangController@tableGudang');
 	
 
 });
