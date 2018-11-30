@@ -248,7 +248,7 @@ class spkProductionController extends Controller
                                         number_format($spkDt[$i]->fr_value,2,',','.'),
                                         $comp=$gudang,
                                         $position=$gudang,
-                                        $flag=2,
+                                        $flag='MENGURANGI',
                                         $spk->spk_code,
                                         'MENGURANGI',
                                         Carbon::now(),
