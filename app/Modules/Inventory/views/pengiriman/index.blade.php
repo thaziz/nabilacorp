@@ -70,6 +70,7 @@
                                                                     {{ $data->c_name }} - {{ $data->gc_gudang }}</option>
                                                             @endforeach
                                                         </select>
+                                                        <input type="hidden" class="form-control" id="comp" name="comp">
                                                     </div>
                                                 </div>
 
@@ -208,6 +209,9 @@
             $.extend($.fn.dataTableExt.oStdClasses, extensions);
             // Used when bJQueryUI is true
             $.extend($.fn.dataTableExt.oJUIClasses, extensions);
+
+            var comp = $('.mem_comp').val();
+            $('#comp').val(comp);
 
         });
 
