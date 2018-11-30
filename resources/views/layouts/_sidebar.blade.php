@@ -194,7 +194,7 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/p_hasilproduksi/produksi') ? 'active' : '' || Request::is('inventory/p_hasilproduksi/*') ? 'active' : '' }}"><a href="{{ url('/inventory/p_hasilproduksi/produksi') }}"><span class="submenu-title">Penerimaan Hasil Produksi</span><span class="hidden">Inventory</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('inventory/p_returncustomer/cust') ? 'active' : '' || Request::is('inventory/p_returncustomer/*') ? 'active' : '' }}"><a href="{{ url('/inventory/p_returncustomer/cust') }}"><span class="submenu-title">Penerimaan Barang Return Customer</span><span class="hidden">Inventory</span></a>
+                            <li class="menu-sekunder {{ Request::is('inventory/p_returncustomer/cust') ? 'active' : '' || Request::is('inventory/p_returncustomer/*') ? 'active' : '' }}"><a href="{{ url('/inventory/p_returncustomer/cust') }}"><span class="submenu-title">Stock Gudang</span><span class="hidden">Inventory</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/b_digunakan/barang') ? 'active' : '' || Request::is('inventory/b_digunakan/*') ? 'active' : '' }}"><a href="{{ url('/inventory/b_digunakan/barang') }}"><span class="submenu-title">Barang Digunakan</span><span class="hidden">Inventory</span></a>
                             </li>

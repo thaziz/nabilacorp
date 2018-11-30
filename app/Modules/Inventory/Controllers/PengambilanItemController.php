@@ -185,9 +185,11 @@ class PengambilanItemController extends Controller
 
     function store(Request $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
+            $gudTujuan = d_gudangcabang::select('gc_id','gc_comp')
+                  ->where('gc_id',$request->prdt_produksi)
+                  ->first();
             // nota do
             $year = carbon::now()->format('y');
             $month = carbon::now()->format('m');
@@ -202,6 +204,8 @@ class PengambilanItemController extends Controller
             d_delivery_order::insert([
                 'do_id' => $maxid,
                 'do_comp' => $request->comp,
+                'do_send' => $gudTujuan->gc_id,
+                'do_sendcomp' => $gudTujuan->gc_comp,
                 'do_nota' => $nota_do,
                 'do_date_send' => Carbon::now(),
                 'do_time' => Carbon::now(),
@@ -240,7 +244,7 @@ class PengambilanItemController extends Controller
                         'prdt_status' => 'FN'
                     ]);
                 }
-                $compp = $request->prdt_produksi;
+                $compp = $request->comp;
                 $gc_id = d_gudangcabang::select('gc_id')
                       ->where('gc_gudang','GUDANG PRODUKSI')
                       ->where('gc_comp',$compp)
