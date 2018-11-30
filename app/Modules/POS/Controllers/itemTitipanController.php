@@ -98,7 +98,7 @@ class itemTitipanController extends Controller
 
     function serahTerima($id){
       $master=d_item_titipan::dataTitipan($id);      
-      $data=d_itemtitipan_dt::itemTitipanDt($id);
+      $data=d_itemtitipan_dt::itemTitipanDt($id);      
       if($master){
         return view('POS::barangTitipan/detailSerahTerima',compact('data','master'));          
       }else{

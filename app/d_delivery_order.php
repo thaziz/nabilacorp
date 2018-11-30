@@ -12,6 +12,7 @@ class d_delivery_order extends Model
     const UPDATED_AT = 'do_update';
     
       protected $fillable = ['do_id',
+                   'do_comp',
       						 'do_nota',
       						 'do_date_send', 
       						 'do_time', 
