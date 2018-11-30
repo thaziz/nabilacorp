@@ -29,8 +29,12 @@ class MonitoringProgressController extends Controller
   }
 
   public function tabel(){
+
+    $comp=Session::get('user_comp');
+
     $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
                ->where('sp_status',DB::raw("'N'"))
+               ->where('sp_comp',DB::raw("$comp"))               
               ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
 
 
@@ -42,6 +46,7 @@ class MonitoringProgressController extends Controller
               ->orwhere('pp_isspk',DB::raw("'P'"));
         })
       ->select(DB::raw("sum(pp_qty) as pp_qty"), 'pp_item')
+      ->where('pp_comp',DB::raw("$comp"))               
       ->groupBy('pp_item');
 
     $sales = DB::Table('d_sales')
@@ -49,6 +54,7 @@ class MonitoringProgressController extends Controller
       ->where(function ($query) {
           $query->where('s_status',DB::raw("'final'"));
         })
+      ->where('s_comp',DB::raw("$comp"))               
       ->leftjoin('d_sales_dt','d_sales.s_id', '=' , 'd_sales_dt.sd_sales');
     /*dd($sales->toSql());*/
 
