@@ -224,7 +224,8 @@ function simpan() {
   var tabel = $("#table-search input").serialize();
   var pp_item = $('#pp_item').val();
   var rowPlan = $('#rowPlan').val();
-  var dataSimpan = tabel+'&pp_item='+pp_item+'&rowPlan='+rowPlan;
+  var comp = $('.mem_comp').val();
+  var dataSimpan = tabel+'&pp_item='+pp_item+'&rowPlan='+rowPlan+'&mem_comp='+comp;
 
   for (var i=0; i<dataInput.length ; i++){
   }

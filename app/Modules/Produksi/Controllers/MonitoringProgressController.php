@@ -237,7 +237,7 @@ class MonitoringProgressController extends Controller
       $spk['P'] = 0;
     }
 
-    return view('produksi.monitoringprogress.plan', compact('plan','spk','id'));  
+    return view('Produksi::monitoringprogress.plan', compact('plan','spk','id'));  
   }
 
   public function save(Request $request){
@@ -265,6 +265,7 @@ class MonitoringProgressController extends Controller
           $pp[$i] = DB::Table('d_productplan')
             ->insert([
               'pp_id' => $maxid,
+              'pp_comp' => $request->mem_comp,
               'pp_item' => $request->pp_item,
               'pp_date' => Carbon::parse($request->{'tanggal'.$i})->format('Y-m-d'),
               'pp_qty' => $request->{'pp_qty'.$i},
