@@ -1,6 +1,7 @@
 <script type="text/javascript">
   dataIndex = null;
 
+  // Function untuk meng-insert sales plan
   function insert_sales_plan() {
     var data = $('#form_sales_plan').serialize();
     $.ajax({
@@ -26,6 +27,7 @@
     });
   }
 
+  // Function untuk memperbarui sales plan
   function perbarui_sales_plan() {
     var data = $('#form_sales_plan').serialize();
     $.ajax({
@@ -51,7 +53,22 @@
     });
   }
 
+  // Function untuk menghitung grand total ketika menambahkan atau mengurangi item
+  function totalPerItem() {
+    var sd_qty_item = $('[name="sd_qty[]"]');
+    var sd_qty, row, sd_price;
+    var grand_total = 0;
+    if(sd_qty_item.length > 0) {
+      for(x = 0;x < sd_qty_item.length;x++) {
+        sd_qty = $( sd_qty_item[x] );
+        row = sd_qty.parents('tr');
+        sd_price = row.find('[name="sd_price[]"]');
+        grand_total += (parseInt( sd_qty.val() ) + parseInt( sd_price.val() ));
+      }
+    }
 
+    $('#grand_biaya').val(grand_total);
+  }
 
   function buttonSimpanPos($status) {
 

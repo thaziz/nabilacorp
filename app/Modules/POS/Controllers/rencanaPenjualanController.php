@@ -56,7 +56,7 @@ class rencanaPenjualanController extends Controller
 
     // Menampilkan form untuk mengupdate data
     function form_perbarui($sp_id) {
-      $d_sales_plan = d_sales_plan::findOrFail($sp_id)->first();
+      $d_sales_plan = d_sales_plan::where('sp_id', $sp_id)->first();
       $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id)->get();
       
       $grand_total = 0;
@@ -72,7 +72,7 @@ class rencanaPenjualanController extends Controller
       }
 
       $d_sales_plan['d_salesplan_dt'] = $d_salesplan_dt;
-      $data = array('d_sales_plan' => $d_sales_plan, 'grand_total' => $grand_total);
+      $data = array('d_sales_plan' => $d_sales_plan, 'grand_total' => $grand_total, 'sp_id' => $sp_id);
       return view('POS::rencanapenjualan/updateRencanaPenjualan', $data);
     }
 

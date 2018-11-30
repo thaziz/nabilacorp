@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                            <div class="form-group">
-                              <input type="hidden"  name="sp_id" id="sp_id" value="{{ $d_sales_plan->sp_id }}">
+                              <input type="hidden"  name="sp_id" id="sp_id" value="{{ $sp_id }}">
                               <input type="text" class="form-control input-sm reset" name="s_note" id="s_note" value="{{ $d_sales_plan->sp_code }}" disabled="">
                            </div>
                         </div>
