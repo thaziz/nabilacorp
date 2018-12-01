@@ -16,10 +16,8 @@
       <div style="padding-top:6px">{{$detail->satuan}}</div>
    </td>
    <td><input class="harga{{$detail->m_item->i_id}} alignAngka" style="width:100%;border:none" name="spdt_price[]" value="{{number_format($detail->m_item->i_price,0,',','.')}}"" readonly></td>
-   <td><input class="alignAngka discRp{{$detail->m_item->i_id}}" style="width:100%;border:none" name="spdt_disc_value[]" id="discRp" onkeyup="hitungTotalPerItem('{{$detail->m_item->i_id}}');rege(event,'discRp{{$detail->m_item->i_id}}')" onblur="setRupiah(event,'{{$detail->m_item->i_id}}')" onclick="setAwal(event,'{{$detail->m_item->i_id}}')" value="{{number_format($detail->spdt_disc_value,0,',','.')}}" ></td>
   
-   <td style="display:none"><input style="width:100%;border:none" name="spdt_total[]" class="totalPerItem alignAngka totalPerItem{{$detail->m_item->i_id}}" readonly value="{{$detail->spdt_qty*$detail->spdt_price}}"></td>
-   <td>
+   <td align="right">
      <script>
           document.write(
                get_currency({{ $detail->subtotal }})

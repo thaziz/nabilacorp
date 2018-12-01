@@ -11,7 +11,7 @@
 			res = res.replace(nonDigitPtr, '');
 			if(res.length > 3) {
 				var currPtr = /(\w{3})/g;
-				var currStr = res.replace(currPtr, '$1,').split('').reverse().join('').replace(/^,(.*)/, '$1');
+				var currStr = res.replace(currPtr, '$1,').split('').reverse().join('').replace(/^\.(.*)/, '$1');
 				$(this).val(currStr);
 			}
 			res = res.split('').reverse().join('');

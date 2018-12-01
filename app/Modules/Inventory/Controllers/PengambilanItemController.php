@@ -8,10 +8,13 @@ use App\d_gudangcabang;
 use App\d_productresult_dt;
 use App\d_delivery_order;
 use App\d_delivery_orderdt;
+use App\d_stock;
+use App\d_stock_mutation;
 use Carbon\Carbon;
 use DB;
 use Response;
 use Datatables;
+use App\Lib\mutasi;
 
 class PengambilanItemController extends Controller
 {
@@ -182,9 +185,11 @@ class PengambilanItemController extends Controller
 
     function store(Request $request)
     {
-        dd($request->all());
         DB::beginTransaction();
         try {
+            $gudTujuan = d_gudangcabang::select('gc_id','gc_comp')
+                  ->where('gc_id',$request->prdt_produksi)
+                  ->first();
             // nota do
             $year = carbon::now()->format('y');
             $month = carbon::now()->format('m');
@@ -198,6 +203,9 @@ class PengambilanItemController extends Controller
 
             d_delivery_order::insert([
                 'do_id' => $maxid,
+                'do_comp' => $request->comp,
+                'do_send' => $gudTujuan->gc_id,
+                'do_sendcomp' => $gudTujuan->gc_comp,
                 'do_nota' => $nota_do,
                 'do_date_send' => Carbon::now(),
                 'do_time' => Carbon::now(),
@@ -211,45 +219,66 @@ class PengambilanItemController extends Controller
                     'dod_prdt_productresult' => $request->prdt_productresult[$i],
                     'dod_prdt_detail' => $request->prdt_detail[$i],
                     'dod_item' => $request->prdt_item[$i],
-                    'dod_qty_send' => $request->prdt_qty[$i],
+                    'dod_qty_send' => $request->prdt_qtyKirim[$i],
                     'dod_date_send' => Carbon::now(),
                     'dod_time_send' => Carbon::now(),
                     'dod_qty_received' => 0,
                     'dod_status' => 'WT'
                 ]);
 
+                $cek = d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
+                    ->where('prdt_detail', $request->prdt_detail[$i])
+                    ->first();
+
                 d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
+                    ->where('prdt_detail', $request->prdt_detail[$i])
+                    ->update([
+                        'prdt_kirim' => $request->prdt_qtyKirim[$i] + $cek->prdt_kirim, 
+                        'prdt_sisa' =>$cek->prdt_sisa - $request->prdt_qtyKirim[$i], 
+                    ]);
+                
+                if ($cek->prdt_kirim == $cek->prdt_qty) {
+                    d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
                     ->where('prdt_detail', $request->prdt_detail[$i])
                     ->update([
                         'prdt_status' => 'FN'
                     ]);
-                if (mutasi::mutasiStok($request->prdt_item[$i],
-                    $request->prdt_qty[$i],
-                    $comp = 6,
-                    $position = 6,
-                    $flag = 11,
-                    $nota_do)) {
                 }
+                $compp = $request->comp;
+                $gc_id = d_gudangcabang::select('gc_id')
+                      ->where('gc_gudang','GUDANG PRODUKSI')
+                      ->where('gc_comp',$compp)
+                      ->first();
 
-                $stokProduksi = d_stock::where('s_comp', '6')
-                    ->where('s_position', '6')
-                    ->where('s_item', $request->prdt_item[$i])
-                    ->first();
-
-                $stokBaru = $stokProduksi->s_qty - $request->prdt_qty[$i];
+                if (mutasi::mutasiStok(
+                    $request->prdt_item[$i],
+                    $request->prdt_qty[$i],
+                    $comp = $gc_id->gc_id,
+                    $position = $gc_id->gc_id,
+                    $flag = 'MENGURANGI',
+                    $nota_do,
+                    'MENGURANGI',
+                    Carbon::now(),
+                    8)) {
+                }
 
                 $maxidd_stock = d_stock::select('s_id')->max('s_id') + 1;
                 //end add id d_stock
+                $gc_sending = d_gudangcabang::select('gc_id')
+                      ->where('gc_gudang','GUDANG SENDING')
+                      ->where('gc_comp',$compp)
+                      ->first();
+                      // dd($gc_sending);
                 $stock = d_stock::where('s_item', $request->prdt_item[$i])
-                    ->where('s_comp', DB::raw('2'))
-                    ->where('s_position', DB::raw('5'))
+                    ->where('s_comp', $gc_id->gc_id)
+                    ->where('s_position', $gc_sending->gc_id)
                     ->first();
-                // dd();
+               
                 if ($stock == null) {
                     d_stock::insert([
                         's_id' => $maxidd_stock,
-                        's_comp' => 2,
-                        's_position' => 5,
+                        's_comp' => $gc_id->gc_id,
+                        's_position' => $gc_sending->gc_id,
                         's_item' => $request->prdt_item[$i],
                         's_qty' => $request->prdt_qty[$i]
                     ]);
@@ -258,8 +287,8 @@ class PengambilanItemController extends Controller
                         'sm_stock' => $maxidd_stock,
                         'sm_detailid' => 1,
                         'sm_date' => Carbon::now(),
-                        'sm_comp' => 2,
-                        'sm_position' => 5,
+                        'sm_comp' => $gc_id->gc_id,
+                        'sm_position' => $gc_sending->gc_id,
                         'sm_mutcat' => 9,
                         'sm_item' => $request->prdt_item[$i],
                         'sm_qty' => $request->prdt_qty[$i],
@@ -281,16 +310,16 @@ class PengambilanItemController extends Controller
 
                     $sm_detailid = d_stock_mutation::select('sm_detailid')
                             ->where('sm_item', $request->prdt_item[$i])
-                            ->where('sm_comp', '2')
-                            ->where('sm_position', '5')
+                            ->where('sm_comp', $gc_id->gc_id)
+                            ->where('sm_position', $gc_sending->gc_id)
                             ->max('sm_detailid') + 1;
 
                     d_stock_mutation::create([
                         'sm_stock' => $stock->s_id,
                         'sm_detailid' => $sm_detailid,
                         'sm_date' => Carbon::now(),
-                        'sm_comp' => 2,
-                        'sm_position' => 5,
+                        'sm_comp' => $gc_id->gc_id,
+                        'sm_position' => $gc_sending->gc_id,
                         'sm_mutcat' => 9,
                         'sm_item' => $request->prdt_item[$i],
                         'sm_qty' => $request->prdt_qty[$i],

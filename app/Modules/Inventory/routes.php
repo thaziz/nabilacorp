@@ -16,9 +16,12 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/produksi/pengambilanitem/cari/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@cariTabelKirim');
 	Route::get('/produksi/suratjalan/save', 'PengambilanItemController@store');
 
-	Route::get('/inventory/p_hasilproduksi/produksi', 'penerimaanController@index');
-	Route::get('/inventory/p_hasilproduksi/getdata', 'penerimaanController@getdata');
+	Route::get('/inventory/p_hasilproduksi/produksi', 'PenerimaanBrgProdController@index');
+	Route::get('/inventory/p_hasilproduksi/get_data_sj/{comp}', 'PenerimaanBrgProdController@get_data_sj');
 	Route::get('/inventory/p_hasilproduksi/terima', 'penerimaanController@terima');
+	Route::get('/inventory/p_hasilproduksi/list_sj', 'PenerimaanBrgProdController@list_sj');
+	Route::get('/inventory/p_hasilproduksi/get_tabel_data/{id}', 'PenerimaanBrgProdController@get_tabel_data');
+	Route::get('/inventory/p_hasilproduksi/terima_hasil_produksi/{id}/{id2}', 'PenerimaanBrgProdController@terima_hasil_produksi');
 
 
 	Route::get('/inventory/mutasiitembaku/index', 'mutasiitembakuController@index');
@@ -37,6 +40,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/namaitem/history/{tgl1}/{tgl2}', 'stockOpnameController@history');
 	Route::get('/inventory/namaitem/detail', 'stockOpnameController@getOPname');
 	Route::get('/inventory/stockopname/print_stockopname/{id}', 'stockOpnameController@print_stockopname');
+//stok gudang
+	Route::get('/inventory/stockgudang/index', 'stockGudangController@index');
+	Route::get('/inventory/namaitem/tablegudang/{x}', 'stockGudangController@tableGudang');
 	
 
 });
