@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 
 use App\mMember;
 use App\Modules\Purchase\model\d_purchase_plan;
+use App\Modules\Purchase\model\d_purchase_order;
+use App\Modules\Purchase\model\d_purchaseorder_dt;
 
 use Datatables;
 
@@ -59,7 +61,7 @@ class purchaseConfirmController extends Controller
 public function getDataRencanaPembelian(Request $request)
   {
     $data = d_purchase_plan::join('m_supplier','d_purchase_plan.p_supplier','=','m_supplier.s_id')
-              // ->join('d_mem','d_purchase_plan.p_mem','=','d_mem.m_id')
+              ->join('d_mem','d_purchase_plan.p_mem','=','d_mem.m_id')
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
             // ->orderBy('d_pcsp_datecreated', 'DESC')
             ->get();
@@ -135,9 +137,165 @@ public function getDataRencanaPembelian(Request $request)
    /*dd($request->all());   */
       return d_purchase_plan::konfirmasiPurchasePlan($request);
    }
-   
 
+   public function konfirmasiOrder(Request $request,$id,$type){  
+   // dd($request->all());   
+   $dataHeader = d_purchase_order::join('m_supplier','po_supplier','=','s_id')
+                            ->leftjoin('d_mem','po_mem','=','m_id')
+                            ->select(
+                                'po_id',
+                                'po_code',
+                                's_company',
+                                'po_date', 
+                                'po_status',
+                                DB::raw('IFNULL(po_date_confirm, "") AS p_confirm'),
+                                DB::raw('IFNULL(m_id, "") AS m_id'),
+                                DB::raw('IFNULL(m_name, "") AS m_name'))
+                            ->where('po_id', '=', $id)
+                            ->orderBy('po_date', 'DESC')
+                            ->get();
+    $statusLabel = $dataHeader[0]->p_status;
+    $dataHeader[0]->p_date=date('d-m-Y',strtotime($dataHeader[0]->p_date));
+    if ($statusLabel == "WT") 
+    {
+        $spanTxt = 'Waiting';
+        $spanClass = 'label-info';
+    }
+    elseif ($statusLabel == "DE")
+    {
+        $spanTxt = 'Dapat Diedit';
+        $spanClass = 'label-warning';
+    }
+    else
+    {
+        $spanTxt = 'Di setujui';
+        $spanClass = 'label-success';
+    }
+    if ($type == "all") 
+    {
+      
+      $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
+                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+                                ->leftjoin('d_stock','s_item','=','i_id')
+                                ->select('i_id',
+                                         'm_item.i_code',
+                                         'm_item.i_name',
+                                         's_name',                                         
+                                         'podt_qty',
+                                         'podt_qtyconfirm',
+                                         DB::raw('IFNULL(s_qty, 0) AS s_qty'),
+                                         'podt_prevcost',
+                                         'podt_pruchaseplan',
+                                          'o4pdt_detailid'
+                                )
+                                ->where('ppdt_pruchaseplan', '=', $id)
+                                ->orderBy('ppdt_created', 'DESC')
+                                ->get();
+      
+    }
+    else
+    {
+
+       $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
+                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+                                ->leftjoin('d_stock','s_item','=','i_id')
+                                ->select('i_id',
+                                         'm_item.i_code',
+                                         'm_item.i_name',
+                                         's_name',                                         
+                                         'podt_qty',
+                                         'podt_qtyconfirm',
+                                         's_qty',
+                                         'podt_prevcost',
+                                         'podt_pruchaseplan',
+                                         'po4dt_detailid'
+                                )
+                                ->where('ppdt_pruchaseplan', '=', $id)
+                                ->where('ppdt_isconfirm', '=', "TRUE")
+                                ->orderBy('ppdt_created', 'DESC')
+                                ->get();
+      
+
+    }
    
+    return Response()->json([
+        'status' => 'sukses',
+        'header' => $dataHeader,
+        'data_isi' => $dataIsi,      
+        'spanTxt' => $spanTxt,
+        'spanClass' => $spanClass,
+    ]);
+      // return d_purchase_plan::konfirmasiOrder($request);
+   }
+   public function getdatatableOrder()
+   {
+     $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
+              ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
+            // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
+            // ->orderBy('d_pcsp_datecreated', 'DESC')
+            ->get();
+    // return $data;    
+    return DataTables::of($data)
+    ->addIndexColumn()
+    ->editColumn('status', function ($data)
+      {
+      if ($data->po_status == "WT") 
+      {
+        return '<span class="label label-info">Waiting</span>';
+      }
+      elseif ($data->po_status == "DE") 
+      {
+        return '<span class="label label-warning">Dapat diedit</span>';
+      }
+      elseif ($data->po_status == "FN") 
+      {
+        return '<span class="label label-success">Finish</span>';
+      }
+    })
+    ->editColumn('tglBuat', function ($data) 
+    {
+        if ($data->po_date == null) 
+        {
+            return '-';
+        }
+        else 
+        {
+            return $data->po_date ? with(new Carbon($data->po_date))->format('d M Y') : '';
+        }
+    })
+    ->editColumn('tglConfirm', function ($data) 
+    {
+        if ($data->po_date_confirm == null) 
+        {
+            return '-';
+        }
+        else 
+        {
+            return $data->po_date_confirm ? with(new Carbon($data->po_date_confirm))->format('d M Y') : '';
+        }
+    })
+    ->addColumn('action', function($data)
+      {
+        if ($data->po_status == "WT") 
+        {
+            return '<div class="text-center">
+                      <button class="btn btn-sm btn-primary" title="Ubah Status"
+                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check">'.$data->po_id.'</i>
+                      </button>
+                  </div>'; 
+        }
+        else 
+        {
+            return '<div class="text-center">
+                      <button class="btn btn-sm btn-primary" title="Ubah Status"
+                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
+                      </button>
+                  </div>'; 
+        }
+      })
+    ->rawColumns(['status', 'action'])
+    ->make(true);
+   }
 
 
    
