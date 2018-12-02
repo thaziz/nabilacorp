@@ -8,6 +8,8 @@ Route::get('/paymentmethod', 'PenjualanController@paymentmethod')->middleware('a
 Route::get('/paymentmethod/edit/{id}/{flag}', 'PenjualanController@paymentmethodEdit')->middleware('auth');
 /*Item*/
 Route::get('/item', 'PenjualanController@item')->middleware('auth');
+
+
 Route::get('/item/search-item/code', 'PenjualanController@searchItemCode')->middleware('auth');
 /*Item*/
 Route::get('/s', 'PenjualanController@s')->middleware('auth');
