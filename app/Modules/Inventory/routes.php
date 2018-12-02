@@ -16,7 +16,7 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/produksi/pengambilanitem/cari/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@cariTabelKirim');
 	Route::get('/produksi/suratjalan/save', 'PengambilanItemController@store');
 	Route::get('/produksi/pengambilanitem/lihat/id', 'PengambilanItemController@orderId');
-	Route::get('/produksi/pengambilanitem/itemkirim/tabel/{id}', 'PengambilanItemController@itemTabelKirim');
+	Route::get('/produksi/pengambilanitem/itemkirim/tabel/{id}', 'Pengambilan`ItemController@itemTabelKirim');
 
 	Route::get('/inventory/p_hasilproduksi/produksi', 'PenerimaanBrgProdController@index');
 	Route::get('/inventory/p_hasilproduksi/get_data_sj/{comp}', 'PenerimaanBrgProdController@get_data_sj');
@@ -47,5 +47,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/stockgudang/index', 'stockGudangController@index');
 	Route::get('/inventory/namaitem/tablegudang/{x}', 'stockGudangController@tableGudang');
 	
+
+//barang di gumakam
+	Route::get('/inventory/b_digunakan/barang', 'PemakaianBrgGdgController@barang');
+	Route::get('/inventory/b_digunakan/get-pemakaian-by-tgl/{tgl1}/{tgl2}', 'PemakaianBrgGdgController@getPemakaianByTgl');
 
 });
