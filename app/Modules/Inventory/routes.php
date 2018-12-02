@@ -15,6 +15,8 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/produksi/pengambilanitem/kirim/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@tabelKirim');
 	Route::get('/produksi/pengambilanitem/cari/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@cariTabelKirim');
 	Route::get('/produksi/suratjalan/save', 'PengambilanItemController@store');
+	Route::get('/produksi/pengambilanitem/lihat/id', 'PengambilanItemController@orderId');
+	Route::get('/produksi/pengambilanitem/itemkirim/tabel/{id}', 'PengambilanItemController@itemTabelKirim');
 
 	Route::get('/inventory/p_hasilproduksi/produksi', 'PenerimaanBrgProdController@index');
 	Route::get('/inventory/p_hasilproduksi/get_data_sj/{comp}', 'PenerimaanBrgProdController@get_data_sj');
@@ -22,7 +24,8 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/p_hasilproduksi/list_sj', 'PenerimaanBrgProdController@list_sj');
 	Route::get('/inventory/p_hasilproduksi/get_tabel_data/{id}', 'PenerimaanBrgProdController@get_tabel_data');
 	Route::get('/inventory/p_hasilproduksi/terima_hasil_produksi/{id}/{id2}', 'PenerimaanBrgProdController@terima_hasil_produksi');
-
+	Route::get('/inventory/p_hasilproduksi/simpan_update_data', 'PenerimaanBrgProdController@simpan_update_data');
+	Route::get('/inventory/p_hasilproduksi/get_penerimaan_by_tgl/{tgl1}/{tgl2}/{akses}/{comp}', 'PenerimaanBrgProdController@get_penerimaan_by_tgl');
 
 	Route::get('/inventory/mutasiitembaku/index', 'mutasiitembakuController@index');
 	Route::get('/inventory/mutasiitembaku/searchItem', 'mutasiitembakuController@searchItem');

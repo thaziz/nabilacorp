@@ -36,8 +36,8 @@
                         <ul id="generalTab" class="nav nav-tabs">
                             <li class="active"><a href="#alert-tab" data-toggle="tab">Penerimaan Barang Hasil
                                     Produksi</a></li>
-                            <li><a href="#waitingResult-tab" data-toggle="tab" onclick="cariTanggal2()">Daftar
-                                    Tunggu</a></li>
+                            {{-- <li><a href="#waitingResult-tab" data-toggle="tab" onclick="cariTanggal2()">Daftar
+                                    Tunggu</a></li> --}}
                             <li><a href="#finishResult-tab" data-toggle="tab" onclick="cariTanggal()">Daftar Hasil
                                     Penerimaan</a></li>
                         </ul>
@@ -436,7 +436,7 @@
             var data = $('#update-terima-produk :input').serialize();
             $.ajax({
                 url: url,
-                type: 'POST',
+                type: 'GET',
                 dataType: 'JSON',
                 data: data,
                 success: function (response) {
@@ -469,12 +469,13 @@
             var tgl1 = $('#tanggal1').val();
             var tgl2 = $('#tanggal2').val();
             var akses = 'inventory';
+            var comp = $('.mem_comp').val();
             $('#data3').DataTable({
                 "destroy": true,
                 "processing": true,
                 "serverside": true,
                 "ajax": {
-                    url: baseUrl + "/inventory/p_hasilproduksi/get_penerimaan_by_tgl/" + tgl1 + '/' + tgl2 + '/' + akses,
+                    url: baseUrl + "/inventory/p_hasilproduksi/get_penerimaan_by_tgl/" + tgl1 + '/' + tgl2 + '/' + akses + '/' + comp,
                     type: 'GET'
                 },
                 "columns": [
