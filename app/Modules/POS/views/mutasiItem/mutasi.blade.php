@@ -342,8 +342,8 @@ ctrl = 17;
           iSalesDetail+='<input style="width:100%" type="hidden" name="mm_detailid[]" value="">';
 
 
-          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="mm_comp[]">';
-          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="mm_position[]">';
+          iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="hidden" name="mm_comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="hidden" name="mm_position[]">';
 
 
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
