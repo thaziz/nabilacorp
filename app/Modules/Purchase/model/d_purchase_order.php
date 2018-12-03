@@ -324,7 +324,7 @@ class d_purchase_order extends Model
         $dataDetail->podt_item = $request->podt_item[$i];
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
-        $dataDetail->podt_qtyconfirm = 1;
+        $dataDetail->podt_qtyconfirm = $request->fieldQtyconfirm[$i];
         $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
         $dataDetail->podt_price = $request->podt_prevprice[$i];
         $dataDetail->podt_isconfirm = 'TRUE';

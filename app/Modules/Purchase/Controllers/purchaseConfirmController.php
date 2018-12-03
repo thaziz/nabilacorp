@@ -192,7 +192,7 @@ public function getDataRencanaPembelian(Request $request)
                                           'podt_total'
                                 )
                                 ->where('podt_purchaseorder', '=', $id)
-                                ->orderBy('podt_created', 'DESC')
+                                // ->orderBy('podt_created', 'DESC')
                                 ->get();
       for ($i=0; $i <count($dataIsi) ; $i++) { 
         $data_stok[$i] = DB::table('d_stock')->where('s_item',$dataIsi[$i]->i_id)->get();
@@ -223,7 +223,7 @@ public function getDataRencanaPembelian(Request $request)
                                 )
                                 ->where('podt_purchaseorder', '=', $id)
                                 ->where('podt_isconfirm', '=', "TRUE")
-                                ->orderBy('podt_created', 'DESC')
+                                // ->orderBy('podt_created', 'DESC')
                                 ->get();
       
       for ($i=0; $i <count($dataIsi) ; $i++) { 
