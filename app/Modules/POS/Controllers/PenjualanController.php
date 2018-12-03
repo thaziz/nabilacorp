@@ -210,6 +210,30 @@ class PenjualanController extends Controller
       $data = array('data' => $m_price);
       return response()->json($data);
     }
+
+    public function update_m_price(Request $req) {
+      $m_pid = $req->m_pid;
+      $m_pid = $m_pid != null ? $m_pid : '';
+      $status = 'gagal';
+      if($m_pid != '') {
+        $m_pbuy1 = $req->m_pbuy1;
+        $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
+        $m_pbuy2 = $req->m_pbuy2;
+        $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
+        $m_pbuy3 = $req->m_pbuy3;
+        $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
+
+        $data = m_price::find($m_pid);
+        $data->m_pbuy1 = $req->m_pbuy1;
+        $data->m_pbuy2 = $req->m_pbuy2;
+        $data->m_pbuy3 = $req->m_pbuy3;
+        $data->save(); 
+        $status = 'sukses';
+      }
+
+      $res = array('status' => $status);
+      return response()->json($res);
+    }
     // =======================================================
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/
