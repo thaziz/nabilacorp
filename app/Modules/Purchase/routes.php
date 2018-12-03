@@ -12,7 +12,7 @@ Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->m
 Route::delete('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
 
 //keuangan
-Route::get('/konfirmasi-purchase/index', 'PurchaseConfirmController@confirmIndex')->middleware('auth');
+Route::get('/konfirmasi-purchase/index', 'PurchaseConfirmController@confirmIndexx')->middleware('auth');
 Route::get('/konfirmasi-purchase/purchase-plane/data', 'PurchaseConfirmController@getDataRencanaPembelian')->middleware('auth');
 Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-plan/{id}/{type}', 'PurchaseConfirmController@confirmRencanaPembelian')->middleware('auth');
 
