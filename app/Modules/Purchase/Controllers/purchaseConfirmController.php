@@ -46,6 +46,7 @@ class purchaseConfirmController extends Controller
 
    }
    public function confirmIndex(){         
+    
      $tbh =view('Purchase::konfirmasipembelian/tab-belanjaharian');   
      $td =view('Purchase::konfirmasipembelian/tab-daftar');   
      $to =view('Purchase::konfirmasipembelian/tab-order');   

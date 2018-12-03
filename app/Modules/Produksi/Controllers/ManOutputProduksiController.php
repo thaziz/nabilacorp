@@ -51,7 +51,7 @@ class ManOutputProduksiController extends Controller
             ->join('d_spk', 'pr_spk', '=', 'spk_id')
             ->where('pr_date', '>=' ,$tgl01)
             ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->orderBy('prdt_date', 'DESC')
             ->get();
 
@@ -74,7 +74,7 @@ class ManOutputProduksiController extends Controller
             ->where('prdt_status','RD')
             ->where('pr_date', '>=' ,$tgl01)
             ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->orderBy('prdt_date', 'DESC')
             ->get();
 
@@ -96,7 +96,7 @@ class ManOutputProduksiController extends Controller
             ->where('prdt_status','FN')
             ->where('pr_date', '>=' ,$tgl01)
             ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->orderBy('prdt_date', 'DESC')
             ->get();
         }elseif ($tampil == 'Terkirim') {
@@ -118,7 +118,7 @@ class ManOutputProduksiController extends Controller
             ->where('prdt_status','RC')
             ->where('pr_date', '>=' ,$tgl01)
             ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->orderBy('prdt_date', 'DESC')
             ->get();
         }
@@ -193,7 +193,7 @@ class ManOutputProduksiController extends Controller
             ->join('d_productplan', 'd_productplan.pp_id', '=', 'd_spk.spk_ref')
             ->where('spk_status', 'PB')
             ->where('spk_date', '=', $tgll)
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->get();
 
         $html = '<select id="cari_spk" onchange="setResultSpk()" class="form-control input-sm" style="width: 100%;">';
@@ -244,19 +244,7 @@ class ManOutputProduksiController extends Controller
                 ->where('spk_id', $request->spk_id)
                 ->first();
 
-            $maxid1 = DB::Table('d_productresult_dt')->select('prdt_detail')->max('prdt_detail');
-            if ($maxid1 <= 0 || $maxid1 == '') {
-                $maxid1 = 1;
-            } else {
-                $maxid1 += 1;
-            }
-
-            $maxid = DB::Table('d_productresult')->select('pr_id')->max('pr_id');
-            if ($maxid <= 0 || $maxid == '') {
-                $maxid = 1;
-            } else {
-                $maxid += 1;
-            }
+            $maxid = DB::Table('d_productresult')->select('pr_id')->max('pr_id')+1;
 
             if (count($cek) == 0) {
 
@@ -269,7 +257,7 @@ class ManOutputProduksiController extends Controller
 
                 d_productresult_dt::insert([
                     'prdt_productresult' => $maxid,
-                    'prdt_detail' => $maxid1,
+                    'prdt_detail' => 1,
                     'prdt_item' => $request->spk_item,
                     'prdt_qty' => $request->spk_qty,
                     'prdt_sisa' => $request->spk_qty,
@@ -303,11 +291,14 @@ class ManOutputProduksiController extends Controller
 
                 } else {
 
+                    $maxDt = d_productresult_dt::select('prdt_detail')
+                        ->where('prdt_productresult',$pr[0]->pr_id)->max('prdt_detail')+1;
                     d_productresult_dt::insert([
                         'prdt_productresult' => $pr[0]->pr_id,
-                        'prdt_detail' => $maxid1,
+                        'prdt_detail' => $maxDt,
                         'prdt_item' => $request->spk_item,
                         'prdt_qty' => $request->spk_qty,
+                        'prdt_sisa' => $request->spk_qty,
                         'prdt_produksi' => $request->prdt_produksi,
                         'prdt_status' => 'RD',
                         'prdt_date' => Carbon::now(),
