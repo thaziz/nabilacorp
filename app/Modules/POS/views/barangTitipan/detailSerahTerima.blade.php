@@ -287,7 +287,25 @@
                                       message: 'Data berhasil disimpan.'
                             });
                             $('.btn-disabled').attr('disabled','disabled');
+
+                            window.location=baseUrl+"/penjualan/barang-titipan/index";
                         }
+
+                    else if(response.status=='gagal'){
+                      $('.btn-disabled').removeAttr('disabled');
+                      $('#kembalian').attr('disabled','disabled');
+                      $('#totalBayar').attr('disabled','disabled');
+                        
+                        iziToast.error({
+                          position:'topRight',
+                          timeout: 2000,
+                          title: '',
+                          message: response.data,
+                        });
+
+
+
+                    }
                     
           }
       });

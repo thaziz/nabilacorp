@@ -73,7 +73,18 @@
                                                                 </div>
                                                                 
                                                             </div>
-
+                                                            <div class="col-md-3 col-sm-12 col-xs-12">
+                                                                    <label class="tebal">Gudang</label>
+                                                            </div>
+                                                            <div class="col-md-9 col-sm-12 col-xs-12">
+                                                               <div class="input-group input-group-sm" style="width: 100%;">
+                                                                    <select name="gudang" id="gudang" class="form-control">
+                                                                       @foreach ($gudang as $element)
+                                                                         <option value="{{ $element->gc_id }}" data-name="{{ $element->gc_gudang }}">{{ $element->gc_id }} - ({{ $element->gc_gudang }})</option>
+                                                                       @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
 
 
@@ -92,23 +103,14 @@
                   <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
               </div>
           </div>      
-          <div class="col-md-1">
+          <div class="col-md-2">
            <label class="control-label tebal">Stok</label>
               <div class="input-group input-group-sm" style="width: 100%;">
                   <input type="number" readonly="" class="form-control input-sm alignAngka reset reset-seach" name="stock" id="stock">  
               </div>
           </div>
-          <div class="col-md-2">
-           <label class="control-label tebal">Gudang</label>
-              <div class="input-group input-group-sm" style="width: 100%;">
-                  <select name="gudang" id="gudang" class="form-control reset-seach">
-                     @foreach ($gudang as $element)
-                       <option value="{{ $element->gc_id }}" data-name="{{ $element->gc_gudang }}">{{ $element->gc_id }} - ({{ $element->gc_gudang }})</option>
-                     @endforeach
-                  </select>
-              </div>
-          </div>
-          <div class="col-md-2">
+          
+          <div class="col-md-3">
            <label class="control-label tebal">Satuan</label>
               <div class="input-group input-group-sm" style="width: 100%;">
                   <div class="drop_here">

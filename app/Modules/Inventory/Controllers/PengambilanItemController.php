@@ -184,7 +184,7 @@ class PengambilanItemController extends Controller
     }
 
     function store(Request $request)
-    {
+    {  
         DB::beginTransaction();
         try {
             $gudTujuan = d_gudangcabang::select('gc_id','gc_comp')
@@ -237,13 +237,6 @@ class PengambilanItemController extends Controller
                         'prdt_sisa' =>$cek->prdt_sisa - $request->prdt_qtyKirim[$i], 
                     ]);
                 
-                if ($cek->prdt_kirim == $cek->prdt_qty) {
-                    d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
-                    ->where('prdt_detail', $request->prdt_detail[$i])
-                    ->update([
-                        'prdt_status' => 'FN'
-                    ]);
-                }
                 $compp = $request->comp;
                 $gc_id = d_gudangcabang::select('gc_id')
                       ->where('gc_gudang','GUDANG PRODUKSI')
@@ -270,30 +263,30 @@ class PengambilanItemController extends Controller
                       ->first();
                       // dd($gc_sending);
                 $stock = d_stock::where('s_item', $request->prdt_item[$i])
-                    ->where('s_comp', $gc_id->gc_id)
+                    ->where('s_comp', $gudTujuan->gc_id)
                     ->where('s_position', $gc_sending->gc_id)
                     ->first();
-               
+
                 if ($stock == null) {
                     d_stock::insert([
                         's_id' => $maxidd_stock,
-                        's_comp' => $gc_id->gc_id,
+                        's_comp' => $gudTujuan->gc_id,
                         's_position' => $gc_sending->gc_id,
                         's_item' => $request->prdt_item[$i],
-                        's_qty' => $request->prdt_qty[$i]
+                        's_qty' => $request->prdt_qtyKirim[$i]
                     ]);
 
                     d_stock_mutation::create([
                         'sm_stock' => $maxidd_stock,
                         'sm_detailid' => 1,
                         'sm_date' => Carbon::now(),
-                        'sm_comp' => $gc_id->gc_id,
+                        'sm_comp' => $gudTujuan->gc_id,
                         'sm_position' => $gc_sending->gc_id,
                         'sm_mutcat' => 9,
                         'sm_item' => $request->prdt_item[$i],
-                        'sm_qty' => $request->prdt_qty[$i],
+                        'sm_qty' => $request->prdt_qtyKirim[$i],
                         'sm_qty_used' => 0,
-                        'sm_qty_sisa' => $request->prdt_qty[$i],
+                        'sm_qty_sisa' => $request->prdt_qtyKirim[$i],
                         'sm_qty_expired' => 0,
                         'sm_detail' => 'PENAMBAHAN',
                         'sm_reff' => $nota_do,
@@ -302,7 +295,7 @@ class PengambilanItemController extends Controller
 
                 } else {
 
-                    $stockUpdate = $stock->s_qty + $request->prdt_qty[$i];
+                    $stockUpdate = $stock->s_qty + $request->prdt_qtyKirim[$i];
 
                     $stock->update([
                         's_qty' => $stockUpdate
@@ -310,7 +303,7 @@ class PengambilanItemController extends Controller
 
                     $sm_detailid = d_stock_mutation::select('sm_detailid')
                             ->where('sm_item', $request->prdt_item[$i])
-                            ->where('sm_comp', $gc_id->gc_id)
+                            ->where('sm_comp', $gudTujuan->gc_id)
                             ->where('sm_position', $gc_sending->gc_id)
                             ->max('sm_detailid') + 1;
 
@@ -318,17 +311,27 @@ class PengambilanItemController extends Controller
                         'sm_stock' => $stock->s_id,
                         'sm_detailid' => $sm_detailid,
                         'sm_date' => Carbon::now(),
-                        'sm_comp' => $gc_id->gc_id,
+                        'sm_comp' => $gudTujuan->gc_id,
                         'sm_position' => $gc_sending->gc_id,
                         'sm_mutcat' => 9,
                         'sm_item' => $request->prdt_item[$i],
-                        'sm_qty' => $request->prdt_qty[$i],
+                        'sm_qty' => $request->prdt_qtyKirim[$i],
                         'sm_qty_used' => 0,
-                        'sm_qty_sisa' => $request->prdt_qty[$i],
+                        'sm_qty_sisa' => $request->prdt_qtyKirim[$i],
                         'sm_qty_expired' => 0,
                         'sm_detail' => 'PENAMBAHAN',
                         'sm_reff' => $nota_do,
                         'sm_insert' => Carbon::now()
+                    ]);
+                }
+
+                $status = d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
+                    ->where('prdt_detail', $request->prdt_detail[$i])
+                    ->first();
+
+                if ($status->prdt_qty == $status->prdt_kirim) {
+                    $status->update([
+                        'prdt_status' => 'FN'
                     ]);
                 }
 
@@ -345,6 +348,32 @@ class PengambilanItemController extends Controller
                 'data' => $e
             ]);
         }
+    }
+
+    public function orderId(Request $request)
+    {
+        $data = d_delivery_order::select('do_id')
+            ->where('do_id', '=', $request->x)
+            ->first();
+
+        return view('Inventory::pengiriman.tabelItem', compact('data'));
+    }
+
+    public function itemTabelKirim($id)
+    {
+        $data = d_delivery_orderdt::where('dod_do', '=', $id)
+            ->join('m_item', 'i_id', '=', 'dod_item')
+            ->get();
+
+        return DataTables::of($data)
+            ->editColumn('dod_status', function ($inquiry) {
+                if ($inquiry->dod_status == 'WT')
+                    return 'Belum di Terima';
+                if ($inquiry->dod_status == 'FN')
+                    return 'Sudah di Terima';
+            })
+            ->addIndexColumn()
+            ->make(true);
     }
 
 }

@@ -60,16 +60,7 @@ class d_item_titipan extends Model
                                                 \''.$itemTitipan->it_keterangan.'\'                                                
                           )"><i class="fa fa-eye"></i> 
                           </button>
-                          <button  type="button" class="btn btn-sm btn-warning" title="Edit" onclick="edit(
-                                               '.$itemTitipan->it_id.',          
-                                                \''.date('d-m-Y',strtotime($itemTitipan->it_date)).'\',   
-                                                \''.$itemTitipan->it_code.'\',
-                                                \''.$itemTitipan->s_company.'\',
-                                                \''.$itemTitipan->s_id.'\',
-                                                \''.$itemTitipan->it_keterangan.'\',
-                                                \''.number_format($itemTitipan->it_total,0,',','.').'\'
-                          )" '.$disable.'><i class="fa fa-edit"></i>
-                          </button>
+                       
                       
                           </div>';
                             return $html;
@@ -78,6 +69,17 @@ class d_item_titipan extends Model
                       ->make(true);    
 
 
+
+   /*<button  type="button" class="btn btn-sm btn-warning" title="Edit" onclick="edit(
+                                               '.$itemTitipan->it_id.',          
+                                                \''.date('d-m-Y',strtotime($itemTitipan->it_date)).'\',   
+                                                \''.$itemTitipan->it_code.'\',
+                                                \''.$itemTitipan->s_company.'\',
+                                                \''.$itemTitipan->s_id.'\',
+                                                \''.$itemTitipan->it_keterangan.'\',
+                                                \''.number_format($itemTitipan->it_total,0,',','.').'\'
+                          )" '.$disable.'><i class="fa fa-edit"></i>
+                          </button>*/
 
 
                           /*<button type="button" class="btn btn-sm btn-danger" title="Hapus" onclick="delete(
@@ -254,7 +256,7 @@ static function serahTerimaStore($request){
       $permintaan=format::format($request->idt_return_titip[$i])-format::format($request->idt_return_lama[$i]);
 
 
-      if($request->idt_action[$i]=='Ditukar Harga'){  
+      if($request->idt_action[$i]!='-'){  
         if($idt_return_lama!=$idt_return_titip){
           $simpanMutasi=mutasi::updateMutasi($request->idt_item[$i],$permintaan,$comp,$position,$flag='BARANG TITIPAN',$request->it_id,$request->idt_action[$i]);
 
@@ -268,6 +270,10 @@ static function serahTerimaStore($request){
 
 
         } 
+      }else{
+              DB::rollBack();              
+              $data=['status'=>'gagal','data'=>"Ma'af, aksi pada detail belum lengkap"];
+              return json_encode($data);
       }
       
       $updateTitipanDt->update([

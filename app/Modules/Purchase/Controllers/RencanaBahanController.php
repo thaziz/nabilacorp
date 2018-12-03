@@ -200,7 +200,8 @@ class RencanaBahanController extends Controller
       // $sup = DB::table('m_item')->select('i_sup_list')->where('i_id', $request->id)->first();
       // $list_sup = explode(',', $sup->i_sup_list);
 
-      $list_sup = DB::table('d_barang_sup')->select('d_bs_supid')->where('d_bs_itemid', $request->id)->get();
+      // $list_sup = DB::table('d_barang_sup')->select('d_bs_supid')->where('d_bs_itemid', $request->id)->get();
+      $list_sup = DB::table('d_item_supplier')->select('is_supplier')->where('is_item', $request->id)->get();
 
 
       if (count($list_sup) > 0) 
@@ -209,7 +210,8 @@ class RencanaBahanController extends Controller
         for ($i=0; $i <count($list_sup); $i++) 
         { 
 
-          $aa = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $list_sup[$i]->d_bs_supid)->first();
+          $aa = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $list_sup[$i]->is_supplier)->first();
+          // $aa = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $list_sup[$i]->d_bs_supid)->first();
 
           $d_sup[] = array('sup_id' => $aa->s_id, 'sup_txt'=> $aa->s_company);
 

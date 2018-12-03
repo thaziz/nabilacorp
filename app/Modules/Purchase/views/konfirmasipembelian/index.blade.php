@@ -299,6 +299,7 @@
       url : baseUrl + "/konfirmasi-purchase/purchase-plane/data/confirm-plan/"+id+"/confirmed",
       type: "GET",
       dataType: "JSON",
+      data:$('#form-confirm-order').serialize(),
       success: function(data)
       {
         var key = 1;
@@ -403,12 +404,12 @@
         },
         "columns" : [
           {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-          {"data" : "tglOrder", "width" : "10%"},
-          {"data" : "d_pcs_code", "width" : "10%"},
+          {"data" : "tglBuat", "width" : "10%"},
+          {"data" : "m_name", "width" : "10%"},
           {"data" : "m_name", "width" : "10%"},
           {"data" : "s_company", "width" : "25%"},
           {"data" : "tglConfirm", "width" : "10%"},
-          {"data" : "hargaTotalNet", "width" : "15%"},
+          {"data" : "po_total_net", "width" : "15%"},
           {"data" : "status", "width" : "10%"},
           {"data" : "action", orderable: false, searchable: false, "width" : "5%"}
         ],
@@ -505,6 +506,7 @@
     $.ajax({
       url : baseUrl + "/keuangan/konfirmasipembelian/confirm-order/"+id+"/"+type,
       type: "GET",
+      data:$('#form-confirm-order').serialize(),
       dataType: "JSON",
       success: function(data)
       {
