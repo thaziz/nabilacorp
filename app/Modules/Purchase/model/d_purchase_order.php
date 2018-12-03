@@ -327,7 +327,7 @@ class d_purchase_order extends Model
         $dataDetail->podt_qtyconfirm = 1;
         $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
         $dataDetail->podt_price = $request->podt_prevprice[$i];
-        $dataDetail->podt_isconfirm = 1;
+        $dataDetail->podt_isconfirm = 'TRUE';
         $dataDetail->podt_created = date('Y-m-d');
         $dataDetail->podt_updated = date('Y-m-d');
         $dataDetail->save();
@@ -338,6 +338,8 @@ class d_purchase_order extends Model
 
 
       }
+
+      return redirect('purcahse-order/order-index');
 
 
 

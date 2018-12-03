@@ -178,6 +178,7 @@ public function getDataRencanaPembelian(Request $request)
                                 ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
+                                         'i_satuan',
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          's_name',                                         
@@ -186,11 +187,17 @@ public function getDataRencanaPembelian(Request $request)
                                          DB::raw('IFNULL(s_qty, 0) AS s_qty'),
                                          'podt_prevcost',
                                          'podt_purchaseorder',
-                                          'podt_detailid'
+                                          'podt_detailid',
+                                          'podt_price',
+                                          'podt_total'
                                 )
                                 ->where('podt_purchaseorder', '=', $id)
                                 ->orderBy('podt_created', 'DESC')
                                 ->get();
+      for ($i=0; $i <count($dataIsi) ; $i++) { 
+        $data_stok[$i] = DB::table('d_stock')->where('s_item',$dataIsi[$i]->i_id)->get();
+        // $data_satuan = DB::table('m_satuan')->where('s_id',$dataIsi[$i]->i_satuan)->get();
+      }
       
     }
     else
@@ -201,6 +208,7 @@ public function getDataRencanaPembelian(Request $request)
                                 ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
+                                         'i_satuan',
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          's_name',                                         
@@ -209,20 +217,31 @@ public function getDataRencanaPembelian(Request $request)
                                          's_qty',
                                          'podt_prevcost',
                                          'podt_purchaseorder',
-                                         'podt_detailid'
+                                         'podt_detailid',
+                                         'podt_price',
+                                         'podt_total'
                                 )
                                 ->where('podt_purchaseorder', '=', $id)
                                 ->where('podt_isconfirm', '=', "TRUE")
                                 ->orderBy('podt_created', 'DESC')
                                 ->get();
       
+      for ($i=0; $i <count($dataIsi) ; $i++) { 
+        $data_stok[$i] = DB::table('d_stock')->where('s_item',$dataIsi[$i]->i_id)->get();
+        // $data_satuan = DB::table('m_satuan')->where('s_id',$dataIsi[$i]->i_satuan)->get();
+      }
+
 
     }
-   
+
+
+
     return Response()->json([
         'status' => 'sukses',
         'header' => $dataHeader,
         'data_isi' => $dataIsi,      
+        'data_stok' => $data_stok,      
+        // 'data_satuan' => $data_satuan,      
         'spanTxt' => $spanTxt,
         'spanClass' => $spanClass,
     ]);
