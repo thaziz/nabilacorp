@@ -510,7 +510,7 @@
       dataType: "JSON",
       success: function(data)
       {
-
+        console.log(data);
         var key = 1;
         var i = randString(5);
         //ambil data ke json->modal

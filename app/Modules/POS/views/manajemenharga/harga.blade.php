@@ -33,7 +33,7 @@
                               </ul>
                               <div id="generalTabContent" class="tab-content responsive">
                                 
-                                @include('penjualan.manajemenharga.modal')
+                                @include('POS::manajemenharga.modal')
 
                                 <div id="alert-tab" class="tab-pane fade in active">
                                  

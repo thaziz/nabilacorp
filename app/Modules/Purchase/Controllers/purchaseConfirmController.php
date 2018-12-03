@@ -174,8 +174,8 @@ public function getDataRencanaPembelian(Request $request)
     if ($type == "all") 
     {
       
-      $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+      $dataIsi = d_purchaseorder_dt::join('m_item','podt_item','=','i_id')
+                                ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
@@ -185,19 +185,20 @@ public function getDataRencanaPembelian(Request $request)
                                          'podt_qtyconfirm',
                                          DB::raw('IFNULL(s_qty, 0) AS s_qty'),
                                          'podt_prevcost',
-                                         'podt_pruchaseplan',
-                                          'o4pdt_detailid'
+                                         'podt_purchaseorder',
+                                          'podt_detailid'
                                 )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->where('podt_purchaseorder', '=', $id)
+                                ->orderBy('podt_created', 'DESC')
                                 ->get();
       
     }
     else
     {
+      // return 'a';
 
-       $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+       $dataIsi = d_purchaseorder_dt::join('m_item','podt_item','=','i_id')
+                                ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
@@ -207,12 +208,12 @@ public function getDataRencanaPembelian(Request $request)
                                          'podt_qtyconfirm',
                                          's_qty',
                                          'podt_prevcost',
-                                         'podt_pruchaseplan',
-                                         'po4dt_detailid'
+                                         'podt_purchaseorder',
+                                         'podt_detailid'
                                 )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->where('podt_purchaseorder', '=', $id)
+                                ->where('podt_isconfirm', '=', "TRUE")
+                                ->orderBy('podt_created', 'DESC')
                                 ->get();
       
 
@@ -229,6 +230,7 @@ public function getDataRencanaPembelian(Request $request)
    }
    public function getdatatableOrder()
    {
+    // return 'a';
      $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
               ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
@@ -280,7 +282,7 @@ public function getDataRencanaPembelian(Request $request)
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
-                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check">'.$data->po_id.'</i>
+                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
                       </button>
                   </div>'; 
         }

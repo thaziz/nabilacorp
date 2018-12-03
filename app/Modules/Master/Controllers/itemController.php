@@ -80,86 +80,71 @@ class itemController extends Controller
         $tmp = $id + 1;
 
         $kode = sprintf("%04s", $tmp);
+        $i_code = 'BRG' . $kode;
+        $i_group = $request->i_group;
+        $i_group = $i_group != null ? $i_group : '';
+        $i_type = $request->i_type;
+        $i_type = $i_type != null ? $i_type : '';
+        $i_name = $request->i_name;
+        $i_name = $i_name != null ? $i_name : '';
+        $i_det = $request->i_det;
+        $i_det = $i_det != null ? $i_det : '';
+        $i_sat1 = $request->i_sat1;
+        $i_sat1 = $i_sat1 != null ? $i_sat1 : '';
+        $i_sat2 = $request->i_sat2;
+        $i_sat2 = $i_sat2 != null ? $i_sat2 : '';
+        $i_sat3 = $request->i_sat3;
+        $i_sat3 = $i_sat3 != null ? $i_sat3 : '';
+        $i_sat_isi1 = $request->i_sat_isi1;
+        $i_sat_isi1 = $i_sat_isi1 != null ? $i_sat_isi1 : '';
+        $i_sat_isi2 = $request->i_sat_isi2;
+        $i_sat_isi2 = $i_sat_isi2 != null ? $i_sat_isi2 : '';
+        $i_sat_isi3 = $request->i_sat_isi3;
+        $i_sat_isi3 = $i_sat_isi3 != null ? $i_sat_isi3 : '';
+        $i_min_stock = $request->i_min_stock;
+        $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
 
-        $type = '';
 
-        if ($request->kelompok == 1) {
-          $type = 'BB';
-        } elseif ($request->kelompok == 2) {
-          $type = 'BP';
-        } elseif ($request->Kelompok == 3) {
-          $type = 'BJ';
-        } elseif ($request->kelompok == 4) {
-          $type = 'BPJ';
-        }
+        // if (!empty($request->supplier)) {
+        //   for ($i=0; $i < count($request->supplier); $i++) {
+        //     $tmp = str_replace('.', '', $request->hargasupplier[$i]);
+        //     $hargasupplier = str_replace('Rp ', '', $tmp);
 
-      $finalkode = $type . $kode;
-
-      if (!empty($request->supplier)) {
-        for ($i=0; $i < count($request->supplier); $i++) {
-          $tmp = str_replace('.', '', $request->hargasupplier[$i]);
-          $hargasupplier = str_replace('Rp ', '', $tmp);
-
-          $idsupplier = DB::table('d_item_supplier')
-                        ->max('is_id');
+        //     $idsupplier = DB::table('d_item_supplier')
+        //                   ->max('is_id');
 
 
-            DB::table('d_item_supplier')
-            ->insert([
-              'is_id' => $idsupplier + 1,
-              'is_item' => $id + 1,
-              'is_supplier' => $request->supplier[$i],
-              'is_price' => $hargasupplier,
-              'is_active' => 'Y'
-            ]);
-        }
-      }
-
-      if (empty($request->hargabeli)) {
-        $tmp = str_replace('.', '', $request->hargajual);
-        $hargajual = str_replace('Rp ', '', $tmp);
-
-        $tmp = str_replace('.', '', $request->hargabeli);
-        $hargabeli = str_replace('Rp ', '', $tmp);
-
-        DB::table('m_item')
-          ->insert([
-            'i_id' => $id + 1,
-            'i_code' => $finalkode,
-            'i_group' => $request->kelompok,
-            'i_type' => $type,
-            'i_name' => $request->nama,
-            'i_satuan' => $request->satuan,
-            'i_price' => $hargajual,
-            'i_hpp' => $hargabeli,
-            'i_det' => $request->detail,
-            'i_status' => 'Y',
-            'i_active' => 'Y',
-            'i_insert' => Carbon::now('Asia/Jakarta')
-          ]);
-      } else {
-        $tmp = str_replace('.', '', $request->hargabeli);
-        $hargabeli = str_replace('Rp ', '', $tmp);
-
-        $tmp = str_replace('.', '', $request->hargajual);
-        $hargajual = str_replace('Rp ', '', $tmp);
+        //       DB::table('d_item_supplier')
+        //       ->insert([
+        //         'is_id' => $idsupplier + 1,
+        //         'is_item' => $id + 1,
+        //         'is_supplier' => $request->supplier[$i],
+        //         'is_price' => $hargasupplier,
+        //         'is_active' => 'Y'
+        //       ]);
+        //   }
+        // }
 
         DB::table('m_item')
           ->insert([
             'i_id' => $id + 1,
-            'i_code' => $finalkode,
-            'i_group' => $request->kelompok,
-            'i_type' => $type,
-            'i_name' => $request->nama,
-            'i_satuan' => $request->satuan,
-            'i_price' => $hargajual,
-            'i_hpp' => $hargabeli,
-            'i_det' => $request->detail,
+            'i_code' => $i_code,
+            'i_group' => $i_group,
+            'i_type' => $i_type,
+            'i_name' => $i_name,
+            'i_sat1' => $i_sat1,
+            'i_sat2' => $i_sat2,
+            'i_sat3' => $i_sat3,
+            'i_sat_isi1' => $i_sat_isi1,
+            'i_sat_isi2' => $i_sat_isi2,
+            'i_sat_isi3' => $i_sat_isi3,
+            'i_min_stock' => $i_min_stock,
+            'i_det' => $i_det,
             'i_status' => 'Y',
             'i_active' => 'Y',
             'i_insert' => Carbon::now('Asia/Jakarta')
           ]);
-      }
+      
 
 
         DB::commit();

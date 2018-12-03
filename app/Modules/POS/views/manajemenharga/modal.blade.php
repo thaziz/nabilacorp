@@ -1,7 +1,7 @@
-<div class="modal fade" id="tambah" role="dialog">
+<div class="modal fade" id="modal_tambah" role="dialog">
   <div class="modal-dialog" style="width: 90%;margin: auto;">
       
-    <form method="get" action="#">
+    <form method="get" action="#" id="form_m_price">
       <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header" style="background-color: #e77c38;">
@@ -14,11 +14,12 @@
             <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 15px;padding-top: 15px; ">
                                         
               <div class="col-md-4 col-sm-4 col-xs-12">
-                <label class="tebal">No Manajemen Harga</label>
+                <label class="tebal">Kode Item</label>
               </div>
               <div class="col-md-4 col-sm-8 col-xs-12">
                 <div class="form-group">  
-                  <input type="text" class="form-control input-sm" readonly="" maxlength="10" name="">
+                  <input type="hidden" name="m_pid" id="m_pid">
+                  <input type="text" class="form-control input-sm" readonly="" maxlength="10" name="i_code" id='i_code' readonly>
                 </div>
               </div>
 
@@ -27,75 +28,38 @@
               </div>
 
               <div class="col-md-4 col-sm-4 col-xs-12">
-                <label class="tebal">Periode</label>
+                <label class="tebal">Nama Item</label>
               </div>
 
               <div class="col-md-4 col-sm-8 col-xs-12">
                 <div class="form-group">  
-                  <input type="text" class="form-control input-sm datepicker2"; name="">
+                  <input type="text" class="form-control input-sm datepicker2"; name="i_name" id='i_name' readonly>
                 </div>
               </div>
 
-              <div class="col-md-4 col-sm-0 col-xs-0" style="height: 45px;">
-                
-              </div>
-
-              <div class="col-md-4 col-sm-4 col-xs-12">
-                <label class="tebal">Kelompok Barang</label>
-              </div>
-
-              <div class="col-md-4 col-sm-8 col-xs-12">
-                <div class="form-group">  
-                  <select class="form-control input-sm">
-                    <option>Semua</option>
-                    <option>Tortila</option>
-                    <option>Burger</option>
-                  </select>
-                </div>
-              </div>
-
+              
             </div>
           
             <div class="table-responsive">
               <table class="table tabelan table-bordered table-hover" id="data2">
                 <thead>
                   <tr>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Satuan</th>
-                    <th>Isi</th>
-                    <th>Harga(Eceran)</th>
-                    <th>Harga(per pcs)</th>
-                    <th>Min Pembelian</th>
+                    <th>Harga A</th>
+                    <th>Harga B</th>
+                    <th>Harga C</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>1111</td>
-                    <td>Tortilla</td>
-                    <td>Pcs</td>
-                    <td>15</td>
-                    <td>Rp. 30.000,-</td>
-                    <td>Rp. 1.500,-</td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td>1112</td>
-                    <td>Kebab</td>
-                    <td>Pcs</td>
-                    <td>20</td>
-                    <td>Rp. 25.000,-</td>
-                    <td>Rp. 1.000,-</td>
-                    <td>10</td>
-                  </tr>
-                  <tr>
-                    <td>1113</td>
-                    <td>Burger</td>
-                    <td>Pcs</td>
-                    <td>10</td>
-                    <td>Rp. 60.000,-</td>
-                    <td>Rp. 8.000,-</td>
-                    <td>10</td>
+                    <td>
+                      <input type="text" class="form-control" name="m_pbuy1" id="m_pbuy1">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" name="m_pbuy2" id="m_pbuy2">
+                    </td>
+                    <td>
+                      <input type="text" class="form-control" name="m_pbuy3" id="m_pbuy3">
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -105,7 +69,7 @@
       
           <div class="modal-footer" style="border-top: none;">
             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Simpan Data</button>
+            <button type="button" class="btn btn-primary" id='insert_m_price_btn'>Simpan Data</button>
           </div>
         </div>
       </form>   
