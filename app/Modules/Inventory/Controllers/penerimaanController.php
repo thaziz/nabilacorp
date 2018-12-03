@@ -19,6 +19,8 @@ class penerimaanController extends Controller {
 
 	public function index()
 	{
+
+		// return 'a';
 		$data = DB::table('d_pengiriman')
 							->where('p_status_diterima', 'Y')
 							->select('p_code', 'p_id')
