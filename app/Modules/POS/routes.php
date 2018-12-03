@@ -9,7 +9,7 @@
 	/*Item*/
 	Route::get('/item', 'PenjualanController@item')->middleware('auth');
 
-<<<<<<< HEAD
+
 Route::get('/penjualan/pos-pesanan/index', 'PenjualanPesananController@posPesanan')->middleware('auth');
 Route::get('/penjualan/pos-pesanan/create', 'PenjualanPesananController@create')->middleware('auth');
 Route::get('/penjualan/pos-pesanan/update', 'PenjualanPesananController@update')->middleware('auth');
@@ -95,8 +95,7 @@ Route::get('/penjualan/penjualanexpired/penjualanexpired', 'PenjualanController@
 Route::get('/penjualan/repackaging/repackaging', 'PenjualanController@repackaging')->middleware('auth');
 Route::get('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi', 'PenjualanController@POSpenjualankonsinyasi')->middleware('auth');
 Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanController@POSpenjualanPesanan')->middleware('auth');
-=======
->>>>>>> 76800e103ffcf4390bd7dc16ef5f9f789b2c0a35
+
 
 	Route::get('/item/search-item/code', 'PenjualanController@searchItemCode')->middleware('auth');
 	/*Item*/
