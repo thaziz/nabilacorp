@@ -67,7 +67,7 @@ Route::get('/master/databarang/tambah_barang', 'MasterController@tambah_barang')
 Route::get('/inventory/p_suplier/suplier', 'InventoryController@suplier')->middleware('auth');
 Route::get('/inventory/p_hasilproduksi/produksi', 'InventoryController@produksi')->middleware('auth');
 Route::get('/inventory/p_returncustomer/cust', 'InventoryController@cust')->middleware('auth');
-Route::get('/inventory/b_digunakan/barang', 'InventoryController@barang')->middleware('auth');
+// Route::get('/inventory/b_digunakan/barang', 'InventoryController@barang')->middleware('auth');
 Route::get('/inventory/stockopname/opname', 'InventoryController@opname')->middleware('auth');
 Route::get('/inventory/p_suplier/cari_nota', 'InventoryController@cari_nota_sup')->middleware('auth');
 Route::get('/inventory/p_hasilproduksi/cari_nota', 'InventoryController@cari_nota_produksi')->middleware('auth');

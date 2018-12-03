@@ -79,12 +79,12 @@ class itemTitipanController extends Controller
     function update(Request $request){      
           return d_item_titipan::updateTitipan($request);
     }
-    function titipanDt($id){
-        $data=d_itemtitipan_dt::itemtitipDt($id);
+    function titipanDt($id){    
+        $data=d_itemtitipan_dt::itemTitipanDt($id);
         return view('POS::barangTitipan/modal',compact('data'));                  
     }
 
-    function editTitipanDt($id,Request $request){      
+    function editTitipanDt($id,Request $request){        
       $status=$request->s_status;      
       $data=d_itemtitipan_dt::editTitipanDt($id);      
       $tamp=[];
