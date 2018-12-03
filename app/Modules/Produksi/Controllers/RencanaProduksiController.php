@@ -13,11 +13,11 @@ use Session;
 class RencanaProduksiController extends Controller
 {
   public function tabel(){
-    $pp_comp=Session::get('user_comp');
+    // $pp_comp=Session::get('user_comp');
     $pp = DB::Table('m_item')
           ->join('d_productplan','m_item.i_id','=','d_productplan.pp_item')
           ->where('pp_isspk','N')
-          ->where('pp_comp',$pp_comp)
+          // ->where('pp_comp',$pp_comp)
           ->get();
 
     $datax = $this->setData($pp);
