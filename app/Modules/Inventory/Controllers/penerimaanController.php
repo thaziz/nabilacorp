@@ -11,7 +11,6 @@ use DateTime;
 use Yajra\Datatables\Datatables;
 use Session;
 use App\Lib\mutasi;
-
 class penerimaanController extends Controller {
 	public function __construct(){
         $this->middleware('auth');
@@ -19,11 +18,9 @@ class penerimaanController extends Controller {
 
 	public function index()
 	{
-
-		// return 'a';
-		$data = DB::table('d_pengiriman')
-							->where('p_status_diterima', 'Y')
-							->select('p_code', 'p_id')
+		$data = DB::table('d_purchase_order')
+							->where('po_status', 'CF')
+							->select('po_code', 'po_id')
 							->get();
 
 		return view('Inventory::penerimaan.index', compact('data'));

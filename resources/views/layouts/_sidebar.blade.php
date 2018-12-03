@@ -188,7 +188,7 @@
                         <!-- =========== -->
                     </a>
                         <ul class="nav nav-second-level">
-                            <li class="menu-sekunder {{ Request::is('inventory/p_suplier/suplier') ? 'active' : '' || Request::is('inventory/p_suplier/*') ? 'active' : '' }}"><a href="{{ url('/inventory/p_suplier/suplier') }}"><span class="submenu-title">Penerimaan Barang Suplier</span><span class="hidden">Inventory</span></a>
+                            <li class="menu-sekunder {{ Request::is('inventory/penerimaan_suplier/suplier') ? 'active' : '' || Request::is('inventory/penerimaan_suplier/*') ? 'active' : '' }}"><a href="{{ url('/inventory/penerimaan_suplier/suplier') }}"><span class="submenu-title">Penerimaan Barang Suplier</span><span class="hidden">Inventory</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/pengirimanproduksi/pengirimanproduksi') ? 'active' : '' || Request::is('inventory/pengirimanproduksi/*') ? 'active' : '' }}"><a href="{{ url('/inventory/pengirimanproduksi/pengirimanproduksi') }}"><span class="submenu-title">Pengiriman Hasil Produksi</span><span class="hidden">Inventory</span></a>
                             </li>

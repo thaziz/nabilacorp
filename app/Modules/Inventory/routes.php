@@ -53,4 +53,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/b_digunakan/get-pemakaian-by-tgl/{tgl1}/{tgl2}', 'PemakaianBrgGdgController@getPemakaianByTgl');
 	Route::get('/inventory/b_digunakan/get-history-by-tgl/{tgl1}/{tgl2}/{tampil}', 'PemakaianBrgGdgController@getHistoryByTgl');
 
+//
+	Route::get('/inventory/penerimaan_suplier/suplier', 'penerimaanController@index')->middleware('auth');
+	Route::get('/inventory/p_hasilproduksi/produksi', 'penerimaanController@produksi')->middleware('auth');
+	Route::get('/inventory/p_returncustomer/cust', 'penerimaanControllerr@cust')->middleware('auth');
+
 });

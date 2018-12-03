@@ -46,6 +46,9 @@
                                               <div class="input-group">
                                                 <select class="form-control input-sm" id="cariId" name="CariId">
                                                   <option> - Pilih Nomor Nota</option>
+                                                  @foreach ($data as $element)
+                                                      <option value="{{ $element->po_id }}">{{ $element->po_id }} - {{ $element->po_code }}</option>
+                                                  @endforeach
                                                 </select>
                                                 <span class="input-group-btn">
                                                   <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
