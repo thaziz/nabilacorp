@@ -247,6 +247,69 @@ public function getDataRencanaPembelian(Request $request)
     ]);
       // return d_purchase_plan::konfirmasiOrder($request);
    }
+
+   public function konfirmasiOrdersubmit(Request $request)
+   {
+     // dd($request->all());
+
+
+        $plan = d_purchase_order::where('po_id',$request->idOrder)->first();
+        // return json_encode($plan);
+        if ($request->statusOrderConfirm != "WT") 
+        {   
+
+          $plan->update([
+              'po_confirm' => date('Y-m-d',strtotime(Carbon::now())),
+              'po_status' => $request->statusOrderConfirm,
+              'po_updated' => Carbon::now(),
+          ]);
+            
+            //update table d_purchasingplan_dt
+            $hitung_field = count($request->fieldConfirmOrder);
+            
+            for ($i=0; $i < $hitung_field; $i++) 
+            {
+                $plandt = d_purchaseorder_dt::where('podt_purchaseorder',$request->idOrder)
+                          ->where('podt_detailid',$i+1)->orderBy('podt_detailid','ASC');
+
+                $plandt->update([
+                  'podt_qtyconfirm' => $request->fieldConfirmOrder[$i],
+                  'podt_updated' => Carbon::now(),
+                  'podt_isconfirm' => "TRUE",
+                ]);
+            }
+            $plandt;
+            // return $request->fieldIdDt;
+        }
+        else
+        {
+            $plan->update([
+            'po_confirm' => null,
+            'po_status' => $request->statusOrderConfirm,
+            'po_updated' => Carbon::now(),
+            ]);
+            //update table d_purchasingplan_dt
+            $hitung_field = count($request->fieldConfirmOrder);
+            for ($i=0; $i < $hitung_field; $i++) 
+            {
+                 $plandt = d_purchaseplan_dt::where('podt_purchaseorder',$request->idOrder)
+                          ->where('podt_detailid',$i+1);
+                   
+                $plandt->update([
+                'podt_qtyconfirm' => $request->fieldConfirmOrder[$i],
+                'podt_updated' => Carbon::now(),
+                'podt_isconfirm' => "FALSE",
+                ]);
+            }
+        }
+        
+        DB::commit();
+        return response()->json([
+            'status' => 'sukses',
+            'pesan' => 'Data Rencana Order Berhasil Diupdate'
+        ]);
+   }
+
    public function getdatatableOrder()
    {
     // return 'a';

@@ -881,7 +881,7 @@
           $('#button_confirm_order').attr('disabled',true);
           $.ajax({
             url : baseUrl + "/keuangan/konfirmasipembelian/confirm-order-submit",
-            type: "post",
+            type: "get",
             dataType: "JSON",
             data: $('#form-confirm-order').serialize(),
             success: function(response)

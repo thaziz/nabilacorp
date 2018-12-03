@@ -420,7 +420,7 @@ class d_purchase_plan extends Model
                                           'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();
       
     }
@@ -443,7 +443,7 @@ class d_purchase_plan extends Model
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
                                 ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();
       
 
@@ -463,7 +463,7 @@ class d_purchase_plan extends Model
   {    
     // DB::beginTransaction();
     // try {
-      // dd($request->all());
+      // dd($request->all());  
       
         //update table d_purchasingplan
         $plan = d_purchase_plan::where('p_id',$request->idPlan)->first();
@@ -483,7 +483,7 @@ class d_purchase_plan extends Model
             for ($i=0; $i < $hitung_field; $i++) 
             {
                 $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->idPlan)
-                          ->where('ppdt_detailid',$i+1);
+                          ->where('ppdt_detailid',$i+1)->orderBy('ppdt_detailid','ASC');
 
                 $plandt->update([
                   'ppdt_qtyconfirm' => $request->fieldConfirm[$i],
@@ -491,7 +491,7 @@ class d_purchase_plan extends Model
                   'ppdt_isconfirm' => "TRUE",
                 ]);
             }
-            // return  $plandt;
+            // return    $plandt;
             // return $request->fieldIdDt;
         }
         else

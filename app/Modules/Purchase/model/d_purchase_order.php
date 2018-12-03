@@ -298,7 +298,7 @@ class d_purchase_order extends Model
       $dataHeader->po_date = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_purchaseplan = $request->cariKodePlan;
       $dataHeader->po_supplier = $request->supplier;
-      $dataHeader->po_code = $p_code;
+      $dataHeader->po_code = $p_code; 
       $dataHeader->po_mem = $request->idStaff;
       $dataHeader->po_method = $request->methodBayar;
       $dataHeader->po_total_gross = $totalGross;
