@@ -50,9 +50,7 @@ class purchaseConfirmController extends Controller
       d_purchase_plan::simpan($request);
 
    }
-   public function confirmIndexx(){         
-
-    dd('d');    
+   public function confirmIndex(){         
 
      $tbh =view('Purchase::konfirmasipembelian/tab-belanjaharian');   
      $td =view('Purchase::konfirmasipembelian/tab-daftar');   
