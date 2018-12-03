@@ -51,5 +51,6 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 //barang di gumakam
 	Route::get('/inventory/b_digunakan/barang', 'PemakaianBrgGdgController@barang');
 	Route::get('/inventory/b_digunakan/get-pemakaian-by-tgl/{tgl1}/{tgl2}', 'PemakaianBrgGdgController@getPemakaianByTgl');
+	Route::get('/inventory/b_digunakan/get-history-by-tgl/{tgl1}/{tgl2}/{tampil}', 'PemakaianBrgGdgController@getHistoryByTgl');
 
 });
