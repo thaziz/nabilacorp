@@ -47,9 +47,6 @@ class penerimaanController extends Controller {
 		DB::beginTransaction();
 		try {
 
-
-			
-
 			DB::table('d_pengiriman_dt')
 					->where('pd_pengiriman', $request->id)
 					->update([						
