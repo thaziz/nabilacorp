@@ -24,7 +24,7 @@
                               <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
                               </div>
                           </div>  
-                        
+                                {!! $modal !!}
                                 <ul id="generalTab" class="nav nav-tabs">
                                   <li class="active"><a href="#alert-tab" data-toggle="tab">Penerimaan Barang Suplier</a></li>
                             <!-- <li><a href="#note-tab" data-toggle="tab">History Penerimaan Barang Suplier</a></li> -->
@@ -51,7 +51,7 @@
                                                   @endforeach
                                                 </select>
                                                 <span class="input-group-btn">
-                                                  <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
+                                                  <a href="#" onclick="carisup()" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
                                                 </span>
                                               </div>
                                             </div>
@@ -101,7 +101,7 @@
                         </div>
                       </div>
                     </div>
-                  
+
 @endsection
 @section("extra_scripts")
     <script type="text/javascript">
@@ -145,5 +145,62 @@
         autoclose:true,
         endDate:"today"
       });    
+
+      function carisup(argument) {
+        var id = $('#cariId').val();
+        $.ajax({
+        url : baseUrl + "/inventory/penerimaan_suplier/suplier_cari/"+id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data){
+
+        $('#modalTerima').modal('show');
+        console.log(data);
+        var key = 1;
+        var i = 1;
+        
+        $('#noNotaMasuk').val(data.header[0].po_code);
+
+        Object.keys(data.gudang).forEach(function(){
+
+          $('#comp').append(
+            '<option value="'+data.gudang[i-1].gc_id+'">'+data.gudang[i-1].gc_gudang+'</option>'
+            );
+          $('#position').append(
+            '<option value="'+data.gudang[i-1].gc_comp+'">'+data.gudang[i-1].gc_comp+'</option>'
+            );
+        i++;
+        });
+
+        Object.keys(data.detail).forEach(function(){
+          $('.drop_here').append(
+            "<tr>"+
+            '<td style="text-align:center"><input type="hidden" name="item[]" value="'+data.detail[key-1].i_id+'" class="form-control">'+data.detail[key-1].i_name+'</td>'+
+            '<td style="text-align:center"><input type="hidden" name="confirmqty[]" value="'+data.detail[key-1].podt_qtyconfirm+'" class="form-control">'+data.detail[key-1].podt_qtyconfirm+'</td>'+
+            '<td style="text-align:center"><input type="text" name="terima[]" class="form-control"></td>'+
+            "</tr>"
+          );
+
+        key++;
+        });
+
+
+
+          }
+        });
+      }
+
+      function save_update(argument) {
+      $.ajax({
+        url : baseUrl + "/inventory/penerimaan_suplier/suplier_save",
+        data:$('#update-terima-produk').serialize(),
+        type: "GET",
+        dataType: "JSON",
+        success: function(data){
+
+        }
+      });
+      }
+
       </script>
 @endsection

@@ -11,6 +11,8 @@ use DateTime;
 use Yajra\Datatables\Datatables;
 use Session;
 use App\Lib\mutasi;
+use App\Modules\Purchase\model\d_purchase_order;
+use App\Modules\Purchase\model\d_purchaseorder_dt;
 class penerimaanController extends Controller {
 	public function __construct(){
         $this->middleware('auth');
@@ -23,7 +25,68 @@ class penerimaanController extends Controller {
 							->select('po_code', 'po_id')
 							->get();
 
-		return view('Inventory::penerimaan.index', compact('data'));
+    	$modal =view('Inventory::penerimaan/modal');
+		return view('Inventory::penerimaan.index', compact('data','modal','gudang'));
+	}
+	public function suplier_cari($id)
+	{
+		$dataHeader = d_purchase_order::join('m_supplier','po_supplier','=','s_id')
+                            ->leftjoin('d_mem','po_mem','=','m_id')
+                            ->select(
+                                'po_id',
+                                'po_code',
+                                's_company',
+                                'po_date', 
+                                'po_status',
+                                DB::raw('IFNULL(po_date_confirm, "") AS p_confirm'),
+                                DB::raw('IFNULL(m_id, "") AS m_id'),
+                                DB::raw('IFNULL(m_name, "") AS m_name'))
+                            ->where('po_id', '=', $id)
+                            ->orderBy('po_date', 'DESC')
+                            ->get();
+
+  		$dataIsi = d_purchaseorder_dt::join('m_item','podt_item','=','i_id')
+                                ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
+                                ->leftjoin('d_stock','s_item','=','i_id')
+                                ->select('i_id',
+                                         'i_satuan',
+                                         'm_item.i_code',
+                                         'm_item.i_name',
+                                         's_name',                                         
+                                         'podt_qty',
+                                         'podt_qtyconfirm',
+                                         DB::raw('IFNULL(s_qty, 0) AS s_qty'),
+                                         'podt_prevcost',
+                                         'podt_purchaseorder',
+                                          'podt_detailid',
+                                          'podt_price',
+                                          'podt_total'
+                                )
+                                ->where('podt_purchaseorder', '=', $id)
+                                // ->orderBy('podt_created', 'DESC')
+                                ->get();
+		$gudang = DB::table('d_gudangcabang')->get();	
+
+        return response()->json([
+        	'header' => $dataHeader,
+        	'detail' => $dataIsi,
+        	'gudang' => $gudang
+        ]);
+
+	}
+
+	public function suplier_save(Request $request)
+	{
+		// dd($request->all());
+		for ($i=0; $i <count($request->confirmqty) ; $i++) { 
+			$save = DB::table('d_stock')->insert([
+				's_item'=>$request->item[$i],
+				's_qty'=>$request->terima[$i],
+				's_comp'=>$request->comp,
+				's_position'=>$request->position,
+				's_insert'=>date('Y-m-d')
+			]);
+		}
 	}
 
 	public function getdata(Request $request){		
