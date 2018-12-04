@@ -78,13 +78,43 @@ class penerimaanController extends Controller {
 	public function suplier_save(Request $request)
 	{
 		// dd($request->all());
+
+		$save1 = DB::table('d_purchase_order')->where('po_code',$request->noNotaMasuk)->update([
+			'po_status'=>'RC'
+		]);
+
+
+
 		for ($i=0; $i <count($request->confirmqty) ; $i++) { 
+			$idplus1 = DB::table('d_stock')->max('s_id');
+			if ($idplus1 == null) {
+				$idplus1 = 1;
+			}else{
+				$idplus1 +=1;
+			}
+
 			$save = DB::table('d_stock')->insert([
+				's_id'=>$idplus1,
 				's_item'=>$request->item[$i],
 				's_qty'=>$request->terima[$i],
 				's_comp'=>$request->comp,
 				's_position'=>$request->position,
 				's_insert'=>date('Y-m-d')
+			]);
+
+			$save_mut = DB::table('d_stock_mutation')->insert([
+				'sm_stock'=>$idplus1,
+				'sm_detailid'=>$idplus1,
+				'sm_item'=>$request->item[$i],
+				'sm_qty'=>$request->terima[$i],
+				'sm_qty_used'=>0,
+				'sm_qty_sisa'=>$request->terima[$i],
+				'sm_qty_expired'=>0,
+				'sm_reff'=>$request->noNotaMasuk,
+				'sm_comp'=>$request->comp,
+				'sm_position'=>$request->position,
+				'sm_date'=>date('Y-m-d'),
+				'sm_insert'=>date('Y-m-d')
 			]);
 		}
 	}
@@ -104,6 +134,74 @@ class penerimaanController extends Controller {
 
 			return response()->json($data);
 	}
+	public function suplier_datatable(Request $request)
+  {
+    $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
+            ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
+            ->where('po_status','RC')
+            ->get();
+    // return $data;    
+    return DataTables::of($data)
+    ->addIndexColumn()
+    ->editColumn('status', function ($data)
+      {
+      if ($data->po_status == "WT") 
+      {
+        return '<span class="label label-info">Waiting</span>';
+      }
+      elseif ($data->po_status == "DE") 
+      {
+        return '<span class="label label-warning">Dapat diedit</span>';
+      }
+      elseif ($data->po_status == "RC") 
+      {
+        return '<span class="label label-success">Finish</span>';
+      }
+    })
+    ->editColumn('tglBuat', function ($data) 
+    {
+        if ($data->po_date == null) 
+        {
+            return '-';
+        }
+        else 
+        {
+            return $data->po_date ? with(new Carbon($data->po_date))->format('d M Y') : '';
+        }
+    })
+    ->editColumn('tglConfirm', function ($data) 
+    {
+        if ($data->p_confirm == null) 
+        {
+            return '-';
+        }
+        else 
+        {
+            return $data->p_confirm ? with(new Carbon($data->p_confirm))->format('d M Y') : '';
+        }
+    })
+    ->addColumn('action', function($data)
+      {
+        // if ($data->p_status == "WT") 
+        // {
+        //     return '<div class="text-center">
+        //               <button class="btn btn-sm btn-primary" title="Ubah Status"
+        //                   onclick=konfirmasiPlanAll("'.$data->p_id.'")><i class="fa fa-check"></i>
+        //               </button>
+        //           </div>'; 
+        // }
+        // else 
+        // {
+        //     return '<div class="text-center">
+        //               <button class="btn btn-sm btn-primary" title="Ubah Status"
+        //                   onclick=konfirmasiPlan("'.$data->p_id.'")><i class="fa fa-check"></i>
+        //               </button>
+        //           </div>'; 
+        // }
+      })
+    ->rawColumns(['status', 'action'])
+    ->make(true);
+  }
 
 	public function terima(Request $request){
 		DB::beginTransaction();

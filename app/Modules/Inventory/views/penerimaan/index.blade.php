@@ -89,7 +89,7 @@
                                     <div id="label-badge-tab" class="tab-pane fade">
                                       <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                          <!-- Isi content -->we
+                                          <!-- Isi content -->
                                         </div>
                                       </div>
                                     </div>
@@ -114,28 +114,42 @@
     $.extend($.fn.dataTableExt.oStdClasses, extensions);
     // Used when bJQueryUI is true
     $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+    
+    $('#data2').dataTable({
+        "destroy": true,
+        "processing" : true,
+        "serverside" : true,
+        "ajax" : {
+          url: baseUrl + "/inventory/penerimaan_suplier/suplier_datatable",
+          type: 'GET'
+        },
+        "columns" : [
+          {"data" : "DT_Row_Index",  orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
+          {"data" : "tglBuat",  "width" : "10%"},
+          {"data" : "s_company",  "width" : "10%"},
+          // {"data" : "m_name",  "width" : "15%"},
+          // {"data" : "s_company",  "width" : "25%"},
+          // {"data" : "tglConfirm",  "width" : "15%"},
+          {"data" : "status",  "width" : "10%"},
+          {"data" : "action",  orderable: false, searchable: false, "width" : "5%"}
+        ],
         "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
+          "searchPlaceholder": "Cari Data",
+          "emptyTable": "Tidak ada data",
+          "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
+          "sSearch": '<i class="fa fa-search"></i>',
+          "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
+          "infoEmpty": "",
+          "paginate": {
+                "previous": "Sebelumnya",
+                "next": "Selanjutnya",
+             }
+        }
+    });
+      });
 
-        });
-   
-});
-      $('.datepicker').datepicker({
+
+    $('.datepicker').datepicker({
         format: "mm",
         viewMode: "months",
         minViewMode: "months"
