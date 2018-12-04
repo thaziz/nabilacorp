@@ -96,8 +96,8 @@
                     <input type="hidden" class="form-control input-sm reset-seach" id="mp_i_price">
                     <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="mp_s_satuan">
 
-                    <input type="" class="fComp form-control input-sm reset-seach" name="" id="mp_fComp">
-                  <input type="" class="fPosition form-control input-sm reset-seach" name="" id="mp_fPosition">
+                    <input type="hidden" class="fComp form-control input-sm reset-seach" name="" id="mp_fComp">
+                  <input type="hidden" class="fPosition form-control input-sm reset-seach" name="" id="mp_fPosition">
                 </div>
             </div>      
             <div class="col-md-2">
