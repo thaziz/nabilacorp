@@ -115,6 +115,7 @@
                           <div class="form-group" id="divSelectPlan">
                             <input class="form-control input-sm" id="cari_kode_plan" name="cariKodePlan" style="width: 100%;">
                             <input type="hidden" class="form-control input-sm" id="kodePlan" name="cariKodePlan" style="width: 100%;">
+                            <input type="hidden" class="form-control input-sm" id="kodecomp" name="kodecomp" style="width: 100%;">
                           </div>
                         </div>
 
@@ -280,6 +281,7 @@
         $('#kodePlan').val(ui.item.p_id);
         $('#cari_sup').val(ui.item.s_company);
         $('#id_supplier').val(ui.item.s_id);
+        $('#kodecomp').val(ui.item.p_comp);
         setPlan();
         }
       });
@@ -337,8 +339,9 @@
       //remove existing appending row
       $('tr').remove('.tbl_form_row');
       var id = $('#kodePlan').val();
+      var comp = $('#kodecomp').val();
       $.ajax({
-        url : baseUrl + "/purcahse-order/get-data-form/"+id,
+        url : baseUrl + "/purcahse-order/get-data-form/"+id+'/'+comp,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -366,7 +369,8 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_pruchaseplan+'" name="podt_purchaseorder[]" class="form-control input-sm"/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="podt_detailid[]" class="form-control input-sm"/>'
                             +'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
+                            +'<td><input type="hidden" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/>'
+                            +'<input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'
 
                             +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'

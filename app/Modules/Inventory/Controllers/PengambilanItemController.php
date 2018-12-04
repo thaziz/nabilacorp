@@ -20,6 +20,7 @@ class PengambilanItemController extends Controller
 {
     public function index(){
     	$gudang = d_gudangcabang::join('m_comp','m_comp.c_id','=','gc_comp')
+            ->where('gc_gudang','GUDANG PENJUALAN')
     		->get();
 
     	return view('Inventory::pengiriman.index',compact('gudang'));
@@ -38,7 +39,7 @@ class PengambilanItemController extends Controller
             ->join('d_spk', 'd_productresult.pr_spk', '=', 'd_spk.spk_id')
             ->join('m_item', 'd_productresult.pr_item', '=', 'm_item.i_id')
             ->where('prdt_status', 'RD')
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->get();
         // dd($data);
 
@@ -119,10 +120,18 @@ class PengambilanItemController extends Controller
         $d2 = substr($tgl2, 0, 2);
         $tgl2 = $y2 . '-' . $m2 . '-' . $d2;
 
-        $data = d_delivery_order::
-        where('do_date_send', '>=', $tgl1)
+        $data = d_delivery_order::select('do_date_send',
+                                        'do_nota',
+                                        'do_time',
+                                        'do_date_received',
+                                        'do_id',
+                                        'c_name',
+                                        'gc_gudang')
+            ->where('do_date_send', '>=', $tgl1)
             ->where('do_date_send', '<=', $tgl2)
-            ->where('do_comp',$comp)
+            ->join('d_gudangcabang','d_gudangcabang.gc_id','=','do_send')
+            ->join('m_comp','m_comp.c_id','=','do_sendcomp')
+            // ->where('do_comp',$comp)
             ->get();
 
         return DataTables::of($data)
@@ -140,46 +149,12 @@ class PengambilanItemController extends Controller
 
             })
             ->editColumn('do_date_send', function ($user) {
-                return $user->do_date_send ? with(new Carbon($user->do_date_send))->format('d M Y') : '';
+                return date('d M Y', strtotime($user->do_date_send)) .' / '. $user->do_nota;
             })
-            ->make(true);
-    }
-
-    public function cariTabelKirim($tgl1, $tgl2, $comp)
-    {
-        $y = substr($tgl1, -4);
-        $m = substr($tgl1, -7, -5);
-        $d = substr($tgl1, 0, 2);
-        $tgl1 = $y . '-' . $m . '-' . $d;
-
-        $y2 = substr($tgl2, -4);
-        $m2 = substr($tgl2, -7, -5);
-        $d2 = substr($tgl2, 0, 2);
-        $tgl2 = $y2 . '-' . $m2 . '-' . $d2;
-
-        $data = d_delivery_order::
-        where('do_date_send', '>=', $tgl1)
-            ->where('do_date_send', '<=', $tgl2)
-            ->where('do_comp',$comp)
-            ->get();
-
-        return DataTables::of($data)
-            ->addColumn('action', function ($data) {
-                return '<div class="text-center" data-toggle="buttons">
-                <button style="margin-left:5px;" 
-                          title="Lihat Detail" 
-                          type="button"
-                          data-toggle="modal"
-                          data-target="#modalDetailProduksi" 
-                          onclick="lihatItem(' . $data->do_id . ')"
-                          class="btn btn-info fa fa-eye btn-sm"
-                  </button>
-                </div>';
-
+            ->editColumn('tujuan', function ($user) {
+                return $user->c_name .' - '. $user->gc_gudang;
             })
-            ->editColumn('do_date_send', function ($user) {
-                return $user->do_date_send ? with(new Carbon($user->do_date_send))->format('d M Y') : '';
-            })
+            ->rawColumns(['do_date_send', 'tujuan','action'])
             ->make(true);
     }
 
@@ -237,10 +212,10 @@ class PengambilanItemController extends Controller
                         'prdt_sisa' =>$cek->prdt_sisa - $request->prdt_qtyKirim[$i], 
                     ]);
                 
-                $compp = $request->comp;
+                // $compp = $request->comp;
                 $gc_id = d_gudangcabang::select('gc_id')
                       ->where('gc_gudang','GUDANG PRODUKSI')
-                      ->where('gc_comp',$compp)
+                      // ->where('gc_comp',$compp)
                       ->first();
 
                 if (mutasi::mutasiStok(
@@ -259,7 +234,7 @@ class PengambilanItemController extends Controller
                 //end add id d_stock
                 $gc_sending = d_gudangcabang::select('gc_id')
                       ->where('gc_gudang','GUDANG SENDING')
-                      ->where('gc_comp',$compp)
+                      // ->where('gc_comp',$compp)
                       ->first();
                       // dd($gc_sending);
                 $stock = d_stock::where('s_item', $request->prdt_item[$i])

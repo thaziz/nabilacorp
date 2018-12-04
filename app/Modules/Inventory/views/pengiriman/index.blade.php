@@ -149,7 +149,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Tanggal Pengiriman</th>
-                                                    <th>Nota DO</th>
+                                                    <th>Tujuan</th>
                                                     <th>Waktu Pengiriman</th>
                                                     <th>Waktu Penerimaan</th>
                                                     <th>Detail</th>
@@ -321,24 +321,6 @@
             })
         }
 
-        var tgl1 = $('#tanggal1').val();
-        var tgl2 = $('#tanggal2').val();
-        var tabelPengirimanDo = $('#tabelPengirimanDo').DataTable({
-            responsive: true,
-            destroy: true,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: baseUrl + "/produksi/pengambilanitem/kirim/tabel/" + tgl1 + '/' + tgl2 + '/' + comp,
-            },
-            columns: [
-                {data: 'do_date_send', name: 'do_date_send'},
-                {data: 'do_nota', name: 'do_nota'},
-                {data: 'do_time', name: 'do_time', orderable: false},
-                {data: 'do_date_received', name: 'do_date_received', orderable: false},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
-            ],
-        });
 
         function cariTanggalJual() {
             var comp = $('.mem_comp').val();
@@ -354,7 +336,7 @@
                 },
                 columns: [
                     {data: 'do_date_send', name: 'do_date_send'},
-                    {data: 'do_nota', name: 'do_nota'},
+                    {data: 'tujuan', name: 'tujuan'},
                     {data: 'do_time', name: 'do_time', orderable: false},
                     {data: 'do_date_received', name: 'do_date_received', orderable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

@@ -322,7 +322,6 @@ function showDetail($id){
    	if(e.which == 13 || e.keyCode == 13){      
       if(parseFloat(angkaDesimal(fQty.val())) > parseFloat(angkaDesimal($('#stock').val())) || 
         parseFloat(angkaDesimal($('#stock').val()))<=0){                  		       
-   			alert(1);
    			iziToast.error({
    				position:'topRight',
    				timeout: 2000,

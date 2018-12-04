@@ -90,7 +90,7 @@ class spkProductionController extends Controller
         $spk = d_spk::join('m_item', 'spk_item', '=', 'i_id')
             ->join('d_productplan', 'pp_id', '=', 'spk_ref')
             ->select('spk_id', 'spk_date', 'i_name', 'pp_qty', 'spk_code', 'spk_status')
-            ->where('spk_comp',$comp)
+            // ->where('spk_comp',$comp)
             ->where(function ($query) {
                 $query->where('spk_status', 'AP')
                       ->orWhere('spk_status', 'PB');

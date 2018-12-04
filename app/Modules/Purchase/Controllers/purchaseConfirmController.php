@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Modules\Purchase\Controllers;
 
+
+
+namespace App\Modules\Purchase\Controllers;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use DB;
+use Response;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\m_customer;
-use Carbon\carbon;
-use DB;
+
+
+
+
+
 
 use App\m_item;
-
-use App\Http\Controllers\Controller;
-
 use App\mMember;
 use App\Modules\Purchase\model\d_purchase_plan;
 use App\Modules\Purchase\model\d_purchase_order;
@@ -46,6 +51,7 @@ class purchaseConfirmController extends Controller
 
    }
    public function confirmIndex(){         
+
      $tbh =view('Purchase::konfirmasipembelian/tab-belanjaharian');   
      $td =view('Purchase::konfirmasipembelian/tab-daftar');   
      $to =view('Purchase::konfirmasipembelian/tab-order');   
@@ -174,10 +180,11 @@ public function getDataRencanaPembelian(Request $request)
     if ($type == "all") 
     {
       
-      $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+      $dataIsi = d_purchaseorder_dt::join('m_item','podt_item','=','i_id')
+                                ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
+                                         'i_satuan',
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          's_name',                                         
@@ -185,21 +192,29 @@ public function getDataRencanaPembelian(Request $request)
                                          'podt_qtyconfirm',
                                          DB::raw('IFNULL(s_qty, 0) AS s_qty'),
                                          'podt_prevcost',
-                                         'podt_pruchaseplan',
-                                          'o4pdt_detailid'
+                                         'podt_purchaseorder',
+                                          'podt_detailid',
+                                          'podt_price',
+                                          'podt_total'
                                 )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->where('podt_purchaseorder', '=', $id)
+                                // ->orderBy('podt_created', 'DESC')
                                 ->get();
+      for ($i=0; $i <count($dataIsi) ; $i++) { 
+        $data_stok[$i] = DB::table('d_stock')->where('s_item',$dataIsi[$i]->i_id)->get();
+        // $data_satuan = DB::table('m_satuan')->where('s_id',$dataIsi[$i]->i_satuan)->get();
+      }
       
     }
     else
     {
+      // return 'a';
 
-       $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+       $dataIsi = d_purchaseorder_dt::join('m_item','podt_item','=','i_id')
+                                ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
+                                         'i_satuan',
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          's_name',                                         
@@ -207,28 +222,101 @@ public function getDataRencanaPembelian(Request $request)
                                          'podt_qtyconfirm',
                                          's_qty',
                                          'podt_prevcost',
-                                         'podt_pruchaseplan',
-                                         'po4dt_detailid'
+                                         'podt_purchaseorder',
+                                         'podt_detailid',
+                                         'podt_price',
+                                         'podt_total'
                                 )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->where('podt_purchaseorder', '=', $id)
+                                ->where('podt_isconfirm', '=', "TRUE")
+                                // ->orderBy('podt_created', 'DESC')
                                 ->get();
       
+      for ($i=0; $i <count($dataIsi) ; $i++) { 
+        $data_stok[$i] = DB::table('d_stock')->where('s_item',$dataIsi[$i]->i_id)->get();
+        // $data_satuan = DB::table('m_satuan')->where('s_id',$dataIsi[$i]->i_satuan)->get();
+      }
+
 
     }
-   
+
+
+
     return Response()->json([
         'status' => 'sukses',
         'header' => $dataHeader,
         'data_isi' => $dataIsi,      
+        'data_stok' => $data_stok,      
+        // 'data_satuan' => $data_satuan,      
         'spanTxt' => $spanTxt,
         'spanClass' => $spanClass,
     ]);
       // return d_purchase_plan::konfirmasiOrder($request);
    }
+
+   public function konfirmasiOrdersubmit(Request $request)
+   {
+     // dd($request->all());
+        $plan = d_purchase_order::where('po_id',$request->idOrder)->first();
+        // return json_encode($plan);
+        if ($request->statusOrderConfirm != "WT") 
+        {   
+
+          $plan->update([
+              'po_confirm' => date('Y-m-d',strtotime(Carbon::now())),
+              'po_status' => $request->statusOrderConfirm,
+              'po_updated' => Carbon::now(),
+          ]);
+            
+            //update table d_purchasingplan_dt
+            $hitung_field = count($request->fieldConfirmOrder);
+            
+            for ($i=0; $i < $hitung_field; $i++) 
+            {
+                $plandt = d_purchaseorder_dt::where('podt_purchaseorder',$request->idOrder)
+                          ->where('podt_detailid',$i+1)->orderBy('podt_detailid','ASC');
+
+                $plandt->update([
+                  'podt_qtyconfirm' => $request->fieldConfirmOrder[$i],
+                  'podt_updated' => Carbon::now(),
+                  'podt_isconfirm' => "TRUE",
+                ]);
+            }
+            $plandt;
+            // return $request->fieldIdDt;
+        }
+        else
+        {
+            $plan->update([
+            'po_confirm' => null,
+            'po_status' => $request->statusOrderConfirm,
+            'po_updated' => Carbon::now(),
+            ]);
+            //update table d_purchasingplan_dt
+            $hitung_field = count($request->fieldConfirmOrder);
+            for ($i=0; $i < $hitung_field; $i++) 
+            {
+                 $plandt = d_purchaseplan_dt::where('podt_purchaseorder',$request->idOrder)
+                          ->where('podt_detailid',$i+1);
+                   
+                $plandt->update([
+                'podt_qtyconfirm' => $request->fieldConfirmOrder[$i],
+                'podt_updated' => Carbon::now(),
+                'podt_isconfirm' => "FALSE",
+                ]);
+            }
+        }
+        
+        DB::commit();
+        return response()->json([
+            'status' => 'sukses',
+            'pesan' => 'Data Rencana Order Berhasil Diupdate'
+        ]);
+   }
+
    public function getdatatableOrder()
    {
+    // return 'a';
      $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
               ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
@@ -280,7 +368,7 @@ public function getDataRencanaPembelian(Request $request)
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
-                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check">'.$data->po_id.'</i>
+                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
                       </button>
                   </div>'; 
         }

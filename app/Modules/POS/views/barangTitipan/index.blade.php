@@ -126,7 +126,7 @@
   var hapusSalesDt =[];
 
    $("#supplier").autocomplete({
-        source: baseUrl+'/seach-supplier',
+        source: baseUrl+'/penjualan/barang-titipan/seach-supplier',
         minLength: 1,
         dataType: 'json',
         select: function(event, ui) 
