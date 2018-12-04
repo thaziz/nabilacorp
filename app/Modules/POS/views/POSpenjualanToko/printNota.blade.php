@@ -22,8 +22,8 @@
 
 @foreach($data['sales_dt'] as $detail)
           <tr>
-          <td width="4px" style="font-size: 5px">{{$detail->i_name}}</td>
-          <td width="5px" >
+          <td width="3px" style="font-size: 5px">{{$detail->i_name}}</td>
+          <td width="6px" >
 
           <div style="text-align: right; font-size: 5px">
           {{$detail->sd_qty}} {{$detail->s_name}} * {{number_format($detail->sd_price,'0',',','.')}}
