@@ -42,6 +42,8 @@ class m_itemm extends Model
 
         $search = $item->term;
 
+        $harga = $item->harga;
+
         $cabang=Session::get('user_comp');                
 
         $position=DB::table('d_gudangcabang')
@@ -67,7 +69,19 @@ class m_itemm extends Model
              })
              ->join('m_satuan','m_satuan.s_id','=','i_satuan')
              /*->join('m_group','g_id','=','i_group')*/
-             ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','s_qty','i_code');
+                  ->join('m_price','m_pitem','=','i_id');
+             /*->join('m_group','g_id','=','i_group')*/
+             
+         if($harga==1){
+          $sql->select('i_id','i_name','m_satuan.s_name as s_name','m_psell1 as i_price','s_qty','i_code');
+        }
+        if($harga==2){
+          $sql->select('i_id','i_name','m_satuan.s_name as s_name','m_psell2 as i_price','s_qty','i_code');
+        }
+        if($harga==3){
+          $sql->select('i_id','i_name','m_satuan.s_name as s_name','m_psell3 as i_price','s_qty','i_code');
+        }
+          
              
 
         if($search!=''){          
