@@ -28,9 +28,9 @@ class d_purchaseorder_dt extends Model
 
 
     protected $table = 'd_purchaseorder_dt';
-    protected $primaryKey = 'podt_id';
-    const CREATED_AT = 'podt_created';
-    const UPDATED_AT = 'podt_updated';
+    protected $primaryKey = 'po_id';
+    const CREATED_AT = 'po_created';
+    const UPDATED_AT = 'po_updated';
     
       protected $fillable =    ['podt_purchaseorder',
                                 'podt_detailid',

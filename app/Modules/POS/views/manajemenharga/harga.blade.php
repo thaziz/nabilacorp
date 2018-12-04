@@ -33,7 +33,7 @@
                               </ul>
                               <div id="generalTabContent" class="tab-content responsive">
                                 
-                                @include('POS::manajemenharga.modal')
+                                @include('penjualan.manajemenharga.modal')
 
                                 <div id="alert-tab" class="tab-pane fade in active">
                                  
@@ -41,20 +41,44 @@
 
                                     <div class="col-md-12 col-sm-12 col-xs-12">
 
+                                      <div align="right" style="margin-bottom: 15px;">
+                                        <button class="btn btn-box-tool" data-target="#tambah" data-toggle="modal"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Manajemen Harga</button>
+                                      </div>
+
                                       <div class="table-responsive">
-                                        <table class="table tabelan table-bordered table-hover" id="tabel_m_price">
+                                        <table class="table tabelan table-bordered table-hover" id="data">
                                           <thead>
                                             <tr>
-                                              <th>Kode - Nama Item</th>
-                                              <th>Item Type</th>
-                                              <th>Item Group</th>
-                                              <th>Harga A</th>
-                                              <th>Harga B</th>
-                                              <th>Harga C</th>
-                                              <th></th>
+                                              <th>No</th>
+                                              <th>No Manajemen Harga</th>
+                                              <th>Aksi</th>
                                             </tr>
                                           </thead>
                                           <tbody>
+                                            <tr>
+                                              <td>1</td>
+                                              <td>08022018/MH/001</td>
+                                              <td>
+                                                <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>2</td>
+                                              <td>08022018/MH/002</td>
+                                              <td>
+                                                <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>3</td>
+                                              <td>08022018/MH/003</td>
+                                              <td>
+                                                <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                                              </td>
+                                            </tr>
                                           </tbody>
                                         </table>
                                       </div>
@@ -95,5 +119,81 @@
 
 @endsection
 @section("extra_scripts")
-    @include('POS::manajemenharga/js/commander')
+    <script type="text/javascript">
+     $(document).ready(function() {
+    var extensions = {
+         "sFilterInput": "form-control input-sm",
+        "sLengthSelect": "form-control input-sm"
+    }
+    // Used when bJQueryUI is false
+    $.extend($.fn.dataTableExt.oStdClasses, extensions);
+    // Used when bJQueryUI is true
+    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
+    $('#data').dataTable({
+          "responsive":true,
+
+          "pageLength": 10,
+        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+        "language": {
+            "searchPlaceholder": "Cari Data",
+            "emptyTable": "Tidak ada data",
+            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
+            "sSearch": '<i class="fa fa-search"></i>',
+            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
+            "infoEmpty": "",
+            "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya",
+                 }
+          }
+
+        });
+    $('#data2').dataTable({
+          "responsive":true,
+
+          "pageLength": 10,
+        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+        "language": {
+            "searchPlaceholder": "Cari Data",
+            "emptyTable": "Tidak ada data",
+            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
+            "sSearch": '<i class="fa fa-search"></i>',
+            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
+            "infoEmpty": "",
+            "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya",
+                 }
+          }
+
+        });
+    $('#data3').dataTable({
+          "responsive":true,
+
+          "pageLength": 10,
+        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+        "language": {
+            "searchPlaceholder": "Cari Data",
+            "emptyTable": "Tidak ada data",
+            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
+            "sSearch": '<i class="fa fa-search"></i>',
+            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
+            "infoEmpty": "",
+            "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya",
+                 }
+          }
+
+        });
+});
+      $('.datepicker').datepicker({
+        format: "mm",
+        viewMode: "months",
+        minViewMode: "months"
+      });
+      $('.datepicker2').datepicker({
+        format:"dd-mm-yyyy"
+      });    
+      </script>
 @endsection()

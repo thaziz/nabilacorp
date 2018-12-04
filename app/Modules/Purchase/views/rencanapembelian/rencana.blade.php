@@ -26,7 +26,7 @@
                
               <ul id="generalTab" class="nav nav-tabs">
                   <li class="active"><a href="#alert-tab" data-toggle="tab">Daftar Rencana Pembelian</a></li>
-                  <li hidden=""><a href="#note-tab" data-toggle="tab">History Rencana Pembelian</a></li>
+                            <li><a href="#note-tab" data-toggle="tab">History Rencana Pembelian</a></li>
                            <!--  <li><a href="#label-badge-tab" data-toggle="tab">Belanja Harian</a></li> -->
               </ul>
         <div id="generalTabContent" class="tab-content responsive">
@@ -40,7 +40,7 @@
                                 <div id="note-tab" class="tab-pane fade">
                                   <div class="row">
                                     <div class="panel-body">
-                                      <!-- Isi Content -->
+                                      <!-- Isi Content -->we we we
                                     </div>
                                   </div>
                                 </div><!--/div note-tab -->
@@ -50,7 +50,7 @@
                                 <div id="label-badge-tab" class="tab-pane fade">
                                   <div class="row">
                                     <div class="panel-body">
-                                      <!-- Isi content -->
+                                      <!-- Isi content -->we
                                     </div>
                                   </div>
                                 </div><!-- /div label-badge-tab -->

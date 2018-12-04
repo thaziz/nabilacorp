@@ -14,7 +14,7 @@ class d_sales_dt extends Model
     protected $primaryKey = 'sd_sales';
     public $timestamps=false;
     
-     protected $fillable = ['sd_sales','sd_comp','sd_position','sd_date','sd_detailid','sd_item','sd_qty','sd_price','sd_disc_percent','sd_disc_value','sd_total','sd_disc_percentvalue'];
+      protected $fillable = ['sd_sales','sd_comp','sd_position','sd_date','sd_detailid','sd_item','sd_qty','sd_price','sd_disc_percent','sd_disc_value','sd_total','sd_disc_percentvalue'];
 	static function penjualanDt($sd_sales=''){		
 
 		return DB::table('d_sales_dt')->join('m_item','sd_item','=','i_id')
@@ -27,18 +27,6 @@ class d_sales_dt extends Model
 
 		})
 		->get();
-	}
-
-	function d_sales() {
-		$res = $this->belongsTo('App\Modules\POS\model\d_sales', 'sd_sales', 's_id');
-
-        return $res;
-	}
-
-	function m_item() {
-		$res = $this->belongsTo('App\m_itemm', 'sd_item', 'i_id');
-
-        return $res;
 	}
 }
 	

@@ -37,28 +37,28 @@ class mutasiItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
+    
+   
     public function mutasiItemIndex()
-    {
-      $mutasiItem=view('POS::mutasiItem/mutasi_item');
-      $form=view('POS::mutasiItem/form-mutasi');
+    {       
+      $mutasiItem=view('POS::mutasiItem/mutasi_item');      
+      $form=view('POS::mutasiItem/form-mutasi');      
       return view('POS::mutasiItem/mutasi',compact('mutasiItem','form'));
     }
     public function dataMutasiItem(Request $request)
-    {
+    { 
       return d_mutasi_item::mutasiItem($request);
     }
 
-    public function store(Request $request){
-        return d_mutasi_item::store($request);
+    public function store(Request $request){        
+        return d_mutasi_item::store($request);        
     }
 
     public function perbarui(Request $request,$id){
-        return d_mutasi_item::perbarui($request,$id);
+        return d_mutasi_item::perbarui($request,$id);        
     }
 
-    function mutasiItemDt($id,Request $request){
+    function mutasiItemDt($id,Request $request){      
       $chek=$request->type;
         if($chek=='Bahan'){
           $status=$request->s_status;
@@ -66,8 +66,8 @@ class mutasiItemController extends Controller
           $tamp=[];
           foreach ($data as $key => $value) {
               $tamp[$key]=$value->i_id;
-          }
-          $tamp=array_map("strval",$tamp);
+          }      
+          $tamp=array_map("strval",$tamp);      
           return view('POS::mutasiItem/editDetailBahan',compact('data','tamp','status'));
         }
 
@@ -77,14 +77,14 @@ class mutasiItemController extends Controller
           $tamp=[];
           foreach ($data as $key => $value) {
               $tamp[$key]=$value->i_id;
-          }
-          $tamp=array_map("strval",$tamp);
+          }      
+          $tamp=array_map("strval",$tamp);      
           return view('POS::mutasiItem/editDetailHasil',compact('data','tamp','status'));
         }
     }
 
-    public function destroy($id){
-      return d_mutasi_item::destroy($id);
+    function destroy($id){
+      return d_mutasi_item::destroy($id);    
     }
 
 }

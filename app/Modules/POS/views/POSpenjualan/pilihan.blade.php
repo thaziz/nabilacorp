@@ -21,7 +21,7 @@
     </div>
   </a>
 
-  <a href="{{url('/penjualan/pos-mobile/index')}}">
+  <a href="{{url('penjualan/POSpenjualanmobile/POSpenjualanmobile')}}">
     <div class="col-sm-6 col-md-6 col-xs-12">
         <div class="panel db mbm">
             <div class="panel-body">

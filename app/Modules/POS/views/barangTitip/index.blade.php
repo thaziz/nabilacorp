@@ -465,8 +465,8 @@ function showDetail($id){
       iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="idt_item[]" value='+i_id.val()+'>'; 
       iSalesDetail+='<input style="width:100%" type="hidden" name="idt_itemtitipan[]" value="">';
       iSalesDetail+='<input style="width:100%" type="hidden" name="idt_detailid[]" value="">';
-      iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="hidden" name="comp[]">';
-          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="hidden" name="position[]">';
+      iSalesDetail+='<input value="'+$('#fComp').val()+'" style="width:100%" type="" name="comp[]">';
+          iSalesDetail+='<input value="'+$('#fPosition').val()+'" style="width:100%" type="" name="position[]">';
       iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
 
       iSalesDetail+='<td width="4%"><input class="form-control stock stock'+i_id.val()+'" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';

@@ -1,7 +1,7 @@
 <div class="modal fade" id="modal-confirm-order" role="dialog">
   <div class="modal-dialog" style="width: 90%;margin: auto;">
       
-    <form method="get" id="form-confirm-order">
+    <form method="post" id="form-confirm-order">
       {{ csrf_field() }}
       <input type="hidden" name="idOrder" id="id_order">
       <!-- Modal content-->
@@ -98,7 +98,7 @@
         </div>
     
         <div class="modal-footer" style="border-top: none;">
-          <button type="button" class="btn btn-info" onclick="konfirmasiPlan()" id="button_confirm_order">Konfirmasi</button>
+          <button type="button" class="btn btn-info" onclick="submitOrderConfirm()" id="button_confirm_order">Konfirmasi</button>
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>
 

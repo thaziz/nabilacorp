@@ -6,7 +6,7 @@
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                     <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-                        <div class="page-title">Form Update Master Data Barang</div>
+                        <div class="page-title">Form Master Data Barang</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
                         <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
@@ -56,8 +56,7 @@
                                 </div>
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="hidden" name="i_id" value="{{ $m_item->i_id }}">
-                                      <input type="text" id="i_code" name='i_code' value='{{ $m_item->i_code }}' class="form-control input-sm" readonly placeholder="(Auto)">
+                                      <input type="text" id="kode_barang" name="kode_barang" class="form-control input-sm" disabled placeholder="(Auto)" value="{{$datasatuan[0]->i_code}}">
                                   </div>
                                 </div>
 
@@ -70,198 +69,75 @@
                                 </div>
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="nama" name='i_name' value='{{ $m_item->i_name }}' class="form-control input-sm">
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="nama-error"><small>Nama harus diisi.</small></span>
+                                      <input type="text" id="nama" name="nama" class="form-control input-sm" value="{{$datasatuan[0]->i_name}}">
                                   </div>
                                 </div>
 
+
+
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                    <label class="tebal">Min. Stock</label>
+                                    <label class="tebal">Kelompok</label>
 
                                 </div>
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='i_min_stock' name='i_min_stock' value='{{ $m_item->i_min_stock }}'  class="form-control">
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Min. Stock Harus Diisi</small></span>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Type</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_type' data-selected='{{ $m_item->i_type }}' id="i_type">
-                                        <option value="">~ Pilih Type ~</option>
-                                        <option value="BJ">Barang Jual</option>
-                                        <option value="BP">Barang Produksi</option>
-                                        <option value="BB">Bahan Baku</option>
-                                      </select>
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="type-error"><small>Type harus dipilih.</small></span>
-                                  </div>
-                                </div>
-              
-
-                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                  <div class="row">
-                                    
-                                    <div class="col-md-3"><label class="tebal">Kelompok</label></div>
-                                    <div class="form-group col-md-9">
-                                        <select class="input-sm form-control select" name='i_group' data-selected='{{ $m_item->i_group }}' onchange="dinamis()" id="kelompok">
-                                          <option value="">~ Pilih Kelompok ~</option>
-                                          @foreach ($kelompok as $key => $value)
-                                            <option value="{{$value->g_id}}">{{$value->g_name}}</option>
-                                          @endforeach
-                                        </select>
-                                        <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="kelompok-error"><small>Kelompok harus dipilih.</small></span>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                
-                               
-
-                                
-
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Satuan Utama</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat1' data-selected='{{ $m_item->i_sat1 }}' id="i_sat1">
-                                        <option value="">~ Pilih Satuan ~</option>
-                                        @foreach ($satuan as $key => $value)
-                                          <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
+                                      <select class="input-sm form-control select" name='kelompok' onchange="dinamis()" id="kelompok">
+                                        <option value="">~ Pilih Kelompok ~</option>
+                                        @foreach ($kelompok as $key => $value)
+                                          @if($datasatuan[0]->i_group == $value->g_id)
+                                          <option value="{{$value->g_id}}" selected>{{$value->g_name}}</option>
+                                          @else
+                                          <option value="{{$value->g_id}}">{{$value->g_name}}</option>
+                                          @endif
                                         @endforeach
                                       </select>
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Satuan harus dipilih.</small></span>
                                   </div>
                                 </div>
-          
+
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                    <label class="tebal">Isi Sat. Utama</label>
+                                    <label class="tebal">Satuan</label>
 
                                 </div>
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='i_sat_isi1' name='i_sat_isi1' value='{{ $m_item->i_sat_isi1 }}' class="form-control" value='1' readonly>
-                                      
-                                  </div>
-                                </div>                      
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Satuan Alternatif 1</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat2' data-selected='{{ $m_item->i_sat2 }}' id="i_sat2">
+                                      <select class="input-sm form-control select" name='satuan'>
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
-                                          <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
+                                          @if($datasatuan[0]->i_satuan == $value->s_id)
+                                          <option value="{{$value->s_id}}" selected>{{$value->s_name}} ({{$value->s_detname}}</option>
+                                          @else
+                                          <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}}</option>
+                                          @endif
                                         @endforeach
                                       </select>
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Satuan harus dipilih.</small></span>
                                   </div>
                                 </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                               <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                    <label class="tebal">Isi Sat. Alternatif 1</label>
+                                      <label class="tebal">Harga Beli</label>
 
                                 </div>
-
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='i_sat_isi2' name='i_sat_isi2' value='{{ $m_item->i_sat_isi2 }}' class="form-control">
-                                      
+                                      <input type="text" id="harga" name="hargabeli" class="form-control input-sm rp" value="Rp. {{number_format($datasatuan[0]->i_hpp,0,',','.')}}">
                                   </div>
                                 </div>
 
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                    <label class="tebal">Satuan Alternatif 2</label>
+                                       <label class="tebal">Harga Jual</label>
 
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat3' data-selected='{{ $m_item->i_sat3 }}' id="i_sat3">
-                                        <option value="">~ Pilih Satuan ~</option>
-                                        @foreach ($satuan as $key => $value)
-                                          <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
-                                        @endforeach
-                                      </select>
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Satuan harus dipilih.</small></span>
-                                  </div>
-                                </div>
-
-                                
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Isi Sat. Alternatif 2</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="number" id='i_sat_isi3' name='i_sat_isi3' value='{{ $m_item->i_sat_isi3 }}' class="form-control">
-                                      
-                                  </div>
-                                </div>                                
-                                
-                                <input type="hidden" name="m_pid" value="{{ $m_price->m_pid
-
-                                 }}">
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                      <label class="tebal">Harga Satuan Utama</label>
-
-                                </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy1' value='{{ $m_price->m_pbuy1 }}' class="form-control input-sm">
-                                      
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                      <label class="tebal">Harga Satuan Alternatif 1</label>
-
-                                </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy2' value='{{ $m_price->m_pbuy2 }}' class="form-control input-sm">
-                                      
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                      <label class="tebal">Harga Satuan Alternatif 2</label>
-
-                                </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy3' value='{{ $m_price->m_pbuy3 }}' class="form-control input-sm">
-                                      
-                                  </div>
-                                </div>
-
+                                 </div>
+                                 <div class="col-md-3 col-sm-8 col-xs-12">
+                                   <div class="form-group">
+                                       <input type="text" id="harga" name="hargajual" class="form-control input-sm rp" value="Rp. {{number_format($datasatuan[0]->i_price,0,',','.')}}">
+                                   </div>
+                                 </div>
 
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
@@ -270,26 +146,32 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <textarea class="form-control input-sm" name='i_det' value='{{ $m_item->i_det }}' value='{{ $m_item->i_det }}'>{{ $m_item->i_det }}</textarea>
+                                      <textarea class="form-control input-sm" name='detail'>{{$datasatuan[0]->i_det}}</textarea>
                                   </div>
                                 </div>
-                                
-                                
-                                  @foreach ($d_item_supplier as $i => $supplier)
 
-                                <div class="" id="dinamis{{ $i }}">
-                                  <div class="col-md-2" style="margin-right: 68px;">
+                                @if (!empty($dataduaan))
+                                  @foreach ($dataduaan as $index => $x)
+                                    <input type="hidden" name="index" value="{{$index}}">
+                                    <div class="dinamis{{$index}}" id="dinamis">
+                                      <div class="col-md-2" style="margin-right: 68px;">
 
-                                        <label class="tebal">Supplier</label>
+                                            <label class="tebal">Supplier</label>
 
-                                  </div>
-                                  
+                                      </div>
+                                      <?php $wow = $x->is_supplier; ?>
                                       <div class="col-md-9">
                                         <div class="form-group col-sm-5">
-                                          <select class="input-sm form-control" name="is_supplier[]" data-selected="{{ $supplier->s_id }}" data-text="{{ $supplier->s_company }}">
+                                          <select class="input-sm form-control select" name="supplier[]" id="showdinamis0">
                                               <option value="">~ Pilih Supplier ~</option>
+                                              @foreach ($supplier as $key => $z)
+                                                @if($wow == $z->s_id)
+                                                <option value="{{$z->s_id}}" selected>{{$z->s_company}} - {{$z->s_name}}</option>
+                                                @else
+                                                <option value="{{$z->s_id}}">{{$z->s_company}} - {{$z->s_name}}</option>
+                                                @endif
+                                              @endforeach
                                           </select>
-                                          <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
                                         </div>
                                         <div class="col-md-2">
 
@@ -297,25 +179,26 @@
 
                                         </div>
                                       <div class="form-group col-sm-3">
-                                        <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0" value="{{ $supplier->is_price }}">
-                                        <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
+                                        <input type="text" class="form-control rp" name="hargasupplier[]" value="Rp. {{number_format($x->is_price,0,',','.')}}">
                                       </div>
                                       <div class="form-group col-sm-2">
-                                        <button type="button" class="btn btn-primary" name='button' onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                        @if ($index == 0)
+                                          <button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                        @else
+                                          <button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                          <button type="button" class="btn btn-danger" name="button" onclick="kurang()"> <i class="fa fa-minus"></i> </button>
+                                        @endif
                                       </div>
                                     </div>
+                                  </div>
                                   @endforeach
-                                  
+                                @endif
 
-                                
-                              </div>
+                                <input type="hidden" name="kode" value="{{$datasatuan[0]->i_code}}">
 
-                              <div class="row">
-                                <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
-                                  <button class="btn btn-primary" type="button" onclick="perbarui()">Simpan</button>
-                                </div>
-                              </div>
-                          
+                          <div align="right">
+                            <button type="button" name="button" class="btn btn-primary" onclick="update({{$datasatuan[0]->i_id}})">update</button>
+                          </div>
 
                       </form>
                 </div>
@@ -326,6 +209,110 @@
 
 @endsection
 @section("extra_scripts")
-  @include('Master::databarang/js/format_currency')
-  @include('Master::databarang/js/commander')
+<script type="text/javascript">
+var iddinamis = parseInt($('input[name=index]').val() + 1);
+      $("#nama").load("/master/databarang/tambah_barang", function(){
+      $("#nama").focus();
+      });
+      $('#tgl_lahir').datepicker({
+          autoclose: true,
+          format: 'dd-mm-yyyy'
+        });
+
+        $(document).ready(function(){
+          $('.rp').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+        });
+
+        dinamis();
+
+        function dinamis(){
+          var html = '<option value="">~ Pilih Supplier ~</option>';
+          var kelompok = $('#kelompok').val();
+          if (kelompok == 1 || kelompok == 3 || kelompok == 4) {
+            $.ajax({
+              type: 'get',
+              url: baseUrl + '/master/item/supplier',
+              dataType: 'json',
+              success : function(result){
+                for (var i = 0; i < result.length; i++) {
+                  html += '<option value="'+result[i].s_id+'">'+result[i].s_company+ '-' +result[i].s_name+'</option>';
+                }
+                  $("#showdinamis"+iddinamis).html(html);
+              }
+            });
+            $('.dinamis').show();
+            $('.select').select2();
+
+          } else {
+            $('.dinamis').hide();
+            $('.select').select2();
+          }
+        }
+
+        function tambah(){
+            var html = '';
+            iddinamis += 1;
+            html += '<div class="dinamis'+iddinamis+'"><div class="col-md-2" style="margin-right: 68px;">'+
+
+                    '<label class="tebal">Supplier</label>'+
+
+                    '</div>'+
+
+                    '<div class="col-md-9">'+
+                    '<div class="form-group col-sm-5">'+
+                    '<select class="input-sm form-control select" name="supplier[]" id="showdinamis'+iddinamis+'">'+
+                      '<option value="">~ Pilih Supplier ~</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="col-md-2">'+
+
+                      '<label for="">Harga </label>'+
+
+                    '</div>'+
+                    '<div class="form-group col-sm-3">'+
+                    '<input type="text" class="form-control rp" name="hargasupplier[]">'+
+                    '</div>'+
+                    '<div class="form-group col-sm-2">'+
+                    '<button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>'+
+                    '&nbsp;'+
+                    '<button type="button" class="btn btn-danger" name="button" onclick="kurang('+iddinamis+')"> <i class="fa fa-minus"></i> </button>'+
+                    '</div>'+
+                    '</div></div>';
+
+
+            $('#dinamis').append(html);
+            $('.select').select2();
+            $('.rp').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
+            dinamis();
+        }
+
+        function kurang(){
+          $('.dinamis'+iddinamis).remove();
+        }
+
+        function update(id){
+          var kode = $('input[name=kode]').val();
+          $.ajax({
+            type: 'get',
+            data: $('#data').serialize(),
+            dataType: 'json',
+            url: baseUrl + '/master/item/update?id='+id+'&kode='+kode,
+            success : function(result){
+              if (result.status == 'berhasil') {
+                  swal({
+                      title: "Berhasil",
+                      text: "Data Berhasil Disimpan",
+                      type: "success",
+                      showConfirmButton: false,
+                      timer: 900
+                  });
+                  setTimeout(function(){
+                        window.location.reload();
+                }, 850);
+              }
+            }
+          });
+        }
+
+</script>
 @endsection
