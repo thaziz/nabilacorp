@@ -12,15 +12,15 @@ Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->m
 Route::delete('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
 
 //keuangan
-Route::get('/konfirmasi-purchase/index', 'PurchaseConfirmController@confirmIndex')->middleware('auth');
-Route::get('/konfirmasi-purchase/purchase-plane/data', 'PurchaseConfirmController@getDataRencanaPembelian')->middleware('auth');
+Route::get('/konfirmasi-purchase/index', 'purchaseConfirmController@confirmIndex')->middleware('auth');
+Route::get('/konfirmasi-purchase/purchase-plane/data', 'purchaseConfirmController@getDataRencanaPembelian')->middleware('auth');
 Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-plan/{id}/{type}', 'PurchaseConfirmController@confirmRencanaPembelian')->middleware('auth');
 
 Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-purchase-plan', 'PurchaseConfirmController@konfirmasiPurchasePlan')->middleware('auth');
 //order konfirmasi
-Route::get('keuangan/konfirmasipembelian/get-data-tabel-order','PurchaseConfirmController@getdatatableOrder')->middleware('auth');
-Route::get('keuangan/konfirmasipembelian/confirm-order/{id}/{type}','PurchaseConfirmController@konfirmasiOrder')->middleware('auth');
-Route::get('keuangan/konfirmasipembelian/confirm-order-submit','PurchaseConfirmController@konfirmasiOrdersubmit')->middleware('auth');
+Route::get('keuangan/konfirmasipembelian/get-data-tabel-order','purchaseConfirmController@getdatatableOrder')->middleware('auth');
+Route::get('keuangan/konfirmasipembelian/confirm-order/{id}/{type}','purchaseConfirmController@konfirmasiOrder')->middleware('auth');
+Route::get('keuangan/konfirmasipembelian/confirm-order-submit','purchaseConfirmController@konfirmasiOrdersubmit')->middleware('auth');
 
 
 /*keuangan/konfirmasi-purchase/confirm-plan/4/confirmed*/

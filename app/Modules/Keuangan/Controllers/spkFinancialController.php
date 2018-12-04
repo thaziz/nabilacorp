@@ -37,6 +37,7 @@ class spkFinancialController extends Controller
     $createSpk=view('Keuangan::spk.create-spk');
     $editSpk=view('Keuangan::spk.edit-spk');
 
+
     return view('Keuangan::spk/index',compact('tabIndex','tabManajSPK','spkDetail','createSpk','editSpk'));
   }
 
@@ -46,7 +47,7 @@ class spkFinancialController extends Controller
     $productplan =DB::table('d_productplan')
                   ->join('m_item','pp_item','=','i_id')
                   ->where('pp_isspk','N')
-                  ->where('pp_comp',$pp_comp)
+                  // ->where('pp_comp',$pp_comp)
                   ->orderBy('pp_date','ASC')
                   ->get();
      
@@ -87,7 +88,7 @@ class spkFinancialController extends Controller
                   ->join('d_productplan','pp_id','=','spk_ref')
                   ->select('spk_id', 'spk_date','i_name','pp_qty','spk_code','spk_status','pp_item')
                   ->whereBetween('spk_date', [$tanggal1, $tanggal2])
-                  ->where('spk_comp',$comp)
+                  // ->where('spk_comp',$comp)
                   ->orderBy('spk_date', 'DESC')
                   ->get();
     }elseif ($tampil == 'draft') {
@@ -98,19 +99,27 @@ class spkFinancialController extends Controller
                   ->whereBetween('spk_date', [$tanggal1, $tanggal2])
                   ->orderBy('spk_date', 'DESC')
                   ->get();
-    }elseif ($tampil == 'progress') {
+    }elseif ($tampil == 'setuju') {
+      $spk = d_spk::join('m_item','spk_item','=','i_id')
+                  ->join('d_productplan','pp_id','=','spk_ref')
+                  ->select('spk_id', 'spk_date','i_name','pp_qty','spk_code','spk_status','pp_item')
+                  ->where('spk_status', '=', 'AP')
+                  ->whereBetween('spk_date', [$tanggal1, $tanggal2])
+                  ->orderBy('spk_date', 'DESC')
+                  ->get();
+    }elseif ($tampil == 'progress'){
+      $spk = d_spk::join('m_item','spk_item','=','i_id')
+                  ->join('d_productplan','pp_id','=','spk_ref')
+                  ->select('spk_id', 'spk_date','i_name','pp_qty','spk_code','spk_status','pp_item')
+                  ->where('spk_status', '=', 'PB')
+                  ->whereBetween('spk_date', [$tanggal1, $tanggal2])
+                  ->orderBy('spk_date', 'DESC')
+                  ->get();
+    }elseif ($tampil == 'finish'){
       $spk = d_spk::join('m_item','spk_item','=','i_id')
                   ->join('d_productplan','pp_id','=','spk_ref')
                   ->select('spk_id', 'spk_date','i_name','pp_qty','spk_code','spk_status','pp_item')
                   ->where('spk_status', '=', 'FN')
-                  ->whereBetween('spk_date', [$tanggal1, $tanggal2])
-                  ->orderBy('spk_date', 'DESC')
-                  ->get();
-    }else{
-      $spk = d_spk::join('m_item','spk_item','=','i_id')
-                  ->join('d_productplan','pp_id','=','spk_ref')
-                  ->select('spk_id', 'spk_date','i_name','pp_qty','spk_code','spk_status','pp_item')
-                  ->where('spk_status', '=', 'CL')
                   ->whereBetween('spk_date', [$tanggal1, $tanggal2])
                   ->orderBy('spk_date', 'DESC')
                   ->get();
@@ -224,7 +233,7 @@ class spkFinancialController extends Controller
   public function tabelFormula( $id, $qty, $comp){
     $gc_id = d_gudangcabang::select('gc_id')
       ->where('gc_gudang','GUDANG BAHAN BAKU')
-      ->where('gc_comp',$comp)
+      // ->where('gc_comp',$comp)
       ->first();
     $gudang = $gc_id->gc_id;
     // dd($gudang);

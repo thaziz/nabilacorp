@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Modules\Purchase\Controllers;
 
+
+
+namespace App\Modules\Purchase\Controllers;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use DB;
+use Response;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\m_customer;
-use Carbon\carbon;
-use DB;
+
+
+
+
+
 
 use App\m_item;
-
-use App\Http\Controllers\Controller;
-
 use App\mMember;
 use App\Modules\Purchase\model\d_purchase_plan;
 use App\Modules\Purchase\model\d_purchase_order;
@@ -46,6 +51,7 @@ class purchaseConfirmController extends Controller
 
    }
    public function confirmIndex(){         
+
      $tbh =view('Purchase::konfirmasipembelian/tab-belanjaharian');   
      $td =view('Purchase::konfirmasipembelian/tab-daftar');   
      $to =view('Purchase::konfirmasipembelian/tab-order');   
