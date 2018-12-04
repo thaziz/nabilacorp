@@ -159,16 +159,13 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     });
 }
 
-	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date,$mutcat=null){	
-        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date,
-            $mutcat) {   
-
+	public static function mutasiStok($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date){	
+        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date) {   
 
             $totalPermintaan= format::format($totalPermintaan);
             $totalHpp=0;
 
 			$updateStock=d_stock::where('s_item',$item)->where('s_comp',$comp)->where('s_position',$position);		
-
             if(!$updateStock->first()->s_qty){
                 $idStock=d_stock::max('s_id')+1;
                 d_stock::create([
@@ -185,6 +182,8 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
     						's_qty'=>$qty
     					]);				
     			}else{				
+    				/*DB::rollBack();         */
+    				
             
             $data=['true'=>false,'totalHpp'=>$totalHpp];
             return $data;
@@ -239,11 +238,9 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_detail'] =$flag;
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
                             $newMutasi[$k]['sm_reff'] = $sm_reff;  
-                            // $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;
-                            $newMutasi[$k]['sm_mutcat'] =$mutcat;      
+                            $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;      
                             $totalHpp+=$totalPermintaan*$getBarang[$k]->sm_hpp;        
                             $k = count($getBarang);
-                            
                         } elseif ($totalPermintaan > $totalQty) {
                         	$qty_used=$getBarang[$k]->sm_qty_used+$totalQty;
                         	$qty_sisa =$getBarang[$k]->sm_qty_sisa-$totalQty;                        	
@@ -271,8 +268,7 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_detail'] =$flag;
                             $newMutasi[$k]['sm_reff'] = $sm_reff; 
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
-                            // $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;    
-                            $newMutasi[$k]['sm_mutcat'] =$mutcat;
+                            $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;    
                             $totalHpp+=$totalQty*$getBarang[$k]->sm_hpp;        
                             
                             $totalPermintaan = $totalPermintaan - $totalQty;
@@ -569,8 +565,5 @@ $mutasiStok->tambahmutasi($item,$totalPermintaan,$compTujuan,$positionTujuan,'Tr
                     $data=['true'=>true,'totalHpp'=>$totalHpp];
                     return $data;
                 });
-    }
-    static function c(){
-        return 'aku';
     }
 }

@@ -50,8 +50,6 @@
     <!--CORE JAVASCRIPT-->
     <script src="{{ asset ('assets/script/main.js') }}"></script>
 
-    
-
 
 <!--     <script src="{{ asset ('assets/c/qz-websocket.js') }}"></script>
     <script src="{{ asset ('assets/c/3rdparty/deployJava.js') }}"></script>
@@ -68,10 +66,8 @@
     <script src="{{ asset ('assets/rupiah-js/formatQty.js?v='.time()) }}"></script>
 
     <script src="{{ asset('assets/script/jquery.maskMoney.js') }}"></script>
-    <script src="{{ asset('assets/jquery-validation.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/sweetalert/sweetalert.min.js') }}"></script>
 
-    
 
     <script type="text/javascript">
         var baseUrl = '{{url('/')}}';

@@ -32,12 +32,12 @@
       <div id="tab-general">
         <div class="row mbl">
           <div class="col-lg-12">
-
+              
             <div class="col-md-12">
                 <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
                 </div>
             </div>
-
+               
             <ul id="generalTab" class="nav nav-tabs">
               <li class="active"><a href="#alert-tab" data-toggle="tab">Form Order Pembelian</a></li>
             </ul>
@@ -45,8 +45,8 @@
             <div id="generalTabContent" class="tab-content responsive">
               <div id="alert-tab" class="tab-pane fade in active">
                 <div class="row">
-
-                  <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: -10px;margin-bottom: 15px;">
+                
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: -10px;margin-bottom: 15px;">  
                     <div class="col-md-5 col-sm-6 col-xs-8" >
                       <h4>Form Order Pembelian</h4>
                     </div>
@@ -55,13 +55,13 @@
                       <a href="{{ url('purcahse-order/order-index') }}" class="btn"><i class="fa fa-arrow-left"></i></a>
                     </div>
                   </div>
-
-
+             
+            
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <form method="POST" id="form_create_po" name="formCreatePo">
                       {{ csrf_field() }}
                       <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
-
+                        
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <label class="tebal">No PO</label>
                         </div>
@@ -71,7 +71,7 @@
                             <input type="text" readonly="" class="form-control input-sm" name="kodePo" placeholder="(Auto)">
                           </div>
                         </div>
-
+                        
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <label class="tebal">Staff</label>
                         </div>
@@ -82,7 +82,7 @@
                             <input type="hidden" readonly="" class="form-control input-sm" name="idStaff" value="{{Auth::user()->m_id}}">
                           </div>
                         </div>
-
+                        
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <label class="tebal">Tanggal Order Pembelian</label>
                         </div>
@@ -90,13 +90,13 @@
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <div class="form-group">
                             <input id="tanggalPo" class="form-control input-sm datepicker2 " name="tanggal" type="text" value="{{ date('d-m-Y') }}">
-                          </div>
+                          </div> 
                         </div>
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <label class="tebal">Cara Pembayaran</label>
                         </div>
-
+  
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <div class="form-group">
                               <select class="form-control input-sm" name="methodBayar" id="method_bayar">
@@ -104,7 +104,7 @@
                                   <option value="DEPOSIT">Deposit</option>
                                   <option value="CREDIT">Tempo</option>
                               </select>
-                          </div>
+                          </div>  
                         </div>
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -124,8 +124,8 @@
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
                           <div class="form-group" id="divSelectSup">
-                            <input type="" class="form-control input-sm" id="cari_sup" name="cariSup" style="width: 100%;">
-                            <input type="hidden" class="form-control input-sm" id="id_supplier" name="supplier" style="width: 100%;">
+                            <input type="" name=""class="form-control input-sm" id="cari_sup" name="cariSup" style="width: 100%;">
+                            <input type="hidden" name=""class="form-control input-sm" id="id_supplier" name="id_supplier" style="width: 100%;">
                           </div>
                         </div>
 
@@ -140,15 +140,14 @@
                                 <th style="text-align: center;" width="5%">No</th>
                                 <th width="25%">Kode | Barang</th>
                                 <th width="7%">Qty</th>
-                                <th width="7%">Satuan</th>
-                                <th width="15%">Harga Prev</th>
+                                <th width="7%">Satuan</th>                                
                                 <th width="15%">Harga Satuan</th>
                                 <th width="15%">Total</th>
                                 <th width="8%">Stok Gudang</th>
                                 <th style="text-align: center;" width="5%">Aksi</th>
                               </tr>
                             </thead>
-                            <tbody class="drop_here">
+                            <tbody>
                             </tbody>
                           </table>
                       </div>
@@ -209,25 +208,25 @@
 
                       <div align="right" style="padding-top:10px;">
                         <div id="div_button_save" class="form-group">
-                          <button type="button" id="button_save" class="btn btn-primary" onclick="simpanPo()">Simpan Data</button>
+                          <button type="button" id="button_save" class="btn btn-primary" onclick="simpanPo()">Simpan Data</button> 
                         </div>
                       </div>
-
+                    
                     </form>
                   </div>
 
                 </div>
               </div>
             </div>
-
+            
           </div>
         </div>
       </div>
     </div>
 
   </div>
-  <!--END PAGE WRAPPER-->
-
+  <!--END PAGE WRAPPER--> 
+                       
 @endsection
 @section("extra_scripts")
 <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
@@ -257,29 +256,29 @@
     });
 
     //autocomplete
-
+    
     $("#cari_sup").autocomplete({
         source: baseUrl+'/purcahse-order/seach-supplier',
         minLength: 1,
         dataType: 'json',
-        select: function(event, ui)
-        {
-        $('#cari_sup').val(ui.item.label);
-        $('#id_supplier').val(ui.item.s_id);
+        select: function(event, ui) 
+        {   
+        $('#cari_sup').val(ui.item.label);        
+        $('#id_supplier').val(ui.item.s_id);           
         }
       });
-
+   
 
      $("#cari_kode_plan").autocomplete({
         source: baseUrl+'/purcahse-order/get-data-code-plan',
         minLength: 1,
         dataType: 'json',
-        select: function(event, ui)
-        {
-        $('#cari_kode_plan').val(ui.item.label);
-        $('#kodePlan').val(ui.item.p_id);
-        $('#cari_sup').val(ui.item.s_company);
-        $('#id_supplier').val(ui.item.s_id);
+        select: function(event, ui) 
+        {   
+        $('#cari_kode_plan').val(ui.item.label);        
+        $('#kodePlan').val(ui.item.p_id);   
+        $('#cari_sup').val(ui.item.s_company);        
+        $('#id_supplier').val(ui.item.s_id);     
         setPlan();
         }
       });
@@ -288,7 +287,7 @@
       //remove child div inside appending-form before appending
       $('#appending div').remove();
       var metode = $(this).val();
-      if (metode == "DEPOSIT")
+      if (metode == "DEPOSIT") 
       {
         $('#appending div').remove();
         $('#appending').append('<div class="col-md-3 col-sm-12 col-xs-12">'
@@ -343,46 +342,35 @@
         dataType: "JSON",
         success: function(data)
         {
-          // console.log(data);
           var totalHarga = 0;
           var key = 1;
           i = randString(5);
           //loop data
-          var s_stock=0;
-          Object.keys(data.data_isi).forEach(function(){
-            // $('.drop_here').html('');
-            if(data.data_isi[key-1].s_qty!=null){
-              s_stock=data.data_isi[key-1].s_qty;
-            }
-            console.log(data.data_isi[key-1].ppdt_detailid + ' detil id');
-            console.log(data.data_isi[key-1].i_name);
-            var i_id=data.data_isi[key-1].i_id;
-
-            $('.drop_here').append(
-                            '<tr class="tbl_form_row" id="row'+i_id+'">'
+          Object.keys(data.data_isi).forEach(function(){     
+          var i_id=data.data_isi[key-1].i_id;       
+            $('#tabel-form-po').append('<tr class="tbl_form_row" id="row'+i_id+'">'
                             +'<td style="text-align:center">'+key+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'" name="fieldNamaItem[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="podt_item[]" class="form-control input-sm"/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_pruchaseplan+'" name="podt_purchaseorder[]" class="form-control input-sm"/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="podt_detailid[]" class="form-control input-sm"/>'
                             +'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'         
 
-                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
                             +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
                             +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
-                            +'<td><input type="text" value="'+s_stock+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].s_qty+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');
-            tamp.push(i_id);
+                            tamp.push(i_id);
             i = randString(5);
             key++;
           });
 
-
+       
 
           //set readonly to enabled
           $('#potongan_harga').attr('readonly',false);
@@ -405,12 +393,12 @@
       hitungTotalPurchase();
     });
 
-
+   
 
     //event onblur potongan harga
 
 
-
+  
 
     //force integer input in textfield
     $('.numberinput').bind('keypress', function (e) {
@@ -449,20 +437,20 @@
       }
     });
 
-  //end jquery
+  //end jquery  
   });
-
-  function convertDecimalToRupiah(decimal)
+  
+  function convertDecimalToRupiah(decimal) 
   {
     var angka = parseInt(decimal);
-    var rupiah = '';
+    var rupiah = '';        
     var angkarev = angka.toString().split('').reverse().join('');
     for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
     var hasil = 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
     return hasil+',00';
   }
 
-  function randString(angka)
+  function randString(angka) 
   {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -473,13 +461,13 @@
     return text;
   }
 
-  function convertToRupiah(angka)
+  function convertToRupiah(angka) 
   {
-    var rupiah = '';
+    var rupiah = '';        
     var angkarev = angka.toString().split('').reverse().join('');
     for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
     var hasil = 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
-    return hasil+',00';
+    return hasil+',00'; 
   }
 
   function convertToAngka(rupiah)
@@ -513,7 +501,7 @@
     $('[name="totalGross"]').val(total);
   }
 
-  function totalPembelianNett()
+  function totalPembelianNett() 
   {
     var totalGross = convertToAngka($('#total_gross').val());
     var potongan = convertToAngka($('#potongan_harga').val());
@@ -532,22 +520,18 @@
   function simpanPo()
   {
     var IsValid = $("form[name='formCreatePo']").valid();
-    // alert('d');
     if(IsValid)
     {
-      // alert('db');
       var countRow = $('#tabel-form-po tr').length;
-      (countRow > 1);
       if(countRow > 1)
       {
-        // alert('kl')
         $('#divSelectSup').removeClass('has-error');
         $('#divSelectPlan').removeClass('has-error');
         $('#button_save').text('Menyimpan...');
-        $('#button_save').attr('disabled',true);
+        $('#button_save').attr('disabled',true); 
         $.ajax({
-            url : baseUrl + "/purcahse-order/save-po",
-            type: "get",
+            url : baseUrl + "/purchasing/orderpembelian/simpan-po",
+            type: "POST",
             dataType: "JSON",
             data: $('#form_create_po').serialize(),
             success: function(response)
@@ -560,7 +544,7 @@
                   message: response.pesan,
                   onClosing: function(instance, toast, closedBy){
                     $('#button_save').text('Simpan Data');
-                    $('#button_save').attr('disabled',false);
+                    $('#button_save').attr('disabled',false); 
                     window.location.href = baseUrl+"/purchasing/orderpembelian/order";
                   }
                 });
@@ -599,7 +583,6 @@
     }
     else //else validation
     {
-      alert('dmy');
       iziToast.warning({
         position: 'center',
         message: "Mohon Lengkapi data form !",

@@ -79,12 +79,12 @@ class itemTitipanController extends Controller
     function update(Request $request){      
           return d_item_titipan::updateTitipan($request);
     }
-    function titipanDt($id){    
-        $data=d_itemtitipan_dt::itemTitipanDt($id);
+    function titipanDt($id){
+        $data=d_itemtitipan_dt::itemtitipDt($id);
         return view('POS::barangTitipan/modal',compact('data'));                  
     }
 
-    function editTitipanDt($id,Request $request){        
+    function editTitipanDt($id,Request $request){      
       $status=$request->s_status;      
       $data=d_itemtitipan_dt::editTitipanDt($id);      
       $tamp=[];
@@ -98,18 +98,16 @@ class itemTitipanController extends Controller
 
     function serahTerima($id){
       $master=d_item_titipan::dataTitipan($id);      
-      $data=d_itemtitipan_dt::itemTitipanDt($id);      
+      $data=d_itemtitipan_dt::itemTitipanDt($id);
       if($master){
         return view('POS::barangTitipan/detailSerahTerima',compact('data','master'));          
       }else{
         return 'data tidak ada';      
       }
     }
-    function serahTerimaStore(Request $request){      
+    function serahTerimaStore(Request $request){
+      
       return  d_item_titipan::serahTerimaStore($request);
-    }
-    function itemTitipan(Request $request){
-      return m_itemm::searchItemTitipan($request);
     }
 
 }

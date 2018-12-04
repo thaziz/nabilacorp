@@ -29,15 +29,16 @@ class d_itemtitipan_dt extends Model
 	   						 select('i_id','i_code','idt_itemtitipan','idt_detailid','idt_date','idt_item','idt_qty','idt_price','i_name','m_satuan.s_name','s_qty','idt_terjual','idt_return_qty','idt_return_titip','idt_action','idt_comp','idt_position',DB::raw(" (select sum(sd_qty) from d_sales_dt where sd_item=idt_item and idt_date=sd_date and idt_comp=sd_comp and idt_position=sd_position group by sd_date) as terjual"))
 	   						->join('m_item','idt_item','=','i_id')
 	    				    ->join('m_satuan','s_id','=','i_satuan')
-	    				    ->Leftjoin('d_stock',function($join){
+	    				    ->join('d_stock',function($join){
 	    				    	$join->on('s_item','=','i_id');
 	    				    	$join->on('s_comp','=','idt_comp');
 	    				    	$join->on('s_position','=','idt_position');
 
 	    				    })
-	    				    ->where('idt_itemtitipan',$id)	    				    
+	    				    ->where('idt_itemtitipan',$id)
+	    				    /*->where('s_comp',$comp)
+	    				    ->where('s_position',$position)*/
 	    				    ->get();
-
 	    				   
 		return $titipan_dt;
     }
@@ -48,7 +49,7 @@ class d_itemtitipan_dt extends Model
 	   						 select('i_id','i_code','idt_itemtitipan','idt_detailid','idt_date','idt_item','idt_qty','idt_price','i_name','m_satuan.s_name','s_qty','idt_terjual','idt_return_qty','idt_return_titip','idt_action','idt_comp','idt_position',DB::raw(" (select sum(sd_qty) from d_sales_dt where sd_item=idt_item and idt_date=sd_date and idt_comp=sd_comp and idt_position=sd_position group by sd_date) as terjual"))
 	   						->join('m_item','idt_item','=','i_id')
 	    				    ->join('m_satuan','s_id','=','i_satuan')
-	    				    ->leftjoin('d_stock',function($join){
+	    				    ->join('d_stock',function($join){
 	    				    	$join->on('s_item','=','i_id');
 	    				    	$join->on('s_comp','=','idt_comp');
 	    				    	$join->on('s_position','=','idt_position');

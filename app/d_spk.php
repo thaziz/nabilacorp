@@ -11,7 +11,7 @@ class d_spk extends Model
     const CREATED_AT = 'spk_insert';
     const UPDATED_AT = 'spk_update';
     
-      protected $fillable = ['spk_id','spk_ref','spk_date', 'spk_item', 'spk_code','spk_status','spk_comp'];
+      protected $fillable = ['spk_id','spk_ref','spk_date', 'spk_item', 'spk_code','spk_status'];
 }
 	
 	
