@@ -57,7 +57,7 @@
 
 
 
- <div class="col-md-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
+ <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
          <div class="col-md-6">
            <label class="control-label tebal" for="">Masukan Kode / Nama</label>
               <div class="input-group input-group-sm" style="width: 100%;">
