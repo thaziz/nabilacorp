@@ -8,7 +8,7 @@
                 <form id="topbar-search" action="#" method="" class="hidden-sm hidden-xs">
                     <div class="input-icon right text-white">
                         <a href="#" class="hidden" id="btn-reset" onclick="btnReset()"><i class="fa fa-times"></i></a>
-                        
+
                         <input type="text" placeholder="Search here..." onkeyup="myFunction()" id="nav-search" class="form-control text-white"/>
                     </div>
                 </form>
@@ -115,6 +115,15 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('master/item/index') ? 'active' : '' || Request::is('/master/item/*') ? 'active' : '' }}"><a href="{{ url('/master/item/index') }}"><span class="submenu-title">Master Data Barang</span></a>
                             </li>
+
+
+                            @if(Auth::user()->punyaAkses('Master Formula','ma_read'))
+                                    <li class="{{ Request::is('master/masterproduksi/index') ? 'active' : '' || Request::is('master/masterproduksi/*') ? 'active' : '' }}">
+                                        <a href="{{ url('master/masterproduksi/index') }}"><span
+                                                    class="submenu-title">Master Formula</span><span
+                                                    class="hidden">Master</span></a>
+                                    </li>
+                            @endif
                         </ul>
                     </li>
 
@@ -134,15 +143,37 @@
                             <li class="menu-sekunder {{ Request::is('purcahse-order/order-index') ? 'active' : '' || Request::is('purchasing/order/*') ? 'active' : '' }}">
                             <a href="{{ url('/purcahse-order/order-index') }}"><span class="submenu-title">Order Pembelian</span><span class="hidden">Purchasing</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('purchasing/orderpembelian/order') ? 'active' : '' || Request::is('purchasing/orderpembelian/*') ? 'active' : '' }}">
+                            <!-- <li class="menu-sekunder {{ Request::is('purchasing/orderpembelian/order') ? 'active' : '' || Request::is('purchasing/orderpembelian/*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/orderpembelian/order') }}"><span class="submenu-title">Order Pembelian Barang Stok</span><span class="hidden">Purchasing</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('purchasing/belanjaharian/belanja') ? 'active' : '' || Request::is('purchasing/belanjaharian/*') ? 'active' : '' }}">
+                            </li> -->
+                            <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjaharian/belanja') ? 'active' : '' || Request::is('purchasing/belanjaharian/*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/belanjaharian/belanja') }}"><span class="submenu-title">Belanja Harian Barang Non Stok</span><span class="hidden">Purchasing</span></a>
-                            </li>
+                            </li> -->
+                            @if(Auth::user()->punyaAkses('Belanja Harian','ma_read'))
+                                    <li class="{{ Request::is('purchasing/belanjaharian/belanja') ? 'active' : '' || Request::is('purchasing/belanjaharian/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/purchasing/belanjaharian/belanja') }}"><span
+                                                    class="submenu-title">Belanja Harian</span><span class="hidden">Purchasing</span></a>
+                                    </li>
+                            @endif
                             <li class="menu-sekunder {{ Request::is('purchasing/returnpembelian/pembelian') ? 'active' : '' || Request::is('purchasing/returnpembelian/*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/returnpembelian/pembelian') }}"><span class="submenu-title">Return Pembelian</span><span class="hidden">Purchasing</span></a>
                             </li>
+
+
+
+
+                                @if(Auth::user()->punyaAkses('Laporan Pembelian','ma_read'))
+                                    <li class="{{ Request::is('purchasing/lap-pembelian/index') ? 'active' : '' || Request::is('purchasing/lap-pembelian/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/purchasing/lap-pembelian/index') }}"><span
+                                                    class="submenu-title">Laporan Pembelian</span><span class="hidden">Purchasing</span></a>
+                                    </li>
+                                @endif
+
+                                {{-- @if(Auth::user()->punyaAkses('Return Pembelian','ma_read')) --}}
+                                <li class="{{ Request::is('purchasing/pembayaran_hutang') ? 'active' : '' || Request::is('purchasing/pembayaran_hutang/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/purchasing/pembayaran_hutang') }}"><span
+                                                    class="submenu-title">Pelunasan Hutang</span><span class="hidden">Purchasing</span></a>
+                                </li>
                             <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjasuplier/suplier') ? 'active' : '' || Request::is('purchasing/belanjasuplier/suplier*') ? 'active' : '' }}">
                             <a href="{{ url('/purchasing/belanjasuplier/suplier') }}"><span class="submenu-title">Belanja Suplier</span></a>
                             </li> -->
@@ -163,11 +194,13 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/p_hasilproduksi/produksi') ? 'active' : '' || Request::is('inventory/p_hasilproduksi/*') ? 'active' : '' }}"><a href="{{ url('/inventory/p_hasilproduksi/produksi') }}"><span class="submenu-title">Penerimaan Hasil Produksi</span><span class="hidden">Inventory</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('inventory/p_returncustomer/cust') ? 'active' : '' || Request::is('inventory/p_returncustomer/*') ? 'active' : '' }}"><a href="{{ url('/inventory/p_returncustomer/cust') }}"><span class="submenu-title">Penerimaan Barang Return Customer</span><span class="hidden">Inventory</span></a>
+                            <li class="menu-sekunder {{ Request::is('inventory/stockgudang/index') ? 'active' : '' || Request::is('inventory/stockgudang/*') ? 'active' : '' }}"><a href="{{ url('/inventory/stockgudang/index') }}"><span class="submenu-title">Stock Gudang</span><span class="hidden">Inventory</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/b_digunakan/barang') ? 'active' : '' || Request::is('inventory/b_digunakan/*') ? 'active' : '' }}"><a href="{{ url('/inventory/b_digunakan/barang') }}"><span class="submenu-title">Barang Digunakan</span><span class="hidden">Inventory</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('inventory/stockopname/opname') ? 'active' : '' || Request::is('inventory/stockopname/*') ? 'active' : '' }}"><a href="{{ url('/inventory/stockopname/opname') }}"><span class="submenu-title">Stock Opname</span><span class="hidden">Inventory</span></a>
+                            </li>
+                            <li class="menu-sekunder {{ Request::is('inventory/mutasiitembaku') ? 'active' : '' || Request::is('inventory/mutasiitembaku/*') ? 'active' : '' }}"><a href="{{ url('/inventory/mutasiitembaku/index') }}"><span class="submenu-title">Mutasi Item Bahan Baku</span><span class="hidden">Inventory</span></a>
                             </li>
                         </ul>
                     </li>
@@ -252,12 +285,14 @@
                             </li>
 
 
-                            <li class="menu-sekunder {{ Request::is('penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') ? 'active' : '' || Request::is('penjualan/POSpenjualankonsinyasi/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') }}"><span class="submenu-title">POS Penjualan Konsinyasi</span><span class="hidden">Penjualan</span></a>
+                            <!-- <li class="menu-sekunder {{ Request::is('penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') ? 'active' : '' || Request::is('penjualan/POSpenjualankonsinyasi/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/POSpenjualankonsinyasi/POSpenjualankonsinyasi') }}"><span class="submenu-title">POS Penjualan Konsinyasi</span><span class="hidden">Penjualan</span></a>
+                            </li> -->
+
+                            <li class="menu-sekunder {{ Request::is('penjualan/penjualanmobile/penjualanmobile') ? 'active' : '' || Request::is('penjualan/penjualanmobile/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanmobile/penjualanmobile') }}"><span class="submenu-title">Laporan Penjualan Toko</span><span class="hidden">Penjualan</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('penjualan/penjualanmobile/penjualanmobile') ? 'active' : '' || Request::is('penjualan/penjualanmobile/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanmobile/penjualanmobile') }}"><span class="submenu-title">Laporan Penjualan Mobile Sales</span><span class="hidden">Penjualan</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('penjualan/mutasistok/mutasi') ? 'active' : '' || Request::is('penjualan/mutasistok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasistok/mutasi') }}"><span class="submenu-title">Mutasi Stock</span><span class="hidden">Penjualan</span></a>
-                            </li>
+                            
+                            <!-- <li class="menu-sekunder {{ Request::is('penjualan/mutasistok/mutasi') ? 'active' : '' || Request::is('penjualan/mutasistok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasistok/mutasi') }}"><span class="submenu-title">Mutasi Stock</span><span class="hidden">Penjualan</span></a>
+                            </li> -->
 
                             <li class="menu-sekunder {{ Request::is('penjualan/mutasi-item/index') ? 'active' : '' || Request::is('penjualan/mutasi-item/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasi-item/index') }}"><span class="submenu-title">Mutasi Item</span><span class="hidden">Penjualan</span></a>
                             </li>
@@ -464,4 +499,3 @@
                 </div>
             </div>
             <!--END CHAT FORM-->
-
