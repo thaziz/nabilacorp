@@ -123,6 +123,30 @@
 
 
 
+           <div class="col-md-3 col-sm-6 col-xs-12">
+             <label>Pilih Harga</label>
+           </div>     
+
+
+
+          <div class="col-md-3 col-sm-6 col-xs-12">
+             <div class="form-group">
+               <select class="move up2 form-control input-sm" id="harga">
+                 <option value="1">
+                   Level 1
+                 </option>
+                 <option value="2">
+                   Level 2
+                 </option>
+                 <option value="3">
+                   Level 3
+                 </option>
+               </select>
+             </div>
+           </div>
+
+
+
 
 
 
