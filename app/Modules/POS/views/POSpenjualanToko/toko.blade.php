@@ -79,7 +79,7 @@
 
 
 
- <div class="col-md-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
+ <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
          <div class="col-md-6">
            <label class="control-label tebal" for="">Masukan Kode / Nama</label>
               <div class="input-group input-group-sm" style="width: 100%;">
@@ -147,70 +147,70 @@
         <div class="col-md-12 col-sm-12 col-xs-12" >
               
               <div class="col-md-5 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top: 10px;">
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                     
                       <label class="control-label tebal" for="penjualan">Sub Total</label>
 
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                       <div class="form-group">
                         <input type="text" id="s_gross" name="s_gross" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                       </div>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                       <label class="control-label tebal" for="discount">Total Diskon(%)</label>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                       <div class="form-group">
                         <input type="text" id="discountP" name="s_disc_percent" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                       </div>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                       <label class="control-label tebal" for="discount">Total Diskon(Rp.)</label>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                       <div class="form-group">
                         <input type="text" id="discountRp" name="s_disc_value" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                       </div>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                       <label class="control-label tebal" for="discount">Total Diskon</label>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                       <div class="form-group">
                         <input type="text" id="discount" name="discount" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                       </div>
                   </div>                  
-                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                       <label class="control-label tebal" for="grand">Grand Total</label>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                       <div class="form-group">
                         <input type="text" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
                       </div>
                   </div>
 
 
-<div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                       <label class="control-label tebal" for="grand">Biaya Kirim</label>
-</div>
-<div class="col-md-6 col-sm-6 col-xs-12">
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                       <div class="form-group">
- <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
+                   <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
                       </div>
-</div>
+                  </div>
 
 
                       
 
 
                 
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                         <label class="control-label tebal" for="jumlah">Grand Total + Biaya Kirim</label>
                   </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
-                          <input type="text" id="grand_biaya" name="s_net" class="form-control input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
+                          <input type="text" id="grand_biaya" name="s_net" class="form-control form-control-xl input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
                         </div>
                   </div>
 
@@ -292,8 +292,8 @@
                                 </div>
                                 <div class="col-md-7 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <div class="form-group">
-                                    <div class="input-group input-group-sm pull-right" style="width: 93%;">
-                                      <input type="text" id="akumulasiTotal" name="" class="form-control reset" style="text-align: right;" " readonly="">
+                                    <div class="input-group pull-right" style="width: 93%;">
+                                      <input type="text" id="akumulasiTotal" name="" class="form-control form-control-xl reset" style="text-align: right;" readonly="">
                                     </div>
                                   </div>
                                 </div>

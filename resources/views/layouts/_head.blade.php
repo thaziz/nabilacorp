@@ -42,5 +42,12 @@
         .alignAngka{
             text-align:right;
         }
+        .form-control-xl{
+            height: 70px;
+            font-size: 45px;
+        }
+        .table{
+            color: black;
+        }
     </style>
     
