@@ -84,11 +84,8 @@
 $(document).ready(function(){      
 
 
-       $("#searchitem").autocomplete({        
-        source: function(request, response) {
-            $.getJSON(baseUrl+"/item", {term:$('#searchitem').val(),harga: $('#harga').val() }, 
-              response);
-        },
+       $("#searchitem").autocomplete({
+        source: baseUrl+'/item',
         minLength: 1,
         dataType: 'json',
         select: function(event, ui) 

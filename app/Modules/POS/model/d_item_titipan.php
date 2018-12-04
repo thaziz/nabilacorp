@@ -104,10 +104,10 @@ class d_item_titipan extends Model
 
     //sehari hanya boleh sakali input
     
-    /*if($chekTitipanBayar->where('it_date','=',date('Y-m-d',strtotime($request->it_date)))->count()!=0){
+    if($chekTitipanBayar->where('it_date','=',date('Y-m-d',strtotime($request->it_date)))->count()!=0){
           $data=['status'=>'gagal','data'=>"Maa'af, data dengan supplier yang sama hanya boleh sekali dalam sehari (silahkan melakukan update data)."];
           return json_encode($data);
-    }*/
+    }
     
     $chekTitipanBayar=d_item_titipan::where('it_supplier',$request->id_supplier);
     if($chekTitipanBayar->count()!=0){
@@ -257,18 +257,8 @@ static function serahTerimaStore($request){
 
 
       if($request->idt_action[$i]!='-'){  
-        if($idt_return_lama!=$idt_return_titip){          
-          $simpanMutasi=mutasi::updateMutasi(
-                                $request->idt_item[$i],
-                                $permintaan,
-                                $comp,
-                                $position,
-                                $flag='BARANG TITIPAN',
-                                $request->it_id,
-                                '',
-                                date('Y-m-d'),
-                                15
-                                );
+        if($idt_return_lama!=$idt_return_titip){
+          $simpanMutasi=mutasi::updateMutasi($request->idt_item[$i],$permintaan,$comp,$position,$flag='BARANG TITIPAN',$request->it_id,$request->idt_action[$i]);
 
           if($simpanMutasi['true']){          
 
