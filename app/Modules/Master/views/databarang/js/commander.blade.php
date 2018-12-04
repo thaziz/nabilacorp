@@ -14,6 +14,57 @@ var iddinamis = 0;
           format_currency( $('[name="m_pbuy1"]') );
           format_currency( $('[name="m_pbuy2"]') );
           format_currency( $('[name="m_pbuy3"]') );
+
+          $('#add_supplier').click(function(e){
+            e.preventDefault();
+            var parent = $('#satuan_el_jual');
+            var content_supplier = $('#supplier').html();
+            content_supplier = content_supplier.replace(/selected=*("selected")*/, '');
+
+            var new_el = $('<div class="col-md-12"><div id="satuan_el" style="display: flex;margin-bottom: 1.5mm;margin-left: 4mm"><select class="form-control supplier" name="supplier[]" data-selected="+" id="supplier">' + content_supplier + '</select><input type="number" name="jumlah_unit_jual[]" class="form-control" placeholder="Jumlah unit..." style="margin-left: 1.5mm;margin-right: 4mm"></div></div>');
+            new_el.find('select').selectpicker({liveSearch : true});
+            new_el.appendTo(parent);
+            if($('#remove_supplier').hasClass('hidden')) {
+              $('#remove_supplier').removeClass('hidden')
+            }
+          });
+
+          format_currency( $("[name='is_price[]']") );
+          $('[name="is_supplier[]"]').select2({
+              width : '100%',
+              ajax : {
+                url : '{{ route("find_m_suplier") }}',
+                datatype : 'json',
+                cache : true,
+                delay : 250,
+                
+                data: function (params) {
+                  
+                  var query = {
+                    keyword : params.term,
+                  }
+
+                  // Query parameters will be ?search=[term]&type=public
+                  return query;
+                },
+               processResults: function (r) {
+                  data = r.data;
+                  var obj = [];
+                  for(x = 0;x < data.length;x++) {
+                    res = data[x];
+                    obj.push({
+                      id : res.s_id,
+                      text : res.s_company
+                    });
+                  }
+
+                  console.log(obj);
+                  return {
+                    results: obj
+                  };
+                }
+              }
+          });
         });
 
         dinamis();
@@ -43,41 +94,66 @@ var iddinamis = 0;
         }
 
         function tambah(){
-            var html = '';
+            var html;
             iddinamis += 1;
-            html += '<div class="dinamis'+iddinamis+'"><div class="col-md-2" style="margin-right: 68px;">'+
+            html = $('<div class="dinamis' + iddinamis + '"><div class="col-md-2" style="margin-right: 68px;">' + '<label class="tebal">Supplier</label>' + '</div>' + '<div class="col-md-9">' + '<div class="form-group col-sm-5">'+
+                                '<select class="input-sm form-control" name="is_supplier[]" id="'+iddinamis+'">'+
+                                  '<option value="">~ Pilih Supplier ~</option>'+
+                                '</select>' +
+                                '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>'+
+                                '</div>' +
+                                '<div class="col-md-2">'+
+            
+                                  '<label for="">Harga </label>'+
+            
+                                '</div>'+
+                                '<div class="form-group col-sm-3">'+
+                                '<input type="text" class="form-control rp" name="is_price[]" id="hargasupplier'+iddinamis+'">'+
+                                '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>' + '</div>'+
+                                '<div class="form-group col-sm-2">'+
+                                '<button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>'+
+                                '&nbsp;'+
+                                '<button type="button" class="btn btn-danger" name="button" onclick="kurang('+iddinamis+')"> <i class="fa fa-minus"></i> </button>'+
+                                '</div>'+
+                                '</div></div>');
 
-                    '<label class="tebal">Supplier</label>'+
+            format_currency( html.find("[name='is_price[]']") );
+            html.find('select').select2({
+              width : '100%',
+              ajax : {
+                url : '{{ route("find_m_suplier") }}',
+                datatype : 'json',
+                cache : true,
+                delay : 250,
+                
+                data: function (params) {
+                  
+                  var query = {
+                    keyword : params.term,
+                  }
 
-                    '</div>'+
+                  // Query parameters will be ?search=[term]&type=public
+                  return query;
+                },
+               processResults: function (r) {
+                  data = r.data;
+                  var obj = [];
+                  for(x = 0;x < data.length;x++) {
+                    res = data[x];
+                    obj.push({
+                      id : res.s_id,
+                      text : res.s_company
+                    });
+                  }
 
-                    '<div class="col-md-9">'+
-                    '<div class="form-group col-sm-5">'+
-                    '<select class="input-sm form-control select" name="supplier[]" id="showdinamis'+iddinamis+'">'+
-                      '<option value="">~ Pilih Supplier ~</option>'+
-                    '</select>'+
-                    '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>'+
-                    '</div>'+
-                    '<div class="col-md-2">'+
-
-                      '<label for="">Harga </label>'+
-
-                    '</div>'+
-                    '<div class="form-group col-sm-3">'+
-                    '<input type="text" class="form-control rp" name="hargasupplier[]" id="hargasupplier'+iddinamis+'">'+
-                    '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>'
-                    '</div>'+
-                    '<div class="form-group col-sm-2">'+
-                    '<button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>'+
-                    '&nbsp;'+
-                    '<button type="button" class="btn btn-danger" name="button" onclick="kurang('+iddinamis+')"> <i class="fa fa-minus"></i> </button>'+
-                    '</div>'+
-                    '</div></div>';
-
-
+                  console.log(obj);
+                  return {
+                    results: obj
+                  };
+                }
+              }
+            });
             $('#dinamis').append(html);
-            $('.select').select2();
-            $('.rp').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
             dinamis();
         }
 
