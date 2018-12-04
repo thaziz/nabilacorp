@@ -167,10 +167,10 @@ ctrl = 17;
 
      });
 
-      $('#s_date').datepicker({
+   /*   $('#s_date').datepicker({
           format:"dd-mm-yyyy",        
           autoclose: true,
-      });    
+      });    */
 
       /*function tgl(){
         $('#s_machine').focus();
@@ -488,6 +488,7 @@ function hapus(e,a){
         tamp.splice(index,1);
         totalPerItem();
         buttonDisable();
+        searchitem.focus();
         
     }
 }
