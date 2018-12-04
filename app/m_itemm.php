@@ -52,7 +52,7 @@ class m_itemm extends Model
         $position=$position->gc_id;
 
 
-        $groupName=['Barang Titipan','Barang Jual'];
+        $groupName=['BTPN','BJ','BP'];
 
 
             
@@ -66,17 +66,17 @@ class m_itemm extends Model
 
              })
              ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->join('m_group','g_id','=','i_group')
+             /*->join('m_group','g_id','=','i_group')*/
              ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','s_qty','i_code');
              
 
         if($search!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                                    
-                  $query->whereIn('g_name',$groupName);                                     
+                  $query->whereIn('i_type',$groupName);                                     
 
                   $query->orWhere('i_code','like','%'.$search.'%');                                    
-                  $query->whereIn('g_name',$groupName); 
+                  $query->whereIn('i_type',$groupName); 
                   });
                   }                                  
         else{
@@ -160,7 +160,7 @@ class m_itemm extends Model
         $search = $item->term;
         $id_supplier =$item->id_supplier;
 
-        $groupName=['Barang PEMBELIAN'];
+        $groupName=['BP'];
         $cabang=Session::get('user_comp');                
         $position=DB::table('d_gudangcabang')
                       ->where('gc_gudang',DB::raw("'GUDANG PEMBELIAN'"))
@@ -176,21 +176,23 @@ class m_itemm extends Model
                   $join->where('is_supplier',$id_supplier); 
              })
              ->leftjoin('m_supplier','s_id','=','is_supplier')
-             ->join('m_group','g_id','=','i_group')
+             /*->join('m_group','g_id','=','i_group')*/
              
              ->leftjoin('d_stock',function($join) use ($comp,$position) {
                   $join->on('s_item','=','i_id');
                   $join->where('s_comp',$comp); 
                   $join->where('s_position',$position);
              })
-             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->select('i_id','i_name','m_satuan.s_name as s_name','is_price','s_qty','i_code');
+             ->join('m_satuan as ms_1','ms_1.s_id','=','i_satuan')
+             ->join('m_satuan as ms_2','ms_2.s_id','=','i_sat2')
+             ->join('m_satuan as ms_3','ms_3.s_id','=','i_sat3')
+             ->select('i_id','i_name','i_satuan','i_sat2','i_sat3','ms_1.s_name as satuan_1','ms_2.s_name as satuan_2','ms_3.s_name as satuan_3','is_price','s_qty','i_code');
         if($search!='' && $id_supplier!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                  
-                  $query->whereIn('g_name',$groupName);                          
+                  $query->whereIn('i_type',$groupName);                          
                   $query->orWhere('i_code','like','%'.$search.'%');
-                  $query->whereIn('g_name',$groupName);        
+                  $query->whereIn('i_type',$groupName);        
                   
                   });
                   }                                  
@@ -201,8 +203,6 @@ class m_itemm extends Model
 
                
         $sql=$sql->get();
-        
-
 
 
         $results = array();
@@ -212,7 +212,7 @@ class m_itemm extends Model
         } else {
           foreach ($sql as $data)
           {
-            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price,0,',','.'),'item' => $data->i_name];
+            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price,0,',','.').')', 'i_id' => $data->i_id,'satuan_1' =>$data->satuan_1,'satuan_2' =>$data->satuan_2,'satuan_3' =>$data->satuan_3,'sat1_id' =>$data->i_satuan,'sat2_id' =>$data->i_sat2,'sat3_id' =>$data->i_sat3,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price,0,',','.'),'item' => $data->i_name];
           }
         } 
         return Response::json($results);
@@ -245,26 +245,27 @@ class m_itemm extends Model
 
 
 
-        $sql=DB::table('m_item')->join('d_item_supplier','is_item','=','i_id')
-             ->join('m_supplier','s_id','=','is_supplier')
+        $sql=DB::table('m_item')->LEFTjoin('d_item_supplier','is_item','=','i_id')
+             ->leftjoin('m_supplier','s_id','=','is_supplier')
              ->leftjoin('d_stock',function($join) use ($comp,$position) {
                     $join->on('s_item','=','i_id');
                     $join->where('s_comp',$comp); 
                     $join->where('s_position',$position); 
              })
-             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->join('m_group','g_id','=','i_group')
+             ->LEFTjoin('m_satuan','m_satuan.s_id','=','i_satuan')
+             /*->join('m_group','g_id','=','i_group')*/
              ->select('i_id','i_name','m_satuan.s_name as s_name','is_price','s_qty','i_code');
 
         if($search!='' && $id_supplier!=''){          
-            $sql->where(function ($query) use ($search,$id_supplier,$comp,$position) {
+
+            $sql->where(function ($query) use ($search,$id_supplier) {
                   $query->where('i_name','like','%'.$search.'%');                  
-                  $query->where('is_supplier',$id_supplier); 
-                  $query->where('g_name',DB::raw("'Barang Titipan'"));    
+                  /*$query->where('is_supplier',$id_supplier); */
+                  $query->where('i_type',DB::raw("'BTPN'"));    
 
                   $query->orWhere('i_code','like','%'.$search.'%');
-                  $query->where('is_supplier',$id_supplier); 
-                  $query->where('g_name',DB::raw("'Barang Titipan'")); 
+                  /*$query->where('is_supplier',$id_supplier); */
+                  $query->where('i_type',DB::raw("'BTPN'")); 
 
 
                   });
@@ -274,7 +275,7 @@ class m_itemm extends Model
           return Response::json($results);
         }
              
-        $sql=$sql->get();
+        $sql=$sql->get();        
 
         $results = array();
                         
@@ -309,7 +310,7 @@ class m_itemm extends Model
         $position=$position->gc_id;
 
 
-        $groupName=['Barang PRODUKSI','Barang Jual'];
+        $groupName=['BPD','BJ'];
 
 
             
@@ -323,17 +324,17 @@ class m_itemm extends Model
 
              })
              ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->join('m_group','g_id','=','i_group')
+             /*->join('m_group','g_id','=','i_group')*/
              ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','s_qty','i_code','i_hpp');
              
 
         if($search!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                                    
-                  $query->whereIn('g_name',$groupName);                                     
+                  $query->whereIn('i_type',$groupName);                                     
 
                   $query->orWhere('i_code','like','%'.$search.'%');                                    
-                  $query->whereIn('g_name',$groupName); 
+                  $query->whereIn('i_type',$groupName); 
                   });
                   }                                  
         else{
@@ -378,7 +379,7 @@ class m_itemm extends Model
         $position=$position->gc_id;
 
 
-        $groupName=['Barang PRODUKSI','Barang Jual'];
+        $groupName=['BPD','BJ'];
 
 
             
@@ -392,17 +393,17 @@ class m_itemm extends Model
 
              })
              ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->join('m_group','g_id','=','i_group')
+             /*->join('m_group','g_id','=','i_group')*/
              ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','s_qty','i_code');
              
 
         if($search!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                                    
-                  $query->whereIn('g_name',$groupName);                                     
+                  $query->whereIn('i_type',$groupName);                                     
 
                   $query->orWhere('i_code','like','%'.$search.'%');                                    
-                  $query->whereIn('g_name',$groupName); 
+                  $query->whereIn('i_type',$groupName); 
                   });
                   }                                  
         else{
@@ -429,6 +430,72 @@ class m_itemm extends Model
     }
 
 
+// barang spk
+  public static function itemSpk($item){
+    
+    
+        $search = $item->term;
+
+        $groupName=['BPD','BP'];
+
+
+            
+
+        $sql=DB::table('m_item')
+             /*->leftjoin('d_stock',function($join) use ($comp,$position) {
+                  $join->on('s_item','=','i_id');
+                  $join->where('s_comp',$comp); 
+                  $join->where('s_position',$position);
+
+
+             })*/
+             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
+             /*->join('m_group','g_id','=','i_group')*/
+             ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','i_code');
+             
+
+        if($search!=''){          
+            $sql->where(function ($query) use ($search,$groupName) {
+                  $query->where('i_name','like','%'.$search.'%');                                    
+                  $query->whereIn('i_type',$groupName);                                     
+
+                  $query->orWhere('i_code','like','%'.$search.'%');                                    
+                  $query->whereIn('i_type',$groupName); 
+                  });
+        }else{
+          $results[] = [ 'id' => null, 'label' =>'Data belum lengkap'];
+          return Response::json($results);
+        }
+               
+        $sql=$sql->get();
+        
+        
+
+        $results = array();
+                        
+        if (count($sql)==0) {
+          $results[] = [ 'id' => null, 'label' =>'tidak di temukan data terkait'];
+        } else {
+          foreach ($sql as $data)
+          {
+            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->i_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'i_code' =>$data->i_code,'i_price' =>number_format($data->i_price,0,',','.'),'item' => $data->i_name];
+          }
+        } 
+        return Response::json($results);
+
+  }
+
+  function m_satuan() {
+    $res = $this->belongsTo('App\m_satuan', 'i_satuan', 's_id');
+
+        return $res;
+  }
+
+  function m_group() {
+    $res = $this->belongsTo('App\m_group', 'i_group', 'g_id');
+
+        return $res;
+  }
 
 }
 	

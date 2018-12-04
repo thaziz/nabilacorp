@@ -41,8 +41,12 @@ class purchaseOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
-   
+
+   public function konvertRp($value)
+    {
+      $value = str_replace(['Rp', '\\', '.', ' '], '', $value);
+      return (int)str_replace(',', '.', $value);
+    }
    public function seachItemPurchase(Request $request){
          return   m_itemm::seachItemPurchase($request);
    }
@@ -50,38 +54,48 @@ class purchaseOrderController extends Controller
       d_purchase_order::simpanOrder($request);
 
    }
-   public function orderIndex(){     
-    $tindex =view('Purchase::orderpembelian/tab-index');       
-    $history =view('Purchase::orderpembelian/tab-history');   
+   public function orderIndex(){
+    $tindex =view('Purchase::orderpembelian/tab-index');
+    $history =view('Purchase::orderpembelian/tab-history');
     /*$to =view('Purchase::orderpembelian/tambah_order');   */
 
-    $modal =view('Purchase::orderpembelian/modal'); 
-    $modaledit =view('Purchase::orderpembelian/modal-edit');       
+    $modal =view('Purchase::orderpembelian/modal');
+    $modaledit =view('Purchase::orderpembelian/modal-edit');
 
-    $modaldetail=view('Purchase::orderpembelian/modal-detail-peritem'); 
-     
+    $modaldetail=view('Purchase::orderpembelian/modal-detail-peritem');
+
      return view('Purchase::orderpembelian/index',compact('tindex','history','to','modal','modaledit','modaldetail'));
    }
-   public function dataOrder(Request $request){     
+   public function dataOrder(Request $request){
       return d_purchase_order::dataOrder($request);
    }
    public function formOrder()
-    {        
+    {
          return view('Purchase::orderpembelian/tambah_order');
     }
      public function getDataForm($id)
-    {        
+    {
          return d_purchase_order::getDataForm($id);
-    }    
+    }
     public function getDataCodePlan(Request $request)
-    {        
+    {
+
          return d_purchase_order::getDataCodePlan($request);
-    }    
+    }
 
      public function seachSupplier(Request $request) {
+        // dd($request->all());
+      // return 'a';
         return m_supplier::seachSupplier($request);
 
      }
-   
+     public function savePo(Request $request)
+     {
+       // dd($request->all());
+
+      return d_purchase_order::savePo($request);
+
+     }
+
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/
