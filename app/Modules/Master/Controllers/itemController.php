@@ -208,7 +208,7 @@ class itemController extends Controller
                     ->leftjoin(DB::raw('m_satuan S3'), 'i_sat3', '=', 'S3.s_id')
                     ->where('i_id', $id)
                     ->first();
-      $m_price = m_price::where('m_pid', $id)->get();
+      $m_price = m_price::where('m_pitem', $id)->get()->first();
       $m_group = m_group::all();                    
       $m_satuan = m_satuan::all();                    
       $d_item_supplier = DB::table('d_item_supplier')

@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <textarea class="form-control input-sm" name='i_det' value='{{ $m_item->i_det }}' value='{{ $m_item->i_det }}'></textarea>
+                                      <textarea class="form-control input-sm" name='i_det' value='{{ $m_item->i_det }}' value='{{ $m_item->i_det }}'>{{ $m_item->i_det }}</textarea>
                                   </div>
                                 </div>
                                 
@@ -293,11 +293,11 @@
 
                                         </div>
                                       <div class="form-group col-sm-3">
-                                        <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0" value="{{ $supplier->s_company }}">
+                                        <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0" value="{{ $supplier->is_price }}">
                                         <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
                                       </div>
                                       <div class="form-group col-sm-2">
-                                        <button type="button" class="btn btn-primary" name='button' value='{{ $m_item->button }}' onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                        <button type="button" class="btn btn-primary" name='button' onclick="tambah()"> <i class="fa fa-plus"></i> </button>
                                       </div>
                                     </div>
                                   @endforeach
