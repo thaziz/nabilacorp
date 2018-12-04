@@ -31,9 +31,9 @@ class d_purchase_plan extends Model
     const CREATED_AT = 'p_created';
     const UPDATED_AT = 'p_updated';
     
-     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp','p_gudang'];
+     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp'];
 
-     static function simpan ($request){ 
+     static function simpan ($request){      
       // return DB::transaction(function () use ($request) {     
 
       // return 'a';      
@@ -61,7 +61,6 @@ class d_purchase_plan extends Model
       d_purchase_plan::create([
               'p_id'=>$p_id,
               'p_comp'=>Session::get('user_comp'),
-              'p_gudang' => $request->gudang,
               'p_date'=>date('Y-m-d',strtotime($request->p_date)),
               'p_code'=>$p_code,
               'p_supplier'=>$request->id_supplier,
@@ -371,7 +370,7 @@ class d_purchase_plan extends Model
 
     static function confirmRencanaPembelian($id,$type)
   {
-    $gudang = d_purchase_plan::where('p_id',$id)->first();
+
     $dataHeader = d_purchase_plan::join('m_supplier','p_supplier','=','s_id')
                             ->leftjoin('d_mem','p_mem','=','m_id')
                             ->select(
@@ -407,9 +406,8 @@ class d_purchase_plan extends Model
     {
       
         $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('d_purchase_plan','d_purchase_plan.p_id','=','ppdt_pruchaseplan')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -422,9 +420,7 @@ class d_purchase_plan extends Model
                                           'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('s_comp',$gudang->p_gudang)
-                                ->where('s_position',$gudang->p_gudang)
-                                ->orderBy('ppdt_detailid', 'ASC')
+                                ->orderBy('ppdt_created', 'DESC')
                                 ->get();
       
     }
@@ -433,7 +429,7 @@ class d_purchase_plan extends Model
 
        $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
+                                ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -446,10 +442,8 @@ class d_purchase_plan extends Model
                                          'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('s_comp',$gudang->p_gudang)
-                                ->where('s_position',$gudang->p_gudang)
                                 ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_detailid', 'ASC')
+                                ->orderBy('ppdt_created', 'DESC')
                                 ->get();
       
 
@@ -469,7 +463,7 @@ class d_purchase_plan extends Model
   {    
     // DB::beginTransaction();
     // try {
-      // dd($request->all());  
+      // dd($request->all());
       
         //update table d_purchasingplan
         $plan = d_purchase_plan::where('p_id',$request->idPlan)->first();
@@ -489,7 +483,7 @@ class d_purchase_plan extends Model
             for ($i=0; $i < $hitung_field; $i++) 
             {
                 $plandt = d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->idPlan)
-                          ->where('ppdt_detailid',$i+1)->orderBy('ppdt_detailid','ASC');
+                          ->where('ppdt_detailid',$i+1);
 
                 $plandt->update([
                   'ppdt_qtyconfirm' => $request->fieldConfirm[$i],
@@ -497,7 +491,7 @@ class d_purchase_plan extends Model
                   'ppdt_isconfirm' => "TRUE",
                 ]);
             }
-            // return    $plandt;
+            // return  $plandt;
             // return $request->fieldIdDt;
         }
         else

@@ -1000,7 +1000,7 @@ function modalShow(){
 }
 
 $(document).keydown(function(e){        
-  if(e.which==121 && e.ctrlKey){        
+  if(e.which==121 && e.ctrlKey){    
         if($('#proses').is(':visible')==false){           
           if($('#grand_biaya').val()!='' && $('#grand_biaya').val()!='0'){
                  modalShow();

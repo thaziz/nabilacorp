@@ -84,10 +84,6 @@ class itemTitipanController extends Controller
         return view('POS::barangTitipan/modal',compact('data'));                  
     }
 
-    function seachSupplier(Request $request){
-      return m_supplier::seachSupplier($request);
-    }
-
     function editTitipanDt($id,Request $request){        
       $status=$request->s_status;      
       $data=d_itemtitipan_dt::editTitipanDt($id);      

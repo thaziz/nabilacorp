@@ -481,8 +481,8 @@ ctrl = 17;
           iSalesDetail+='<input style="width:100%" type="hidden" name="mp_detailid[]" value="">';
 
 
-          iSalesDetail+='<input value="'+$('#mp_fComp').val()+'" style="width:100%" type="" name="mp_comp[]">';
-          iSalesDetail+='<input value="'+$('#mp_fPosition').val()+'" style="width:100%" type="" name="mp_position[]">';
+          iSalesDetail+='<input value="'+$('#mp_fComp').val()+'" style="width:100%" type="hidden" name="mp_comp[]">';
+          iSalesDetail+='<input value="'+$('#mp_fPosition').val()+'" style="width:100%" type="hidden" name="mp_position[]">';
 
 
           iSalesDetail+='<div style="padding-top:6px">'+mp_i_code.val()+' - '+mp_itemName.val()+'</div></td>';
@@ -665,7 +665,7 @@ $('#mp_fQty').keyup(function(e) {
 function simpan(){
   $('.btn-disabled').attr('disabled','disabled');
   var form=$('#datab').serialize();
-  alert(form);
+  
      $.ajax({
           url     :  baseUrl+'/penjualan/mutasi-item/store',
           type    : 'GET', 

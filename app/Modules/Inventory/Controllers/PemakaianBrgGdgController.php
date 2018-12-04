@@ -38,7 +38,7 @@ class PemakaianBrgGdgController extends Controller
 
         $data = d_pakai_barang::join('d_gudangcabang','d_pakai_barang.d_pb_gdg','=','d_gudangcabang.gc_id')
               ->join('d_mem','d_pakai_barang.d_pb_staff','=','d_mem.m_id')
-              ->select('d_pakai_barang.*', 'd_mem.m_id', 'd_mem.m_name', 'd_gudangcabang.gc_id', 'd_gudangcabang.gc_gudang')
+              ->select('d_pakai_barang.*', 'd_mem.m_id', 'd_mem.m_name', 'd_gudangcabang.gc_id', 'd_gudangcabang.gc_cabang')
               ->whereBetween('d_pb_date', [$tanggal1, $tanggal2])
               ->orderBy('d_pb_created', 'DESC')
               ->get();
@@ -71,46 +71,6 @@ class PemakaianBrgGdgController extends Controller
                     </div>'; 
         })
         ->rawColumns(['status', 'action'])
-        ->make(true);
-    }
-
-    public function getHistoryByTgl($tgl1, $tgl2, $tampil)
-    {
-        $y = substr($tgl1, -4);
-        $m = substr($tgl1, -7,-5);
-        $d = substr($tgl1,0,2);
-        $tanggal1 = $y.'-'.$m.'-'.$d;
-
-        $y2 = substr($tgl2, -4);
-        $m2 = substr($tgl2, -7,-5);
-        $d2 = substr($tgl2,0,2);
-        $tanggal2 = $y2.'-'.$m2.'-'.$d2;
-
-        $data = d_pakai_barangdt::select('d_pakai_barangdt.*', 'd_pakai_barang.*', 'm_item.i_name', 'm_satuan.s_name', DB::raw('sum(d_pakai_barangdt.d_pbdt_qty) as qty_pakai'))
-            ->leftJoin('d_pakai_barang','d_pakai_barangdt.d_pbdt_pbid','=','d_pakai_barang.d_pb_id')
-            ->leftJoin('m_item','d_pakai_barangdt.d_pbdt_item','=','m_item.i_id')
-            ->leftJoin('m_satuan','d_pakai_barangdt.d_pbdt_sat','=','m_satuan.s_id')
-            ->where('d_pakai_barang.d_pb_gdg', '=', $tampil)
-            ->whereBetween('d_pakai_barang.d_pb_date', [$tanggal1, $tanggal2])
-            ->groupBy('d_pakai_barangdt.d_pbdt_pbid')
-            ->groupBy('d_pakai_barangdt.d_pbdt_item')
-            ->orderBy('d_pakai_barang.d_pb_created', 'DESC')
-            ->get();
-
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->editColumn('tglPakai', function ($data) 
-        {
-            if ($data->d_pbdt_created == null) 
-            {
-                return '-';
-            }
-            else 
-            {
-                return $data->d_pbdt_created ? with(new Carbon($data->d_pbdt_created))->format('d M Y') : '';
-            }
-        })
-        // ->rawColumns(['status', 'action'])
         ->make(true);
     }
 }

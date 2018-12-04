@@ -33,6 +33,8 @@ Route::get('/master/item/hapus', 'itemController@hapus');
 //End Master Formula
 
 //data supplier
+    Route::get('/master/datasuplier/find_m_suplier', 'SuplierController@find_m_suplier')->name('find_m_suplier');    
+    Route::get('/master/datasuplier/suplier', 'SuplierController@suplier')->name('suplier');    
     Route::get('/master/datasuplier/suplier', 'SuplierController@suplier')->name('suplier');    
     Route::post('master/datasuplier/suplier_proses', 'SuplierController@suplier_proses');
     Route::get('/master/datasuplier/tambah_suplier', 'SuplierController@tambah_suplier');
