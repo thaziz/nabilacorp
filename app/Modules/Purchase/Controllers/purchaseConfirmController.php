@@ -257,8 +257,6 @@ public function getDataRencanaPembelian(Request $request)
    public function konfirmasiOrdersubmit(Request $request)
    {
      // dd($request->all());
-
-
         $plan = d_purchase_order::where('po_id',$request->idOrder)->first();
         // return json_encode($plan);
         if ($request->statusOrderConfirm != "WT") 
