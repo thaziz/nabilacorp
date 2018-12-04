@@ -29,7 +29,7 @@ Route::get('keuangan/konfirmasipembelian/confirm-order-submit','purchaseConfirmC
 Route::get('/purcahse-order/order-index', 'purchaseOrderController@orderIndex')->middleware('auth');
 Route::get('/purcahse-order/data-order', 'purchaseOrderController@dataOrder')->middleware('auth');
 Route::get('/purcahse-order/form-order', 'purchaseOrderController@formOrder')->middleware('auth');
-Route::get('/purcahse-order/get-data-form/{id}/{comp}', 'purchaseOrderController@getDataForm')->middleware('auth');
+Route::get('/purcahse-order/get-data-form/{id}', 'purchaseOrderController@getDataForm')->middleware('auth');
 Route::get('/purcahse-order/get-data-code-plan', 'purchaseOrderController@getDataCodePlan')->middleware('auth');
 Route::get('/purcahse-order/seach-supplier', 'purchaseOrderController@seachSupplier')->middleware('auth');
 Route::get('/purcahse-order/save-po', 'purchaseOrderController@savePo')->middleware('auth');

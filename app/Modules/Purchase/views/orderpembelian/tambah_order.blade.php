@@ -115,7 +115,6 @@
                           <div class="form-group" id="divSelectPlan">
                             <input class="form-control input-sm" id="cari_kode_plan" name="cariKodePlan" style="width: 100%;">
                             <input type="hidden" class="form-control input-sm" id="kodePlan" name="cariKodePlan" style="width: 100%;">
-                            <input type="hidden" class="form-control input-sm" id="kodecomp" name="kodecomp" style="width: 100%;">
                           </div>
                         </div>
 
@@ -281,7 +280,6 @@
         $('#kodePlan').val(ui.item.p_id);
         $('#cari_sup').val(ui.item.s_company);
         $('#id_supplier').val(ui.item.s_id);
-        $('#kodecomp').val(ui.item.p_comp);
         setPlan();
         }
       });
@@ -339,9 +337,8 @@
       //remove existing appending row
       $('tr').remove('.tbl_form_row');
       var id = $('#kodePlan').val();
-      var comp = $('#kodecomp').val();
       $.ajax({
-        url : baseUrl + "/purcahse-order/get-data-form/"+id+'/'+comp,
+        url : baseUrl + "/purcahse-order/get-data-form/"+id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
