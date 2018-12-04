@@ -9,27 +9,14 @@ var iddinamis = 0;
         });
 
         $(document).ready(function(){
+
+
           $('.select').select2();
           $('.dinamis').hide();
           format_currency( $('[name="m_pbuy1"]') );
           format_currency( $('[name="m_pbuy2"]') );
           format_currency( $('[name="m_pbuy3"]') );
 
-          $('#add_supplier').click(function(e){
-            e.preventDefault();
-            var parent = $('#satuan_el_jual');
-            var content_supplier = $('#supplier').html();
-            content_supplier = content_supplier.replace(/selected=*("selected")*/, '');
-
-            var new_el = $('<div class="col-md-12"><div id="satuan_el" style="display: flex;margin-bottom: 1.5mm;margin-left: 4mm"><select class="form-control supplier" name="supplier[]" data-selected="+" id="supplier">' + content_supplier + '</select><input type="number" name="jumlah_unit_jual[]" class="form-control" placeholder="Jumlah unit..." style="margin-left: 1.5mm;margin-right: 4mm"></div></div>');
-            new_el.find('select').selectpicker({liveSearch : true});
-            new_el.appendTo(parent);
-            if($('#remove_supplier').hasClass('hidden')) {
-              $('#remove_supplier').removeClass('hidden')
-            }
-          });
-
-          format_currency( $("[name='is_price[]']") );
           $('[name="is_supplier[]"]').select2({
               width : '100%',
               ajax : {
@@ -65,6 +52,26 @@ var iddinamis = 0;
                 }
               }
           });
+
+          setTimeout(function(){
+            var select = $('select');
+            select.each(function(){
+              var val = $(this).attr('data-selected');
+              var text = $(this).attr('data-text');
+              if(text != undefined && text != null) {
+                 var opt = $('<option value="' + val + '">' + text + '</option>');
+                 $(this).append(opt); 
+                 $(this).val( val ).trigger('change');
+              }
+              else {
+
+                if(val != undefined && val != null) {
+                  $(this).val( val ).trigger('change');
+                }
+              }
+            });
+          }, 2000);
+
         });
 
         dinamis();
@@ -179,6 +186,31 @@ var iddinamis = 0;
                     });
                     setTimeout(function(){
                           window.location.reload();
+                  }, 850);
+                }
+              }
+            });
+          
+        }
+
+        function perbarui(){
+          
+            $.ajax({
+              type: 'get',
+              data: $('#data').serialize(),
+              dataType: 'json',
+              url: baseUrl + '/master/item/update',
+              success : function(result){
+                if (result.status == 'berhasil') {
+                    swal({
+                        title: "Berhasil",
+                        text: "Data Berhasil Disimpan",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 900
+                    });
+                    setTimeout(function(){
+                          // window.location.reload();
                   }, 850);
                 }
               }

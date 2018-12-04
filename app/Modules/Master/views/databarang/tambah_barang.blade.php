@@ -321,4 +321,9 @@
 @section("extra_scripts")
   @include('Master::databarang/js/format_currency')
   @include('Master::databarang/js/commander')
+  <script>
+    $(document).ready(function(){
+      format_currency( $("[name='is_price[]']") );
+    });
+  </script>
 @endsection
