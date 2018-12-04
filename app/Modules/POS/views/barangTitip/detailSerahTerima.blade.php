@@ -144,8 +144,8 @@
                   
                <input style="width:100%" type="hidden" name="idt_item[]" value="{{$detail->i_id}}">
                     <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div>
-              <input style="width:100%" type="" name="comp[]" value="{{$detail->idt_comp}}">
-              <input style="width:100%" type="" name="position[]" value="{{$detail->idt_position}}">
+              <input style="width:100%" type="hidden" name="comp[]" value="{{$detail->idt_comp}}">
+              <input style="width:100%" type="hidden" name="position[]" value="{{$detail->idt_position}}">
                     </td>
 
 
@@ -267,6 +267,7 @@
           success : function(response){    
                     
                     if(response.status=='sukses'){
+                      window.location.href = baseUrl+'/penjualan/barang-titip/index';
                         }
                     
           }

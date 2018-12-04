@@ -9,6 +9,7 @@ use Carbon\carbon;
 use DB;
 
 use App\m_itemm;
+use App\m_price;
 use App\d_stock;
 
 use App\Http\Controllers\Controller;
@@ -184,5 +185,55 @@ class PenjualanController extends Controller
     {
       return view('/penjualan/POSpenjualanPesanan/POSpenjualanPesanan');
     }
+
+    // Method untuk modul manajemen harga
+    public function harga() {
+      return view('POS::manajemenharga/harga');
+    }
+
+    public function find_m_price() {
+      $m_price = m_price::take(100)->get();
+      foreach ($m_price as $item) {
+        $item['i_code'] = '';
+        $item['i_name'] = '';
+        $item['i_type'] = '';
+        $item['g_name'] = '';
+        if($item->m_item != null) {
+          $item['i_code'] = $item->m_item->i_code;
+          $item['i_name'] = $item->m_item->i_name;
+          $item['i_type'] = $item->m_item->i_type;
+          $item['g_name'] = $item->m_item->m_group->g_name;
+
+        }
+      }
+
+      $data = array('data' => $m_price);
+      return response()->json($data);
+    }
+
+    public function update_m_price(Request $req) {
+      $m_pid = $req->m_pid;
+      $m_pid = $m_pid != null ? $m_pid : '';
+      $status = 'gagal';
+      if($m_pid != '') {
+        $m_pbuy1 = $req->m_pbuy1;
+        $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
+        $m_pbuy2 = $req->m_pbuy2;
+        $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
+        $m_pbuy3 = $req->m_pbuy3;
+        $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
+
+        $data = m_price::find($m_pid);
+        $data->m_pbuy1 = $req->m_pbuy1;
+        $data->m_pbuy2 = $req->m_pbuy2;
+        $data->m_pbuy3 = $req->m_pbuy3;
+        $data->save(); 
+        $status = 'sukses';
+      }
+
+      $res = array('status' => $status);
+      return response()->json($res);
+    }
+    // =======================================================
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/
