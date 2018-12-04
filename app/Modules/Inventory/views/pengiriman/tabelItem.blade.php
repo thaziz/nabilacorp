@@ -1,4 +1,4 @@
-<table class="table tabelan table-bordered table-striped" id="detailItemm">
+<table class="table tabelan table-bordered table-striped" id="detailItem">
     <thead>
     <tr>
         <th width="5%">No</th>
@@ -16,7 +16,7 @@
 
 <script>
     var id = {{ $data->do_id }};
-    $('#detailItemm').DataTable({
+    $('#detailItem').DataTable({
         responsive: true,
         destroy: true,
         processing: true,

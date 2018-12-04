@@ -12,15 +12,14 @@ Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->m
 Route::delete('/purcahse-plan/get-delete-plan/{id}', 'purchasePlanController@deletePlan')->middleware('auth');
 
 //keuangan
-Route::get('/konfirmasi-purchase/index', 'purchaseConfirmController@confirmIndex')->middleware('auth');
-Route::get('/konfirmasi-purchase/purchase-plane/data', 'purchaseConfirmController@getDataRencanaPembelian')->middleware('auth');
+Route::get('/konfirmasi-purchase/index', 'PurchaseConfirmController@confirmIndex')->middleware('auth');
+Route::get('/konfirmasi-purchase/purchase-plane/data', 'PurchaseConfirmController@getDataRencanaPembelian')->middleware('auth');
 Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-plan/{id}/{type}', 'PurchaseConfirmController@confirmRencanaPembelian')->middleware('auth');
 
 Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-purchase-plan', 'PurchaseConfirmController@konfirmasiPurchasePlan')->middleware('auth');
 //order konfirmasi
-Route::get('keuangan/konfirmasipembelian/get-data-tabel-order','purchaseConfirmController@getdatatableOrder')->middleware('auth');
-Route::get('keuangan/konfirmasipembelian/confirm-order/{id}/{type}','purchaseConfirmController@konfirmasiOrder')->middleware('auth');
-Route::get('keuangan/konfirmasipembelian/confirm-order-submit','purchaseConfirmController@konfirmasiOrdersubmit')->middleware('auth');
+Route::get('keuangan/konfirmasipembelian/get-data-tabel-order','PurchaseConfirmController@getdatatableOrder')->middleware('auth');
+Route::get('keuangan/konfirmasipembelian/confirm-order/{id}/{type}','PurchaseConfirmController@konfirmasiOrder')->middleware('auth');
 
 
 /*keuangan/konfirmasi-purchase/confirm-plan/4/confirmed*/
@@ -29,7 +28,7 @@ Route::get('keuangan/konfirmasipembelian/confirm-order-submit','purchaseConfirmC
 Route::get('/purcahse-order/order-index', 'purchaseOrderController@orderIndex')->middleware('auth');
 Route::get('/purcahse-order/data-order', 'purchaseOrderController@dataOrder')->middleware('auth');
 Route::get('/purcahse-order/form-order', 'purchaseOrderController@formOrder')->middleware('auth');
-Route::get('/purcahse-order/get-data-form/{id}/{comp}', 'purchaseOrderController@getDataForm')->middleware('auth');
+Route::get('/purcahse-order/get-data-form/{id}', 'purchaseOrderController@getDataForm')->middleware('auth');
 Route::get('/purcahse-order/get-data-code-plan', 'purchaseOrderController@getDataCodePlan')->middleware('auth');
 Route::get('/purcahse-order/seach-supplier', 'purchaseOrderController@seachSupplier')->middleware('auth');
 Route::get('/purcahse-order/save-po', 'purchaseOrderController@savePo')->middleware('auth');

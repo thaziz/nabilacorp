@@ -10,6 +10,8 @@ use App\Suplier;
 use Datatables;
 use Session;
 
+use App\m_supplier;
+
 class SuplierController extends Controller
 {
 
@@ -194,4 +196,20 @@ class SuplierController extends Controller
                 'pesan' => 'Data Suppler Berhasil Dihapus'
             ]);
     } 
+
+    public function find_m_suplier(Request $req) {
+      // Keyword yang diberikan oleh user
+      $keyword = $req->keyword;  
+      $keyword = $keyword != null ? $keyword : '';
+
+      if($keyword == '') {
+          $data = m_supplier::all();
+      }
+      else {
+          $data = m_supplier::where('s_company', 'LIKE', "%$keyword%")->get();
+      }
+      $res = array('data' => $data);
+
+      return response()->json($res);
+    }
 }

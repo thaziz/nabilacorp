@@ -286,16 +286,13 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                 });
 	}
 
-    public static function updateMutasi($item,$totalPermintaan,$comp,$position,$flag='',$sm_reff='',$ket=null,$date,$mutcat=null){
-        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$ket,$date,$mutcat) {   
-
-
+    public static function updateMutasi($item,$totalPermintaan,$comp,$position,$flag='',$sm_reff=''){
+        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff) {   
 
         if ($totalPermintaan>0) {            
             
              $mutasiStok=new mutasi;
-             
-             return $mutasiStok->mutasiStok($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$ket,$date,$mutcat);
+             return $mutasiStok->mutasiStok($item,$totalPermintaan,$comp,$position,$flag,$sm_reff);
         }else{               
             
             $getBarang=d_stock_mutation::where('sm_item',$item)->where('sm_comp',$comp)

@@ -192,7 +192,7 @@
 
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                    <label class="tebal">Satuan Alternatif 2/label>
+                                    <label class="tebal">Satuan Alternatif 2</label>
 
                                 </div>
 
@@ -270,11 +270,9 @@
                                   </div>
                                 </div>
                                 
-                                <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
-                                  <button class="btn btn-primary" type="button" onclick="simpan()">Simpan</button>
-                                </div>
+                                
 
-                                <div class="_dinamis" id="_dinamis" style="display: none">
+                                <div class="" id="dinamis">
                                   <div class="col-md-2" style="margin-right: 68px;">
 
                                         <label class="tebal">Supplier</label>
@@ -283,7 +281,7 @@
 
                                   <div class="col-md-9">
                                     <div class="form-group col-sm-5">
-                                      <select class="input-sm form-control select" name="supplier[]" id="showdinamis0">
+                                      <select class="input-sm form-control" name="is_supplier[]" >
                                           <option value="">~ Pilih Supplier ~</option>
                                       </select>
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
@@ -294,7 +292,7 @@
 
                                     </div>
                                   <div class="form-group col-sm-3">
-                                    <input type="text" class="form-control rp" name="hargasupplier[]" id="hargasupplier0">
+                                    <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0">
                                     <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
                                   </div>
                                   <div class="form-group col-sm-2">
@@ -305,7 +303,11 @@
                                 
                               </div>
 
-
+                              <div class="row">
+                                <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
+                                  <button class="btn btn-primary" type="button" onclick="simpan()">Simpan</button>
+                                </div>
+                              </div>
                           
 
                       </form>
