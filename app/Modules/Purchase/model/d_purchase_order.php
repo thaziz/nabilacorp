@@ -183,12 +183,15 @@ class d_purchase_order extends Model
 
 
 
-     static function getDataForm($id)
+     static function getDataForm($id,$comp)
     {
-          $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+      // return [$id,$comp];
+         $dataIsi = d_purchase_plan::join('d_purchaseplan_dt','p_id','ppdt_pruchaseplan')
+                                ->join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
+                                         'p_comp',
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          'm_item.i_price',
@@ -201,6 +204,7 @@ class d_purchase_order extends Model
                                          'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
+                                ->where('d_stock.s_comp', '=', $comp)
                                 ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
@@ -222,7 +226,7 @@ class d_purchase_order extends Model
 
         if (empty($term)) {
             $sup = DB::table('d_purchase_plan')
-                     ->select('p_code', 'p_id','s_id','s_company')
+                     ->select('p_code', 'p_id','s_id','s_company','p_comp')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
@@ -230,7 +234,7 @@ class d_purchase_order extends Model
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
             foreach ($sup as $val) {
-                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
+                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id,'p_comp'=>$val->p_comp];
             }
             return Response::json($formatted_tags);
         }
@@ -238,7 +242,7 @@ class d_purchase_order extends Model
         {
           // return 'a';
             $sup = DB::table('d_purchase_plan')
-                     ->select('p_code', 'p_id','s_id','s_company')
+                     ->select('p_code', 'p_id','s_id','s_company','p_comp')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
@@ -248,7 +252,7 @@ class d_purchase_order extends Model
                      ->get();
             // return $sup;
             foreach ($sup as $val) {
-                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
+                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id,'p_comp'=>$val->p_comp];
             }
             return Response::json($formatted_tags);
         }
