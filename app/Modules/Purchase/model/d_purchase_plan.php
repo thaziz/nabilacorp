@@ -31,11 +31,11 @@ class d_purchase_plan extends Model
     const CREATED_AT = 'p_created';
     const UPDATED_AT = 'p_updated';
     
-     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp'];
+     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp','p_gudang'];
 
      static function simpan ($request){      
       // return DB::transaction(function () use ($request) {     
-
+      // dd($request->all());
       // return 'a';      
       $p_id=d_purchase_plan::max('p_id')+1;
      
@@ -61,6 +61,7 @@ class d_purchase_plan extends Model
       d_purchase_plan::create([
               'p_id'=>$p_id,
               'p_comp'=>Session::get('user_comp'),
+              'p_gudang'=>$request->gudang,
               'p_date'=>date('Y-m-d',strtotime($request->p_date)),
               'p_code'=>$p_code,
               'p_supplier'=>$request->id_supplier,
