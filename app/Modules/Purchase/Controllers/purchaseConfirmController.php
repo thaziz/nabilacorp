@@ -16,7 +16,7 @@ use App\mMember;
 use App\Modules\Purchase\model\d_purchase_plan;
 use App\Modules\Purchase\model\d_purchase_order;
 use App\Modules\Purchase\model\d_purchaseorder_dt;
-
+use App\d_purchasing;
 use Datatables;
 
 class purchaseConfirmController extends Controller
@@ -358,5 +358,75 @@ public function getDataRencanaPembelian(Request $request)
     {
         return view('/purchasing/rencanabahanbaku/bahan');
     }
+
+  public function confirmOrderPembelian($id,$type)
+  {
+    $dataHeader = d_purchasing::join('d_supplier','d_purchasing.s_id','=','d_supplier.s_id')
+                ->join('d_mem','d_purchasing.d_pcs_staff','=','d_mem.m_id')
+                ->select('d_pcs_date_created','d_pcs_id', 'd_pcs_duedate', 'd_pcsp_id','d_pcs_code','s_company','d_pcs_staff','d_pcs_method','d_pcs_total_net','d_pcs_date_received','d_pcs_status','d_mem.m_name','d_mem.m_id')
+                ->where('d_pcs_id', '=', $id)
+                ->orderBy('d_pcs_date_created', 'DESC')
+                ->get();
+
+    $statusLabel = $dataHeader[0]->d_pcs_status;
+    if ($statusLabel == "WT") 
+    {
+        $spanTxt = 'Waiting';
+        $spanClass = 'label-info';
+    }
+    elseif ($statusLabel == "DE")
+    {
+        $spanTxt = 'Dapat Diedit';
+        $spanClass = 'label-warning';
+    }
+    else
+    {
+        $spanTxt = 'Di setujui';
+        $spanClass = 'label-success';
+    }
+
+    if ($type == "all") 
+    {
+      $dataIsi = d_purchasing_dt::join('m_item', 'd_purchasing_dt.i_id', '=', 'm_item.i_id')
+                ->join('m_satuan', 'd_purchasing_dt.d_pcsdt_sat', '=', 'm_satuan.m_sid')
+                ->select('d_purchasing_dt.*', 'm_item.*', 'm_satuan.*')
+                ->where('d_purchasing_dt.d_pcs_id', '=', $id)
+                ->orderBy('d_purchasing_dt.d_pcsdt_created', 'DESC')
+                ->get();
+    }
+    else
+    {
+      $dataIsi = d_purchasing_dt::join('m_item', 'd_purchasing_dt.i_id', '=', 'm_item.i_id')
+                ->join('m_satuan', 'd_purchasing_dt.d_pcsdt_sat', '=', 'm_satuan.m_sid')
+                ->select('d_purchasing_dt.*', 'm_item.*', 'm_satuan.*')
+                ->where('d_purchasing_dt.d_pcs_id', '=', $id)
+                ->where('d_purchasing_dt.d_pcsdt_isconfirm', '=', "TRUE")
+                ->orderBy('d_purchasing_dt.d_pcsdt_created', 'DESC')
+                ->get();
+    }
+
+    foreach ($dataIsi as $val) 
+    {
+      //cek item type
+      $itemType[] = DB::table('m_item')->select('i_type', 'i_id')->where('i_id','=', $val->i_id)->first();
+      //get satuan utama
+      $sat1[] = $val->i_sat1;
+    }
+
+    //variabel untuk count array
+    $counter = 0;
+    //ambil value stok by item type
+    $dataStok = $this->getStokByType($itemType, $sat1, $counter);
+    
+    return Response()->json([
+        'status' => 'sukses',
+        'header' => $dataHeader,
+        'data_isi' => $dataIsi,
+        'data_stok' => $dataStok['val_stok'],
+        'data_satuan' => $dataStok['txt_satuan'],
+        'spanTxt' => $spanTxt,
+        'spanClass' => $spanClass,
+    ]);
+  }
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/

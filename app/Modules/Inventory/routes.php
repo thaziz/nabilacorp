@@ -59,5 +59,9 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	/*Route::get('/inventory/p_hasilproduksi/produksi', 'penerimaanController@produksi')->middleware('auth');*/
 	Route::get('/inventory/p_returncustomer/cust', 'penerimaanControllerr@cust')->middleware('auth');
 
+//penerimaan supplier
+	Route::get('/inventory/p_suplier/suplier', 'PenerimaanBrgSupController@index')->middleware('auth');
+	Route::get('/inventory/p_suplier/lookup-data-pembelian', 'PenerimaanBrgSupController@lookupDataPembelian');
+
 
 });
