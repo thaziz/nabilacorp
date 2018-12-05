@@ -42,17 +42,21 @@ class PenjualanMobileController extends Controller
        $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
        $tgl_akhir = $req->tgl_akhir;
        $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
+        
+       $rows = d_sales_dt::leftJoin('d_sales', function($join) {
+        $join->on('sd_sales', '=', 's_id');
+      })->where('s_channel', 'Toko');
+
+
        if($tgl_awal != '' && $tgl_akhir != '') {
         $tgl_awal = str_replace('/', '-', $tgl_awal);
         $tgl_awal = date('Y-m-d', strtotime($tgl_awal));
         $tgl_akhir = str_replace('/', '-', $tgl_akhir);
         $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
-        $rows = d_sales_dt::whereBetween('sd_date', array($tgl_awal, $tgl_akhir))->orderBy('sd_date', 'DESC')->get();
+        $rows = $rows->whereBetween('sd_date', array($tgl_awal, $tgl_akhir));
        }
-
-       else {
-          $rows = d_sales_dt::orderBy('sd_date', 'DESC')->get();
-       }
+        
+        $rows = $rows->orderBy('sd_date', 'DESC')->get();
 
        foreach ($rows as $row) {
          $new_row = $row;
@@ -67,6 +71,8 @@ class PenjualanMobileController extends Controller
          $new_row['sd_total'] = $detail->sd_total;
          $new_row['s_nama_cus'] = '';
          $new_row['s_finishdate'] = '';
+         $new_row['s_channel'] = '';
+
          if($row->d_sales != null) {
             $new_row['s_note'] = $row->d_sales->s_note;
             $new_row['s_nama_cus'] = $row->d_sales->s_nama_cus;
