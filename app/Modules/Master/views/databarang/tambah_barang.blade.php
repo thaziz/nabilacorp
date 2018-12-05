@@ -320,10 +320,14 @@
 @endsection
 @section("extra_scripts")
   @include('Master::databarang/js/format_currency')
+<<<<<<< HEAD
   @include('Master::databarang/js/form_commander')
   <script>
     $(document).ready(function(){
       format_currency( $("[name='is_price[]']") );
     });
   </script>
+=======
+  @include('Master::databarang/js/commander')
+>>>>>>> 9ca8b5338bbb9c5d42c66106d659317c7c30cd8e
 @endsection

@@ -13,10 +13,10 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/pengirimanproduksi/pengirimanproduksi', 'PengambilanItemController@index');
 	Route::get('/produksi/suratjalan/create/delivery/{comp}', 'PengambilanItemController@tabelDelivery');
 	Route::get('/produksi/pengambilanitem/kirim/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@tabelKirim');
-	Route::get('/produksi/pengambilanitem/cari/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@cariTabelKirim');
+	Route::get('/produksi/pengambilanitem/cari/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@tabelKirim');
 	Route::get('/produksi/suratjalan/save', 'PengambilanItemController@store');
 	Route::get('/produksi/pengambilanitem/lihat/id', 'PengambilanItemController@orderId');
-	Route::get('/produksi/pengambilanitem/itemkirim/tabel/{id}', 'Pengambilan`ItemController@itemTabelKirim');
+	Route::get('/produksi/pengambilanitem/itemkirim/tabel/{id}', 'PengambilanItemController@itemTabelKirim');
 
 	Route::get('/inventory/p_hasilproduksi/produksi', 'PenerimaanBrgProdController@index');
 	Route::get('/inventory/p_hasilproduksi/get_data_sj/{comp}', 'PenerimaanBrgProdController@get_data_sj');
@@ -58,6 +58,10 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/penerimaan_suplier/suplier_datatable', 'penerimaanController@suplier_datatable')->middleware('auth');
 	/*Route::get('/inventory/p_hasilproduksi/produksi', 'penerimaanController@produksi')->middleware('auth');*/
 	Route::get('/inventory/p_returncustomer/cust', 'penerimaanControllerr@cust')->middleware('auth');
+
+//penerimaan supplier
+	Route::get('/inventory/p_suplier/suplier', 'PenerimaanBrgSupController@index')->middleware('auth');
+	Route::get('/inventory/p_suplier/lookup-data-pembelian', 'PenerimaanBrgSupController@lookupDataPembelian');
 
 
 });

@@ -84,8 +84,11 @@
 $(document).ready(function(){      
 
 
-       $("#searchitem").autocomplete({
-        source: baseUrl+'/item',
+       $("#searchitem").autocomplete({        
+        source: function(request, response) {
+            $.getJSON(baseUrl+"/item", {term:$('#searchitem').val(),harga: $('#harga').val() }, 
+              response);
+        },
         minLength: 1,
         dataType: 'json',
         select: function(event, ui) 
@@ -160,11 +163,11 @@ ctrl = 17;
           format:"dd-mm-yyyy",    
           autoclose: true,    
       }); 
-      $('#s_date').datepicker({
+     /* $('#s_date').datepicker({
           format:"dd-mm-yyyy",   
           autoclose: true,     
       });    
-
+*/
       /*function tgl(){
         $('#s_machine').focus();
       }*/
@@ -456,6 +459,7 @@ function hapus(e,a){
         tamp.splice(index,1);
         totalPerItem();
         buttonDisable();
+        searchitem.focus();
         
     }
 }

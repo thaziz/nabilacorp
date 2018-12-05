@@ -208,6 +208,7 @@ class itemController extends Controller
                     ->leftjoin(DB::raw('m_satuan S3'), 'i_sat3', '=', 'S3.s_id')
                     ->where('i_id', $id)
                     ->first();
+<<<<<<< HEAD
       $m_price = m_price::where('m_pitem', $id)->get()->first();
       if($m_price == null) {
         $m_price = array( 
@@ -216,6 +217,9 @@ class itemController extends Controller
           'm_pbuy3' => 0 
         );
       }
+=======
+      $m_price = m_price::where('m_pid', $id)->get();
+>>>>>>> 9ca8b5338bbb9c5d42c66106d659317c7c30cd8e
       $m_group = m_group::all();                    
       $m_satuan = m_satuan::all();                    
       $d_item_supplier = DB::table('d_item_supplier')
@@ -270,11 +274,6 @@ class itemController extends Controller
         $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
         $m_pbuy3 = $request->m_pbuy3;
         $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
-        // Ke tabel m_supplier 
-        $is_supplier = $request->is_supplier;
-        $is_supplier = $is_supplier != null ? $is_supplier : '';
-        $is_price = $request->is_price;
-        $is_price = $is_price != null ? $is_price : '';
 
         // ===============================================
         // if (!empty($request->supplier)) {
@@ -331,11 +330,11 @@ class itemController extends Controller
         for($x = 0; $x < count($is_supplier);$x++) {
           DB::table('d_item_supplier')
             ->insert([
-              'is_item' => $i_id,
+              'is_item' => $tmp,
               'is_supplier' => $is_supplier[$x],
               'is_price' => $is_price[$x],
               'is_active' => 'Y',
-              'is_updated' => Carbon::now('Asia/Jakarta')
+              'is_created' => Carbon::now('Asia/Jakarta')
             ]);
         }
 
@@ -346,7 +345,7 @@ class itemController extends Controller
       } catch (\Exception $e) {
         DB::rollback();
         return response()->json([
-          'status' => 'gagal. ' . $e
+          'status' => 'gagal'
         ]);
       }
     }

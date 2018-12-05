@@ -139,7 +139,7 @@ class d_item_supplier extends Model
     
 
      public static function seachItemPurchase($item) {
-
+  
         $search = $item->term;
         $id_supplier =$item->id_supplier;
         $sql=DB::table('m_item')->join('d_item_supplier','is_item','=','i_id')

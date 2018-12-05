@@ -80,7 +80,7 @@
                                                                <div class="input-group input-group-sm" style="width: 100%;">
                                                                     <select name="gudang" id="gudang" class="form-control">
                                                                        @foreach ($gudang as $element)
-                                                                         <option value="{{ $element->gc_id }}" data-name="{{ $element->gc_gudang }}">{{ $element->gc_id }} - ({{ $element->gc_gudang }})</option>
+                                                                         <option value="{{ $element->gc_id }}" data-name="{{ $element->gc_gudang }}">{{ $element->c_name }} - {{ $element->gc_gudang }}</option>
                                                                        @endforeach
                                                                     </select>
                                                                 </div>
