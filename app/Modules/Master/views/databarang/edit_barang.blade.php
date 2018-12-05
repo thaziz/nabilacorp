@@ -327,5 +327,5 @@
 @endsection
 @section("extra_scripts")
   @include('Master::databarang/js/format_currency')
-  @include('Master::databarang/js/commander')
+  @include('Master::databarang/js/form_commander')
 @endsection

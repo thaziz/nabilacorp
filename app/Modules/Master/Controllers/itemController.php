@@ -209,6 +209,13 @@ class itemController extends Controller
                     ->where('i_id', $id)
                     ->first();
       $m_price = m_price::where('m_pitem', $id)->get()->first();
+      if($m_price == null) {
+        $m_price = array( 
+          'm_pbuy1' => 0, 
+          'm_pbuy2' => 0, 
+          'm_pbuy3' => 0 
+        );
+      }
       $m_group = m_group::all();                    
       $m_satuan = m_satuan::all();                    
       $d_item_supplier = DB::table('d_item_supplier')
@@ -220,6 +227,7 @@ class itemController extends Controller
         'kelompok' => $m_group, 
         'satuan' => $m_satuan
       );
+      
       // die(json_encode($res));
       return view('Master::databarang/edit_barang', $res);
     }
