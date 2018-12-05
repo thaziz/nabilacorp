@@ -333,7 +333,6 @@
     totalPembelianGross();
     var tamp=[];
     function setPlan(){
-
       //remove existing appending row
       $('tr').remove('.tbl_form_row');
       var id = $('#kodePlan').val();
@@ -554,16 +553,17 @@
             {
               if(response.status == "sukses")
               {
-                iziToast.success({
-                  position: 'center',
-                  title: 'Pemberitahuan',
-                  message: response.pesan,
-                  onClosing: function(instance, toast, closedBy){
+                // iziToast.success({
+                //   position: 'center',
+                //   title: 'Pemberitahuan',
+                //   message: response.pesan,
+                //   onClosing: function(instance, toast, closedBy){
+                  alert('order tersimpan!');
                     $('#button_save').text('Simpan Data');
                     $('#button_save').attr('disabled',false);
-                    window.location.href = baseUrl+"/purchasing/orderpembelian/order";
-                  }
-                });
+                    window.location.href = baseUrl+"/purcahse-order/order-index";
+                //   }
+                // });
               }
               else
               {

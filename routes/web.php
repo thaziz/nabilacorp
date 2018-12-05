@@ -64,7 +64,6 @@ Route::get('/master/databarang/tambah_barang', 'MasterController@tambah_barang')
 
 
 /*Inventory*/
-Route::get('/inventory/p_suplier/suplier', 'InventoryController@suplier')->middleware('auth');
 Route::get('/inventory/p_hasilproduksi/produksi', 'InventoryController@produksi')->middleware('auth');
 Route::get('/inventory/p_returncustomer/cust', 'InventoryController@cust')->middleware('auth');
 // Route::get('/inventory/b_digunakan/barang', 'InventoryController@barang')->middleware('auth');
