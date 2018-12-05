@@ -21,6 +21,7 @@ class PenerimaanBrgProdController extends Controller
 {
     public function index()
 	{
+    
 		$modalTerima = view('Inventory::penerimaan.modal');
 		$tabelPenerimaan = view('Inventory::penerimaan.tabel_penerimaan');
 		$tabPenFinal = view('Inventory::penerimaan.tabel_penerimaan_final');

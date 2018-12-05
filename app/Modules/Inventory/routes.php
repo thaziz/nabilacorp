@@ -12,6 +12,7 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	//versi baru
 	Route::get('/inventory/pengirimanproduksi/pengirimanproduksi', 'PengambilanItemController@index');
 	Route::get('/produksi/suratjalan/create/delivery/{comp}', 'PengambilanItemController@tabelDelivery');
+	Route::get('/produksi/pengambilanitem/kirim/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@tabelKirim');
 	Route::get('/produksi/pengambilanitem/cari/tabel/{tgl1}/{tgl2}/{comp}', 'PengambilanItemController@tabelKirim');
 	Route::get('/produksi/suratjalan/save', 'PengambilanItemController@store');
 	Route::get('/produksi/pengambilanitem/lihat/id', 'PengambilanItemController@orderId');
@@ -50,14 +51,17 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 //barang di gumakam
 	Route::get('/inventory/b_digunakan/barang', 'PemakaianBrgGdgController@barang');
 	Route::get('/inventory/b_digunakan/get-pemakaian-by-tgl/{tgl1}/{tgl2}', 'PemakaianBrgGdgController@getPemakaianByTgl');
-	Route::get('/inventory/b_digunakan/get-history-by-tgl/{tgl1}/{tgl2}/{tampil}', 'PemakaianBrgGdgController@getHistoryByTgl');
 
-//
 	Route::get('/inventory/penerimaan_suplier/suplier', 'penerimaanController@index')->middleware('auth');
 	Route::get('/inventory/penerimaan_suplier/suplier_cari/{id}', 'penerimaanController@suplier_cari')->middleware('auth');
 	Route::get('/inventory/penerimaan_suplier/suplier_save', 'penerimaanController@suplier_save')->middleware('auth');
 	Route::get('/inventory/penerimaan_suplier/suplier_datatable', 'penerimaanController@suplier_datatable')->middleware('auth');
-	Route::get('/inventory/p_hasilproduksi/produksi', 'penerimaanController@produksi')->middleware('auth');
+	/*Route::get('/inventory/p_hasilproduksi/produksi', 'penerimaanController@produksi')->middleware('auth');*/
 	Route::get('/inventory/p_returncustomer/cust', 'penerimaanControllerr@cust')->middleware('auth');
+
+//penerimaan supplier
+	Route::get('/inventory/p_suplier/suplier', 'PenerimaanBrgSupController@index')->middleware('auth');
+	Route::get('/inventory/p_suplier/lookup-data-pembelian', 'PenerimaanBrgSupController@lookupDataPembelian');
+
 
 });

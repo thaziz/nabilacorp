@@ -73,9 +73,9 @@ class purchaseOrderController extends Controller
     {
          return view('Purchase::orderpembelian/tambah_order');
     }
-     public function getDataForm($id,$comp)
+     public function getDataForm($id)
     {
-         return d_purchase_order::getDataForm($id,$comp);
+         return d_purchase_order::getDataForm($id);
     }
     public function getDataCodePlan(Request $request)
     {

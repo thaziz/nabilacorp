@@ -78,7 +78,10 @@
   var hapusSalesDt =[];
 
 $(document).ready(function(){      
-       $("#searchitem").autocomplete({
+
+
+       
+        $("#searchitem").autocomplete({        
         source: function(request, response) {
             $.getJSON(baseUrl+"/item", {term:$('#searchitem').val(),harga: $('#harga').val() }, 
               response);
@@ -164,10 +167,10 @@ ctrl = 17;
 
      });
 
-      $('#s_date').datepicker({
+   /*   $('#s_date').datepicker({
           format:"dd-mm-yyyy",        
           autoclose: true,
-      });    
+      });    */
 
       /*function tgl(){
         $('#s_machine').focus();
@@ -485,6 +488,7 @@ function hapus(e,a){
         tamp.splice(index,1);
         totalPerItem();
         buttonDisable();
+        searchitem.focus();
         
     }
 }
@@ -1001,7 +1005,7 @@ function modalShow(){
 }
 
 $(document).keydown(function(e){        
-  if(e.which==121 && e.ctrlKey){        
+  if(e.which==121 && e.ctrlKey){    
         if($('#proses').is(':visible')==false){           
           if($('#grand_biaya').val()!='' && $('#grand_biaya').val()!='0'){
                  modalShow();

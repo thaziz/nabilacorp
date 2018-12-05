@@ -504,22 +504,22 @@
   function konfirmasiOrder(id,type) 
   {
     $.ajax({
-      url : baseUrl + "/keuangan/konfirmasipembelian/confirm-order/"+id+"/all",
+      url : baseUrl + "/keuangan/konfirmasipembelian/confirm-order/"+id+"/"+type,
       type: "GET",
       data:$('#form-confirm-order').serialize(),
       dataType: "JSON",
       success: function(data)
       {
-        console.log(data);
+
         var key = 1;
         var i = randString(5);
         //ambil data ke json->modal
         $('#txt_span_status_order_confirm').text(data.spanTxt);
         $("#txt_span_status_order_confirm").addClass('label'+' '+data.spanClass);
-        $("#id_order").val(data.header[0].po_id);
-        $("#status_order_confirm").val(data.header[0].po_status);
-        $('#lblCodeOrderConfirm').text(data.header[0].po_code);
-        $('#lblTglOrderConfirm').text(data.header[0].po_date);
+        $("#id_order").val(data.header[0].d_pcs_id);
+        $("#status_order_confirm").val(data.header[0].d_pcs_status);
+        $('#lblCodeOrderConfirm').text(data.header[0].d_pcs_code);
+        $('#lblTglOrderConfirm').text(data.header[0].p_date);
         $('#lblStaffOrderConfirm').text(data.header[0].m_name);
         $('#lblSupplierOrderConfirm').text(data.header[0].s_company);
         if (data.header[0].d_pcs_method != "CASH") 
@@ -559,14 +559,14 @@
             $('#tabel-order-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                             +'<td>'+key+'</td>'
                             +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                            +'<td>'+data.data_isi[key-1].podt_qty+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].s_qty+'" name="fieldIdDtOrder[]" class="form-control input-sm"/></td>'
+                            +'<td>'+data.data_isi[key-1].d_pcsdt_qty+'</td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].d_pcsdt_qty+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" readonly/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcsdt_id+'" name="fieldIdDtOrder[]" class="form-control input-sm"/></td>'
                             +'<td>'+data.data_isi[key-1].m_sname+'</td>'
-                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].podt_prevcost)+'</td>'
-                            +'<td id="price_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
-                            +'<td id="total_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price*data.data_isi[key-1].podt_qtyconfirm)+'</td>'
-                            +'<td>'+data.data_stok[key-1].qtyStok+'</td>'
+                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_prevcost)+'</td>'
+                            +'<td id="price_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_price)+'</td>'
+                            +'<td id="total_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_total)+'</td>'
+                            +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row_order btn-sm" disabled>X</button></td>'
                             +'</tr>');
             i = randString(5);
@@ -579,15 +579,15 @@
           Object.keys(data.data_isi).forEach(function(){
             $('#tabel-order-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                             +'<td>'+key+'</td>'
-                           +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                            +'<td>'+data.data_isi[key-1].podt_qty+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].s_qty+'" name="fieldIdDtOrder[]" class="form-control input-sm"/></td>'
+                            +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
+                            +'<td>'+data.data_isi[key-1].d_pcsdt_qty+'</td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].d_pcsdt_qty+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" readonly/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcsdt_id+'" name="fieldIdDtOrder[]" class="form-control input-sm"/></td>'
                             +'<td>'+data.data_isi[key-1].m_sname+'</td>'
-                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].podt_prevcost)+'</td>'
-                            +'<td id="price_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
-                            +'<td id="total_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price*data.data_isi[key-1].podt_qtyconfirm)+'</td>'
-                            +'<td>'+data.data_stok[key-1].qtyStok+' </td>'
+                            +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_prevcost)+'</td>'
+                            +'<td id="price_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_price)+'</td>'
+                            +'<td id="total_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_total)+'</td>'
+                            +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row_order btn-sm">X</button></td>'
                             +'</tr>');
             i = randString(5);
@@ -881,7 +881,7 @@
           $('#button_confirm_order').attr('disabled',true);
           $.ajax({
             url : baseUrl + "/keuangan/konfirmasipembelian/confirm-order-submit",
-            type: "get",
+            type: "post",
             dataType: "JSON",
             data: $('#form-confirm-order').serialize(),
             success: function(response)

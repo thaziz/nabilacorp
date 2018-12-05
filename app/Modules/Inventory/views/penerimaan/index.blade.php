@@ -5,53 +5,54 @@
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                     <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-                        <div class="page-title">Penerimaan Barang Suplier</div>
+                        <div class="page-title">Penerimaan Barang Hasil Produksi</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
                         <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                         <li><i></i>&nbsp;Inventory&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Penerimaan Barang Suplier</li>
+                        <li class="active">Penerimaan Barang Hasil Produksi</li>
                     </ol>
                     <div class="clearfix">
                     </div>
                 </div>
                 <div class="page-content fadeInRight">
-                  <div id="tab-general">
-                      <div class="row mbl">
-                        <div class="col-lg-12">
-                              
-                          <div class="col-md-12">
-                              <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
-                              </div>
-                          </div>  
-                                {!! $modal !!}
-                                <ul id="generalTab" class="nav nav-tabs">
-                                  <li class="active"><a href="#alert-tab" data-toggle="tab">Penerimaan Barang Suplier</a></li>
-                            <!-- <li><a href="#note-tab" data-toggle="tab">History Penerimaan Barang Suplier</a></li> -->
-                            <!-- <li><a href="#label-badge-tab-tab" data-toggle="tab">3</a></li> -->
-                                </ul>
-                                <div id="generalTabContent" class="tab-content responsive">
+                    <div id="tab-general">
+                        <div class="row mbl">
+                            <div class="col-lg-12">
+
+                                            <div class="col-md-12">
+                                                <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
+                                                </div>
+                                            </div>
+
+                            <ul id="generalTab" class="nav nav-tabs">
+                              <li class="active"><a href="#alert-tab" data-toggle="tab">Penerimaan Barang Hasil Produksi</a></li>
+                            <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
+                            <li><a href="#label-badge-tab-tab" data-toggle="tab">3</a></li> -->
+                        </ul>
+                         <div id="generalTabContent" class="tab-content responsive">
 
                                   @include('inventory.p_suplier.modal')
 
                                     <div id="alert-tab" class="tab-pane fade in active">
                                       <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                          
+
                                           <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
                                             <div class="col-md-6 col-sm-12 col-xs-12">
                                               <label class="tebal">No Nota :</label>
                                             </div>
                                             <div class="col-md-6 col-sm-12 col-xs-12">
                                               <div class="input-group">
-                                                <select class="form-control input-sm" id="cariId" name="CariId">
-                                                  <option> - Pilih Nomor Nota</option>
-                                                  @foreach ($data as $element)
-                                                      <option value="{{ $element->po_id }}">{{ $element->po_id }} - {{ $element->po_code }}</option>
+                                                <select class="form-control input-sm select2" id="cariId" name="CariId" onchange="getdata()">
+                                                  <option value=""> - Pilih Nomor Nota</option>
+                                                  @foreach ($data as $key => $value)
+                                                  <option value="{{$value->p_id}}">{{$value->p_code}}</option>
                                                   @endforeach
                                                 </select>
+                                                <input type="hidden" name="id" id="id">
                                                 <span class="input-group-btn">
-                                                  <a href="#" onclick="carisup()" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
+                                                  <a href="#" class="btn btn-info btn-sm"><i class="fa fa-search" alt="search"></i></a>
                                                 </span>
                                               </div>
                                             </div>
@@ -63,93 +64,36 @@
                                               <thead>
                                                 <tr>
                                                   <th width="5%">No</th>
-                                                  <th>No PO</th>
-                                                  <th>Suplier</th>
-                                                  <th width="5%">Status</th>
-                                                  <th width="10%">Aksi</th>
+                                                  <!-- <th>No Pengiriman</th> -->
+                                                  <th>Item</th>
+                                                  <th>QTY</th>
+                                                  <th>Status</th>
+                                                  <!-- <th>Aksi</th> -->
                                                 </tr>
                                               </thead>
-                                              <tbody>
-                                               
+                                              <tbody id="showdata">
+
                                               </tbody>
                                             </table>
                                           </div>
 
+                                          <div class="modal-footer">
+                              <button type="button" class="minu mx btn btn-danger" >Batal</button>
+                              <button class="btn final btn-primary minu mx" type="button" onclick="simpan('final')"> Simpan</button>
+                            </div>
+
                                         </div>
-                                        
+
                                       </div>
                                     </div>
                                      <!-- End div #alert-tab  -->
 
-                                    <!-- div note-tab -->
-                                   
-                                    <!--/div note-tab -->
-
-                                    <!-- div label-badge-tab -->
-                                    <div id="label-badge-tab" class="tab-pane fade">
-                                      <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                          <!-- Isi content -->
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <!-- /div label-badge-tab -->                                   
-                                
-                                </div>
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
 @endsection
 @section("extra_scripts")
     <script type="text/javascript">
-     $(document).ready(function() {
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    
-    $('#data2').dataTable({
-        "destroy": true,
-        "processing" : true,
-        "serverside" : true,
-        "ajax" : {
-          url: baseUrl + "/inventory/penerimaan_suplier/suplier_datatable",
-          type: 'GET'
-        },
-        "columns" : [
-          {"data" : "DT_Row_Index",  orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-          {"data" : "tglBuat",  "width" : "10%"},
-          {"data" : "s_company",  "width" : "10%"},
-          // {"data" : "m_name",  "width" : "15%"},
-          // {"data" : "s_company",  "width" : "25%"},
-          // {"data" : "tglConfirm",  "width" : "15%"},
-          {"data" : "status",  "width" : "10%"},
-          {"data" : "action",  orderable: false, searchable: false, "width" : "5%"}
-        ],
-        "language": {
-          "searchPlaceholder": "Cari Data",
-          "emptyTable": "Tidak ada data",
-          "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-          "sSearch": '<i class="fa fa-search"></i>',
-          "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-          "infoEmpty": "",
-          "paginate": {
-                "previous": "Sebelumnya",
-                "next": "Selanjutnya",
-             }
-        }
-    });
-      });
+      $('.select2').select2();
 
-
-    $('.datepicker').datepicker({
+      $('.datepicker').datepicker({
         format: "mm",
         viewMode: "months",
         minViewMode: "months"
@@ -158,62 +102,69 @@
         format:"dd-mm-yyyy",
         autoclose:true,
         endDate:"today"
-      });    
+      });
 
-      function carisup(argument) {
+      function getdata(){
+        $("#id").val('');
+        swal({
+              title: 'Loading!',
+              showCancelButton: false,
+              showConfirmButton: false
+            });
         var id = $('#cariId').val();
+        var html = '';
         $.ajax({
-        url : baseUrl + "/inventory/penerimaan_suplier/suplier_cari/"+id,
-        type: "GET",
-        dataType: "JSON",
-        success: function(data){
+          type: 'get',
+          dataType: 'json',
+          data: {id:id},
+          url: baseUrl + '/inventory/p_hasilproduksi/getdata',
+          success : function(result){
+            $("#id").val(result[0].pd_pengiriman);
+            for (var i = 0; i < result.length; i++) {
 
-        $('#modalTerima').modal('show');
-        console.log(data);
-        var key = 1;
-        var i = 1;
-        
-        $('#noNotaMasuk').val(data.header[0].po_code);
-
-        Object.keys(data.gudang).forEach(function(){
-
-          $('#comp').append(
-            '<option value="'+data.gudang[i-1].gc_id+'">'+data.gudang[i-1].gc_gudang+'</option>'
-            );
-          $('#position').append(
-            '<option value="'+data.gudang[i-1].gc_comp+'">'+data.gudang[i-1].gc_comp+'</option>'
-            );
-        i++;
-        });
-
-        Object.keys(data.detail).forEach(function(){
-          $('.drop_here').append(
-            "<tr>"+
-            '<td style="text-align:center"><input type="hidden" name="item[]" value="'+data.detail[key-1].i_id+'" class="form-control">'+data.detail[key-1].i_name+'</td>'+
-            '<td style="text-align:center"><input type="hidden" name="confirmqty[]" value="'+data.detail[key-1].podt_qtyconfirm+'" class="form-control">'+data.detail[key-1].podt_qtyconfirm+'</td>'+
-            '<td style="text-align:center"><input type="text" name="terima[]" class="form-control"></td>'+
-            "</tr>"
-          );
-
-        key++;
-        });
-
-
-
+              if (result[i].pd_status_diterima == 'N') {
+                var status = '<span class="badge badge-warning">Belum DIterima</span>';
+                /*var button = '<td align="center"><button type="button" class="btn btn-info btn-sm" onclick="terima('+result[i].pd_id+')" name="button">Terima</button></td>';*/
+              } else if (result[i].pd_status_diterima == 'Y') {
+                var status = '<span class="badge badge-success">Sudah DIterima</span>';
+                /*var button = '<td align="center"><button type="button" class="btn btn-info btn-sm" onclick="terima('+result[i].pd_id+')" disabled name="button">Terima</button></td>';*/
+              }
+              html += '<tr>'+
+                      '<td>'+(i + 1)+'</td>'+
+                      /*'<td>'+result[i].p_code+'</td>'+*/
+                      '<td>'+result[i].i_name+'</td>'+
+                      '<td>'+result[i].pd_qty+'</td>'+
+                      '<td align="center">'+status+'</td>'+
+                      /*button+*/
+                      '</tr>';
+            }
+            $('#showdata').html(html);
+            swal.close();
           }
         });
       }
 
-      function save_update(argument) {
-      $.ajax({
-        url : baseUrl + "/inventory/penerimaan_suplier/suplier_save",
-        data:$('#update-terima-produk').serialize(),
-        type: "GET",
-        dataType: "JSON",
-        success: function(data){
-
-        }
-      });
+      function simpan(){
+        var id=$("#id").val();
+        swal({
+              title: 'Loading!',
+              showCancelButton: false,
+              showConfirmButton: false
+            });
+          $.ajax({
+            type: 'get',
+            data: {id:id},
+            dataType: 'json',
+            url: baseUrl + '/inventory/p_hasilproduksi/terima',
+            success : function(result){
+              if (result.status == 'berhasil') {
+                swal("Success!", "Berhasil Diterima.", "success");
+              }
+              setTimeout(function(){
+                window.location.reload();
+              }, 500);
+            }
+          });
       }
 
       </script>

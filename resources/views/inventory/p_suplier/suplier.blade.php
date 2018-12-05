@@ -67,7 +67,39 @@
                                                 </tr>
                                               </thead>
                                               <tbody>
-                                               
+                                                <tr>
+                                                  <td>1</td>
+                                                  <td>06022018/PO/001</td>
+                                                  <td>Alpha</td>
+                                                  <td><span class="label label-info">Tidak Lengkap</span></td>
+                                                  <td>
+                                                    <button class="btn btn-warning btn-sm" title="Edit"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-danger btn-sm" title="Hapus"><i class="fa fa-trash-o"></i></button>
+                                                    <button class="btn-link" data-toggle="modal" data-target="#detail">Detail</button>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td>2</td>
+                                                  <td>06022018/PO/002</td>
+                                                  <td>Bravo</td>
+                                                  <td><span class="label label-info">Tidak Lengkap</span></td>
+                                                  <td>
+                                                    <button class="btn btn-warning btn-sm" title="Edit"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-danger btn-sm" title="Hapus"><i class="fa fa-trash-o"></i></button>
+                                                    <button class="btn-link" data-toggle="modal" data-target="#detail">Detail</button>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td>3</td>
+                                                  <td>06022018/PO/003</td>
+                                                  <td>Charlie</td>
+                                                  <td><span class="label label-info">Tidak Lengkap</span></td>
+                                                  <td>
+                                                    <button class="btn btn-warning btn-sm" title="Edit"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-danger btn-sm" title="Hapus"><i class="fa fa-trash-o"></i></button>
+                                                    <button class="btn-link" data-toggle="modal" data-target="#detail">Detail</button>
+                                                  </td>
+                                                </tr>
                                               </tbody>
                                             </table>
                                           </div>
@@ -79,7 +111,63 @@
                                      <!-- End div #alert-tab  -->
 
                                     <!-- div note-tab -->
-                                   
+                                    <div id="note-tab" class="tab-pane fade">
+                                      <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                           <div class="col-md-6 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <label class="tebal">Gudang :</label>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                              <select class="form-control input-sm">
+                                                <option>-- Pilih Gudang --</option>
+                                                <option>Pusat</option>
+                                                <option>Pinggiran</option>
+                                              </select>
+                                            </div>
+                                          </div>
+
+                                          <div class="table-responsive">
+                                            <table class="table tabelan table-hover table-bordered" id="data">
+                                              <thead>
+                                                <tr>
+                                                  <th>No</th>
+
+                                                  <th>No PO</th>
+                                                  <th>Suplier</th>
+                                                  <th>Status</th>
+                                                  <th>Aksi</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr>
+                                                  <td>1</td>
+                                                  <td>06022018/PO/001</td>
+                                                  <td>Alpha</td>
+                                                  <td><span class="label label-success">Lengkap</span></td>
+                                                  <td><button data-toggle="modal" data-target="#detail" class="btn btn-primary btn-sm"><i class="fa fa-arrow-right"></i></button></td>
+                                                </tr>
+                                                <tr>
+                                                  <td>2</td>
+                                                  <td>06022018/PO/002</td>
+                                                  <td>Bravo</td>
+                                                  <td><span class="label label-success">Lengkap</span></td>
+                                                  <td><button data-toggle="modal" data-target="#detail" class="btn btn-primary btn-sm"><i class="fa fa-arrow-right"></i></button></td>
+                                                </tr>
+                                                <tr>
+                                                  <td>3</td>
+                                                  <td>06022018/PO/003</td>
+                                                  <td>Charlie</td>
+                                                  <td><span class="label label-success">Lengkap</span></td>
+                                                  <td><button data-toggle="modal" data-target="#detail" class="btn btn-primary btn-sm"><i class="fa fa-arrow-right"></i></button></td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                     <!--/div note-tab -->
 
                                     <!-- div label-badge-tab -->
@@ -130,7 +218,44 @@
           }
 
         });
-   
+    $('#data2').dataTable({
+          "responsive":true,
+
+          "pageLength": 10,
+        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+        "language": {
+            "searchPlaceholder": "Cari Data",
+            "emptyTable": "Tidak ada data",
+            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
+            "sSearch": '<i class="fa fa-search"></i>',
+            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
+            "infoEmpty": "",
+            "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya",
+                 }
+          }
+
+        });
+    $('#data3').dataTable({
+          "responsive":true,
+
+          "pageLength": 10,
+        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+        "language": {
+            "searchPlaceholder": "Cari Data",
+            "emptyTable": "Tidak ada data",
+            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
+            "sSearch": '<i class="fa fa-search"></i>',
+            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
+            "infoEmpty": "",
+            "paginate": {
+                    "previous": "Sebelumnya",
+                    "next": "Selanjutnya",
+                 }
+          }
+
+        });
 });
       $('.datepicker').datepicker({
         format: "mm",
