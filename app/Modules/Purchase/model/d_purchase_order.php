@@ -185,6 +185,7 @@ class d_purchase_order extends Model
 
      static function getDataForm($id)
     {
+          $gudang = d_purchase_plan::where('p_id',$id)->first();
           $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
@@ -201,11 +202,12 @@ class d_purchase_order extends Model
                                          'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
+                                ->where('s_comp',$gudang->p_gudang)
+                                ->where('s_position',$gudang->p_gudang)
                                 ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
-
 
         return response()->json([
             'status' => 'sukses',
@@ -262,7 +264,8 @@ class d_purchase_order extends Model
 
     static function savePo($request)
      {
-      // dd($request->all());
+      DB::beginTransaction();
+      try {
       $totalGross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
       // $totalGross = $this->konvertRp();
       $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
@@ -338,6 +341,17 @@ class d_purchase_order extends Model
 
 
       }
+      DB::commit();
+    return response()->json([
+          'status' => 'sukses',
+      ]);
+    } catch (\Exception $e) {
+    DB::rollback();
+    return response()->json([
+        'status' => 'gagal',
+        'data' => $e
+      ]);
+    }
 
 
 
