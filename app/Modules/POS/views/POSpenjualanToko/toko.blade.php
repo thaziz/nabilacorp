@@ -351,6 +351,7 @@
                             </div>
                         
                             <div class="modal-footer">
+                            <div id="div_print"></div>
                               <button type="button" class="minu mx btn btn-warning" data-dismiss="modal">Close</button>
                               <button class="btn final btn-primary minu mx" type="button" onclick="buttonSimpanPos('final')">Simpan & Print</button>
                               <button type="button" class="minu mx btn-primary btn btn-disabled perbarui" data-toggle="modal" disabled="" style="display: none;"  onclick="buttonSimpanPos()">Perbarui</button>
