@@ -9,7 +9,7 @@
           </div>
 
           <div class="modal-body">
-            <form action="#" method="GET" id="update-terima-produk">
+            <form action="#" method="POST" id="update-terima-produk">
               {{ csrf_field() }}
 
               <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 15px;padding-top: 15px; ">
@@ -20,8 +20,7 @@
               
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="form-group">  
-                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-                  <input class="form-control input-sm ui-autocomplete-input" name="noNotaMasuk" id="noNotaMasuk" autocomplete="off" readonly="" type="text">
+                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="form-control input-sm ui-autocomplete-input" name="noNotaMasuk" id="noNotaMasuk" autocomplete="off" readonly="" type="text">
                   <input class="form-control" name="detailId" id="detailId" type="hidden">
                   <input class="form-control" name="doId" id="doId" type="hidden">
                   <input class="form-control" name="prdtId" id="prdtId" type="hidden">
@@ -31,21 +30,11 @@
               </div>
                 
               <div class="col-md-4 col-sm-4 col-xs-12">
-                <label class="tebal">Comp</label>
+                <label class="tebal">Nama Item</label>
               </div>
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="form-group">  
-                  <select class="form-control" name="comp" id="comp">
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-4 col-xs-12">
-                <label class="tebal">Position</label>
-              </div>
-              <div class="col-md-8 col-sm-8 col-xs-12">
-                <div class="form-group">  
-                  <select class="form-control" name="position" id="position">
-                  </select>
+                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input class="form-control input-sm ui-autocomplete-input" name="namaItemMasuk" id="namaItemMasuk" autocomplete="off" readonly="" type="text">
                 </div>
               </div>
 
@@ -69,7 +58,7 @@
                 </div>
               </div> --}}
 
-              {{-- <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="col-md-4 col-sm-4 col-xs-12">
                 <label class="tebal">Qty Masuk</label>
               </div>
 
@@ -88,21 +77,6 @@
                 <div class="form-group">  
                  <input style="text-align: right;" class="form-control input-sm" name="qtyDiterima" id="qtyDiterima" type="number" onkeyup="bandingQty()">
                 </div>
-              </div> --}}
-
-              <div class="">
-                <table class="table ">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Qty</th>
-                      <th>Confirm</th>
-                    </tr>
-                    </thead>
-                    <tbody class="drop_here">
-                      
-                    </tbody>
-                </table>
               </div>
 
             </div>

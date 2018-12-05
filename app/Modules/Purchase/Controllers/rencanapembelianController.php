@@ -25,7 +25,13 @@ class rencanapembelianController extends Controller
     public function create()
     {
       // return Auth::user();
-        $gudang = DB::table('d_gudangcabang')->where('gc_comp',Session::get('user_comp'))->get();
+        $gudang = DB::table('d_gudangcabang')
+            ->join('m_comp','m_comp.c_id','=','gc_comp')
+            ->where('gc_comp',Session::get('user_comp'))
+            ->where('gc_gudang', '=', 'GUDANG PENJUALAN')
+            ->orWhere('gc_gudang', '=', 'GUDANG BAHAN BAKU')
+            ->get();
+            // dd($gudang);
         return view('Purchase::rencanapembelian/create',compact('gudang'));
     }
     

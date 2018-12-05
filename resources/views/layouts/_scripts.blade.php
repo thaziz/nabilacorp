@@ -1,4 +1,5 @@
     <script src="{{ asset ('assets/script/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ asset ('assets/script/jquery.dataTables.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery-migrate-1.2.1.min.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery-ui.js') }}"></script>
     <script src="{{ asset ('assets/script/highcharts.js') }}"></script>
@@ -28,7 +29,6 @@
     <script src="{{ asset ('assets/script/zabuto_calendar.min.js') }}"></script>
     <script src="{{ asset ('assets/script/index.js') }}"></script>
 
-    <script src="{{ asset ('assets/script/jquery.dataTables.js') }}"></script>
     <script src="{{ asset ('assets/toastr/toastr.min.js') }}"></script>
     {{-- <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>

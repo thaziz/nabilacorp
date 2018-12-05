@@ -41,6 +41,7 @@ class m_itemm extends Model
 //cari barang jual
 
         $search = $item->term;
+
         $harga = $item->harga;
 
         $cabang=Session::get('user_comp');                
@@ -56,20 +57,22 @@ class m_itemm extends Model
         $groupName=['BTPN','BJ','BP'];
 
 
-        
+            
 
         $sql=DB::table('m_item')
              ->leftjoin('d_stock',function($join) use ($comp,$position) {
                   $join->on('s_item','=','i_id');
                   $join->where('s_comp',$comp); 
                   $join->where('s_position',$position);
+
+
              })
              ->join('m_satuan','m_satuan.s_id','=','i_satuan')
-             ->join('m_price','m_pitem','=','i_id');
+             /*->join('m_group','g_id','=','i_group')*/
+                  ->join('m_price','m_pitem','=','i_id');
              /*->join('m_group','g_id','=','i_group')*/
              
-
-        if($harga==1){
+         if($harga==1){
           $sql->select('i_id','i_name','m_satuan.s_name as s_name','m_psell1 as i_price','s_qty','i_code');
         }
         if($harga==2){
@@ -78,6 +81,7 @@ class m_itemm extends Model
         if($harga==3){
           $sql->select('i_id','i_name','m_satuan.s_name as s_name','m_psell3 as i_price','s_qty','i_code');
         }
+          
              
 
         if($search!=''){          
@@ -166,11 +170,10 @@ class m_itemm extends Model
     
 
      public static function seachItemPurchase($item) {
-
         $search = $item->term;
         $id_supplier =$item->id_supplier;
 
-        $groupName=['BP'];
+        $groupName=['BB'];
         $cabang=Session::get('user_comp');                
         $position=DB::table('d_gudangcabang')
                       ->where('gc_gudang',DB::raw("'GUDANG PEMBELIAN'"))

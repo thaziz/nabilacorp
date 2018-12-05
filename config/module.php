@@ -9,6 +9,6 @@ return  [
        'Master',
        'System',
        'Inventory',
-       'Keuangan', 
+       'keuangan', 
     ]
 ];

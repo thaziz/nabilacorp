@@ -26,7 +26,7 @@
                
               <ul id="generalTab" class="nav nav-tabs">
                   <li class="active"><a href="#alert-tab" data-toggle="tab">Daftar Rencana Pembelian</a></li>
-                  {{-- <li hidden=""><a href="#note-tab" data-toggle="tab">History Rencana Pembelian</a></li> --}}
+            {{--       <li hidden=""><a href="#note-tab" data-toggle="tab">History Rencana Pembelian</a></li> --}}
                            <!--  <li><a href="#label-badge-tab" data-toggle="tab">Belanja Harian</a></li> -->
               </ul>
         <div id="generalTabContent" class="tab-content responsive">

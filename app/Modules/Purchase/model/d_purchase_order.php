@@ -183,15 +183,13 @@ class d_purchase_order extends Model
 
 
 
-     static function getDataForm($id,$comp)
+     static function getDataForm($id)
     {
-      // return [$id,$comp];
-         $dataIsi = d_purchase_plan::join('d_purchaseplan_dt','p_id','ppdt_pruchaseplan')
-                                ->join('m_item','ppdt_item','=','i_id')
+          $gudang = d_purchase_plan::where('p_id',$id)->first();
+          $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
-                                         'p_comp',
                                          'm_item.i_code',
                                          'm_item.i_name',
                                          'm_item.i_price',
@@ -204,12 +202,12 @@ class d_purchase_order extends Model
                                          'ppdt_detailid'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('d_stock.s_comp', '=', $comp)
+                                ->where('s_comp',$gudang->p_gudang)
+                                ->where('s_position',$gudang->p_gudang)
                                 ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
-
 
         return response()->json([
             'status' => 'sukses',
@@ -226,7 +224,7 @@ class d_purchase_order extends Model
 
         if (empty($term)) {
             $sup = DB::table('d_purchase_plan')
-                     ->select('p_code', 'p_id','s_id','s_company','p_comp')
+                     ->select('p_code', 'p_id','s_id','s_company')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
@@ -234,7 +232,7 @@ class d_purchase_order extends Model
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
             foreach ($sup as $val) {
-                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id,'p_comp'=>$val->p_comp];
+                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
             }
             return Response::json($formatted_tags);
         }
@@ -242,7 +240,7 @@ class d_purchase_order extends Model
         {
           // return 'a';
             $sup = DB::table('d_purchase_plan')
-                     ->select('p_code', 'p_id','s_id','s_company','p_comp')
+                     ->select('p_code', 'p_id','s_id','s_company')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
@@ -252,7 +250,7 @@ class d_purchase_order extends Model
                      ->get();
             // return $sup;
             foreach ($sup as $val) {
-                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id,'p_comp'=>$val->p_comp];
+                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
             }
             return Response::json($formatted_tags);
         }
@@ -266,7 +264,8 @@ class d_purchase_order extends Model
 
     static function savePo($request)
      {
-      // dd($request->all());
+      DB::beginTransaction();
+      try {
       $totalGross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
       // $totalGross = $this->konvertRp();
       $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
@@ -302,7 +301,7 @@ class d_purchase_order extends Model
       $dataHeader->po_date = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_purchaseplan = $request->cariKodePlan;
       $dataHeader->po_supplier = $request->supplier;
-      $dataHeader->po_code = $p_code; 
+      $dataHeader->po_code = $p_code;
       $dataHeader->po_mem = $request->idStaff;
       $dataHeader->po_method = $request->methodBayar;
       $dataHeader->po_total_gross = $totalGross;
@@ -328,10 +327,10 @@ class d_purchase_order extends Model
         $dataDetail->podt_item = $request->podt_item[$i];
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
-        $dataDetail->podt_qtyconfirm = $request->fieldQtyconfirm[$i];
+        $dataDetail->podt_qtyconfirm = 1;
         $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
         $dataDetail->podt_price = $request->podt_prevprice[$i];
-        $dataDetail->podt_isconfirm = 'TRUE';
+        $dataDetail->podt_isconfirm = 1;
         $dataDetail->podt_created = date('Y-m-d');
         $dataDetail->podt_updated = date('Y-m-d');
         $dataDetail->save();
@@ -342,8 +341,17 @@ class d_purchase_order extends Model
 
 
       }
-
-      return redirect('purcahse-order/order-index');
+      DB::commit();
+    return response()->json([
+          'status' => 'sukses',
+      ]);
+    } catch (\Exception $e) {
+    DB::rollback();
+    return response()->json([
+        'status' => 'gagal',
+        'data' => $e
+      ]);
+    }
 
 
 
