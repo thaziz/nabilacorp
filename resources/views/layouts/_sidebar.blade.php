@@ -349,6 +349,8 @@
                         <ul class="nav nav-second-level">
                             <li class="menu-sekunder {{ Request::is('konfirmasi-purchase/index') ? 'active' : '' }}"><a href="{{ url('/konfirmasi-purchase/index') }}"><span class="submenu-title">konfirmasi Pembelian</span></a>
                             </li>
+                            <li class="menu-sekunder {{ Request::is('laporan_sales/index') ? 'active' : '' }}"><a href="{{ url('/laporan_sales/index') }}"><span class="submenu-title">Laporan Sales</span></a>
+                            </li>
                             <li class="menu-sekunder {{ Request::is('keuangan/spk/spk') ? 'active' : '' || Request::is('keuangan/spk/*') ? 'active' : '' }}"><a href="{{ url('/keuangan/spk/spk') }}"><span class="submenu-title">Manajemen SPK</span><span class="hidden">Keuangan</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('keuangan/p_inputtransaksi/transaksi') ? 'active' : '' || Request::is('keuangan/p_inputtransaksi/*') ? 'active' : '' }}"><a href="{{ url('/keuangan/p_inputtransaksi/transaksi') }}"><span class="submenu-title">Proses Input Transaksi</span><span class="hidden">Keuangan</span></a>

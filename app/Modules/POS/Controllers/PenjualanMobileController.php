@@ -35,9 +35,11 @@ class PenjualanMobileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function find_d_sales_dt(Request $req) {
+      // dd($req->all());
        $data = array();
 
        // Filter berdasarkan tanggal
+       // return 'a';
        $tgl_awal = $req->tgl_awal;
        $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
        $tgl_akhir = $req->tgl_akhir;
@@ -55,6 +57,7 @@ class PenjualanMobileController extends Controller
         $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
         $rows = $rows->whereBetween('sd_date', array($tgl_awal, $tgl_akhir));
        }
+<<<<<<< HEAD
         
         $rows = $rows->orderBy('sd_date', 'DESC')->get();
 
@@ -85,8 +88,54 @@ class PenjualanMobileController extends Controller
          }
          array_push($data, $new_row);
        }
+=======
+       // return $rows;
 
-       $res = array('data' => $data);
+       
+>>>>>>> 4cb608f2175b882539118315293eca0e1f7f4f3f
+
+        DB::table('d_sales')
+    // ->select('m_satuan.s_id')
+      ->leftjoin('d_sales_dt','d_sales.s_id','=','sd_sales')
+        ->leftjoin('m_item','sd_item','=','i_id')
+        ->leftjoin('m_satuan','d_sales.s_id','=','m_satuan.s_id')
+        ->where('sd_sales',$sd_sales)
+        ->where('s_channel','=','Toko')
+        ->leftjoin('d_stock',function($join){
+          $join->on('d_stock.s_item','=','i_id');
+          $join->on('d_stock.s_comp','=','sd_comp');
+          $join->on('d_stock.s_position','=','sd_position');
+        });
+       // return $rows;
+       // foreach ($rows as $row) {
+         // $new_row = $row;
+        // return $detail = d_sales_dt::penjualanDt($row->sd_detailid);
+       //   $detail = $detail[0];
+       //   $new_row['i_name'] = $detail->i_name;
+       //   $new_row['sd_qty'] = $detail->sd_qty;
+       //   $new_row['sd_price'] = $detail->sd_price;
+       //   $new_row['sd_disc_percent'] = $detail->sd_disc_percent;
+       //   $new_row['sd_disc_percentvalue'] = $detail->sd_disc_percentvalue;
+       //   $new_row['sd_disc_value'] = $detail->sd_disc_value;
+       //   $new_row['sd_total'] = $detail->sd_total;
+       //   return $new_row['s'] = $detail->sd_total;
+       //   $new_row['s_nama_cus'] = '';
+       //   $new_row['s_finishdate'] = '';
+       //   if($row->d_sales != null) {
+       //      $new_row['s_note'] = $row->d_sales->s_note; 
+       //      $new_row['s_nama_cus'] = $row->d_sales->s_nama_cus;
+       //      $new_row['s_finishdate'] = $row->d_sales->s_finishdate;
+       //   }
+
+       //   $new_row['s_detname'] = '';
+       //   if($row->m_item != null) {
+       //      $new_row['s_detname'] = $row->m_item->m_satuan->s_detname;
+       //   }
+       //   array_push($data, $new_row);
+       // }
+       // return $data;
+
+       // return $res = array('data' => $data);
        return response()->json($res);
     }
 

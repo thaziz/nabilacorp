@@ -1,6 +1,28 @@
 @extends('main')
 @section('content')
 {!!$printPl!!}
+<style type="text/css">
+  @media screen {
+  #printSection {
+      display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
+  }
+}
+
+</style>
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -640,16 +662,11 @@ function simpanPos(status=''){
 
 
 
- qz.findPrinter("POS-80");
 
-        // Automatically gets called when "qz.findPrinter()" is finished.
+ qz.findPrinter("POS-80");
         window['qzDoneFinding'] = function() {
             var p = document.getElementById('printer');
             var printer = qz.getPrinter();
-
-            // Alert the printer name to user      
-
-            // Remove reference to this function
             window['qzDoneFinding'] = null;
         };
 
@@ -659,13 +676,39 @@ function simpanPos(status=''){
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
-        
-                qz.appendHTML(
-            '<html>' +response +'</html>'
-    );
-                   
 
-    qz.printHTML();
+/*
+$('.div_data').html(response);
+
+
+
+
+
+
+    printElement(document.getElementById("div_data"));*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    qz.appendHTML(
+              '<html>' +response +'</html>'
+            );
+            qz.printHTML();
+
+            
         }
     })
 
@@ -701,7 +744,22 @@ resetFrom();
 }
 
 
-  
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+    
+    var $printSection = document.getElementById("printSection");
+    
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+    
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+}
+
 
 function perbaruiData(){
   

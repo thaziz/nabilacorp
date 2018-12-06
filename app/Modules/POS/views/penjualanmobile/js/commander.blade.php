@@ -61,7 +61,22 @@
 		            return content;
 		          } 
 		        },
+<<<<<<< HEAD
 		        
+=======
+		        // { 
+		        //   data : null,
+		        //   render : function(res) {
+		        //     var date = new Date(res.s_finishdate);
+		        //     var day = date.getDate();
+		        //     var month = date.getMonth() + 1;
+		        //     var year = date.getFullYear();
+
+		        //     var content = day + '/' + month + '/' + year;
+		        //     return content;
+		        //   } 
+		        // },
+>>>>>>> 4cb608f2175b882539118315293eca0e1f7f4f3f
 		        
 		        { data : 's_nama_cus' },
 		        { data : 's_detname' },
