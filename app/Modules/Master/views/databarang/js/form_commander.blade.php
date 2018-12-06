@@ -9,16 +9,13 @@ var iddinamis = 0;
         });
 
         $(document).ready(function(){
-
-
           $('.select').select2();
           $('.dinamis').hide();
           format_currency( $('[name="m_pbuy1"]') );
           format_currency( $('[name="m_pbuy2"]') );
           format_currency( $('[name="m_pbuy3"]') );
 
-
-          //format_currency( $("[name='is_price[]']") );
+          format_currency( $("[name='is_price[]']") );
           $('[name="is_supplier[]"]').select2({
               width : '100%',
               ajax : {
@@ -157,6 +154,31 @@ var iddinamis = 0;
               data: $('#data').serialize(),
               dataType: 'json',
               url: baseUrl + '/master/item/simpan',
+              success : function(result){
+                if (result.status == 'berhasil') {
+                    swal({
+                        title: "Berhasil",
+                        text: "Data Berhasil Disimpan",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 900
+                    });
+                    setTimeout(function(){
+                          window.location.reload();
+                  }, 850);
+                }
+              }
+            });
+          
+        }
+
+        function perbarui(){
+          
+            $.ajax({
+              type: 'get',
+              data: $('#data').serialize(),
+              dataType: 'json',
+              url: baseUrl + '/master/item/update',
               success : function(result){
                 if (result.status == 'berhasil') {
                     swal({

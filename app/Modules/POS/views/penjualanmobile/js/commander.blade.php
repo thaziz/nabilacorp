@@ -61,18 +61,7 @@
 		            return content;
 		          } 
 		        },
-		        { 
-		          data : null,
-		          render : function(res) {
-		            var date = new Date(res.s_finishdate);
-		            var day = date.getDate();
-		            var month = date.getMonth() + 1;
-		            var year = date.getFullYear();
-
-		            var content = day + '/' + month + '/' + year;
-		            return content;
-		          } 
-		        },
+		        
 		        
 		        { data : 's_nama_cus' },
 		        { data : 's_detname' },
