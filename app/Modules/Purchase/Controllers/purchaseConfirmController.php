@@ -361,11 +361,11 @@ public function getDataRencanaPembelian(Request $request)
 
   public function confirmOrderPembelian($id,$type)
   {
-    $dataHeader = d_purchasing::join('d_supplier','d_purchasing.s_id','=','d_supplier.s_id')
-                ->join('d_mem','d_purchasing.d_pcs_staff','=','d_mem.m_id')
-                ->select('d_pcs_date_created','d_pcs_id', 'd_pcs_duedate', 'd_pcsp_id','d_pcs_code','s_company','d_pcs_staff','d_pcs_method','d_pcs_total_net','d_pcs_date_received','d_pcs_status','d_mem.m_name','d_mem.m_id')
-                ->where('d_pcs_id', '=', $id)
-                ->orderBy('d_pcs_date_created', 'DESC')
+    $dataHeader = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
+                ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
+                ->select('po_created','po_id', 'po_duedate','d_mem.m_name','d_mem.m_id')
+                // ->where('d_pcs_id', '=', $id)
+                // ->orderBy('d_pcs_date_created', 'DESC')
                 ->get();
 
     $statusLabel = $dataHeader[0]->d_pcs_status;
@@ -387,21 +387,21 @@ public function getDataRencanaPembelian(Request $request)
 
     if ($type == "all") 
     {
-      $dataIsi = d_purchasing_dt::join('m_item', 'd_purchasing_dt.i_id', '=', 'm_item.i_id')
-                ->join('m_satuan', 'd_purchasing_dt.d_pcsdt_sat', '=', 'm_satuan.m_sid')
-                ->select('d_purchasing_dt.*', 'm_item.*', 'm_satuan.*')
-                ->where('d_purchasing_dt.d_pcs_id', '=', $id)
-                ->orderBy('d_purchasing_dt.d_pcsdt_created', 'DESC')
+      $dataIsi = d_purchase_order::join('m_item', 'd_purchase_order.i_id', '=', 'm_item.i_id')
+                ->join('m_satuan', 'd_purchase_order.d_pcsdt_sat', '=', 'm_satuan.m_sid')
+                ->select('d_purchase_order.*', 'm_item.*', 'm_satuan.*')
+                ->where('d_purchase_order.d_pcs_id', '=', $id)
+                ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
                 ->get();
     }
     else
     {
-      $dataIsi = d_purchasing_dt::join('m_item', 'd_purchasing_dt.i_id', '=', 'm_item.i_id')
-                ->join('m_satuan', 'd_purchasing_dt.d_pcsdt_sat', '=', 'm_satuan.m_sid')
-                ->select('d_purchasing_dt.*', 'm_item.*', 'm_satuan.*')
-                ->where('d_purchasing_dt.d_pcs_id', '=', $id)
-                ->where('d_purchasing_dt.d_pcsdt_isconfirm', '=', "TRUE")
-                ->orderBy('d_purchasing_dt.d_pcsdt_created', 'DESC')
+      $dataIsi = d_purchase_order::join('m_item', 'd_purchase_order.podt_item', '=', 'm_item.i_id')
+                // ->join('m_satuan', 'd_purchase_order.d_pcsdt_sat', '=', 'm_satuan.m_sid')
+                ->select('d_purchase_order.*', 'm_item.*')
+                ->where('d_purchase_order.podt_purchaseorder', '=', $id)
+                ->where('d_purchase_order.d_pcsdt_isconfirm', '=', "TRUE")
+                ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
                 ->get();
     }
 

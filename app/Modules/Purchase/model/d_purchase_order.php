@@ -245,6 +245,7 @@ class d_purchase_order extends Model
         {
           // return 'a';
             $sup = DB::table('d_purchase_plan')
+                    
                      ->select('p_code', 'p_id','s_id','s_company')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
@@ -334,9 +335,9 @@ class d_purchase_order extends Model
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
         $dataDetail->podt_qtyconfirm = 1;
-        $dataDetail->podt_prevcost = $request->podt_price[$i];
-        $dataDetail->podt_price = $request->podt_prevprice[$i];
-        $dataDetail->podt_isconfirm = 1;
+        $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
+        $dataDetail->podt_price = $request->podt_price[$i];
+        $dataDetail->podt_isconfirm = 'TRUE';
         $dataDetail->podt_created = date('Y-m-d');
         $dataDetail->podt_updated = date('Y-m-d');
         $dataDetail->save();
