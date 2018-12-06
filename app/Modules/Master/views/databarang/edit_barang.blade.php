@@ -95,7 +95,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_type' value='{{ $m_item->i_type }}' id="i_type">
+                                      <select class="input-sm form-control select" name='i_type' data-selected='{{ $m_item->i_type }}' id="i_type">
                                         <option value="">~ Pilih Type ~</option>
                                         <option value="BJ">Barang Jual</option>
                                         <option value="BP">Barang Produksi</option>
@@ -111,7 +111,7 @@
                                     
                                     <div class="col-md-3"><label class="tebal">Kelompok</label></div>
                                     <div class="form-group col-md-9">
-                                        <select class="input-sm form-control select" name='i_group' value='{{ $m_item->i_group }}' onchange="dinamis()" id="kelompok">
+                                        <select class="input-sm form-control select" name='i_group' data-selected='{{ $m_item->i_group }}' onchange="dinamis()" id="kelompok">
                                           <option value="">~ Pilih Kelompok ~</option>
                                           @foreach ($kelompok as $key => $value)
                                             <option value="{{$value->g_id}}">{{$value->g_name}}</option>
@@ -136,7 +136,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat1' value='{{ $m_item->i_sat1 }}' id="i_sat1">
+                                      <select class="input-sm form-control select" name='i_sat1' data-selected='{{ $m_item->i_sat1 }}' id="i_sat1">
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
                                           <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
@@ -167,7 +167,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat2' value='{{ $m_item->i_sat2 }}' id="i_sat2">
+                                      <select class="input-sm form-control select" name='i_sat2' data-selected='{{ $m_item->i_sat2 }}' id="i_sat2">
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
                                           <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
@@ -198,7 +198,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat3' value='{{ $m_item->i_sat3 }}' id="i_sat3">
+                                      <select class="input-sm form-control select" name='i_sat3' data-selected='{{ $m_item->i_sat3 }}' id="i_sat3">
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
                                           <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
@@ -282,7 +282,7 @@
                                   @foreach ($d_item_supplier as $supplier)
                                       <div class="col-md-9">
                                         <div class="form-group col-sm-5">
-                                          <select class="input-sm form-control" name="is_supplier[]" data-selected="{{ $supplier->s_id }}">
+                                          <select class="input-sm form-control" name="is_supplier[]" data-selected="{{ $supplier->s_id }}" data-text="{{ $supplier->s_company }}">
                                               <option value="">~ Pilih Supplier ~</option>
                                           </select>
                                           <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
@@ -308,7 +308,7 @@
 
                               <div class="row">
                                 <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
-                                  <button class="btn btn-primary" type="button" onclick="simpan()">Simpan</button>
+                                  <button class="btn btn-primary" type="button" onclick="perbarui()">Simpan</button>
                                 </div>
                               </div>
                           

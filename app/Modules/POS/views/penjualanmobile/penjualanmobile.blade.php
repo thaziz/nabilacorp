@@ -76,10 +76,6 @@
                               <th>Nama</th>
                               <th>No Bukti</th>
                               <th>Tanggal</th>
-<<<<<<< HEAD
-=======
-                              {{-- <th>Jatuh Tempo</th> --}}
->>>>>>> 4cb608f2175b882539118315293eca0e1f7f4f3f
                               <th>Customer</th>
                               <th>Sat</th>
                               <th>Qty</th>
