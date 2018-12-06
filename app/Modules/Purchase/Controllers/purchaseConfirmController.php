@@ -361,13 +361,12 @@ public function getDataRencanaPembelian(Request $request)
 
   public function confirmOrderPembelian($id,$type)
   {
-    $dataHeader = d_purchasing::join('m_supplier','d_purchasing.s_id','=','m_supplier.s_id')
-                ->join('d_mem','d_purchasing.d_pcs_staff','=','d_mem.m_name')
-                // ->select('d_pcs_date_created','d_pcs_id', 'd_pcs_duedate', 'd_pcsp_id','d_pcs_code','s_company','d_pcs_staff','d_pcs_method','d_pcs_total_net','d_pcs_date_received','d_pcs_status','d_mem.m_name','d_mem.m_id')
-                // ->where('d_pcs_id', '=', $id)  
+    $dataHeader = d_purchasing::join('d_supplier','d_purchasing.s_id','=','d_supplier.s_id')
+                ->join('d_mem','d_purchasing.d_pcs_staff','=','d_mem.m_id')
+                ->select('d_pcs_date_created','d_pcs_id', 'd_pcs_duedate', 'd_pcsp_id','d_pcs_code','s_company','d_pcs_staff','d_pcs_method','d_pcs_total_net','d_pcs_date_received','d_pcs_status','d_mem.m_name','d_mem.m_id')
+                ->where('d_pcs_id', '=', $id)
                 ->orderBy('d_pcs_date_created', 'DESC')
-                ->get();//*all();
-              return $dataHeader;
+                ->get();
 
     $statusLabel = $dataHeader[0]->d_pcs_status;
     if ($statusLabel == "WT") 

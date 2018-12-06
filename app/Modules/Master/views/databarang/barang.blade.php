@@ -101,6 +101,7 @@
 
 @endsection
 @section("extra_scripts")
+    @include('Master::databarang/js/format_currency')
     <script type="text/javascript">
 
 var tablex;
@@ -128,18 +129,37 @@ function table(){
               "type": "get",              
               },
             columns: [
-            {data: 'i_code', name: 'i_code'}, 
-            {data: 'i_code', name: 'i_code'}, 
-            {data: 'i_name', name: 'i_name'},
-            {data: 's_name', name: 's_name'},            
-            {data: 'i_hpp', name: 'i_hpp'},      
-            {data: 'i_price', name: 'i_price'},      
-            {data: 'g_name', name: 'g_name'},            
-            {data: 'action', name: 'action'},            
-           
+              {data: 'i_code', name: 'i_code'}, 
+              {data: 'i_code', name: 'i_code'}, 
+              {data: 'i_name', name: 'i_name'},
+              {data: 's_name', name: 's_name'},            
+              {
+                data: null, 
+                name: 'i_hpp',
+                render : function(res) {
+                  return get_currency(res.i_hpp);
+                }
+              },      
+              {
+                data: null, 
+                name: 'i_price',
+                render : function(res) {
+                  return get_currency(res.i_price);
+                }
+              },      
+              {data: 'g_name', name: 'g_name'},            
+              {data: 'action', name: 'action'},            
             ],             
-            responsive: false,
 
+            'columnDefs': [
+               {
+                  'targets': [4, 5],
+                  'createdCell':  function (td) {
+                     $(td).attr('align', 'right'); 
+                  }
+               }
+            ],
+            responsive: false,
             "pageLength": 10,
             "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
              

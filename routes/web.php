@@ -51,7 +51,12 @@ Route::get('/master/databaku/baku', 'MasterController@baku')->middleware('auth')
 Route::get('/master/databaku/tambah_baku', 'MasterController@tambah_baku')->middleware('auth');
 Route::get('/master/datajenis/jenis', 'MasterController@jenis')->middleware('auth');
 Route::get('/master/datajenis/tambah_jenis', 'MasterController@tambah_jenis')->middleware('auth');
+
+// Section pegawai
 Route::get('/master/datapegawai/pegawai', 'MasterController@pegawai')->middleware('auth');
+Route::get('/master/datapegawai/find_m_pegawai', 'MasterController@find_m_pegawai')->middleware('auth');
+// ======================================================================================
+
 Route::get('/master/datakeuangan/keuangan', 'MasterController@keuangan')->middleware('auth');
 Route::get('/master/datatransaksi/transaksi', 'MasterController@transaksi')->middleware('auth');
 Route::get('/master/datasuplier/tambah_suplier', 'MasterController@tambah_suplier')->middleware('auth');
