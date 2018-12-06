@@ -186,7 +186,10 @@ class d_purchase_order extends Model
      static function getDataForm($id)
     {
           $gudang = d_purchase_plan::where('p_id',$id)->first();
-          $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+          
+          $dataIsi = d_purchaseplan_dt::
+                                join('d_purchase_plan','ppdt_pruchaseplan','=','p_id')
+                                ->join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
@@ -199,11 +202,13 @@ class d_purchase_order extends Model
                                          'ppdt_prevcost',
                                          's_qty',
                                          'ppdt_pruchaseplan',
-                                         'ppdt_detailid'
+                                         'ppdt_detailid',
+                                         'p_comp',
+                                         'p_gudang'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('s_comp',$gudang->p_gudang)
-                                ->where('s_position',$gudang->p_gudang)
+                                ->where('p_comp',$gudang->p_comp)
+                                ->where('p_gudang',$gudang->p_gudang)
                                 ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
@@ -264,6 +269,7 @@ class d_purchase_order extends Model
 
     static function savePo($request)
      {
+      // dd($request->all());
       DB::beginTransaction();
       try {
       $totalGross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
@@ -328,7 +334,7 @@ class d_purchase_order extends Model
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
         $dataDetail->podt_qtyconfirm = 1;
-        $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
+        $dataDetail->podt_prevcost = $request->podt_price[$i];
         $dataDetail->podt_price = $request->podt_prevprice[$i];
         $dataDetail->podt_isconfirm = 1;
         $dataDetail->podt_created = date('Y-m-d');
@@ -338,6 +344,10 @@ class d_purchase_order extends Model
         $dataBrg = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
           'i_price'=> str_replace('.', '', $request->podt_prevprice[$i]),
         ]);
+
+        // $update = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
+        //     'i_price'=>$request->podt_prevprice[$i]
+        // ]);
 
 
       }

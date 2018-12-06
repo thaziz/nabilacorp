@@ -372,6 +372,7 @@ class d_purchase_plan extends Model
    static function confirmRencanaPembelian($id,$type)
   {
     $gudang = d_purchase_plan::where('p_id',$id)->first();
+    // return json_encode($gudang);
     $dataHeader = d_purchase_plan::join('m_supplier','p_supplier','=','s_id')
                             ->leftjoin('d_mem','p_mem','=','m_id')
                             ->select(
@@ -419,11 +420,13 @@ class d_purchase_plan extends Model
                                          DB::raw('IFNULL(s_qty, 0) AS s_qty'),
                                          'ppdt_prevcost',
                                          'ppdt_pruchaseplan',
-                                          'ppdt_detailid'
+                                         'ppdt_detailid',
+                                         'p_comp',
+                                         'p_gudang'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('s_comp',$gudang->p_gudang)
-                                ->where('s_position',$gudang->p_gudang)
+                                ->where('p_comp',$gudang->p_comp)
+                                ->where('p_gudang',$gudang->p_gudang)
                                 ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();
       
@@ -443,11 +446,13 @@ class d_purchase_plan extends Model
                                          's_qty',
                                          'ppdt_prevcost',
                                          'ppdt_pruchaseplan',
-                                         'ppdt_detailid'
+                                         'ppdt_detailid',
+                                         'p_comp',
+                                         'p_gudang'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('s_comp',$gudang->p_gudang)
-                                ->where('s_position',$gudang->p_gudang)
+                                ->where('p_comp',$gudang->p_comp)
+                                ->where('p_gudang',$gudang->p_gudang)
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();

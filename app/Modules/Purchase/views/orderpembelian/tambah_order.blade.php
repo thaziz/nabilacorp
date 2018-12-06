@@ -371,13 +371,13 @@
                             +'<input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'
                             +'<td>'+
-                              '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
+                              '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
                             +'<td>'+
-                              '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
+                              '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
 
-                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
                             +'<td><input type="text" value="'+s_stock+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');
