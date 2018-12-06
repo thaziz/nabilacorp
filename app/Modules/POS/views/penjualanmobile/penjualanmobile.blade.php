@@ -76,7 +76,7 @@
                               <th>Nama</th>
                               <th>No Bukti</th>
                               <th>Tanggal</th>
-                              <th>Jatuh Tempo</th>
+                              {{-- <th>Jatuh Tempo</th> --}}
                               <th>Customer</th>
                               <th>Sat</th>
                               <th>Qty</th>

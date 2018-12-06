@@ -11,5 +11,10 @@ Route::group(['namespace' => 'App\Modules\Keuangan\Controllers', 'middleware'=>[
 	Route::get('/produksi/spk/final/simpan-spk', 'spkFinancialController@simpanSpk');
 	Route::get('/keuangan/spk/lihat-detail', 'spkFinancialController@detailSpk');
 	Route::get('/keuangan/spk/update-status/{id}', 'spkFinancialController@updateStatus');
+
+
+	Route::get('/laporan_sales/index', 'laporanSalesController@index');
+
+
 });
 

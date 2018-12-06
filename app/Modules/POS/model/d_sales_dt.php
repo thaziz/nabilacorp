@@ -16,15 +16,20 @@ class d_sales_dt extends Model
     
      protected $fillable = ['sd_sales','sd_comp','sd_position','sd_date','sd_detailid','sd_item','sd_qty','sd_price','sd_disc_percent','sd_disc_value','sd_total','sd_disc_percentvalue'];
 	static function penjualanDt($sd_sales=''){		
+		// return'a';
 
-		return DB::table('d_sales_dt')->join('m_item','sd_item','=','i_id')
-		->join('m_satuan','s_id','=','i_satuan')->where('sd_sales',$sd_sales)
+		// return $sd_sales;
+		return DB::table('d_sales')
+		// ->select('m_satuan.s_id')
+		->leftjoin('d_sales_dt','d_sales.s_id','=','sd_sales')
+		->leftjoin('m_item','sd_item','=','i_id')
+		->leftjoin('m_satuan','d_sales.s_id','=','m_satuan.s_id')
+		->where('sd_sales',$sd_sales)
+		->where('s_channel','=','Toko')
 		->leftjoin('d_stock',function($join){
-			$join->on('s_item','=','i_id');
-			$join->on('s_comp','=','sd_comp');
-			$join->on('s_position','=','sd_position');
-
-
+			$join->on('d_stock.s_item','=','i_id');
+			$join->on('d_stock.s_comp','=','sd_comp');
+			$join->on('d_stock.s_position','=','sd_position');
 		})
 		->get();
 	}
