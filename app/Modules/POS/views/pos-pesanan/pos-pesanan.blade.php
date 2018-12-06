@@ -511,42 +511,8 @@ function hapusButton(a){
 })*/
 
 payment();
-function addf2(e){
-   {                
-        if (e.keyCode == 113) {                 
-             payment();
-        }
-    }
-    
-  }
 
-function payment(){
-  $html='';
-  $html+={!!$pm!!};
-  $html+='<td>'+
-         '<input type="hidden" name="sp_date[]" value="0">'+
-         '<input class="minu mx f2 nominal alignAngka nominal'+dataIndex+'" style="width:90%" type="" name="sp_nominal[]"'+
-    'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' +dataIndex+'\');rege(event,\'nominal' +dataIndex+'\')"'+  'onblur="setRupiah(event,\'nominal' +dataIndex+'\')" onclick="setAwal(event,\'nominal' +dataIndex+'\')"'+
-    'autocomplete="off">'+
-          '</td>'+
-           '<td>'+
-      '<button type="button" class="btn btn-sm btn-danger hapus" onclick="btnHapusPayment(this)"  ><i class="fa fa-trash-o">'+
-          '</i></button>'+
-          '</td>'+
-        '</tr>';
-        
- $('.tr_clone').append($html);  
-       
-            dataIndex++;            
-              
-          var arrow = {
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40
-},
-
-ctrl = 17;
+function payment(){  
          $('.minu').keydown(function (e) {              
                     if (e.ctrlKey && e.which === arrow.right) {
                         
@@ -637,9 +603,9 @@ function simpanPos(status=''){
           success : function(response){    
                     
                     if(response.status=='sukses'){
-                      $('#serah_terima').attr('disabled','disabled');
-                      $('.tr_clone').html('');  
-                      payment();                      
+                      $('#serah_terima').attr('disabled','disabled');                      
+                      $('#nominal').val('');  
+
                       tamp=[];
                       hapusSalesDt=[];
                         $('#serah_terima').attr('disabled','disabled');
@@ -656,7 +622,7 @@ function simpanPos(status=''){
                         title: '', 
                         timeout: 1000,
                         message: 'Data berhasil disimpan.'});
-                         $('#s_date').focus();
+                         $('#searchitem').focus();
                             if(response.s_status=='final'){
 
 
@@ -1124,7 +1090,7 @@ function setDatePicker(){
 
 function modalShow(){  
   $('#proses').on("shown.bs.modal", function() {
-                               $('#biaya_kirim').focus();
+                               $('#nominal').focus();
   });
   $('#proses').modal('show');
 }
@@ -1370,5 +1336,11 @@ function buttonSimpanPos($status){
       }
     }
 
+
+$("#nominal").keyup(function(event) {
+    if (event.keyCode === 13) {
+        buttonSimpanPos('final');
+    }
+});
       </script>
 @endsection
