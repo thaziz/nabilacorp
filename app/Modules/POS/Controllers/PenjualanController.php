@@ -115,9 +115,9 @@ class PenjualanController extends Controller
       $paymentmethod=m_paymentmethod::pm();       
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
       $machine=m_machine::showMachineActive();      
-      $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine'));      
+      $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine','paymentmethod'));      
       $data['listtoko']=view('POS::POSpenjualanToko/listtoko');   
-      return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm','printPl'));
+      return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm','printPl','paymentmethod'));
     }
 
     function create(Request $request){

@@ -70,7 +70,10 @@
                  </option>
                </select>
              </div>
-           </div>          
+           </div>
+
+
+          
           </div>
 
 
@@ -303,7 +306,21 @@
     <td class="hutang" style="display: none;">Jatuh Tempo</th>
   </thead>
   <tbody class="tr_clone">
-
+      <tr>
+        <td>
+          <select style="width:90%" class="minu mx" name="sp_method[]" >
+              @foreach($paymentmethod as $pm)
+                <option value="{{$pm->pm_id}}">{{$pm->pm_name}}</option>
+              @endforeach
+          </select>
+      </td>
+      <td>
+    <input class="minu mx f2 nominal alignAngka nominal" style="width:90%" type="" name="sp_nominal[]"
+     id="nominal" 
+     onkeyup="totalPembayaran('nominal');rege(event,'nominal');"      
+     onblur="setRupiah(event,'nominal')" onclick="setAwal(event,'nominal')
+    autocomplete="off">
+      </td>
   </tbody>
 </table>
                                 <div class="col-md-12" style="border-bottom: 4px solid #9e5a2e; padding-top:8px ">

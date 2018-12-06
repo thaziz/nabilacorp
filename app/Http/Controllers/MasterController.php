@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Customer;
+use App\m_pegawai;
 use DB;
 use Carbon\carbon;
 use Session;
@@ -154,12 +155,33 @@ class MasterController extends Controller
     {
         return view('/master/datajenis/tambah_jenis');
     }
-
-     public function pegawai()
+    // Modul pegawai
+    public function pegawai()
     {
-        return view('/master/datapegawai/pegawai');
+        return view('Master::datapegawai/pegawai');
     }
 
+    public function find_m_pegawai()
+    {
+        // Dihubungkan ke tabel jabatan
+        $m_pegawai = m_pegawai::leftJoin('m_jabatan', function($join) {
+            $join->on('c_jabatan_id', '=', 'j_id');
+        });
+
+        // Dihubungkan ke tabel divisi
+        $m_pegawai = m_pegawai::leftJoin('m_divisi', function($join) {
+            $join->on('c_divisi_id', '=', 'd_id');
+        });
+
+
+        $m_pegawai = $m_pegawai->get();
+        
+        $data = array('data' => $m_pegawai);
+
+        return response()->json($data);
+    }
+
+    // ===================================
      public function keuangan()
     {
         return view('/master/datakeuangan/keuangan');
@@ -223,6 +245,6 @@ class MasterController extends Controller
     }
     public function tambah_pegawai()
     {
-        return view('/master/datapegawai/tambah_pegawai');
+        return view('Master::datapegawai/tambah_pegawai');
     }
 }

@@ -1,29 +1,6 @@
 @extends('main')
 @section('content')
 {!!$printPl!!}
-
-<style type="text/css">
-  @media screen {
-  #printSection {
-      display: none;
-  }
-}
-
-@media print {
-  body * {
-    visibility:hidden;
-  }
-  #printSection, #printSection * {
-    visibility:visible;
-  }
-  #printSection {
-    position:absolute;
-    left:0;
-    top:0;
-  }
-}
-
-</style>
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -551,31 +528,7 @@ function addf2(e){
   }
 
 function payment(){
-  $html='';
-  $html+={!!$pm!!};
-  $html+='<td>'+
-         '<input class="minu mx f2 nominal alignAngka nominal'+dataIndex+'" style="width:90%" type="" name="sp_nominal[]"'+
-    'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' +dataIndex+'\');rege(event,\'nominal' +dataIndex+'\')"'+  'onblur="setRupiah(event,\'nominal' +dataIndex+'\')" onclick="setAwal(event,\'nominal' +dataIndex+'\')"'+
-    'autocomplete="off">'+
-          '</td>'+
-           '<td>'+
-      '<button type="button" class="btn btn-sm btn-danger hapus" onclick="btnHapusPayment(this)"  ><i class="fa fa-trash-o">'+
-          '</i></button>'+
-          '</td>'+
-        '</tr>';
-        
- $('.tr_clone').append($html);  
-       
-            dataIndex++;            
-              
-          var arrow = {
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40
-},
-
-ctrl = 17;
+  
          $('.minu').keydown(function (e) {              
                     if (e.ctrlKey && e.which === arrow.right) {
                         
@@ -663,8 +616,8 @@ function simpanPos(status=''){
           success : function(response){    
                     
                     if(response.status=='sukses'){
-                      $('.tr_clone').html('');  
-                      payment();                      
+                      
+                      $('#nominal').val('');          
                       tamp=[];
                       hapusSalesDt=[];
                         $('#kembalian').attr('disabled','disabled');
@@ -683,7 +636,7 @@ function simpanPos(status=''){
                         
                         $('#s_date').val('{{date("d-m-Y")}}');                        
                         $('#s_created_by').val('{{Auth::user()->m_name}}');
-                        $('#s_date').focus();
+                        $('#searchitem').focus();
                         if(response.s_status=='final'){
                         
 
@@ -706,14 +659,11 @@ function simpanPos(status=''){
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
-/*$('#div_print').html(response);
-    printElement(document.getElementById("div_print"));*/
-
         
-            qz.appendHTML(
-              '<html>' +response +'</html>'
-            );
-            qz.printHTML();
+                qz.appendHTML(
+            '<html>' +response +'</html>'
+    );
+    qz.printHTML();
         }
     })
 
@@ -750,22 +700,7 @@ function simpanPos(status=''){
 }
 
 
-  function printElement(elem) {
-    var domClone = elem.cloneNode(true);
-    
-    var $printSection = document.getElementById("printSection");
-    
-    if (!$printSection) {
-        var $printSection = document.createElement("div");
-        $printSection.id = "printSection";
-        document.body.appendChild($printSection);
-    }
-    
-    $printSection.innerHTML = "";
-    $printSection.appendChild(domClone);
-    window.print();
-}
-
+  
 
 function perbaruiData(){
   $('#kembalian').removeAttr('disabled');
@@ -1038,7 +973,7 @@ function modalShow(){
 
   
   $('#proses').on("shown.bs.modal", function(e) {    
-            $('#biaya_kirim').focus();
+            $('#nominal').focus();
             
   });  
   $('#proses').modal('show');
@@ -1239,6 +1174,11 @@ function tambah(){
   $('.reset-seach').val('');      
 }
 
+$("#nominal").keyup(function(event) {
+    if (event.keyCode === 13) {
+        buttonSimpanPos('final');
+    }
+});
 
       </script>
 @endsection

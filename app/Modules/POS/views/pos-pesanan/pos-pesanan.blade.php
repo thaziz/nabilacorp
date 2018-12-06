@@ -1,28 +1,6 @@
 @extends('main')
 @section('content')
 {!!$printPl!!}
-<style type="text/css">
-  @media screen {
-  #printSection {
-      display: none;
-  }
-}
-
-@media print {
-  body * {
-    visibility:hidden;
-  }
-  #printSection, #printSection * {
-    visibility:visible;
-  }
-  #printSection {
-    position:absolute;
-    left:0;
-    top:0;
-  }
-}
-
-</style>
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -511,42 +489,8 @@ function hapusButton(a){
 })*/
 
 payment();
-function addf2(e){
-   {                
-        if (e.keyCode == 113) {                 
-             payment();
-        }
-    }
-    
-  }
 
-function payment(){
-  $html='';
-  $html+={!!$pm!!};
-  $html+='<td>'+
-         '<input type="hidden" name="sp_date[]" value="0">'+
-         '<input class="minu mx f2 nominal alignAngka nominal'+dataIndex+'" style="width:90%" type="" name="sp_nominal[]"'+
-    'id="nominal" onkeyup="hapusPayment(event,this);addf2(event);totalPembayaran(\'nominal' +dataIndex+'\');rege(event,\'nominal' +dataIndex+'\')"'+  'onblur="setRupiah(event,\'nominal' +dataIndex+'\')" onclick="setAwal(event,\'nominal' +dataIndex+'\')"'+
-    'autocomplete="off">'+
-          '</td>'+
-           '<td>'+
-      '<button type="button" class="btn btn-sm btn-danger hapus" onclick="btnHapusPayment(this)"  ><i class="fa fa-trash-o">'+
-          '</i></button>'+
-          '</td>'+
-        '</tr>';
-        
- $('.tr_clone').append($html);  
-       
-            dataIndex++;            
-              
-          var arrow = {
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40
-},
-
-ctrl = 17;
+function payment(){  
          $('.minu').keydown(function (e) {              
                     if (e.ctrlKey && e.which === arrow.right) {
                         
@@ -637,9 +581,9 @@ function simpanPos(status=''){
           success : function(response){    
                     
                     if(response.status=='sukses'){
-                      $('#serah_terima').attr('disabled','disabled');
-                      $('.tr_clone').html('');  
-                      payment();                      
+                      $('#serah_terima').attr('disabled','disabled');                      
+                      $('#nominal').val('');  
+
                       tamp=[];
                       hapusSalesDt=[];
                         $('#serah_terima').attr('disabled','disabled');
@@ -656,17 +600,22 @@ function simpanPos(status=''){
                         title: '', 
                         timeout: 1000,
                         message: 'Data berhasil disimpan.'});
-                         $('#s_date').focus();
+                         $('#searchitem').focus();
                             if(response.s_status=='final'){
 
 
 
 
-
  qz.findPrinter("POS-80");
+
+        // Automatically gets called when "qz.findPrinter()" is finished.
         window['qzDoneFinding'] = function() {
             var p = document.getElementById('printer');
             var printer = qz.getPrinter();
+
+            // Alert the printer name to user      
+
+            // Remove reference to this function
             window['qzDoneFinding'] = null;
         };
 
@@ -676,39 +625,13 @@ function simpanPos(status=''){
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
+        
+                qz.appendHTML(
+            '<html>' +response +'</html>'
+    );
+                   
 
-/*
-$('.div_data').html(response);
-
-
-
-
-
-
-    printElement(document.getElementById("div_data"));*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    qz.appendHTML(
-              '<html>' +response +'</html>'
-            );
-            qz.printHTML();
-
-            
+    qz.printHTML();
         }
     })
 
@@ -744,22 +667,7 @@ resetFrom();
 }
 
 
-function printElement(elem) {
-    var domClone = elem.cloneNode(true);
-    
-    var $printSection = document.getElementById("printSection");
-    
-    if (!$printSection) {
-        var $printSection = document.createElement("div");
-        $printSection.id = "printSection";
-        document.body.appendChild($printSection);
-    }
-    
-    $printSection.innerHTML = "";
-    $printSection.appendChild(domClone);
-    window.print();
-}
-
+  
 
 function perbaruiData(){
   
@@ -1124,7 +1032,7 @@ function setDatePicker(){
 
 function modalShow(){  
   $('#proses').on("shown.bs.modal", function() {
-                               $('#biaya_kirim').focus();
+                               $('#nominal').focus();
   });
   $('#proses').modal('show');
 }
@@ -1370,5 +1278,11 @@ function buttonSimpanPos($status){
       }
     }
 
+
+$("#nominal").keyup(function(event) {
+    if (event.keyCode === 13) {
+        buttonSimpanPos('final');
+    }
+});
       </script>
 @endsection
