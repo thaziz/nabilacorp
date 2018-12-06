@@ -97,7 +97,7 @@
          <div id="note-tab" class="tab-pane fade">
             <div class="row">
                <div class="panel-body">
-                  <!-- Isi Content -->we we we
+                  <!-- Isi Content -->
                </div>
             </div>
          </div>

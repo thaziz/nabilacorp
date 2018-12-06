@@ -216,7 +216,6 @@ class itemController extends Controller
           'm_pbuy3' => 0 
         );
       }
-      $m_price = m_price::where('m_pid', $id)->get();
       $m_group = m_group::all();                    
       $m_satuan = m_satuan::all();                    
       $d_item_supplier = DB::table('d_item_supplier')
@@ -271,7 +270,11 @@ class itemController extends Controller
         $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
         $m_pbuy3 = $request->m_pbuy3;
         $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
-
+        // Ke tabel m_supplier
+        $is_supplier = $request->is_supplier;
+        $is_supplier = $is_supplier != null ? $is_supplier : array();
+        $is_price = $request->is_price;
+        $is_price = $is_price != null ? $is_price : array();
         // ===============================================
         // if (!empty($request->supplier)) {
         //   for ($i=0; $i < count($request->supplier); $i++) {
@@ -342,7 +345,7 @@ class itemController extends Controller
       } catch (\Exception $e) {
         DB::rollback();
         return response()->json([
-          'status' => 'gagal'
+          'status' => 'gagal. ' . $e
         ]);
       }
     }
