@@ -217,7 +217,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='i_sat_isi3' names='i_sat_isi3' class="form-control">
+                                      <input type="number" id='i_sat_isi3' name='i_sat_isi3' class="form-control">
                                       
                                   </div>
                                 </div>                                
@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name="m_pbuy2" class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name="m_pbuy2" class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -253,7 +253,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name="m_pbuy3" class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name="m_pbuy3" class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -320,14 +320,12 @@
 @endsection
 @section("extra_scripts")
   @include('Master::databarang/js/format_currency')
-<<<<<<< HEAD
+
   @include('Master::databarang/js/form_commander')
   <script>
     $(document).ready(function(){
       format_currency( $("[name='is_price[]']") );
     });
   </script>
-=======
-  @include('Master::databarang/js/commander')
->>>>>>> 9ca8b5338bbb9c5d42c66106d659317c7c30cd8e
+
 @endsection
