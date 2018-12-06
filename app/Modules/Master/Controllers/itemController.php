@@ -270,11 +270,15 @@ class itemController extends Controller
         $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
         $m_pbuy3 = $request->m_pbuy3;
         $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
+<<<<<<< HEAD
         // Ke tabel m_supplier
         $is_supplier = $request->is_supplier;
         $is_supplier = $is_supplier != null ? $is_supplier : array();
         $is_price = $request->is_price;
         $is_price = $is_price != null ? $is_price : array();
+=======
+
+>>>>>>> master
         // ===============================================
         // if (!empty($request->supplier)) {
         //   for ($i=0; $i < count($request->supplier); $i++) {
@@ -345,7 +349,7 @@ class itemController extends Controller
       } catch (\Exception $e) {
         DB::rollback();
         return response()->json([
-          'status' => 'gagal. ' . $e
+          'status' => 'gagal'
         ]);
       }
     }

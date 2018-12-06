@@ -15,7 +15,12 @@ var iddinamis = 0;
           format_currency( $('[name="m_pbuy2"]') );
           format_currency( $('[name="m_pbuy3"]') );
 
+<<<<<<< HEAD:app/Modules/Master/views/databarang/js/form_commander.blade.php
           format_currency( $("[name='is_price[]']") );
+=======
+
+          //format_currency( $("[name='is_price[]']") );
+>>>>>>> master:app/Modules/Master/views/databarang/js/commander.blade.php
           $('[name="is_supplier[]"]').select2({
               width : '100%',
               ajax : {
@@ -172,6 +177,7 @@ var iddinamis = 0;
           
         }
 
+<<<<<<< HEAD:app/Modules/Master/views/databarang/js/form_commander.blade.php
         function perbarui(){
           
             $.ajax({
@@ -197,6 +203,8 @@ var iddinamis = 0;
           
         }
 
+=======
+>>>>>>> master:app/Modules/Master/views/databarang/js/commander.blade.php
   function validateForm() {
     var nama = document.getElementById('nama');
     var kelompok = document.getElementById('kelompok');
