@@ -1,5 +1,29 @@
 <script type="text/javascript">
-var iddinamis = 0;
+      function hitung_harga_satuan() {
+        
+        // Function untuk menghitung harga satuan alternatif 1 dan 2
+        var i_sat_isi2 = $('[name="i_sat_isi2"]').val();
+        i_sat_isi2 = i_sat_isi2 != '' ? i_sat_isi2 : 0;
+        var i_sat_isi3 = $('[name="i_sat_isi3"]').val();
+        i_sat_isi3 = i_sat_isi3 != '' ? i_sat_isi3 : 0;
+        var m_pbuy1 = $('[name="m_pbuy1"]').val();
+        m_pbuy1 = m_pbuy1 != '' ? m_pbuy1 : 0;
+
+        $('[name="m_pbuy2"]').next().val(
+          get_currency( m_pbuy1 * i_sat_isi2 )
+        );
+        $('[name="m_pbuy2"]').val(
+          m_pbuy1 * i_sat_isi2
+        );
+        $('[name="m_pbuy3"]').next().val(
+          get_currency( m_pbuy1 * i_sat_isi3 )
+        );
+        $('[name="m_pbuy3"]').val(
+          m_pbuy1 * i_sat_isi3
+        );
+      }
+
+      var iddinamis = 0;
       $("#nama").load("/master/databarang/tambah_barang", function(){
       $("#nama").focus();
       });
@@ -14,6 +38,13 @@ var iddinamis = 0;
           format_currency( $('[name="m_pbuy1"]') );
           format_currency( $('[name="m_pbuy2"]') );
           format_currency( $('[name="m_pbuy3"]') );
+
+          // Mentrigger penghitungan harga satuan
+          $('[name="i_sat_isi2"]').on('keyup change paste', hitung_harga_satuan);
+          $('[name="i_sat_isi3"]').on('keyup change paste', hitung_harga_satuan);
+          $('[name="m_pbuy1"]').next().on('keyup change paste', hitung_harga_satuan);
+          // ===================================
+
 
           format_currency( $("[name='is_price[]']") );
           $('[name="is_supplier[]"]').select2({

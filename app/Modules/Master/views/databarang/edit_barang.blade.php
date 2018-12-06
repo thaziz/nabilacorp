@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy2' value='{{ $m_price->m_pbuy2 }}' class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name='m_pbuy2' value='{{ $m_price->m_pbuy2 }}' class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -253,7 +253,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy3' value='{{ $m_price->m_pbuy3 }}' class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name='m_pbuy3' value='{{ $m_price->m_pbuy3 }}' class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
