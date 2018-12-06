@@ -80,12 +80,7 @@
 
       <tr>
           @for($i=0; $i<count($sp_nominal['nominal']); $i++)
-                <td style="font-size: 5px">
-                @if($sp_nominal['date'][$i]==0)
-                {{date('d-m-Y')}} 
-                @else 
-                {{$sp_nominal['date'][$i]}} 
-                @endif</td>
+                <td style="font-size: 5px">if($sp_nominal['date'][$i]==0){{date('d-m-Y')}} @else {{$sp_nominal['date'][$i]}} @endif</td>
                 <td class="text-right bold" width="4px" style="font-size: 5px"></td>
                 <td width=""><div style="text-align: right;font-size: 5px">{{$sp_nominal['nominal'][$i]}}</div></td>                
           @endfor

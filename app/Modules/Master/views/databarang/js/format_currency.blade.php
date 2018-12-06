@@ -3,16 +3,22 @@
 		var currEl = el.clone();
 		currEl.removeAttr('id');
 		currEl.removeAttr('name');
+		var currency = get_currency( el.val() );
+		currency = currency.replace(/,[0-9]*/, ''); 
+		currEl.val(
+			currency
+		);
 		currEl.keyup(function(){
-			var nonDigitPtr = /\D/g;
 			var val = $(this).val();
+			val = val.replace(/([0-9.]*),[0-9]*/, '$1');
+			var nonDigitPtr = /\D/g;
 			var res = val.split('');
 			if(res.length > 3) {
 				res = res.reverse().join('');
 				res = res.replace(nonDigitPtr, '');
 				var currPtr = /(\w{3})/g;
-				var currStr = res.replace(currPtr, '$1,').split('').reverse().join('').replace(/^\.(.*)/, '$1');
-				currStr = currStr.replace(/^,(.*)/, '$1');
+				var currStr = res.replace(currPtr, '$1.').split('').reverse().join('').replace(/^\.(.*)/, '$1');
+				currStr = currStr.replace(/^\.(.*)/, '$1');
 				$(this).val(currStr);
 				res = res.split('').reverse().join('');
 			}
@@ -44,11 +50,11 @@
 			currStr = v;
 			if(res.length > 3) {
 				var currPtr = /(\w{3})/g;
-				var currStr = res.replace(currPtr, '$1,').split('').reverse().join('').replace(/^,(.*)/, '$1');
+				var currStr = res.replace(currPtr, '$1.').split('').reverse().join('').replace(/^\.(.*)/, '$1');
 			}
 
 
-			currStr += desimal != '' ? '.' + desimal : '';
+			currStr += desimal != '' ? ',' + desimal : '';
 			return currStr;
 		}
 
