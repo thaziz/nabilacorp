@@ -217,7 +217,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='i_sat_isi3' names='i_sat_isi3' class="form-control">
+                                      <input type="number" id='i_sat_isi3' name='i_sat_isi3' class="form-control">
                                       
                                   </div>
                                 </div>                                
