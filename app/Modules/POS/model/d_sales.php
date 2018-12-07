@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Modules\POS\model\d_sales_dt;
 
+use App\Modules\POS\model\d_receivable;
+
 use App\Lib\mutasi;
 
 use App\Lib\format;
@@ -630,6 +632,20 @@ class d_sales extends Model
                     's_bayar'=>$bayar,
                     /*'s_kembalian'=>$kembalian,*/
                     's_bulat'=>$s_bulat
+           ]);
+
+          $r_id=d_receivable::max('r_id')+1;
+          d_receivable::create([
+                'r_id'=>$r_id,
+                'r_date'=>date('Y-m-d',strtotime($request->s_date)),
+                'r_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
+                'r_type' =>'Penjualan Pesanan',
+                /*'r_code'=>,
+                'r_mem',*/
+                'r_ref'=>$note,
+                'r_value'=>$s_net,
+                'r_pay'=>$bayar,
+                'p_outstanding'=>$s_net-$bayar,              
             ]);
 
   
