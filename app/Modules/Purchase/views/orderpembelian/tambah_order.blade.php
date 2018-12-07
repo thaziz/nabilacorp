@@ -140,6 +140,7 @@
                                 <th style="text-align: center;" width="5%">No</th>
                                 <th width="25%">Kode | Barang</th>
                                 <th width="7%">Qty</th>
+                                <th width="7%">Qty Confirm</th>
                                 <th width="7%">Satuan</th>
                                 <th width="15%">Harga Satuan</th>
                                 <th width="15%">Harga Prev</th>
@@ -366,11 +367,11 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].ppdt_detailid+'" name="podt_detailid[]" class="form-control input-sm"/>'
                             +'</td>'
 
-                            +'<td><input type="hidden" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
 
-                            +'<input type="text" value="'+data.data_isi[key-1].ppdt_qtyconfirm+'" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" /></td>'
 
-                            +'<td><input type="hidden" value="'+data.data_isi[key-1].s_id+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'+data.data_isi[key-1].s_name+''
+                            +'<td><input type="hidden" value="'+data.data_isi[key-1].id_satuan+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'+data.data_isi[key-1].s_name+''
 
                             +'<td>'+
                               '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'

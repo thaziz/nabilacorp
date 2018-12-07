@@ -64,6 +64,7 @@ class d_purchase_plan extends Model
               'p_gudang'=>$request->gudang,
               'p_date'=>date('Y-m-d',strtotime($request->p_date)),
               'p_code'=>$p_code,
+              'p_status'=>'FN',
               'p_supplier'=>$request->id_supplier,
               'p_mem'=>Auth::user()->m_id,                      
         ]);
@@ -80,6 +81,7 @@ class d_purchase_plan extends Model
                           'ppdt_totalcost'=>$request->harga_total[$i],
                           'ppdt_prevcost'=>$ppdt_prevcost,
                           'ppdt_satuan'=>$request->satuan_pilih[$i],
+                          'ppdt_isconfirm'=>'TRUE',
                            ]);
          $chekItemSupplier=d_item_supplier::where('is_supplier',$request->id_supplier)->where('is_item',$request->ppdt_item[$i])->where('is_active','Y');
 

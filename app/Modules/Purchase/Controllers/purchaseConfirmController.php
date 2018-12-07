@@ -363,8 +363,8 @@ public function getDataRencanaPembelian(Request $request)
   {
     $dataHeader = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
                 ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
-                ->select('po_created','po_id', 'po_duedate','d_mem.m_name','d_mem.m_id')
-                // ->where('d_pcs_id', '=', $id)
+                ->select('po_created','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id')
+                ->where('po_id', '=', $id)
                 // ->orderBy('d_pcs_date_created', 'DESC')
                 ->get();
 
@@ -387,24 +387,25 @@ public function getDataRencanaPembelian(Request $request)
 
     if ($type == "all") 
     {
-      $dataIsi = d_purchase_order::join('m_item', 'd_purchase_order.i_id', '=', 'm_item.i_id')
-                ->join('m_satuan', 'd_purchase_order.d_pcsdt_sat', '=', 'm_satuan.m_sid')
-                ->select('d_purchase_order.*', 'm_item.*', 'm_satuan.*')
-                ->where('d_purchase_order.d_pcs_id', '=', $id)
-                ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
+      $dataIsi = d_purchaseorder_dt::join('m_item', 'd_purchaseorder_dt.i_id', '=', 'm_item.i_id')
+                ->join('m_satuan', 'd_purchaseorder_dt.d_pcsdt_sat', '=', 'm_satuan.m_sid')
+                ->select('d_purchaseorder_dt.*', 'm_item.*', 'm_satuan.*')
+                ->where('d_purchaseorder_dt.d_pcs_id', '=', $id)
+                ->orderBy('d_purchaseorder_dt.d_pcsdt_created', 'DESC')
                 ->get();
     }
     else
     {
-      $dataIsi = d_purchase_order::join('m_item', 'd_purchase_order.podt_item', '=', 'm_item.i_id')
-                // ->join('m_satuan', 'd_purchase_order.d_pcsdt_sat', '=', 'm_satuan.m_sid')
-                ->select('d_purchase_order.*', 'm_item.*')
-                ->where('d_purchase_order.podt_purchaseorder', '=', $id)
-                ->where('d_purchase_order.d_pcsdt_isconfirm', '=', "TRUE")
-                ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
+      // return $id;
+      $dataIsi = d_purchaseorder_dt::join('m_item', 'd_purchaseorder_dt.podt_item', '=', 'm_item.i_id')
+                ->join('m_satuan', 'd_purchaseorder_dt.podt_satuan', '=', 'm_satuan.s_id')
+                ->select('d_purchaseorder_dt.*', 'm_item.*','m_satuan.*')
+                ->where('d_purchaseorder_dt.podt_purchaseorder', '=', $id)
+                // ->where('d_purchase_order.d_pcsdt_isconfirm', '=', "TRUE")
+                // ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
                 ->get();
     }
-
+    // return $dataIsi;
     foreach ($dataIsi as $val) 
     {
       //cek item type
@@ -412,21 +413,47 @@ public function getDataRencanaPembelian(Request $request)
       //get satuan utama
       $sat1[] = $val->i_sat1;
     }
-
+    // return $sat1;
+    // return $itemType;
+    for ($i=0; $i <count($itemType) ; $i++) { 
+       $dataStok = DB::table('d_stock')->where('s_item',$itemType[$i]->i_id)->get();
+    }
+    // return $dataStok;
     //variabel untuk count array
     $counter = 0;
     //ambil value stok by item type
-    $dataStok = $this->getStokByType($itemType, $sat1, $counter);
-    
+    // $dataStok = $this->getStokByType($itemType, $sat1, $counter);
+    // return 
     return Response()->json([
         'status' => 'sukses',
         'header' => $dataHeader,
         'data_isi' => $dataIsi,
-        'data_stok' => $dataStok['val_stok'],
-        'data_satuan' => $dataStok['txt_satuan'],
+        // 'data_stok' => $dataStok['val_stok'],
+        // 'data_satuan' => $dataStok['txt_satuan'],
         'spanTxt' => $spanTxt,
         'spanClass' => $spanClass,
     ]);
   }
+
+  public function confirmOrderSubmit(Request $request)
+  {
+    // dd($request->all());
+
+    if ($request->statusOrderConfirm == 'CF') {
+        $dataHeader = DB::table('d_purchase_order')->where('podt_purchaseorder',$request->idOrder)->update([
+          'po_status'=>'FN'
+        ]);
+        for ($i=0; $i <count($request->fieldConfirmOrder) ; $i++) { 
+          $dataisi = DB::table('d_purchaseorder_dt')->where('podt_purchaseorder',$request->idOrder)->where('podt_detailid',$request->fieldIdDtOrder[$i])->update([
+            'podt_qtyconfirm'=>$request->fieldConfirmOrder[$i]
+          ]);
+        }
+    }else{
+      return 'lol';
+    }
+
+
+  }
+
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/

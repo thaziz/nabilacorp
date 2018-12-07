@@ -197,6 +197,7 @@ class d_purchase_order extends Model
                                          'm_item.i_name',
                                          'm_item.i_price',
                                          's_name',
+                                         'm_satuan.s_id as id_satuan',
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
                                          'ppdt_prevcost',
@@ -321,7 +322,7 @@ class d_purchase_order extends Model
       $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
       $dataHeader->po_date_confirm = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_duedate = date('Y-m-d',strtotime($request->tanggal));
-      $dataHeader->po_status = 'WT';
+      $dataHeader->po_status = 'CF';
       $dataHeader->po_created = date('Y-m-d');
       $dataHeader->po_updated =  date('Y-m-d');
       $dataHeader->save();
@@ -331,10 +332,11 @@ class d_purchase_order extends Model
         $dataDetail = new d_purchaseorder_dt;
         $dataDetail->podt_purchaseorder = $p_id;
         $dataDetail->podt_detailid = $i+1;
+        $dataDetail->podt_satuan = $request->fieldSatuan[$i];
         $dataDetail->podt_item = $request->podt_item[$i];
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
-        $dataDetail->podt_qtyconfirm = 1;
+        $dataDetail->podt_qtyconfirm = $request->fieldQtyconfirm[$i];
         $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
         $dataDetail->podt_price = $request->podt_price[$i];
         $dataDetail->podt_isconfirm = 'TRUE';

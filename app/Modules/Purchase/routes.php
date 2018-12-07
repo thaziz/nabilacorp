@@ -20,6 +20,7 @@ Route::get('/konfirmasi-purchase/purchase-plane/data/confirm-purchase-plan', 'pu
 //order konfirmasi
 Route::get('keuangan/konfirmasipembelian/get-data-tabel-order','purchaseConfirmController@getdatatableOrder')->middleware('auth');
 Route::get('keuangan/konfirmasipembelian/confirm-order/{id}/{type}','purchaseConfirmController@confirmOrderPembelian')->middleware('auth');
+Route::get('keuangan/konfirmasipembelian/confirm-order-submit','purchaseConfirmController@confirmOrderSubmit')->middleware('auth');
 
 
 /*keuangan/konfirmasi-purchase/confirm-plan/4/confirmed*/
