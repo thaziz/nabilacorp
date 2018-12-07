@@ -440,9 +440,11 @@ public function getDataRencanaPembelian(Request $request)
     // dd($request->all());
 
     if ($request->statusOrderConfirm == 'CF') {
-        $dataHeader = DB::table('d_purchase_order')->where('podt_purchaseorder',$request->idOrder)->update([
+        
+        $dataHeader = DB::table('d_purchase_order')->where('po_id',$request->idOrder)->update([
           'po_status'=>'FN'
         ]);
+
         for ($i=0; $i <count($request->fieldConfirmOrder) ; $i++) { 
           $dataisi = DB::table('d_purchaseorder_dt')->where('podt_purchaseorder',$request->idOrder)->where('podt_detailid',$request->fieldIdDtOrder[$i])->update([
             'podt_qtyconfirm'=>$request->fieldConfirmOrder[$i]
