@@ -46,6 +46,10 @@
             height: 70px;
             font-size: 45px;
         }
+        .form-control-l{
+            height: 55px;
+            font-size: 35px;
+        }
         .table{
             color: black;
         }
