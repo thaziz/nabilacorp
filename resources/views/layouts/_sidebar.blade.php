@@ -254,6 +254,7 @@
                     <!-- ======= -->
                     </a>
                         <ul class="nav nav-second-level">
+                            <li class="menu-sekunder {{ Request::is('penjualan/pembayaranpiutang/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/pembayaranpiutang/index') }}"><span class="submenu-title">Pembayaran Piutang</span><span class="hidden">Penjualan</span></a>
                             <li class="menu-sekunder {{ Request::is('penjualan/stok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/stok/index') }}"><span class="submenu-title">Stok Barang Penjualan</span><span class="hidden">Penjualan</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('penjualan/manajemenharga/harga') ? 'active' : '' || Request::is('penjualan/manajemenharga/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/manajemenharga/harga') }}"><span class="submenu-title">Manajemen Harga</span><span class="hidden">Penjualan</span></a>
