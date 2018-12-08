@@ -89,7 +89,7 @@ Route::get('/penjualan/monitorprogress/progress', 'PenjualanController@progress'
 Route::get('/penjualan/monitoringorder/monitoring', 'PenjualanController@monitoringorder')->middleware('auth');
 Route::get('/penjualan/mutasistok/mutasi', 'MutasiController@mutasi')->middleware('auth');
 Route::get('/penjualan/layananpesanan/tambah_layananpesanan', 'PenjualanController@tambah_layananpesanan')->middleware('auth');
-Route::get('/penjualan/POSpenjualanmobile/POSpenjualanmobile', 'PenjualanMobileController@POSpenjualanmobile')->middleware('auth');
+Route::get('/penjualan/POSpenjualanmobile/POSpenjualanmobile', 'laporanPenjualanTokoController@POSpenjualanmobile')->middleware('auth');
 Route::get('/penjualan/produklangsung/produklangsung', 'PenjualanController@produklangsung')->middleware('auth');
 Route::get('/penjualan/penjualanexpired/penjualanexpired', 'PenjualanController@penjualanexpired')->middleware('auth');
 Route::get('/penjualan/repackaging/repackaging', 'PenjualanController@repackaging')->middleware('auth');
@@ -187,7 +187,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/monitoringorder/monitoring', 'PenjualanController@monitoringorder')->middleware('auth');
 	Route::get('/penjualan/mutasistok/mutasi', 'MutasiController@mutasi')->middleware('auth');
 	Route::get('/penjualan/layananpesanan/tambah_layananpesanan', 'PenjualanController@tambah_layananpesanan')->middleware('auth');
-	Route::get('/penjualan/POSpenjualanmobile/POSpenjualanmobile', 'PenjualanMobileController@POSpenjualanmobile')->middleware('auth');
+	Route::get('/penjualan/POSpenjualanmobile/POSpenjualanmobile', 'laporanPenjualanTokoController@POSpenjualanmobile')->middleware('auth');
 	Route::get('/penjualan/produklangsung/produklangsung', 'PenjualanController@produklangsung')->middleware('auth');
 	Route::get('/penjualan/penjualanexpired/penjualanexpired', 'PenjualanController@penjualanexpired')->middleware('auth');
 	Route::get('/penjualan/repackaging/repackaging', 'PenjualanController@repackaging')->middleware('auth');
@@ -195,9 +195,16 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanController@POSpenjualanPesanan')->middleware('auth');
 
 	// Laporan penjualan mobile 
-	Route::get('/penjualan/penjualanmobile/penjualanmobile', 'PenjualanMobileController@penjualanmobile')->middleware('auth');
-	Route::get('/penjualan/penjualanmobile/find_d_sales_dt', 'PenjualanMobileController@find_d_sales_dt')->middleware('auth');
-	Route::get('/penjualan/penjualanmobile/print_laporan', 'PenjualanMobileController@print_laporan')->middleware('auth');
+	Route::get('/penjualan/penjualanmobile/penjualanmobile', 'laporanPenjualanTokoController@penjualanmobile')->middleware('auth');
+	Route::get('/penjualan/penjualanmobile/find_d_sales_dt', 'laporanPenjualanTokoController@find_d_sales_dt')->middleware('auth');
+	Route::get('/penjualan/penjualanmobile/print_laporan', 'laporanPenjualanTokoController@print_laporan')->middleware('auth');
+
+	Route::get('/penjualan/penjualanmobile/print_laporan_excel', 'laporanPenjualanTokoController@print_laporan_excel')->middleware('auth');
+
+	//menampilkan total pada ajax
+	Route::get('/penjualan/penjualanmobile/totalPenjualan', 'laporanPenjualanTokoController@totalPenjualan')->middleware('auth');
+	
+	
 
 	// ==========================================================================================
 	Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
