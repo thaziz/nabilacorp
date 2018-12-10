@@ -23,160 +23,66 @@ class ManOutputProduksiController extends Controller
     	return view('Produksi::o_produksi.index',compact('modalCreate')); 
     }
 
-    public function tabel($tgl1, $tgl2, $tampil, $comp){
+    public function tabel($tgl1, $tgl2){
         $y = substr($tgl1, -4);
         $m = substr($tgl1, -7,-5);
         $d = substr($tgl1,0,2);
-         $tgl01 = $y.'-'.$m.'-'.$d;
+         $tanggal1 = $y.'-'.$m.'-'.$d;
 
         $y2 = substr($tgl2, -4);
         $m2 = substr($tgl2, -7,-5);
         $d2 = substr($tgl2,0,2);
-          $tgl02 = $y2.'-'.$m2.'-'.$d2;
+          $tanggal2 = $y2.'-'.$m2.'-'.$d2;
         //   dd($tgl01);
-        if ($tampil == 'Semua') {
-            $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
-            ->get();
+        $data = d_spk::join('m_item', 'spk_item', '=', 'i_id')
+            ->join('d_productplan', 'pp_id', '=', 'spk_ref')
+            ->select('spk_id', 'spk_date', 'i_code', 'i_name', 'pp_qty', 'spk_code', 'spk_status')
+            ->where(function ($query) {
+                $query->where('spk_status', 'PB');
+            })
+            ->where('spk_date', '>=', $tanggal1)
+            ->where('spk_date', '<=', $tanggal2)
+            ->orderBy('spk_date', 'DESC')
 
-        }elseif ($tampil == 'Belum-dikirim') {
-
-           $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('prdt_status','RD')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
             ->get();
-
-        }elseif ($tampil == 'Dikirim') {
-            $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('prdt_status','FN')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
-            ->get();
-        }elseif ($tampil == 'Terkirim') {
-            $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'mp_name',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('prdt_status','RC')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
-            ->get();
-        }
-        
-
         return DataTables::of($data)
+
+            ->editColumn('spk_date', function ($user) {
+                return $user->spk_date ? with(new Carbon($user->spk_date))->format('d M Y') : '';
+
+            })
+
+            ->editColumn('item', function ($user) {
+                return ($user->i_code .' - '. $user->i_name);
+            })
+
+            ->editColumn('produksi', function ($user) {
+                return $result = d_productresult_dt::
+                    join('d_productresult','d_productresult.pr_id','=','prdt_productresult')
+                    ->where('pr_spk',$user->spk_id)
+                    ->sum('d_productresult_dt.prdt_qty');
+            })
+
+            ->editColumn('result', function ($user) {
+                return '<input type="number" name="" class="form-control input-sm">';
+            })
+
             ->addColumn('action', function ($data) {
-                if ($data->prdt_status == 'RD') {
                     return '<div class="text-center">
                   <button style="margin-left:5px;" 
                           title="Menunggu" 
                           type="button"
-                          class="btn btn-warning btn-sm">
-                          <i class="fa fa-cubes" aria-hidden="true"></i>
+                          class="btn btn-success btn-sm">
+                          <i class="fa fa-info-circle" aria-hidden="true"></i>
                   </button>
                 </div>';
 
-                } else if ($data->prdt_status == 'RC') {
-                    return '<div class="text-center">
-                    <button id="status" 
-                            class="btn btn-success btn-sm" 
-                            title="Diterima">
-                            <i class="fa fa-check-square" aria-hidden="true"></i>
-                    </button>
-                  </div>';
-                } else {
-                    return '<div class="text-center">
-                    <button id="status" 
-                            class="btn btn-primary btn-sm" 
-                            title="Dikirim">
-                            <i class="fa fa-car" aria-hidden="true"></i>
-                    </button>
-                  </div>';
-                }
+            })
 
-            })
-            ->editColumn('pr_date', function ($user) {
-                return $user->pr_date ? with(new Carbon($user->pr_date))->format('d M Y') : '';
-            })
-            ->editColumn('prdt_date', function ($user) {
-                return date('d M Y', strtotime($user->prdt_date)) . ', ' . $user->prdt_time;
-            })
-            ->editColumn('prdt_status', function ($inquiry) {
-                if ($inquiry->prdt_status == 'RD')
-                    return '<div class="text-center">
-                    <span class="label label-red">Digudang</span>
-                  </div>';
-                if ($inquiry->prdt_status == 'FN')
-                    return '<div class="text-center">
-                    <span class="label label-yellow">Dikirim</span>
-                  </div>';
-                if ($inquiry->prdt_status == 'RC')
-                    return '<div class="text-center">
-                    <span class="label label-success">Diterima</span>
-                  </div>';
-            })
             ->rawColumns(['prdt_status',
-                'action'
+                          'produksi',
+                          'result',
+                          'action'
             ])
             ->make(true);
 
