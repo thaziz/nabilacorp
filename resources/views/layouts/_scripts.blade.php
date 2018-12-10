@@ -1,4 +1,5 @@
     <script src="{{ asset ('assets/script/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ asset ('assets/script/moment.min.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.dataTables.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery-migrate-1.2.1.min.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery-ui.js') }}"></script>
