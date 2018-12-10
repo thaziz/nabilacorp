@@ -170,15 +170,19 @@ class m_itemm extends Model
     
 
      public static function seachItemPurchase($item) {
+      // return $item;
+      // dd($item->all());
         $search = $item->term;
         $id_supplier =$item->id_supplier;
 
         $groupName=['BB'];
-        $cabang=Session::get('user_comp');                
+        $cabang = Session::get('user_comp');                
         $position=DB::table('d_gudangcabang')
-                      ->where('gc_gudang',DB::raw("'GUDANG PEMBELIAN'"))
+                      // ->where('gc_gudang',DB::raw("'GUDANG PEMBELIAN'"))
                       ->where('gc_comp',$cabang)
-                      ->select('gc_id')->first();   
+                      ->select('gc_id')
+                      ->first();   
+        // return json_encode($position);
         $comp=$position->gc_id;
         $position=$position->gc_id;
 

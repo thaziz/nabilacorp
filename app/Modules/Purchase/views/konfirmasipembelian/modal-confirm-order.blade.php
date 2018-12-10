@@ -85,7 +85,7 @@
                   <th width="15%;">Harga prev</th>
                   <th width="15%;">Harga Satuan</th>
                   <th class="15%">Harga Total</th>
-                  <th width="5%;">Stok Gudang</th>
+                  {{-- <th width="5%;">Stok Gudang</th> --}}
                   <th width="5%;">Aksi</th>
                 </tr>
               </thead>
@@ -98,7 +98,7 @@
         </div>
     
         <div class="modal-footer" style="border-top: none;">
-          <button type="button" class="btn btn-info" onclick="konfirmasiPlan()" id="button_confirm_order">Konfirmasi</button>
+          <button type="button" class="btn btn-info" onclick="submitOrderConfirm()" id="button_confirm_order">Konfirmasi</button>
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>
 

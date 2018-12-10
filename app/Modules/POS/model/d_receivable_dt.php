@@ -4,6 +4,7 @@ namespace App\Modules\POS\model;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 use App\Modules\POS\model\d_receivable_dt;
 
 use App\Lib\mutasi;
