@@ -21,8 +21,9 @@ class MonitoringProgressController extends Controller
 {
   public function monitoring(){
     
-    if (Auth::user()->punyaAkses('Monitoring Order & Stock','ma_read')) {        
-      return view('Produksi::monitoringprogress.index');
+    if (Auth::user()->punyaAkses('Monitoring Order & Stock','ma_read')) {      
+      $autoPlan = view('Produksi::monitoringprogress.auto_plan');  
+      return view('Produksi::monitoringprogress.index',compact('autoPlan'));
     }else{
       return view('system.hakakses.errorakses');
     }
@@ -35,9 +36,7 @@ class MonitoringProgressController extends Controller
     $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
                ->where('sp_status',DB::raw("'N'"))
                ->where('sp_comp',DB::raw("$comp"))               
-              ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
-
-
+               ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
 
     $pp = DB::Table('d_productplan')
       ->where(function($query){
@@ -64,9 +63,6 @@ class MonitoringProgressController extends Controller
                       ->where('gc_comp',$cabang)
                       ->select('gc_id')->get();    
 
-
-
-
     $stock = DB::Table('d_stock')
       ->select('s_item',DB::raw("sum(s_qty) as s_qty"));
       /*->where(function($query){
@@ -86,9 +82,6 @@ class MonitoringProgressController extends Controller
       }
       $stock->groupBy('s_item');
       
-
-
-
      $mon = DB::Table('m_item')
         ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty',
             DB::raw("sum(sd_qty) as jumlah"), 
@@ -111,8 +104,6 @@ class MonitoringProgressController extends Controller
         ->groupBy('i_id')
         ->get();
 
-        
-
      //return $mon;
     $dat = array();
     foreach ($mon as $r) {
@@ -131,8 +122,6 @@ class MonitoringProgressController extends Controller
           $data[$i]['jumlah'] =$key['jumlah']+$key['spdt_qty'];          
         }
         
-
-
         $data[$i]['pp_qty'] = $key['pp_qty'] == null ? 0 : $key['pp_qty'];
         $data[$i]['s_qty'] = $key['s_qty'] == null ? 0 : $key['s_qty'];
         /*$data[$i]['jumlah'] = $key['jumlah'] == null ? 0 : $key['jumlah'];*/
@@ -163,8 +152,6 @@ class MonitoringProgressController extends Controller
                ->where('sp_comp',DB::raw("$comp"))               
               ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
 
-
-
     $pp = DB::Table('d_productplan')
       ->where(function($query){
         $query->where('pp_isspk',DB::raw("'N'"))
@@ -184,16 +171,11 @@ class MonitoringProgressController extends Controller
       ->leftjoin('d_sales_dt','d_sales.s_id', '=' , 'd_sales_dt.sd_sales');
     /*dd($sales->toSql());*/
 
-
-
   $cabang=Session::get('user_comp');            
   $position=DB::table('d_gudangcabang')
                       ->whereIn('gc_gudang',['GUDANG PENJUALAN','GUDANG PRODUKSI'])
                       ->where('gc_comp',$cabang)
                       ->select('gc_id')->get();    
-
-
-
 
     $stock = DB::Table('d_stock')
       ->select('s_item',DB::raw("sum(s_qty) as s_qty"));
@@ -214,9 +196,6 @@ class MonitoringProgressController extends Controller
       }
       $stock->groupBy('s_item');
       
-
-
-
      $mon = DB::Table('m_item')
         ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty',
             DB::raw("sum(sd_qty) as jumlah"), 
@@ -238,8 +217,6 @@ class MonitoringProgressController extends Controller
         ->where('i_isactive','TRUE')
         ->groupBy('i_id')
         ->get();
-
-        
 
      //return $mon;
     $dat = array();

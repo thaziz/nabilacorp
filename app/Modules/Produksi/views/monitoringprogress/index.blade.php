@@ -53,17 +53,24 @@
                              
                                 <div class="col-md-12 col-sm-12 col-xs-12">
 
-                                  <div align="left">
-                                    <select class="form-control" id="fil" onchange="filter()" >
-                                      <option value="A">Semua</option>
-                                      <option value="O">Hanya Order</option>
-                                    </select>
+                                  <div class="col-md-2 col-sm-4 col-xs-12">
+                                    <label class="tebal">Pilih Tampilan :</label>
                                   </div>
 
-                                  <div align="right">
-                                    <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-box-tool" id="btn-tambah"><i class="fa fa-plus"></i>&nbsp; Buat Rencana</a>
+                                  <div class="col-md-3 col-sm-8 col-xs-12">
+                                    <div class="form-group">
+                                      <select class="form-control input-sm" id="fil" onchange="filter()" >
+                                        <option value="A">Semua</option>
+                                        <option value="O">Hanya Order</option>
+                                      </select>
+                                    </div>
                                   </div>
-                                  <div class="table-responsive" style="margin-top:10px;">
+
+                                  <div class="col-md-7 col-sm-12 col-xs-12" style="margin-bottom: 15px;" align="right">
+                                    <a href="#" data-toggle="modal" data-target="#autoModalPlan" class="btn btn-box-tool" id="btn-tambah"><i class="fa fa-plus"></i>&nbsp; Buat Rencana</a>
+                                  </div>
+
+                                  <div class="table-responsive">
                                     <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0" id="data">
                                      <thead>
                                         <tr>
@@ -109,6 +116,9 @@
                               </div>
                             </div>
                             <!-- end modal plan -->
+                            {{-- modal auto plan --}}
+                            {!! $autoPlan !!}
+                            {{-- end modal auto plan --}}
                     </div>
                           <!-- /div alert-tab -->
            <!-- div note-tab -->
@@ -161,8 +171,6 @@
         }
         
       }
-  
-
       ,
     "columns": [
         { "data": "pp_item" },
@@ -201,36 +209,15 @@
         });
    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-$(document).ready(function() {
-var extensions = {
-   "sFilterInput": "form-control input-sm",
-  "sLengthSelect": "form-control input-sm"
-}
-// Used when bJQueryUI is false
-$.extend($.fn.dataTableExt.oStdClasses, extensions);
-// Used when bJQueryUI is true
-$.extend($.fn.dataTableExt.oJUIClasses, extensions);
-  
-
-  
-
-  /*$('#data')
-  .on( 'error.dt', function ( e, settings, techNote, message ) {
-    location.reload();
-  } )
-  .DataTable();*/
+  $(document).ready(function() {
+  var extensions = {
+     "sFilterInput": "form-control input-sm",
+    "sLengthSelect": "form-control input-sm"
+  }
+  // Used when bJQueryUI is false
+  $.extend($.fn.dataTableExt.oStdClasses, extensions);
+  // Used when bJQueryUI is true
+  $.extend($.fn.dataTableExt.oJUIClasses, extensions);
 
   $(document).on('click','.plan',function(){
     var id = $(this).data('id');
@@ -255,6 +242,11 @@ $.extend($.fn.dataTableExt.oJUIClasses, extensions);
           }
       });
     });
+
+  $('#autoModalPlan').on('shown.bs.modal', function () {
+    
+  }) 
+  
 
 });
 
