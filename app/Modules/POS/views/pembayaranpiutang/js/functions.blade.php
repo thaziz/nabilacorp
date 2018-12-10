@@ -23,7 +23,9 @@
 	 	o_payment.find('#r_pay').val( 
 	 		get_currency(data.r_pay )
 	 	);
-	 	o_payment.find('#r_value').val( data.r_value );
+	 	o_payment.find('#r_value').val( 
+	 		get_currency(data.r_value )
+	 	);
 	 	o_payment.find('#r_code').val( data.r_code );
 	 	o_payment.find('#r_ref').val( data.r_ref );
 	 	o_payment.find('#p_outstanding').val( 
@@ -79,16 +81,18 @@
 	 function insert_d_receivable_dt() {
 	 	var data = $('#form_payment form').serialize();
 	 	$.ajax({
-		      url: "{{ url('/penjualan/pembayaranpiutang/d_receivable_dt') }}",
+		      url: "{{ url('/penjualan/pembayaranpiutang/insert_d_receivable_dt') }}",
 		      type: 'GET',
 		      data: data,
 		      dataType: 'json',
 		      success: function (response) {
-				  if(response) {
+				  if(response.status == 'sukses') {
 				  	iziToast.success({
 				  		title : 'Info',
 				  		message : 'Sukses menyimpan data'
 				  	});
+
+				  	tabel_d_receivable_dt.ajax.reload();
 				  }
 				  else {
 				  	iziToast.error({
@@ -97,6 +101,7 @@
 				  	});
 				  }
 
+				 $('#form_payment form')[0].reset();
 				  $('#form_payment').modal('hide')
 		      }
 		});	
