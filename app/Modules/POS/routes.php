@@ -228,7 +228,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	// Routing untuk pembayaran piutang
 	Route::get('/penjualan/pembayaranpiutang/index', 'PembayaranPiutangController@index');
 	Route::get('/penjualan/pembayaranpiutang/find_d_receivable', 'PembayaranPiutangController@find_d_receivable');
-	Route::get('/penjualan/pembayaranpiutang/find_d_receivable_dt', 'PembayaranPiutangController@find_d_receivable_dt');
+	Route::get('/penjualan/pembayaranpiutang/find_d_receivable_dt/{r_id}', 'PembayaranPiutangController@find_d_receivable_dt');
 	Route::get('/penjualan/pembayaranpiutang/insert_d_receivable_dt', 'PembayaranPiutangController@insert_d_receivable_dt');
 
 

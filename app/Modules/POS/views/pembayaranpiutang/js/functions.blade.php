@@ -37,20 +37,29 @@
 	 	var tr = $(obj).parents('tr');
 	 	var data = tabel_d_receivable_dt.row( tr ).data();
 	 	var o_detail = $('#form_detail');
-	 	o_detail.find('#r_date').text( data.r_date );
+	 	o_detail.find('#r_date').text( 
+	 		moment(data.r_date).format('DD/MM/YYYY') 
+	 	);
 		o_detail.find('#r_duedate').text( data.r_duedate );
 		o_detail.find('#r_code').text( data.r_code );
-		o_detail.find('#r_value').text( data.r_value );
-		o_detail.find('#r_pay').text( data.r_pay );
-		o_detail.find('#p_outstanding').text( data.p_outstanding );
+		o_detail.find('#r_value').text( 
+			get_currency(data.r_value) 
+		);
+		o_detail.find('#r_pay').text( 
+			get_currency(data.r_pay) 
+		);
+		o_detail.find('#p_outstanding').text( 
+			get_currency(data.p_outstanding) 
+		);
+
+		find_d_receivable_dt(data.r_id);
 
 	 }
 
-	 function find_d_receivable_dt() {
+	 function find_d_receivable_dt(r_id) {
 	 	$.ajax({
-		      url: "{{ url('/penjualan/pembayaranpiutang/d_receivable_dt') }}",
+		      url: "{{ url('/penjualan/pembayaranpiutang/find_d_receivable_dt') }}/" + r_id,
 		      type: 'GET',
-		      data: data,
 		      dataType: 'json',
 		      success: function (response) {
 				  render_d_receivable_dt(response.data);
@@ -60,12 +69,14 @@
 
 	 function render_d_receivable_dt(d_receivable_dt) {
 	 	var list_group = $('#list_d_receivable_dt');
+	 	list_group.html('');
 	 	if(d_receivable_dt.length > 0) {
 	 		for(x = 0;x < d_receivable_dt.length;x++) {
 	 			var data = d_receivable_dt[x];
+	 			var rd_datepay = moment(data.rd_datepay).format('DD/MM/YYYY');
 	 			var list_group_item = $('<a href="#" class="list-group-item"></a>')
-	 			var rd_datepay_item = $('<h4>' + data.rd_datepay + '</h4>');
-	 			var rd_value_item = $('<p>' + data.rd_value + '</p>');
+	 			var rd_datepay_item = $('<h4>' + rd_datepay + '</h4>');
+	 			var rd_value_item = $('<p>' + get_currency(data.rd_value) + '</p>');
 
 	 			list_group_item.append(rd_datepay_item);
 	 			list_group_item.append(rd_value_item);

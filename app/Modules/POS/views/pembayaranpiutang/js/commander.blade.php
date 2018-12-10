@@ -7,6 +7,10 @@
 	        format:"dd/mm/yyyy"
 	      });   
 
+	      $('#form_payment').on('hide.bs.modal', function(){
+	      	$(this).find('form')[0].reset();
+	      })
+
 	      format_currency( $('#rd_value') );
 
 			tabel_d_receivable_dt = $("#tabel_d_receivable").DataTable({
@@ -21,25 +25,15 @@
 		        { 
 		        	data : null,
 		        	render : function(res) {
-		        		var day = new Date(res.r_date);
-		        		var date = day.getDate();
-		        		var month = day.getMonth() + 1;
-		        		var year = day.getFullYear();
-
-		        		var res = date + '/' + month + '/' + year;
-		        		return res;
+		        		var result = moment(res.r_date).format('DD/MM/YYYY');
+		        		return result;
 		        	}
 		        },
 		        { 
 		        	data : null,
 		        	render : function(res) {
-		        		var day = new Date(res.r_duedate);
-		        		var date = day.getDate();
-		        		var month = day.getMonth() + 1;
-		        		var year = day.getFullYear();
-
-		        		var res = date + '/' + month + '/' + year;
-		        		return res;
+		        		var result = moment(res.r_duedate).format('DD/MM/YYYY');
+		        		return result;
 		        	}
 		        },
 				{ data : 'r_code'},
@@ -65,10 +59,10 @@
 		        	data : null,
 		        	render : function(res) {
 		        		
-		        		var detail_btn = '<button id="detail_btn" onclick="open_detail(this)" class="btn btn-primary btn-sm" title="detail" data-toggle="modal" data-target="#form_detail"><i class="fa fa-indent" style="margin-right:2mm"></i></button>';
+		        		var detail_btn = '<button id="detail_btn" onclick="open_detail(this)" class="btn btn-success btn-sm" title="detail" data-toggle="modal" data-target="#form_detail"  style="margin-right:2mm"><i class="fa fa-indent"></i></button>';
 		        		var payment_btn = '<button id="payment_btn" onclick="open_payment(this)" class="btn btn-primary btn-sm" title="payment" data-toggle="modal" data-target="#form_payment"><i class="fa fa-money"></i></button>';
 
-		        		var result = payment_btn;
+		        		var result = detail_btn + payment_btn;
 
 		        		return result;
 		        	}

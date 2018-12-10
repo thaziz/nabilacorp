@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 15px;padding-top: 15px; ">
                                         
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Kode Item</label>
+                <label class="tebal">Kode Pembayaran</label>
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  

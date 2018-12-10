@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header" style="background-color: #e77c38;">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title" style="color: white;">Form Manajemen Harga</h4>
+            <h4 class="modal-title" style="color: white;">Detail Pembayaran Piutang</h4>
           </div>
 
           <div class="modal-body">
@@ -14,7 +14,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 15px;padding-top: 15px; ">
                                         
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Kode Item</label>
+                <label class="tebal">Kode Pembayaran</label>
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
@@ -65,12 +65,25 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <input type="text" class="form-control input-sm" readonly name="r_pay" id='r_pay' >
+                  <p id='r_pay' ></p>
                 </div>
               </div>
 
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="list-group list_d_receivable_dt"></div>
+                <label class="tebal">Sisa Pembayaran</label>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">  
+                  <p id='p_outstanding' ></p>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="container-fluid" style="background: white">
+                  
+                    <h3>Daftar Pembayaran</h3>
+                    <div class="list-group" id="list_d_receivable_dt"></div>
+                </div>
               </div>
 
               
