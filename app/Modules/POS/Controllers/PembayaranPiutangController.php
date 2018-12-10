@@ -38,8 +38,20 @@ class PembayaranPiutangController extends Controller
       return view('POS::pembayaranpiutang/index');
     }
 
-    public function find_d_receivable() {
-      $d_receivable = d_receivable::all();
+    public function find_d_receivable(Request $req) {
+      $tgl_awal = $req->tgl_awal;
+      $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
+      $tgl_akhir = $req->tgl_akhir;
+      $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
+      if($tgl_awal != '' && $tgl_akhir != '') {
+        $tgl_awal = date('Y-d-m', strtotime($tgl_awal));
+        $tgl_akhir = date('Y-d-m', strtotime($tgl_akhir));
+        $d_receivable = d_receivable::whereBetween('r_date', array($tgl_awal, $tgl_akhir))->get();
+      }
+      else {
+
+        $d_receivable = d_receivable::all();
+      }
       $data = array('data' => $d_receivable);
 
       return response()->json($data);

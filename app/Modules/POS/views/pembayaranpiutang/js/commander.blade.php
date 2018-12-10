@@ -7,9 +7,9 @@
 	        format:"dd/mm/yyyy"
 	      });   
 
-	      $('#form_payment').on('hide.bs.modal', function(){
-	      	$(this).find('form')[0].reset();
-	      })
+	      $('#tgl_awal').val( moment().format('DD/MM/YYYY') );
+	      $('#tgl_akhir').val( moment().add(7, 'days').format('DD/MM/YYYY') );
+
 
 	      format_currency( $('#rd_value') );
 
