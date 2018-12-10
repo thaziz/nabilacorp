@@ -52,6 +52,14 @@
                               <!-- End Modal -->
                              
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                  <div align="left">
+                                    <select class="form-control" id="fil" onchange="filter()" >
+                                      <option value="A">Semua</option>
+                                      <option value="O">Hanya Order</option>
+                                    </select>
+                                  </div>
+
                                   <div align="right">
                                     <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-box-tool" id="btn-tambah"><i class="fa fa-plus"></i>&nbsp; Buat Rencana</a>
                                   </div>
@@ -130,39 +138,32 @@
 @section("extra_scripts")
 <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-var extensions = {
-   "sFilterInput": "form-control input-sm",
-  "sLengthSelect": "form-control input-sm"
-}
-// Used when bJQueryUI is false
-$.extend($.fn.dataTableExt.oStdClasses, extensions);
-// Used when bJQueryUI is true
-$.extend($.fn.dataTableExt.oJUIClasses, extensions);
-  var table = $('#data').dataTable({
-    "responsive":true,
-    "pageLength": 10,
-    "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-    "language": {
-        "searchPlaceholder": "Cari Data",
-        "emptyTable": "Tidak ada data",
-        "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-        "infoFiltered" : "",
-        "sSearch": '<i class="fa fa-search"></i>',
-        "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-        "infoEmpty": "",
-        "zeroRecords": "Data tidak ditemukan",
-        "paginate": {
-                "previous": "Sebelumnya",
-                "next": "Selanjutnya",
-            }
-      },
 
-    "ajax":{
-          "url" : baseUrl + "/produksi/monitoringprogress/tabel",
-          "type": "GET",
-          
-    },
+   var tablex;
+   setTimeout(function () {
+
+    table();
+   }, 1500);
+
+   function table(){
+    /*$('#data').dataTable().fnDestroy();*/
+    tablex = $("#data").DataTable({        
+      responsive: true,
+      "language": dataTableLanguage,
+      processing: true,
+      /*serverSide: true,*/
+      ajax: {
+        "url": "{{ url("/produksi/monitoringprogress/tabel") }}",
+        "type": "get",
+         "data": function(d){
+         d._token = "{{ csrf_token() }}";
+         d.fil = $('#fil').val();
+        }
+        
+      }
+  
+
+      ,
     "columns": [
         { "data": "pp_item" },
         { "data": "i_name" },
@@ -172,12 +173,58 @@ $.extend($.fn.dataTableExt.oJUIClasses, extensions);
         { "data": "j_butuh" ,"className" : "dt-body-right"},
         { "data": "pp_qty" ,"className" : "dt-body-right"},
         { "data": "j_kurang" ,"className" : "dt-body-right"},
-        { "data": "plan" },],
+        { "data": "plan" },
+    ],
     "order":[2,'desc'],
 
-  });
+      'columnDefs': [
 
-  $.fn.dataTable.ext.errMode = 'none';
+      {
+        "targets": 4,
+        "className": "text-right",
+      }
+      ],
+            //responsive: true,
+
+            "pageLength": 10,
+            "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+            
+            "rowCallback": function( row, data, index ) {
+
+              /*$node = this.api().row(row).nodes().to$();*/
+
+              if (data['s_status']=='draft') {
+                $('td', row).addClass('warning');
+              } 
+            }   
+
+        });
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+var extensions = {
+   "sFilterInput": "form-control input-sm",
+  "sLengthSelect": "form-control input-sm"
+}
+// Used when bJQueryUI is false
+$.extend($.fn.dataTableExt.oStdClasses, extensions);
+// Used when bJQueryUI is true
+$.extend($.fn.dataTableExt.oJUIClasses, extensions);
+  
+
+  
 
   /*$('#data')
   .on( 'error.dt', function ( e, settings, techNote, message ) {
@@ -218,7 +265,10 @@ $.extend($.fn.dataTableExt.oJUIClasses, extensions);
     changeYear: true
   });
 
-
+function filter(){
+  var filter=$('#fil').val();  
+  tablex.ajax.reload();
+}
 
 function simpan() {
   $('#btnSimpan').attr('disabled','disabled');
