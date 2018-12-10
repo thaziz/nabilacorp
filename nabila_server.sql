@@ -1,23 +1,16 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.36-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win32
--- HeidiSQL Version:             9.5.0.5196
+-- Versi server:                 10.1.19-MariaDB - mariadb.org binary distribution
+-- OS Server:                    Win32
+-- HeidiSQL Versi:               9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-
--- Dumping database structure for nabila
-CREATE DATABASE IF NOT EXISTS `nabila` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `nabila`;
-
--- Dumping structure for table nabila.d_access
-DROP TABLE IF EXISTS `d_access`;
+-- Dumping structure for table alamrayasite_nabila.d_access
 CREATE TABLE IF NOT EXISTS `d_access` (
   `a_id` int(11) NOT NULL AUTO_INCREMENT,
   `a_name` varchar(50) DEFAULT NULL,
@@ -26,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `d_access` (
   PRIMARY KEY (`a_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_access: ~67 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_access: ~67 rows (approximately)
 DELETE FROM `d_access`;
 /*!40000 ALTER TABLE `d_access` DISABLE KEYS */;
 INSERT INTO `d_access` (`a_id`, `a_name`, `a_parrent`, `a_order`) VALUES
@@ -99,8 +92,8 @@ INSERT INTO `d_access` (`a_id`, `a_name`, `a_parrent`, `a_order`) VALUES
 	(67, 'Tahun Finansial', 4, 67);
 /*!40000 ALTER TABLE `d_access` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_akun
-DROP TABLE IF EXISTS `d_akun`;
+
+-- Dumping structure for table alamrayasite_nabila.d_akun
 CREATE TABLE IF NOT EXISTS `d_akun` (
   `id_akun` varchar(50) NOT NULL,
   `nama_akun` varchar(255) NOT NULL,
@@ -114,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `d_akun` (
   PRIMARY KEY (`id_akun`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_akun: ~5 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_akun: ~5 rows (approximately)
 DELETE FROM `d_akun`;
 /*!40000 ALTER TABLE `d_akun` DISABLE KEYS */;
 INSERT INTO `d_akun` (`id_akun`, `nama_akun`, `kelompok_akun`, `posisi_akun`, `type_akun`, `group_neraca`, `group_laba_rugi`, `created_at`, `updated_at`) VALUES
@@ -125,8 +118,8 @@ INSERT INTO `d_akun` (`id_akun`, `nama_akun`, `kelompok_akun`, `posisi_akun`, `t
 	('1.878787.78', 'usaha', 'KAS', 'D', 'DETAIL', 'code01', 'edoc01', '2018-06-28 16:50:42', '2018-06-28 16:50:42');
 /*!40000 ALTER TABLE `d_akun` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_akun_saldo
-DROP TABLE IF EXISTS `d_akun_saldo`;
+
+-- Dumping structure for table alamrayasite_nabila.d_akun_saldo
 CREATE TABLE IF NOT EXISTS `d_akun_saldo` (
   `id_akun` varchar(50) NOT NULL,
   `bulan` varchar(20) NOT NULL,
@@ -135,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `d_akun_saldo` (
   PRIMARY KEY (`id_akun`,`bulan`,`tahun`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_akun_saldo: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_akun_saldo: ~2 rows (approximately)
 DELETE FROM `d_akun_saldo`;
 /*!40000 ALTER TABLE `d_akun_saldo` DISABLE KEYS */;
 INSERT INTO `d_akun_saldo` (`id_akun`, `bulan`, `tahun`, `saldo`) VALUES
@@ -143,8 +136,8 @@ INSERT INTO `d_akun_saldo` (`id_akun`, `bulan`, `tahun`, `saldo`) VALUES
 	('1.878787.78', '06', '2018', 7999);
 /*!40000 ALTER TABLE `d_akun_saldo` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_barang_sup
-DROP TABLE IF EXISTS `d_barang_sup`;
+
+-- Dumping structure for table alamrayasite_nabila.d_barang_sup
 CREATE TABLE IF NOT EXISTS `d_barang_sup` (
   `d_bs_itemid` int(11) NOT NULL,
   `d_bs_detailid` int(11) NOT NULL,
@@ -154,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `d_barang_sup` (
   PRIMARY KEY (`d_bs_itemid`,`d_bs_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabel handle data relasi barang dan supplier';
 
--- Dumping data for table nabila.d_barang_sup: ~1,332 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_barang_sup: ~1.332 rows (approximately)
 DELETE FROM `d_barang_sup`;
 /*!40000 ALTER TABLE `d_barang_sup` DISABLE KEYS */;
 INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_created`, `d_bs_updated`) VALUES
@@ -162,7 +155,6 @@ INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_
 	(7, 2, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 3, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 4, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
-	(7, 5, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 6, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 7, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
 	(7, 8, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11'),
@@ -1489,13 +1481,17 @@ INSERT INTO `d_barang_sup` (`d_bs_itemid`, `d_bs_detailid`, `d_bs_supid`, `d_bs_
 	(646, 108, 1, '2018-10-29 17:15:10', '2018-10-29 17:20:21'),
 	(646, 109, 1, '2018-10-29 17:15:10', '2018-10-29 17:20:21'),
 	(646, 110, 1, '2018-10-29 17:15:10', '2018-10-29 17:20:21'),
-	(646, 111, 1, '2018-10-29 17:15:10', '2018-10-29 17:20:21');
+	(646, 111, 1, '2018-10-29 17:15:10', '2018-10-29 17:20:21'),
+	(1412, 5, 1, '2018-10-29 17:13:49', '2018-10-29 17:20:11');
 /*!40000 ALTER TABLE `d_barang_sup` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_delivery_order
-DROP TABLE IF EXISTS `d_delivery_order`;
+
+-- Dumping structure for table alamrayasite_nabila.d_delivery_order
 CREATE TABLE IF NOT EXISTS `d_delivery_order` (
   `do_id` int(11) NOT NULL AUTO_INCREMENT,
+  `do_comp` int(11) DEFAULT NULL,
+  `do_send` int(11) DEFAULT NULL,
+  `do_sendcomp` int(11) DEFAULT NULL,
   `do_nota` varchar(50) DEFAULT NULL,
   `do_date_send` date DEFAULT NULL,
   `do_time` time DEFAULT NULL,
@@ -1503,19 +1499,18 @@ CREATE TABLE IF NOT EXISTS `d_delivery_order` (
   `do_insert` timestamp NULL DEFAULT NULL,
   `do_update` datetime DEFAULT NULL,
   PRIMARY KEY (`do_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_delivery_order: ~3 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_delivery_order: ~1 rows (approximately)
 DELETE FROM `d_delivery_order`;
 /*!40000 ALTER TABLE `d_delivery_order` DISABLE KEYS */;
-INSERT INTO `d_delivery_order` (`do_id`, `do_nota`, `do_date_send`, `do_time`, `do_date_received`, `do_insert`, `do_update`) VALUES
-	(1, 'DO180605-000-1', '2018-06-05', '12:56:05', NULL, '2018-06-05 12:56:05', NULL),
-	(2, 'DO180608-000-2', '2018-06-08', '15:46:43', NULL, '2018-06-08 15:46:43', NULL),
-	(3, 'DO180624-000-3', '2018-06-24', '20:49:10', NULL, '2018-06-24 20:49:10', NULL);
+INSERT INTO `d_delivery_order` (`do_id`, `do_comp`, `do_send`, `do_sendcomp`, `do_nota`, `do_date_send`, `do_time`, `do_date_received`, `do_insert`, `do_update`) VALUES
+	(1, 1, 1, 1, 'DO181203-000-1', '2018-12-03', '09:31:35', NULL, '2018-12-03 09:31:35', NULL),
+	(2, 1, 4, 2, 'DO181203-000-2', '2018-12-03', '09:35:46', NULL, '2018-12-03 09:35:46', NULL);
 /*!40000 ALTER TABLE `d_delivery_order` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_delivery_orderdt
-DROP TABLE IF EXISTS `d_delivery_orderdt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_delivery_orderdt
 CREATE TABLE IF NOT EXISTS `d_delivery_orderdt` (
   `dod_do` int(11) NOT NULL,
   `dod_detailid` tinyint(4) NOT NULL,
@@ -1535,18 +1530,16 @@ CREATE TABLE IF NOT EXISTS `d_delivery_orderdt` (
   CONSTRAINT `FK_d_delivery_orderdt_d_delivery_order` FOREIGN KEY (`dod_do`) REFERENCES `d_delivery_order` (`do_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_delivery_orderdt: ~4 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_delivery_orderdt: ~2 rows (approximately)
 DELETE FROM `d_delivery_orderdt`;
 /*!40000 ALTER TABLE `d_delivery_orderdt` DISABLE KEYS */;
 INSERT INTO `d_delivery_orderdt` (`dod_do`, `dod_detailid`, `dod_prdt_productresult`, `dod_prdt_detail`, `dod_item`, `dod_qty_send`, `dod_date_send`, `dod_time_send`, `dod_qty_received`, `dod_date_received`, `dod_time_received`, `dod_status`, `dod_insert`, `dod_update`) VALUES
-	(1, 1, 1, 1, 320, 10, '2018-06-05', '12:56:05', 10, '2018-06-05', '10:15:00', 'FN', '2018-06-05 12:56:05', '2018-06-05 05:58:21'),
-	(2, 1, 2, 3, 161, 10, '2018-06-08', '15:46:43', 0, NULL, NULL, 'WT', '2018-06-08 15:46:43', NULL),
-	(2, 2, 3, 4, 166, 10, '2018-06-08', '15:46:43', 8, '2018-06-08', '16:20:00', 'WT', '2018-06-08 15:46:43', '2018-06-08 16:16:34'),
-	(3, 1, 1, 1, 326, 60, '2018-06-24', '20:49:10', 0, NULL, NULL, 'WT', '2018-06-24 20:49:10', NULL);
+	(1, 1, 1, 1, 3, 3, '2018-12-03', '09:31:35', 3, '2018-12-03', '00:00:00', 'FN', NULL, '2018-12-03 09:35:07'),
+	(2, 1, 1, 1, 3, 4, '2018-12-03', '09:35:46', 4, '2018-12-03', '00:00:00', 'FN', NULL, '2018-12-03 09:37:14');
 /*!40000 ALTER TABLE `d_delivery_orderdt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_formula
-DROP TABLE IF EXISTS `d_formula`;
+
+-- Dumping structure for table alamrayasite_nabila.d_formula
 CREATE TABLE IF NOT EXISTS `d_formula` (
   `f_id` int(11) DEFAULT NULL,
   `f_detailid` int(11) DEFAULT NULL,
@@ -1559,312 +1552,15 @@ CREATE TABLE IF NOT EXISTS `d_formula` (
   CONSTRAINT `FK_d_formula_m_item` FOREIGN KEY (`f_bb`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_formula: ~298 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_formula: ~0 rows (approximately)
 DELETE FROM `d_formula`;
 /*!40000 ALTER TABLE `d_formula` DISABLE KEYS */;
 INSERT INTO `d_formula` (`f_id`, `f_detailid`, `f_bb`, `f_value`, `f_scale`) VALUES
-	(25, 1, 3, 4000.00, '8'),
-	(25, 2, 48, 30.00, '8'),
-	(25, 3, 7, 1700.00, '13'),
-	(25, 4, 49, 120.00, '8'),
-	(25, 5, 54, 600.00, '13'),
-	(25, 6, 70, 150.00, '8'),
-	(25, 7, 71, 40.00, '8'),
-	(25, 8, 136, 8.00, '6'),
-	(25, 9, 646, 5.00, '8'),
-	(1, 1, 3, 4000.00, '8'),
-	(1, 2, 48, 30.00, '8'),
-	(1, 3, 49, 120.00, '8'),
-	(1, 4, 7, 1700.00, '13'),
-	(1, 5, 54, 600.00, '13'),
-	(1, 6, 70, 150.00, '8'),
-	(1, 7, 71, 40.00, '8'),
-	(1, 8, 646, 5.00, '8'),
-	(1, 9, 273, 3.00, '10'),
-	(1, 10, 274, 63.00, '1'),
-	(2, 1, 3, 4000.00, '8'),
-	(2, 2, 48, 30.00, '8'),
-	(2, 3, 49, 120.00, '8'),
-	(2, 4, 7, 1700.00, '13'),
-	(2, 5, 54, 600.00, '13'),
-	(2, 6, 58, 8.00, '10'),
-	(2, 7, 70, 150.00, '8'),
-	(2, 8, 71, 40.00, '8'),
-	(2, 9, 75, 168.00, '1'),
-	(2, 10, 646, 5.00, '8'),
-	(3, 1, 3, 4000.00, '8'),
-	(3, 2, 48, 30.00, '8'),
-	(3, 3, 49, 120.00, '8'),
-	(3, 4, 7, 1700.00, '13'),
-	(3, 5, 54, 600.00, '13'),
-	(3, 6, 60, 5.00, '10'),
-	(3, 7, 70, 150.00, '8'),
-	(3, 8, 71, 40.00, '8'),
-	(3, 9, 73, 105.00, '10'),
-	(3, 10, 646, 5.00, '8'),
-	(4, 1, 3, 3500.00, '8'),
-	(4, 2, 48, 30.00, '8'),
-	(4, 3, 49, 120.00, '8'),
-	(4, 4, 7, 1700.00, '13'),
-	(4, 5, 54, 600.00, '13'),
-	(4, 6, 59, 6.00, '10'),
-	(4, 7, 70, 150.00, '8'),
-	(4, 8, 71, 40.00, '8'),
-	(4, 9, 74, 126.00, '1'),
-	(4, 10, 139, 1.50, '3'),
-	(5, 1, 3, 3500.00, '8'),
-	(5, 2, 48, 30.00, '8'),
-	(5, 3, 49, 120.00, '8'),
-	(5, 4, 7, 1700.00, '13'),
-	(5, 5, 54, 600.00, '13'),
-	(5, 6, 59, 6.00, '10'),
-	(5, 7, 70, 150.00, '8'),
-	(5, 8, 71, 40.00, '8'),
-	(5, 9, 74, 126.00, '1'),
-	(5, 10, 125, 350.00, '8'),
-	(6, 1, 3, 4000.00, '8'),
-	(6, 2, 45, 1.00, '9'),
-	(6, 3, 48, 30.00, '8'),
-	(6, 4, 49, 300.00, '8'),
-	(6, 5, 7, 1700.00, '13'),
-	(6, 6, 13, 8.00, '14'),
-	(6, 7, 54, 600.00, '13'),
-	(6, 8, 59, 6.00, '10'),
-	(6, 9, 70, 150.00, '8'),
-	(6, 10, 71, 40.00, '8'),
-	(7, 1, 74, 126.00, '1'),
-	(8, 1, 3, 4000.00, '8'),
-	(8, 2, 4, 6.00, '1'),
-	(8, 3, 48, 30.00, '8'),
-	(8, 4, 49, 300.00, '8'),
-	(8, 5, 7, 1700.00, '13'),
-	(8, 6, 54, 600.00, '13'),
-	(8, 7, 59, 6.00, '10'),
-	(8, 8, 70, 150.00, '8'),
-	(8, 9, 71, 40.00, '8'),
-	(8, 10, 74, 126.00, '1'),
-	(9, 1, 3, 4000.00, '8'),
-	(9, 2, 48, 20.00, '8'),
-	(9, 3, 7, 1700.00, '13'),
-	(9, 4, 49, 150.00, '8'),
-	(9, 5, 54, 600.00, '13'),
-	(9, 6, 57, 4.00, '10'),
-	(9, 7, 63, 84.00, '1'),
-	(9, 8, 71, 50.00, '8'),
-	(9, 9, 116, 200.00, '3'),
-	(9, 10, 126, 15.00, '3'),
-	(10, 1, 3, 4000.00, '8'),
-	(10, 2, 48, 20.00, '8'),
-	(10, 3, 49, 600.00, '8'),
-	(10, 4, 7, 1700.00, '13'),
-	(10, 5, 54, 600.00, '13'),
-	(10, 6, 57, 4.00, '10'),
-	(10, 7, 63, 84.00, '1'),
-	(10, 8, 71, 40.00, '8'),
-	(10, 9, 646, 5.00, '8'),
-	(11, 1, 3, 4000.00, '8'),
-	(11, 2, 48, 20.00, '8'),
-	(11, 3, 7, 1700.00, '13'),
-	(11, 4, 49, 600.00, '8'),
-	(11, 5, 54, 600.00, '13'),
-	(11, 6, 60, 5.00, '10'),
-	(11, 7, 71, 40.00, '8'),
-	(11, 8, 73, 105.00, '10'),
-	(11, 9, 646, 5.00, '8'),
-	(12, 1, 3, 4000.00, '8'),
-	(12, 2, 48, 20.00, '8'),
-	(12, 3, 7, 1700.00, '13'),
-	(12, 4, 49, 600.00, '8'),
-	(12, 5, 54, 600.00, '13'),
-	(12, 6, 59, 6.00, '10'),
-	(12, 7, 71, 40.00, '8'),
-	(12, 8, 74, 126.00, '1'),
-	(12, 9, 646, 5.00, '8'),
-	(13, 1, 3, 4000.00, '8'),
-	(13, 2, 48, 30.00, '8'),
-	(13, 3, 49, 130.00, '8'),
-	(13, 4, 7, 1700.00, '13'),
-	(13, 5, 54, 600.00, '13'),
-	(13, 6, 18, 5.00, '3'),
-	(13, 7, 19, 20.00, '3'),
-	(13, 8, 57, 4.00, '10'),
-	(13, 9, 63, 84.00, '1'),
-	(13, 10, 70, 150.00, '8'),
-	(14, 1, 3, 4000.00, '8'),
-	(14, 2, 48, 30.00, '8'),
-	(14, 3, 49, 130.00, '8'),
-	(14, 4, 7, 1700.00, '13'),
-	(14, 5, 54, 600.00, '13'),
-	(14, 6, 18, 5.00, '3'),
-	(14, 7, 19, 20.00, '3'),
-	(14, 8, 60, 5.00, '10'),
-	(14, 9, 70, 150.00, '8'),
-	(14, 10, 71, 40.00, '8'),
-	(15, 1, 3, 4000.00, '8'),
-	(15, 2, 48, 30.00, '8'),
-	(15, 3, 7, 600.00, '13'),
-	(15, 4, 49, 120.00, '8'),
-	(15, 5, 54, 600.00, '13'),
-	(15, 6, 57, 4.00, '10'),
-	(15, 7, 63, 84.00, '1'),
-	(15, 8, 70, 150.00, '8'),
-	(15, 9, 71, 40.00, '8'),
-	(15, 10, 136, 8.00, '6'),
-	(16, 1, 3, 4000.00, '8'),
-	(16, 2, 48, 30.00, '8'),
-	(16, 3, 7, 1700.00, '13'),
-	(16, 4, 49, 120.00, '8'),
-	(16, 5, 54, 600.00, '13'),
-	(16, 6, 57, 4.00, '10'),
-	(16, 7, 63, 84.00, '1'),
-	(16, 8, 70, 150.00, '8'),
-	(16, 9, 71, 40.00, '8'),
-	(16, 10, 135, 8.00, '6'),
-	(17, 1, 3, 4000.00, '8'),
-	(17, 2, 48, 30.00, '8'),
-	(17, 3, 49, 120.00, '8'),
-	(17, 4, 7, 1700.00, '13'),
-	(17, 5, 54, 600.00, '13'),
-	(17, 6, 57, 4.00, '10'),
-	(17, 7, 63, 84.00, '1'),
-	(17, 8, 70, 150.00, '8'),
-	(17, 9, 71, 40.00, '8'),
-	(17, 10, 121, 8.00, '4'),
-	(18, 1, 3, 4000.00, '8'),
-	(18, 2, 48, 30.00, '8'),
-	(18, 3, 49, 120.00, '8'),
-	(18, 4, 7, 1700.00, '13'),
-	(18, 5, 54, 600.00, '13'),
-	(18, 6, 57, 4.00, '10'),
-	(18, 7, 63, 84.00, '1'),
-	(18, 8, 70, 150.00, '8'),
-	(18, 9, 128, 12.00, '6'),
-	(18, 10, 646, 5.00, '8'),
-	(19, 1, 3, 4000.00, '8'),
-	(19, 2, 48, 30.00, '8'),
-	(19, 3, 49, 600.00, '8'),
-	(19, 4, 7, 1700.00, '13'),
-	(19, 5, 54, 600.00, '13'),
-	(19, 6, 57, 4.00, '10'),
-	(19, 7, 63, 84.00, '1'),
-	(19, 8, 128, 12.00, '6'),
-	(19, 9, 646, 5.00, '8'),
-	(20, 1, 3, 4000.00, '8'),
-	(20, 2, 48, 30.00, '8'),
-	(20, 3, 49, 600.00, '8'),
-	(20, 4, 7, 1700.00, '13'),
-	(20, 5, 54, 600.00, '13'),
-	(20, 6, 60, 5.00, '10'),
-	(20, 7, 73, 105.00, '10'),
-	(20, 8, 128, 12.00, '6'),
-	(20, 9, 646, 5.00, '8'),
-	(21, 1, 3, 4000.00, '8'),
-	(21, 2, 48, 30.00, '8'),
-	(21, 3, 49, 600.00, '8'),
-	(21, 4, 7, 1700.00, '13'),
-	(21, 5, 54, 600.00, '13'),
-	(21, 6, 59, 6.00, '10'),
-	(21, 7, 74, 126.00, '1'),
-	(21, 8, 128, 12.00, '6'),
-	(21, 9, 646, 5.00, '8'),
-	(22, 1, 3, 4000.00, '8'),
-	(22, 2, 48, 30.00, '8'),
-	(22, 3, 49, 120.00, '8'),
-	(22, 4, 7, 1700.00, '13'),
-	(22, 5, 54, 600.00, '13'),
-	(22, 6, 59, 6.00, '10'),
-	(22, 7, 70, 150.00, '8'),
-	(22, 8, 74, 126.00, '1'),
-	(22, 9, 128, 12.00, '6'),
-	(22, 10, 646, 5.00, '8'),
-	(23, 1, 3, 4000.00, '8'),
-	(23, 2, 48, 30.00, '8'),
-	(23, 3, 49, 120.00, '8'),
-	(23, 4, 7, 1700.00, '13'),
-	(23, 5, 54, 600.00, '13'),
-	(23, 6, 59, 5.00, '10'),
-	(23, 7, 70, 150.00, '8'),
-	(23, 8, 71, 40.00, '8'),
-	(23, 9, 74, 105.00, '1'),
-	(23, 10, 646, 5.00, '8'),
-	(24, 1, 3, 4000.00, '8'),
-	(24, 2, 48, 30.00, '8'),
-	(24, 3, 49, 120.00, '8'),
-	(24, 4, 7, 1700.00, '13'),
-	(24, 5, 54, 600.00, '13'),
-	(24, 6, 60, 5.00, '10'),
-	(24, 7, 70, 150.00, '8'),
-	(24, 8, 73, 105.00, '10'),
-	(24, 9, 128, 12.00, '6'),
-	(24, 10, 646, 5.00, '8'),
-	(26, 1, 3, 4000.00, '8'),
-	(26, 2, 48, 30.00, '8'),
-	(26, 3, 49, 120.00, '8'),
-	(26, 4, 7, 1700.00, '13'),
-	(26, 5, 54, 600.00, '13'),
-	(26, 6, 60, 5.00, '10'),
-	(26, 7, 70, 150.00, '8'),
-	(26, 8, 71, 40.00, '8'),
-	(26, 9, 73, 105.00, '10'),
-	(26, 10, 135, 8.00, '6'),
-	(27, 1, 3, 4000.00, '8'),
-	(27, 2, 48, 30.00, '8'),
-	(27, 3, 7, 1700.00, '13'),
-	(27, 4, 49, 120.00, '8'),
-	(27, 5, 54, 600.00, '13'),
-	(27, 6, 60, 5.00, '10'),
-	(27, 7, 70, 150.00, '8'),
-	(27, 8, 71, 40.00, '8'),
-	(27, 9, 73, 105.00, '10'),
-	(27, 10, 121, 8.00, '4'),
-	(29, 1, 3, 4000.00, '8'),
-	(29, 2, 48, 30.00, '8'),
-	(29, 3, 7, 1700.00, '13'),
-	(29, 4, 49, 120.00, '8'),
-	(29, 5, 54, 600.00, '13'),
-	(29, 6, 59, 6.00, '10'),
-	(29, 7, 70, 150.00, '8'),
-	(29, 8, 71, 40.00, '8'),
-	(29, 9, 74, 126.00, '1'),
-	(29, 10, 142, 1.00, '1'),
-	(30, 1, 3, 4000.00, '8'),
-	(30, 2, 48, 30.00, '8'),
-	(30, 3, 49, 120.00, '8'),
-	(30, 4, 7, 1700.00, '13'),
-	(30, 5, 54, 600.00, '13'),
-	(30, 6, 59, 6.00, '10'),
-	(30, 7, 70, 150.00, '8'),
-	(30, 8, 74, 126.00, '1'),
-	(30, 9, 119, 1.00, '4'),
-	(30, 10, 128, 12.00, '6'),
-	(31, 1, 3, 4000.00, '8'),
-	(31, 2, 45, 2.00, '9'),
-	(31, 3, 5, 1.00, '6'),
-	(31, 4, 48, 30.00, '8'),
-	(31, 5, 7, 1700.00, '13'),
-	(31, 6, 49, 120.00, '8'),
-	(31, 7, 9, 500.00, '8'),
-	(31, 8, 54, 600.00, '13'),
-	(31, 9, 59, 6.00, '10'),
-	(31, 10, 70, 150.00, '8'),
-	(28, 1, 3, 4000.00, '8'),
-	(28, 2, 48, 30.00, '8'),
-	(28, 3, 49, 600.00, '8'),
-	(28, 4, 7, 1700.00, '13'),
-	(28, 5, 54, 600.00, '13'),
-	(28, 6, 60, 5.00, '10'),
-	(28, 7, 71, 40.00, '8'),
-	(28, 8, 73, 105.00, '10'),
-	(28, 9, 121, 8.00, '4'),
-	(28, 10, 646, 5.00, '8'),
-	(32, 1, 3, 10.00, '8'),
-	(32, 2, 70, 5.00, '8'),
-	(33, 1, 1, 1.00, '4'),
-	(33, 2, 1412, 10.00, '4');
+	(1, 1, 1412, 10.00, '4');
 /*!40000 ALTER TABLE `d_formula` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_formula_result
-DROP TABLE IF EXISTS `d_formula_result`;
+
+-- Dumping structure for table alamrayasite_nabila.d_formula_result
 CREATE TABLE IF NOT EXISTS `d_formula_result` (
   `fr_id` int(11) NOT NULL AUTO_INCREMENT,
   `fr_adonan` int(11) NOT NULL,
@@ -1875,49 +1571,17 @@ CREATE TABLE IF NOT EXISTS `d_formula_result` (
   PRIMARY KEY (`fr_id`,`fr_adonan`),
   UNIQUE KEY `fr_adonan` (`fr_adonan`),
   CONSTRAINT `FK_d_formula_result_m_item` FOREIGN KEY (`fr_adonan`) REFERENCES `m_item` (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_formula_result: ~33 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_formula_result: ~0 rows (approximately)
 DELETE FROM `d_formula_result`;
 /*!40000 ALTER TABLE `d_formula_result` DISABLE KEYS */;
 INSERT INTO `d_formula_result` (`fr_id`, `fr_adonan`, `fr_result`, `fr_scale`, `fr_updated`, `fr_created`) VALUES
-	(1, 299, 3.00, '1', '2018-08-16 02:12:08', '2018-08-16 02:12:08'),
-	(2, 297, 8.00, '1', '2018-08-16 02:13:21', '2018-08-16 02:13:21'),
-	(3, 301, 5.00, '1', '2018-08-16 02:15:35', '2018-08-16 02:15:35'),
-	(4, 331, 6.00, '1', '2018-08-16 02:16:55', '2018-08-16 02:16:55'),
-	(5, 327, 6.00, '1', '2018-08-16 02:17:40', '2018-08-16 02:17:40'),
-	(6, 325, 6.00, '1', '2018-08-16 02:20:40', '2018-08-16 02:20:40'),
-	(7, 328, 6.00, '1', '2018-08-16 02:25:21', '2018-08-16 02:25:21'),
-	(8, 332, 6.00, '1', '2018-08-16 02:27:24', '2018-08-16 02:27:24'),
-	(9, 311, 4.00, '1', '2018-08-16 02:28:09', '2018-08-16 02:28:09'),
-	(10, 302, 4.00, '1', '2018-08-16 02:28:54', '2018-08-16 02:28:54'),
-	(11, 396, 5.00, '1', '2018-08-16 02:29:53', '2018-08-16 02:29:53'),
-	(12, 304, 6.00, '1', '2018-08-16 02:31:20', '2018-08-16 02:31:20'),
-	(13, 165, 4.00, '1', '2018-08-16 02:35:00', '2018-08-16 02:35:00'),
-	(14, 3, 5.00, '1', '2018-08-16 02:35:48', '2018-08-16 02:35:48'),
-	(15, 337, 4.00, '1', '2018-08-16 02:38:19', '2018-08-16 02:38:19'),
-	(16, 339, 4.00, '1', '2018-08-16 02:39:13', '2018-08-16 02:39:13'),
-	(17, 356, 4.00, '1', '2018-08-16 02:39:57', '2018-08-16 02:39:57'),
-	(18, 347, 4.00, '1', '2018-08-16 02:42:09', '2018-08-16 02:42:09'),
-	(19, 335, 4.00, '1', '2018-08-16 02:43:13', '2018-08-16 02:43:13'),
-	(20, 361, 5.00, '1', '2018-08-16 02:44:24', '2018-08-16 02:44:24'),
-	(21, 352, 6.00, '1', '2018-08-16 02:46:14', '2018-08-16 02:46:14'),
-	(22, 344, 6.00, '1', '2018-08-16 02:46:55', '2018-08-16 02:46:55'),
-	(23, 161, 5.00, '1', '2018-08-16 02:48:24', '2018-08-16 02:48:24'),
-	(24, 343, 5.00, '1', '2018-08-16 02:49:14', '2018-08-16 02:49:14'),
-	(25, 338, 5.00, '1', NULL, '2018-08-13 04:31:34'),
-	(26, 340, 5.00, '1', '2018-08-16 02:51:01', '2018-08-16 02:51:01'),
-	(27, 359, 5.00, '1', '2018-08-16 02:52:16', '2018-08-16 02:52:16'),
-	(28, 367, 5.00, '1', '2018-08-18 03:38:26', '2018-08-18 03:38:26'),
-	(29, 326, 6.00, '1', '2018-08-16 04:16:54', '2018-08-16 04:16:54'),
-	(30, 350, 6.00, '1', '2018-08-16 04:19:01', '2018-08-16 04:19:01'),
-	(31, 324, 6.00, '1', '2018-08-16 04:20:20', '2018-08-16 04:20:20'),
-	(32, 183, 3.00, '1', NULL, '2018-10-19 20:03:54'),
-	(33, 407, 10.00, '4', '2018-11-07 03:44:40', '2018-11-07 03:44:40');
+	(1, 3, 5.00, '3', NULL, '2018-12-03 08:46:56');
 /*!40000 ALTER TABLE `d_formula_result` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_group
-DROP TABLE IF EXISTS `d_group`;
+
+-- Dumping structure for table alamrayasite_nabila.d_group
 CREATE TABLE IF NOT EXISTS `d_group` (
   `g_id` int(11) NOT NULL,
   `g_name` varchar(30) DEFAULT NULL,
@@ -1925,15 +1589,15 @@ CREATE TABLE IF NOT EXISTS `d_group` (
   UNIQUE KEY `g_name` (`g_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='nama group';
 
--- Dumping data for table nabila.d_group: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_group: ~0 rows (approximately)
 DELETE FROM `d_group`;
 /*!40000 ALTER TABLE `d_group` DISABLE KEYS */;
 INSERT INTO `d_group` (`g_id`, `g_name`) VALUES
 	(1, 'ke');
 /*!40000 ALTER TABLE `d_group` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_group_access
-DROP TABLE IF EXISTS `d_group_access`;
+
+-- Dumping structure for table alamrayasite_nabila.d_group_access
 CREATE TABLE IF NOT EXISTS `d_group_access` (
   `ga_access` int(11) NOT NULL,
   `ga_group` int(11) NOT NULL,
@@ -1947,7 +1611,7 @@ CREATE TABLE IF NOT EXISTS `d_group_access` (
   CONSTRAINT `FK_d_group_access_d_group` FOREIGN KEY (`ga_group`) REFERENCES `d_group` (`g_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_group_access: ~67 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_group_access: ~67 rows (approximately)
 DELETE FROM `d_group_access`;
 /*!40000 ALTER TABLE `d_group_access` DISABLE KEYS */;
 INSERT INTO `d_group_access` (`ga_access`, `ga_group`, `ga_read`, `ga_insert`, `ga_update`, `ga_delete`) VALUES
@@ -2020,8 +1684,8 @@ INSERT INTO `d_group_access` (`ga_access`, `ga_group`, `ga_read`, `ga_insert`, `
 	(67, 1, 'N', 'N', 'N', 'N');
 /*!40000 ALTER TABLE `d_group_access` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_gudangcabang
-DROP TABLE IF EXISTS `d_gudangcabang`;
+
+-- Dumping structure for table alamrayasite_nabila.d_gudangcabang
 CREATE TABLE IF NOT EXISTS `d_gudangcabang` (
   `gc_id` int(11) NOT NULL AUTO_INCREMENT,
   `gc_gudang` varchar(30) NOT NULL COMMENT 'GC : GUDANG CUSTOMER | GG : GUDANG GROSIR | GR : GUDANG RETAIL | GS : GUDANG SENDING | GP : GUDANG PRODUKSI | GB : GUDANG BAHAN BAKU',
@@ -2033,9 +1697,9 @@ CREATE TABLE IF NOT EXISTS `d_gudangcabang` (
   KEY `FK_d_gudangcabang_m_gudang` (`gc_gudang`),
   CONSTRAINT `FK_d_gudangcabang_m_comp` FOREIGN KEY (`gc_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_d_gudangcabang_m_gudang` FOREIGN KEY (`gc_gudang`) REFERENCES `m_gudang` (`g_name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_gudangcabang: ~7 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_gudangcabang: ~8 rows (approximately)
 DELETE FROM `d_gudangcabang`;
 /*!40000 ALTER TABLE `d_gudangcabang` DISABLE KEYS */;
 INSERT INTO `d_gudangcabang` (`gc_id`, `gc_gudang`, `gc_comp`, `gc_insert`, `gc_update`) VALUES
@@ -2046,11 +1710,12 @@ INSERT INTO `d_gudangcabang` (`gc_id`, `gc_gudang`, `gc_comp`, `gc_insert`, `gc_
 	(5, 'GUDANG PRODUKSI', 1, NULL, NULL),
 	(6, 'GUDANG PEMBELIAN', 1, NULL, NULL),
 	(7, 'GUDANG BAHAN BAKU', 1, NULL, NULL),
-	(8, 'GUDANG BAHAN BAKU', 2, NULL, NULL);
+	(8, 'GUDANG BAHAN BAKU', 2, NULL, NULL),
+	(9, 'GUDANG SENDING', 1, NULL, NULL);
 /*!40000 ALTER TABLE `d_gudangcabang` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_itemtitipan_dt
-DROP TABLE IF EXISTS `d_itemtitipan_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_itemtitipan_dt
 CREATE TABLE IF NOT EXISTS `d_itemtitipan_dt` (
   `idt_itemtitipan` int(11) NOT NULL,
   `idt_detailid` int(11) NOT NULL,
@@ -2072,13 +1737,15 @@ CREATE TABLE IF NOT EXISTS `d_itemtitipan_dt` (
   CONSTRAINT `FK_d_itemtitipan_dt_d_item_titipan` FOREIGN KEY (`idt_itemtitipan`) REFERENCES `d_item_titipan` (`it_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_itemtitipan_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_itemtitipan_dt: ~0 rows (approximately)
 DELETE FROM `d_itemtitipan_dt`;
 /*!40000 ALTER TABLE `d_itemtitipan_dt` DISABLE KEYS */;
+INSERT INTO `d_itemtitipan_dt` (`idt_itemtitipan`, `idt_detailid`, `idt_date`, `idt_comp`, `idt_position`, `idt_item`, `idt_qty`, `idt_sisa`, `idt_terjual`, `idt_return_qty`, `idt_return_titip`, `idt_price`, `idt_action`, `idt_status`, `idt_created`, `idt_updated`) VALUES
+	(1, 1, '2018-12-04', 1, 1, 1419, 109.00, NULL, NULL, 0.00, NULL, 5000.00, NULL, 'Y', '2018-12-04 05:59:11', '2018-12-04 05:59:11');
 /*!40000 ALTER TABLE `d_itemtitipan_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_itemtitip_dt
-DROP TABLE IF EXISTS `d_itemtitip_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_itemtitip_dt
 CREATE TABLE IF NOT EXISTS `d_itemtitip_dt` (
   `idt_itemtitip` int(11) NOT NULL,
   `idt_detailid` int(11) NOT NULL,
@@ -2096,13 +1763,18 @@ CREATE TABLE IF NOT EXISTS `d_itemtitip_dt` (
   CONSTRAINT `FK_d_itemtitip_dt_d_item_titip` FOREIGN KEY (`idt_itemtitip`) REFERENCES `d_item_titip` (`it_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_itemtitip_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_itemtitip_dt: ~4 rows (approximately)
 DELETE FROM `d_itemtitip_dt`;
 /*!40000 ALTER TABLE `d_itemtitip_dt` DISABLE KEYS */;
+INSERT INTO `d_itemtitip_dt` (`idt_itemtitip`, `idt_detailid`, `idt_date`, `idt_item`, `idt_qty`, `idt_terjual`, `idt_return`, `idt_comp`, `idt_position`, `idt_price`, `idt_created`, `idt_updated`) VALUES
+	(1, 1, '2018-11-30', 3, 10.00, 5.00, 5.00, 1, 1, 8000.00, '2018-11-30 02:59:21', '2018-11-30 03:01:31'),
+	(1, 2, '2018-11-30', 75, 10.00, 5.00, 5.00, 1, 1, 8000.00, '2018-11-30 02:59:21', '2018-11-30 03:01:31'),
+	(2, 1, '2018-12-04', 1419, 100.00, 45.00, 55.00, 1, 1, 100.00, '2018-12-04 06:01:38', '2018-12-04 06:03:43'),
+	(3, 1, '2018-12-04', 1419, 9.00, 8.00, 1.00, 1, 1, 100.00, '2018-12-04 06:05:22', '2018-12-04 06:05:35');
 /*!40000 ALTER TABLE `d_itemtitip_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_item_supplier
-DROP TABLE IF EXISTS `d_item_supplier`;
+
+-- Dumping structure for table alamrayasite_nabila.d_item_supplier
 CREATE TABLE IF NOT EXISTS `d_item_supplier` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `is_item` int(11) DEFAULT NULL,
@@ -2112,9 +1784,9 @@ CREATE TABLE IF NOT EXISTS `d_item_supplier` (
   `is_created` timestamp NULL DEFAULT NULL,
   `is_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`is_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_item_supplier: ~5 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_item_supplier: ~8 rows (approximately)
 DELETE FROM `d_item_supplier`;
 /*!40000 ALTER TABLE `d_item_supplier` DISABLE KEYS */;
 INSERT INTO `d_item_supplier` (`is_id`, `is_item`, `is_supplier`, `is_price`, `is_active`, `is_created`, `is_updated`) VALUES
@@ -2122,11 +1794,15 @@ INSERT INTO `d_item_supplier` (`is_id`, `is_item`, `is_supplier`, `is_price`, `i
 	(2, 9, 20, 6000.00, 'Y', NULL, NULL),
 	(3, 10, 20, 7000.00, 'Y', NULL, NULL),
 	(4, 11, 21, 5000.00, 'Y', NULL, NULL),
-	(5, 11, 20, 5000.00, 'Y', NULL, NULL);
+	(5, 1412, 1, 5000.00, 'Y', NULL, '2018-12-10 09:12:42'),
+	(6, 3, 1, 0.00, 'Y', '2018-12-03 04:05:45', '2018-12-04 02:08:19'),
+	(7, 1419, 1, 5000.00, 'Y', '2018-12-03 04:26:34', '2018-12-03 04:32:47'),
+	(8, 396, 1, 0.00, 'Y', '2018-12-04 02:08:19', '2018-12-04 02:08:19'),
+	(9, 1415, 1, 0.00, 'Y', '2018-12-10 09:11:08', '2018-12-10 09:11:08');
 /*!40000 ALTER TABLE `d_item_supplier` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_item_titip
-DROP TABLE IF EXISTS `d_item_titip`;
+
+-- Dumping structure for table alamrayasite_nabila.d_item_titip
 CREATE TABLE IF NOT EXISTS `d_item_titip` (
   `it_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_code` varchar(50) NOT NULL DEFAULT '0',
@@ -2140,15 +1816,19 @@ CREATE TABLE IF NOT EXISTS `d_item_titip` (
   `it_created` datetime DEFAULT NULL,
   `it_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`it_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_item_titip: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_item_titip: ~3 rows (approximately)
 DELETE FROM `d_item_titip`;
 /*!40000 ALTER TABLE `d_item_titip` DISABLE KEYS */;
+INSERT INTO `d_item_titip` (`it_id`, `it_code`, `it_comp`, `it_date`, `it_toko`, `it_status`, `it_total`, `it_bayar`, `it_keterangan`, `it_created`, `it_updated`) VALUES
+	(1, 'TTN-1811-00001', 1, '2018-11-30', NULL, 'terima', 160000.00, NULL, 'ewe', '2018-11-30 02:59:21', '2018-11-30 03:01:31'),
+	(2, 'TTN-1812-00001', 1, '2018-12-04', NULL, 'terima', 10000.00, NULL, NULL, '2018-12-04 06:01:38', '2018-12-04 06:03:43'),
+	(3, 'TTN-1812-00002', 1, '2018-12-04', NULL, 'terima', 900.00, NULL, 'mahmud', '2018-12-04 06:05:20', '2018-12-04 06:05:35');
 /*!40000 ALTER TABLE `d_item_titip` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_item_titipan
-DROP TABLE IF EXISTS `d_item_titipan`;
+
+-- Dumping structure for table alamrayasite_nabila.d_item_titipan
 CREATE TABLE IF NOT EXISTS `d_item_titipan` (
   `it_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_comp` int(11) NOT NULL DEFAULT '0',
@@ -2171,15 +1851,17 @@ CREATE TABLE IF NOT EXISTS `d_item_titipan` (
   KEY `FK_d_item_titipan_m_supplier` (`it_supplier`),
   CONSTRAINT `FK_d_item_titipan_m_comp` FOREIGN KEY (`it_comp`) REFERENCES `m_comp` (`c_id`),
   CONSTRAINT `FK_d_item_titipan_m_supplier` FOREIGN KEY (`it_supplier`) REFERENCES `m_supplier` (`s_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_item_titipan: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_item_titipan: ~1 rows (approximately)
 DELETE FROM `d_item_titipan`;
 /*!40000 ALTER TABLE `d_item_titipan` DISABLE KEYS */;
+INSERT INTO `d_item_titipan` (`it_id`, `it_comp`, `it_code`, `it_status`, `it_supplier`, `it_date`, `it_toko`, `it_note`, `it_total`, `it_disc`, `it_bayar`, `it_jurnal`, `it_keterangan`, `it_created`, `it_updated`) VALUES
+	(1, 1, 'IT-1812-00001', '0', 1, '2018-12-04', NULL, NULL, 545000.00, NULL, NULL, NULL, 'kakak', '2018-12-04 05:59:11', '2018-12-04 05:59:11');
 /*!40000 ALTER TABLE `d_item_titipan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_konversi_satuan
-DROP TABLE IF EXISTS `d_konversi_satuan`;
+
+-- Dumping structure for table alamrayasite_nabila.d_konversi_satuan
 CREATE TABLE IF NOT EXISTS `d_konversi_satuan` (
   `ks_id` int(11) NOT NULL AUTO_INCREMENT,
   `ks_primary` int(11) DEFAULT NULL,
@@ -2191,13 +1873,13 @@ CREATE TABLE IF NOT EXISTS `d_konversi_satuan` (
   PRIMARY KEY (`ks_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_konversi_satuan: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_konversi_satuan: ~0 rows (approximately)
 DELETE FROM `d_konversi_satuan`;
 /*!40000 ALTER TABLE `d_konversi_satuan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_konversi_satuan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mem
-DROP TABLE IF EXISTS `d_mem`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mem
 CREATE TABLE IF NOT EXISTS `d_mem` (
   `m_id` varchar(10) NOT NULL,
   `m_username` varchar(20) DEFAULT NULL,
@@ -2213,18 +1895,18 @@ CREATE TABLE IF NOT EXISTS `d_mem` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_mem: ~4 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mem: ~4 rows (approximately)
 DELETE FROM `d_mem`;
 /*!40000 ALTER TABLE `d_mem` DISABLE KEYS */;
 INSERT INTO `d_mem` (`m_id`, `m_username`, `m_passwd`, `m_name`, `m_birth_tgl`, `m_addr`, `m_reff`, `m_lastlogin`, `m_lastlogout`, `m_insert`, `m_update`) VALUES
-	('1', 'thoriq', '47e3896af5f3d18dbce321283dd9af0197f8c0e4', 'shitta', '2018-03-28', NULL, NULL, '2018-03-28 08:24:54', '2018-03-28 08:24:53', '2018-03-28 08:24:50', '2018-04-09 20:30:36'),
+	('1', 'Nabila', '47e3896af5f3d18dbce321283dd9af0197f8c0e4', 'Nabila', '2018-03-28', NULL, NULL, '2018-03-28 08:24:54', '2018-03-28 08:24:53', '2018-03-28 08:24:50', '2018-12-03 14:47:59'),
 	('2', 'shitta', '47e3896af5f3d18dbce321283dd9af0197f8c0e4', 'dfd', '2018-05-02', NULL, NULL, '2018-05-02 16:22:44', '2018-05-02 16:22:53', '2018-04-10 07:24:47', '2018-05-02 16:22:54'),
 	('3', 'APRIL', '47e3896af5f3d18dbce321283dd9af0197f8c0e4', 'APRIL', '2018-03-28', NULL, NULL, '2018-03-28 08:24:54', '2018-03-28 08:24:53', '2018-03-28 08:24:50', '2018-10-25 09:55:13'),
 	('4', 'mahmud', '47e3896af5f3d18dbce321283dd9af0197f8c0e4', 'sds', '2018-05-02', NULL, NULL, '2018-05-02 16:22:45', '2018-05-02 16:22:47', '2018-04-10 07:31:19', '2018-05-02 16:22:50');
 /*!40000 ALTER TABLE `d_mem` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mem_access
-DROP TABLE IF EXISTS `d_mem_access`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mem_access
 CREATE TABLE IF NOT EXISTS `d_mem_access` (
   `ma_id` int(11) NOT NULL AUTO_INCREMENT,
   `ma_mem` varchar(10) DEFAULT NULL,
@@ -2242,13 +1924,13 @@ CREATE TABLE IF NOT EXISTS `d_mem_access` (
   CONSTRAINT `FK_d_mem_acces_d_mem` FOREIGN KEY (`ma_mem`) REFERENCES `d_mem` (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='menampung akses user';
 
--- Dumping data for table nabila.d_mem_access: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mem_access: ~0 rows (approximately)
 DELETE FROM `d_mem_access`;
 /*!40000 ALTER TABLE `d_mem_access` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mem_access` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mem_comp
-DROP TABLE IF EXISTS `d_mem_comp`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mem_comp
 CREATE TABLE IF NOT EXISTS `d_mem_comp` (
   `mc_mem` varchar(10) NOT NULL,
   `mc_comp` int(11) NOT NULL,
@@ -2262,7 +1944,7 @@ CREATE TABLE IF NOT EXISTS `d_mem_comp` (
   CONSTRAINT `FK_d_mem_comp_m_comp` FOREIGN KEY (`mc_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_mem_comp: ~3 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mem_comp: ~3 rows (approximately)
 DELETE FROM `d_mem_comp`;
 /*!40000 ALTER TABLE `d_mem_comp` DISABLE KEYS */;
 INSERT INTO `d_mem_comp` (`mc_mem`, `mc_comp`, `mc_lvl`, `mc_active`, `mc_insert`, `mc_update`) VALUES
@@ -2271,8 +1953,8 @@ INSERT INTO `d_mem_comp` (`mc_mem`, `mc_comp`, `mc_lvl`, `mc_active`, `mc_insert
 	('3', 1, NULL, 'Y', NULL, '2018-09-06 16:08:01');
 /*!40000 ALTER TABLE `d_mem_comp` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mem_gudangcomp
-DROP TABLE IF EXISTS `d_mem_gudangcomp`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mem_gudangcomp
 CREATE TABLE IF NOT EXISTS `d_mem_gudangcomp` (
   `mg_mem` varchar(50) NOT NULL,
   `mg_gudangcomp` int(11) NOT NULL,
@@ -2284,13 +1966,13 @@ CREATE TABLE IF NOT EXISTS `d_mem_gudangcomp` (
   CONSTRAINT `FK_d_mem_gudangcomp_d_mem` FOREIGN KEY (`mg_mem`) REFERENCES `d_mem` (`m_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_mem_gudangcomp: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mem_gudangcomp: ~0 rows (approximately)
 DELETE FROM `d_mem_gudangcomp`;
 /*!40000 ALTER TABLE `d_mem_gudangcomp` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mem_gudangcomp` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mutasi_item
-DROP TABLE IF EXISTS `d_mutasi_item`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mutasi_item
 CREATE TABLE IF NOT EXISTS `d_mutasi_item` (
   `mi_id` int(11) NOT NULL AUTO_INCREMENT,
   `mi_comp` int(11) NOT NULL DEFAULT '0',
@@ -2304,13 +1986,13 @@ CREATE TABLE IF NOT EXISTS `d_mutasi_item` (
   CONSTRAINT `FK_d_mutasi_item_m_comp` FOREIGN KEY (`mi_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_mutasi_item: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mutasi_item: ~0 rows (approximately)
 DELETE FROM `d_mutasi_item`;
 /*!40000 ALTER TABLE `d_mutasi_item` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mutasi_item` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mutationitem_material
-DROP TABLE IF EXISTS `d_mutationitem_material`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mutationitem_material
 CREATE TABLE IF NOT EXISTS `d_mutationitem_material` (
   `mm_mutationitem` int(11) NOT NULL,
   `mm_detailid` int(11) NOT NULL,
@@ -2326,13 +2008,13 @@ CREATE TABLE IF NOT EXISTS `d_mutationitem_material` (
   CONSTRAINT `FK_d_mutationitem_material_d_mutasi_item` FOREIGN KEY (`mm_mutationitem`) REFERENCES `d_mutasi_item` (`mi_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_mutationitem_material: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mutationitem_material: ~0 rows (approximately)
 DELETE FROM `d_mutationitem_material`;
 /*!40000 ALTER TABLE `d_mutationitem_material` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mutationitem_material` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_mutationitem_product
-DROP TABLE IF EXISTS `d_mutationitem_product`;
+
+-- Dumping structure for table alamrayasite_nabila.d_mutationitem_product
 CREATE TABLE IF NOT EXISTS `d_mutationitem_product` (
   `mp_mutationitem` int(11) NOT NULL,
   `mp_detailid` int(11) NOT NULL,
@@ -2348,13 +2030,13 @@ CREATE TABLE IF NOT EXISTS `d_mutationitem_product` (
   CONSTRAINT `FK_d_mutationitem_product_d_mutasi_item` FOREIGN KEY (`mp_mutationitem`) REFERENCES `d_mutasi_item` (`mi_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_mutationitem_product: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_mutationitem_product: ~0 rows (approximately)
 DELETE FROM `d_mutationitem_product`;
 /*!40000 ALTER TABLE `d_mutationitem_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_mutationitem_product` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_opname
-DROP TABLE IF EXISTS `d_opname`;
+
+-- Dumping structure for table alamrayasite_nabila.d_opname
 CREATE TABLE IF NOT EXISTS `d_opname` (
   `o_id` int(11) NOT NULL AUTO_INCREMENT,
   `o_nota` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
@@ -2364,20 +2046,17 @@ CREATE TABLE IF NOT EXISTS `d_opname` (
   `o_insert` timestamp NULL DEFAULT NULL,
   `o_update` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`o_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table nabila.d_opname: ~4 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_opname: ~0 rows (approximately)
 DELETE FROM `d_opname`;
 /*!40000 ALTER TABLE `d_opname` DISABLE KEYS */;
 INSERT INTO `d_opname` (`o_id`, `o_nota`, `o_staff`, `o_comp`, `o_position`, `o_insert`, `o_update`) VALUES
-	(1, 'OD1811271', NULL, 1, 1, '2018-11-27 15:39:34', NULL),
-	(2, 'OD1811272', NULL, 7, 7, '2018-11-27 15:49:59', NULL),
-	(3, 'OD1811273', NULL, 7, 7, '2018-11-27 15:50:59', NULL),
-	(4, 'OD1811274', NULL, 7, 7, '2018-11-27 17:15:13', NULL);
+	(1, 'OD1812031', NULL, 7, 7, '2018-12-03 08:52:41', NULL);
 /*!40000 ALTER TABLE `d_opname` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_opnamedt
-DROP TABLE IF EXISTS `d_opnamedt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_opnamedt
 CREATE TABLE IF NOT EXISTS `d_opnamedt` (
   `od_ido` int(11) NOT NULL,
   `od_idodt` int(11) NOT NULL,
@@ -2387,25 +2066,66 @@ CREATE TABLE IF NOT EXISTS `d_opnamedt` (
   CONSTRAINT `FK_d_opnamedt_d_opname` FOREIGN KEY (`od_ido`) REFERENCES `d_opname` (`o_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table nabila.d_opnamedt: ~11 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_opnamedt: ~0 rows (approximately)
 DELETE FROM `d_opnamedt`;
 /*!40000 ALTER TABLE `d_opnamedt` DISABLE KEYS */;
 INSERT INTO `d_opnamedt` (`od_ido`, `od_idodt`, `od_item`, `od_opname`) VALUES
-	(1, 1, 5, 5.00),
-	(1, 2, 7, 6.00),
-	(2, 1, 3, 500.00),
-	(3, 1, 18, 500.00),
-	(4, 1, 3, 4500.00),
-	(4, 2, 19, 50.00),
-	(4, 3, 48, 5000.00),
-	(4, 4, 49, 5000.00),
-	(4, 5, 60, 5000.00),
-	(4, 6, 70, 5000.00),
-	(4, 7, 71, 5000.00);
+	(1, 1, 1412, 50.00);
 /*!40000 ALTER TABLE `d_opnamedt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_pengiriman
-DROP TABLE IF EXISTS `d_pengiriman`;
+
+-- Dumping structure for table alamrayasite_nabila.d_pakai_barang
+CREATE TABLE IF NOT EXISTS `d_pakai_barang` (
+  `d_pb_id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_pb_code` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `d_pb_date` date NOT NULL,
+  `d_pb_peminta` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `d_pb_keperluan` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `d_pb_staff` varchar(15) COLLATE utf8_unicode_ci NOT NULL COMMENT 'd_mem (m_id)',
+  `d_pb_gdg` int(11) NOT NULL COMMENT 'd_gudangcabang (id)',
+  `d_pb_created` datetime NOT NULL,
+  `d_pb_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`d_pb_id`),
+  KEY `FK_d_pakai_barang_d_gudangcabang` (`d_pb_gdg`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='tabel untuk menyimpan data pemakaian barang digunakan';
+
+-- Dumping data for table alamrayasite_nabila.d_pakai_barang: ~2 rows (approximately)
+DELETE FROM `d_pakai_barang`;
+/*!40000 ALTER TABLE `d_pakai_barang` DISABLE KEYS */;
+INSERT INTO `d_pakai_barang` (`d_pb_id`, `d_pb_code`, `d_pb_date`, `d_pb_peminta`, `d_pb_keperluan`, `d_pb_staff`, `d_pb_gdg`, `d_pb_created`, `d_pb_updated`) VALUES
+	(12, 'PBG-1811-00001', '2018-11-03', 'OM TONI', 'CUMAN TEST', '15', 2, '2018-11-03 01:33:12', '2018-11-03 01:33:12'),
+	(13, 'PBG-1811-00002', '2018-11-14', 'JOKO', 'SHODAKOH', '26', 1, '2018-11-14 22:18:41', '2018-11-14 22:18:41');
+/*!40000 ALTER TABLE `d_pakai_barang` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_pakai_barangdt
+CREATE TABLE IF NOT EXISTS `d_pakai_barangdt` (
+  `d_pbdt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_pbdt_pbid` int(11) NOT NULL COMMENT 'd_pakai_barang (id)',
+  `d_pbdt_item` int(11) NOT NULL COMMENT 'm_item (id)',
+  `d_pbdt_sat` int(11) NOT NULL COMMENT 'm_satuan (id)',
+  `d_pbdt_qty` int(11) NOT NULL DEFAULT '0',
+  `d_pbdt_price` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `d_pbdt_pricetotal` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `d_pbdt_keterangan` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `d_pbdt_created` datetime NOT NULL,
+  `d_pbdt_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`d_pbdt_id`),
+  KEY `FK_d_pakai_barangdt_d_pakai_barang` (`d_pbdt_pbid`),
+  KEY `FK_d_pakai_barangdt_m_item` (`d_pbdt_item`),
+  KEY `FK_d_pakai_barangdt_m_satuan` (`d_pbdt_sat`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='u/ pemakaian barang detail';
+
+-- Dumping data for table alamrayasite_nabila.d_pakai_barangdt: ~2 rows (approximately)
+DELETE FROM `d_pakai_barangdt`;
+/*!40000 ALTER TABLE `d_pakai_barangdt` DISABLE KEYS */;
+INSERT INTO `d_pakai_barangdt` (`d_pbdt_id`, `d_pbdt_pbid`, `d_pbdt_item`, `d_pbdt_sat`, `d_pbdt_qty`, `d_pbdt_price`, `d_pbdt_pricetotal`, `d_pbdt_keterangan`, `d_pbdt_created`, `d_pbdt_updated`) VALUES
+	(12, 12, 297, 1, 10, 0.00, 0.00, '', '2018-11-03 01:33:12', '2018-11-03 01:33:12'),
+	(13, 13, 162, 1, 2, 0.00, 0.00, '', '2018-11-14 22:18:41', '2018-11-14 22:18:41');
+/*!40000 ALTER TABLE `d_pakai_barangdt` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_pengiriman
 CREATE TABLE IF NOT EXISTS `d_pengiriman` (
   `p_id` int(11) NOT NULL,
   `p_pr` varchar(100) DEFAULT NULL,
@@ -2419,13 +2139,13 @@ CREATE TABLE IF NOT EXISTS `d_pengiriman` (
   PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_pengiriman: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_pengiriman: ~0 rows (approximately)
 DELETE FROM `d_pengiriman`;
 /*!40000 ALTER TABLE `d_pengiriman` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_pengiriman` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_pengiriman_dt
-DROP TABLE IF EXISTS `d_pengiriman_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_pengiriman_dt
 CREATE TABLE IF NOT EXISTS `d_pengiriman_dt` (
   `pd_pengiriman` int(11) NOT NULL,
   `pd_detailid` int(11) NOT NULL,
@@ -2443,13 +2163,13 @@ CREATE TABLE IF NOT EXISTS `d_pengiriman_dt` (
   CONSTRAINT `FK_d_pengiriman_dt_d_pengiriman` FOREIGN KEY (`pd_pengiriman`) REFERENCES `d_pengiriman` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_pengiriman_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_pengiriman_dt: ~0 rows (approximately)
 DELETE FROM `d_pengiriman_dt`;
 /*!40000 ALTER TABLE `d_pengiriman_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_pengiriman_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_productplan
-DROP TABLE IF EXISTS `d_productplan`;
+
+-- Dumping structure for table alamrayasite_nabila.d_productplan
 CREATE TABLE IF NOT EXISTS `d_productplan` (
   `pp_id` int(11) NOT NULL AUTO_INCREMENT,
   `pp_comp` int(11) NOT NULL DEFAULT '0',
@@ -2462,70 +2182,60 @@ CREATE TABLE IF NOT EXISTS `d_productplan` (
   PRIMARY KEY (`pp_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_productplan: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productplan: ~0 rows (approximately)
 DELETE FROM `d_productplan`;
 /*!40000 ALTER TABLE `d_productplan` DISABLE KEYS */;
 INSERT INTO `d_productplan` (`pp_id`, `pp_comp`, `pp_date`, `pp_item`, `pp_qty`, `pp_isspk`, `pp_insert`, `pp_update`) VALUES
-	(1, 1, '2018-11-27', 3, 5, 'Y', NULL, '2018-11-28 00:18:02');
+	(1, 1, '2018-12-03', 3, 10, 'P', NULL, '2018-12-03 09:26:34');
 /*!40000 ALTER TABLE `d_productplan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_productresult
-DROP TABLE IF EXISTS `d_productresult`;
+
+-- Dumping structure for table alamrayasite_nabila.d_productresult
 CREATE TABLE IF NOT EXISTS `d_productresult` (
   `pr_id` int(11) NOT NULL,
-  `pr_comp` int(11) NOT NULL,
-  `pr_code` varchar(50) NOT NULL,
   `pr_spk` int(11) NOT NULL,
   `pr_date` date DEFAULT NULL,
   `pr_item` int(11) DEFAULT NULL,
-  `pr_note` varchar(50) DEFAULT NULL,
-  `pr_status` enum('Y','N') NOT NULL DEFAULT 'N',
-  `pr_created` datetime DEFAULT NULL,
-  `pr_updated` datetime DEFAULT NULL,
+  `pr_insert` datetime DEFAULT NULL,
+  `pr_update` datetime DEFAULT NULL,
   PRIMARY KEY (`pr_id`),
   KEY `pr_spk` (`pr_spk`),
-  KEY `FK_d_productresult_m_comp` (`pr_comp`),
-  CONSTRAINT `FK_d_productresult_m_comp` FOREIGN KEY (`pr_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
+  CONSTRAINT `FK_d_productresult_d_spk` FOREIGN KEY (`pr_spk`) REFERENCES `d_spk` (`spk_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_productresult: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productresult: ~0 rows (approximately)
 DELETE FROM `d_productresult`;
 /*!40000 ALTER TABLE `d_productresult` DISABLE KEYS */;
-INSERT INTO `d_productresult` (`pr_id`, `pr_comp`, `pr_code`, `pr_spk`, `pr_date`, `pr_item`, `pr_note`, `pr_status`, `pr_created`, `pr_updated`) VALUES
-	(1, 1, 'PR-1811-00001', 0, '2018-11-26', NULL, 'coba', 'N', '2018-11-26 03:54:39', '2018-11-26 03:54:39');
+INSERT INTO `d_productresult` (`pr_id`, `pr_spk`, `pr_date`, `pr_item`, `pr_insert`, `pr_update`) VALUES
+	(1, 1, '2018-12-03', 3, NULL, NULL);
 /*!40000 ALTER TABLE `d_productresult` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_productresult_dt
-DROP TABLE IF EXISTS `d_productresult_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_productresult_dt
 CREATE TABLE IF NOT EXISTS `d_productresult_dt` (
   `prdt_productresult` int(11) NOT NULL,
-  `prdt_detailid` int(11) NOT NULL,
-  `prdt_comp` int(11) NOT NULL,
-  `prdt_position` int(11) NOT NULL,
-  `prdt_date` date DEFAULT NULL,
+  `prdt_detail` int(11) NOT NULL,
   `prdt_item` int(11) DEFAULT NULL,
-  `prdt_qty` decimal(10,0) DEFAULT NULL,
-  `prdt_qty_sisa` decimal(10,0) DEFAULT NULL,
-  `prdt_kirim` decimal(10,0) DEFAULT '0',
-  `prdt_status` varchar(2) DEFAULT NULL COMMENT 'RD : Ready | PR : Progres | FN : Final | RC : Received',
-  `prdt_hpp` decimal(10,2) NOT NULL,
-  `prdt_time` time DEFAULT NULL,
-  `prdt_created` datetime DEFAULT NULL,
-  `prdt_updated` datetime DEFAULT NULL,
-  PRIMARY KEY (`prdt_productresult`,`prdt_detailid`),
-  KEY `FK_d_productresult_dt_m_comp` (`prdt_comp`),
-  CONSTRAINT `FK_d_productresult_dt_d_productresult` FOREIGN KEY (`prdt_productresult`) REFERENCES `d_productresult` (`pr_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `prdt_qty` decimal(10,0) NOT NULL,
+  `prdt_kirim` decimal(10,0) NOT NULL,
+  `prdt_sisa` decimal(10,0) NOT NULL,
+  `prdt_produksi` int(11) DEFAULT NULL,
+  `prdt_status` varchar(2) DEFAULT NULL COMMENT 'RD : Ready |  FN : Final | RC : Received',
+  `prdt_date` date DEFAULT NULL,
+  `prdt_time` time NOT NULL,
+  PRIMARY KEY (`prdt_productresult`,`prdt_detail`),
+  CONSTRAINT `FK_d_productresult_dt_d_productresult` FOREIGN KEY (`prdt_productresult`) REFERENCES `d_productresult` (`pr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_productresult_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_productresult_dt: ~0 rows (approximately)
 DELETE FROM `d_productresult_dt`;
 /*!40000 ALTER TABLE `d_productresult_dt` DISABLE KEYS */;
-INSERT INTO `d_productresult_dt` (`prdt_productresult`, `prdt_detailid`, `prdt_comp`, `prdt_position`, `prdt_date`, `prdt_item`, `prdt_qty`, `prdt_qty_sisa`, `prdt_kirim`, `prdt_status`, `prdt_hpp`, `prdt_time`, `prdt_created`, `prdt_updated`) VALUES
-	(1, 1, 5, 5, NULL, 226, 100, NULL, 0, NULL, 186.00, NULL, '2018-11-26 03:54:39', '2018-11-26 03:54:39');
+INSERT INTO `d_productresult_dt` (`prdt_productresult`, `prdt_detail`, `prdt_item`, `prdt_qty`, `prdt_kirim`, `prdt_sisa`, `prdt_produksi`, `prdt_status`, `prdt_date`, `prdt_time`) VALUES
+	(1, 1, 3, 7, 7, 0, NULL, 'FN', '2018-12-03', '16:45:00');
 /*!40000 ALTER TABLE `d_productresult_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchaseorder_dt
-DROP TABLE IF EXISTS `d_purchaseorder_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchaseorder_dt
 CREATE TABLE IF NOT EXISTS `d_purchaseorder_dt` (
   `podt_purchaseorder` int(11) NOT NULL,
   `podt_detailid` int(11) NOT NULL COMMENT 'ID PURCHASING (d_pcs_id)',
@@ -2542,19 +2252,21 @@ CREATE TABLE IF NOT EXISTS `d_purchaseorder_dt` (
   PRIMARY KEY (`podt_purchaseorder`,`podt_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchaseorder_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchaseorder_dt: ~2 rows (approximately)
 DELETE FROM `d_purchaseorder_dt`;
 /*!40000 ALTER TABLE `d_purchaseorder_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchaseorder_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchaseplan_dt
-DROP TABLE IF EXISTS `d_purchaseplan_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchaseplan_dt
 CREATE TABLE IF NOT EXISTS `d_purchaseplan_dt` (
   `ppdt_pruchaseplan` int(11) NOT NULL AUTO_INCREMENT,
   `ppdt_detailid` int(11) NOT NULL DEFAULT '0',
   `ppdt_item` int(11) NOT NULL DEFAULT '0',
   `ppdt_qty` int(11) NOT NULL DEFAULT '0',
   `ppdt_prevcost` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `ppdt_totalcost` decimal(10,2) DEFAULT NULL,
+  `ppdt_satuan` int(11) DEFAULT NULL,
   `ppdt_qtyconfirm` int(11) NOT NULL DEFAULT '0',
   `ppdt_isconfirm` varchar(5) NOT NULL DEFAULT 'FALSE' COMMENT 'IS CONFIRM ?',
   `ppdt_ispo` varchar(5) NOT NULL DEFAULT 'FALSE' COMMENT 'IS PO ?',
@@ -2563,22 +2275,19 @@ CREATE TABLE IF NOT EXISTS `d_purchaseplan_dt` (
   `ppdt_updated` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ppdt_pruchaseplan`,`ppdt_detailid`),
   CONSTRAINT `FK_d_purchaseplan_dt_d_purchase_plan` FOREIGN KEY (`ppdt_pruchaseplan`) REFERENCES `d_purchase_plan` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchaseplan_dt: ~6 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchaseplan_dt: ~4 rows (approximately)
 DELETE FROM `d_purchaseplan_dt`;
 /*!40000 ALTER TABLE `d_purchaseplan_dt` DISABLE KEYS */;
-INSERT INTO `d_purchaseplan_dt` (`ppdt_pruchaseplan`, `ppdt_detailid`, `ppdt_item`, `ppdt_qty`, `ppdt_prevcost`, `ppdt_qtyconfirm`, `ppdt_isconfirm`, `ppdt_ispo`, `ppdt_poid`, `ppdt_created`, `ppdt_updated`) VALUES
-	(5, 0, 19, 160, 57000.00, 5, 'FALSE', 'FALSE', 0, '2018-11-15 14:34:28', '2018-11-15 08:21:40'),
-	(6, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-16 14:29:51', '2018-11-16 07:29:51'),
-	(7, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-16 15:34:56', '2018-11-16 08:34:56'),
-	(8, 0, 49, 12000, 10520.00, 0, 'FALSE', 'FALSE', 0, '2018-11-21 10:13:16', '2018-11-21 03:13:16'),
-	(9, 0, 48, 400, 32615.38, 400, 'FALSE', 'FALSE', 0, '2018-11-21 10:13:49', '2018-11-21 03:17:20'),
-	(10, 0, 73, 2100, 120.00, 2100, 'TRUE', 'FALSE', 0, '2018-11-21 10:24:25', '2018-11-21 03:24:59');
+INSERT INTO `d_purchaseplan_dt` (`ppdt_pruchaseplan`, `ppdt_detailid`, `ppdt_item`, `ppdt_qty`, `ppdt_prevcost`, `ppdt_totalcost`, `ppdt_satuan`, `ppdt_qtyconfirm`, `ppdt_isconfirm`, `ppdt_ispo`, `ppdt_poid`, `ppdt_created`, `ppdt_updated`) VALUES
+	(1, 1, 1412, 10, 5000.00, 50000.00, 4, 0, 'TRUE', 'FALSE', 0, '2018-12-10 09:10:34', '2018-12-10 09:10:34'),
+	(2, 1, 1415, 12, 0.00, 0.00, 4, 0, 'TRUE', 'FALSE', 0, '2018-12-10 09:11:08', '2018-12-10 09:11:08'),
+	(3, 1, 1412, 10, 5000.00, 50000.00, 4, 0, 'TRUE', 'FALSE', 0, '2018-12-10 09:12:42', '2018-12-10 09:12:42');
 /*!40000 ALTER TABLE `d_purchaseplan_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchase_order
-DROP TABLE IF EXISTS `d_purchase_order`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchase_order
 CREATE TABLE IF NOT EXISTS `d_purchase_order` (
   `po_id` int(11) NOT NULL AUTO_INCREMENT,
   `po_comp` int(11) NOT NULL DEFAULT '0',
@@ -2602,19 +2311,20 @@ CREATE TABLE IF NOT EXISTS `d_purchase_order` (
   `po_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `po_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`po_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchase_order: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchase_order: ~1 rows (approximately)
 DELETE FROM `d_purchase_order`;
 /*!40000 ALTER TABLE `d_purchase_order` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchase_order` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchase_plan
-DROP TABLE IF EXISTS `d_purchase_plan`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchase_plan
 CREATE TABLE IF NOT EXISTS `d_purchase_plan` (
   `p_id` int(11) NOT NULL AUTO_INCREMENT,
   `p_date` date NOT NULL,
   `p_comp` int(11) NOT NULL,
+  `p_gudang` int(11) DEFAULT NULL,
   `p_code` varchar(15) NOT NULL,
   `p_supplier` int(11) NOT NULL,
   `p_mem` varchar(10) NOT NULL COMMENT 'd_mem (m_id)',
@@ -2624,22 +2334,19 @@ CREATE TABLE IF NOT EXISTS `d_purchase_plan` (
   `p_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `p_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchase_plan: ~6 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchase_plan: ~1 rows (approximately)
 DELETE FROM `d_purchase_plan`;
 /*!40000 ALTER TABLE `d_purchase_plan` DISABLE KEYS */;
-INSERT INTO `d_purchase_plan` (`p_id`, `p_date`, `p_comp`, `p_code`, `p_supplier`, `p_mem`, `p_confirm`, `p_status`, `p_status_date`, `p_created`, `p_updated`) VALUES
-	(5, '2018-11-15', 1, 'ROR-1811-00001', 1, '', NULL, 'WT', NULL, '2018-11-15 07:34:28', '2018-11-15 08:21:40'),
-	(6, '2018-11-15', 0, 'ROR-1811-00002', 1, '', NULL, 'WT', NULL, '2018-11-16 07:29:51', '2018-11-16 07:29:51'),
-	(7, '2018-11-15', 0, 'ROR-1811-00003', 1, '', NULL, 'WT', NULL, '2018-11-16 08:34:56', '2018-11-16 08:34:56'),
-	(8, '2018-11-15', 1, 'ROR-1811-00004', 1, '', NULL, 'WT', NULL, '2018-11-21 03:13:16', '2018-11-21 03:13:16'),
-	(9, '2018-11-15', 1, 'ROR-1811-00005', 1, '', NULL, 'WT', NULL, '2018-11-21 03:13:49', '2018-11-21 03:17:20'),
-	(10, '2018-11-21', 1, 'ROR-1811-00006', 1, '', '2018-11-21', 'FN', NULL, '2018-11-21 03:24:25', '2018-11-21 03:24:59');
+INSERT INTO `d_purchase_plan` (`p_id`, `p_date`, `p_comp`, `p_gudang`, `p_code`, `p_supplier`, `p_mem`, `p_confirm`, `p_status`, `p_status_date`, `p_created`, `p_updated`) VALUES
+	(1, '2018-12-06', 1, 1, 'PO-1812-00001', 1, '1', NULL, 'FN', NULL, '2018-12-10 09:10:34', '2018-12-10 09:10:34'),
+	(2, '2018-12-06', 1, 1, 'PO-1812-00002', 1, '1', NULL, 'FN', NULL, '2018-12-10 09:11:08', '2018-12-10 09:11:08'),
+	(3, '2018-12-06', 2, 4, 'PO-1812-00003', 1, '1', NULL, 'FN', NULL, '2018-12-10 09:12:41', '2018-12-10 09:12:41');
 /*!40000 ALTER TABLE `d_purchase_plan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasing
-DROP TABLE IF EXISTS `d_purchasing`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasing
 CREATE TABLE IF NOT EXISTS `d_purchasing` (
   `d_pcs_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsp_id` int(11) NOT NULL COMMENT 'PURCHASING PLAN',
@@ -2666,7 +2373,7 @@ CREATE TABLE IF NOT EXISTS `d_purchasing` (
   CONSTRAINT `FK_d_purchasing_d_supplier` FOREIGN KEY (`s_id`) REFERENCES `m_supplier` (`s_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasing: ~4 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasing: ~4 rows (approximately)
 DELETE FROM `d_purchasing`;
 /*!40000 ALTER TABLE `d_purchasing` DISABLE KEYS */;
 INSERT INTO `d_purchasing` (`d_pcs_id`, `d_pcsp_id`, `s_id`, `d_pcs_code`, `d_pcs_staff`, `d_pcs_method`, `d_pcs_total_gross`, `d_pcs_discount`, `d_pcs_disc_percent`, `d_pcs_disc_value`, `d_pcs_tax_percent`, `d_pcs_tax_value`, `d_pcs_total_net`, `d_pcs_date_created`, `d_pcs_date_received`, `d_pcs_date_confirm`, `d_pcs_duedate`, `d_pcs_status`, `d_pcs_created`, `d_pcs_updated`) VALUES
@@ -2676,8 +2383,8 @@ INSERT INTO `d_purchasing` (`d_pcs_id`, `d_pcsp_id`, `s_id`, `d_pcs_code`, `d_pc
 	(17, 15, 21, 'PO-061826-00009', 'Jamilah', 'CASH', 99500.00, 4525.00, 5, 4975.00, 0, 0.00, 90000.00, '2018-06-26', NULL, '2018-06-26', '2018-07-02', 'CF', '2018-06-26 23:07:55', '2018-06-26 23:08:18');
 /*!40000 ALTER TABLE `d_purchasing` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasingharian
-DROP TABLE IF EXISTS `d_purchasingharian`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasingharian
 CREATE TABLE IF NOT EXISTS `d_purchasingharian` (
   `d_pcsh_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsh_code` varchar(15) NOT NULL,
@@ -2695,13 +2402,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingharian` (
   CONSTRAINT `FK_d_purchasingharian_d_supplier` FOREIGN KEY (`d_pcsh_supid`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasingharian: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasingharian: ~0 rows (approximately)
 DELETE FROM `d_purchasingharian`;
 /*!40000 ALTER TABLE `d_purchasingharian` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingharian` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasingharian_dt
-DROP TABLE IF EXISTS `d_purchasingharian_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasingharian_dt
 CREATE TABLE IF NOT EXISTS `d_purchasingharian_dt` (
   `d_pcshdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcshdt_pcshid` int(11) NOT NULL,
@@ -2718,13 +2425,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingharian_dt` (
   CONSTRAINT `FK_d_purchasingharian_dt_m_item` FOREIGN KEY (`d_pcshdt_item`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasingharian_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasingharian_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasingharian_dt`;
 /*!40000 ALTER TABLE `d_purchasingharian_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingharian_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasingplan
-DROP TABLE IF EXISTS `d_purchasingplan`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasingplan
 CREATE TABLE IF NOT EXISTS `d_purchasingplan` (
   `d_pcsp_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsp_code` varchar(15) NOT NULL,
@@ -2740,13 +2447,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingplan` (
   CONSTRAINT `FK_d_purchasingplan_d_supplier` FOREIGN KEY (`d_pcsp_sup`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasingplan: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasingplan: ~0 rows (approximately)
 DELETE FROM `d_purchasingplan`;
 /*!40000 ALTER TABLE `d_purchasingplan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingplan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasingplan_dt
-DROP TABLE IF EXISTS `d_purchasingplan_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasingplan_dt
 CREATE TABLE IF NOT EXISTS `d_purchasingplan_dt` (
   `d_pcspdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcspdt_idplan` int(11) NOT NULL DEFAULT '0',
@@ -2764,13 +2471,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingplan_dt` (
   CONSTRAINT `FK_d_purchasingplan_dt_d_purchasingplan` FOREIGN KEY (`d_pcspdt_idplan`) REFERENCES `d_purchasingplan` (`d_pcsp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasingplan_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasingplan_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasingplan_dt`;
 /*!40000 ALTER TABLE `d_purchasingplan_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingplan_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasingreturn
-DROP TABLE IF EXISTS `d_purchasingreturn`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasingreturn
 CREATE TABLE IF NOT EXISTS `d_purchasingreturn` (
   `d_pcsr_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsr_pcsid` int(11) NOT NULL COMMENT 'id_purchashing (d_purchasing)',
@@ -2793,13 +2500,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingreturn` (
   CONSTRAINT `FK_d_purchasingreturn_d_supplier` FOREIGN KEY (`d_pcsr_supid`) REFERENCES `m_supplier` (`s_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasingreturn: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasingreturn: ~0 rows (approximately)
 DELETE FROM `d_purchasingreturn`;
 /*!40000 ALTER TABLE `d_purchasingreturn` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingreturn` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasingreturn_dt
-DROP TABLE IF EXISTS `d_purchasingreturn_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasingreturn_dt
 CREATE TABLE IF NOT EXISTS `d_purchasingreturn_dt` (
   `d_pcsrdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcsrdt_idpcsr` int(11) NOT NULL,
@@ -2819,13 +2526,13 @@ CREATE TABLE IF NOT EXISTS `d_purchasingreturn_dt` (
   CONSTRAINT `FK_d_purchasingreturn_dt_m_item` FOREIGN KEY (`d_pcsrdt_item`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasingreturn_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasingreturn_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasingreturn_dt`;
 /*!40000 ALTER TABLE `d_purchasingreturn_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasingreturn_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_purchasing_dt
-DROP TABLE IF EXISTS `d_purchasing_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_purchasing_dt
 CREATE TABLE IF NOT EXISTS `d_purchasing_dt` (
   `d_pcsdt_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_pcs_id` int(11) NOT NULL COMMENT 'ID PURCHASING (d_pcs_id)',
@@ -2848,13 +2555,63 @@ CREATE TABLE IF NOT EXISTS `d_purchasing_dt` (
   CONSTRAINT `FK_d_purchasing_dt_m_item` FOREIGN KEY (`i_id`) REFERENCES `m_item` (`i_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_purchasing_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_purchasing_dt: ~0 rows (approximately)
 DELETE FROM `d_purchasing_dt`;
 /*!40000 ALTER TABLE `d_purchasing_dt` DISABLE KEYS */;
 /*!40000 ALTER TABLE `d_purchasing_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_sales
-DROP TABLE IF EXISTS `d_sales`;
+
+-- Dumping structure for table alamrayasite_nabila.d_receivable
+CREATE TABLE IF NOT EXISTS `d_receivable` (
+  `r_id` int(11) NOT NULL COMMENT 'ID',
+  `r_date` date DEFAULT NULL COMMENT 'Tanggal Create',
+  `r_duedate` date DEFAULT NULL COMMENT 'Jatuh tempo',
+  `r_type` char(5) DEFAULT NULL COMMENT 'Piutang dari ?',
+  `r_code` varchar(15) DEFAULT NULL COMMENT 'kode pembayarn',
+  `r_mem` int(11) DEFAULT NULL COMMENT 'Id pengguna',
+  `r_ref` varchar(15) DEFAULT NULL COMMENT 'Kode refferensi',
+  `r_value` decimal(10,2) DEFAULT NULL COMMENT 'Nilai Piutang',
+  `r_pay` decimal(10,2) DEFAULT NULL COMMENT 'Jumlah Bayar',
+  `p_outstanding` decimal(10,2) DEFAULT NULL COMMENT 'Sisa pembayaran',
+  `r_created` datetime DEFAULT NULL,
+  `r_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`r_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_receivable: ~0 rows (approximately)
+DELETE FROM `d_receivable`;
+/*!40000 ALTER TABLE `d_receivable` DISABLE KEYS */;
+INSERT INTO `d_receivable` (`r_id`, `r_date`, `r_duedate`, `r_type`, `r_code`, `r_mem`, `r_ref`, `r_value`, `r_pay`, `p_outstanding`, `r_created`, `r_updated`) VALUES
+	(1, '2018-12-06', '2018-12-05', 'Penju', NULL, NULL, 'PESANAN-65/2018', 8000.00, 17000.00, -9000.00, NULL, '2018-12-10 05:23:28'),
+	(2, '2018-12-10', '1970-01-01', 'Penju', NULL, NULL, 'PESANAN-66/2018', 800000.00, 800000.00, 0.00, '2018-12-10 10:04:54', '2018-12-10 10:04:54'),
+	(3, '2018-12-10', '2018-12-03', 'Penju', NULL, NULL, 'PESANAN-67/2018', 80000.00, 0.00, 80000.00, '2018-12-10 10:05:45', '2018-12-10 10:05:45');
+/*!40000 ALTER TABLE `d_receivable` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_receivable_dt
+CREATE TABLE IF NOT EXISTS `d_receivable_dt` (
+  `rd_receivable` int(11) NOT NULL,
+  `rd_detailid` int(11) NOT NULL,
+  `rd_datepay` date DEFAULT NULL,
+  `rd_value` double DEFAULT NULL,
+  `rd_created` datetime DEFAULT NULL,
+  `rd_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`rd_receivable`,`rd_detailid`),
+  CONSTRAINT `FK_d_receivable_dt_d_receivable` FOREIGN KEY (`rd_receivable`) REFERENCES `d_receivable` (`r_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_receivable_dt: ~1 rows (approximately)
+DELETE FROM `d_receivable_dt`;
+/*!40000 ALTER TABLE `d_receivable_dt` DISABLE KEYS */;
+INSERT INTO `d_receivable_dt` (`rd_receivable`, `rd_detailid`, `rd_datepay`, `rd_value`, `rd_created`, `rd_updated`) VALUES
+	(1, 1, '1970-01-01', 2000, '2018-12-10 05:19:49', '2018-12-10 05:19:49'),
+	(1, 2, '2018-12-10', 2000, '2018-12-10 05:21:18', '2018-12-10 05:21:18'),
+	(1, 3, '2018-12-12', 4000, '2018-12-10 05:23:14', '2018-12-10 05:23:14'),
+	(1, 4, '2018-12-10', 9000, '2018-12-10 05:23:28', '2018-12-10 05:23:28');
+/*!40000 ALTER TABLE `d_receivable_dt` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_sales
 CREATE TABLE IF NOT EXISTS `d_sales` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_comp` int(11) NOT NULL DEFAULT '0',
@@ -2889,18 +2646,83 @@ CREATE TABLE IF NOT EXISTS `d_sales` (
   KEY `FK_sales_customer` (`s_customer`),
   KEY `FK_d_sales_m_comp` (`s_comp`),
   CONSTRAINT `FK_d_sales_m_comp` FOREIGN KEY (`s_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_sales: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales: ~64 rows (approximately)
 DELETE FROM `d_sales`;
 /*!40000 ALTER TABLE `d_sales` DISABLE KEYS */;
 INSERT INTO `d_sales` (`s_id`, `s_comp`, `s_channel`, `s_jenis_bayar`, `s_date`, `s_finishdate`, `s_duedate`, `s_note`, `s_kasir`, `s_machine`, `s_create_by`, `s_update_by`, `s_customer`, `s_nama_cus`, `s_alamat_cus`, `s_gross`, `s_disc_percent`, `s_disc_value`, `s_tax`, `s_ongkir`, `s_bulat`, `s_net`, `s_bayar`, `s_kembalian`, `s_jurnal`, `s_status`, `s_insert`, `s_update`) VALUES
-	(1, 1, 'Pesanan', '2', '2018-11-23', '1970-01-01', '2018-11-20', 'PESANAN-1/2018.11.23', NULL, '2', '1', NULL, NULL, 'mahmus', 'bjn', 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 0.00, NULL, NULL, 'final', '2018-11-23 03:36:50', '2018-11-23 03:36:50'),
-	(2, 1, 'Toko', NULL, '2018-11-26', NULL, NULL, 'TOKO-2/2018.11.26', NULL, '2', '1', NULL, NULL, NULL, NULL, 2800000.00, 0.00, 0.00, 0, 0.00, 0.00, 2800000.00, 2800000.00, NULL, 1860.00, 'final', '2018-11-26 03:57:30', '2018-11-26 03:57:30');
+	(1, 1, 'Toko', NULL, '2018-12-04', NULL, NULL, 'TOKO-1/2018.12.04', NULL, '2', '1', NULL, NULL, NULL, NULL, 42600.00, 0.00, 0.00, 0, 0.00, 0.00, 42600.00, 42600.00, NULL, 0.00, 'final', '2018-12-04 02:46:10', '2018-12-04 02:46:11'),
+	(2, 1, 'Toko', NULL, '2018-12-04', NULL, NULL, 'TOKO-2/2018.12.04', NULL, '2', '1', NULL, NULL, NULL, NULL, 150000.00, 0.00, 0.00, 0, 0.00, 0.00, 150000.00, 150000.00, NULL, 86.40, 'final', '2018-12-04 04:36:35', '2018-12-04 04:36:35'),
+	(3, 1, 'Toko', NULL, '2018-12-04', NULL, NULL, 'TOKO-3/2018.12.04', NULL, '2', '1', NULL, NULL, NULL, NULL, 150000.00, 0.00, 10.00, 0, 0.00, 0.00, 149990.00, 149990.00, NULL, 125.20, 'final', '2018-12-04 05:31:26', '2018-12-04 05:31:26'),
+	(4, 1, 'Toko', NULL, '2018-12-04', NULL, NULL, 'TOKO-4/2018.12.04', NULL, '2', '1', NULL, NULL, NULL, NULL, 1200000.00, 92000.00, 0.00, 0, 0.00, 0.00, 1108000.00, 1108000.00, NULL, 839.70, 'final', '2018-12-04 06:34:33', '2018-12-04 05:34:34'),
+	(5, 1, 'Toko', NULL, '2018-12-04', NULL, NULL, 'TOKO-5/2018.12.04', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 8000.00, 0.00, 0, 0.00, 0.00, 72000.00, 72000.00, NULL, 52.20, 'final', '2018-12-04 05:37:08', '2018-12-04 05:37:08'),
+	(6, 1, 'Toko', NULL, '2018-12-04', NULL, NULL, 'TOKO-6/2018.12.04', NULL, '2', '1', NULL, NULL, NULL, NULL, 7000.00, 0.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, 4.75, 'final', '2018-12-04 22:29:00', '2018-12-04 22:29:01'),
+	(7, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-7/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 01:33:59', '2018-12-05 01:33:59'),
+	(8, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-8/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:36:28', '2018-12-05 01:36:28'),
+	(9, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-9/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:38:17', '2018-12-05 01:38:17'),
+	(10, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-10/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:39:39', '2018-12-05 01:39:39'),
+	(11, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-11/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:41:33', '2018-12-05 01:41:33'),
+	(12, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-12/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:42:34', '2018-12-05 01:42:34'),
+	(13, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-13/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:43:38', '2018-12-05 01:43:38'),
+	(14, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-14/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:44:58', '2018-12-05 01:44:59'),
+	(15, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-15/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 01:46:02', '2018-12-05 01:46:02'),
+	(16, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-16/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 01:46:48', '2018-12-05 01:46:48'),
+	(17, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-17/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:47:40', '2018-12-05 01:47:40'),
+	(18, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-18/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:48:10', '2018-12-05 01:48:11'),
+	(19, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-19/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:49:53', '2018-12-05 01:49:53'),
+	(20, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-20/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 7500.00, 0.00, 0.00, 0, 0.00, 0.00, 7500.00, 7500.00, NULL, 4.64, 'final', '2018-12-05 01:50:21', '2018-12-05 01:50:21'),
+	(21, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-21/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 01:51:29', '2018-12-05 01:51:29'),
+	(22, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-22/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 01:55:40', '2018-12-05 01:55:41'),
+	(23, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-23/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 01:56:04', '2018-12-05 01:56:04'),
+	(24, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-24/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 02:03:23', '2018-12-05 02:03:23'),
+	(25, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-25/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 02:04:58', '2018-12-05 02:04:59'),
+	(26, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-26/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 7000.00, 0.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, 4.75, 'final', '2018-12-05 02:12:42', '2018-12-05 02:12:42'),
+	(27, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-27/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 02:14:24', '2018-12-05 02:14:25'),
+	(28, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-28/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 02:17:54', '2018-12-05 02:17:54'),
+	(29, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-29/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 02:29:03', '2018-12-05 02:29:03'),
+	(30, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-30/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 02:30:35', '2018-12-05 02:30:35'),
+	(31, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-31/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 7000.00, 0.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, 4.75, 'final', '2018-12-05 02:38:36', '2018-12-05 02:38:36'),
+	(32, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-32/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 04:48:00', '2018-12-05 04:48:00'),
+	(33, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-33/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 04:56:00', '2018-12-05 04:56:00'),
+	(34, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-34/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 04:59:25', '2018-12-05 04:59:25'),
+	(35, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-35/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:03:29', '2018-12-05 05:03:29'),
+	(36, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-36/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:04:11', '2018-12-05 05:04:11'),
+	(37, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-37/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:05:27', '2018-12-05 05:05:27'),
+	(38, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-38/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:05:42', '2018-12-05 05:05:42'),
+	(39, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-39/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:06:20', '2018-12-05 05:06:20'),
+	(40, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-40/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:07:45', '2018-12-05 05:07:45'),
+	(41, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-41/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 05:08:05', '2018-12-05 05:08:05'),
+	(42, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-42/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-05 06:05:25', '2018-12-05 06:05:25'),
+	(43, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-43/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 678000.00, 0.00, 0.00, 0, 0.00, 0.00, 678000.00, 678000.00, NULL, 479.50, 'final', '2018-12-05 16:34:36', '2018-12-05 16:34:36'),
+	(44, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-44/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 2216000.00, 0.00, 0.00, 0, 0.00, 0.00, 2216000.00, 2216000.00, NULL, 1594.51, 'final', '2018-12-05 16:37:14', '2018-12-05 16:37:14'),
+	(45, 1, 'Toko', NULL, '2018-12-05', NULL, NULL, 'TOKO-45/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 160000.00, 0.00, 0.00, 0, 0.00, 0.00, 160000.00, 160000.00, NULL, 124.80, 'final', '2018-12-05 16:38:16', '2018-12-05 16:38:16'),
+	(46, 1, 'Toko', NULL, '2018-05-12', NULL, NULL, 'TOKO-46/2018.12.05', NULL, '2', '1', NULL, NULL, NULL, NULL, 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 80000.00, NULL, 72.60, 'final', '2018-12-05 16:39:56', '2018-12-05 16:39:57'),
+	(47, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-47/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 7000.00, 0.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, 4.75, 'final', '2018-12-06 00:39:28', '2018-12-06 00:39:28'),
+	(48, 1, 'Pesanan', '1', '2018-12-06', '2018-12-19', '1970-01-01', 'PESANAN-48/2018.12.06', NULL, '2', '1', NULL, NULL, 'sdsd', 'sdsd', 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, NULL, 'final', '2018-12-06 00:40:40', '2018-12-06 00:40:40'),
+	(49, 1, 'Pesanan', '1', '2018-12-06', '2018-12-20', '1970-01-01', 'PESANAN-49/2018.12.06', NULL, '2', '1', NULL, NULL, 'sds', 'sds', 6000.00, 0.00, 0.00, 0, 0.00, 0.00, 6000.00, 0.00, NULL, NULL, 'draft', '2018-12-06 01:35:20', '2018-12-06 01:35:20'),
+	(50, 1, 'Pesanan', '1', '2018-12-06', '2018-11-28', '1970-01-01', 'PESANAN-50/2018.12.06', NULL, '2', '1', NULL, NULL, 'asas', 'asas', 6000.00, 0.00, 0.00, 0, 0.00, 0.00, 6000.00, 6000.00, NULL, NULL, 'final', '2018-12-06 01:35:40', '2018-12-06 01:35:40'),
+	(51, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-51/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-06 01:36:15', '2018-12-06 01:36:15'),
+	(52, 1, 'Pesanan', '1', '2018-12-06', '2018-12-13', '1970-01-01', 'PESANAN-52/2018.12.06', NULL, '2', '1', NULL, NULL, 'asas', 'asas', 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, NULL, 'final', '2018-12-06 01:38:29', '2018-12-06 01:38:29'),
+	(53, 1, 'Pesanan', '1', '2018-12-06', '2018-12-20', '1970-01-01', 'PESANAN-53/2018.12.06', NULL, '2', '1', NULL, NULL, 'asas', 'asas', 56000.00, 0.00, 0.00, 0, 0.00, 0.00, 56000.00, 56000.00, NULL, NULL, 'final', '2018-12-06 01:39:01', '2018-12-06 01:39:01'),
+	(54, 1, 'Pesanan', '1', '2018-12-06', '2018-12-18', '1970-01-01', 'PESANAN-54/2018.12.06', NULL, '2', '1', NULL, NULL, 'sdsd', 'sdsd', 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, NULL, 'final', '2018-12-06 01:45:57', '2018-12-06 01:45:57'),
+	(55, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-55/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 2500.00, 0.00, 0.00, 0, 0.00, 0.00, 2500.00, 2500.00, NULL, 1.34, 'final', '2018-12-06 01:53:55', '2018-12-06 01:53:55'),
+	(56, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-56/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 7500.00, 0.00, 0.00, 0, 0.00, 0.00, 7500.00, 7500.00, NULL, 4.64, 'final', '2018-12-06 01:54:16', '2018-12-06 01:54:17'),
+	(57, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-57/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-04 14:08:31', '2018-12-06 06:08:31'),
+	(58, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-58/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 5.22, 'final', '2018-12-06 06:19:28', '2018-12-06 06:19:29'),
+	(59, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-59/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-06 06:24:06', '2018-12-06 06:24:06'),
+	(60, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-60/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-06 06:26:20', '2018-12-06 06:26:20'),
+	(61, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-61/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 8000.00, NULL, 7.26, 'final', '2018-12-06 06:27:32', '2018-12-06 06:27:32'),
+	(62, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-62/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 11000.00, 0.00, 0.00, 0, 0.00, 0.00, 11000.00, 11000.00, NULL, 7.46, 'final', '2018-12-06 06:27:44', '2018-12-06 06:27:44'),
+	(63, 1, 'Pesanan', '1', '2018-12-06', '2018-12-13', '1970-01-01', 'PESANAN-63/2018.12.06', NULL, '2', '1', NULL, NULL, 'sdsd', 'sdsd', 30000.00, 0.00, 0.00, 0, 0.00, 0.00, 30000.00, 30000.00, NULL, NULL, 'final', '2018-12-06 06:34:11', '2018-12-06 06:34:11'),
+	(64, 1, 'Toko', NULL, '2018-12-06', NULL, NULL, 'TOKO-64/2018.12.06', NULL, '2', '1', NULL, NULL, NULL, NULL, 7000.00, 0.00, 0.00, 0, 0.00, 0.00, 7000.00, 7000.00, NULL, 4.75, 'final', '2018-12-06 06:34:56', '2018-12-06 06:34:56'),
+	(65, 1, 'Pesanan', '2', '2018-12-06', '1970-01-01', '2018-12-05', 'PESANAN-65/2018.12.06', NULL, '2', '1', NULL, NULL, 'sddsd', 'ssdsdsd', 8000.00, 0.00, 0.00, 0, 0.00, 0.00, 8000.00, 2000.00, NULL, NULL, 'final', '2018-12-06 09:38:10', '2018-12-06 09:38:10'),
+	(66, 2, 'Pesanan', '1', '2018-12-10', '2018-12-26', '1970-01-01', 'PESANAN-66/2018.12.10', NULL, '2', '1', NULL, NULL, 'mahm', 'sdsd', 800000.00, 0.00, 0.00, 0, 0.00, 0.00, 800000.00, 800000.00, NULL, NULL, 'final', '2018-12-10 10:04:54', '2018-12-10 10:04:54'),
+	(67, 2, 'Pesanan', '2', '2018-12-10', '1970-01-01', '2018-12-03', 'PESANAN-67/2018.12.10', NULL, '2', '1', NULL, NULL, 'sds', 'sdsd', 80000.00, 0.00, 0.00, 0, 0.00, 0.00, 80000.00, 0.00, NULL, NULL, 'final', '2018-12-10 10:05:45', '2018-12-10 10:05:45');
 /*!40000 ALTER TABLE `d_sales` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_salesplan_dt
-DROP TABLE IF EXISTS `d_salesplan_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_salesplan_dt
 CREATE TABLE IF NOT EXISTS `d_salesplan_dt` (
   `spdt_salesplan` int(11) NOT NULL,
   `spdt_detailid` int(11) NOT NULL,
@@ -2911,15 +2733,15 @@ CREATE TABLE IF NOT EXISTS `d_salesplan_dt` (
   PRIMARY KEY (`spdt_salesplan`,`spdt_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_salesplan_dt: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_salesplan_dt: ~0 rows (approximately)
 DELETE FROM `d_salesplan_dt`;
 /*!40000 ALTER TABLE `d_salesplan_dt` DISABLE KEYS */;
 INSERT INTO `d_salesplan_dt` (`spdt_salesplan`, `spdt_detailid`, `spdt_item`, `spdt_qty`, `spdt_created`, `spdt_updated`) VALUES
-	(1, 0, 75, 10, '2018-11-26 04:24:40', '2018-11-26 04:24:40');
+	(1, 1, 3, 10, '2018-12-03 08:31:59', '2018-12-03 08:31:59');
 /*!40000 ALTER TABLE `d_salesplan_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_sales_dt
-DROP TABLE IF EXISTS `d_sales_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_sales_dt
 CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   `sd_sales` int(11) NOT NULL,
   `sd_detailid` tinyint(4) NOT NULL,
@@ -2940,16 +2762,92 @@ CREATE TABLE IF NOT EXISTS `d_sales_dt` (
   CONSTRAINT `FK_d_sales_dt_m_comp` FOREIGN KEY (`sd_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_sales_dt: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales_dt: ~73 rows (approximately)
 DELETE FROM `d_sales_dt`;
 /*!40000 ALTER TABLE `d_sales_dt` DISABLE KEYS */;
 INSERT INTO `d_sales_dt` (`sd_sales`, `sd_detailid`, `sd_date`, `sd_comp`, `sd_position`, `sd_item`, `sd_qty`, `sd_price`, `sd_disc_percent`, `sd_disc_percentvalue`, `sd_disc_value`, `sd_total_disc`, `sd_total`) VALUES
-	(1, 1, '2018-11-23', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
-	(2, 1, '2018-11-26', 1, 1, 226, 10, 280000, 0, 0.00, 0.00, NULL, 2800000.00);
+	(1, 1, '2018-12-04', 1, 1, 476, 1, 42600, 0, 0.00, 0.00, NULL, 42600.00),
+	(2, 1, '2018-12-04', 1, 1, 9, 10, 15000, 0, 0.00, 0.00, NULL, 150000.00),
+	(3, 1, '2018-12-04', 1, 1, 3, 10, 8000, 0, 0.00, 10.00, NULL, 79990.00),
+	(3, 2, '2018-12-04', 1, 1, 135, 10, 7000, 0, 0.00, 0.00, NULL, 70000.00),
+	(4, 1, '2018-12-04', 1, 1, 132, 10, 64000, 10, 64000.00, 0.00, NULL, 576000.00),
+	(4, 2, '2018-12-04', 1, 1, 136, 10, 56000, 5, 28000.00, 0.00, NULL, 532000.00),
+	(5, 1, '2018-12-04', 1, 1, 75, 10, 8000, 10, 8000.00, 0.00, NULL, 72000.00),
+	(6, 1, '2018-12-04', 1, 1, 56, 1, 7000, 0, 0.00, 0.00, NULL, 7000.00),
+	(7, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(8, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(9, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(10, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(11, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(12, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(13, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(14, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(15, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(16, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(17, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(18, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(19, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(20, 1, '2018-12-05', 1, 1, 16, 1, 7500, 0, 0.00, 0.00, NULL, 7500.00),
+	(21, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(22, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(23, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(24, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(25, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(26, 1, '2018-12-05', 1, 1, 56, 1, 7000, 0, 0.00, 0.00, NULL, 7000.00),
+	(27, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(28, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(29, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(30, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(31, 1, '2018-12-05', 1, 1, 56, 1, 7000, 0, 0.00, 0.00, NULL, 7000.00),
+	(32, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(33, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(34, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(35, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(36, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(37, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(38, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(39, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(40, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(41, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(42, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(43, 1, '2018-12-05', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(43, 2, '2018-12-05', 1, 1, 75, 2, 8000, 0, 0.00, 0.00, NULL, 16000.00),
+	(43, 3, '2018-12-05', 1, 1, 132, 1, 64000, 0, 0.00, 0.00, NULL, 64000.00),
+	(43, 4, '2018-12-05', 1, 1, 136, 10, 56000, 0, 0.00, 0.00, NULL, 560000.00),
+	(43, 5, '2018-12-05', 1, 1, 199, 10, 3000, 0, 0.00, 0.00, NULL, 30000.00),
+	(44, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(44, 2, '2018-12-05', 1, 1, 75, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(44, 3, '2018-12-05', 1, 1, 131, 12, 8000, 0, 0.00, 0.00, NULL, 96000.00),
+	(44, 4, '2018-12-05', 1, 1, 136, 35, 56000, 0, 0.00, 0.00, NULL, 1960000.00),
+	(45, 1, '2018-12-05', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(45, 2, '2018-12-05', 1, 1, 75, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(46, 1, '2018-05-12', 1, 1, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00),
+	(47, 1, '2018-12-06', 1, 1, 56, 1, 7000, 0, 0.00, 0.00, NULL, 7000.00),
+	(48, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(49, 1, '2018-12-06', 1, 1, 3, 1, 6000, 0, 0.00, 0.00, NULL, 6000.00),
+	(50, 1, '2018-12-06', 1, 1, 3, 1, 6000, 0, 0.00, 0.00, NULL, 6000.00),
+	(51, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(52, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(53, 1, '2018-12-06', 1, 1, 136, 1, 56000, 0, 0.00, 0.00, NULL, 56000.00),
+	(54, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(55, 1, '2018-12-06', 1, 1, 306, 1, 2500, 0, 0.00, 0.00, NULL, 2500.00),
+	(56, 1, '2018-12-06', 1, 1, 16, 1, 7500, 0, 0.00, 0.00, NULL, 7500.00),
+	(57, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(58, 1, '2018-12-06', 1, 1, 75, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(59, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(60, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(61, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(62, 1, '2018-12-06', 1, 1, 110, 1, 11000, 0, 0.00, 0.00, NULL, 11000.00),
+	(63, 1, '2018-12-06', 1, 1, 56, 2, 7000, 0, 0.00, 0.00, NULL, 14000.00),
+	(63, 2, '2018-12-06', 1, 1, 75, 2, 8000, 0, 0.00, 0.00, NULL, 16000.00),
+	(64, 1, '2018-12-06', 1, 1, 56, 1, 7000, 0, 0.00, 0.00, NULL, 7000.00),
+	(65, 1, '2018-12-06', 1, 1, 3, 1, 8000, 0, 0.00, 0.00, NULL, 8000.00),
+	(66, 1, '2018-12-10', 4, 4, 75, 100, 8000, 0, 0.00, 0.00, NULL, 800000.00),
+	(67, 1, '2018-12-10', 4, 4, 3, 10, 8000, 0, 0.00, 0.00, NULL, 80000.00);
 /*!40000 ALTER TABLE `d_sales_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_sales_payment
-DROP TABLE IF EXISTS `d_sales_payment`;
+
+-- Dumping structure for table alamrayasite_nabila.d_sales_payment
 CREATE TABLE IF NOT EXISTS `d_sales_payment` (
   `sp_sales` int(11) NOT NULL,
   `sp_paymentid` tinyint(4) NOT NULL,
@@ -2963,16 +2861,81 @@ CREATE TABLE IF NOT EXISTS `d_sales_payment` (
   CONSTRAINT `FK_d_sales_payment_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_sales_payment: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales_payment: ~59 rows (approximately)
 DELETE FROM `d_sales_payment`;
 /*!40000 ALTER TABLE `d_sales_payment` DISABLE KEYS */;
 INSERT INTO `d_sales_payment` (`sp_sales`, `sp_paymentid`, `sp_date`, `sp_comp`, `sp_method`, `sp_nominal`) VALUES
-	(1, 1, '2018-11-23', 1, 1, 0.00),
-	(2, 1, '2018-11-26', 1, 1, 2800000.00);
+	(1, 1, '2018-12-04', 1, 1, 42600.00),
+	(2, 1, '2018-12-04', 1, 1, 150000.00),
+	(3, 1, '2018-12-04', 1, 1, 149990.00),
+	(4, 1, '2018-12-04', 1, 1, 1108000.00),
+	(5, 1, '2018-12-04', 1, 1, 72000.00),
+	(6, 1, '2018-12-04', 1, 1, 7000.00),
+	(7, 1, '2018-12-05', 1, 1, 80000.00),
+	(8, 1, '2018-12-05', 1, 1, 8000.00),
+	(9, 1, '2018-12-05', 1, 1, 8000.00),
+	(10, 1, '2018-12-05', 1, 1, 8000.00),
+	(11, 1, '2018-12-05', 1, 1, 8000.00),
+	(12, 1, '2018-12-05', 1, 1, 8000.00),
+	(13, 1, '2018-12-05', 1, 1, 8000.00),
+	(14, 1, '2018-12-05', 1, 1, 8000.00),
+	(15, 1, '2018-12-05', 1, 1, 80000.00),
+	(16, 1, '2018-12-05', 1, 1, 80000.00),
+	(17, 1, '2018-12-05', 1, 1, 8000.00),
+	(18, 1, '2018-12-05', 1, 1, 8000.00),
+	(19, 1, '2018-12-05', 1, 1, 8000.00),
+	(20, 1, '2018-12-05', 1, 1, 7500.00),
+	(21, 1, '2018-12-05', 1, 1, 8000.00),
+	(22, 1, '2018-12-05', 1, 1, 80000.00),
+	(23, 1, '2018-12-05', 1, 1, 80000.00),
+	(24, 1, '2018-12-05', 1, 1, 8000.00),
+	(25, 1, '2018-12-05', 1, 1, 8000.00),
+	(26, 1, '2018-12-05', 1, 1, 7000.00),
+	(27, 1, '2018-12-05', 1, 1, 8000.00),
+	(28, 1, '2018-12-05', 1, 1, 8000.00),
+	(29, 1, '2018-12-05', 1, 1, 80000.00),
+	(30, 1, '2018-12-05', 1, 1, 8000.00),
+	(31, 1, '2018-12-05', 1, 1, 7000.00),
+	(32, 1, '2018-12-05', 1, 2, 8000.00),
+	(33, 1, '2018-12-05', 1, 1, 8000.00),
+	(34, 1, '2018-12-05', 1, 1, 8000.00),
+	(35, 1, '2018-12-05', 1, 1, 8000.00),
+	(36, 1, '2018-12-05', 1, 1, 8000.00),
+	(37, 1, '2018-12-05', 1, 1, 8000.00),
+	(38, 1, '2018-12-05', 1, 1, 8000.00),
+	(39, 1, '2018-12-05', 1, 1, 8000.00),
+	(40, 1, '2018-12-05', 1, 1, 8000.00),
+	(41, 1, '2018-12-05', 1, 1, 8000.00),
+	(42, 1, '2018-12-05', 1, 1, 8000.00),
+	(43, 1, '2018-12-05', 1, 1, 678000.00),
+	(44, 1, '2018-12-05', 1, 1, 2216000.00),
+	(45, 1, '2018-12-05', 1, 1, 160000.00),
+	(46, 1, '2018-12-05', 1, 1, 80000.00),
+	(47, 1, '2018-12-06', 1, 1, 7000.00),
+	(48, 1, '2018-12-06', 1, 1, 8000.00),
+	(49, 1, '2018-12-06', 1, 1, 0.00),
+	(50, 1, '2018-12-06', 1, 1, 6000.00),
+	(51, 1, '2018-12-06', 1, 1, 8000.00),
+	(52, 1, '2018-12-06', 1, 1, 8000.00),
+	(53, 1, '2018-12-06', 1, 1, 56000.00),
+	(54, 1, '2018-12-06', 1, 1, 8000.00),
+	(55, 1, '2018-12-06', 1, 1, 2500.00),
+	(56, 1, '2018-12-06', 1, 1, 7500.00),
+	(57, 1, '2018-12-06', 1, 1, 8000.00),
+	(58, 1, '2018-12-06', 1, 1, 8000.00),
+	(59, 1, '2018-12-06', 1, 1, 8000.00),
+	(60, 1, '2018-12-06', 1, 1, 8000.00),
+	(61, 1, '2018-12-06', 1, 1, 8000.00),
+	(62, 1, '2018-12-06', 1, 1, 11000.00),
+	(63, 1, '2018-12-06', 1, 1, 30000.00),
+	(64, 1, '2018-12-06', 1, 1, 7000.00),
+	(65, 1, '2018-12-06', 1, 1, 2000.00),
+	(66, 1, '2018-12-10', 2, 1, 800000.00),
+	(67, 1, '2018-12-10', 2, 1, 0.00);
 /*!40000 ALTER TABLE `d_sales_payment` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_sales_plan
-DROP TABLE IF EXISTS `d_sales_plan`;
+
+-- Dumping structure for table alamrayasite_nabila.d_sales_plan
 CREATE TABLE IF NOT EXISTS `d_sales_plan` (
   `sp_id` int(11) NOT NULL AUTO_INCREMENT,
   `sp_code` varchar(50) DEFAULT NULL,
@@ -2985,17 +2948,92 @@ CREATE TABLE IF NOT EXISTS `d_sales_plan` (
   PRIMARY KEY (`sp_id`),
   KEY `FK_d_sales_plan_m_comp` (`sp_comp`),
   CONSTRAINT `FK_d_sales_plan_m_comp` FOREIGN KEY (`sp_comp`) REFERENCES `m_comp` (`c_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_sales_plan: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_sales_plan: ~0 rows (approximately)
 DELETE FROM `d_sales_plan`;
 /*!40000 ALTER TABLE `d_sales_plan` DISABLE KEYS */;
-INSERT INTO `d_sales_plan` (`sp_id`, `sp_code`, `sp_comp`, `sp_mem`, `sp_date`, `sp_created`, `sp_updated`, `sp_status`) VALUES
-	(1, 'RENCANAPENJUALAN-1/2018.11.26', 1, 0, '2018-11-26', '2018-11-26 04:24:39', '2018-11-26 04:24:39', 'N');
 /*!40000 ALTER TABLE `d_sales_plan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_spk
-DROP TABLE IF EXISTS `d_spk`;
+
+-- Dumping structure for table alamrayasite_nabila.d_sales_return
+CREATE TABLE IF NOT EXISTS `d_sales_return` (
+  `dsr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dsr_sid` int(11) NOT NULL,
+  `dsr_cus` int(11) NOT NULL,
+  `dsr_code` varchar(15) NOT NULL,
+  `dsr_method` varchar(2) NOT NULL COMMENT 'TK : Tukar Barang | PN : Potong Nota | SB : Salah Barang | SA : Salah Alamat | KB : Kurang Barang',
+  `dsr_jenis_return` varchar(2) DEFAULT NULL COMMENT 'BR : Barang Rusak | KB : Kelebihan Barang',
+  `dsr_type_sales` varchar(2) NOT NULL COMMENT 'RT | GR',
+  `dsr_date` date NOT NULL,
+  `dsr_price_return` decimal(12,2) NOT NULL,
+  `dsr_sgross` decimal(12,2) NOT NULL,
+  `dsr_disc_vpercent` decimal(12,2) NOT NULL,
+  `dsr_disc_value` decimal(12,2) DEFAULT NULL,
+  `dsr_net` decimal(12,2) DEFAULT NULL,
+  `dsr_status` varchar(2) NOT NULL COMMENT 'WT : Waiting | TL : Tolak | TR : Terima | FN : Finish',
+  `dsr_status_terima` varchar(2) NOT NULL DEFAULT '' COMMENT 'WT : Waiting | TR : Terima',
+  `dsr_resi` varchar(25) NOT NULL,
+  `dsr_created` timestamp NULL DEFAULT NULL,
+  `dsr_updated` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`dsr_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_sales_return: ~0 rows (approximately)
+DELETE FROM `d_sales_return`;
+/*!40000 ALTER TABLE `d_sales_return` DISABLE KEYS */;
+INSERT INTO `d_sales_return` (`dsr_id`, `dsr_sid`, `dsr_cus`, `dsr_code`, `dsr_method`, `dsr_jenis_return`, `dsr_type_sales`, `dsr_date`, `dsr_price_return`, `dsr_sgross`, `dsr_disc_vpercent`, `dsr_disc_value`, `dsr_net`, `dsr_status`, `dsr_status_terima`, `dsr_resi`, `dsr_created`, `dsr_updated`) VALUES
+	(1, 1, 1040, 'XX1811261-R', 'KB', NULL, 'GR', '2018-11-26', 54000.00, 926000.00, 0.00, 0.00, 926000.00, 'FN', 'WT', '', NULL, NULL);
+/*!40000 ALTER TABLE `d_sales_return` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_sales_returndt
+CREATE TABLE IF NOT EXISTS `d_sales_returndt` (
+  `dsrdt_idsr` int(11) NOT NULL,
+  `dsrdt_smdt` int(11) unsigned NOT NULL,
+  `dsrdt_item` int(11) NOT NULL,
+  `dsrdt_qty` int(11) NOT NULL,
+  `dsrdt_qty_confirm` int(11) DEFAULT '0',
+  `dsrdt_price` decimal(12,2) DEFAULT NULL,
+  `dsrdt_disc_percent` decimal(12,2) DEFAULT NULL,
+  `dsrdt_disc_vpercent` decimal(12,2) DEFAULT NULL,
+  `dsrdt_disc_vpercentreturn` decimal(12,2) DEFAULT NULL,
+  `dsrdt_disc_value` decimal(12,2) DEFAULT NULL,
+  `dsrdt_return_price` decimal(12,2) DEFAULT NULL,
+  `dsrdt_hasil` decimal(12,2) DEFAULT NULL,
+  `dsrdt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dsrdt_updated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  KEY `dsrdt_idsr` (`dsrdt_idsr`),
+  CONSTRAINT `FK_d_sales_returndt_d_sales_return` FOREIGN KEY (`dsrdt_idsr`) REFERENCES `d_sales_return` (`dsr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_sales_returndt: ~2 rows (approximately)
+DELETE FROM `d_sales_returndt`;
+/*!40000 ALTER TABLE `d_sales_returndt` DISABLE KEYS */;
+INSERT INTO `d_sales_returndt` (`dsrdt_idsr`, `dsrdt_smdt`, `dsrdt_item`, `dsrdt_qty`, `dsrdt_qty_confirm`, `dsrdt_price`, `dsrdt_disc_percent`, `dsrdt_disc_vpercent`, `dsrdt_disc_vpercentreturn`, `dsrdt_disc_value`, `dsrdt_return_price`, `dsrdt_hasil`, `dsrdt_created`, `dsrdt_updated`) VALUES
+	(1, 1, 299, 20, 2, 27000.00, 0.00, 0.00, 0.00, 0.00, 54000.00, 486000.00, '2018-11-26 15:39:03', '0000-00-00 00:00:00'),
+	(1, 2, 162, 20, 0, 22000.00, NULL, 0.00, 0.00, 0.00, 0.00, 440000.00, '2018-11-26 15:39:03', '0000-00-00 00:00:00');
+/*!40000 ALTER TABLE `d_sales_returndt` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_sales_returnsb
+CREATE TABLE IF NOT EXISTS `d_sales_returnsb` (
+  `dsrs_sr` int(11) unsigned NOT NULL,
+  `dsrs_detailid` int(11) NOT NULL,
+  `dsrs_item` int(11) DEFAULT NULL,
+  `dsrs_qty` int(11) DEFAULT NULL,
+  `dsrs_created` timestamp NULL DEFAULT NULL,
+  `dsrs_updated` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`dsrs_sr`,`dsrs_detailid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table alamrayasite_nabila.d_sales_returnsb: ~0 rows (approximately)
+DELETE FROM `d_sales_returnsb`;
+/*!40000 ALTER TABLE `d_sales_returnsb` DISABLE KEYS */;
+/*!40000 ALTER TABLE `d_sales_returnsb` ENABLE KEYS */;
+
+
+-- Dumping structure for table alamrayasite_nabila.d_spk
 CREATE TABLE IF NOT EXISTS `d_spk` (
   `spk_id` int(11) NOT NULL,
   `spk_comp` int(11) NOT NULL,
@@ -3011,15 +3049,15 @@ CREATE TABLE IF NOT EXISTS `d_spk` (
   CONSTRAINT `FK_d_spk_d_productplan` FOREIGN KEY (`spk_ref`) REFERENCES `d_productplan` (`pp_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_spk: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_spk: ~0 rows (approximately)
 DELETE FROM `d_spk`;
 /*!40000 ALTER TABLE `d_spk` DISABLE KEYS */;
 INSERT INTO `d_spk` (`spk_id`, `spk_comp`, `spk_ref`, `spk_code`, `spk_date`, `spk_item`, `spk_status`, `spk_insert`, `spk_update`) VALUES
-	(1, 1, 1, 'SPK1811271', '2018-11-27', 3, 'PB', '2018-11-27 17:18:02', '2018-11-27 18:27:25');
+	(1, 1, 1, 'SPK1812031', '2018-12-03', 3, 'PB', '2018-12-03 08:53:04', '2018-12-03 09:24:45');
 /*!40000 ALTER TABLE `d_spk` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_stock
-DROP TABLE IF EXISTS `d_stock`;
+
+-- Dumping structure for table alamrayasite_nabila.d_stock
 CREATE TABLE IF NOT EXISTS `d_stock` (
   `s_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `s_comp` int(11) NOT NULL COMMENT 'PEMILIK',
@@ -3034,27 +3072,582 @@ CREATE TABLE IF NOT EXISTS `d_stock` (
   KEY `FK_d_stock_d_gudangcabang_2` (`s_position`),
   CONSTRAINT `FK_d_stock_d_gudangcabang` FOREIGN KEY (`s_comp`) REFERENCES `d_gudangcabang` (`gc_id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_d_stock_d_gudangcabang_2` FOREIGN KEY (`s_position`) REFERENCES `d_gudangcabang` (`gc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1600 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_stock: ~11 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_stock: ~565 rows (approximately)
 DELETE FROM `d_stock`;
 /*!40000 ALTER TABLE `d_stock` DISABLE KEYS */;
 INSERT INTO `d_stock` (`s_id`, `s_comp`, `s_position`, `s_item`, `s_qty`, `s_qty_min`, `s_insert`, `s_update`) VALUES
-	(1, 1, 1, 226, 90.00, 0.00, '2018-11-26 03:54:39', '2018-11-27 16:39:06'),
-	(2, 1, 1, 5, 5.00, 0.00, '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
-	(3, 1, 1, 7, 6.00, 0.00, '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
-	(4, 7, 7, 3, 5000.00, 0.00, '2018-11-27 15:49:59', '2018-11-27 17:15:13'),
-	(5, 7, 7, 18, 0.00, 0.00, '2018-11-27 15:50:59', '2018-11-27 18:27:25'),
-	(6, 7, 7, 19, 50.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(7, 7, 7, 48, 2000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
-	(8, 7, 7, 49, 5000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(9, 7, 7, 60, 4500.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
-	(10, 7, 7, 70, 5000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(11, 7, 7, 71, 1000.00, 0.00, '2018-11-27 17:15:13', '2018-11-27 18:27:25');
+	(1034, 1, 1, 3, 99867.00, 100000.00, '2018-12-04 10:59:51', '2018-12-06 06:27:32'),
+	(1035, 1, 1, 1, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1036, 1, 1, 2, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1037, 1, 1, 6, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1038, 1, 1, 7, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1039, 1, 1, 8, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1040, 1, 1, 9, 99990.00, 100000.00, '2018-12-04 10:59:51', '2018-12-04 04:36:35'),
+	(1041, 1, 1, 10, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1042, 1, 1, 11, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1043, 1, 1, 12, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1044, 1, 1, 13, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1045, 1, 1, 14, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1046, 1, 1, 15, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1047, 1, 1, 16, 99998.00, 100000.00, '2018-12-04 10:59:51', '2018-12-06 01:54:16'),
+	(1048, 1, 1, 17, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1049, 1, 1, 18, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1050, 1, 1, 19, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1051, 1, 1, 20, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1052, 1, 1, 21, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1053, 1, 1, 22, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1054, 1, 1, 23, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1055, 1, 1, 24, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1056, 1, 1, 25, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1057, 1, 1, 26, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1058, 1, 1, 27, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1059, 1, 1, 28, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1060, 1, 1, 29, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1061, 1, 1, 30, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1062, 1, 1, 31, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1063, 1, 1, 32, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1064, 1, 1, 33, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1065, 1, 1, 34, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1066, 1, 1, 35, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1067, 1, 1, 36, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1068, 1, 1, 37, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1069, 1, 1, 38, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1070, 1, 1, 39, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1071, 1, 1, 40, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1072, 1, 1, 41, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1073, 1, 1, 42, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1074, 1, 1, 43, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1075, 1, 1, 44, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1076, 1, 1, 45, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1077, 1, 1, 46, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1078, 1, 1, 47, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1079, 1, 1, 48, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1080, 1, 1, 49, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1081, 1, 1, 50, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1082, 1, 1, 51, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1083, 1, 1, 52, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1084, 1, 1, 53, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1085, 1, 1, 54, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1086, 1, 1, 55, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1087, 1, 1, 56, 99995.00, 100000.00, '2018-12-04 10:59:51', '2018-12-06 06:34:56'),
+	(1088, 1, 1, 57, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1089, 1, 1, 58, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1090, 1, 1, 59, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1091, 1, 1, 60, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1092, 1, 1, 61, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1093, 1, 1, 62, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1094, 1, 1, 63, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1095, 1, 1, 64, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1096, 1, 1, 65, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1097, 1, 1, 66, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1098, 1, 1, 67, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1099, 1, 1, 68, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1100, 1, 1, 69, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1101, 1, 1, 70, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1102, 1, 1, 71, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1103, 1, 1, 72, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1104, 1, 1, 73, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1105, 1, 1, 74, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1106, 1, 1, 75, 99967.00, 100000.00, '2018-12-04 10:59:51', '2018-12-06 06:19:28'),
+	(1107, 1, 1, 76, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1108, 1, 1, 77, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1109, 1, 1, 78, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1110, 1, 1, 79, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1111, 1, 1, 80, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1112, 1, 1, 81, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1113, 1, 1, 82, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1114, 1, 1, 83, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1115, 1, 1, 84, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1116, 1, 1, 85, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1117, 1, 1, 86, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1118, 1, 1, 87, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1119, 1, 1, 88, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1120, 1, 1, 89, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1121, 1, 1, 90, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1122, 1, 1, 91, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1123, 1, 1, 92, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1124, 1, 1, 93, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1125, 1, 1, 94, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1126, 1, 1, 95, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1127, 1, 1, 96, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1128, 1, 1, 97, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1129, 1, 1, 98, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1130, 1, 1, 99, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1131, 1, 1, 100, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1132, 1, 1, 101, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1133, 1, 1, 102, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1134, 1, 1, 103, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1135, 1, 1, 104, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1136, 1, 1, 105, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1137, 1, 1, 106, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1138, 1, 1, 107, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1139, 1, 1, 108, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1140, 1, 1, 109, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1141, 1, 1, 110, 99999.00, 100000.00, '2018-12-04 10:59:51', '2018-12-06 06:27:44'),
+	(1142, 1, 1, 111, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1143, 1, 1, 112, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1144, 1, 1, 113, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1145, 1, 1, 114, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1146, 1, 1, 115, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1147, 1, 1, 116, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1148, 1, 1, 117, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1149, 1, 1, 118, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1150, 1, 1, 119, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1151, 1, 1, 120, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1152, 1, 1, 121, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1153, 1, 1, 122, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1154, 1, 1, 123, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1155, 1, 1, 124, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1156, 1, 1, 125, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1157, 1, 1, 126, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1158, 1, 1, 127, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1159, 1, 1, 128, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1160, 1, 1, 129, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1161, 1, 1, 130, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1162, 1, 1, 131, 99988.00, 100000.00, '2018-12-04 10:59:51', '2018-12-05 16:37:14'),
+	(1163, 1, 1, 132, 99989.00, 100000.00, '2018-12-04 10:59:51', '2018-12-05 16:34:36'),
+	(1164, 1, 1, 133, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1165, 1, 1, 134, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1166, 1, 1, 135, 99990.00, 100000.00, '2018-12-04 10:59:51', '2018-12-04 05:31:26'),
+	(1167, 1, 1, 136, 99945.00, 100000.00, '2018-12-04 10:59:51', '2018-12-05 16:37:14'),
+	(1168, 1, 1, 137, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1169, 1, 1, 138, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1170, 1, 1, 139, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1171, 1, 1, 140, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1172, 1, 1, 141, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1173, 1, 1, 142, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1174, 1, 1, 143, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1175, 1, 1, 144, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1176, 1, 1, 145, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1177, 1, 1, 146, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1178, 1, 1, 147, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1179, 1, 1, 148, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1180, 1, 1, 149, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1181, 1, 1, 150, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1182, 1, 1, 151, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1183, 1, 1, 152, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1184, 1, 1, 153, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1185, 1, 1, 154, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1186, 1, 1, 155, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1187, 1, 1, 158, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1188, 1, 1, 159, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1189, 1, 1, 160, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1190, 1, 1, 161, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1191, 1, 1, 162, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1192, 1, 1, 164, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1193, 1, 1, 165, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1194, 1, 1, 166, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1195, 1, 1, 167, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1196, 1, 1, 168, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1197, 1, 1, 169, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1198, 1, 1, 170, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1199, 1, 1, 171, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1200, 1, 1, 172, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1201, 1, 1, 173, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1202, 1, 1, 174, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1203, 1, 1, 175, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1204, 1, 1, 176, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1205, 1, 1, 177, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1206, 1, 1, 178, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1207, 1, 1, 179, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1208, 1, 1, 180, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1209, 1, 1, 181, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1210, 1, 1, 182, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1211, 1, 1, 183, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1212, 1, 1, 184, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1213, 1, 1, 185, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1214, 1, 1, 186, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1215, 1, 1, 187, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1216, 1, 1, 188, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1217, 1, 1, 189, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1218, 1, 1, 190, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1219, 1, 1, 191, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1220, 1, 1, 192, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1221, 1, 1, 193, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1222, 1, 1, 194, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1223, 1, 1, 195, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1224, 1, 1, 196, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1225, 1, 1, 197, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1226, 1, 1, 198, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1227, 1, 1, 199, 99990.00, 100000.00, '2018-12-04 10:59:51', '2018-12-05 16:34:36'),
+	(1228, 1, 1, 200, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1229, 1, 1, 201, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1230, 1, 1, 202, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1231, 1, 1, 203, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1232, 1, 1, 204, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1233, 1, 1, 205, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1234, 1, 1, 206, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1235, 1, 1, 207, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1236, 1, 1, 208, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1237, 1, 1, 209, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1238, 1, 1, 210, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1239, 1, 1, 211, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1240, 1, 1, 212, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1241, 1, 1, 213, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1242, 1, 1, 214, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1243, 1, 1, 215, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1244, 1, 1, 216, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1245, 1, 1, 217, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1246, 1, 1, 218, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1247, 1, 1, 219, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1248, 1, 1, 220, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1249, 1, 1, 221, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1250, 1, 1, 222, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1251, 1, 1, 223, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1252, 1, 1, 224, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1253, 1, 1, 225, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1254, 1, 1, 226, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1255, 1, 1, 227, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1256, 1, 1, 228, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1257, 1, 1, 229, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1258, 1, 1, 230, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1259, 1, 1, 231, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1260, 1, 1, 232, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1261, 1, 1, 233, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1262, 1, 1, 234, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1263, 1, 1, 235, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1264, 1, 1, 236, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1265, 1, 1, 237, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1266, 1, 1, 238, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1267, 1, 1, 239, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1268, 1, 1, 240, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1269, 1, 1, 241, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1270, 1, 1, 242, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1271, 1, 1, 243, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1272, 1, 1, 244, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1273, 1, 1, 245, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1274, 1, 1, 246, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1275, 1, 1, 247, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1276, 1, 1, 248, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1277, 1, 1, 249, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1278, 1, 1, 250, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1279, 1, 1, 251, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1280, 1, 1, 252, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1281, 1, 1, 253, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1282, 1, 1, 254, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1283, 1, 1, 255, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1284, 1, 1, 256, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1285, 1, 1, 257, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1286, 1, 1, 258, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1287, 1, 1, 259, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1288, 1, 1, 260, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1289, 1, 1, 261, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1290, 1, 1, 262, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1291, 1, 1, 263, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1292, 1, 1, 264, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1293, 1, 1, 265, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1294, 1, 1, 266, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1295, 1, 1, 267, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1296, 1, 1, 268, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1297, 1, 1, 269, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1298, 1, 1, 270, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1299, 1, 1, 271, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1300, 1, 1, 272, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1301, 1, 1, 273, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1302, 1, 1, 274, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1303, 1, 1, 275, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1304, 1, 1, 276, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1305, 1, 1, 277, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1306, 1, 1, 278, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1307, 1, 1, 279, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1308, 1, 1, 280, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1309, 1, 1, 281, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1310, 1, 1, 282, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1311, 1, 1, 283, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1312, 1, 1, 284, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1313, 1, 1, 285, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1314, 1, 1, 286, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1315, 1, 1, 287, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1316, 1, 1, 288, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1317, 1, 1, 289, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1318, 1, 1, 290, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1319, 1, 1, 291, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1320, 1, 1, 292, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1321, 1, 1, 293, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1322, 1, 1, 294, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1323, 1, 1, 295, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1324, 1, 1, 296, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1325, 1, 1, 297, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1326, 1, 1, 298, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1327, 1, 1, 299, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1328, 1, 1, 300, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1329, 1, 1, 301, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1330, 1, 1, 302, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1331, 1, 1, 303, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1332, 1, 1, 304, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1333, 1, 1, 305, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1334, 1, 1, 306, 99999.00, 100000.00, '2018-12-04 10:59:51', '2018-12-06 01:53:55'),
+	(1335, 1, 1, 307, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1336, 1, 1, 308, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1337, 1, 1, 309, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1338, 1, 1, 310, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1339, 1, 1, 311, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1340, 1, 1, 312, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1341, 1, 1, 313, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1342, 1, 1, 314, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1343, 1, 1, 315, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1344, 1, 1, 316, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1345, 1, 1, 317, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1346, 1, 1, 318, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1347, 1, 1, 319, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1348, 1, 1, 320, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1349, 1, 1, 321, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1350, 1, 1, 322, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1351, 1, 1, 323, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1352, 1, 1, 324, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1353, 1, 1, 325, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1354, 1, 1, 326, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1355, 1, 1, 327, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1356, 1, 1, 328, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1357, 1, 1, 329, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1358, 1, 1, 330, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1359, 1, 1, 331, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1360, 1, 1, 332, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1361, 1, 1, 333, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1362, 1, 1, 334, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1363, 1, 1, 335, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1364, 1, 1, 336, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1365, 1, 1, 337, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1366, 1, 1, 338, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1367, 1, 1, 339, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1368, 1, 1, 340, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1369, 1, 1, 341, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1370, 1, 1, 342, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1371, 1, 1, 343, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1372, 1, 1, 344, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1373, 1, 1, 345, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1374, 1, 1, 346, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1375, 1, 1, 347, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1376, 1, 1, 348, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1377, 1, 1, 349, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1378, 1, 1, 350, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1379, 1, 1, 351, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1380, 1, 1, 352, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1381, 1, 1, 353, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1382, 1, 1, 354, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1383, 1, 1, 355, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1384, 1, 1, 356, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1385, 1, 1, 357, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1386, 1, 1, 358, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1387, 1, 1, 359, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1388, 1, 1, 360, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1389, 1, 1, 361, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1390, 1, 1, 362, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1391, 1, 1, 363, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1392, 1, 1, 364, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1393, 1, 1, 365, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1394, 1, 1, 366, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1395, 1, 1, 367, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1396, 1, 1, 368, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1397, 1, 1, 369, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1398, 1, 1, 370, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1399, 1, 1, 371, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1400, 1, 1, 372, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1401, 1, 1, 373, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1402, 1, 1, 374, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1403, 1, 1, 375, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1404, 1, 1, 376, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1405, 1, 1, 377, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1406, 1, 1, 378, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1407, 1, 1, 380, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1408, 1, 1, 381, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1409, 1, 1, 382, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1410, 1, 1, 383, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1411, 1, 1, 384, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1412, 1, 1, 385, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1413, 1, 1, 386, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1414, 1, 1, 387, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1415, 1, 1, 388, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1416, 1, 1, 389, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1417, 1, 1, 390, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1418, 1, 1, 391, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1419, 1, 1, 392, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1420, 1, 1, 393, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1421, 1, 1, 394, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1422, 1, 1, 395, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1423, 1, 1, 402, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1424, 1, 1, 403, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1425, 1, 1, 404, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1426, 1, 1, 406, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1427, 1, 1, 408, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1428, 1, 1, 410, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1429, 1, 1, 411, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1430, 1, 1, 412, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1431, 1, 1, 413, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1432, 1, 1, 414, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1433, 1, 1, 415, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1434, 1, 1, 416, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1435, 1, 1, 417, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1436, 1, 1, 418, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1437, 1, 1, 419, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1438, 1, 1, 420, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1439, 1, 1, 421, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1440, 1, 1, 422, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1441, 1, 1, 423, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1442, 1, 1, 424, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1443, 1, 1, 425, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1444, 1, 1, 426, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1445, 1, 1, 427, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1446, 1, 1, 428, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1447, 1, 1, 429, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1448, 1, 1, 430, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1449, 1, 1, 431, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1450, 1, 1, 432, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1451, 1, 1, 433, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1452, 1, 1, 434, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1453, 1, 1, 435, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1454, 1, 1, 436, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1455, 1, 1, 532, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1456, 1, 1, 533, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1457, 1, 1, 534, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1458, 1, 1, 535, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1459, 1, 1, 536, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1460, 1, 1, 537, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1461, 1, 1, 538, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1462, 1, 1, 539, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1463, 1, 1, 540, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1464, 1, 1, 541, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1465, 1, 1, 542, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1466, 1, 1, 543, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1467, 1, 1, 544, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1468, 1, 1, 545, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1469, 1, 1, 546, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1470, 1, 1, 547, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1471, 1, 1, 548, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1472, 1, 1, 549, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1473, 1, 1, 550, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1474, 1, 1, 551, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1475, 1, 1, 552, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1476, 1, 1, 553, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1477, 1, 1, 554, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1478, 1, 1, 555, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1479, 1, 1, 556, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1480, 1, 1, 1411, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1481, 1, 1, 1412, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1482, 1, 1, 1413, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1483, 1, 1, 1414, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1484, 1, 1, 1415, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1485, 1, 1, 1416, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1486, 1, 1, 1417, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1487, 1, 1, 1418, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1488, 1, 1, 1419, 100000.00, 100000.00, '2018-12-04 10:59:51', '2018-12-04 06:05:20'),
+	(1489, 1, 1, 437, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1490, 1, 1, 438, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1491, 1, 1, 439, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1492, 1, 1, 440, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1493, 1, 1, 441, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1494, 1, 1, 442, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1495, 1, 1, 443, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1496, 1, 1, 444, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1497, 1, 1, 445, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1498, 1, 1, 446, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1499, 1, 1, 447, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1500, 1, 1, 448, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1501, 1, 1, 449, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1502, 1, 1, 450, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1503, 1, 1, 451, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1504, 1, 1, 452, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1505, 1, 1, 453, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1506, 1, 1, 454, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1507, 1, 1, 455, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1508, 1, 1, 456, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1509, 1, 1, 457, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1510, 1, 1, 458, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1511, 1, 1, 459, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1512, 1, 1, 460, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1513, 1, 1, 461, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1514, 1, 1, 462, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1515, 1, 1, 463, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1516, 1, 1, 464, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1517, 1, 1, 465, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1518, 1, 1, 466, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1519, 1, 1, 467, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1520, 1, 1, 468, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1521, 1, 1, 469, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1522, 1, 1, 470, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1523, 1, 1, 471, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1524, 1, 1, 472, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1525, 1, 1, 473, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1526, 1, 1, 474, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1527, 1, 1, 475, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1528, 1, 1, 476, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1529, 1, 1, 477, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1530, 1, 1, 478, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1531, 1, 1, 479, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1532, 1, 1, 480, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1533, 1, 1, 481, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1534, 1, 1, 482, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1535, 1, 1, 483, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1536, 1, 1, 484, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1537, 1, 1, 486, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1538, 1, 1, 488, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1539, 1, 1, 489, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1540, 1, 1, 490, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1541, 1, 1, 491, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1542, 1, 1, 492, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1543, 1, 1, 493, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1544, 1, 1, 494, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1545, 1, 1, 495, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1546, 1, 1, 496, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1547, 1, 1, 497, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1548, 1, 1, 498, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1549, 1, 1, 499, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1550, 1, 1, 500, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1551, 1, 1, 501, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1552, 1, 1, 502, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1553, 1, 1, 506, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1554, 1, 1, 507, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1555, 1, 1, 508, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1556, 1, 1, 509, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1557, 1, 1, 510, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1558, 1, 1, 513, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1559, 1, 1, 514, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1560, 1, 1, 515, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1561, 1, 1, 516, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1562, 1, 1, 517, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1563, 1, 1, 518, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1564, 1, 1, 519, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1565, 1, 1, 520, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1566, 1, 1, 521, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1567, 1, 1, 522, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1568, 1, 1, 523, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1569, 1, 1, 524, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1570, 1, 1, 525, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1571, 1, 1, 526, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1572, 1, 1, 527, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1573, 1, 1, 528, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1574, 1, 1, 529, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1575, 1, 1, 530, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1576, 1, 1, 531, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1577, 1, 1, 4, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1578, 1, 1, 5, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1579, 1, 1, 156, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1580, 1, 1, 157, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1581, 1, 1, 163, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1582, 1, 1, 379, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1583, 1, 1, 396, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1584, 1, 1, 397, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1585, 1, 1, 398, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1586, 1, 1, 399, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1587, 1, 1, 400, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1588, 1, 1, 401, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1589, 1, 1, 405, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1590, 1, 1, 407, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1591, 1, 1, 409, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1592, 1, 1, 485, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1593, 1, 1, 487, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1594, 1, 1, 503, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1595, 1, 1, 504, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1596, 1, 1, 505, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1597, 1, 1, 511, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1598, 1, 1, 512, 100000.00, 100000.00, '2018-12-04 10:59:51', NULL),
+	(1599, 2, 1, 1419, 11.00, 0.00, '2018-12-04 06:01:38', '2018-12-04 06:05:35');
 /*!40000 ALTER TABLE `d_stock` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_stock_mutation
-DROP TABLE IF EXISTS `d_stock_mutation`;
+
+-- Dumping structure for table alamrayasite_nabila.d_stock_mutation
 CREATE TABLE IF NOT EXISTS `d_stock_mutation` (
   `sm_stock` bigint(20) NOT NULL,
   `sm_detailid` tinyint(4) NOT NULL,
@@ -3082,38 +3675,660 @@ CREATE TABLE IF NOT EXISTS `d_stock_mutation` (
   CONSTRAINT `FK_d_stock_mutation_d_stock_mutcat` FOREIGN KEY (`sm_mutcat`) REFERENCES `d_stock_mutcat` (`smc_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table nabila.d_stock_mutation: ~17 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_stock_mutation: ~565 rows (approximately)
 DELETE FROM `d_stock_mutation`;
 /*!40000 ALTER TABLE `d_stock_mutation` DISABLE KEYS */;
 INSERT INTO `d_stock_mutation` (`sm_stock`, `sm_detailid`, `sm_date`, `sm_comp`, `sm_position`, `sm_mutcat`, `sm_item`, `sm_qty`, `sm_qty_used`, `sm_qty_sisa`, `sm_qty_expired`, `sm_detail`, `sm_keterangan`, `sm_hpp`, `sm_sell`, `sm_reff`, `sm_insert`, `sm_update`) VALUES
-	(1, 1, '2018-11-26', 1, 1, 5, 226, 100.00, 10.00, 90.00, 0.00, 'TAMBAH BARANG HASIL PRODUKSI', NULL, 186.00, NULL, 'PR-1811-00001', '2018-11-26 03:54:39', '2018-11-26 03:57:30'),
-	(2, 1, '2018-11-27', 1, 1, 60, 5, 5.00, 0.00, 5.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811271', '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
-	(3, 1, '2018-11-27', 1, 1, 60, 7, 6.00, 0.00, 6.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811271', '2018-11-27 15:39:34', '2018-11-27 15:39:34'),
-	(4, 1, '2018-11-27', 7, 7, 60, 3, 500.00, 0.00, 500.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811272', '2018-11-27 15:49:59', '2018-11-27 15:49:59'),
-	(5, 1, '2018-11-27', 7, 7, 60, 18, 500.00, 500.00, 0.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811273', '2018-11-27 15:50:59', '2018-11-27 18:27:25'),
-	(6, 1, '2018-11-27', 7, 7, 60, 19, 50.00, 0.00, 50.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(7, 1, '2018-11-27', 7, 7, 60, 48, 5000.00, 3000.00, 2000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
-	(8, 1, '2018-11-27', 7, 7, 60, 49, 5000.00, 0.00, 5000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(9, 1, '2018-11-27', 7, 7, 60, 60, 5000.00, 500.00, 4500.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
-	(10, 1, '2018-11-27', 7, 7, 60, 70, 5000.00, 0.00, 5000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(11, 1, '2018-11-27', 7, 7, 60, 71, 5000.00, 4000.00, 1000.00, 0.00, 'MENAMBAH OPNAME', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 18:27:25'),
-	(1, 2, '2018-11-26', 1, 1, 5, 226, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 186.00, NULL, 'TOKO-2/2018.11.26', NULL, NULL),
-	(4, 2, '2018-11-27', 7, 7, 60, 3, 4500.00, 0.00, 4500.00, 0.00, 'PENAMBAHAN', NULL, NULL, NULL, 'OD1811274', '2018-11-27 17:15:13', '2018-11-27 17:15:13'),
-	(5, 2, '2018-11-27', 7, 7, 100, 18, -500.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL),
-	(7, 2, '2018-11-27', 7, 7, 100, 48, -3000.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL),
-	(9, 2, '2018-11-27', 7, 7, 100, 60, -500.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL),
-	(11, 2, '2018-11-27', 7, 7, 100, 71, -4000.00, NULL, NULL, NULL, '2', 'MENGURANGI', NULL, NULL, 'SPK1811271', NULL, NULL);
+	(1034, 1, '2018-12-04', 1, 1, 1, 3, 100000.00, 133.00, 99867.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.26, NULL, '1', NULL, '2018-12-06 06:27:32'),
+	(1035, 1, '2018-12-04', 1, 1, 1, 1, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.04, NULL, '1', NULL, NULL),
+	(1036, 1, '2018-12-04', 1, 1, 1, 2, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.50, NULL, '1', NULL, NULL),
+	(1037, 1, '2018-12-04', 1, 1, 1, 6, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.62, NULL, '1', NULL, NULL),
+	(1038, 1, '2018-12-04', 1, 1, 1, 7, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.53, NULL, '1', NULL, NULL),
+	(1039, 1, '2018-12-04', 1, 1, 1, 8, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.04, NULL, '1', NULL, NULL),
+	(1040, 1, '2018-12-04', 1, 1, 1, 9, 100000.00, 10.00, 99990.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.64, NULL, '1', NULL, '2018-12-04 04:36:35'),
+	(1041, 1, '2018-12-04', 1, 1, 1, 10, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.07, NULL, '1', NULL, NULL),
+	(1042, 1, '2018-12-04', 1, 1, 1, 11, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.92, NULL, '1', NULL, NULL),
+	(1043, 1, '2018-12-04', 1, 1, 1, 12, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.39, NULL, '1', NULL, NULL),
+	(1044, 1, '2018-12-04', 1, 1, 1, 13, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.93, NULL, '1', NULL, NULL),
+	(1045, 1, '2018-12-04', 1, 1, 1, 14, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.02, NULL, '1', NULL, NULL),
+	(1046, 1, '2018-12-04', 1, 1, 1, 15, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.78, NULL, '1', NULL, NULL),
+	(1047, 1, '2018-12-04', 1, 1, 1, 16, 100000.00, 2.00, 99998.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.64, NULL, '1', NULL, '2018-12-06 01:54:17'),
+	(1048, 1, '2018-12-04', 1, 1, 1, 17, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.55, NULL, '1', NULL, NULL),
+	(1049, 1, '2018-12-04', 1, 1, 1, 18, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.79, NULL, '1', NULL, NULL),
+	(1050, 1, '2018-12-04', 1, 1, 1, 19, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.02, NULL, '1', NULL, NULL),
+	(1051, 1, '2018-12-04', 1, 1, 1, 20, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.25, NULL, '1', NULL, NULL),
+	(1052, 1, '2018-12-04', 1, 1, 1, 21, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.58, NULL, '1', NULL, NULL),
+	(1053, 1, '2018-12-04', 1, 1, 1, 22, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.95, NULL, '1', NULL, NULL),
+	(1054, 1, '2018-12-04', 1, 1, 1, 23, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.35, NULL, '1', NULL, NULL),
+	(1055, 1, '2018-12-04', 1, 1, 1, 24, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.29, NULL, '1', NULL, NULL),
+	(1056, 1, '2018-12-04', 1, 1, 1, 25, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.29, NULL, '1', NULL, NULL),
+	(1057, 1, '2018-12-04', 1, 1, 1, 26, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.54, NULL, '1', NULL, NULL),
+	(1058, 1, '2018-12-04', 1, 1, 1, 27, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.49, NULL, '1', NULL, NULL),
+	(1059, 1, '2018-12-04', 1, 1, 1, 28, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.75, NULL, '1', NULL, NULL),
+	(1060, 1, '2018-12-04', 1, 1, 1, 29, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.36, NULL, '1', NULL, NULL),
+	(1061, 1, '2018-12-04', 1, 1, 1, 30, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.56, NULL, '1', NULL, NULL),
+	(1062, 1, '2018-12-04', 1, 1, 1, 31, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.62, NULL, '1', NULL, NULL),
+	(1063, 1, '2018-12-04', 1, 1, 1, 32, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.36, NULL, '1', NULL, NULL),
+	(1064, 1, '2018-12-04', 1, 1, 1, 33, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.28, NULL, '1', NULL, NULL),
+	(1065, 1, '2018-12-04', 1, 1, 1, 34, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.27, NULL, '1', NULL, NULL),
+	(1066, 1, '2018-12-04', 1, 1, 1, 35, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.32, NULL, '1', NULL, NULL),
+	(1067, 1, '2018-12-04', 1, 1, 1, 36, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.76, NULL, '1', NULL, NULL),
+	(1068, 1, '2018-12-04', 1, 1, 1, 37, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.42, NULL, '1', NULL, NULL),
+	(1069, 1, '2018-12-04', 1, 1, 1, 38, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.96, NULL, '1', NULL, NULL),
+	(1070, 1, '2018-12-04', 1, 1, 1, 39, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.10, NULL, '1', NULL, NULL),
+	(1071, 1, '2018-12-04', 1, 1, 1, 40, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.68, NULL, '1', NULL, NULL),
+	(1072, 1, '2018-12-04', 1, 1, 1, 41, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.53, NULL, '1', NULL, NULL),
+	(1073, 1, '2018-12-04', 1, 1, 1, 42, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.59, NULL, '1', NULL, NULL),
+	(1074, 1, '2018-12-04', 1, 1, 1, 43, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.01, NULL, '1', NULL, NULL),
+	(1075, 1, '2018-12-04', 1, 1, 1, 44, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.61, NULL, '1', NULL, NULL),
+	(1076, 1, '2018-12-04', 1, 1, 1, 45, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.66, NULL, '1', NULL, NULL),
+	(1077, 1, '2018-12-04', 1, 1, 1, 46, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.04, NULL, '1', NULL, NULL),
+	(1078, 1, '2018-12-04', 1, 1, 1, 47, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.15, NULL, '1', NULL, NULL),
+	(1079, 1, '2018-12-04', 1, 1, 1, 48, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.05, NULL, '1', NULL, NULL),
+	(1080, 1, '2018-12-04', 1, 1, 1, 49, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.65, NULL, '1', NULL, NULL),
+	(1081, 1, '2018-12-04', 1, 1, 1, 50, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.41, NULL, '1', NULL, NULL),
+	(1082, 1, '2018-12-04', 1, 1, 1, 51, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.22, NULL, '1', NULL, NULL),
+	(1083, 1, '2018-12-04', 1, 1, 1, 52, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.65, NULL, '1', NULL, NULL),
+	(1084, 1, '2018-12-04', 1, 1, 1, 53, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.14, NULL, '1', NULL, NULL),
+	(1085, 1, '2018-12-04', 1, 1, 1, 54, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.31, NULL, '1', NULL, NULL),
+	(1086, 1, '2018-12-04', 1, 1, 1, 55, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.93, NULL, '1', NULL, NULL),
+	(1087, 1, '2018-12-04', 1, 1, 1, 56, 100000.00, 5.00, 99995.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.75, NULL, '1', NULL, '2018-12-06 06:34:56'),
+	(1088, 1, '2018-12-04', 1, 1, 1, 57, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.62, NULL, '1', NULL, NULL),
+	(1089, 1, '2018-12-04', 1, 1, 1, 58, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.16, NULL, '1', NULL, NULL),
+	(1090, 1, '2018-12-04', 1, 1, 1, 59, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.64, NULL, '1', NULL, NULL),
+	(1091, 1, '2018-12-04', 1, 1, 1, 60, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.52, NULL, '1', NULL, NULL),
+	(1092, 1, '2018-12-04', 1, 1, 1, 61, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.57, NULL, '1', NULL, NULL),
+	(1093, 1, '2018-12-04', 1, 1, 1, 62, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.34, NULL, '1', NULL, NULL),
+	(1094, 1, '2018-12-04', 1, 1, 1, 63, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.02, NULL, '1', NULL, NULL),
+	(1095, 1, '2018-12-04', 1, 1, 1, 64, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.40, NULL, '1', NULL, NULL),
+	(1096, 1, '2018-12-04', 1, 1, 1, 65, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.18, NULL, '1', NULL, NULL),
+	(1097, 1, '2018-12-04', 1, 1, 1, 66, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.57, NULL, '1', NULL, NULL),
+	(1098, 1, '2018-12-04', 1, 1, 1, 67, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.72, NULL, '1', NULL, NULL),
+	(1099, 1, '2018-12-04', 1, 1, 1, 68, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.80, NULL, '1', NULL, NULL),
+	(1100, 1, '2018-12-04', 1, 1, 1, 69, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.92, NULL, '1', NULL, NULL),
+	(1101, 1, '2018-12-04', 1, 1, 1, 70, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.13, NULL, '1', NULL, NULL),
+	(1102, 1, '2018-12-04', 1, 1, 1, 71, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.41, NULL, '1', NULL, NULL),
+	(1103, 1, '2018-12-04', 1, 1, 1, 72, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.30, NULL, '1', NULL, NULL),
+	(1104, 1, '2018-12-04', 1, 1, 1, 73, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.05, NULL, '1', NULL, NULL),
+	(1105, 1, '2018-12-04', 1, 1, 1, 74, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.34, NULL, '1', NULL, NULL),
+	(1106, 1, '2018-12-04', 1, 1, 1, 75, 100000.00, 33.00, 99967.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.22, NULL, '1', NULL, '2018-12-06 06:19:29'),
+	(1107, 1, '2018-12-04', 1, 1, 1, 76, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.40, NULL, '1', NULL, NULL),
+	(1108, 1, '2018-12-04', 1, 1, 1, 77, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.13, NULL, '1', NULL, NULL),
+	(1109, 1, '2018-12-04', 1, 1, 1, 78, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.19, NULL, '1', NULL, NULL),
+	(1110, 1, '2018-12-04', 1, 1, 1, 79, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.48, NULL, '1', NULL, NULL),
+	(1111, 1, '2018-12-04', 1, 1, 1, 80, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.63, NULL, '1', NULL, NULL),
+	(1112, 1, '2018-12-04', 1, 1, 1, 81, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.25, NULL, '1', NULL, NULL),
+	(1113, 1, '2018-12-04', 1, 1, 1, 82, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.80, NULL, '1', NULL, NULL),
+	(1114, 1, '2018-12-04', 1, 1, 1, 83, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.24, NULL, '1', NULL, NULL),
+	(1115, 1, '2018-12-04', 1, 1, 1, 84, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.12, NULL, '1', NULL, NULL),
+	(1116, 1, '2018-12-04', 1, 1, 1, 85, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.57, NULL, '1', NULL, NULL),
+	(1117, 1, '2018-12-04', 1, 1, 1, 86, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.07, NULL, '1', NULL, NULL),
+	(1118, 1, '2018-12-04', 1, 1, 1, 87, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.89, NULL, '1', NULL, NULL),
+	(1119, 1, '2018-12-04', 1, 1, 1, 88, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.73, NULL, '1', NULL, NULL),
+	(1120, 1, '2018-12-04', 1, 1, 1, 89, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.19, NULL, '1', NULL, NULL),
+	(1121, 1, '2018-12-04', 1, 1, 1, 90, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.01, NULL, '1', NULL, NULL),
+	(1122, 1, '2018-12-04', 1, 1, 1, 91, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.01, NULL, '1', NULL, NULL),
+	(1123, 1, '2018-12-04', 1, 1, 1, 92, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.01, NULL, '1', NULL, NULL),
+	(1124, 1, '2018-12-04', 1, 1, 1, 93, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 20.20, NULL, '1', NULL, NULL),
+	(1125, 1, '2018-12-04', 1, 1, 1, 94, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.42, NULL, '1', NULL, NULL),
+	(1126, 1, '2018-12-04', 1, 1, 1, 95, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.59, NULL, '1', NULL, NULL),
+	(1127, 1, '2018-12-04', 1, 1, 1, 96, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.59, NULL, '1', NULL, NULL),
+	(1128, 1, '2018-12-04', 1, 1, 1, 97, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.59, NULL, '1', NULL, NULL),
+	(1129, 1, '2018-12-04', 1, 1, 1, 98, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.59, NULL, '1', NULL, NULL),
+	(1130, 1, '2018-12-04', 1, 1, 1, 99, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.25, NULL, '1', NULL, NULL),
+	(1131, 1, '2018-12-04', 1, 1, 1, 100, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.05, NULL, '1', NULL, NULL),
+	(1132, 1, '2018-12-04', 1, 1, 1, 101, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.18, NULL, '1', NULL, NULL),
+	(1133, 1, '2018-12-04', 1, 1, 1, 102, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.91, NULL, '1', NULL, NULL),
+	(1134, 1, '2018-12-04', 1, 1, 1, 103, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.35, NULL, '1', NULL, NULL),
+	(1135, 1, '2018-12-04', 1, 1, 1, 104, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.77, NULL, '1', NULL, NULL),
+	(1136, 1, '2018-12-04', 1, 1, 1, 105, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.96, NULL, '1', NULL, NULL),
+	(1137, 1, '2018-12-04', 1, 1, 1, 106, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.18, NULL, '1', NULL, NULL),
+	(1138, 1, '2018-12-04', 1, 1, 1, 107, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.00, NULL, '1', NULL, NULL),
+	(1139, 1, '2018-12-04', 1, 1, 1, 108, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.01, NULL, '1', NULL, NULL),
+	(1140, 1, '2018-12-04', 1, 1, 1, 109, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.60, NULL, '1', NULL, NULL),
+	(1141, 1, '2018-12-04', 1, 1, 1, 110, 100000.00, 1.00, 99999.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.46, NULL, '1', NULL, '2018-12-06 06:27:44'),
+	(1142, 1, '2018-12-04', 1, 1, 1, 111, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.77, NULL, '1', NULL, NULL),
+	(1143, 1, '2018-12-04', 1, 1, 1, 112, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.49, NULL, '1', NULL, NULL),
+	(1144, 1, '2018-12-04', 1, 1, 1, 113, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.95, NULL, '1', NULL, NULL),
+	(1145, 1, '2018-12-04', 1, 1, 1, 114, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.93, NULL, '1', NULL, NULL),
+	(1146, 1, '2018-12-04', 1, 1, 1, 115, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.49, NULL, '1', NULL, NULL),
+	(1147, 1, '2018-12-04', 1, 1, 1, 116, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.81, NULL, '1', NULL, NULL),
+	(1148, 1, '2018-12-04', 1, 1, 1, 117, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.49, NULL, '1', NULL, NULL),
+	(1149, 1, '2018-12-04', 1, 1, 1, 118, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.32, NULL, '1', NULL, NULL),
+	(1150, 1, '2018-12-04', 1, 1, 1, 119, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.50, NULL, '1', NULL, NULL),
+	(1151, 1, '2018-12-04', 1, 1, 1, 120, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.15, NULL, '1', NULL, NULL),
+	(1152, 1, '2018-12-04', 1, 1, 1, 121, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.50, NULL, '1', NULL, NULL),
+	(1153, 1, '2018-12-04', 1, 1, 1, 122, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.47, NULL, '1', NULL, NULL),
+	(1154, 1, '2018-12-04', 1, 1, 1, 123, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.44, NULL, '1', NULL, NULL),
+	(1155, 1, '2018-12-04', 1, 1, 1, 124, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.89, NULL, '1', NULL, NULL),
+	(1156, 1, '2018-12-04', 1, 1, 1, 125, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.54, NULL, '1', NULL, NULL),
+	(1157, 1, '2018-12-04', 1, 1, 1, 126, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.88, NULL, '1', NULL, NULL),
+	(1158, 1, '2018-12-04', 1, 1, 1, 127, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.43, NULL, '1', NULL, NULL),
+	(1159, 1, '2018-12-04', 1, 1, 1, 128, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.75, NULL, '1', NULL, NULL),
+	(1160, 1, '2018-12-04', 1, 1, 1, 129, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.40, NULL, '1', NULL, NULL),
+	(1161, 1, '2018-12-04', 1, 1, 1, 130, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.50, NULL, '1', NULL, NULL),
+	(1162, 1, '2018-12-04', 1, 1, 1, 131, 100000.00, 12.00, 99988.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.48, NULL, '1', NULL, '2018-12-05 16:37:14'),
+	(1163, 1, '2018-12-04', 1, 1, 1, 132, 100000.00, 11.00, 99989.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 44.20, NULL, '1', NULL, '2018-12-05 16:34:36'),
+	(1164, 1, '2018-12-04', 1, 1, 1, 133, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.59, NULL, '1', NULL, NULL),
+	(1165, 1, '2018-12-04', 1, 1, 1, 134, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 27.00, NULL, '1', NULL, NULL),
+	(1166, 1, '2018-12-04', 1, 1, 1, 135, 100000.00, 10.00, 99990.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.26, NULL, '1', NULL, '2018-12-04 05:31:26'),
+	(1167, 1, '2018-12-04', 1, 1, 1, 136, 100000.00, 55.00, 99945.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.77, NULL, '1', NULL, '2018-12-05 16:37:14'),
+	(1168, 1, '2018-12-04', 1, 1, 1, 137, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.64, NULL, '1', NULL, NULL),
+	(1169, 1, '2018-12-04', 1, 1, 1, 138, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.75, NULL, '1', NULL, NULL),
+	(1170, 1, '2018-12-04', 1, 1, 1, 139, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.35, NULL, '1', NULL, NULL),
+	(1171, 1, '2018-12-04', 1, 1, 1, 140, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.30, NULL, '1', NULL, NULL),
+	(1172, 1, '2018-12-04', 1, 1, 1, 141, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.56, NULL, '1', NULL, NULL),
+	(1173, 1, '2018-12-04', 1, 1, 1, 142, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 14.07, NULL, '1', NULL, NULL),
+	(1174, 1, '2018-12-04', 1, 1, 1, 143, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.08, NULL, '1', NULL, NULL),
+	(1175, 1, '2018-12-04', 1, 1, 1, 144, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.08, NULL, '1', NULL, NULL),
+	(1176, 1, '2018-12-04', 1, 1, 1, 145, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.08, NULL, '1', NULL, NULL),
+	(1177, 1, '2018-12-04', 1, 1, 1, 146, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.68, NULL, '1', NULL, NULL),
+	(1178, 1, '2018-12-04', 1, 1, 1, 147, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.35, NULL, '1', NULL, NULL),
+	(1179, 1, '2018-12-04', 1, 1, 1, 148, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.37, NULL, '1', NULL, NULL),
+	(1180, 1, '2018-12-04', 1, 1, 1, 149, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.58, NULL, '1', NULL, NULL),
+	(1181, 1, '2018-12-04', 1, 1, 1, 150, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.54, NULL, '1', NULL, NULL),
+	(1182, 1, '2018-12-04', 1, 1, 1, 151, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.74, NULL, '1', NULL, NULL),
+	(1183, 1, '2018-12-04', 1, 1, 1, 152, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.54, NULL, '1', NULL, NULL),
+	(1184, 1, '2018-12-04', 1, 1, 1, 153, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.25, NULL, '1', NULL, NULL),
+	(1185, 1, '2018-12-04', 1, 1, 1, 154, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.14, NULL, '1', NULL, NULL),
+	(1186, 1, '2018-12-04', 1, 1, 1, 155, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.88, NULL, '1', NULL, NULL),
+	(1187, 1, '2018-12-04', 1, 1, 1, 158, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.20, NULL, '1', NULL, NULL),
+	(1188, 1, '2018-12-04', 1, 1, 1, 159, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.87, NULL, '1', NULL, NULL),
+	(1189, 1, '2018-12-04', 1, 1, 1, 160, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.29, NULL, '1', NULL, NULL),
+	(1190, 1, '2018-12-04', 1, 1, 1, 161, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.26, NULL, '1', NULL, NULL),
+	(1191, 1, '2018-12-04', 1, 1, 1, 162, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.32, NULL, '1', NULL, NULL),
+	(1192, 1, '2018-12-04', 1, 1, 1, 164, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.03, NULL, '1', NULL, NULL),
+	(1193, 1, '2018-12-04', 1, 1, 1, 165, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.19, NULL, '1', NULL, NULL),
+	(1194, 1, '2018-12-04', 1, 1, 1, 166, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.30, NULL, '1', NULL, NULL),
+	(1195, 1, '2018-12-04', 1, 1, 1, 167, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.57, NULL, '1', NULL, NULL),
+	(1196, 1, '2018-12-04', 1, 1, 1, 168, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.59, NULL, '1', NULL, NULL),
+	(1197, 1, '2018-12-04', 1, 1, 1, 169, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.34, NULL, '1', NULL, NULL),
+	(1198, 1, '2018-12-04', 1, 1, 1, 170, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.80, NULL, '1', NULL, NULL),
+	(1199, 1, '2018-12-04', 1, 1, 1, 171, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.24, NULL, '1', NULL, NULL),
+	(1200, 1, '2018-12-04', 1, 1, 1, 172, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.23, NULL, '1', NULL, NULL),
+	(1201, 1, '2018-12-04', 1, 1, 1, 173, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.76, NULL, '1', NULL, NULL),
+	(1202, 1, '2018-12-04', 1, 1, 1, 174, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 31.26, NULL, '1', NULL, NULL),
+	(1203, 1, '2018-12-04', 1, 1, 1, 175, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.31, NULL, '1', NULL, NULL),
+	(1204, 1, '2018-12-04', 1, 1, 1, 176, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.31, NULL, '1', NULL, NULL),
+	(1205, 1, '2018-12-04', 1, 1, 1, 177, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.33, NULL, '1', NULL, NULL),
+	(1206, 1, '2018-12-04', 1, 1, 1, 178, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 21.25, NULL, '1', NULL, NULL),
+	(1207, 1, '2018-12-04', 1, 1, 1, 179, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.00, NULL, '1', NULL, NULL),
+	(1208, 1, '2018-12-04', 1, 1, 1, 180, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.00, NULL, '1', NULL, NULL),
+	(1209, 1, '2018-12-04', 1, 1, 1, 181, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.50, NULL, '1', NULL, NULL),
+	(1210, 1, '2018-12-04', 1, 1, 1, 182, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 15.00, NULL, '1', NULL, NULL),
+	(1211, 1, '2018-12-04', 1, 1, 1, 183, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.30, NULL, '1', NULL, NULL),
+	(1212, 1, '2018-12-04', 1, 1, 1, 184, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 19.00, NULL, '1', NULL, NULL),
+	(1213, 1, '2018-12-04', 1, 1, 1, 185, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.25, NULL, '1', NULL, NULL),
+	(1214, 1, '2018-12-04', 1, 1, 1, 186, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.52, NULL, '1', NULL, NULL),
+	(1215, 1, '2018-12-04', 1, 1, 1, 187, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.75, NULL, '1', NULL, NULL),
+	(1216, 1, '2018-12-04', 1, 1, 1, 188, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.81, NULL, '1', NULL, NULL),
+	(1217, 1, '2018-12-04', 1, 1, 1, 189, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.62, NULL, '1', NULL, NULL),
+	(1218, 1, '2018-12-04', 1, 1, 1, 190, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.12, NULL, '1', NULL, NULL),
+	(1219, 1, '2018-12-04', 1, 1, 1, 191, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.33, NULL, '1', NULL, NULL),
+	(1220, 1, '2018-12-04', 1, 1, 1, 192, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.31, NULL, '1', NULL, NULL),
+	(1221, 1, '2018-12-04', 1, 1, 1, 193, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.80, NULL, '1', NULL, NULL),
+	(1222, 1, '2018-12-04', 1, 1, 1, 194, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.10, NULL, '1', NULL, NULL),
+	(1223, 1, '2018-12-04', 1, 1, 1, 195, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.96, NULL, '1', NULL, NULL),
+	(1224, 1, '2018-12-04', 1, 1, 1, 196, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.80, NULL, '1', NULL, NULL),
+	(1225, 1, '2018-12-04', 1, 1, 1, 197, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.05, NULL, '1', NULL, NULL),
+	(1226, 1, '2018-12-04', 1, 1, 1, 198, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.06, NULL, '1', NULL, NULL),
+	(1227, 1, '2018-12-04', 1, 1, 1, 199, 100000.00, 10.00, 99990.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.99, NULL, '1', NULL, '2018-12-05 16:34:36'),
+	(1228, 1, '2018-12-04', 1, 1, 1, 200, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.38, NULL, '1', NULL, NULL),
+	(1229, 1, '2018-12-04', 1, 1, 1, 201, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.28, NULL, '1', NULL, NULL),
+	(1230, 1, '2018-12-04', 1, 1, 1, 202, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.69, NULL, '1', NULL, NULL),
+	(1231, 1, '2018-12-04', 1, 1, 1, 203, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.50, NULL, '1', NULL, NULL),
+	(1232, 1, '2018-12-04', 1, 1, 1, 204, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 27.54, NULL, '1', NULL, NULL),
+	(1233, 1, '2018-12-04', 1, 1, 1, 205, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 29.04, NULL, '1', NULL, NULL),
+	(1234, 1, '2018-12-04', 1, 1, 1, 206, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.32, NULL, '1', NULL, NULL),
+	(1235, 1, '2018-12-04', 1, 1, 1, 207, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.16, NULL, '1', NULL, NULL),
+	(1236, 1, '2018-12-04', 1, 1, 1, 208, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 14.75, NULL, '1', NULL, NULL),
+	(1237, 1, '2018-12-04', 1, 1, 1, 209, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 35.38, NULL, '1', NULL, NULL),
+	(1238, 1, '2018-12-04', 1, 1, 1, 210, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.67, NULL, '1', NULL, NULL),
+	(1239, 1, '2018-12-04', 1, 1, 1, 211, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 37.57, NULL, '1', NULL, NULL),
+	(1240, 1, '2018-12-04', 1, 1, 1, 212, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.44, NULL, '1', NULL, NULL),
+	(1241, 1, '2018-12-04', 1, 1, 1, 213, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 38.50, NULL, '1', NULL, NULL),
+	(1242, 1, '2018-12-04', 1, 1, 1, 214, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 119.29, NULL, '1', NULL, NULL),
+	(1243, 1, '2018-12-04', 1, 1, 1, 215, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.90, NULL, '1', NULL, NULL),
+	(1244, 1, '2018-12-04', 1, 1, 1, 216, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 24.93, NULL, '1', NULL, NULL),
+	(1245, 1, '2018-12-04', 1, 1, 1, 217, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.39, NULL, '1', NULL, NULL),
+	(1246, 1, '2018-12-04', 1, 1, 1, 218, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.36, NULL, '1', NULL, NULL),
+	(1247, 1, '2018-12-04', 1, 1, 1, 219, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.34, NULL, '1', NULL, NULL),
+	(1248, 1, '2018-12-04', 1, 1, 1, 220, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 126.48, NULL, '1', NULL, NULL),
+	(1249, 1, '2018-12-04', 1, 1, 1, 221, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 130.48, NULL, '1', NULL, NULL),
+	(1250, 1, '2018-12-04', 1, 1, 1, 222, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.11, NULL, '1', NULL, NULL),
+	(1251, 1, '2018-12-04', 1, 1, 1, 223, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 24.29, NULL, '1', NULL, NULL),
+	(1252, 1, '2018-12-04', 1, 1, 1, 224, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 23.69, NULL, '1', NULL, NULL),
+	(1253, 1, '2018-12-04', 1, 1, 1, 225, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 32.96, NULL, '1', NULL, NULL),
+	(1254, 1, '2018-12-04', 1, 1, 1, 226, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 186.09, NULL, '1', NULL, NULL),
+	(1255, 1, '2018-12-04', 1, 1, 1, 227, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 189.82, NULL, '1', NULL, NULL),
+	(1256, 1, '2018-12-04', 1, 1, 1, 228, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.16, NULL, '1', NULL, NULL),
+	(1257, 1, '2018-12-04', 1, 1, 1, 229, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 108.55, NULL, '1', NULL, NULL),
+	(1258, 1, '2018-12-04', 1, 1, 1, 230, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.70, NULL, '1', NULL, NULL),
+	(1259, 1, '2018-12-04', 1, 1, 1, 231, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.50, NULL, '1', NULL, NULL),
+	(1260, 1, '2018-12-04', 1, 1, 1, 232, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.00, NULL, '1', NULL, NULL),
+	(1261, 1, '2018-12-04', 1, 1, 1, 233, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 38.64, NULL, '1', NULL, NULL),
+	(1262, 1, '2018-12-04', 1, 1, 1, 234, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 30.80, NULL, '1', NULL, NULL),
+	(1263, 1, '2018-12-04', 1, 1, 1, 235, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.22, NULL, '1', NULL, NULL),
+	(1264, 1, '2018-12-04', 1, 1, 1, 236, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.30, NULL, '1', NULL, NULL),
+	(1265, 1, '2018-12-04', 1, 1, 1, 237, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.30, NULL, '1', NULL, NULL),
+	(1266, 1, '2018-12-04', 1, 1, 1, 238, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.70, NULL, '1', NULL, NULL),
+	(1267, 1, '2018-12-04', 1, 1, 1, 239, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.92, NULL, '1', NULL, NULL),
+	(1268, 1, '2018-12-04', 1, 1, 1, 240, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.00, NULL, '1', NULL, NULL),
+	(1269, 1, '2018-12-04', 1, 1, 1, 241, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.92, NULL, '1', NULL, NULL),
+	(1270, 1, '2018-12-04', 1, 1, 1, 242, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.00, NULL, '1', NULL, NULL),
+	(1271, 1, '2018-12-04', 1, 1, 1, 243, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 40.00, NULL, '1', NULL, NULL),
+	(1272, 1, '2018-12-04', 1, 1, 1, 244, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.50, NULL, '1', NULL, NULL),
+	(1273, 1, '2018-12-04', 1, 1, 1, 245, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.48, NULL, '1', NULL, NULL),
+	(1274, 1, '2018-12-04', 1, 1, 1, 246, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.52, NULL, '1', NULL, NULL),
+	(1275, 1, '2018-12-04', 1, 1, 1, 247, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 95.85, NULL, '1', NULL, NULL),
+	(1276, 1, '2018-12-04', 1, 1, 1, 248, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 98.65, NULL, '1', NULL, NULL),
+	(1277, 1, '2018-12-04', 1, 1, 1, 249, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.48, NULL, '1', NULL, NULL),
+	(1278, 1, '2018-12-04', 1, 1, 1, 250, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.48, NULL, '1', NULL, NULL),
+	(1279, 1, '2018-12-04', 1, 1, 1, 251, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.04, NULL, '1', NULL, NULL),
+	(1280, 1, '2018-12-04', 1, 1, 1, 252, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.18, NULL, '1', NULL, NULL),
+	(1281, 1, '2018-12-04', 1, 1, 1, 253, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 15.53, NULL, '1', NULL, NULL),
+	(1282, 1, '2018-12-04', 1, 1, 1, 254, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 27.39, NULL, '1', NULL, NULL),
+	(1283, 1, '2018-12-04', 1, 1, 1, 255, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 28.75, NULL, '1', NULL, NULL),
+	(1284, 1, '2018-12-04', 1, 1, 1, 256, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 33.01, NULL, '1', NULL, NULL),
+	(1285, 1, '2018-12-04', 1, 1, 1, 257, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.38, NULL, '1', NULL, NULL),
+	(1286, 1, '2018-12-04', 1, 1, 1, 258, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.60, NULL, '1', NULL, NULL),
+	(1287, 1, '2018-12-04', 1, 1, 1, 259, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 19.36, NULL, '1', NULL, NULL),
+	(1288, 1, '2018-12-04', 1, 1, 1, 260, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.80, NULL, '1', NULL, NULL),
+	(1289, 1, '2018-12-04', 1, 1, 1, 261, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 31.76, NULL, '1', NULL, NULL),
+	(1290, 1, '2018-12-04', 1, 1, 1, 262, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.80, NULL, '1', NULL, NULL),
+	(1291, 1, '2018-12-04', 1, 1, 1, 263, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 37.82, NULL, '1', NULL, NULL),
+	(1292, 1, '2018-12-04', 1, 1, 1, 264, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.80, NULL, '1', NULL, NULL),
+	(1293, 1, '2018-12-04', 1, 1, 1, 265, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.66, NULL, '1', NULL, NULL),
+	(1294, 1, '2018-12-04', 1, 1, 1, 266, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 35.23, NULL, '1', NULL, NULL),
+	(1295, 1, '2018-12-04', 1, 1, 1, 267, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.58, NULL, '1', NULL, NULL),
+	(1296, 1, '2018-12-04', 1, 1, 1, 268, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.00, NULL, '1', NULL, NULL),
+	(1297, 1, '2018-12-04', 1, 1, 1, 269, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.47, NULL, '1', NULL, NULL),
+	(1298, 1, '2018-12-04', 1, 1, 1, 270, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.60, NULL, '1', NULL, NULL),
+	(1299, 1, '2018-12-04', 1, 1, 1, 271, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.84, NULL, '1', NULL, NULL),
+	(1300, 1, '2018-12-04', 1, 1, 1, 272, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 23.65, NULL, '1', NULL, NULL),
+	(1301, 1, '2018-12-04', 1, 1, 1, 273, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.93, NULL, '1', NULL, NULL),
+	(1302, 1, '2018-12-04', 1, 1, 1, 274, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.30, NULL, '1', NULL, NULL),
+	(1303, 1, '2018-12-04', 1, 1, 1, 275, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 22.00, NULL, '1', NULL, NULL),
+	(1304, 1, '2018-12-04', 1, 1, 1, 276, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.00, NULL, '1', NULL, NULL),
+	(1305, 1, '2018-12-04', 1, 1, 1, 277, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.90, NULL, '1', NULL, NULL),
+	(1306, 1, '2018-12-04', 1, 1, 1, 278, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.20, NULL, '1', NULL, NULL),
+	(1307, 1, '2018-12-04', 1, 1, 1, 279, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 75.00, NULL, '1', NULL, NULL),
+	(1308, 1, '2018-12-04', 1, 1, 1, 280, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.65, NULL, '1', NULL, NULL),
+	(1309, 1, '2018-12-04', 1, 1, 1, 281, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.33, NULL, '1', NULL, NULL),
+	(1310, 1, '2018-12-04', 1, 1, 1, 282, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 15.11, NULL, '1', NULL, NULL),
+	(1311, 1, '2018-12-04', 1, 1, 1, 283, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.00, NULL, '1', NULL, NULL),
+	(1312, 1, '2018-12-04', 1, 1, 1, 284, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.50, NULL, '1', NULL, NULL),
+	(1313, 1, '2018-12-04', 1, 1, 1, 285, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 85.74, NULL, '1', NULL, NULL),
+	(1314, 1, '2018-12-04', 1, 1, 1, 286, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.65, NULL, '1', NULL, NULL),
+	(1315, 1, '2018-12-04', 1, 1, 1, 287, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.70, NULL, '1', NULL, NULL),
+	(1316, 1, '2018-12-04', 1, 1, 1, 288, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.95, NULL, '1', NULL, NULL),
+	(1317, 1, '2018-12-04', 1, 1, 1, 289, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.90, NULL, '1', NULL, NULL),
+	(1318, 1, '2018-12-04', 1, 1, 1, 290, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.48, NULL, '1', NULL, NULL),
+	(1319, 1, '2018-12-04', 1, 1, 1, 291, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.39, NULL, '1', NULL, NULL),
+	(1320, 1, '2018-12-04', 1, 1, 1, 292, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 19.05, NULL, '1', NULL, NULL),
+	(1321, 1, '2018-12-04', 1, 1, 1, 293, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.66, NULL, '1', NULL, NULL),
+	(1322, 1, '2018-12-04', 1, 1, 1, 294, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 23.34, NULL, '1', NULL, NULL),
+	(1323, 1, '2018-12-04', 1, 1, 1, 295, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.44, NULL, '1', NULL, NULL),
+	(1324, 1, '2018-12-04', 1, 1, 1, 296, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 108.56, NULL, '1', NULL, NULL),
+	(1325, 1, '2018-12-04', 1, 1, 1, 297, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.80, NULL, '1', NULL, NULL),
+	(1326, 1, '2018-12-04', 1, 1, 1, 298, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.80, NULL, '1', NULL, NULL),
+	(1327, 1, '2018-12-04', 1, 1, 1, 299, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.14, NULL, '1', NULL, NULL),
+	(1328, 1, '2018-12-04', 1, 1, 1, 300, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.46, NULL, '1', NULL, NULL),
+	(1329, 1, '2018-12-04', 1, 1, 1, 301, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.60, NULL, '1', NULL, NULL),
+	(1330, 1, '2018-12-04', 1, 1, 1, 302, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.10, NULL, '1', NULL, NULL),
+	(1331, 1, '2018-12-04', 1, 1, 1, 303, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.26, NULL, '1', NULL, NULL),
+	(1332, 1, '2018-12-04', 1, 1, 1, 304, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.70, NULL, '1', NULL, NULL),
+	(1333, 1, '2018-12-04', 1, 1, 1, 305, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.18, NULL, '1', NULL, NULL),
+	(1334, 1, '2018-12-04', 1, 1, 1, 306, 100000.00, 1.00, 99999.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.34, NULL, '1', NULL, '2018-12-06 01:53:55'),
+	(1335, 1, '2018-12-04', 1, 1, 1, 307, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.78, NULL, '1', NULL, NULL),
+	(1336, 1, '2018-12-04', 1, 1, 1, 308, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.39, NULL, '1', NULL, NULL),
+	(1337, 1, '2018-12-04', 1, 1, 1, 309, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.85, NULL, '1', NULL, NULL),
+	(1338, 1, '2018-12-04', 1, 1, 1, 310, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 19.34, NULL, '1', NULL, NULL),
+	(1339, 1, '2018-12-04', 1, 1, 1, 311, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.40, NULL, '1', NULL, NULL),
+	(1340, 1, '2018-12-04', 1, 1, 1, 312, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.20, NULL, '1', NULL, NULL),
+	(1341, 1, '2018-12-04', 1, 1, 1, 313, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 28.78, NULL, '1', NULL, NULL),
+	(1342, 1, '2018-12-04', 1, 1, 1, 314, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.76, NULL, '1', NULL, NULL),
+	(1343, 1, '2018-12-04', 1, 1, 1, 315, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.24, NULL, '1', NULL, NULL),
+	(1344, 1, '2018-12-04', 1, 1, 1, 316, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.06, NULL, '1', NULL, NULL),
+	(1345, 1, '2018-12-04', 1, 1, 1, 317, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.69, NULL, '1', NULL, NULL),
+	(1346, 1, '2018-12-04', 1, 1, 1, 318, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.39, NULL, '1', NULL, NULL),
+	(1347, 1, '2018-12-04', 1, 1, 1, 319, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 14.52, NULL, '1', NULL, NULL),
+	(1348, 1, '2018-12-04', 1, 1, 1, 320, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 30.39, NULL, '1', NULL, NULL),
+	(1349, 1, '2018-12-04', 1, 1, 1, 321, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 28.37, NULL, '1', NULL, NULL),
+	(1350, 1, '2018-12-04', 1, 1, 1, 322, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.26, NULL, '1', NULL, NULL),
+	(1351, 1, '2018-12-04', 1, 1, 1, 323, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.06, NULL, '1', NULL, NULL),
+	(1352, 1, '2018-12-04', 1, 1, 1, 324, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 98.55, NULL, '1', NULL, NULL),
+	(1353, 1, '2018-12-04', 1, 1, 1, 325, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 106.05, NULL, '1', NULL, NULL),
+	(1354, 1, '2018-12-04', 1, 1, 1, 326, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.29, NULL, '1', NULL, NULL),
+	(1355, 1, '2018-12-04', 1, 1, 1, 327, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 19.23, NULL, '1', NULL, NULL),
+	(1356, 1, '2018-12-04', 1, 1, 1, 328, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 45.00, NULL, '1', NULL, NULL),
+	(1357, 1, '2018-12-04', 1, 1, 1, 329, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 78.43, NULL, '1', NULL, NULL),
+	(1358, 1, '2018-12-04', 1, 1, 1, 330, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 85.00, NULL, '1', NULL, NULL),
+	(1359, 1, '2018-12-04', 1, 1, 1, 331, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.50, NULL, '1', NULL, NULL),
+	(1360, 1, '2018-12-04', 1, 1, 1, 332, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.60, NULL, '1', NULL, NULL),
+	(1361, 1, '2018-12-04', 1, 1, 1, 333, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.00, NULL, '1', NULL, NULL),
+	(1362, 1, '2018-12-04', 1, 1, 1, 334, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.32, NULL, '1', NULL, NULL),
+	(1363, 1, '2018-12-04', 1, 1, 1, 335, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.00, NULL, '1', NULL, NULL),
+	(1364, 1, '2018-12-04', 1, 1, 1, 336, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 25.00, NULL, '1', NULL, NULL),
+	(1365, 1, '2018-12-04', 1, 1, 1, 337, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 110.00, NULL, '1', NULL, NULL),
+	(1366, 1, '2018-12-04', 1, 1, 1, 338, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.26, NULL, '1', NULL, NULL),
+	(1367, 1, '2018-12-04', 1, 1, 1, 339, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.45, NULL, '1', NULL, NULL),
+	(1368, 1, '2018-12-04', 1, 1, 1, 340, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.45, NULL, '1', NULL, NULL),
+	(1369, 1, '2018-12-04', 1, 1, 1, 341, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.64, NULL, '1', NULL, NULL),
+	(1370, 1, '2018-12-04', 1, 1, 1, 342, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.28, NULL, '1', NULL, NULL),
+	(1371, 1, '2018-12-04', 1, 1, 1, 343, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.62, NULL, '1', NULL, NULL),
+	(1372, 1, '2018-12-04', 1, 1, 1, 344, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.15, NULL, '1', NULL, NULL),
+	(1373, 1, '2018-12-04', 1, 1, 1, 345, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.21, NULL, '1', NULL, NULL),
+	(1374, 1, '2018-12-04', 1, 1, 1, 346, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.06, NULL, '1', NULL, NULL),
+	(1375, 1, '2018-12-04', 1, 1, 1, 347, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.98, NULL, '1', NULL, NULL),
+	(1376, 1, '2018-12-04', 1, 1, 1, 348, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.45, NULL, '1', NULL, NULL),
+	(1377, 1, '2018-12-04', 1, 1, 1, 349, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.07, NULL, '1', NULL, NULL),
+	(1378, 1, '2018-12-04', 1, 1, 1, 350, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.23, NULL, '1', NULL, NULL),
+	(1379, 1, '2018-12-04', 1, 1, 1, 351, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.02, NULL, '1', NULL, NULL),
+	(1380, 1, '2018-12-04', 1, 1, 1, 352, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.00, NULL, '1', NULL, NULL),
+	(1381, 1, '2018-12-04', 1, 1, 1, 353, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.00, NULL, '1', NULL, NULL),
+	(1382, 1, '2018-12-04', 1, 1, 1, 354, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.00, NULL, '1', NULL, NULL),
+	(1383, 1, '2018-12-04', 1, 1, 1, 355, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 15.00, NULL, '1', NULL, NULL),
+	(1384, 1, '2018-12-04', 1, 1, 1, 356, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.81, NULL, '1', NULL, NULL),
+	(1385, 1, '2018-12-04', 1, 1, 1, 357, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.53, NULL, '1', NULL, NULL),
+	(1386, 1, '2018-12-04', 1, 1, 1, 358, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.06, NULL, '1', NULL, NULL),
+	(1387, 1, '2018-12-04', 1, 1, 1, 359, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.82, NULL, '1', NULL, NULL),
+	(1388, 1, '2018-12-04', 1, 1, 1, 360, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.60, NULL, '1', NULL, NULL),
+	(1389, 1, '2018-12-04', 1, 1, 1, 361, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.45, NULL, '1', NULL, NULL),
+	(1390, 1, '2018-12-04', 1, 1, 1, 362, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.34, NULL, '1', NULL, NULL),
+	(1391, 1, '2018-12-04', 1, 1, 1, 363, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.55, NULL, '1', NULL, NULL),
+	(1392, 1, '2018-12-04', 1, 1, 1, 364, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.80, NULL, '1', NULL, NULL),
+	(1393, 1, '2018-12-04', 1, 1, 1, 365, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.57, NULL, '1', NULL, NULL),
+	(1394, 1, '2018-12-04', 1, 1, 1, 366, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.84, NULL, '1', NULL, NULL),
+	(1395, 1, '2018-12-04', 1, 1, 1, 367, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.14, NULL, '1', NULL, NULL),
+	(1396, 1, '2018-12-04', 1, 1, 1, 368, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.77, NULL, '1', NULL, NULL),
+	(1397, 1, '2018-12-04', 1, 1, 1, 369, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.93, NULL, '1', NULL, NULL),
+	(1398, 1, '2018-12-04', 1, 1, 1, 370, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.00, NULL, '1', NULL, NULL),
+	(1399, 1, '2018-12-04', 1, 1, 1, 371, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 38.08, NULL, '1', NULL, NULL),
+	(1400, 1, '2018-12-04', 1, 1, 1, 372, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.38, NULL, '1', NULL, NULL),
+	(1401, 1, '2018-12-04', 1, 1, 1, 373, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.76, NULL, '1', NULL, NULL),
+	(1402, 1, '2018-12-04', 1, 1, 1, 374, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.31, NULL, '1', NULL, NULL),
+	(1403, 1, '2018-12-04', 1, 1, 1, 375, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 25.97, NULL, '1', NULL, NULL),
+	(1404, 1, '2018-12-04', 1, 1, 1, 376, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.97, NULL, '1', NULL, NULL),
+	(1405, 1, '2018-12-04', 1, 1, 1, 377, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.94, NULL, '1', NULL, NULL),
+	(1406, 1, '2018-12-04', 1, 1, 1, 378, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 19.40, NULL, '1', NULL, NULL),
+	(1407, 1, '2018-12-04', 1, 1, 1, 380, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.88, NULL, '1', NULL, NULL),
+	(1408, 1, '2018-12-04', 1, 1, 1, 381, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.48, NULL, '1', NULL, NULL),
+	(1409, 1, '2018-12-04', 1, 1, 1, 382, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 20.71, NULL, '1', NULL, NULL),
+	(1410, 1, '2018-12-04', 1, 1, 1, 383, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.77, NULL, '1', NULL, NULL),
+	(1411, 1, '2018-12-04', 1, 1, 1, 384, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.97, NULL, '1', NULL, NULL),
+	(1412, 1, '2018-12-04', 1, 1, 1, 385, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.29, NULL, '1', NULL, NULL),
+	(1413, 1, '2018-12-04', 1, 1, 1, 386, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 25.33, NULL, '1', NULL, NULL),
+	(1414, 1, '2018-12-04', 1, 1, 1, 387, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 37.37, NULL, '1', NULL, NULL),
+	(1415, 1, '2018-12-04', 1, 1, 1, 388, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 55.93, NULL, '1', NULL, NULL),
+	(1416, 1, '2018-12-04', 1, 1, 1, 389, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.04, NULL, '1', NULL, NULL),
+	(1417, 1, '2018-12-04', 1, 1, 1, 390, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.11, NULL, '1', NULL, NULL),
+	(1418, 1, '2018-12-04', 1, 1, 1, 391, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.48, NULL, '1', NULL, NULL),
+	(1419, 1, '2018-12-04', 1, 1, 1, 392, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.18, NULL, '1', NULL, NULL),
+	(1420, 1, '2018-12-04', 1, 1, 1, 393, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.50, NULL, '1', NULL, NULL),
+	(1421, 1, '2018-12-04', 1, 1, 1, 394, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.54, NULL, '1', NULL, NULL),
+	(1422, 1, '2018-12-04', 1, 1, 1, 395, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.77, NULL, '1', NULL, NULL),
+	(1423, 1, '2018-12-04', 1, 1, 1, 402, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.00, NULL, '1', NULL, NULL),
+	(1424, 1, '2018-12-04', 1, 1, 1, 403, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1425, 1, '2018-12-04', 1, 1, 1, 404, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.68, NULL, '1', NULL, NULL),
+	(1426, 1, '2018-12-04', 1, 1, 1, 406, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 43.81, NULL, '1', NULL, NULL),
+	(1427, 1, '2018-12-04', 1, 1, 1, 408, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.81, NULL, '1', NULL, NULL),
+	(1428, 1, '2018-12-04', 1, 1, 1, 410, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 29.74, NULL, '1', NULL, NULL),
+	(1429, 1, '2018-12-04', 1, 1, 1, 411, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.14, NULL, '1', NULL, NULL),
+	(1430, 1, '2018-12-04', 1, 1, 1, 412, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.48, NULL, '1', NULL, NULL),
+	(1431, 1, '2018-12-04', 1, 1, 1, 413, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.94, NULL, '1', NULL, NULL),
+	(1432, 1, '2018-12-04', 1, 1, 1, 414, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.95, NULL, '1', NULL, NULL),
+	(1433, 1, '2018-12-04', 1, 1, 1, 415, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.99, NULL, '1', NULL, NULL),
+	(1434, 1, '2018-12-04', 1, 1, 1, 416, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.10, NULL, '1', NULL, NULL),
+	(1435, 1, '2018-12-04', 1, 1, 1, 417, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.40, NULL, '1', NULL, NULL),
+	(1436, 1, '2018-12-04', 1, 1, 1, 418, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.50, NULL, '1', NULL, NULL),
+	(1437, 1, '2018-12-04', 1, 1, 1, 419, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 40.30, NULL, '1', NULL, NULL),
+	(1438, 1, '2018-12-04', 1, 1, 1, 420, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.39, NULL, '1', NULL, NULL),
+	(1439, 1, '2018-12-04', 1, 1, 1, 421, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.93, NULL, '1', NULL, NULL),
+	(1440, 1, '2018-12-04', 1, 1, 1, 422, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.08, NULL, '1', NULL, NULL),
+	(1441, 1, '2018-12-04', 1, 1, 1, 423, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.94, NULL, '1', NULL, NULL),
+	(1442, 1, '2018-12-04', 1, 1, 1, 424, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.66, NULL, '1', NULL, NULL),
+	(1443, 1, '2018-12-04', 1, 1, 1, 425, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.76, NULL, '1', NULL, NULL),
+	(1444, 1, '2018-12-04', 1, 1, 1, 426, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.70, NULL, '1', NULL, NULL),
+	(1445, 1, '2018-12-04', 1, 1, 1, 427, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.86, NULL, '1', NULL, NULL),
+	(1446, 1, '2018-12-04', 1, 1, 1, 428, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.03, NULL, '1', NULL, NULL),
+	(1447, 1, '2018-12-04', 1, 1, 1, 429, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.44, NULL, '1', NULL, NULL),
+	(1448, 1, '2018-12-04', 1, 1, 1, 430, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.08, NULL, '1', NULL, NULL),
+	(1449, 1, '2018-12-04', 1, 1, 1, 431, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.74, NULL, '1', NULL, NULL),
+	(1450, 1, '2018-12-04', 1, 1, 1, 432, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 60.00, NULL, '1', NULL, NULL),
+	(1451, 1, '2018-12-04', 1, 1, 1, 433, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.61, NULL, '1', NULL, NULL),
+	(1452, 1, '2018-12-04', 1, 1, 1, 434, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.87, NULL, '1', NULL, NULL),
+	(1453, 1, '2018-12-04', 1, 1, 1, 435, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 6.60, NULL, '1', NULL, NULL),
+	(1454, 1, '2018-12-04', 1, 1, 1, 436, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.40, NULL, '1', NULL, NULL),
+	(1455, 1, '2018-12-04', 1, 1, 1, 532, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 110.40, NULL, '1', NULL, NULL),
+	(1456, 1, '2018-12-04', 1, 1, 1, 533, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 134.40, NULL, '1', NULL, NULL),
+	(1457, 1, '2018-12-04', 1, 1, 1, 534, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 163.20, NULL, '1', NULL, NULL),
+	(1458, 1, '2018-12-04', 1, 1, 1, 535, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 177.60, NULL, '1', NULL, NULL),
+	(1459, 1, '2018-12-04', 1, 1, 1, 536, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 249.60, NULL, '1', NULL, NULL),
+	(1460, 1, '2018-12-04', 1, 1, 1, 537, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 144.00, NULL, '1', NULL, NULL),
+	(1461, 1, '2018-12-04', 1, 1, 1, 538, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 177.60, NULL, '1', NULL, NULL),
+	(1462, 1, '2018-12-04', 1, 1, 1, 539, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 254.40, NULL, '1', NULL, NULL),
+	(1463, 1, '2018-12-04', 1, 1, 1, 540, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 312.00, NULL, '1', NULL, NULL),
+	(1464, 1, '2018-12-04', 1, 1, 1, 541, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 374.40, NULL, '1', NULL, NULL),
+	(1465, 1, '2018-12-04', 1, 1, 1, 542, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 240.00, NULL, '1', NULL, NULL),
+	(1466, 1, '2018-12-04', 1, 1, 1, 543, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 288.00, NULL, '1', NULL, NULL),
+	(1467, 1, '2018-12-04', 1, 1, 1, 544, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 336.00, NULL, '1', NULL, NULL),
+	(1468, 1, '2018-12-04', 1, 1, 1, 545, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 124.80, NULL, '1', NULL, NULL),
+	(1469, 1, '2018-12-04', 1, 1, 1, 546, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 153.60, NULL, '1', NULL, NULL),
+	(1470, 1, '2018-12-04', 1, 1, 1, 547, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 240.00, NULL, '1', NULL, NULL),
+	(1471, 1, '2018-12-04', 1, 1, 1, 548, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 288.00, NULL, '1', NULL, NULL),
+	(1472, 1, '2018-12-04', 1, 1, 1, 549, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 369.60, NULL, '1', NULL, NULL),
+	(1473, 1, '2018-12-04', 1, 1, 1, 550, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 177.60, NULL, '1', NULL, NULL),
+	(1474, 1, '2018-12-04', 1, 1, 1, 551, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 254.40, NULL, '1', NULL, NULL),
+	(1475, 1, '2018-12-04', 1, 1, 1, 552, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 336.00, NULL, '1', NULL, NULL),
+	(1476, 1, '2018-12-04', 1, 1, 1, 553, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 340.00, NULL, '1', NULL, NULL),
+	(1477, 1, '2018-12-04', 1, 1, 1, 554, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 408.00, NULL, '1', NULL, NULL),
+	(1478, 1, '2018-12-04', 1, 1, 1, 555, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 465.60, NULL, '1', NULL, NULL),
+	(1479, 1, '2018-12-04', 1, 1, 1, 556, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 513.60, NULL, '1', NULL, NULL),
+	(1480, 1, '2018-12-04', 1, 1, 1, 1411, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 0.00, NULL, '1', NULL, NULL),
+	(1481, 1, '2018-12-04', 1, 1, 1, 1412, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 455.00, NULL, '1', NULL, NULL),
+	(1482, 1, '2018-12-04', 1, 1, 1, 1413, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, NULL),
+	(1483, 1, '2018-12-04', 1, 1, 1, 1414, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, NULL),
+	(1484, 1, '2018-12-04', 1, 1, 1, 1415, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, NULL),
+	(1485, 1, '2018-12-04', 1, 1, 1, 1416, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, NULL),
+	(1486, 1, '2018-12-04', 1, 1, 1, 1417, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, NULL),
+	(1487, 1, '2018-12-04', 1, 1, 1, 1418, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, NULL),
+	(1488, 1, '2018-12-04', 1, 1, 1, 1419, 100000.00, 109.00, 99891.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 100.00, NULL, '1', NULL, '2018-12-04 06:05:20'),
+	(1489, 1, '2018-12-04', 1, 1, 1, 437, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 11.00, NULL, '1', NULL, NULL),
+	(1490, 1, '2018-12-04', 1, 1, 1, 438, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 22.00, NULL, '1', NULL, NULL),
+	(1491, 1, '2018-12-04', 1, 1, 1, 439, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 800.00, NULL, '1', NULL, NULL),
+	(1492, 1, '2018-12-04', 1, 1, 1, 440, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.00, NULL, '1', NULL, NULL),
+	(1493, 1, '2018-12-04', 1, 1, 1, 441, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.60, NULL, '1', NULL, NULL),
+	(1494, 1, '2018-12-04', 1, 1, 1, 442, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.60, NULL, '1', NULL, NULL),
+	(1495, 1, '2018-12-04', 1, 1, 1, 443, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.60, NULL, '1', NULL, NULL),
+	(1496, 1, '2018-12-04', 1, 1, 1, 444, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.60, NULL, '1', NULL, NULL),
+	(1497, 1, '2018-12-04', 1, 1, 1, 445, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.40, NULL, '1', NULL, NULL),
+	(1498, 1, '2018-12-04', 1, 1, 1, 446, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.20, NULL, '1', NULL, NULL),
+	(1499, 1, '2018-12-04', 1, 1, 1, 447, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.70, NULL, '1', NULL, NULL),
+	(1500, 1, '2018-12-04', 1, 1, 1, 448, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.55, NULL, '1', NULL, NULL),
+	(1501, 1, '2018-12-04', 1, 1, 1, 449, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 22.40, NULL, '1', NULL, NULL),
+	(1502, 1, '2018-12-04', 1, 1, 1, 450, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.10, NULL, '1', NULL, NULL),
+	(1503, 1, '2018-12-04', 1, 1, 1, 451, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.80, NULL, '1', NULL, NULL),
+	(1504, 1, '2018-12-04', 1, 1, 1, 452, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.00, NULL, '1', NULL, NULL),
+	(1505, 1, '2018-12-04', 1, 1, 1, 453, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.00, NULL, '1', NULL, NULL),
+	(1506, 1, '2018-12-04', 1, 1, 1, 454, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 14.00, NULL, '1', NULL, NULL),
+	(1507, 1, '2018-12-04', 1, 1, 1, 455, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.30, NULL, '1', NULL, NULL),
+	(1508, 1, '2018-12-04', 1, 1, 1, 456, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 14.50, NULL, '1', NULL, NULL),
+	(1509, 1, '2018-12-04', 1, 1, 1, 457, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.50, NULL, '1', NULL, NULL),
+	(1510, 1, '2018-12-04', 1, 1, 1, 458, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 15.00, NULL, '1', NULL, NULL),
+	(1511, 1, '2018-12-04', 1, 1, 1, 459, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.50, NULL, '1', NULL, NULL),
+	(1512, 1, '2018-12-04', 1, 1, 1, 460, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1513, 1, '2018-12-04', 1, 1, 1, 461, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1514, 1, '2018-12-04', 1, 1, 1, 462, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1515, 1, '2018-12-04', 1, 1, 1, 463, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.00, NULL, '1', NULL, NULL),
+	(1516, 1, '2018-12-04', 1, 1, 1, 464, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.00, NULL, '1', NULL, NULL),
+	(1517, 1, '2018-12-04', 1, 1, 1, 465, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1518, 1, '2018-12-04', 1, 1, 1, 466, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.00, NULL, '1', NULL, NULL),
+	(1519, 1, '2018-12-04', 1, 1, 1, 467, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 91.20, NULL, '1', NULL, NULL),
+	(1520, 1, '2018-12-04', 1, 1, 1, 468, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 48.00, NULL, '1', NULL, NULL),
+	(1521, 1, '2018-12-04', 1, 1, 1, 469, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 58.00, NULL, '1', NULL, NULL),
+	(1522, 1, '2018-12-04', 1, 1, 1, 470, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 58.00, NULL, '1', NULL, NULL),
+	(1523, 1, '2018-12-04', 1, 1, 1, 471, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.25, NULL, '1', NULL, NULL),
+	(1524, 1, '2018-12-04', 1, 1, 1, 472, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.00, NULL, '1', NULL, NULL),
+	(1525, 1, '2018-12-04', 1, 1, 1, 473, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.00, NULL, '1', NULL, NULL),
+	(1526, 1, '2018-12-04', 1, 1, 1, 474, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.00, NULL, '1', NULL, NULL),
+	(1527, 1, '2018-12-04', 1, 1, 1, 475, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 10.50, NULL, '1', NULL, NULL),
+	(1528, 1, '2018-12-04', 1, 1, 1, 476, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.00, NULL, '1', NULL, NULL),
+	(1529, 1, '2018-12-04', 1, 1, 1, 477, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1530, 1, '2018-12-04', 1, 1, 1, 478, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.50, NULL, '1', NULL, NULL),
+	(1531, 1, '2018-12-04', 1, 1, 1, 479, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 8.00, NULL, '1', NULL, NULL),
+	(1532, 1, '2018-12-04', 1, 1, 1, 480, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.00, NULL, '1', NULL, NULL),
+	(1533, 1, '2018-12-04', 1, 1, 1, 481, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 22.00, NULL, '1', NULL, NULL),
+	(1534, 1, '2018-12-04', 1, 1, 1, 482, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 44.00, NULL, '1', NULL, NULL),
+	(1535, 1, '2018-12-04', 1, 1, 1, 483, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 60.00, NULL, '1', NULL, NULL),
+	(1536, 1, '2018-12-04', 1, 1, 1, 484, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.00, NULL, '1', NULL, NULL),
+	(1537, 1, '2018-12-04', 1, 1, 1, 486, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 60.00, NULL, '1', NULL, NULL),
+	(1538, 1, '2018-12-04', 1, 1, 1, 488, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.10, NULL, '1', NULL, NULL),
+	(1539, 1, '2018-12-04', 1, 1, 1, 489, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.30, NULL, '1', NULL, NULL),
+	(1540, 1, '2018-12-04', 1, 1, 1, 490, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.50, NULL, '1', NULL, NULL),
+	(1541, 1, '2018-12-04', 1, 1, 1, 491, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.20, NULL, '1', NULL, NULL),
+	(1542, 1, '2018-12-04', 1, 1, 1, 492, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.30, NULL, '1', NULL, NULL),
+	(1543, 1, '2018-12-04', 1, 1, 1, 493, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.65, NULL, '1', NULL, NULL),
+	(1544, 1, '2018-12-04', 1, 1, 1, 494, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 15.25, NULL, '1', NULL, NULL),
+	(1545, 1, '2018-12-04', 1, 1, 1, 495, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.10, NULL, '1', NULL, NULL),
+	(1546, 1, '2018-12-04', 1, 1, 1, 496, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.60, NULL, '1', NULL, NULL),
+	(1547, 1, '2018-12-04', 1, 1, 1, 497, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 5.00, NULL, '1', NULL, NULL),
+	(1548, 1, '2018-12-04', 1, 1, 1, 498, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.90, NULL, '1', NULL, NULL),
+	(1549, 1, '2018-12-04', 1, 1, 1, 499, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 16.00, NULL, '1', NULL, NULL),
+	(1550, 1, '2018-12-04', 1, 1, 1, 500, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 13.00, NULL, '1', NULL, NULL),
+	(1551, 1, '2018-12-04', 1, 1, 1, 501, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 36.00, NULL, '1', NULL, NULL),
+	(1552, 1, '2018-12-04', 1, 1, 1, 502, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.00, NULL, '1', NULL, NULL),
+	(1553, 1, '2018-12-04', 1, 1, 1, 506, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.25, NULL, '1', NULL, NULL),
+	(1554, 1, '2018-12-04', 1, 1, 1, 507, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.90, NULL, '1', NULL, NULL),
+	(1555, 1, '2018-12-04', 1, 1, 1, 508, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.50, NULL, '1', NULL, NULL),
+	(1556, 1, '2018-12-04', 1, 1, 1, 509, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 400.00, NULL, '1', NULL, NULL),
+	(1557, 1, '2018-12-04', 1, 1, 1, 510, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 17.50, NULL, '1', NULL, NULL),
+	(1558, 1, '2018-12-04', 1, 1, 1, 513, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.70, NULL, '1', NULL, NULL),
+	(1559, 1, '2018-12-04', 1, 1, 1, 514, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.20, NULL, '1', NULL, NULL),
+	(1560, 1, '2018-12-04', 1, 1, 1, 515, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.75, NULL, '1', NULL, NULL),
+	(1561, 1, '2018-12-04', 1, 1, 1, 516, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.20, NULL, '1', NULL, NULL),
+	(1562, 1, '2018-12-04', 1, 1, 1, 517, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.20, NULL, '1', NULL, NULL),
+	(1563, 1, '2018-12-04', 1, 1, 1, 518, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.25, NULL, '1', NULL, NULL),
+	(1564, 1, '2018-12-04', 1, 1, 1, 519, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 43.00, NULL, '1', NULL, NULL),
+	(1565, 1, '2018-12-04', 1, 1, 1, 520, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 48.00, NULL, '1', NULL, NULL),
+	(1566, 1, '2018-12-04', 1, 1, 1, 521, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 20.00, NULL, '1', NULL, NULL),
+	(1567, 1, '2018-12-04', 1, 1, 1, 522, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 44.00, NULL, '1', NULL, NULL),
+	(1568, 1, '2018-12-04', 1, 1, 1, 523, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 22.00, NULL, '1', NULL, NULL),
+	(1569, 1, '2018-12-04', 1, 1, 1, 524, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 22.00, NULL, '1', NULL, NULL),
+	(1570, 1, '2018-12-04', 1, 1, 1, 525, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 50.00, NULL, '1', NULL, NULL),
+	(1571, 1, '2018-12-04', 1, 1, 1, 526, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 25.00, NULL, '1', NULL, NULL),
+	(1572, 1, '2018-12-04', 1, 1, 1, 527, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 25.00, NULL, '1', NULL, NULL),
+	(1573, 1, '2018-12-04', 1, 1, 1, 528, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.00, NULL, '1', NULL, NULL),
+	(1574, 1, '2018-12-04', 1, 1, 1, 529, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 30.00, NULL, '1', NULL, NULL),
+	(1575, 1, '2018-12-04', 1, 1, 1, 530, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 25.00, NULL, '1', NULL, NULL),
+	(1576, 1, '2018-12-04', 1, 1, 1, 531, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 27.00, NULL, '1', NULL, NULL),
+	(1577, 1, '2018-12-04', 1, 1, 1, 4, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.92, NULL, '1', NULL, NULL),
+	(1578, 1, '2018-12-04', 1, 1, 1, 5, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.03, NULL, '1', NULL, NULL),
+	(1579, 1, '2018-12-04', 1, 1, 1, 156, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.87, NULL, '1', NULL, NULL),
+	(1580, 1, '2018-12-04', 1, 1, 1, 157, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 2.88, NULL, '1', NULL, NULL),
+	(1581, 1, '2018-12-04', 1, 1, 1, 163, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 4.11, NULL, '1', NULL, NULL),
+	(1582, 1, '2018-12-04', 1, 1, 1, 379, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.18, NULL, '1', NULL, NULL),
+	(1583, 1, '2018-12-04', 1, 1, 1, 396, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 38.70, NULL, '1', NULL, NULL),
+	(1584, 1, '2018-12-04', 1, 1, 1, 397, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 73.20, NULL, '1', NULL, NULL),
+	(1585, 1, '2018-12-04', 1, 1, 1, 398, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 21.98, NULL, '1', NULL, NULL),
+	(1586, 1, '2018-12-04', 1, 1, 1, 399, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 33.70, NULL, '1', NULL, NULL),
+	(1587, 1, '2018-12-04', 1, 1, 1, 400, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 21.65, NULL, '1', NULL, NULL),
+	(1588, 1, '2018-12-04', 1, 1, 1, 401, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 39.11, NULL, '1', NULL, NULL),
+	(1589, 1, '2018-12-04', 1, 1, 1, 405, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 7.87, NULL, '1', NULL, NULL),
+	(1590, 1, '2018-12-04', 1, 1, 1, 407, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 18.81, NULL, '1', NULL, NULL),
+	(1591, 1, '2018-12-04', 1, 1, 1, 409, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 34.90, NULL, '1', NULL, NULL),
+	(1592, 1, '2018-12-04', 1, 1, 1, 485, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 35.00, NULL, '1', NULL, NULL),
+	(1593, 1, '2018-12-04', 1, 1, 1, 487, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 1.80, NULL, '1', NULL, NULL),
+	(1594, 1, '2018-12-04', 1, 1, 1, 503, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 3.50, NULL, '1', NULL, NULL),
+	(1595, 1, '2018-12-04', 1, 1, 1, 504, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 9.00, NULL, '1', NULL, NULL),
+	(1596, 1, '2018-12-04', 1, 1, 1, 505, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 12.00, NULL, '1', NULL, NULL),
+	(1597, 1, '2018-12-04', 1, 1, 1, 511, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 600.00, NULL, '1', NULL, NULL),
+	(1598, 1, '2018-12-04', 1, 1, 1, 512, 100000.00, 0.00, 100000.00, NULL, 'Data Item Masuk', 'Data Item Masuk', 26.50, NULL, '1', NULL, NULL),
+	(1599, 1, '2018-12-04', 2, 1, 11, 1419, 100.00, 98.00, 2.00, 0.00, 'TransferProduksi', NULL, 100.00, NULL, 'TTN-1812-00001', '2018-12-04 06:01:38', '2018-12-04 06:05:35'),
+	(1034, 2, '2018-12-04', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-3/2018.12.04', NULL, NULL),
+	(1040, 2, '2018-12-04', 1, 1, NULL, 9, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 8.64, NULL, 'TOKO-2/2018.12.04', NULL, NULL),
+	(1047, 2, '2018-12-05', 1, 1, NULL, 16, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.64, NULL, 'TOKO-20/2018.12.05', NULL, NULL),
+	(1087, 2, '2018-12-04', 1, 1, NULL, 56, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.75, NULL, 'TOKO-6/2018.12.04', NULL, NULL),
+	(1106, 2, '2018-12-04', 1, 1, NULL, 75, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 5.22, NULL, 'TOKO-5/2018.12.04', NULL, NULL),
+	(1141, 2, '2018-12-06', 1, 1, NULL, 110, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.46, NULL, 'TOKO-62/2018.12.06', NULL, NULL),
+	(1162, 2, '2018-12-05', 1, 1, NULL, 131, -12.00, NULL, NULL, NULL, 'Penjualan Toko', '', 6.48, NULL, 'TOKO-44/2018.12.05', NULL, NULL),
+	(1163, 2, '2018-12-04', 1, 1, NULL, 132, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 44.20, NULL, 'TOKO-4/2018.12.04', NULL, NULL),
+	(1166, 2, '2018-12-04', 1, 1, NULL, 135, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 5.26, NULL, 'TOKO-3/2018.12.04', NULL, NULL),
+	(1167, 2, '2018-12-04', 1, 1, NULL, 136, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 39.77, NULL, 'TOKO-4/2018.12.04', NULL, NULL),
+	(1227, 2, '2018-12-05', 1, 1, NULL, 199, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 1.99, NULL, 'TOKO-43/2018.12.05', NULL, NULL),
+	(1334, 2, '2018-12-06', 1, 1, NULL, 306, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 1.34, NULL, 'TOKO-55/2018.12.06', NULL, NULL),
+	(1488, 2, '2018-12-04', 1, 1, 12, 1419, 109.00, 0.00, 109.00, 0.00, 'BARANG TITIPAN', NULL, 5000.00, NULL, '1', '2018-12-04 05:59:11', '2018-12-04 05:59:11'),
+	(1599, 2, '2018-12-04', 2, 1, NULL, 1419, -45.00, NULL, NULL, NULL, 'PENJUALAN TITIP', '', 100.00, NULL, 'TTN-1812-00001', NULL, NULL),
+	(1034, 3, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-7/2018.12.05', NULL, NULL),
+	(1047, 3, '2018-12-06', 1, 1, NULL, 16, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.64, NULL, 'TOKO-56/2018.12.06', NULL, NULL),
+	(1087, 3, '2018-12-05', 1, 1, NULL, 56, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.75, NULL, 'TOKO-26/2018.12.05', NULL, NULL),
+	(1106, 3, '2018-12-05', 1, 1, NULL, 75, -2.00, NULL, NULL, NULL, 'Penjualan Toko', '', 5.22, NULL, 'TOKO-43/2018.12.05', NULL, NULL),
+	(1163, 3, '2018-12-05', 1, 1, NULL, 132, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 44.20, NULL, 'TOKO-43/2018.12.05', NULL, NULL),
+	(1167, 3, '2018-12-05', 1, 1, NULL, 136, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 39.77, NULL, 'TOKO-43/2018.12.05', NULL, NULL),
+	(1488, 3, '2018-12-04', 1, 1, 1, 1419, -100.00, NULL, NULL, NULL, 'TAMBAH BARANG TITIP', 'e', 100.00, NULL, 'TTN-1812-00001', NULL, NULL),
+	(1599, 3, '2018-12-04', 2, 1, NULL, 1419, -45.00, NULL, NULL, NULL, 'PENJUALAN TITIP', '', 100.00, NULL, 'TTN-1812-00001', NULL, NULL),
+	(1034, 4, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-8/2018.12.05', NULL, NULL),
+	(1087, 4, '2018-12-05', 1, 1, NULL, 56, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.75, NULL, 'TOKO-31/2018.12.05', NULL, NULL),
+	(1106, 4, '2018-12-05', 1, 1, NULL, 75, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 5.22, NULL, 'TOKO-44/2018.12.05', NULL, NULL),
+	(1167, 4, '2018-12-05', 1, 1, NULL, 136, -35.00, NULL, NULL, NULL, 'Penjualan Toko', '', 39.77, NULL, 'TOKO-44/2018.12.05', NULL, NULL),
+	(1488, 4, '2018-12-04', 1, 1, 1, 1419, -9.00, NULL, NULL, NULL, 'TAMBAH BARANG TITIP', 'e', 100.00, NULL, 'TTN-1812-00002', NULL, NULL),
+	(1599, 4, '2018-12-04', 2, 1, 11, 1419, 9.00, 0.00, 9.00, 0.00, 'TransferProduksi', NULL, 100.00, NULL, 'TTN-1812-00002', '2018-12-04 06:05:22', '2018-12-04 06:05:22'),
+	(1034, 5, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-9/2018.12.05', NULL, NULL),
+	(1087, 5, '2018-12-06', 1, 1, NULL, 56, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.75, NULL, 'TOKO-47/2018.12.06', NULL, NULL),
+	(1106, 5, '2018-12-05', 1, 1, NULL, 75, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 5.22, NULL, 'TOKO-45/2018.12.05', NULL, NULL),
+	(1599, 5, '2018-12-04', 2, 1, NULL, 1419, -8.00, NULL, NULL, NULL, 'PENJUALAN TITIP', '', 100.00, NULL, 'TTN-1812-00002', NULL, NULL),
+	(1034, 6, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-10/2018.12.05', NULL, NULL),
+	(1087, 6, '2018-12-06', 1, 1, NULL, 56, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 4.75, NULL, 'TOKO-64/2018.12.06', NULL, NULL),
+	(1106, 6, '2018-12-06', 1, 1, NULL, 75, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 5.22, NULL, 'TOKO-58/2018.12.06', NULL, NULL),
+	(1034, 7, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-11/2018.12.05', NULL, NULL),
+	(1034, 8, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-12/2018.12.05', NULL, NULL),
+	(1034, 9, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-13/2018.12.05', NULL, NULL),
+	(1034, 10, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-14/2018.12.05', NULL, NULL),
+	(1034, 11, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-15/2018.12.05', NULL, NULL),
+	(1034, 12, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-16/2018.12.05', NULL, NULL),
+	(1034, 13, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-17/2018.12.05', NULL, NULL),
+	(1034, 14, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-18/2018.12.05', NULL, NULL),
+	(1034, 15, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-19/2018.12.05', NULL, NULL),
+	(1034, 16, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-21/2018.12.05', NULL, NULL),
+	(1034, 17, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-22/2018.12.05', NULL, NULL),
+	(1034, 18, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-23/2018.12.05', NULL, NULL),
+	(1034, 19, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-24/2018.12.05', NULL, NULL),
+	(1034, 20, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-25/2018.12.05', NULL, NULL),
+	(1034, 21, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-27/2018.12.05', NULL, NULL),
+	(1034, 22, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-28/2018.12.05', NULL, NULL),
+	(1034, 23, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-29/2018.12.05', NULL, NULL),
+	(1034, 24, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-30/2018.12.05', NULL, NULL),
+	(1034, 25, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-32/2018.12.05', NULL, NULL),
+	(1034, 26, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-33/2018.12.05', NULL, NULL),
+	(1034, 27, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-34/2018.12.05', NULL, NULL),
+	(1034, 28, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-35/2018.12.05', NULL, NULL),
+	(1034, 29, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-36/2018.12.05', NULL, NULL),
+	(1034, 30, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-37/2018.12.05', NULL, NULL),
+	(1034, 31, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-38/2018.12.05', NULL, NULL),
+	(1034, 32, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-39/2018.12.05', NULL, NULL),
+	(1034, 33, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-40/2018.12.05', NULL, NULL),
+	(1034, 34, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-41/2018.12.05', NULL, NULL),
+	(1034, 35, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-42/2018.12.05', NULL, NULL),
+	(1034, 36, '2018-12-05', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-43/2018.12.05', NULL, NULL),
+	(1034, 37, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-44/2018.12.05', NULL, NULL),
+	(1034, 38, '2018-12-05', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-45/2018.12.05', NULL, NULL),
+	(1034, 39, '2018-05-12', 1, 1, NULL, 3, -10.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-46/2018.12.05', NULL, NULL),
+	(1034, 40, '2018-12-06', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-51/2018.12.06', NULL, NULL),
+	(1034, 41, '2018-12-06', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-57/2018.12.06', NULL, NULL),
+	(1034, 42, '2018-12-06', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-59/2018.12.06', NULL, NULL),
+	(1034, 43, '2018-12-06', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-60/2018.12.06', NULL, NULL),
+	(1034, 44, '2018-12-06', 1, 1, NULL, 3, -1.00, NULL, NULL, NULL, 'Penjualan Toko', '', 7.26, NULL, 'TOKO-61/2018.12.06', NULL, NULL);
 /*!40000 ALTER TABLE `d_stock_mutation` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_stock_mutcat
-DROP TABLE IF EXISTS `d_stock_mutcat`;
+
+-- Dumping structure for table alamrayasite_nabila.d_stock_mutcat
 CREATE TABLE IF NOT EXISTS `d_stock_mutcat` (
   `smc_id` tinyint(4) NOT NULL,
   `smc_note` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`smc_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_stock_mutcat: ~21 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_stock_mutcat: ~22 rows (approximately)
 DELETE FROM `d_stock_mutcat`;
 /*!40000 ALTER TABLE `d_stock_mutcat` DISABLE KEYS */;
 INSERT INTO `d_stock_mutcat` (`smc_id`, `smc_note`) VALUES
@@ -3131,6 +4346,7 @@ INSERT INTO `d_stock_mutcat` (`smc_id`, `smc_note`) VALUES
 	(12, 'KURANG BARANG TITIP'),
 	(13, 'TAMBAH BARANG TITIPAN'),
 	(14, 'KURANG BARANG TITIPAN'),
+	(15, 'RETURN  BARANG TITIPAN'),
 	(40, 'Bahan Baku Rusak'),
 	(50, 'Bahan Baku Hilang'),
 	(60, 'menambah opname '),
@@ -3140,8 +4356,8 @@ INSERT INTO `d_stock_mutcat` (`smc_id`, `smc_note`) VALUES
 	(100, 'pengurangan stock');
 /*!40000 ALTER TABLE `d_stock_mutcat` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_supplier_brg
-DROP TABLE IF EXISTS `d_supplier_brg`;
+
+-- Dumping structure for table alamrayasite_nabila.d_supplier_brg
 CREATE TABLE IF NOT EXISTS `d_supplier_brg` (
   `d_sb_supid` int(11) NOT NULL,
   `d_sb_detailid` int(11) NOT NULL,
@@ -3151,12 +4367,12 @@ CREATE TABLE IF NOT EXISTS `d_supplier_brg` (
   PRIMARY KEY (`d_sb_supid`,`d_sb_detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_supplier_brg: ~17 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_supplier_brg: ~17 rows (approximately)
 DELETE FROM `d_supplier_brg`;
 /*!40000 ALTER TABLE `d_supplier_brg` DISABLE KEYS */;
 INSERT INTO `d_supplier_brg` (`d_sb_supid`, `d_sb_detailid`, `d_sb_itemid`, `d_sb_created`, `d_sb_updated`) VALUES
+	(1, 1, 1412, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
 	(1, 9, 60, '2018-10-29 17:19:46', '2018-11-01 10:59:25'),
-	(26, 1, 7, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
 	(26, 2, 646, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
 	(26, 3, 70, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
 	(26, 4, 71, '2018-10-29 17:14:07', '2018-10-31 18:20:47'),
@@ -3174,8 +4390,8 @@ INSERT INTO `d_supplier_brg` (`d_sb_supid`, `d_sb_detailid`, `d_sb_itemid`, `d_s
 	(120, 8, 54, '2018-10-29 17:19:46', '2018-11-01 10:59:25');
 /*!40000 ALTER TABLE `d_supplier_brg` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_transferitem
-DROP TABLE IF EXISTS `d_transferitem`;
+
+-- Dumping structure for table alamrayasite_nabila.d_transferitem
 CREATE TABLE IF NOT EXISTS `d_transferitem` (
   `ti_id` int(11) NOT NULL AUTO_INCREMENT,
   `ti_time` datetime DEFAULT NULL,
@@ -3191,7 +4407,7 @@ CREATE TABLE IF NOT EXISTS `d_transferitem` (
   PRIMARY KEY (`ti_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_transferitem: ~13 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_transferitem: ~13 rows (approximately)
 DELETE FROM `d_transferitem`;
 /*!40000 ALTER TABLE `d_transferitem` DISABLE KEYS */;
 INSERT INTO `d_transferitem` (`ti_id`, `ti_time`, `ti_code`, `ti_order`, `ti_orderstaff`, `ti_note`, `ti_isapproved`, `ti_issent`, `ti_isreceived`, `ti_insert`, `ti_update`) VALUES
@@ -3210,8 +4426,8 @@ INSERT INTO `d_transferitem` (`ti_id`, `ti_time`, `ti_code`, `ti_order`, `ti_ord
 	(13, '2018-06-08 00:00:00', 'REQ18060813', 'GR', NULL, NULL, 'Y', 'Y', 'Y', '2018-06-08 14:30:26', '2018-06-08 14:33:33');
 /*!40000 ALTER TABLE `d_transferitem` ENABLE KEYS */;
 
--- Dumping structure for table nabila.d_transferitem_dt
-DROP TABLE IF EXISTS `d_transferitem_dt`;
+
+-- Dumping structure for table alamrayasite_nabila.d_transferitem_dt
 CREATE TABLE IF NOT EXISTS `d_transferitem_dt` (
   `tidt_id` int(11) NOT NULL,
   `tidt_detail` tinyint(4) NOT NULL,
@@ -3230,7 +4446,7 @@ CREATE TABLE IF NOT EXISTS `d_transferitem_dt` (
   CONSTRAINT `FK_d_request_dt_d_request_item` FOREIGN KEY (`tidt_id`) REFERENCES `d_transferitem` (`ti_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.d_transferitem_dt: ~17 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.d_transferitem_dt: ~17 rows (approximately)
 DELETE FROM `d_transferitem_dt`;
 /*!40000 ALTER TABLE `d_transferitem_dt` DISABLE KEYS */;
 INSERT INTO `d_transferitem_dt` (`tidt_id`, `tidt_detail`, `tidt_item`, `tidt_qty`, `tidt_qty_appr`, `tidt_apprtime`, `tidt_apprstaff`, `tidt_qty_send`, `tidt_sendtime`, `tidt_sendstaff`, `tidt_qty_received`, `tidt_receivedtime`, `tidt_receivedstaff`) VALUES
@@ -3253,14 +4469,14 @@ INSERT INTO `d_transferitem_dt` (`tidt_id`, `tidt_detail`, `tidt_item`, `tidt_qt
 	(13, 1, 563, 20, 20, '2018-06-08 02:30:26', NULL, 20, '2018-06-08 02:30:26', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `d_transferitem_dt` ENABLE KEYS */;
 
--- Dumping structure for table nabila.migrations
-DROP TABLE IF EXISTS `migrations`;
+
+-- Dumping structure for table alamrayasite_nabila.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table nabila.migrations: 110 rows
+-- Dumping data for table alamrayasite_nabila.migrations: 110 rows
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
@@ -3376,8 +4592,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 	('2018_02_12_091908_create_customer_table', 1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_acces_gudangitem
-DROP TABLE IF EXISTS `m_acces_gudangitem`;
+
+-- Dumping structure for table alamrayasite_nabila.m_acces_gudangitem
 CREATE TABLE IF NOT EXISTS `m_acces_gudangitem` (
   `ag_id` int(11) NOT NULL AUTO_INCREMENT,
   `ag_gudang` varchar(50) DEFAULT NULL,
@@ -3385,7 +4601,7 @@ CREATE TABLE IF NOT EXISTS `m_acces_gudangitem` (
   PRIMARY KEY (`ag_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_acces_gudangitem: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_acces_gudangitem: ~2 rows (approximately)
 DELETE FROM `m_acces_gudangitem`;
 /*!40000 ALTER TABLE `m_acces_gudangitem` DISABLE KEYS */;
 INSERT INTO `m_acces_gudangitem` (`ag_id`, `ag_gudang`, `ag_fitur`) VALUES
@@ -3393,8 +4609,8 @@ INSERT INTO `m_acces_gudangitem` (`ag_id`, `ag_gudang`, `ag_fitur`) VALUES
 	(2, '4,5', 'Pembelian');
 /*!40000 ALTER TABLE `m_acces_gudangitem` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_cabang
-DROP TABLE IF EXISTS `m_cabang`;
+
+-- Dumping structure for table alamrayasite_nabila.m_cabang
 CREATE TABLE IF NOT EXISTS `m_cabang` (
   `c_id` varchar(3) NOT NULL,
   `c_name` varchar(50) NOT NULL,
@@ -3403,7 +4619,7 @@ CREATE TABLE IF NOT EXISTS `m_cabang` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_cabang: ~10 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_cabang: ~10 rows (approximately)
 DELETE FROM `m_cabang`;
 /*!40000 ALTER TABLE `m_cabang` DISABLE KEYS */;
 INSERT INTO `m_cabang` (`c_id`, `c_name`, `c_insert`, `c_update`) VALUES
@@ -3419,8 +4635,8 @@ INSERT INTO `m_cabang` (`c_id`, `c_name`, `c_insert`, `c_update`) VALUES
 	('GS', 'GUDANG SENDING', '2018-05-02 14:38:14', '2018-05-02 14:38:15');
 /*!40000 ALTER TABLE `m_cabang` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_comp
-DROP TABLE IF EXISTS `m_comp`;
+
+-- Dumping structure for table alamrayasite_nabila.m_comp
 CREATE TABLE IF NOT EXISTS `m_comp` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_code` varchar(50) DEFAULT '0',
@@ -3432,18 +4648,20 @@ CREATE TABLE IF NOT EXISTS `m_comp` (
   `c_insert` timestamp NULL DEFAULT NULL,
   `c_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_comp: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_comp: ~4 rows (approximately)
 DELETE FROM `m_comp`;
 /*!40000 ALTER TABLE `m_comp` DISABLE KEYS */;
 INSERT INTO `m_comp` (`c_id`, `c_code`, `c_owner`, `c_name`, `c_address`, `c_type`, `c_control`, `c_insert`, `c_update`) VALUES
-	(1, 'A01', 'Ponorogo', 'Ponorogo', 'Ponorogo', NULL, NULL, NULL, '2018-09-06 18:41:17'),
-	(2, 'A02', 'Ponorogo', 'xxx', 'Ponorogo', NULL, NULL, NULL, '2018-09-24 10:45:27');
+	(1, 'A01', 'Pusat', 'Pusat', 'Jl. Gajah Mada No. 22 ponorogo', NULL, NULL, NULL, '2018-12-04 12:40:43'),
+	(2, 'A02', 'NABILA 2', 'NABILA 2', 'jl. Raya Ponorogo Pacitan', NULL, NULL, NULL, '2018-12-04 12:41:18'),
+	(3, 'A03', 'NABILA 3', 'NABILA 3', 'Jl. Raya Siman no 72 ', NULL, NULL, NULL, '2018-12-04 12:41:12'),
+	(4, 'A04', 'MOBILE', 'MOBILE', NULL, NULL, NULL, NULL, '2018-12-04 12:40:35');
 /*!40000 ALTER TABLE `m_comp` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_customer
-DROP TABLE IF EXISTS `m_customer`;
+
+-- Dumping structure for table alamrayasite_nabila.m_customer
 CREATE TABLE IF NOT EXISTS `m_customer` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
   `c_code` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -3461,7 +4679,7 @@ CREATE TABLE IF NOT EXISTS `m_customer` (
   UNIQUE KEY `c_code` (`c_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table nabila.m_customer: ~7 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_customer: ~7 rows (approximately)
 DELETE FROM `m_customer`;
 /*!40000 ALTER TABLE `m_customer` DISABLE KEYS */;
 INSERT INTO `m_customer` (`c_id`, `c_code`, `c_name`, `c_birthday`, `c_email`, `c_hp1`, `c_hp2`, `c_address`, `c_class`, `c_type`, `c_insert`, `c_update`) VALUES
@@ -3474,21 +4692,21 @@ INSERT INTO `m_customer` (`c_id`, `c_code`, `c_name`, `c_birthday`, `c_email`, `
 	(7, 'CUS1118/C001/7', 'mahm', '2018-11-05', 'taziz704@gmail.com', '+6285233526818', '+6285233526818', 'wewe', 'C', 'RT', '2018-11-22 10:10:44', '2018-11-22 17:10:44');
 /*!40000 ALTER TABLE `m_customer` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_employee
-DROP TABLE IF EXISTS `m_employee`;
+
+-- Dumping structure for table alamrayasite_nabila.m_employee
 CREATE TABLE IF NOT EXISTS `m_employee` (
   `e_id` smallint(6) NOT NULL AUTO_INCREMENT,
   `e_nama` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`e_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_employee: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_employee: ~0 rows (approximately)
 DELETE FROM `m_employee`;
 /*!40000 ALTER TABLE `m_employee` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_employee` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_group
-DROP TABLE IF EXISTS `m_group`;
+
+-- Dumping structure for table alamrayasite_nabila.m_group
 CREATE TABLE IF NOT EXISTS `m_group` (
   `g_id` int(11) NOT NULL AUTO_INCREMENT,
   `g_code` varchar(50) DEFAULT NULL,
@@ -3502,7 +4720,7 @@ CREATE TABLE IF NOT EXISTS `m_group` (
   UNIQUE KEY `g_code` (`g_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_group: ~13 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_group: ~13 rows (approximately)
 DELETE FROM `m_group`;
 /*!40000 ALTER TABLE `m_group` DISABLE KEYS */;
 INSERT INTO `m_group` (`g_id`, `g_code`, `g_name`, `g_akun_persediaan`, `g_akun_beban`, `g_akun_penjualan`, `g_create`, `g_update`) VALUES
@@ -3521,8 +4739,8 @@ INSERT INTO `m_group` (`g_id`, `g_code`, `g_name`, `g_akun_persediaan`, `g_akun_
 	(13, '016', 'BARANG LAIN-LAIN', '120.01', NULL, NULL, '2018-08-14 03:25:13', NULL);
 /*!40000 ALTER TABLE `m_group` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_gudang
-DROP TABLE IF EXISTS `m_gudang`;
+
+-- Dumping structure for table alamrayasite_nabila.m_gudang
 CREATE TABLE IF NOT EXISTS `m_gudang` (
   `g_name` varchar(30) NOT NULL,
   `g_insert` datetime DEFAULT NULL,
@@ -3530,7 +4748,7 @@ CREATE TABLE IF NOT EXISTS `m_gudang` (
   PRIMARY KEY (`g_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_gudang: ~10 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_gudang: ~10 rows (approximately)
 DELETE FROM `m_gudang`;
 /*!40000 ALTER TABLE `m_gudang` DISABLE KEYS */;
 INSERT INTO `m_gudang` (`g_name`, `g_insert`, `g_update`) VALUES
@@ -3546,8 +4764,8 @@ INSERT INTO `m_gudang` (`g_name`, `g_insert`, `g_update`) VALUES
 	('GUDANG TITIPAN', '2018-09-19 10:57:02', '2018-09-19 10:57:05');
 /*!40000 ALTER TABLE `m_gudang` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_item
-DROP TABLE IF EXISTS `m_item`;
+
+-- Dumping structure for table alamrayasite_nabila.m_item
 CREATE TABLE IF NOT EXISTS `m_item` (
   `i_id` int(11) NOT NULL AUTO_INCREMENT,
   `i_code` varchar(12) NOT NULL,
@@ -3573,9 +4791,9 @@ CREATE TABLE IF NOT EXISTS `m_item` (
   UNIQUE KEY `i_kode` (`i_code`),
   KEY `FK_m_item_m_group` (`i_group`),
   CONSTRAINT `FK_m_item_m_group` FOREIGN KEY (`i_group`) REFERENCES `m_group` (`g_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1413 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1420 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_item: ~558 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_item: ~558 rows (approximately)
 DELETE FROM `m_item`;
 /*!40000 ALTER TABLE `m_item` DISABLE KEYS */;
 INSERT INTO `m_item` (`i_id`, `i_code`, `i_group`, `i_type`, `i_name`, `i_satuan`, `i_sat1`, `i_sat2`, `i_sat3`, `i_sat_isi1`, `i_sat_isi2`, `i_sat_isi3`, `i_hpp`, `i_price`, `i_status`, `i_isactive`, `i_active`, `i_det`, `i_insert`, `i_update`) VALUES
@@ -3651,7 +4869,7 @@ INSERT INTO `m_item` (`i_id`, `i_code`, `i_group`, `i_type`, `i_name`, `i_satuan
 	(70, 'BRG0070', 3, 'BJ', 'Sobek kacang', 4, 4, 4, 5, 1, 10, 100, 8.13, 12000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(71, 'BRG0071', 3, 'BJ', 'Sobek kismis', 4, 4, 4, 5, 1, 10, 100, 13.41, 14000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(72, 'BRG0072', 3, 'BJ', 'Sobek nanas', 4, 4, 4, 5, 1, 10, 100, 11.30, 13000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-	(73, 'BRG0073', 3, 'BJ', 'Sobek pisang', 4, 4, 4, 5, 1, 10, 100, 11.05, 14000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+	(73, 'BRG0073', 3, 'BTPN', 'Sobek pisang', 4, 4, 4, 5, 1, 10, 100, 11.05, 14000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(74, 'BRG0074', 3, 'BJ', 'Sobek susu', 4, 4, 4, 5, 1, 10, 100, 10.34, 12000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(75, 'BRG0075', 3, 'BJ', 'Sosis top abon', 4, 4, 4, 5, 1, 10, 100, 5.22, 8000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(76, 'BRG0076', 3, 'BJ', 'Strawberry', 4, 4, 4, 5, 1, 10, 100, 3.40, 6000.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -4136,11 +5354,18 @@ INSERT INTO `m_item` (`i_id`, `i_code`, `i_group`, `i_type`, `i_name`, `i_satuan
 	(555, 'BRG0555', 3, 'BJ', 'Tart 30*40 Kotak 2 Lps', 4, 4, 4, 5, 1, 10, 100, 465.60, 597.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(556, 'BRG0556', 3, 'BJ', 'Tart 30*40 Kotak 3 Lps', 4, 4, 4, 5, 1, 10, 100, 513.60, 657.00, '', 'TRUE', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(1411, 'i_code', 3, 'BJ', 'i_name', 4, 4, 4, 5, 1, 10, 100, 0.00, 0.00, '', 'TRUE', '', 'i_det', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-	(1412, 'BRG1111', 3, 'BB', 'COBA', 4, 4, 4, 6, 1, 10, 100, 455.00, 4000.00, 'Y', 'TRUE', 'Y', NULL, '2018-11-07 10:10:27', NULL);
+	(1412, 'BRG1111', 3, 'BB', 'Bawang', 4, 4, 4, 6, 1, 10, 100, 455.00, 4000.00, 'Y', 'TRUE', 'Y', NULL, '2018-11-07 10:10:27', NULL),
+	(1413, 'BRG5000', 3, 'BB', 'Terigu', 4, 4, 4, 5, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:33:41', NULL),
+	(1414, 'BRG5001', 3, 'BB', 'Gula Halus', 4, 4, 4, 5, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:34:04', NULL),
+	(1415, 'BRG5002', 3, 'BB', 'Palmia', 4, 4, 4, 4, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:34:39', NULL),
+	(1416, 'BRG5003', 3, 'BB', 'Bos', 4, 4, 4, 5, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:35:32', NULL),
+	(1417, 'BRG5004', 3, 'BB', 'Kuning Telur', 4, 4, 4, 5, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:35:32', NULL),
+	(1418, 'BRG5005', 3, 'BB', 'Putih Telur', 4, 4, 4, 5, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:35:32', NULL),
+	(1419, 'BRG5006', 3, 'BTPN', 'Putih Telur Barokah', 4, 4, 4, 5, 5, 5, 5, 100.00, 100.00, 'Y', 'TRUE', 'Y', NULL, '2018-12-04 07:35:32', NULL);
 /*!40000 ALTER TABLE `m_item` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_machine
-DROP TABLE IF EXISTS `m_machine`;
+
+-- Dumping structure for table alamrayasite_nabila.m_machine
 CREATE TABLE IF NOT EXISTS `m_machine` (
   `m_id` int(11) NOT NULL AUTO_INCREMENT,
   `m_type` char(50) DEFAULT NULL,
@@ -4151,7 +5376,7 @@ CREATE TABLE IF NOT EXISTS `m_machine` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_machine: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_machine: ~2 rows (approximately)
 DELETE FROM `m_machine`;
 /*!40000 ALTER TABLE `m_machine` DISABLE KEYS */;
 INSERT INTO `m_machine` (`m_id`, `m_type`, `m_name`, `m_active`, `m_insert`, `m_update`) VALUES
@@ -4159,8 +5384,8 @@ INSERT INTO `m_machine` (`m_id`, `m_type`, `m_name`, `m_active`, `m_insert`, `m_
 	(3, 'Toko', 'Kasir 2', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `m_machine` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_paymentmethod
-DROP TABLE IF EXISTS `m_paymentmethod`;
+
+-- Dumping structure for table alamrayasite_nabila.m_paymentmethod
 CREATE TABLE IF NOT EXISTS `m_paymentmethod` (
   `pm_id` tinyint(4) NOT NULL,
   `pm_year` varchar(50) DEFAULT NULL,
@@ -4175,7 +5400,7 @@ CREATE TABLE IF NOT EXISTS `m_paymentmethod` (
   PRIMARY KEY (`pm_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_paymentmethod: ~6 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_paymentmethod: ~6 rows (approximately)
 DELETE FROM `m_paymentmethod`;
 /*!40000 ALTER TABLE `m_paymentmethod` DISABLE KEYS */;
 INSERT INTO `m_paymentmethod` (`pm_id`, `pm_year`, `pm_name`, `pm_coa_comp`, `pm_coa_year`, `pm_coa_code`, `pm_firur`, `pm_active`, `pm_insert`, `pm_update`) VALUES
@@ -4187,8 +5412,8 @@ INSERT INTO `m_paymentmethod` (`pm_id`, `pm_year`, `pm_name`, `pm_coa_comp`, `pm
 	(6, '2018', 'HUTANG', '', '2018', '', 'Penjualan', 'Y', NULL, NULL);
 /*!40000 ALTER TABLE `m_paymentmethod` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_price
-DROP TABLE IF EXISTS `m_price`;
+
+-- Dumping structure for table alamrayasite_nabila.m_price
 CREATE TABLE IF NOT EXISTS `m_price` (
   `m_pid` int(11) NOT NULL AUTO_INCREMENT,
   `m_pitem` int(11) NOT NULL DEFAULT '0',
@@ -4203,564 +5428,564 @@ CREATE TABLE IF NOT EXISTS `m_price` (
   PRIMARY KEY (`m_pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=646 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_price: ~645 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_price: ~645 rows (approximately)
 DELETE FROM `m_price`;
 /*!40000 ALTER TABLE `m_price` DISABLE KEYS */;
 INSERT INTO `m_price` (`m_pid`, `m_pitem`, `m_pbuy1`, `m_pbuy2`, `m_pbuy3`, `m_psell1`, `m_psell2`, `m_psell3`, `m_pcreated`, `m_pupdated`) VALUES
-	(1, 1, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(2, 2, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(3, 3, 5888.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(4, 4, 11000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(5, 5, 50.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(6, 6, 94500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(7, 7, 210.52, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(8, 8, 6340.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(9, 9, 68000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(10, 10, 1090.90, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(11, 11, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(12, 12, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(13, 13, 2000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(14, 14, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(15, 15, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(16, 16, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(17, 17, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(18, 18, 34000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(19, 19, 57000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(20, 20, 1000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(21, 21, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(22, 22, 23000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(23, 23, 6600.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(24, 24, 13666.66, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(25, 25, 9466.66, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(26, 26, 57000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(27, 27, 4750.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(28, 28, 84400.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(29, 29, 6174.93, 0.00, 0.00, 26000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(30, 30, 33583.33, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(31, 31, 122000.00, 0.00, 0.00, 137000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(32, 32, 200000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(33, 33, 5500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(34, 34, 1345.83, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(35, 35, 103000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(36, 36, 25000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(37, 37, 16500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', '2018-06-28 09:54:18'),
-	(38, 38, 10000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(39, 39, 10833.33, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(40, 40, 30000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(41, 41, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(42, 42, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(43, 43, 43000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(44, 44, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(45, 45, 4000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(46, 46, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(47, 47, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(48, 48, 32615.38, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(49, 49, 10520.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(50, 50, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(51, 51, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(52, 52, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(53, 53, 15500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(54, 54, 11555.55, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(55, 55, 9400.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(56, 56, 80.00, 0.00, 0.00, 5750.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(57, 57, 180.00, 0.00, 0.00, 160000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(58, 58, 120.00, 0.00, 0.00, 115000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(59, 59, 150.00, 0.00, 0.00, 130000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(60, 60, 170.00, 0.00, 0.00, 150000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(61, 61, 20000.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(62, 62, 16000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(63, 63, 120.00, 0.00, 0.00, 9500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(64, 64, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(65, 65, 58000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(66, 66, 24000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(67, 67, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(68, 68, 6520.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(69, 69, 35000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(70, 70, 35000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(71, 71, 36000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(72, 72, 144000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(73, 73, 120.00, 0.00, 0.00, 9000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(74, 74, 110.00, 0.00, 0.00, 8000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(75, 75, 100.00, 0.00, 0.00, 6500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(76, 76, 18000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(77, 77, 180.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(78, 78, 21458.33, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(79, 79, 0.00, 0.00, 0.00, 98000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(80, 80, 0.00, 0.00, 0.00, 50000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(81, 81, 0.00, 0.00, 0.00, 28000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(82, 82, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(83, 83, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(84, 84, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(85, 85, 45000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(86, 86, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(87, 87, 750.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(88, 88, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(89, 89, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(90, 90, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(91, 91, 5000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(92, 92, 11000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(93, 93, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(94, 94, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(95, 95, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(96, 96, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(97, 97, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(98, 98, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(99, 99, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(100, 100, 36750.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(101, 101, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(102, 102, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(103, 103, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(104, 104, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(105, 105, 45000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(106, 106, 42500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(107, 107, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(108, 108, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(109, 109, 35000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(110, 110, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(111, 111, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(112, 112, 19800.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(113, 113, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(114, 114, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(115, 115, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(116, 116, 39000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(117, 117, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(118, 118, 24066.66, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(119, 119, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(120, 120, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(121, 121, 1345.83, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(122, 122, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(123, 123, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(124, 124, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(125, 125, 20000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(126, 126, 20000.00, 0.00, 0.00, 285000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(127, 127, 0.00, 0.00, 0.00, 825000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(128, 128, 1345.83, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(129, 129, 0.00, 0.00, 0.00, 825000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(130, 130, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(131, 131, 0.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(132, 132, 350.00, 0.00, 0.00, 218000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(133, 133, 1345.83, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(134, 134, 1345.00, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(135, 135, 1345.83, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(136, 136, 1345.83, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(137, 137, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(138, 138, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(139, 139, 65500.00, 0.00, 0.00, 109000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(140, 140, 24499.00, 0.00, 0.00, 18300.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(141, 141, 0.00, 0.00, 0.00, 700000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(142, 142, 12000.00, 0.00, 0.00, 12350.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(143, 143, 1354.33, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(144, 144, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(145, 145, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(146, 146, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(147, 147, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(148, 148, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(149, 149, 380.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(150, 150, 360.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(151, 151, 3000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(152, 152, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(153, 153, 4400.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(154, 154, 60.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(155, 155, 35.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(156, 156, 25.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(157, 157, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(158, 158, 6000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(159, 159, 230.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(160, 160, 0.00, 0.00, 0.00, 12000.00, 13000.00, 0.00, '2018-06-05 02:58:18', '2018-06-29 03:47:12'),
-	(161, 161, 0.00, 0.00, 0.00, 1000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(162, 162, 12941.52, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', '2018-06-27 23:05:54'),
-	(163, 163, 32500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', '2018-06-27 23:27:11'),
-	(164, 164, 16000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(165, 165, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(166, 166, 0.00, 0.00, 0.00, 5000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(167, 167, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(168, 168, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(169, 169, 3849.49, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(170, 170, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(171, 171, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(172, 172, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(173, 173, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(174, 174, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(175, 175, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(176, 176, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(177, 177, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(178, 178, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(179, 179, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(180, 180, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(181, 181, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(182, 182, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(183, 183, 19000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(184, 184, 18000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(185, 185, 17000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(186, 186, 28000.00, 0.00, 0.00, 35000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(187, 187, 115000.00, 0.00, 0.00, 130000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(188, 188, 68400.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(189, 189, 190000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(190, 190, 65000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(191, 191, 35000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(192, 192, 18055.55, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(193, 193, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(194, 194, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(195, 195, 5000.00, 0.00, 0.00, 5000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(196, 196, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(197, 197, 15600.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(198, 198, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(199, 199, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(200, 200, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(201, 201, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(202, 202, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(203, 203, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(204, 204, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(205, 205, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(206, 206, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(207, 207, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(208, 208, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(209, 209, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(210, 210, 3500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(211, 211, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(212, 212, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(213, 213, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(214, 214, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(215, 215, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(216, 216, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(217, 217, 1345.83, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(218, 218, 0.00, 0.00, 0.00, 3500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(219, 219, 0.00, 0.00, 0.00, 3500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(220, 220, 0.00, 0.00, 0.00, 3500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(221, 221, 0.00, 0.00, 0.00, 3500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(222, 222, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(223, 223, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(224, 224, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(225, 225, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(226, 226, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(227, 227, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(228, 228, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(229, 229, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(230, 230, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(231, 231, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(232, 232, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(233, 234, 26500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(234, 235, 102000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(235, 236, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(236, 237, 30000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(237, 238, 6000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(238, 239, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(239, 240, 12003.75, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(240, 241, 23000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(241, 242, 10000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(242, 243, 10900.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(243, 244, 16800.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(244, 245, 14440.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(245, 246, 12825.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(246, 247, 22600.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(247, 248, 85000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(248, 249, 8000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(249, 250, 10000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(250, 251, 98300.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(251, 252, 9400.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(252, 253, 7000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(253, 254, 39695.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(254, 255, 15000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(255, 256, 225000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(256, 257, 11800.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(257, 258, 69400.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(258, 259, 4900.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(259, 260, 22600.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(260, 261, 2040.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(261, 262, 2040.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(262, 263, 0.00, 0.00, 0.00, 49000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(263, 264, 10500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(264, 265, 0.00, 0.00, 0.00, 10000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(265, 266, 0.00, 0.00, 0.00, 43000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(266, 267, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(267, 268, 17500.00, 0.00, 0.00, 23500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(268, 269, 525000.00, 0.00, 0.00, 4167.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(269, 270, 2000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(270, 271, 5000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(271, 272, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(272, 273, 200.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(273, 274, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(274, 275, 14000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(275, 276, 8000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(276, 277, 0.00, 0.00, 0.00, 45000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(277, 278, 52500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(278, 279, 14000.00, 0.00, 0.00, 10000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(279, 280, 100000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(280, 281, 16000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(281, 282, 0.00, 0.00, 0.00, 2000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(282, 283, 0.00, 0.00, 0.00, 3200.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(283, 284, 2000.00, 0.00, 0.00, 2000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(284, 285, 1268.00, 0.00, 0.00, 2500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(285, 286, 0.00, 0.00, 0.00, 1400.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(286, 287, 1932.00, 0.00, 0.00, 5000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(287, 288, 0.00, 0.00, 0.00, 13000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(288, 289, 0.00, 0.00, 0.00, 10000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(289, 290, 0.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(290, 291, 0.00, 0.00, 0.00, 4000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(291, 292, 0.00, 0.00, 0.00, 16000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(292, 293, 4791.00, 0.00, 0.00, 10000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(293, 294, 0.00, 0.00, 0.00, 10500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(294, 295, 0.00, 0.00, 0.00, 12500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(295, 296, 0.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(296, 297, 0.00, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(297, 298, 0.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(298, 299, 15165.49, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(299, 300, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(300, 301, 633079.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(301, 302, 20000.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(302, 303, 7708.05, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(303, 304, 5076.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(304, 305, 0.00, 0.00, 0.00, 18000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(305, 306, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(306, 307, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(307, 308, 0.00, 0.00, 0.00, 18600.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(308, 309, 0.00, 0.00, 0.00, 12500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(309, 310, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(310, 311, 15643.33, 0.00, 0.00, 27000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(311, 312, 8508.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(312, 313, 0.00, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(313, 314, 0.00, 0.00, 0.00, 31000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(314, 315, 0.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(315, 316, 0.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(316, 317, 0.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(317, 318, 0.00, 0.00, 0.00, 18000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(318, 319, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(319, 320, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(320, 321, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(321, 322, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(322, 323, 0.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(323, 324, 11376.49, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(324, 325, 22187.62, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(325, 326, 17535.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(326, 327, 6012.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(327, 328, 25000.00, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(328, 329, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(329, 330, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(330, 331, 32000.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(331, 332, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(332, 333, 19000.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(333, 334, 0.00, 0.00, 0.00, 26000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(334, 335, 11167.00, 0.00, 0.00, 26000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(335, 336, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(336, 337, 11264.23, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(337, 338, 21000.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(338, 339, 23000.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(339, 340, 21000.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(340, 341, 9437.50, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(341, 342, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(342, 343, 9856.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(343, 344, 7496.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(344, 345, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(345, 346, 12941.17, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(346, 347, 12096.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(347, 348, 6876.71, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(348, 349, 16965.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(349, 350, 16965.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(350, 351, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(351, 352, 19000.00, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(352, 353, 0.00, 0.00, 0.00, 28000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(353, 354, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(354, 355, 0.00, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(355, 356, 0.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(356, 357, 8770.18, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(357, 358, 0.00, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(358, 359, 21000.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(359, 360, 0.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(360, 361, 8116.82, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(361, 362, 14645.98, 0.00, 0.00, 26000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(362, 363, 0.00, 0.00, 0.00, 26000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(363, 364, 15000.00, 0.00, 0.00, 26000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(364, 365, 0.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(365, 366, 0.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(366, 367, 0.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(367, 368, 0.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(368, 369, 0.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(369, 370, 3500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(370, 371, 5500.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(371, 372, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(372, 373, 0.00, 0.00, 0.00, 13000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(373, 374, 0.00, 0.00, 0.00, 19000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(374, 375, 0.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(375, 376, 0.00, 0.00, 0.00, 12000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(376, 377, 106000.00, 0.00, 0.00, 96000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(377, 378, 0.00, 0.00, 0.00, 87500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(378, 379, 210000.00, 0.00, 0.00, 225000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(379, 380, 0.00, 0.00, 0.00, 220000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(380, 381, 12000.00, 0.00, 0.00, 12000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(381, 382, 0.00, 0.00, 0.00, 12500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(382, 383, 0.00, 0.00, 0.00, 14000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(383, 384, 0.00, 0.00, 0.00, 12000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(384, 385, 0.00, 0.00, 0.00, 12000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(385, 386, 0.00, 0.00, 0.00, 16000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(386, 387, 97000.00, 0.00, 0.00, 115000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(387, 388, 0.00, 0.00, 0.00, 36000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(388, 389, 28675.00, 0.00, 0.00, 35000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(389, 390, 0.00, 0.00, 0.00, 36000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(390, 391, 110760.00, 0.00, 0.00, 130000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(391, 392, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(392, 393, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(393, 394, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(394, 395, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(395, 396, 0.00, 0.00, 0.00, 35000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(396, 397, 0.00, 0.00, 0.00, 35000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(397, 398, 0.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(398, 399, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(399, 400, 50000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(400, 401, 0.00, 0.00, 0.00, 200000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(401, 402, 0.00, 0.00, 0.00, 30500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(402, 403, 0.00, 0.00, 0.00, 3000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(403, 404, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(404, 405, 1550000.00, 0.00, 0.00, 1950000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(405, 406, 0.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(406, 407, 0.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(407, 408, 230.00, 0.00, 0.00, 35000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(408, 409, 0.00, 0.00, 0.00, 35000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(409, 410, 0.00, 0.00, 0.00, 40000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(410, 411, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(411, 412, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(412, 413, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(413, 414, 0.00, 0.00, 0.00, 500000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(414, 415, 0.00, 0.00, 0.00, 320000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(415, 416, 0.00, 0.00, 0.00, 420000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(416, 417, 290000.00, 0.00, 0.00, 370000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(417, 418, 0.00, 0.00, 0.00, 470000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(418, 419, 335000.00, 0.00, 0.00, 420000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(419, 420, 435000.00, 0.00, 0.00, 520000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(420, 422, 0.00, 0.00, 0.00, 18000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(421, 423, 1400000.00, 0.00, 0.00, 1700000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(422, 424, 60000.00, 0.00, 0.00, 200000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(423, 425, 0.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(424, 426, 0.00, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(425, 427, 0.00, 0.00, 0.00, 110000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(426, 428, 0.00, 0.00, 0.00, 400000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(427, 429, 0.00, 0.00, 0.00, 90000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(428, 430, 59280.00, 0.00, 0.00, 55000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(429, 431, 0.00, 0.00, 0.00, 110000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(430, 432, 17500.00, 0.00, 0.00, 19500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(431, 433, 0.00, 0.00, 0.00, 22000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(432, 434, 0.00, 0.00, 0.00, 2300000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(433, 435, 0.00, 0.00, 0.00, 10000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(434, 436, 0.00, 0.00, 0.00, 218000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(435, 437, 0.00, 0.00, 0.00, 115000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(436, 438, 1800.00, 0.00, 0.00, 2500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(437, 439, 0.00, 0.00, 0.00, 3000000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(438, 440, 52910.00, 0.00, 0.00, 63000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(439, 441, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(440, 442, 250000.00, 0.00, 0.00, 270000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(441, 443, 195000.00, 0.00, 0.00, 225000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(442, 444, 0.00, 0.00, 0.00, 16000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(443, 445, 0.00, 0.00, 0.00, 60000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(444, 446, 0.00, 0.00, 0.00, 115000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(445, 447, 15500.00, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(446, 448, 0.00, 0.00, 0.00, 16500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(447, 449, 10000.00, 0.00, 0.00, 13000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(448, 450, 201000.00, 0.00, 0.00, 230000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(449, 451, 0.00, 0.00, 0.00, 122000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(450, 452, 0.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(451, 453, 41000.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(452, 454, 41000.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(453, 455, 41000.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(454, 456, 50000.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(455, 457, 41000.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(456, 458, 0.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(457, 459, 41000.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(458, 460, 41000.00, 0.00, 0.00, 51000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(459, 461, 0.00, 0.00, 0.00, 219000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(460, 462, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(461, 463, 0.00, 0.00, 0.00, 23600.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(462, 464, 0.00, 0.00, 0.00, 23600.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(463, 465, 0.00, 0.00, 0.00, 6000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(464, 466, 0.00, 0.00, 0.00, 11700.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(465, 467, 0.00, 0.00, 0.00, 7900.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(466, 468, 0.00, 0.00, 0.00, 1900.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(467, 469, 0.00, 0.00, 0.00, 46200.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(468, 470, 0.00, 0.00, 0.00, 22700.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(469, 471, 0.00, 0.00, 0.00, 77900.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(470, 472, 0.00, 0.00, 0.00, 20700.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(471, 473, 0.00, 0.00, 0.00, 28400.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(472, 474, 0.00, 0.00, 0.00, 35400.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(473, 475, 0.00, 0.00, 0.00, 63100.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(474, 476, 0.00, 0.00, 0.00, 42600.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(475, 477, 0.00, 0.00, 0.00, 34300.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(476, 478, 0.00, 0.00, 0.00, 12400.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(477, 479, 0.00, 0.00, 0.00, 16000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(478, 480, 0.00, 0.00, 0.00, 110000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(479, 481, 0.00, 0.00, 0.00, 75000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(480, 482, 440.00, 0.00, 0.00, 60000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(481, 483, 0.00, 0.00, 0.00, 55000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(482, 484, 0.00, 0.00, 0.00, 2400000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(483, 485, 0.00, 0.00, 0.00, 2200000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(484, 486, 11000.00, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(485, 487, 90000.00, 0.00, 0.00, 110000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(486, 488, 16095.00, 0.00, 0.00, 23000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(487, 489, 21367.50, 0.00, 0.00, 28000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(488, 490, 0.00, 0.00, 0.00, 300000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(489, 491, 0.00, 0.00, 0.00, 40000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(490, 492, 0.00, 0.00, 0.00, 45000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(491, 493, 0.00, 0.00, 0.00, 70000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(492, 494, 0.00, 0.00, 0.00, 110000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(493, 495, 0.00, 0.00, 0.00, 113000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(494, 496, 65212.50, 0.00, 0.00, 75000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(495, 497, 0.00, 0.00, 0.00, 375000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(496, 498, 0.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(497, 499, 0.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(498, 500, 0.00, 0.00, 0.00, 102000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(499, 501, 0.00, 0.00, 0.00, 102000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(500, 502, 18000.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(501, 503, 0.00, 0.00, 0.00, 45000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(502, 504, 0.00, 0.00, 0.00, 45000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(503, 505, 216520.00, 0.00, 0.00, 257000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(504, 506, 0.00, 0.00, 0.00, 425000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(505, 507, 0.00, 0.00, 0.00, 450000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(506, 508, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(507, 509, 0.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(508, 510, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(509, 511, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(510, 512, 0.00, 0.00, 0.00, 13500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(511, 513, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(512, 514, 28000.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(513, 515, 25000.00, 0.00, 0.00, 29000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(514, 516, 17000.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(515, 517, 23000.00, 0.00, 0.00, 24000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(516, 518, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(517, 519, 0.00, 0.00, 0.00, 22500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(518, 520, 27000.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(519, 521, 0.00, 0.00, 0.00, 18000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(520, 522, 16000.00, 0.00, 0.00, 18000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(521, 523, 0.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(522, 524, 0.00, 0.00, 0.00, 20000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(523, 525, 20000.00, 0.00, 0.00, 14000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(524, 526, 0.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(525, 527, 0.00, 0.00, 0.00, 225000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(526, 528, 10000.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(527, 529, 57500.00, 0.00, 0.00, 68000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(528, 530, 45000.00, 0.00, 0.00, 55000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(529, 531, 0.00, 0.00, 0.00, 108000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(530, 532, 0.00, 0.00, 0.00, 27500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(531, 533, 0.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(532, 534, 0.00, 0.00, 0.00, 30500.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(533, 535, 0.00, 0.00, 0.00, 30000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(534, 536, 0.00, 0.00, 0.00, 800000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(535, 537, 15000.00, 0.00, 0.00, 18000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(536, 538, 0.00, 0.00, 0.00, 535000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(537, 539, 0.00, 0.00, 0.00, 48000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(538, 540, 0.00, 0.00, 0.00, 36000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(539, 541, 0.00, 0.00, 0.00, 39000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(540, 542, 0.00, 0.00, 0.00, 47000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(541, 543, 0.00, 0.00, 0.00, 34000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(542, 544, 0.00, 0.00, 0.00, 15000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(543, 545, 6500.00, 0.00, 0.00, 7000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(544, 546, 0.00, 0.00, 0.00, 6000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(545, 547, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(546, 548, 0.00, 0.00, 0.00, 37000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(547, 549, 0.00, 0.00, 0.00, 90000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(548, 550, 0.00, 0.00, 0.00, 25000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(549, 551, 0.00, 0.00, 0.00, 50000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(550, 552, 0.00, 0.00, 0.00, 10000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(551, 553, 18000.00, 0.00, 0.00, 17000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(552, 554, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(553, 555, 0.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
-	(554, 556, 18000.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
+	(1, 1, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(2, 2, 0.00, 0.00, 0.00, 19000.00, 19000.00, 19000.00, '2018-06-05 02:58:18', NULL),
+	(3, 3, 5888.00, 0.00, 0.00, 8000.00, 6000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(4, 4, 11000.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(5, 5, 50.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(6, 6, 94500.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(7, 7, 210.52, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(8, 8, 6340.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(9, 9, 68000.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(10, 10, 1090.90, 0.00, 0.00, 11000.00, 11000.00, 11000.00, '2018-06-05 02:58:18', NULL),
+	(11, 11, 0.00, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(12, 12, 0.00, 0.00, 0.00, 16000.00, 16000.00, 16000.00, '2018-06-05 02:58:18', NULL),
+	(13, 13, 2000.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(14, 14, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(15, 15, 0.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(16, 16, 0.00, 0.00, 0.00, 7500.00, 7500.00, 7500.00, '2018-06-05 02:58:18', NULL),
+	(17, 17, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(18, 18, 34000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(19, 19, 57000.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(20, 20, 1000.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(21, 21, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(22, 22, 23000.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(23, 23, 6600.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(24, 24, 13666.66, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(25, 25, 9466.66, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(26, 26, 57000.00, 0.00, 0.00, 6500.00, 6500.00, 6500.00, '2018-06-05 02:58:18', NULL),
+	(27, 27, 4750.00, 0.00, 0.00, 7500.00, 7500.00, 7500.00, '2018-06-05 02:58:18', NULL),
+	(28, 28, 84400.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(29, 29, 6174.93, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(30, 30, 33583.33, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(31, 31, 122000.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(32, 32, 200000.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(33, 33, 5500.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(34, 34, 1345.83, 0.00, 0.00, 19000.00, 19000.00, 19000.00, '2018-06-05 02:58:18', NULL),
+	(35, 35, 103000.00, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(36, 36, 25000.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(37, 37, 16500.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', '2018-06-28 09:54:18'),
+	(38, 38, 10000.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(39, 39, 10833.33, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(40, 40, 30000.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(41, 41, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(42, 42, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(43, 43, 43000.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(44, 44, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(45, 45, 4000.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(46, 46, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(47, 47, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(48, 48, 32615.38, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(49, 49, 10520.00, 0.00, 0.00, 5500.00, 5500.00, 5500.00, '2018-06-05 02:58:18', NULL),
+	(50, 50, 0.00, 0.00, 0.00, 4500.00, 4500.00, 4500.00, '2018-06-05 02:58:18', NULL),
+	(51, 51, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(52, 52, 0.00, 0.00, 0.00, 4500.00, 4500.00, 4500.00, '2018-06-05 02:58:18', NULL),
+	(53, 53, 15500.00, 0.00, 0.00, 11000.00, 11000.00, 11000.00, '2018-06-05 02:58:18', NULL),
+	(54, 54, 11555.55, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(55, 55, 9400.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(56, 56, 80.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(57, 57, 180.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(58, 58, 120.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(59, 59, 150.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(60, 60, 170.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(61, 61, 20000.00, 0.00, 0.00, 16000.00, 16000.00, 16000.00, '2018-06-05 02:58:18', NULL),
+	(62, 62, 16000.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(63, 63, 120.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(64, 64, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(65, 65, 58000.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(66, 66, 24000.00, 0.00, 0.00, 11000.00, 11000.00, 11000.00, '2018-06-05 02:58:18', NULL),
+	(67, 67, 0.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(68, 68, 6520.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(69, 69, 35000.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(70, 70, 35000.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(71, 71, 36000.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(72, 72, 144000.00, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(73, 73, 120.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(74, 74, 110.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(75, 75, 100.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(76, 76, 18000.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(77, 77, 180.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(78, 78, 21458.33, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(79, 79, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(80, 80, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(81, 81, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(82, 82, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(83, 83, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(84, 84, 0.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(85, 85, 45000.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(86, 86, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(87, 87, 750.00, 0.00, 0.00, 2300.00, 2300.00, 2300.00, '2018-06-05 02:58:18', NULL),
+	(88, 88, 0.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(89, 89, 0.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(90, 90, 0.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(91, 91, 5000.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(92, 92, 11000.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(93, 93, 0.00, 0.00, 0.00, 27000.00, 27000.00, 27000.00, '2018-06-05 02:58:18', NULL),
+	(94, 94, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(95, 95, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(96, 96, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(97, 97, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(98, 98, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(99, 99, 0.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(100, 100, 36750.00, 0.00, 0.00, 2700.00, 2700.00, 2700.00, '2018-06-05 02:58:18', NULL),
+	(101, 101, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(102, 102, 0.00, 0.00, 0.00, 11000.00, 11000.00, 11000.00, '2018-06-05 02:58:18', NULL),
+	(103, 103, 0.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(104, 104, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(105, 105, 45000.00, 0.00, 0.00, 11000.00, 11000.00, 11000.00, '2018-06-05 02:58:18', NULL),
+	(106, 106, 42500.00, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(107, 107, 0.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(108, 108, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(109, 109, 35000.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(110, 110, 0.00, 0.00, 0.00, 11000.00, 11000.00, 11000.00, '2018-06-05 02:58:18', NULL),
+	(111, 111, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(112, 112, 19800.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(113, 113, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(114, 114, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(115, 115, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(116, 116, 39000.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(117, 117, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(118, 118, 24066.66, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(119, 119, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(120, 120, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(121, 121, 1345.83, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(122, 122, 0.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(123, 123, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(124, 124, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(125, 125, 20000.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(126, 126, 20000.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(127, 127, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(128, 128, 1345.83, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(129, 129, 0.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(130, 130, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(131, 131, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(132, 132, 350.00, 0.00, 0.00, 64000.00, 64000.00, 64000.00, '2018-06-05 02:58:18', NULL),
+	(133, 133, 1345.83, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(134, 134, 1345.00, 0.00, 0.00, 56000.00, 56000.00, 56000.00, '2018-06-05 02:58:18', NULL),
+	(135, 135, 1345.83, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(136, 136, 1345.83, 0.00, 0.00, 56000.00, 56000.00, 56000.00, '2018-06-05 02:58:18', NULL),
+	(137, 137, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(138, 138, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(139, 139, 65500.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(140, 140, 24499.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(141, 141, 0.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(142, 142, 12000.00, 0.00, 0.00, 16000.00, 16000.00, 16000.00, '2018-06-05 02:58:18', NULL),
+	(143, 143, 1354.33, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(144, 144, 0.00, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(145, 145, 0.00, 0.00, 0.00, 16000.00, 16000.00, 16000.00, '2018-06-05 02:58:18', NULL),
+	(146, 146, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(147, 147, 0.00, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(148, 148, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(149, 149, 380.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(150, 150, 360.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(151, 151, 3000.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(152, 152, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(153, 153, 4400.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(154, 154, 60.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(155, 155, 35.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(156, 156, 25.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(157, 157, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(158, 158, 6000.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(159, 159, 230.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(160, 160, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', '2018-06-29 03:47:12'),
+	(161, 161, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(162, 162, 12941.52, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', '2018-06-27 23:05:54'),
+	(163, 163, 32500.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', '2018-06-27 23:27:11'),
+	(164, 164, 16000.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(165, 165, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(166, 166, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(167, 167, 0.00, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(168, 168, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(169, 169, 3849.49, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(170, 170, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(171, 171, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(172, 172, 0.00, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(173, 173, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(174, 174, 0.00, 0.00, 0.00, 50000.00, 50000.00, 50000.00, '2018-06-05 02:58:18', NULL),
+	(175, 175, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(176, 176, 0.00, 0.00, 0.00, 3200.00, 3200.00, 3200.00, '2018-06-05 02:58:18', NULL),
+	(177, 177, 0.00, 0.00, 0.00, 17000.00, 17000.00, 17000.00, '2018-06-05 02:58:18', NULL),
+	(178, 178, 0.00, 0.00, 0.00, 28000.00, 28000.00, 28000.00, '2018-06-05 02:58:18', NULL),
+	(179, 179, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(180, 180, 0.00, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(181, 181, 0.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(182, 182, 0.00, 0.00, 0.00, 21000.00, 21000.00, 21000.00, '2018-06-05 02:58:18', NULL),
+	(183, 183, 19000.00, 0.00, 0.00, 4500.00, 4500.00, 4500.00, '2018-06-05 02:58:18', NULL),
+	(184, 184, 18000.00, 0.00, 0.00, 27000.00, 27000.00, 27000.00, '2018-06-05 02:58:18', NULL),
+	(185, 185, 17000.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(186, 186, 28000.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(187, 187, 115000.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(188, 188, 68400.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(189, 189, 190000.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(190, 190, 65000.00, 0.00, 0.00, 1500.00, 1500.00, 1500.00, '2018-06-05 02:58:18', NULL),
+	(191, 191, 35000.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(192, 192, 18055.55, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(193, 193, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(194, 194, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(195, 195, 5000.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(196, 196, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(197, 197, 15600.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(198, 198, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(199, 199, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(200, 200, 0.00, 0.00, 0.00, 6.00, 6.00, 6.00, '2018-06-05 02:58:18', NULL),
+	(201, 201, 0.00, 0.00, 0.00, 18.00, 18.00, 18.00, '2018-06-05 02:58:18', NULL),
+	(202, 202, 0.00, 0.00, 0.00, 20.00, 20.00, 20.00, '2018-06-05 02:58:18', NULL),
+	(203, 203, 0.00, 0.00, 0.00, 7.00, 7.00, 7.00, '2018-06-05 02:58:18', NULL),
+	(204, 204, 0.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(205, 205, 0.00, 0.00, 0.00, 37000.00, 37000.00, 37000.00, '2018-06-05 02:58:18', NULL),
+	(206, 206, 0.00, 0.00, 0.00, 1600.00, 1600.00, 1600.00, '2018-06-05 02:58:18', NULL),
+	(207, 207, 0.00, 0.00, 0.00, 1300.00, 1300.00, 1300.00, '2018-06-05 02:58:18', NULL),
+	(208, 208, 0.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(209, 209, 0.00, 0.00, 0.00, 41000.00, 41000.00, 41000.00, '2018-06-05 02:58:18', NULL),
+	(210, 210, 3500.00, 0.00, 0.00, 1800.00, 1800.00, 1800.00, '2018-06-05 02:58:18', NULL),
+	(211, 211, 0.00, 0.00, 0.00, 43000.00, 43000.00, 43000.00, '2018-06-05 02:58:18', NULL),
+	(212, 212, 0.00, 0.00, 0.00, 1500.00, 1500.00, 1500.00, '2018-06-05 02:58:18', NULL),
+	(213, 213, 0.00, 0.00, 0.00, 45000.00, 45000.00, 45000.00, '2018-06-05 02:58:18', NULL),
+	(214, 214, 0.00, 0.00, 0.00, 170000.00, 170000.00, 170000.00, '2018-06-05 02:58:18', NULL),
+	(215, 215, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(216, 216, 0.00, 0.00, 0.00, 33000.00, 33000.00, 33000.00, '2018-06-05 02:58:18', NULL),
+	(217, 217, 1345.83, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(218, 218, 0.00, 0.00, 0.00, 1800.00, 1800.00, 1800.00, '2018-06-05 02:58:18', NULL),
+	(219, 219, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(220, 220, 0.00, 0.00, 0.00, 170000.00, 170000.00, 170000.00, '2018-06-05 02:58:18', NULL),
+	(221, 221, 0.00, 0.00, 0.00, 175000.00, 175000.00, 175000.00, '2018-06-05 02:58:18', NULL),
+	(222, 222, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(223, 223, 0.00, 0.00, 0.00, 35.00, 35.00, 35.00, '2018-06-05 02:58:18', NULL),
+	(224, 224, 0.00, 0.00, 0.00, 27.00, 27.00, 27.00, '2018-06-05 02:58:18', NULL),
+	(225, 225, 0.00, 0.00, 0.00, 37.00, 37.00, 37.00, '2018-06-05 02:58:18', NULL),
+	(226, 226, 0.00, 0.00, 0.00, 280000.00, 280000.00, 280000.00, '2018-06-05 02:58:18', NULL),
+	(227, 227, 0.00, 0.00, 0.00, 300000.00, 300000.00, 300000.00, '2018-06-05 02:58:18', NULL),
+	(228, 228, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(229, 229, 0.00, 0.00, 0.00, 160000.00, 160000.00, 160000.00, '2018-06-05 02:58:18', NULL),
+	(230, 230, 0.00, 0.00, 0.00, 55000.00, 55000.00, 55000.00, '2018-06-05 02:58:18', NULL),
+	(231, 231, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(232, 232, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(233, 234, 26500.00, 0.00, 0.00, 50000.00, 50000.00, 50000.00, '2018-06-05 02:58:18', NULL),
+	(234, 235, 102000.00, 0.00, 0.00, 23000.00, 23000.00, 23000.00, '2018-06-05 02:58:18', NULL),
+	(235, 236, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(236, 237, 30000.00, 0.00, 0.00, 55000.00, 55000.00, 55000.00, '2018-06-05 02:58:18', NULL),
+	(237, 238, 6000.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(238, 239, 0.00, 0.00, 0.00, 57000.00, 57000.00, 57000.00, '2018-06-05 02:58:18', NULL),
+	(239, 240, 12003.75, 0.00, 0.00, 8500.00, 8500.00, 8500.00, '2018-06-05 02:58:18', NULL),
+	(240, 241, 23000.00, 0.00, 0.00, 57000.00, 57000.00, 57000.00, '2018-06-05 02:58:18', NULL),
+	(241, 242, 10000.00, 0.00, 0.00, 8500.00, 8500.00, 8500.00, '2018-06-05 02:58:18', NULL),
+	(242, 243, 10900.00, 0.00, 0.00, 58000.00, 58000.00, 58000.00, '2018-06-05 02:58:18', NULL),
+	(243, 244, 16800.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(244, 245, 14440.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(245, 246, 12825.00, 0.00, 0.00, 29000.00, 29000.00, 29000.00, '2018-06-05 02:58:18', NULL),
+	(246, 247, 22600.00, 0.00, 0.00, 140000.00, 140000.00, 140000.00, '2018-06-05 02:58:18', NULL),
+	(247, 248, 85000.00, 0.00, 0.00, 145000.00, 145000.00, 145000.00, '2018-06-05 02:58:18', NULL),
+	(248, 249, 8000.00, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(249, 250, 10000.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(250, 251, 98300.00, 0.00, 0.00, 13000.00, 13000.00, 13000.00, '2018-06-05 02:58:18', NULL),
+	(251, 252, 9400.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(252, 253, 7000.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(253, 254, 39695.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(254, 255, 15000.00, 0.00, 0.00, 38000.00, 38000.00, 38000.00, '2018-06-05 02:58:18', NULL),
+	(255, 256, 225000.00, 0.00, 0.00, 45000.00, 45000.00, 45000.00, '2018-06-05 02:58:18', NULL),
+	(256, 257, 11800.00, 0.00, 0.00, 22000.00, 22000.00, 22000.00, '2018-06-05 02:58:18', NULL),
+	(257, 258, 69400.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(258, 259, 4900.00, 0.00, 0.00, 24000.00, 24000.00, 24000.00, '2018-06-05 02:58:18', NULL),
+	(259, 260, 22600.00, 0.00, 0.00, 2200.00, 2200.00, 2200.00, '2018-06-05 02:58:18', NULL),
+	(260, 261, 2040.00, 0.00, 0.00, 42000.00, 42000.00, 42000.00, '2018-06-05 02:58:18', NULL),
+	(261, 262, 2040.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(262, 263, 0.00, 0.00, 0.00, 46000.00, 46000.00, 46000.00, '2018-06-05 02:58:18', NULL),
+	(263, 264, 10500.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(264, 265, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(265, 266, 0.00, 0.00, 0.00, 45000.00, 45000.00, 45000.00, '2018-06-05 02:58:18', NULL),
+	(266, 267, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(267, 268, 17500.00, 0.00, 0.00, 5500.00, 5500.00, 5500.00, '2018-06-05 02:58:18', NULL),
+	(268, 269, 525000.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(269, 270, 2000.00, 0.00, 0.00, 2200.00, 2200.00, 2200.00, '2018-06-05 02:58:18', NULL),
+	(270, 271, 5000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(271, 272, 0.00, 0.00, 0.00, 34000.00, 34000.00, 34000.00, '2018-06-05 02:58:18', NULL),
+	(272, 273, 200.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(273, 274, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(274, 275, 14000.00, 0.00, 0.00, 32000.00, 32000.00, 32000.00, '2018-06-05 02:58:18', NULL),
+	(275, 276, 8000.00, 0.00, 0.00, 17000.00, 17000.00, 17000.00, '2018-06-05 02:58:18', NULL),
+	(276, 277, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(277, 278, 52500.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(278, 279, 14000.00, 0.00, 0.00, 95000.00, 95000.00, 95000.00, '2018-06-05 02:58:18', NULL),
+	(279, 280, 100000.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(280, 281, 16000.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(281, 282, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(282, 283, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(283, 284, 2000.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(284, 285, 1268.00, 0.00, 0.00, 100000.00, 100000.00, 100000.00, '2018-06-05 02:58:18', NULL),
+	(285, 286, 0.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(286, 287, 1932.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(287, 288, 0.00, 0.00, 0.00, 16000.00, 16000.00, 16000.00, '2018-06-05 02:58:18', NULL),
+	(288, 289, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(289, 290, 0.00, 0.00, 0.00, 28000.00, 28000.00, 28000.00, '2018-06-05 02:58:18', NULL),
+	(290, 291, 0.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(291, 292, 0.00, 0.00, 0.00, 28000.00, 28000.00, 28000.00, '2018-06-05 02:58:18', NULL),
+	(292, 293, 4791.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(293, 294, 0.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(294, 295, 0.00, 0.00, 0.00, 40000.00, 40000.00, 40000.00, '2018-06-05 02:58:18', NULL),
+	(295, 296, 0.00, 0.00, 0.00, 150000.00, 150000.00, 150000.00, '2018-06-05 02:58:18', NULL),
+	(296, 297, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(297, 298, 0.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(298, 299, 15165.49, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(299, 300, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(300, 301, 633079.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(301, 302, 20000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(302, 303, 7708.05, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(303, 304, 5076.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(304, 305, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(305, 306, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(306, 307, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(307, 308, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(308, 309, 0.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(309, 310, 0.00, 0.00, 0.00, 30000.00, 30000.00, 30000.00, '2018-06-05 02:58:18', NULL),
+	(310, 311, 15643.33, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(311, 312, 8508.00, 0.00, 0.00, 1500.00, 1500.00, 1500.00, '2018-06-05 02:58:18', NULL),
+	(312, 313, 0.00, 0.00, 0.00, 37000.00, 37000.00, 37000.00, '2018-06-05 02:58:18', NULL),
+	(313, 314, 0.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(314, 315, 0.00, 0.00, 0.00, 1600.00, 1600.00, 1600.00, '2018-06-05 02:58:18', NULL),
+	(315, 316, 0.00, 0.00, 0.00, 1300.00, 1300.00, 1300.00, '2018-06-05 02:58:18', NULL),
+	(316, 317, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(317, 318, 0.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(318, 319, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(319, 320, 0.00, 0.00, 0.00, 42000.00, 42000.00, 42000.00, '2018-06-05 02:58:18', NULL),
+	(320, 321, 0.00, 0.00, 0.00, 40000.00, 40000.00, 40000.00, '2018-06-05 02:58:18', NULL),
+	(321, 322, 0.00, 0.00, 0.00, 1800.00, 1800.00, 1800.00, '2018-06-05 02:58:18', NULL),
+	(322, 323, 0.00, 0.00, 0.00, 1500.00, 1500.00, 1500.00, '2018-06-05 02:58:18', NULL),
+	(323, 324, 11376.49, 0.00, 0.00, 165000.00, 165000.00, 165000.00, '2018-06-05 02:58:18', NULL),
+	(324, 325, 22187.62, 0.00, 0.00, 170000.00, 170000.00, 170000.00, '2018-06-05 02:58:18', NULL),
+	(325, 326, 17535.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(326, 327, 6012.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(327, 328, 25000.00, 0.00, 0.00, 60000.00, 60000.00, 60000.00, '2018-06-05 02:58:18', NULL),
+	(328, 329, 0.00, 0.00, 0.00, 115000.00, 115000.00, 115000.00, '2018-06-05 02:58:18', NULL),
+	(329, 330, 0.00, 0.00, 0.00, 120000.00, 120000.00, 120000.00, '2018-06-05 02:58:18', NULL),
+	(330, 331, 32000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(331, 332, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(332, 333, 19000.00, 0.00, 0.00, 55000.00, 55000.00, 55000.00, '2018-06-05 02:58:18', NULL),
+	(333, 334, 0.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(334, 335, 11167.00, 0.00, 0.00, 70000.00, 70000.00, 70000.00, '2018-06-05 02:58:18', NULL),
+	(335, 336, 0.00, 0.00, 0.00, 40000.00, 40000.00, 40000.00, '2018-06-05 02:58:18', NULL),
+	(336, 337, 11264.23, 0.00, 0.00, 165000.00, 165000.00, 165000.00, '2018-06-05 02:58:18', NULL),
+	(337, 338, 21000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(338, 339, 23000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(339, 340, 21000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(340, 341, 9437.50, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(341, 342, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(342, 343, 9856.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(343, 344, 7496.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(344, 345, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(345, 346, 12941.17, 0.00, 0.00, 7500.00, 7500.00, 7500.00, '2018-06-05 02:58:18', NULL),
+	(346, 347, 12096.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(347, 348, 6876.71, 0.00, 0.00, 8500.00, 8500.00, 8500.00, '2018-06-05 02:58:18', NULL),
+	(348, 349, 16965.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(349, 350, 16965.00, 0.00, 0.00, 8500.00, 8500.00, 8500.00, '2018-06-05 02:58:18', NULL),
+	(350, 351, 0.00, 0.00, 0.00, 8500.00, 8500.00, 8500.00, '2018-06-05 02:58:18', NULL),
+	(351, 352, 19000.00, 0.00, 0.00, 17000.00, 17000.00, 17000.00, '2018-06-05 02:58:18', NULL),
+	(352, 353, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(353, 354, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(354, 355, 0.00, 0.00, 0.00, 22000.00, 22000.00, 22000.00, '2018-06-05 02:58:18', NULL),
+	(355, 356, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(356, 357, 8770.18, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(357, 358, 0.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(358, 359, 21000.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(359, 360, 0.00, 0.00, 0.00, 6500.00, 6500.00, 6500.00, '2018-06-05 02:58:18', NULL),
+	(360, 361, 8116.82, 0.00, 0.00, 4500.00, 4500.00, 4500.00, '2018-06-05 02:58:18', NULL),
+	(361, 362, 14645.98, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(362, 363, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(363, 364, 15000.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(364, 365, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(365, 366, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(366, 367, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(367, 368, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(368, 369, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(369, 370, 3500.00, 0.00, 0.00, 28000.00, 28000.00, 28000.00, '2018-06-05 02:58:18', NULL),
+	(370, 371, 5500.00, 0.00, 0.00, 56000.00, 56000.00, 56000.00, '2018-06-05 02:58:18', NULL),
+	(371, 372, 0.00, 0.00, 0.00, 58000.00, 58000.00, 58000.00, '2018-06-05 02:58:18', NULL),
+	(372, 373, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(373, 374, 0.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(374, 375, 0.00, 0.00, 0.00, 36000.00, 36000.00, 36000.00, '2018-06-05 02:58:18', NULL),
+	(375, 376, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(376, 377, 106000.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(377, 378, 0.00, 0.00, 0.00, 38000.00, 38000.00, 38000.00, '2018-06-05 02:58:18', NULL),
+	(378, 379, 210000.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(379, 380, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(380, 381, 12000.00, 0.00, 0.00, 6000.00, 6000.00, 6000.00, '2018-06-05 02:58:18', NULL),
+	(381, 382, 0.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(382, 383, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(383, 384, 0.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(384, 385, 0.00, 0.00, 0.00, 25000.00, 25000.00, 25000.00, '2018-06-05 02:58:18', NULL),
+	(385, 386, 0.00, 0.00, 0.00, 45000.00, 45000.00, 45000.00, '2018-06-05 02:58:18', NULL),
+	(386, 387, 97000.00, 0.00, 0.00, 70000.00, 70000.00, 70000.00, '2018-06-05 02:58:18', NULL),
+	(387, 388, 0.00, 0.00, 0.00, 100000.00, 100000.00, 100000.00, '2018-06-05 02:58:18', NULL),
+	(388, 389, 28675.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(389, 390, 0.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(390, 391, 110760.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(391, 392, 0.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(392, 393, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(393, 394, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(394, 395, 0.00, 0.00, 0.00, 7000.00, 7000.00, 7000.00, '2018-06-05 02:58:18', NULL),
+	(395, 396, 0.00, 0.00, 0.00, 47000.00, 47000.00, 47000.00, '2018-06-05 02:58:18', NULL),
+	(396, 397, 0.00, 0.00, 0.00, 85000.00, 85000.00, 85000.00, '2018-06-05 02:58:18', NULL),
+	(397, 398, 0.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(398, 399, 0.00, 0.00, 0.00, 55000.00, 55000.00, 55000.00, '2018-06-05 02:58:18', NULL),
+	(399, 400, 50000.00, 0.00, 0.00, 35000.00, 35000.00, 35000.00, '2018-06-05 02:58:18', NULL),
+	(400, 401, 0.00, 0.00, 0.00, 60000.00, 60000.00, 60000.00, '2018-06-05 02:58:18', NULL),
+	(401, 402, 0.00, 0.00, 0.00, 8000.00, 8000.00, 8000.00, '2018-06-05 02:58:18', NULL),
+	(402, 403, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(403, 404, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(404, 405, 1550000.00, 0.00, 0.00, 14000.00, 14000.00, 14000.00, '2018-06-05 02:58:18', NULL),
+	(405, 406, 0.00, 0.00, 0.00, 60000.00, 60000.00, 60000.00, '2018-06-05 02:58:18', NULL),
+	(406, 407, 0.00, 0.00, 0.00, 30000.00, 30000.00, 30000.00, '2018-06-05 02:58:18', NULL),
+	(407, 408, 230.00, 0.00, 0.00, 30000.00, 30000.00, 30000.00, '2018-06-05 02:58:18', NULL),
+	(408, 409, 0.00, 0.00, 0.00, 45000.00, 45000.00, 45000.00, '2018-06-05 02:58:18', NULL),
+	(409, 410, 0.00, 0.00, 0.00, 45000.00, 45000.00, 45000.00, '2018-06-05 02:58:18', NULL),
+	(410, 411, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(411, 412, 0.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(412, 413, 0.00, 0.00, 0.00, 3500.00, 3500.00, 3500.00, '2018-06-05 02:58:18', NULL),
+	(413, 414, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(414, 415, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(415, 416, 0.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(416, 417, 290000.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(417, 418, 0.00, 0.00, 0.00, 12000.00, 12000.00, 12000.00, '2018-06-05 02:58:18', NULL),
+	(418, 419, 335000.00, 0.00, 0.00, 55000.00, 55000.00, 55000.00, '2018-06-05 02:58:18', NULL),
+	(419, 420, 435000.00, 0.00, 0.00, 3000.00, 3000.00, 3000.00, '2018-06-05 02:58:18', NULL),
+	(420, 422, 0.00, 0.00, 0.00, 4000.00, 4000.00, 4000.00, '2018-06-05 02:58:18', NULL),
+	(421, 423, 1400000.00, 0.00, 0.00, 5000.00, 5000.00, 5000.00, '2018-06-05 02:58:18', NULL),
+	(422, 424, 60000.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(423, 425, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(424, 426, 0.00, 0.00, 0.00, 18000.00, 18000.00, 18000.00, '2018-06-05 02:58:18', NULL),
+	(425, 427, 0.00, 0.00, 0.00, 28000.00, 28000.00, 28000.00, '2018-06-05 02:58:18', NULL),
+	(426, 428, 0.00, 0.00, 0.00, 2000.00, 2000.00, 2000.00, '2018-06-05 02:58:18', NULL),
+	(427, 429, 0.00, 0.00, 0.00, 2500.00, 2500.00, 2500.00, '2018-06-05 02:58:18', NULL),
+	(428, 430, 59280.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(429, 431, 0.00, 0.00, 0.00, 20000.00, 20000.00, 20000.00, '2018-06-05 02:58:18', NULL),
+	(430, 432, 17500.00, 0.00, 0.00, 100000.00, 100000.00, 100000.00, '2018-06-05 02:58:18', NULL),
+	(431, 433, 0.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(432, 434, 0.00, 0.00, 0.00, 15000.00, 15000.00, 15000.00, '2018-06-05 02:58:18', NULL),
+	(433, 435, 0.00, 0.00, 0.00, 9000.00, 9000.00, 9000.00, '2018-06-05 02:58:18', NULL),
+	(434, 436, 0.00, 0.00, 0.00, 10000.00, 10000.00, 10000.00, '2018-06-05 02:58:18', NULL),
+	(435, 437, 0.00, 0.00, 0.00, 13.00, 13.00, 13.00, '2018-06-05 02:58:18', NULL),
+	(436, 438, 1800.00, 0.00, 0.00, 24.00, 24.00, 24.00, '2018-06-05 02:58:18', NULL),
+	(437, 439, 0.00, 0.00, 0.00, 1.00, 1.00, 1.00, '2018-06-05 02:58:18', NULL),
+	(438, 440, 52910.00, 0.00, 0.00, 5.00, 5.00, 5.00, '2018-06-05 02:58:18', NULL),
+	(439, 441, 0.00, 0.00, 0.00, 9.50, 9.50, 9.50, '2018-06-05 02:58:18', NULL),
+	(440, 442, 250000.00, 0.00, 0.00, 4.50, 4.50, 4.50, '2018-06-05 02:58:18', NULL),
+	(441, 443, 195000.00, 0.00, 0.00, 4.50, 4.50, 4.50, '2018-06-05 02:58:18', NULL),
+	(442, 444, 0.00, 0.00, 0.00, 2.00, 2.00, 2.00, '2018-06-05 02:58:18', NULL),
+	(443, 445, 0.00, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(444, 446, 0.00, 0.00, 0.00, 4.50, 4.50, 4.50, '2018-06-05 02:58:18', NULL),
+	(445, 447, 15500.00, 0.00, 0.00, 6.00, 6.00, 6.00, '2018-06-05 02:58:18', NULL),
+	(446, 448, 0.00, 0.00, 0.00, 7.00, 7.00, 7.00, '2018-06-05 02:58:18', NULL),
+	(447, 449, 10000.00, 0.00, 0.00, 25.00, 25.00, 25.00, '2018-06-05 02:58:18', NULL),
+	(448, 450, 201000.00, 0.00, 0.00, 6.00, 6.00, 6.00, '2018-06-05 02:58:18', NULL),
+	(449, 451, 0.00, 0.00, 0.00, 10.50, 10.50, 10.50, '2018-06-05 02:58:18', NULL),
+	(450, 452, 0.00, 0.00, 0.00, 12.00, 12.00, 12.00, '2018-06-05 02:58:18', NULL),
+	(451, 453, 41000.00, 0.00, 0.00, 25.00, 25.00, 25.00, '2018-06-05 02:58:18', NULL),
+	(452, 454, 41000.00, 0.00, 0.00, 17.00, 17.00, 17.00, '2018-06-05 02:58:18', NULL),
+	(453, 455, 41000.00, 0.00, 0.00, 25.00, 25.00, 25.00, '2018-06-05 02:58:18', NULL),
+	(454, 456, 50000.00, 0.00, 0.00, 16.00, 16.00, 16.00, '2018-06-05 02:58:18', NULL),
+	(455, 457, 41000.00, 0.00, 0.00, 10.00, 10.00, 10.00, '2018-06-05 02:58:18', NULL),
+	(456, 458, 0.00, 0.00, 0.00, 17.00, 17.00, 17.00, '2018-06-05 02:58:18', NULL),
+	(457, 459, 41000.00, 0.00, 0.00, 16.00, 16.00, 16.00, '2018-06-05 02:58:18', NULL),
+	(458, 460, 41000.00, 0.00, 0.00, 10.00, 10.00, 10.00, '2018-06-05 02:58:18', NULL),
+	(459, 461, 0.00, 0.00, 0.00, 12.00, 12.00, 12.00, '2018-06-05 02:58:18', NULL),
+	(460, 462, 0.00, 0.00, 0.00, 12.00, 12.00, 12.00, '2018-06-05 02:58:18', NULL),
+	(461, 463, 0.00, 0.00, 0.00, 13.00, 13.00, 13.00, '2018-06-05 02:58:18', NULL),
+	(462, 464, 0.00, 0.00, 0.00, 15.00, 15.00, 15.00, '2018-06-05 02:58:18', NULL),
+	(463, 465, 0.00, 0.00, 0.00, 12.00, 12.00, 12.00, '2018-06-05 02:58:18', NULL),
+	(464, 466, 0.00, 0.00, 0.00, 12.00, 12.00, 12.00, '2018-06-05 02:58:18', NULL),
+	(465, 467, 0.00, 0.00, 0.00, 110.00, 110.00, 110.00, '2018-06-05 02:58:18', NULL),
+	(466, 468, 0.00, 0.00, 0.00, 55.00, 55.00, 55.00, '2018-06-05 02:58:18', NULL),
+	(467, 469, 0.00, 0.00, 0.00, 66.00, 66.00, 66.00, '2018-06-05 02:58:18', NULL),
+	(468, 470, 0.00, 0.00, 0.00, 68.00, 68.00, 68.00, '2018-06-05 02:58:18', NULL),
+	(469, 471, 0.00, 0.00, 0.00, 8.50, 8.50, 8.50, '2018-06-05 02:58:18', NULL),
+	(470, 472, 0.00, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(471, 473, 0.00, 0.00, 0.00, 13.00, 13.00, 13.00, '2018-06-05 02:58:18', NULL),
+	(472, 474, 0.00, 0.00, 0.00, 20.00, 20.00, 20.00, '2018-06-05 02:58:18', NULL),
+	(473, 475, 0.00, 0.00, 0.00, 13.00, 13.00, 13.00, '2018-06-05 02:58:18', NULL),
+	(474, 476, 0.00, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(475, 477, 0.00, 0.00, 0.00, 11.00, 11.00, 11.00, '2018-06-05 02:58:18', NULL),
+	(476, 478, 0.00, 0.00, 0.00, 10.00, 10.00, 10.00, '2018-06-05 02:58:18', NULL),
+	(477, 479, 0.00, 0.00, 0.00, 10.00, 10.00, 10.00, '2018-06-05 02:58:18', NULL),
+	(478, 480, 0.00, 0.00, 0.00, 19.00, 19.00, 19.00, '2018-06-05 02:58:18', NULL),
+	(479, 481, 0.00, 0.00, 0.00, 24.00, 24.00, 24.00, '2018-06-05 02:58:18', NULL),
+	(480, 482, 440.00, 0.00, 0.00, 46.00, 46.00, 46.00, '2018-06-05 02:58:18', NULL),
+	(481, 483, 0.00, 0.00, 0.00, 62.00, 62.00, 62.00, '2018-06-05 02:58:18', NULL),
+	(482, 484, 0.00, 0.00, 0.00, 28.00, 28.00, 28.00, '2018-06-05 02:58:18', NULL),
+	(483, 485, 0.00, 0.00, 0.00, 38.00, 38.00, 38.00, '2018-06-05 02:58:18', NULL),
+	(484, 486, 11000.00, 0.00, 0.00, 70.00, 70.00, 70.00, '2018-06-05 02:58:18', NULL),
+	(485, 487, 90000.00, 0.00, 0.00, 2.50, 2.50, 2.50, '2018-06-05 02:58:18', NULL),
+	(486, 488, 16095.00, 0.00, 0.00, 6.50, 6.50, 6.50, '2018-06-05 02:58:18', NULL),
+	(487, 489, 21367.50, 0.00, 0.00, 3.00, 3.00, 3.00, '2018-06-05 02:58:18', NULL),
+	(488, 490, 0.00, 0.00, 0.00, 5.50, 5.50, 5.50, '2018-06-05 02:58:18', NULL),
+	(489, 491, 0.00, 0.00, 0.00, 5.00, 5.00, 5.00, '2018-06-05 02:58:18', NULL),
+	(490, 492, 0.00, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(491, 493, 0.00, 0.00, 0.00, 5.00, 5.00, 5.00, '2018-06-05 02:58:18', NULL),
+	(492, 494, 0.00, 0.00, 0.00, 16.50, 16.50, 16.50, '2018-06-05 02:58:18', NULL),
+	(493, 495, 0.00, 0.00, 0.00, 17.50, 17.50, 17.50, '2018-06-05 02:58:18', NULL),
+	(494, 496, 65212.50, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(495, 497, 0.00, 0.00, 0.00, 6.00, 6.00, 6.00, '2018-06-05 02:58:18', NULL),
+	(496, 498, 0.00, 0.00, 0.00, 5.00, 5.00, 5.00, '2018-06-05 02:58:18', NULL),
+	(497, 499, 0.00, 0.00, 0.00, 19.00, 19.00, 19.00, '2018-06-05 02:58:18', NULL),
+	(498, 500, 0.00, 0.00, 0.00, 14.00, 14.00, 14.00, '2018-06-05 02:58:18', NULL),
+	(499, 501, 0.00, 0.00, 0.00, 40.00, 40.00, 40.00, '2018-06-05 02:58:18', NULL),
+	(500, 502, 18000.00, 0.00, 0.00, 20.00, 20.00, 20.00, '2018-06-05 02:58:18', NULL),
+	(501, 503, 0.00, 0.00, 0.00, 4.00, 4.00, 4.00, '2018-06-05 02:58:18', NULL),
+	(502, 504, 0.00, 0.00, 0.00, 10.00, 10.00, 10.00, '2018-06-05 02:58:18', NULL),
+	(503, 505, 216520.00, 0.00, 0.00, 14.00, 14.00, 14.00, '2018-06-05 02:58:18', NULL),
+	(504, 506, 0.00, 0.00, 0.00, 2.50, 2.50, 2.50, '2018-06-05 02:58:18', NULL),
+	(505, 507, 0.00, 0.00, 0.00, 6.50, 6.50, 6.50, '2018-06-05 02:58:18', NULL),
+	(506, 508, 0.00, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(507, 509, 0.00, 0.00, 0.00, 500.00, 500.00, 500.00, '2018-06-05 02:58:18', NULL),
+	(508, 510, 0.00, 0.00, 0.00, 19.00, 19.00, 19.00, '2018-06-05 02:58:18', NULL),
+	(509, 511, 0.00, 0.00, 0.00, 1.00, 1.00, 1.00, '2018-06-05 02:58:18', NULL),
+	(510, 512, 0.00, 0.00, 0.00, 30.00, 30.00, 30.00, '2018-06-05 02:58:18', NULL),
+	(511, 513, 0.00, 0.00, 0.00, 8.50, 8.50, 8.50, '2018-06-05 02:58:18', NULL),
+	(512, 514, 28000.00, 0.00, 0.00, 3.00, 3.00, 3.00, '2018-06-05 02:58:18', NULL),
+	(513, 515, 25000.00, 0.00, 0.00, 4.50, 4.50, 4.50, '2018-06-05 02:58:18', NULL),
+	(514, 516, 17000.00, 0.00, 0.00, 3.50, 3.50, 3.50, '2018-06-05 02:58:18', NULL),
+	(515, 517, 23000.00, 0.00, 0.00, 5.00, 5.00, 5.00, '2018-06-05 02:58:18', NULL),
+	(516, 518, 0.00, 0.00, 0.00, 8.00, 8.00, 8.00, '2018-06-05 02:58:18', NULL),
+	(517, 519, 0.00, 0.00, 0.00, 48.00, 48.00, 48.00, '2018-06-05 02:58:18', NULL),
+	(518, 520, 27000.00, 0.00, 0.00, 53.00, 53.00, 53.00, '2018-06-05 02:58:18', NULL),
+	(519, 521, 0.00, 0.00, 0.00, 25.00, 25.00, 25.00, '2018-06-05 02:58:18', NULL),
+	(520, 522, 16000.00, 0.00, 0.00, 49.00, 49.00, 49.00, '2018-06-05 02:58:18', NULL),
+	(521, 523, 0.00, 0.00, 0.00, 27.00, 27.00, 27.00, '2018-06-05 02:58:18', NULL),
+	(522, 524, 0.00, 0.00, 0.00, 27.00, 27.00, 27.00, '2018-06-05 02:58:18', NULL),
+	(523, 525, 20000.00, 0.00, 0.00, 55.00, 55.00, 55.00, '2018-06-05 02:58:18', NULL),
+	(524, 526, 0.00, 0.00, 0.00, 27.00, 27.00, 27.00, '2018-06-05 02:58:18', NULL),
+	(525, 527, 0.00, 0.00, 0.00, 27.00, 27.00, 27.00, '2018-06-05 02:58:18', NULL),
+	(526, 528, 10000.00, 0.00, 0.00, 28.00, 28.00, 28.00, '2018-06-05 02:58:18', NULL),
+	(527, 529, 57500.00, 0.00, 0.00, 32.00, 32.00, 32.00, '2018-06-05 02:58:18', NULL),
+	(528, 530, 45000.00, 0.00, 0.00, 27.00, 27.00, 27.00, '2018-06-05 02:58:18', NULL),
+	(529, 531, 0.00, 0.00, 0.00, 29.00, 29.00, 29.00, '2018-06-05 02:58:18', NULL),
+	(530, 532, 0.00, 0.00, 0.00, 153.00, 153.00, 153.00, '2018-06-05 02:58:18', NULL),
+	(531, 533, 0.00, 0.00, 0.00, 183.00, 183.00, 183.00, '2018-06-05 02:58:18', NULL),
+	(532, 534, 0.00, 0.00, 0.00, 219.00, 219.00, 219.00, '2018-06-05 02:58:18', NULL),
+	(533, 535, 0.00, 0.00, 0.00, 237.00, 237.00, 237.00, '2018-06-05 02:58:18', NULL),
+	(534, 536, 0.00, 0.00, 0.00, 312.00, 312.00, 312.00, '2018-06-05 02:58:18', NULL),
+	(535, 537, 15000.00, 0.00, 0.00, 195.00, 195.00, 195.00, '2018-06-05 02:58:18', NULL),
+	(536, 538, 0.00, 0.00, 0.00, 237.00, 237.00, 237.00, '2018-06-05 02:58:18', NULL),
+	(537, 539, 0.00, 0.00, 0.00, 333.00, 333.00, 333.00, '2018-06-05 02:58:18', NULL),
+	(538, 540, 0.00, 0.00, 0.00, 390.00, 390.00, 390.00, '2018-06-05 02:58:18', NULL),
+	(539, 541, 0.00, 0.00, 0.00, 468.00, 468.00, 468.00, '2018-06-05 02:58:18', NULL),
+	(540, 542, 0.00, 0.00, 0.00, 315.00, 315.00, 315.00, '2018-06-05 02:58:18', NULL),
+	(541, 543, 0.00, 0.00, 0.00, 375.00, 375.00, 375.00, '2018-06-05 02:58:18', NULL),
+	(542, 544, 0.00, 0.00, 0.00, 435.00, 435.00, 435.00, '2018-06-05 02:58:18', NULL),
+	(543, 545, 6500.00, 0.00, 0.00, 171.00, 171.00, 171.00, '2018-06-05 02:58:18', NULL),
+	(544, 546, 0.00, 0.00, 0.00, 207.00, 207.00, 207.00, '2018-06-05 02:58:18', NULL),
+	(545, 547, 0.00, 0.00, 0.00, 315.00, 315.00, 315.00, '2018-06-05 02:58:18', NULL),
+	(546, 548, 0.00, 0.00, 0.00, 375.00, 375.00, 375.00, '2018-06-05 02:58:18', NULL),
+	(547, 549, 0.00, 0.00, 0.00, 477.00, 477.00, 477.00, '2018-06-05 02:58:18', NULL),
+	(548, 550, 0.00, 0.00, 0.00, 237.00, 237.00, 237.00, '2018-06-05 02:58:18', NULL),
+	(549, 551, 0.00, 0.00, 0.00, 333.00, 333.00, 333.00, '2018-06-05 02:58:18', NULL),
+	(550, 552, 0.00, 0.00, 0.00, 435.00, 435.00, 435.00, '2018-06-05 02:58:18', NULL),
+	(551, 553, 18000.00, 0.00, 0.00, 425.00, 425.00, 425.00, '2018-06-05 02:58:18', NULL),
+	(552, 554, 0.00, 0.00, 0.00, 525.00, 525.00, 525.00, '2018-06-05 02:58:18', NULL),
+	(553, 555, 0.00, 0.00, 0.00, 597.00, 597.00, 597.00, '2018-06-05 02:58:18', NULL),
+	(554, 556, 18000.00, 0.00, 0.00, 657.00, 657.00, 657.00, '2018-06-05 02:58:18', NULL),
 	(555, 557, 0.00, 0.00, 0.00, 21000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
 	(556, 558, 0.00, 0.00, 0.00, 300000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
 	(557, 559, 0.00, 0.00, 0.00, 11000.00, 0.00, 0.00, '2018-06-05 02:58:18', NULL),
@@ -4854,8 +6079,8 @@ INSERT INTO `m_price` (`m_pid`, `m_pitem`, `m_pbuy1`, `m_pbuy2`, `m_pbuy3`, `m_p
 	(645, 651, 1200.00, 24000.00, 24000.00, 0.00, 0.00, 0.00, '2018-07-03 04:18:37', NULL);
 /*!40000 ALTER TABLE `m_price` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_satuan
-DROP TABLE IF EXISTS `m_satuan`;
+
+-- Dumping structure for table alamrayasite_nabila.m_satuan
 CREATE TABLE IF NOT EXISTS `m_satuan` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_name` varchar(50) DEFAULT NULL,
@@ -4865,7 +6090,7 @@ CREATE TABLE IF NOT EXISTS `m_satuan` (
   PRIMARY KEY (`s_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_satuan: ~12 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_satuan: ~12 rows (approximately)
 DELETE FROM `m_satuan`;
 /*!40000 ALTER TABLE `m_satuan` DISABLE KEYS */;
 INSERT INTO `m_satuan` (`s_id`, `s_name`, `s_detname`, `s_create`, `s_update`) VALUES
@@ -4883,15 +6108,15 @@ INSERT INTO `m_satuan` (`s_id`, `s_name`, `s_detname`, `s_create`, `s_update`) V
 	(12, 'PJK', 'PAJAK', '2018-07-04 00:57:22', NULL);
 /*!40000 ALTER TABLE `m_satuan` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_stock_cabang
-DROP TABLE IF EXISTS `m_stock_cabang`;
+
+-- Dumping structure for table alamrayasite_nabila.m_stock_cabang
 CREATE TABLE IF NOT EXISTS `m_stock_cabang` (
   `sc_id` int(11) NOT NULL AUTO_INCREMENT,
   `sc_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`sc_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_stock_cabang: ~24 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_stock_cabang: ~24 rows (approximately)
 DELETE FROM `m_stock_cabang`;
 /*!40000 ALTER TABLE `m_stock_cabang` DISABLE KEYS */;
 INSERT INTO `m_stock_cabang` (`sc_id`, `sc_name`) VALUES
@@ -4921,14 +6146,15 @@ INSERT INTO `m_stock_cabang` (`sc_id`, `sc_name`) VALUES
 	(24, 'Gudang Sending Cabang 2');
 /*!40000 ALTER TABLE `m_stock_cabang` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_supplier
-DROP TABLE IF EXISTS `m_supplier`;
+
+-- Dumping structure for table alamrayasite_nabila.m_supplier
 CREATE TABLE IF NOT EXISTS `m_supplier` (
   `s_id` int(11) NOT NULL AUTO_INCREMENT,
   `s_company` varchar(100) DEFAULT NULL,
   `s_name` varchar(100) DEFAULT NULL,
   `s_npwp` varchar(100) DEFAULT NULL,
   `s_address` varchar(100) DEFAULT NULL,
+  `s_phone` varchar(100) DEFAULT NULL,
   `s_phone1` varchar(50) DEFAULT NULL,
   `s_phone2` varchar(50) DEFAULT NULL,
   `s_rekening` varchar(25) DEFAULT NULL,
@@ -4943,17 +6169,20 @@ CREATE TABLE IF NOT EXISTS `m_supplier` (
   `s_insert` timestamp NULL DEFAULT NULL,
   `s_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`s_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_supplier: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_supplier: ~4 rows (approximately)
 DELETE FROM `m_supplier`;
 /*!40000 ALTER TABLE `m_supplier` DISABLE KEYS */;
-INSERT INTO `m_supplier` (`s_id`, `s_company`, `s_name`, `s_npwp`, `s_address`, `s_phone1`, `s_phone2`, `s_rekening`, `s_bank`, `s_fax`, `s_note`, `s_top`, `s_deposit`, `s_limit`, `s_hutang`, `s_item_list`, `s_insert`, `s_update`) VALUES
-	(1, 'sd', 'sd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-11-23 10:12:41');
+INSERT INTO `m_supplier` (`s_id`, `s_company`, `s_name`, `s_npwp`, `s_address`, `s_phone`, `s_phone1`, `s_phone2`, `s_rekening`, `s_bank`, `s_fax`, `s_note`, `s_top`, `s_deposit`, `s_limit`, `s_hutang`, `s_item_list`, `s_insert`, `s_update`) VALUES
+	(1, 'Tacik', 'April', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-12-04 07:29:50'),
+	(2, 'BERAS PKL', 'Mahmud', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-12-04 07:29:36'),
+	(3, 'DUS', 'Suratno', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-12-04 07:30:21'),
+	(4, 'Daging Ayam', 'Pahino', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, NULL, NULL, '2018-12-04 07:30:39');
 /*!40000 ALTER TABLE `m_supplier` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_toko_titip
-DROP TABLE IF EXISTS `m_toko_titip`;
+
+-- Dumping structure for table alamrayasite_nabila.m_toko_titip
 CREATE TABLE IF NOT EXISTS `m_toko_titip` (
   `tt_id` int(11) NOT NULL AUTO_INCREMENT,
   `tt_company` varchar(100) DEFAULT NULL,
@@ -4968,13 +6197,13 @@ CREATE TABLE IF NOT EXISTS `m_toko_titip` (
   PRIMARY KEY (`tt_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.m_toko_titip: ~0 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_toko_titip: ~0 rows (approximately)
 DELETE FROM `m_toko_titip`;
 /*!40000 ALTER TABLE `m_toko_titip` DISABLE KEYS */;
 /*!40000 ALTER TABLE `m_toko_titip` ENABLE KEYS */;
 
--- Dumping structure for table nabila.m_users
-DROP TABLE IF EXISTS `m_users`;
+
+-- Dumping structure for table alamrayasite_nabila.m_users
 CREATE TABLE IF NOT EXISTS `m_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -4987,7 +6216,7 @@ CREATE TABLE IF NOT EXISTS `m_users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table nabila.m_users: ~2 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.m_users: ~2 rows (approximately)
 DELETE FROM `m_users`;
 /*!40000 ALTER TABLE `m_users` DISABLE KEYS */;
 INSERT INTO `m_users` (`id`, `name`, `email`, `username`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -4995,15 +6224,15 @@ INSERT INTO `m_users` (`id`, `name`, `email`, `username`, `password`, `remember_
 	(2, 'Bravo', 'bravo@bravo.com', 'bravo', '$2y$10$ORK70cBLfoFFcXBJFNFwFeIPpUKnk3Vf3ro/0GZOGYfDLntxxFzF6', 'swMqwu1kNY36uWl56Rmsqssjtvp7I5u7QJGVVofjXNIgrkjKcB9MbHanhxjL', '2018-02-03 01:46:43', '2018-02-03 01:46:51');
 /*!40000 ALTER TABLE `m_users` ENABLE KEYS */;
 
--- Dumping structure for table nabila.password_resets
-DROP TABLE IF EXISTS `password_resets`;
+
+-- Dumping structure for table alamrayasite_nabila.password_resets
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table nabila.password_resets: 110 rows
+-- Dumping data for table alamrayasite_nabila.password_resets: 110 rows
 DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
@@ -5119,36 +6348,29 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 	('bravo@bravo.com', 'cf414a57670872d4bd8c1b0f18d3509f5deb06a0c579f51ca494b81d4dc4e8c9', '2018-02-03 01:48:46');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
--- Dumping structure for table nabila.spk_formula
-DROP TABLE IF EXISTS `spk_formula`;
+
+-- Dumping structure for table alamrayasite_nabila.spk_formula
 CREATE TABLE IF NOT EXISTS `spk_formula` (
   `fr_spk` int(12) DEFAULT NULL,
   `fr_detailid` int(12) DEFAULT NULL,
   `fr_formula` int(12) DEFAULT NULL,
   `fr_value` decimal(10,2) DEFAULT NULL,
   `fr_scale` varchar(50) DEFAULT NULL,
-  `fr_status` enum('Y','N') DEFAULT NULL,
+  `fr_status` enum('Y','N') DEFAULT 'N',
   KEY `FK_spk_formula_d_spk` (`fr_spk`),
   KEY `fr_detailid` (`fr_detailid`),
-  CONSTRAINT `FK_spk_formula_d_spk` FOREIGN KEY (`fr_spk`) REFERENCES `d_spk` (`spk_id`)
+  CONSTRAINT `FK_spk_formula_d_spk` FOREIGN KEY (`fr_spk`) REFERENCES `d_spk` (`spk_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table nabila.spk_formula: ~8 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.spk_formula: ~0 rows (approximately)
 DELETE FROM `spk_formula`;
 /*!40000 ALTER TABLE `spk_formula` DISABLE KEYS */;
 INSERT INTO `spk_formula` (`fr_spk`, `fr_detailid`, `fr_formula`, `fr_value`, `fr_scale`, `fr_status`) VALUES
-	(1, 1, 3, 4000.00, '3', NULL),
-	(1, 2, 18, 5.00, '4', NULL),
-	(1, 3, 19, 20.00, '4', NULL),
-	(1, 4, 49, 130.00, '4', NULL),
-	(1, 5, 48, 30.00, '4', NULL),
-	(1, 6, 60, 5.00, '4', NULL),
-	(1, 7, 70, 150.00, '4', NULL),
-	(1, 8, 71, 40.00, '4', NULL);
+	(1, 1, 1412, 20.00, '4', 'N');
 /*!40000 ALTER TABLE `spk_formula` ENABLE KEYS */;
 
--- Dumping structure for table nabila.table 68
-DROP TABLE IF EXISTS `table 68`;
+
+-- Dumping structure for table alamrayasite_nabila.table 68
 CREATE TABLE IF NOT EXISTS `table 68` (
   `COL 1` varchar(4) DEFAULT NULL,
   `COL 2` varchar(7) DEFAULT NULL,
@@ -5165,7 +6387,7 @@ CREATE TABLE IF NOT EXISTS `table 68` (
   `COL 13` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table nabila.table 68: ~557 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.table 68: ~557 rows (approximately)
 DELETE FROM `table 68`;
 /*!40000 ALTER TABLE `table 68` DISABLE KEYS */;
 INSERT INTO `table 68` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `COL 7`, `COL 8`, `COL 9`, `COL 10`, `COL 11`, `COL 12`, `COL 13`) VALUES
@@ -5728,8 +6950,8 @@ INSERT INTO `table 68` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `C
 	('556', 'BRG0556', 'KUE ULANG TAHUN', '', 'Tart 30*40 Kotak 3 Lps', '', ' 513.600 ', ' 657.000 ', '', '', '', '', '');
 /*!40000 ALTER TABLE `table 68` ENABLE KEYS */;
 
--- Dumping structure for table nabila.table 69
-DROP TABLE IF EXISTS `table 69`;
+
+-- Dumping structure for table alamrayasite_nabila.table 69
 CREATE TABLE IF NOT EXISTS `table 69` (
   `COL 1` varchar(4) DEFAULT NULL,
   `COL 2` varchar(7) DEFAULT NULL,
@@ -5746,7 +6968,7 @@ CREATE TABLE IF NOT EXISTS `table 69` (
   `COL 13` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table nabila.table 69: ~557 rows (approximately)
+-- Dumping data for table alamrayasite_nabila.table 69: ~557 rows (approximately)
 DELETE FROM `table 69`;
 /*!40000 ALTER TABLE `table 69` DISABLE KEYS */;
 INSERT INTO `table 69` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `COL 7`, `COL 8`, `COL 9`, `COL 10`, `COL 11`, `COL 12`, `COL 13`) VALUES
@@ -6309,8 +7531,8 @@ INSERT INTO `table 69` (`COL 1`, `COL 2`, `COL 3`, `COL 4`, `COL 5`, `COL 6`, `C
 	('556', 'BRG0556', 'KUE ULANG TAHUN', '', 'Tart 30*40 Kotak 3 Lps', '', ' 513.600 ', ' 657.000 ', '', '', '', '', '');
 /*!40000 ALTER TABLE `table 69` ENABLE KEYS */;
 
--- Dumping structure for table nabila.users
-DROP TABLE IF EXISTS `users`;
+
+-- Dumping structure for table alamrayasite_nabila.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -6323,14 +7545,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table nabila.users: 2 rows
+-- Dumping data for table alamrayasite_nabila.users: 2 rows
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 	(1, 'amdin1', 'admin22@gmail.com', 'admin', '$2y$10$hFooeUmTUWV5bmY8HMPvJOEo1kGC/CqEWeWtX226xvM4qgMUBP6oe', 'P8GCWFWR07E2tnEmThy5o3WA90r9lnpzPhb7sybctW3jQKfdNvwINfay2J9s', '2017-12-19 06:20:05', '2018-03-12 07:18:22'),
 	(2, 'Bravo', 'bravo@bravo.com', 'bravo', '$2y$10$ORK70cBLfoFFcXBJFNFwFeIPpUKnk3Vf3ro/0GZOGYfDLntxxFzF6', 'swMqwu1kNY36uWl56Rmsqssjtvp7I5u7QJGVVofjXNIgrkjKcB9MbHanhxjL', '2018-02-03 01:46:43', '2018-02-03 01:46:51');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
-
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
