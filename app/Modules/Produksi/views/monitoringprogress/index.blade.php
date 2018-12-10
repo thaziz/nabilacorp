@@ -52,6 +52,9 @@
                               <!-- End Modal -->
                              
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+                                  <div align="right">
+                                    <a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-box-tool" id="btn-tambah"><i class="fa fa-plus"></i>&nbsp; Buat Rencana</a>
+                                  </div>
                                   <div class="table-responsive" style="margin-top:10px;">
                                     <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0" id="data">
                                      <thead>
