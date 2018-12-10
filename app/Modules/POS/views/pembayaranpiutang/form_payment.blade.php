@@ -18,7 +18,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <input type="hidden" name="m_pid" id="m_pid">
+                  <input type="hidden" name="rd_receivable" id="rd_receivable">
                   <input type="text" class="form-control input-sm" readonly name="r_code" id='r_code' readonly>
                 </div>
               </div>
@@ -85,7 +85,7 @@
       
           <div class="modal-footer" style="border-top: none;">
             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id='insert_m_price_btn'>Simpan Data</button>
+            <button type="button" class="btn btn-primary" id='insert_m_price_btn' onclick="insert_d_receivable_dt()">Simpan Data</button>
           </div>
         </div>
       </form>   

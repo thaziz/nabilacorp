@@ -11,8 +11,6 @@ use App\Lib\mutasi;
 
 use App\Lib\format;
 
-use App\d_receivable_payment;
-
 use App\m_item;
 
 use DB;
@@ -23,10 +21,11 @@ use Datatables;
 
 use Session;
 
-class d_receivable extends Model
+class d_receivable_dt extends Model
 {  
     protected $table = 'd_receivable_dt';    
-
+    const CREATED_AT = 'rd_created';
+    const UPDATED_AT = 'rd_updated';
 }
 	
 ?>
