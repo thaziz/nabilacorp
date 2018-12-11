@@ -68,20 +68,19 @@
 	 }
 
 	 function render_d_receivable_dt(d_receivable_dt) {
-	 	var list_group = $('#list_d_receivable_dt');
-	 	list_group.html('');
+	 	var list_group = $('.list_d_receivable_dt');
+	 	list_group.html('');	 	
 	 	if(d_receivable_dt.length > 0) {
 	 		for(x = 0;x < d_receivable_dt.length;x++) {
 	 			var data = d_receivable_dt[x];
 	 			var rd_datepay = moment(data.rd_datepay).format('DD/MM/YYYY');
-	 			var list_group_item = $('<a href="#" class="list-group-item"></a>')
-	 			var rd_datepay_item = $('<h4>' + rd_datepay + '</h4>');
-	 			var rd_value_item = $('<p>' + get_currency(data.rd_value) + '</p>');
+	 			
+	 			
+	 			$a='<tr><td width="30%">'+rd_datepay+'</td>';
+	 			$a+='<td class="text-right" >'+get_currency(data.rd_value)+'</td></tr>';
+	 			
 
-	 			list_group_item.append(rd_datepay_item);
-	 			list_group_item.append(rd_value_item);
-
-	 			list_group.append(list_group_item);
+	 			list_group.append($a);
 	 		}
 	 	}
 	 	else {

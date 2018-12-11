@@ -89,11 +89,13 @@
                           <th>Bayar?</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        
+                      <tbody class="list_d_receivable_dt">
+                            
+                          </tr>
+                          
                       </tbody>
                     </table>
-                    <div class="list-group" id="list_d_receivable_dt"></div>
+                    <!-- <div class="list-group" id="list_d_receivable_dt"></div> -->
                 </div>
               </div>
 
