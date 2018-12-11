@@ -244,11 +244,48 @@
     });
 
   $('#autoModalPlan').on('shown.bs.modal', function () {
-    
-  }) 
+      $("#tableAutoPlan").dataTable().fnDestroy();
+      $("#tableAutoPlan").DataTable({        
+      responsive: true,
+      "language": dataTableLanguage,
+      processing: true,
+      /*serverSide: true,*/
+      ajax: {
+        "url": "{{ url("/produksi/monitoringprogress/tabel/autoplan") }}",
+        "type": "get",
+         "data": function(d){
+         d._token = "{{ csrf_token() }}";
+         d.fil = $('#fil').val();
+        }
+        
+      }
+      ,
+    "columns": [
+        { "data": "i_name" },
+        { "data": "j_butuh" ,"className" : "dt-body-right"},
+        { "data": "pp_qty" ,"className" : "dt-body-right"},
+        { "data": "j_kurang" ,"className" : "dt-body-right"},
+    ],
+    "order":[2,'desc'],
+            //responsive: true,
+
+            "pageLength": 10,
+            "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+            
+            "rowCallback": function( row, data, index ) {
+
+              /*$node = this.api().row(row).nodes().to$();*/
+
+              if (data['s_status']=='draft') {
+                $('td', row).addClass('warning');
+              } 
+            }   
+
+        });
+    }) 
   
 
-});
+  });
 
   $(".datepicker").datepicker({
     dateFormat: "yy-mm-dd",
@@ -257,98 +294,124 @@
     changeYear: true
   });
 
-function filter(){
-  var filter=$('#fil').val();  
-  tablex.ajax.reload();
-}
-
-function simpan() {
-  $('#btnSimpan').attr('disabled','disabled');
-  var form = document.getElementById('form-plan');
-  var dataInput = form.getElementsByTagName('input');
-  var tabel = $("#table-search input").serialize();
-  var pp_item = $('#pp_item').val();
-  var rowPlan = $('#rowPlan').val();
-  var comp = $('.mem_comp').val();
-  var dataSimpan = tabel+'&pp_item='+pp_item+'&rowPlan='+rowPlan+'&mem_comp='+comp;
-
-  for (var i=0; i<dataInput.length ; i++){
+  function filter(){
+    var filter=$('#fil').val();  
+    tablex.ajax.reload();
   }
-  for (var i=7; i<dataInput.length ; i+=2){
-    ///validation
-    if (dataInput[i].value == '') {
-        Command: toastr["warning"]("Kolom Jumlah Rencana tidak boleh kosong ", "Peringatan !")
 
-        toastr.options = {
-          "closeButton": false,
-          "debug": false,
-          "newestOnTop": true,
-          "progressBar": false,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": false,
-          "onclick": null,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "3000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
-        $('#btnSimpan').removeAttr('disabled');
-        return false;
+  function simpan() {
+    $('#btnSimpan').attr('disabled','disabled');
+    var form = document.getElementById('form-plan');
+    var dataInput = form.getElementsByTagName('input');
+    var tabel = $("#table-search input").serialize();
+    var pp_item = $('#pp_item').val();
+    var rowPlan = $('#rowPlan').val();
+    var comp = $('.mem_comp').val();
+    var dataSimpan = tabel+'&pp_item='+pp_item+'&rowPlan='+rowPlan+'&mem_comp='+comp;
+
+    for (var i=0; i<dataInput.length ; i++){
     }
-  }
-  for (var i=5; i<dataInput.length ; i+=2){
-    if (dataInput[i].value == '') {
-        Command: toastr["warning"]("Kolom Tanggal tidak boleh kosong ", "Peringatan !")
+    for (var i=7; i<dataInput.length ; i+=2){
+      ///validation
+      if (dataInput[i].value == '') {
+          Command: toastr["warning"]("Kolom Jumlah Rencana tidak boleh kosong ", "Peringatan !")
 
-        toastr.options = {
-          "closeButton": false,
-          "debug": false,
-          "newestOnTop": true,
-          "progressBar": false,
-          "positionClass": "toast-top-right",
-          "preventDuplicates": false,
-          "onclick": null,
-          "showDuration": "300",
-          "hideDuration": "1000",
-          "timeOut": "3000",
-          "extendedTimeOut": "1000",
-          "showEasing": "swing",
-          "hideEasing": "linear",
-          "showMethod": "fadeIn",
-          "hideMethod": "fadeOut"
-        }
-        $('#btnSimpan').removeAttr('disabled');
-        return false;
-    }
-  }
-  $.ajax({
-      url : baseUrl + "/produksi/monitoringprogress/save",
-      type: "GET",
-      data : dataSimpan,
-        success: function(response){
-          if (response.status == 'sukses') {
-            var table = $('#data').DataTable();
-            table.ajax.reload( null, false );
-            iziToast.success({timeout: 5000, 
-                          position: "topRight",
-                          icon: 'fa fa-chrome', 
-                          title: '', 
-                          message: 'Rencana di tambahkan.'});
-            $("#modal").modal("hide");
-            $('#btnSimpan').removeAttr('disabled');
-          }else{
-            iziToast.error({position: "topRight",
-                        title: '', 
-                        message: 'Rencana gagal di tambahkan.'});
-            $('#btnSimpan').removeAttr('disabled');
+          toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
           }
-        },
-    });
-}
+          $('#btnSimpan').removeAttr('disabled');
+          return false;
+      }
+    }
+    for (var i=5; i<dataInput.length ; i+=2){
+      if (dataInput[i].value == '') {
+          Command: toastr["warning"]("Kolom Tanggal tidak boleh kosong ", "Peringatan !")
+
+          toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+          $('#btnSimpan').removeAttr('disabled');
+          return false;
+      }
+    }
+    $.ajax({
+        url : baseUrl + "/produksi/monitoringprogress/save",
+        type: "GET",
+        data : dataSimpan,
+          success: function(response){
+            if (response.status == 'sukses') {
+              var table = $('#data').DataTable();
+              table.ajax.reload( null, false );
+              iziToast.success({timeout: 5000, 
+                            position: "topRight",
+                            icon: 'fa fa-chrome', 
+                            title: '', 
+                            message: 'Rencana di tambahkan.'});
+              $("#modal").modal("hide");
+              $('#btnSimpan').removeAttr('disabled');
+            }else{
+              iziToast.error({position: "topRight",
+                          title: '', 
+                          message: 'Rencana gagal di tambahkan.'});
+              $('#btnSimpan').removeAttr('disabled');
+            }
+          },
+      });
+  }
+
+  function autoPlanSimpan(){
+    $.ajax({
+        url : baseUrl + "/produksi/monitoringprogress/save/autoplan",
+        type: "GET",
+        data : $('#formAutoPlan').serialize(),
+          success: function(response){
+            if (response.status == 'sukses') {
+              var table = $('#data').DataTable();
+              table.ajax.reload( null, false );
+              iziToast.success({timeout: 5000, 
+                            position: "topRight",
+                            icon: 'fa fa-chrome', 
+                            title: '', 
+                            message: 'Rencana di tambahkan.'});
+              $("#autoModalPlan").modal("hide");
+              $('#btnSimpan').removeAttr('disabled');
+            }else{
+              iziToast.error({position: "topRight",
+                          title: '', 
+                          message: 'Rencana gagal di tambahkan.'});
+              $('#btnSimpan').removeAttr('disabled');
+            }
+          },
+      });
+  }
 
 </script>
 @endsection()
