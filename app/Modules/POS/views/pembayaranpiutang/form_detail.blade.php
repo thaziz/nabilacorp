@@ -13,68 +13,68 @@
 
             <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 15px;padding-top: 15px; ">
                                         
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Kode Pembayaran</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_code"></p>
+                  <label id="r_code"></label>
                 </div>
               </div>
                                         
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Ref</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_ref"></p>
+                  <label id="r_ref"></label>
                 </div>
               </div>
 
               
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Tanggal Piutang</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_date"></p>
+                  <label id="r_date"></label>
                 </div>
               </div>
                     
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Tanggal Jatuh Tempo</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_duedate"></p>
+                  <label id="r_duedate"></label>
                 </div>
               </div>
                     
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Jumlah Piutang</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_value"></p>
+                  <label id="r_value"></label>
                 </div>
               </div>
 
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Jumlah Piutang Terbayar</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group">  
+              <div class="col-md-3 col-sm-6 col-xs-12">
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <p id='r_pay' ></p>
+                <div class="form-group">  
+                  <label id='r_pay' ></label>
                 </div>
               </div>
 
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <label class="tebal">Sisa Pembayaran</label>
               </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <p id='p_outstanding' ></p>
+                  <label id='p_outstanding' ></label>
                 </div>
               </div>
 
@@ -82,6 +82,17 @@
                 <div class="container-fluid" style="background: white">
                   
                     <h3>Daftar Pembayaran</h3>
+                    <table class="table tabelan table-bordered table-striped table-hover data-table">
+                      <thead>
+                        <tr>
+                          <th>Tanggal?</th>
+                          <th>Bayar?</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                    </table>
                     <div class="list-group" id="list_d_receivable_dt"></div>
                 </div>
               </div>
