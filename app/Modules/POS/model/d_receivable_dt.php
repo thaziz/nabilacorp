@@ -26,6 +26,14 @@ class d_receivable_dt extends Model
     protected $table = 'd_receivable_dt';    
     const CREATED_AT = 'rd_created';
     const UPDATED_AT = 'rd_updated';
+
+
+     protected $fillable = ['rd_receivable',
+							'rd_detailid' ,
+							'rd_datepay',							
+							'rd_value',							
+							'rd_status'
+						   ];
 }
 	
 ?>

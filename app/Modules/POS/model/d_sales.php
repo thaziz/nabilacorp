@@ -593,6 +593,24 @@ class d_sales extends Model
             return $data;
           }
 
+      $query = DB::select(DB::raw("SELECT MAX(RIGHT(r_code,4)) as kode_max from d_receivable WHERE DATE_FORMAT(r_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+      $kd = "";
+      
+      if(count($query)>0)
+      {
+        foreach($query as $k)
+        {
+          $tmp = ((int)$k->kode_max)+1;
+          $kd = sprintf("%05s", $tmp);
+        }
+      }
+      else
+      {
+        $kd = "00001";
+      }
+
+$r_code = "DPR-".date('ym')."-".$kd;
+
           $s_gross = format::format($request->s_gross);
           $s_ongkir = format::format($request->s_ongkir);          
           $s_disc_value = format::format($request->s_disc_value);
@@ -634,19 +652,36 @@ class d_sales extends Model
                     's_bulat'=>$s_bulat
            ]);
 
-          $r_id=d_receivable::max('r_id')+1;
+          $r_id=d_receivable::max('r_id')+1;          
+          if($s_net-$bayar<0){
+            $p_outstanding=0;
+            $r_pay=$s_net;            
+            }else{
+            $p_outstanding=$s_net-$bayar;
+            $r_pay=$bayar;
+          }
+          
           d_receivable::create([
                 'r_id'=>$r_id,
                 'r_date'=>date('Y-m-d',strtotime($request->s_date)),
                 'r_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
                 'r_type' =>'Penjualan Pesanan',
-                /*'r_code'=>,
-                'r_mem',*/
+                'r_code'=>$r_code,
+                'r_mem',
                 'r_ref'=>$note,
                 'r_value'=>$s_net,
-                'r_pay'=>$bayar,
-                'p_outstanding'=>$s_net-$bayar,              
+                'r_pay'=>$r_pay,
+                'p_outstanding'=>$p_outstanding,              
             ]);
+        if($bayar!=0){
+          d_receivable_dt::create([
+              'rd_receivable' =>$r_id,
+              'rd_detailid'   =>1,
+              'rd_datepay'    =>date('Y-m-d',strtotime($request->s_date)),             
+              'rd_value'      =>$r_pay,
+              'rd_status'     =>'Y'
+          ]);
+        }
 
   
           for ($i=0; $i <count($request->sd_item); $i++) {  

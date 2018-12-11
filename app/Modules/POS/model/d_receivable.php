@@ -42,7 +42,8 @@ class d_receivable extends Model
 							'r_pay',
 							'p_outstanding',
 							'r_created',
-							'r_updated'
+							'r_updated',
+							'r_status'
 							];
 
 

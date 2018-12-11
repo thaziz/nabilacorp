@@ -40,6 +40,7 @@
 	 	o_detail.find('#r_date').text( 
 	 		moment(data.r_date).format('DD/MM/YYYY') 
 	 	);
+	 	o_detail.find('#r_ref').text( data.r_ref );
 		o_detail.find('#r_duedate').text( data.r_duedate );
 		o_detail.find('#r_code').text( data.r_code );
 		o_detail.find('#r_value').text( 
