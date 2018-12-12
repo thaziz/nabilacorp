@@ -36,7 +36,7 @@ class ManOutputProduksiController extends Controller
         //   dd($tgl01);
         $data = d_spk::join('m_item', 'spk_item', '=', 'i_id')
             ->join('d_productplan', 'pp_id', '=', 'spk_ref')
-            ->select('spk_id', 'spk_date', 'i_code', 'i_name', 'pp_qty', 'spk_code', 'spk_status')
+            ->select('spk_id','spk_item', 'spk_date', 'i_code', 'i_name', 'pp_qty', 'spk_code', 'spk_status')
             ->where(function ($query) {
                 $query->where('spk_status', 'PB');
             })
@@ -64,7 +64,9 @@ class ManOutputProduksiController extends Controller
             })
 
             ->editColumn('result', function ($user) {
-                return '<input type="number" name="" class="form-control input-sm">';
+                return '<input type="hidden" name="spk_id[]" class="form-control input-sm spk_id" value="'.$user->spk_id.'">
+                        <input type="hidden" name="spk_item[]" class="form-control input-sm spk_item" value="'.$user->spk_item.'">
+                        <input type="number" name="result_spk[]" class="form-control input-sm result_spk">';
             })
 
             ->addColumn('action', function ($data) {
@@ -132,7 +134,7 @@ class ManOutputProduksiController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         DB::beginTransaction();
         try {
             $cek = DB::table('d_productresult')
