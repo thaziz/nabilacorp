@@ -97,6 +97,15 @@ class ManajemenReturnPenjualanController extends Controller
                 return 'Kelebihan Barang';
             }
         })
+    ->editColumn('description',function ($data)
+            {
+              return  '<div class="text-center">
+                        <select class="form-control">
+                          <option value="Kelebihan">Kelebihan</option>
+                          <option value="Rusak">Rusak</option>
+                        </select>
+                      </div>';# code...
+            })
 
     ->addColumn('action', function($data){
       if ($data->dsr_method == 'SB' || $data->dsr_method == 'SA') {
@@ -207,7 +216,7 @@ class ManajemenReturnPenjualanController extends Controller
          
         })
       
-    ->rawColumns(['dsr_date','dsr_status','dsr_method','dsr_jenis_return','action'])
+    ->rawColumns(['dsr_date','description','dsr_status','dsr_method','dsr_jenis_return','action'])
     ->make(true);
   }
 
@@ -411,6 +420,15 @@ class ManajemenReturnPenjualanController extends Controller
       }
       
     })
+    ->editColumn('description',function ($data)
+          {
+            return  '<div class="text-center">
+                      <select class="form-control">
+                        <option value="Kelebihan">Kelebihan</option>
+                        <option value="Rusak">Rusak</option>
+                      </select>
+                    </div>';# code...
+          })
     ->editColumn('sd_return', function ($data) {
       return '<input  name="sd_return[]" readonly 
                       class="form-control text-right hasilReturn" 
@@ -423,6 +441,7 @@ class ManajemenReturnPenjualanController extends Controller
     })
     ->rawColumns([  'i_name',
                     'sd_qty',
+                    'description',
                     'sd_qty_return',
                     'sd_price',
                     'sd_disc_percent',

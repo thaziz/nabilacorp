@@ -217,6 +217,7 @@
                                                 +'<th width="5%">Jumlah</th>'
                                                 +'<th width="5%">Tukar</th>'
                                                 +'<th>Satuan</th>'
+                                                +'<th width="15%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
@@ -326,6 +327,7 @@
                                                 +'<th width="5%">Jumlah</th>'
                                                 +'<th width="5%">Return</th>'
                                                 +'<th>Satuan</th>'
+                                                +'<th width="15%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
@@ -442,6 +444,7 @@
                                                 +'<th width="5%">Jumlah</th>'
                                                 +'<th width="5%">Kirim</th>'
                                                 +'<th>Satuan</th>'
+                                                +'<th width="15%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
@@ -602,6 +605,7 @@
                                                 +'<th width="5%">Jumlah</th>'
                                                 +'<th width="5%">Kirim</th>'
                                                 +'<th>Satuan</th>'
+                                                +'<th width="15%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
@@ -761,6 +765,7 @@
                                                 +'<th width="5%">Jumlah</th>'
                                                 +'<th width="5%">Kurang</th>'
                                                 +'<th>Satuan</th>'
+                                                +'<th width="15%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
@@ -858,6 +863,7 @@
               {data: 'sd_qty', name: 'sd_qty'},
               {data: 'sd_qty_return', name: 'sd_qty_return'},
               {data: 's_name', name: 's_name'},
+              {data: 'description', name: 'description'},
               {data: 'sd_price', name: 'sd_price'},
               {data: 'sd_disc_percent', name: 'sd_disc_percent', orderable: false},
               {data: 'sd_disc_value', name: 'sd_disc_value', orderable: false},
