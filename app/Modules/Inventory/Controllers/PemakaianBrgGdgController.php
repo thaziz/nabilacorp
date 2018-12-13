@@ -11,6 +11,8 @@ use App\d_stock;
 use Datatables;
 use App\d_pakai_barang;
 use App\d_pakai_barangdt;
+use App\d_gudangcabang;
+use Carbon\Carbon;
 
 class PemakaianBrgGdgController extends Controller
 {
@@ -18,13 +20,15 @@ class PemakaianBrgGdgController extends Controller
     {
     	$tabIndex = view('Inventory::b_digunakan.tab-index');
     	$tabHistory = view('Inventory::b_digunakan.tab-history');
-    	$modal = view('Inventory::b_digunakan.modal');
+    	$comp = Session::get('user_comp');
+    	$gudang = d_gudangcabang::where('gc_comp',$comp)->get();
+    	$modal = view('Inventory::b_digunakan.modal',compact('gudang'));
     	$modalDetail = view('Inventory::b_digunakan.modal-detail');
     	$modalEdit = view('Inventory::b_digunakan.modal-edit');
         return view('Inventory::b_digunakan.index',compact('tabIndex','tabHistory','modal','modalDetail','modalEdit'));
     }
 
-    public function getPemakaianByTgl($tgl1, $tgl2)
+    public function getPemakaianByTgl($tgl1, $tgl2, $comp)
     {
         $y = substr($tgl1, -4);
         $m = substr($tgl1, -7,-5);
@@ -37,10 +41,9 @@ class PemakaianBrgGdgController extends Controller
         $tanggal2 = $y2.'-'.$m2.'-'.$d2;
 
         $data = d_pakai_barang::join('d_gudangcabang','d_pakai_barang.d_pb_gdg','=','d_gudangcabang.gc_id')
-              ->join('d_mem','d_pakai_barang.d_pb_staff','=','d_mem.m_id')
-              ->select('d_pakai_barang.*', 'd_mem.m_id', 'd_mem.m_name', 'd_gudangcabang.gc_id', 'd_gudangcabang.gc_cabang')
               ->whereBetween('d_pb_date', [$tanggal1, $tanggal2])
               ->orderBy('d_pb_created', 'DESC')
+              ->where('d_pb_comp',$comp)
               ->get();
 
         return DataTables::of($data)

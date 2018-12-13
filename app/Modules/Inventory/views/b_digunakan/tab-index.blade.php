@@ -45,7 +45,6 @@
               <th class="wd-10p">No</th>
               <th class="wd-15p">Tgl</th>
               <th class="wd-15p">Kode</th>
-              <th class="wd-15p">Staff</th>
               <th class="wd-15p">Gudang</th>
               <th class="wd-20p">Peminta</th>
               <th class="wd-20p">Keperluan</th>
