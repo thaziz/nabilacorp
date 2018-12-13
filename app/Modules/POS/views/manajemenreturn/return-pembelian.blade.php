@@ -138,20 +138,12 @@
                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
                                       +'<div class="form-group">'
                                         +'<select class="form-control input-sm select2" id="cari_nota_sales" name="id_sales" style="width: 100% !important;">'
-                                          +'<option> - Pilih Nota Penjualan</option>'
-                                        +'</select>'
+                                          +'<option> - Pilih Nota Penjualan</option>'+
+                                         
+                                        '</select>'
                                       +'</div>'
                                     +'</div>'
-                                    +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                      +'<label class="tebal">Jenis Return<font color="red">*</font></label>'
-                                    +'</div>'
-                                    +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                      +'<div class="form-group">'
-                                      +'<select class="form-control input-sm" id="pilih_metode_return" name="jenis_return" style="width: 100%;">'
-                                        +'<option value="BR"> Barang Rusak </option>'
-                                      +'</select>'
-                                      +'</div>'
-                                    +'</div>'
+                                    
                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
                                       +'<label class="tebal">Tanggal Return</label>'
                                     +'</div>'
@@ -261,17 +253,7 @@
                                         +'</select>'
                                       +'</div>'
                                     +'</div>'
-                                    +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                      +'<label class="tebal">Jenis Return<font color="red">*</font></label>'
-                                    +'</div>'
-                                    +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                      +'<div class="form-group">'
-                                      +'<select class="form-control input-sm" id="pilih_metode_return" name="jenis_return" style="width: 100%;">'
-                                        +'<option value="BR"> Barang Rusak </option>'
-                                        +'<option value="KB"> Kelebihan Barang </option>'
-                                      +'</select>'
-                                      +'</div>'
-                                    +'</div>'
+                                    
                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
                                       +'<label class="tebal">Tanggal Return</label>'
                                     +'</div>'
@@ -702,13 +684,13 @@
                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
                                       +'<label class="tebal">Jenis Return<font color="red">*</font></label>'
                                     +'</div>'
-                                    +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                      +'<div class="form-group">'
-                                      +'<select class="form-control input-sm" id="pilih_metode_return" name="jenis_return" style="width: 100%;">'
-                                        // +'<option value="KR"> Barang Rusak </option>'
-                                      +'</select>'
-                                      +'</div>'
-                                    +'</div>'
+                                    // +'<div class="col-md-4 col-sm-9 col-xs-12">'
+                                    //   +'<div class="form-group">'
+                                    //   +'<select class="form-control input-sm" id="pilih_metode_return" name="jenis_return" style="width: 100%;">'
+                                    //     // +'<option value="KR"> Barang Rusak </option>'
+                                    //   +'</select>'
+                                    //   +'</div>'
+                                    // +'</div>'
                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
                                       +'<label class="tebal">Tanggal Return</label>'
                                     +'</div>'
@@ -875,7 +857,7 @@
               {data: 'i_name', name: 'i_name'},
               {data: 'sd_qty', name: 'sd_qty'},
               {data: 'sd_qty_return', name: 'sd_qty_return'},
-              {data: 'm_sname', name: 'm_sname'},
+              {data: 's_name', name: 's_name'},
               {data: 'sd_price', name: 'sd_price'},
               {data: 'sd_disc_percent', name: 'sd_disc_percent', orderable: false},
               {data: 'sd_disc_value', name: 'sd_disc_value', orderable: false},
