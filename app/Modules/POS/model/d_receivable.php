@@ -37,6 +37,8 @@ class d_receivable extends Model
 							'r_type',
 							'r_code',
 							'r_mem' ,
+							'r_customer_name',
+							'r_alamat_cus',
 							'r_ref',
 							'r_value',
 							'r_pay',

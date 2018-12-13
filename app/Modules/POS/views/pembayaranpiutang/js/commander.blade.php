@@ -37,6 +37,8 @@
 		        	}
 		        },
 				{ data : 'r_code'},
+				{ data : 'r_customer_name'},
+				{ data : 'r_alamat_cus'},
 				{ 
 					data : null,
 					render : function(res) {

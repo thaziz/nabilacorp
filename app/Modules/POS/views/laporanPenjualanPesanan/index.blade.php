@@ -5,12 +5,12 @@
 <!--BEGIN TITLE & BREADCRUMB PAGE-->
 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
    <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-      <div class="page-title">Laporan Penjualan Toko</div>
+      <div class="page-title">Laporan Penjualan Pesanan</div>
    </div>
    <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
       <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
       <li><i></i>&nbsp;Penjualan&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-      <li class="active">Laporan Penjualan Toko</li>
+      <li class="active">Laporan Penjualan Pesanan</li>
    </ol>
    <div class="clearfix">
    </div>
@@ -25,7 +25,7 @@
          </div>
       </div>
       <ul id="generalTab" class="nav nav-tabs">
-         <li class="active"><a href="#alert-tab" data-toggle="tab">Laporan Penjualan Toko</a></li>
+         <li class="active"><a href="#alert-tab" data-toggle="tab">Laporan Penjualan Pesanan</a></li>
          <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
             <li><a href="#label-badge-tab" data-toggle="tab">3</a></li> -->
       </ul>
@@ -113,16 +113,18 @@
                      <table id="tabel_d_sales_dt" class="table tabelan table-hover table-bordered" width="100%" cellspacing="0">
                         <thead>
                            <tr>
-                              <th>Nama</th>
-                              <th>No Bukti</th>
+                              <th rowspan="2">No</th>
                               <th>Tanggal</th>
-                              <th>Customer</th>
-                              <th>Sat</th>
-                              <th>Qty</th>
-                              <th>Harga</th>
-                              <th>Disc%(Rp)</th>
-                              <th>Diskon Rp</th>                              
-                              <th>Total</th>
+                              <th>No Ref</th>
+                              <th>Pelanggan</th>
+                              <th>Kode Kas</th>
+                              <th rowspan="2">Rupiah</th>                                                            
+                           </tr>
+                           <tr>
+                              <th>Ref Piutang</th>
+                              <th>Tanggal Piutang</th>
+                              <th>Piutang(Rp)</th>
+                              <th>Bayar(Rp)</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -156,5 +158,5 @@
 </div>
 @endsection
 @section("extra_scripts")
-@include('POS::laporanPenjualanToko/js/commander')
+@include('POS::laporanPenjualanPesanan/js/commander')
 @endsection()

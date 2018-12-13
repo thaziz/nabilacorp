@@ -203,10 +203,16 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 
 	//menampilkan total pada ajax
 	Route::get('/penjualan/penjualanmobile/totalPenjualan', 'laporanPenjualanTokoController@totalPenjualan')->middleware('auth');
-	
-	
-
 	// ==========================================================================================
+
+	// Laporan penjualan pesanan
+	Route::get('penjualan/laporan-penjualan-pesanan/index', 'laporanPenjualanPesananController@index')->middleware('auth');	
+	Route::get('penjualan/laporan-penjualan-pesanan/table', 'laporanPenjualanPesananController@table')->middleware('auth');	
+	
+	//selesai  Laporan penjualan pesanan
+
+
+
 	Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
 	Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 

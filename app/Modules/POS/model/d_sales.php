@@ -667,7 +667,9 @@ $r_code = "DPR-".date('ym')."-".$kd;
                 'r_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
                 'r_type' =>'Penjualan Pesanan',
                 'r_code'=>$r_code,
-                'r_mem',
+                /*'r_mem',*/
+                'r_customer_name'=>$request->s_nama_cus,
+                'r_alamat_cus'=>$request->s_alamat_cus,
                 'r_ref'=>$note,
                 'r_value'=>$s_net,
                 'r_pay'=>$r_pay,
