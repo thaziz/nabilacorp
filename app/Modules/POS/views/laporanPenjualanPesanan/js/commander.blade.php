@@ -69,7 +69,7 @@ function table(){
 
       $('#tabel_d_sales_dt').dataTable().fnDestroy();
     tablex = $("#tabel_d_sales_dt").DataTable({        
-         responsive: true,
+         responsive: false,
         "language": dataTableLanguage,
     processing: true,
             /*serverSide: true,*/
@@ -84,18 +84,17 @@ function table(){
                     },
               },
             columns: [
-             	{ data : 'i_name' },
-		        { data : 's_note' },
-		        { data : 's_date'},
-		        { data : 's_nama_cus' },
-		        { data : 's_detname' },
-		        { data : 'sd_qty' },
-		       /* { data : 'sd_price' },
-		        { data : 'sd_disc_value' },
-		        { data : 'sd_disc_percentvalue' },		        
-		        { data : 'sd_total' },*/
+            	{ data : 'DT_Row_Index' },
+             	{ data : 'r_date' },
+		        { data : 'r_reff' },
+		        { data : 'r_cus'},
+		        { data : 'r_value' },
+		        { data : 'tgl' },
+		        { data : 'jml' },
+		        { data : 'r_outstanding' },
            
             ],
+            "orderable": true,
              'columnDefs': [
                 
                {
