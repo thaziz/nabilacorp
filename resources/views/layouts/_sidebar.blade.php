@@ -254,6 +254,7 @@
                     <!-- ======= -->
                     </a>
                         <ul class="nav nav-second-level">
+                            <li class="menu-sekunder {{ Request::is('penjualan/pembayaranpiutang/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/pembayaranpiutang/index') }}"><span class="submenu-title">Pembayaran Piutang</span><span class="hidden">Penjualan</span></a>
                             <li class="menu-sekunder {{ Request::is('penjualan/stok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/stok/index') }}"><span class="submenu-title">Stok Barang Penjualan</span><span class="hidden">Penjualan</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('penjualan/manajemenharga/harga') ? 'active' : '' || Request::is('penjualan/manajemenharga/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/manajemenharga/harga') }}"><span class="submenu-title">Manajemen Harga</span><span class="hidden">Penjualan</span></a>
@@ -289,6 +290,9 @@
                             </li> -->
 
                             <li class="menu-sekunder {{ Request::is('penjualan/penjualanmobile/penjualanmobile') ? 'active' : '' || Request::is('penjualan/penjualanmobile/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanmobile/penjualanmobile') }}"><span class="submenu-title">Laporan Penjualan Toko</span><span class="hidden">Penjualan</span></a>
+                            </li>
+
+                            <li class="menu-sekunder {{ Request::is('penjualan/laporan-penjualan-pesanan/index') ? 'active' : '' || Request::is('penjualan/laporan-penjualan-pesanan/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/laporan-penjualan-pesanan/index') }}"><span class="submenu-title">Laporan Penjualan Pesanan</span><span class="hidden">Penjualan</span></a>
                             </li>
                             
                             <!-- <li class="menu-sekunder {{ Request::is('penjualan/mutasistok/mutasi') ? 'active' : '' || Request::is('penjualan/mutasistok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasistok/mutasi') }}"><span class="submenu-title">Mutasi Stock</span><span class="hidden">Penjualan</span></a>

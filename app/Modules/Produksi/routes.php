@@ -22,8 +22,8 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 /* selesai spk*/
 //mahmud output produksi
 	Route::get('/produksi/hasil-produksi/index', 'ManOutputProduksiController@index')->middleware('auth');
-	Route::get('/produksi/o_produksi/tabel/{tgl1}/{tgl2}/{pilih}/{comp}', 'ManOutputProduksiController@tabel');	
-	Route::get('/produksi/o_produksi/select2/spk/{tgl1}/{comp}', 'ManOutputProduksiController@setSpk');
+	Route::get('/produksi/o_produksi/tabel/{tgl1}/{tgl2}', 'ManOutputProduksiController@tabel');	
+	// Route::get('/produksi/o_produksi/select2/spk/{tgl1}/{comp}', 'ManOutputProduksiController@setSpk');
 	Route::get('/produksi/o_produksi/store', 'ManOutputProduksiController@store');
 //mahmud output produksi
 	Route::get('/produksi/bahanbaku/baku', 'ProduksiController@baku')->middleware('auth');
@@ -51,6 +51,9 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 	Route::get('/penjualan/monitoringorder/nota/tabel/{id}', 'MonitoringOrderController@nota');
 	Route::get('/produksi/monitoringprogress/plan/{id}', 'MonitoringProgressController@plan');
 	Route::get('/produksi/monitoringprogress/save', 'MonitoringProgressController@save');
+	Route::get('/produksi/monitoringprogress/tabel-filter-monitoring', 'MonitoringProgressController@tabelFilterMonitoring');
+	Route::get('/produksi/monitoringprogress/tabel/autoplan', 'MonitoringProgressController@autoPlan');
+	Route::get('/produksi/monitoringprogress/save/autoplan', 'MonitoringProgressController@saveAutoPlan');
 	//monitoring order selesai
 
 	

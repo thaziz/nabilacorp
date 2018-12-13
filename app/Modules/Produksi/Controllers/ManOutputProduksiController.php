@@ -23,160 +23,68 @@ class ManOutputProduksiController extends Controller
     	return view('Produksi::o_produksi.index',compact('modalCreate')); 
     }
 
-    public function tabel($tgl1, $tgl2, $tampil, $comp){
+    public function tabel($tgl1, $tgl2){
         $y = substr($tgl1, -4);
         $m = substr($tgl1, -7,-5);
         $d = substr($tgl1,0,2);
-         $tgl01 = $y.'-'.$m.'-'.$d;
+         $tanggal1 = $y.'-'.$m.'-'.$d;
 
         $y2 = substr($tgl2, -4);
         $m2 = substr($tgl2, -7,-5);
         $d2 = substr($tgl2,0,2);
-          $tgl02 = $y2.'-'.$m2.'-'.$d2;
+          $tanggal2 = $y2.'-'.$m2.'-'.$d2;
         //   dd($tgl01);
-        if ($tampil == 'Semua') {
-            $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
-            ->get();
+        $data = d_spk::join('m_item', 'spk_item', '=', 'i_id')
+            ->join('d_productplan', 'pp_id', '=', 'spk_ref')
+            ->select('spk_id','spk_item', 'spk_date', 'i_code', 'i_name', 'pp_qty', 'spk_code', 'spk_status')
+            ->where(function ($query) {
+                $query->where('spk_status', 'PB');
+            })
+            ->where('spk_date', '>=', $tanggal1)
+            ->where('spk_date', '<=', $tanggal2)
+            ->orderBy('spk_date', 'DESC')
 
-        }elseif ($tampil == 'Belum-dikirim') {
-
-           $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('prdt_status','RD')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
             ->get();
-
-        }elseif ($tampil == 'Dikirim') {
-            $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('prdt_status','FN')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
-            ->get();
-        }elseif ($tampil == 'Terkirim') {
-            $data = DB::table('d_productresult_dt')
-            ->select('pr_date',
-                'spk_code',
-                'i_name',
-                'prdt_date',
-                'prdt_time',
-                'prdt_qty',
-                'prdt_productresult',
-                'prdt_detail',
-                'prdt_status',
-                'mp_name',
-                'prdt_produksi')
-            ->join('d_productresult', 'prdt_productresult', '=', 'pr_id')
-            ->join('m_item', 'i_id', '=', 'prdt_item')
-            ->join('d_spk', 'pr_spk', '=', 'spk_id')
-            ->where('prdt_status','RC')
-            ->where('pr_date', '>=' ,$tgl01)
-            ->where('pr_date', '<=' ,$tgl02)
-            ->where('spk_comp',$comp)
-            ->orderBy('prdt_date', 'DESC')
-            ->get();
-        }
-        
-
         return DataTables::of($data)
+
+            ->editColumn('spk_date', function ($user) {
+                return $user->spk_date ? with(new Carbon($user->spk_date))->format('d M Y') : '';
+
+            })
+
+            ->editColumn('item', function ($user) {
+                return ($user->i_code .' - '. $user->i_name);
+            })
+
+            ->editColumn('produksi', function ($user) {
+                return $result = d_productresult_dt::
+                    join('d_productresult','d_productresult.pr_id','=','prdt_productresult')
+                    ->where('pr_spk',$user->spk_id)
+                    ->sum('d_productresult_dt.prdt_qty');
+            })
+
+            ->editColumn('result', function ($user) {
+                return '<input type="hidden" name="spk_id[]" class="form-control input-sm spk-id" value="'.$user->spk_id.'">
+                        <input type="hidden" name="spk_item[]" class="form-control input-sm spk-item" value="'.$user->spk_item.'">
+                        <input type="number" name="spk_qty[]" class="form-control input-sm result-spk" value="0">';
+            })
+
             ->addColumn('action', function ($data) {
-                if ($data->prdt_status == 'RD') {
                     return '<div class="text-center">
                   <button style="margin-left:5px;" 
                           title="Menunggu" 
                           type="button"
-                          class="btn btn-warning btn-sm">
-                          <i class="fa fa-cubes" aria-hidden="true"></i>
+                          class="btn btn-success btn-sm">
+                          <i class="fa fa-info-circle" aria-hidden="true"></i>
                   </button>
                 </div>';
 
-                } else if ($data->prdt_status == 'RC') {
-                    return '<div class="text-center">
-                    <button id="status" 
-                            class="btn btn-success btn-sm" 
-                            title="Diterima">
-                            <i class="fa fa-check-square" aria-hidden="true"></i>
-                    </button>
-                  </div>';
-                } else {
-                    return '<div class="text-center">
-                    <button id="status" 
-                            class="btn btn-primary btn-sm" 
-                            title="Dikirim">
-                            <i class="fa fa-car" aria-hidden="true"></i>
-                    </button>
-                  </div>';
-                }
+            })
 
-            })
-            ->editColumn('pr_date', function ($user) {
-                return $user->pr_date ? with(new Carbon($user->pr_date))->format('d M Y') : '';
-            })
-            ->editColumn('prdt_date', function ($user) {
-                return date('d M Y', strtotime($user->prdt_date)) . ', ' . $user->prdt_time;
-            })
-            ->editColumn('prdt_status', function ($inquiry) {
-                if ($inquiry->prdt_status == 'RD')
-                    return '<div class="text-center">
-                    <span class="label label-red">Digudang</span>
-                  </div>';
-                if ($inquiry->prdt_status == 'FN')
-                    return '<div class="text-center">
-                    <span class="label label-yellow">Dikirim</span>
-                  </div>';
-                if ($inquiry->prdt_status == 'RC')
-                    return '<div class="text-center">
-                    <span class="label label-success">Diterima</span>
-                  </div>';
-            })
             ->rawColumns(['prdt_status',
-                'action'
+                          'produksi',
+                          'result',
+                          'action'
             ])
             ->make(true);
 
@@ -228,206 +136,197 @@ class ManOutputProduksiController extends Controller
     {
         // dd($request->all());
         DB::beginTransaction();
-        try {
-            $cek = DB::table('d_productresult')
-                ->where('pr_spk', $request->spk_id)
-                ->get();
-            $status = d_spk::where('spk_id', $request->spk_id)
-                ->first();
+        try 
+        {
+            for ($i=0; $i <count($request->spk_qty) ; $i++) 
+            { 
+                if ($request->spk_qty[$i] != '0') 
+                {
+                    $cek = DB::table('d_productresult')
+                        ->where('pr_spk', $request->spk_id[$i])
+                        ->get();
 
-            d_productplan::where('pp_id', $status->spk_ref)
-                ->update([
-                    'pp_isspk' => 'P'
-                ]);
+                    $status = d_spk::where('spk_id', $request->spk_id[$i])
+                        ->first();
 
-            $nota = d_spk::select('spk_code')
-                ->where('spk_id', $request->spk_id)
-                ->first();
-
-            $maxid1 = DB::Table('d_productresult_dt')->select('prdt_detail')->max('prdt_detail');
-            if ($maxid1 <= 0 || $maxid1 == '') {
-                $maxid1 = 1;
-            } else {
-                $maxid1 += 1;
-            }
-
-            $maxid = DB::Table('d_productresult')->select('pr_id')->max('pr_id');
-            if ($maxid <= 0 || $maxid == '') {
-                $maxid = 1;
-            } else {
-                $maxid += 1;
-            }
-
-            if (count($cek) == 0) {
-
-                d_productresult::insert([
-                    'pr_id' => $maxid,
-                    'pr_spk' => $request->spk_id,
-                    'pr_date' => Carbon::now(),
-                    'pr_item' => $request->spk_item
-                ]);
-
-                d_productresult_dt::insert([
-                    'prdt_productresult' => $maxid,
-                    'prdt_detail' => $maxid1,
-                    'prdt_item' => $request->spk_item,
-                    'prdt_qty' => $request->spk_qty,
-                    'prdt_sisa' => $request->spk_qty,
-                    'prdt_produksi' => $request->prdt_produksi,
-                    'prdt_status' => 'RD',
-                    'prdt_date' => Carbon::now(),
-                    'prdt_time' => $request->time
-
-                ]);
-
-            } else {
-
-                $pr = d_productresult::where('pr_spk', $request->spk_id)
-                    ->get();
-
-                $prdt = d_productresult_dt::where('prdt_productresult', $pr[0]->pr_id)
-                    ->where('prdt_status', 'RD')
-                    ->first();
-
-                if ($prdt != null) {
-
-                    $hasil = $prdt->prdt_qty + $request->spk_qty;
-                    $sisa = $prdt->prdt_sisa + $request->spk_qty;
-
-                    d_productresult_dt::where('prdt_productresult', $pr[0]->pr_id)
-                        ->where('prdt_status', 'RD')
+                    d_productplan::where('pp_id', $status->spk_ref)
                         ->update([
-                            'prdt_qty' => $hasil,
-                            'prdt_sisa' => $sisa,
+                            'pp_isspk' => 'P'
                         ]);
 
-                } else {
+                    $nota = d_spk::select('spk_code')
+                        ->where('spk_id', $request->spk_id[$i])
+                        ->first();
 
-                    d_productresult_dt::insert([
-                        'prdt_productresult' => $pr[0]->pr_id,
-                        'prdt_detail' => $maxid1,
-                        'prdt_item' => $request->spk_item,
-                        'prdt_qty' => $request->spk_qty,
-                        'prdt_produksi' => $request->prdt_produksi,
-                        'prdt_status' => 'RD',
-                        'prdt_date' => Carbon::now(),
-                        'prdt_time' => $request->time
+                    $maxid1 = DB::Table('d_productresult_dt')->select('prdt_detail')->max('prdt_detail')+1;
+                    $maxid = DB::Table('d_productresult')->select('pr_id')->max('pr_id')+1;
 
-                    ]);
+                    if (count($cek) == 0) 
+                    {
+
+                        d_productresult::insert([
+                            'pr_id' => $maxid,
+                            'pr_spk' => $request->spk_id[$i],
+                            'pr_date' => Carbon::now(),
+                            'pr_item' => $request->spk_item[$i]
+                        ]);
+
+                        d_productresult_dt::insert([
+                            'prdt_productresult' => $maxid,
+                            'prdt_detail' => $maxid1,
+                            'prdt_item' => $request->spk_item[$i],
+                            'prdt_qty' => $request->spk_qty[$i],
+                            'prdt_sisa' => $request->spk_qty[$i],
+                            'prdt_status' => 'RD',
+                            'prdt_date' => Carbon::now(),
+                            'prdt_time' => Carbon::now()
+
+                        ]);
+
+                    } else {
+
+
+                        $pr = d_productresult::where('pr_spk', $request->spk_id[$i])
+                            ->get();
+
+                        $prdt = d_productresult_dt::where('prdt_productresult', $pr[0]->pr_id)
+                            ->where('prdt_status', 'RD')
+                            ->first();
+
+                        if ($prdt != null) {
+
+                            $hasil = $prdt->prdt_qty + $request->spk_qty[$i];
+                            $sisa = $prdt->prdt_sisa + $request->spk_qty[$i];
+
+                            d_productresult_dt::where('prdt_productresult', $pr[0]->pr_id)
+                                ->where('prdt_status', 'RD')
+                                ->update([
+                                    'prdt_qty' => $hasil,
+                                    'prdt_sisa' => $sisa,
+                                ]);
+
+                        } else {
+
+                            d_productresult_dt::insert([
+                                'prdt_productresult' => $pr[0]->pr_id,
+                                'prdt_detail' => $maxid1,
+                                'prdt_item' => $request->spk_item[$i],
+                                'prdt_qty' => $request->spk_qty[$i],
+                                'prdt_sisa' => $request->spk_qty[$i],
+                                'prdt_status' => 'RD',
+                                'prdt_date' => Carbon::now(),
+                                'prdt_time' => Carbon::now()
+
+                            ]);
+                        }
+
+                    }
+                    // dd($status);
+                    $gc_id = d_gudangcabang::select('gc_id')
+                      ->where('gc_gudang','GUDANG PRODUKSI')
+                      ->first();
+                    $gudang = $gc_id->gc_id;
+
+                    $stockProduksi = d_stock::where('s_comp', $gudang)
+                        ->where('s_position', $gudang)
+                        ->where('s_item', $request->spk_item[$i])
+                        ->first();
+
+                    if ($stockProduksi == null) {
+
+                        $maxid = DB::Table('d_stock')->select('s_id')->max('s_id')+1;
+                        d_stock::insert([
+                            's_id' => $maxid,
+                            's_comp' => $gudang,
+                            's_position' => $gudang,
+                            's_item' => $request->spk_item[$i],
+                            's_qty' => $request->spk_qty[$i],
+                            's_insert' => Carbon::now()
+                        ]);
+
+                        d_stock_mutation::create([
+                            'sm_stock' => $maxid,
+                            'sm_detailid' => 1,
+                            'sm_date' => Carbon::now(),
+                            'sm_comp' => $gudang,
+                            'sm_position' => $gudang,
+                            'sm_mutcat' => 5,
+                            'sm_item' => $request->spk_item[$i],
+                            'sm_qty' => $request->spk_qty[$i],
+                            'sm_qty_used' => 0,
+                            'sm_qty_sisa' => $request->spk_qty[$i],
+                            'sm_qty_expired' => 0,
+                            'sm_detail' => 'PENAMBAHAN',
+                            'sm_reff' => $nota->spk_code,
+                            'sm_insert' => Carbon::now()
+                        ]);
+
+                    } else {
+
+                        $sm_detailid = d_stock_mutation::select('sm_detailid')
+                                ->where('sm_item', $request->spk_item[$i])
+                                ->where('sm_comp', $gudang)
+                                ->where('sm_position', $gudang)
+                                ->max('sm_detailid') + 1;
+
+                        $stokBaru = $stockProduksi->s_qty + $request->spk_qty[$i];
+                        $stokProduksi = d_stock::where('s_comp', $gudang)
+                            ->where('s_position', $gudang)
+                            ->where('s_id', $stockProduksi->s_id)
+                            ->update(['s_qty' => $stokBaru]);
+
+                        d_stock_mutation::create([
+                            'sm_stock' => $stockProduksi->s_id,
+                            'sm_detailid' => $sm_detailid,
+                            'sm_date' => Carbon::now(),
+                            'sm_comp' => $gudang,
+                            'sm_position' => $gudang,
+                            'sm_mutcat' => 5,
+                            'sm_item' => $request->spk_item[$i],
+                            'sm_qty' => $request->spk_qty[$i],
+                            'sm_qty_used' => 0,
+                            'sm_qty_sisa' => $request->spk_qty[$i],
+                            'sm_qty_expired' => 0,
+                            'sm_detail' => 'PENAMBAHAN',
+                            'sm_reff' => $nota->spk_code,
+                            'sm_insert' => Carbon::now()
+                        ]);
+
+                    }
+
+                    $cek = d_productresult::select(
+                        'pr_id',
+                        'pr_spk',
+                        'prdt_qty')
+                        ->where('pr_spk',$request->spk_id[$i])
+                        ->join('d_productresult_dt','d_productresult_dt.prdt_productresult','=','pr_id')
+                        ->get();
+                    // dd($cek);
+                    $totalHasil = 0;
+                    for ($i=0; $i <count($cek) ; $i++) { 
+                        $totalHasil += $cek[$i]->prdt_qty;
+                    }
+                    // dd($cek[0]);
+                    $autoStatus = d_spk::select('spk_id',
+                        'spk_ref',
+                        'spk_status',
+                        'pp_qty',
+                        'spk_code')
+                        ->join('d_productplan','d_productplan.pp_id','=','spk_ref')
+                        ->where('spk_id',$cek[0]->pr_spk)
+                        ->first();
+
+                    if ($autoStatus->pp_qty == $totalHasil) {
+                        $autoStatus->update([
+                            'spk_status' => 'FN'
+                        ]);
+                        d_productplan::where('pp_id', $status->spk_ref)
+                        ->update([
+                            'pp_isspk' => 'C'
+                        ]);
+                    }
                 }
-
             }
-            // dd($status);
-            $gc_id = d_gudangcabang::select('gc_id')
-	          ->where('gc_gudang','GUDANG PRODUKSI')
-	          ->where('gc_comp',$status->spk_comp)
-	          ->first();
-	        $gudang = $gc_id->gc_id;
-
-            $stockProduksi = d_stock::where('s_comp', $gudang)
-                ->where('s_position', $gudang)
-                ->where('s_item', $request->spk_item)
-                ->first();
-
-            if ($stockProduksi == null) {
-                $maxid = DB::Table('d_stock')->select('s_id')->max('s_id');
-                if ($maxid <= 0 || $maxid == '') {
-                    $maxid = 1;
-                } else {
-                    $maxid += 1;
-                }
-
-                d_stock::insert([
-                    's_id' => $maxid,
-                    's_comp' => $gudang,
-                    's_position' => $gudang,
-                    's_item' => $request->spk_item,
-                    's_qty' => $request->spk_qty,
-                    's_insert' => Carbon::now()
-                ]);
-
-                d_stock_mutation::create([
-                    'sm_stock' => $maxid,
-                    'sm_detailid' => 1,
-                    'sm_date' => Carbon::now(),
-                    'sm_comp' => $gudang,
-                    'sm_position' => $gudang,
-                    'sm_mutcat' => 5,
-                    'sm_item' => $request->spk_item,
-                    'sm_qty' => $request->spk_qty,
-                    'sm_qty_used' => 0,
-                    'sm_qty_sisa' => $request->spk_qty,
-                    'sm_qty_expired' => 0,
-                    'sm_detail' => 'PENAMBAHAN',
-                    'sm_reff' => $nota->spk_code,
-                    'sm_insert' => Carbon::now()
-                ]);
-
-            } else {
-
-                $sm_detailid = d_stock_mutation::select('sm_detailid')
-                        ->where('sm_item', $request->spk_item)
-                        ->where('sm_comp', $gudang)
-                        ->where('sm_position', $gudang)
-                        ->max('sm_detailid') + 1;
-
-                $stokBaru = $stockProduksi->s_qty + $request->spk_qty;
-                $stokProduksi = d_stock::where('s_comp', $gudang)
-                    ->where('s_position', $gudang)
-                    ->where('s_id', $stockProduksi->s_id)
-                    ->update(['s_qty' => $stokBaru]);
-
-                d_stock_mutation::create([
-                    'sm_stock' => $stockProduksi->s_id,
-                    'sm_detailid' => $sm_detailid,
-                    'sm_date' => Carbon::now(),
-                    'sm_comp' => $gudang,
-                    'sm_position' => $gudang,
-                    'sm_mutcat' => 5,
-                    'sm_item' => $request->spk_item,
-                    'sm_qty' => $request->spk_qty,
-                    'sm_qty_used' => 0,
-                    'sm_qty_sisa' => $request->spk_qty,
-                    'sm_qty_expired' => 0,
-                    'sm_detail' => 'PENAMBAHAN',
-                    'sm_reff' => $nota->spk_code,
-                    'sm_insert' => Carbon::now()
-                ]);
-
-            }
-
-            $cek = d_productresult::select(
-                'pr_id',
-                'pr_spk',
-                'prdt_qty')
-                ->where('pr_spk',$request->spk_id)
-                ->join('d_productresult_dt','d_productresult_dt.prdt_productresult','=','pr_id')
-                ->get();
-            
-            $totalHasil = 0;
-            for ($i=0; $i <count($cek) ; $i++) { 
-                
-                $totalHasil += $cek[$i]->prdt_qty;
-            }
-
-            $autoStatus = d_spk::select('spk_id',
-                'spk_ref',
-                'spk_status',
-                'pp_qty')
-                ->where('spk_id',$request->spk_id)
-                ->join('d_productplan','d_productplan.pp_id','=','spk_ref')
-                ->first();
-           // dd($totalHasil);
-            if ($autoStatus->pp_qty == $totalHasil) {
-                $autoStatus->update([
-                    'spk_status' => 'FN'
-                ]);
-                d_productplan::where('pp_id', $status->spk_ref)
-                ->update([
-                    'pp_isspk' => 'C'
-                ]);
-            }
-
 
         DB::commit();
 	    return response()->json([

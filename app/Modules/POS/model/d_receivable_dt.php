@@ -4,42 +4,36 @@ namespace App\Modules\POS\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-use DB;
+
+use App\Modules\POS\model\d_receivable_dt;
+
+use App\Lib\mutasi;
+
+use App\Lib\format;
 
 use App\m_item;
 
-class d_sales_dt extends Model
+use DB;
+
+use Auth;
+
+use Datatables;
+
+use Session;
+
+class d_receivable_dt extends Model
 {  
-    protected $table = 'd_sales_dt';
-    protected $primaryKey = 'sd_sales';
-    public $timestamps=false;
-    
-     protected $fillable = ['sd_sales','sd_comp','sd_position','sd_date','sd_detailid','sd_item','sd_qty','sd_price','sd_disc_percent','sd_disc_value','sd_total','sd_disc_percentvalue'];
-	static function penjualanDt($sd_sales=''){		
-
-		return DB::table('d_sales_dt')->join('m_item','sd_item','=','i_id')
-		->join('m_satuan','s_id','=','i_satuan')->where('sd_sales',$sd_sales)
-		->leftjoin('d_stock',function($join){
-			$join->on('s_item','=','i_id');
-			$join->on('s_comp','=','sd_comp');
-			$join->on('s_position','=','sd_position');
+    protected $table = 'd_receivable_dt';    
+    const CREATED_AT = 'rd_created';
+    const UPDATED_AT = 'rd_updated';
 
 
-		})
-		->get();
-	}
-
-	function d_sales() {
-		$res = $this->belongsTo('App\Modules\POS\model\d_sales', 'sd_sales', 's_id');
-
-        return $res;
-	}
-
-	function m_item() {
-		$res = $this->belongsTo('App\m_itemm', 'sd_item', 'i_id');
-
-        return $res;
-	}
+     protected $fillable = ['rd_receivable',
+							'rd_detailid' ,
+							'rd_datepay',							
+							'rd_value',							
+							'rd_status'
+						   ];
 }
 	
-	
+?>

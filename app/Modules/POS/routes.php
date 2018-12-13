@@ -203,10 +203,16 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 
 	//menampilkan total pada ajax
 	Route::get('/penjualan/penjualanmobile/totalPenjualan', 'laporanPenjualanTokoController@totalPenjualan')->middleware('auth');
-	
-	
-
 	// ==========================================================================================
+
+	// Laporan penjualan pesanan
+	Route::get('penjualan/laporan-penjualan-pesanan/index', 'laporanPenjualanPesananController@index')->middleware('auth');	
+	Route::get('penjualan/laporan-penjualan-pesanan/table', 'laporanPenjualanPesananController@table')->middleware('auth');	
+	
+	//selesai  Laporan penjualan pesanan
+
+
+
 	Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
 	Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 
@@ -224,6 +230,12 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/returnpenjualan/tabel', 'ManajemenReturnPenjualanController@tabel');
 	Route::get('/penjualan/manajemenreturn/r_penjualan', 'ManajemenReturnPenjualanController@r_penjualan')->middleware('auth');
 	Route::get('/penjualan/returnpenjualan/tambahreturn', 'ManajemenReturnPenjualanController@newreturn');
+	
+	// Routing untuk pembayaran piutang
+	Route::get('/penjualan/pembayaranpiutang/index', 'PembayaranPiutangController@index');
+	Route::get('/penjualan/pembayaranpiutang/find_d_receivable', 'PembayaranPiutangController@find_d_receivable');
+	Route::get('/penjualan/pembayaranpiutang/find_d_receivable_dt/{r_id}', 'PembayaranPiutangController@find_d_receivable_dt');
+	Route::get('/penjualan/pembayaranpiutang/insert_d_receivable_dt', 'PembayaranPiutangController@insert_d_receivable_dt');
 
 
 	Route::get('/penjualan/pos-mobile/index', 'PenjualanController@posToko')->middleware('auth');
