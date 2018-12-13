@@ -110,22 +110,21 @@
 
                <div class="col-md-12 col-sm-12 col-xs-12">
                   <div class="table-responsive">
-                     <table id="tabel_d_sales_dt" class="table tabelan table-hover table-bordered" width="100%" cellspacing="0">
+                     <table id="tabel_d_sales_dt" class="table tabelan table-hover table-bordered table-striped" width="100%" cellspacing="0">
                         <thead>
                            <tr>
-                              <th rowspan="2">No</th>
-                              <th>Tanggal</th>
-                              <th>No Ref</th>
-                              <th>Pelanggan</th>
-                              <th>Kode Kas</th>
-                              <th rowspan="2">Rupiah</th>                                                            
+                              <th align="center" rowspan="2" width="1%">No</th>
+                              <th align="center" rowspan="2" width="3%">Tanggal</th>
+                              <th align="center" rowspan="2" width="15%">No Ref</th>
+                              <th align="center" rowspan="2"  width="17%">Pelanggan</th>                              
+                              <th align="center" rowspan="2"  width="15%">Piutang</th>
+                              <th align="center" colspan="2">Terbayar</th>            
+                              <th align="center" rowspan="2"  width="15%">Sisa Hutang</th>                  
                            </tr>
-                           <tr>
-                              <th>Ref Piutang</th>
-                              <th>Tanggal Piutang</th>
-                              <th>Piutang(Rp)</th>
-                              <th>Bayar(Rp)</th>
-                           </tr>
+                            <tr>                                 
+                                 <th width="8%">Tgl bayar</th>                                 
+                                 <th  width="10%">Jml Bayar</th>
+                              </tr>
                         </thead>
                         <tbody>
                         </tbody>

@@ -249,10 +249,12 @@ class laporanPenjualanTokoController  extends Controller
       Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows){        
             $excel->sheet('New sheet', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows) {
                 $sheet->loadView('POS::laporanPenjualanToko/print_laporan_excel')
+                /*->mergeCells('A2:B3')*/
                 ->with('data',$rows)
                 ->with('grand_total',$grand_total)
                 ->with('total_discountPercent',$total_discountPercent)
                 ->with('total_discountvalue',$total_discountvalue);
+
 
             });
 

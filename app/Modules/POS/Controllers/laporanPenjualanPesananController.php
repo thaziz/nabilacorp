@@ -37,6 +37,13 @@ class laporanPenjualanPesananController  extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function receivableDt ($id){
+       return $data=d_receivable_dt::
+              where('rd_receivable',$id)              
+             ->orderBy('rd_detailid')
+             ->get();
+    }
+
     public function index() {      
       return view('POS::laporanPenjualanPesanan/index');
     }
@@ -47,21 +54,60 @@ class laporanPenjualanPesananController  extends Controller
 
 
        $data=d_receivable::
-              leftjoin('d_receivable_dt',function($join){
-                  $join->on('r_id','=','rd_receivable');                   
-                  $join->where('rd_status','Y');
-              })
-             ->get();
-
-      $data2=d_receivable::
+             get();
+      /*$data2=d_receivable::
               join('d_receivable_dt',function($join){
                   $join->on('r_id','=','rd_receivable');                   
                   $join->where('rd_status','N');
               })
-             ->get();
+             ->get();*/
+      
 
-        $result = $data->merge($data2);
-        dd($result);
+      return Datatables::of($data)                       
+                      ->addIndexColumn()                                                 
+                      ->editColumn('r_date', function ($data) {                            
+                                return date('d-m-Y',strtotime($data->r_date));                            
+                        })
+                      ->editColumn('r_reff', function ($data) {                            
+                                return $data->r_code;
+                        })
+                      ->editColumn('r_value', function ($data) {                            
+                                return '<div style="width:100%;text-align:right">'.number_format($data->r_value,2,',','.');   
+                        })
+                      ->editColumn('r_outstanding', function ($data) {                            
+                                return '<div style="width:100%;text-align:right">'.number_format($data->r_outstanding,2,',','.');   
+                        })
+                      ->editColumn('r_cus', function ($data) {                            
+                                return $data->r_customer_name;   
+                        })                         
+                      ->editColumn('Terbayar', function ($data) {                  
+                                $dt=$this->receivableDt($data->r_id);
+                                $html='';
+                                foreach ($dt as $key => $dataDt) {
+                                  $html.= $dataDt->rd_value.'<br>';
+                                }
+                                return $html;                      
+                      })   
+                      ->editColumn('jml', function ($data) {                  
+                                $dt=$this->receivableDt($data->r_id);                                
+                                $html='';
+                                foreach ($dt as $key => $dataDt) {                                  
+                                  $html.= '<div style="width:100%;text-align:right">'.number_format($dataDt->rd_value,2,',','.').'<br>';
+                                }
+                                return $html;                      
+                      })           
+                      ->editColumn('tgl', function ($data) {                  
+                                $dt=$this->receivableDt($data->r_id);
+                                $html='';
+                                foreach ($dt as $key => $dataDt) {
+                                  $html.='<div style="width:100%;text-align:center">'.date('d-m-Y',strtotime($dataDt->rd_datepay)).'<br>';
+                                }
+                                return $html;                      
+                      })           
+                      ->rawColumns(['tgl','jml','r_value','r_outstanding'])         
+                      ->make(true); 
+    
+        
              
        
     }
