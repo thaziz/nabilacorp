@@ -47,21 +47,21 @@
                                           <div class="col-md-6 col-sm-7 col-xs-12">
                                             <div class="form-group" style="display: ">
                                               <div class="input-daterange input-group">
-                                                <input id="tanggal" data-provide="datepicker" class="form-control input-sm" name="tanggal" type="text">
+                                                <input id="tgl_awal" data-provide="datepicker" class="form-control input-sm" name="tgl_awal" type="text">
                                                 <span class="input-group-addon">-</span>
-                                                <input id="tanggal" data-provide="datepicker" class="input-sm form-control" name="tanggal" type="text">
+                                                <input id="tgl_akhir" data-provide="datepicker" class="input-sm form-control" name="tgl_akhir" type="text">
                                               </div>
                                             </div>
                                           </div>
                                         </div>
 
                                         <div class="col-md-3 col-sm-3 col-xs-12" align="center">
-                                          <button class="btn btn-primary btn-sm btn-flat" type="button">
+                                          <button class="btn btn-primary btn-sm btn-flat" type="button" onclick="find_d_purchaseharian()">
                                             <strong>
                                               <i class="fa fa-search" aria-hidden="true"></i>
                                             </strong>
                                           </button>
-                                          <button class="btn btn-info btn-sm btn-flat" type="button">
+                                          <button class="btn btn-info btn-sm btn-flat" type="button" onclick="refresh_d_purchaseharian()">
                                             <strong>
                                               <i class="fa fa-undo" aria-hidden="true"></i>
                                             </strong>
@@ -75,17 +75,18 @@
                                       </div>
 
                                       <div class="table-responsive" style="margin-top: 15px;">
-                                        <table class="table tabelan table-bordered" id="data">
+                                        <table class="table tabelan table-bordered" id="tabel_d_purchaseharian">
                                           <thead>
-                                            <th>No</th>
                                             <th>Tanggal Belanja</th>
+                                            <th>Staff</th>
                                             <th>Nota</th>
-                                            <th>Total Gross</th>
-                                            <th>Penyesuaian</th>
-                                            <th>Total Net</th>
-                                            <th>Item</th>
+                                            <th>Peminta</th>
+                                            <th>Keperluan</th>
+                                            <th>Total Biaya</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                           </thead>
+                                          <tbody></tbody>
                                         </table>
                                       </div>
 
@@ -99,7 +100,7 @@
                                 <div id="note-tab" class="tab-pane fade">
                                   <div class="row">
                                     <div class="panel-body">
-                                      <!-- Isi Content -->we we we
+                                      <!-- Isi Content -->
                                     </div>
                                   </div>
                                 </div><!--/div note-tab -->
@@ -109,7 +110,7 @@
                                 <div id="label-badge-tab" class="tab-pane fade">
                                   <div class="row">
                                     <div class="panel-body">
-                                      <!-- Isi content -->we
+                                      <!-- Isi content -->
                                     </div>
                                   </div>
                                 </div><!-- /div label-badge-tab -->
@@ -120,82 +121,7 @@
 
 @endsection
 @section("extra_scripts")
-    <script type="text/javascript">
-     $(document).ready(function() {
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data2').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data3').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-});
-      $('.datepicker').datepicker({
-        format: "mm/yyyy",
-        viewMode: "months",
-        minViewMode: "months"
-      });
-      $('.datepicker2').datepicker({
-        format:"dd/mm/yyyy"
-      });    
-      </script>
+    @include('Purchase::belanjaharian/js/format_currency')
+    @include('Purchase::belanjaharian/js/functions')
+    @include('Purchase::belanjaharian/js/commander')
 @endsection()

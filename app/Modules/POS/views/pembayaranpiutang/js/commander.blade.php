@@ -10,12 +10,13 @@
 	      $('#tgl_awal').val( moment().format('DD/MM/YYYY') );
 	      $('#tgl_akhir').val( moment().add(7, 'days').format('DD/MM/YYYY') );
 
-
+	      var req = 'tgl_awal=' + $('#tgl_awal').val() + '&tgl_akhir=' + $('#tgl_akhir').val();
+	      req = req.replace('/', '%2F');
 	      format_currency( $('#rd_value') );
 
-			tabel_d_receivable_dt = $("#tabel_d_receivable").DataTable({
+			tabel_d_receivable = $("#tabel_d_receivable").DataTable({
 		      ajax: {
-		        "url": "{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}",
+		        "url": "{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}?" + req,
 		        "type": "get",
 		        data: {
 		          "_token": "{{ csrf_token() }}"

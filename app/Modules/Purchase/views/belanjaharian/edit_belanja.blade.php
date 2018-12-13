@@ -62,8 +62,8 @@
                                   <div class="form-group">
                                     <div class="input-icon ">
                                       <i class="glyphicon glyphicon-calendar"></i>
-                                        <input type="text" maxlength="10" readonly="" class="form-control input-sm" value="{{ date('d/m/Y') }}">
-                                        <input type="hidden" name="d_pcsh_date" id="d_pcsh_date" value="{{ date('d/m/Y') }}">
+                                        
+                                        <input type="hidden" name="d_pcsh_date" id="d_pcsh_date" value="{{ $d_purchaseharian->d_pcsh_date }}">
                                     </div>
                                   </div>
                                 </div>
@@ -78,7 +78,7 @@
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                    
-                                      <input type="text" readonly="" class="form-control input-sm">                
+                                      <input type="text" readonly="" class="form-control input-sm" value="{{ $d_purchaseharian->d_pcsh_code }}">                
                                     
                                   </div>
                                 </div>
@@ -91,8 +91,8 @@
 
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" readonly="" value="{{ Auth::user()->m_name }}" class="form-control input-sm" >
-                                      <input type="hidden" value="{{ Auth::user()->m_id }}" name="d_pcsh_staff">
+                                      <input type="text" readonly="" value="{{ $d_purchaseharian->m_name }}" class="form-control input-sm" >
+                                      
                                   </div>
                                 </div>
 
@@ -105,7 +105,7 @@
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                    
-                                      <input type="text" id="d_pcsh_keperluan" name="d_pcsh_keperluan" class="form-control input-sm" ">
+                                      <input type="text" id="d_pcsh_keperluan" name="d_pcsh_keperluan" class="form-control input-sm" value="{{ $d_purchaseharian->d_pcsh_keperluan }}">
                                     
                                   </div>
                                 </div>
@@ -194,4 +194,32 @@
     @include('Purchase::belanjaharian/js/format_currency')
     @include('Purchase::belanjaharian/js/form_functions')
     @include('Purchase::belanjaharian/js/form_commander')
+    <script>
+      $(document).ready(function(){
+        var d_purchasingharian_dt = {{ $d_purchasingharian_dt }};
+        var data;
+        if(d_purchasingharian_dt.length > 0) {
+          for(var x = 0;x < d_purchasingharian_dt.length;x++) {
+            data = d_purchasingharian_dt[x];
+
+            var d_pcshdt_item = "<input type='hidden' name='d_pcshdt_item[]' value='" + item_selected.id + "'>" + item_selected.text;
+            var d_pcshdt_qty = $(this).val();
+            var s_detname = item_selected.s_detname;
+            var m_pbuy1 = item_selected.m_pbuy1 ;
+            var total_harga = m_pbuy1 * d_pcshdt_qty;
+            var aksi = "<button onclick='remove_item(this)' type='button' class='btn btn-danger'><i class='glyphicon glyphicon-trash'></i></button";
+
+            d_pcshdt_qty = "<input type='hidden' name='d_pcshdt_qty[]' value='" + d_pcshdt_qty + "'>" + d_pcshdt_qty;
+            m_pbuy1 = "<input type='hidden' name='d_pcshdt_price[]' value='" + m_pbuy1 + "'>" + get_currency(m_pbuy1);
+            total_harga = get_currency(total_harga);
+
+            tabel_d_purchasingharian_dt.row.add(
+              [d_pcshdt_item, d_pcshdt_qty, s_detname, m_pbuy1, total_harga, aksi]
+            );
+
+          }
+          tabel_d_purchasingharian_dt.row.draw();
+        }
+      });
+    </script>
 @endsection()
