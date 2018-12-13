@@ -1,21 +1,22 @@
 <script>
 	
 
-	 function refresh_d_receivable_dt() {
+	 function refresh_d_receivable() {
 	 	$('#tgl_awal, #tgl_akhir').val('')
-	 	tabel_d_receivable_dt.ajax.url("{{ url('/penjualan/penjualanmobile/find_d_receivable_dt') }}").load();
+	 	tabel_d_receivable.ajax.url("{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}").load();
 	 }
-	 function find_d_receivable_dt() {
+	 function find_d_receivable() {
 	 	var tgl_awal = $('[name="tgl_awal"]').val();
 	 	var tgl_akhir = $('[name="tgl_akhir"]').val();
 	 	var arg = '?tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
-	 	var url_target =  "{{ url('/penjualan/penjualanmobile/find_d_receivable_dt') }}" + arg;
-	 	tabel_d_receivable_dt.ajax.url(url_target).load();
+	 	var url_target =  "{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}" + arg;
+	 	tabel_d_receivable.ajax.url(url_target).load();
+	 	// tabel_d_receivable.ajax.reload();
 	 }
 
 	 function open_payment(obj) {
 	 	var tr = $(obj).parents('tr');
-	 	var data = tabel_d_receivable_dt.row( tr ).data();
+	 	var data = tabel_d_receivable.row( tr ).data();
 	 	var o_payment = $('#form_payment');
 	 	o_payment.find('#rd_receivable').val( 
 	 		get_currency(data.r_id )
@@ -35,7 +36,7 @@
 
 	 function open_detail(obj) {
 	 	var tr = $(obj).parents('tr');
-	 	var data = tabel_d_receivable_dt.row( tr ).data();
+	 	var data = tabel_d_receivable.row( tr ).data();
 	 	var o_detail = $('#form_detail');
 	 	o_detail.find('#r_date').text( 
 	 		moment(data.r_date).format('DD/MM/YYYY') 
@@ -103,7 +104,7 @@
 				  		message : 'Sukses menyimpan data'
 				  	});
 
-				  	tabel_d_receivable_dt.ajax.reload();
+				  	tabel_d_receivable.ajax.reload();
 				  }
 				  else {
 				  	iziToast.error({
