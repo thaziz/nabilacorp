@@ -227,22 +227,18 @@
 
                         function simpanHasilProduct() {
                             $('.PostingHasil').attr('disabled', 'disabled');
-                            var tgl = $('.spk_id').val();
-                                spk_id = $('.spk_item').val();
-                                result_spk = $('.result_spk').val();
+                            var spkId = $('.spk-id').serialize();
+                            var spkItem = $('.spk-item').serialize();
+                            var resultSpk = $('.result-spk').serialize();
                             $.ajax({
                                 url: baseUrl + "/produksi/o_produksi/store",
-                                type: 'get',
-                                data: tgl + '&' + spk_id + '&' + result_spk,
+                                type: 'GET',
+                                data: spkId + '&' + spkItem + '&' + resultSpk,
                                 success: function (response) {
                                     if (response.status == 'sukses') {
-                                        $("#JumlahItem").val('');
-                                        $("#NamaItem").val('');
-                                        $("#mySelect").val('');
-                                        $("#time").val('');
-                                        $("#spk_ref").val('');
-                                        $("#JumlahItemSpk").val('');
-                                        $("#TanggalProduksi").val('');
+                                        $(".spk-id").val('');
+                                        $(".spk-item").val('');
+                                        $(".result-spk").val('');
                                         cariTanggal();
                                         iziToast.success({
                                             timeout: 5000,
@@ -252,7 +248,6 @@
                                             message: 'Berhasil ditambahkan.'
                                         });
                                         $('.PostingHasil').removeAttr('disabled', 'disabled');
-                                        $("input[name='Tanggal_Produksi']").focus();
                                     } else {
                                         iziToast.error({
                                             position: "topRight",
