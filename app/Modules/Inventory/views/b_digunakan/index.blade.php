@@ -97,24 +97,7 @@
     });//datepicker("setDate", "0");
 
     //select2
-    $( "#head_gudang" ).select2({
-      placeholder: "Pilih Gudang...",
-      ajax: {
-        url: baseUrl + '/inventory/b_digunakan/lookup-data-gudang',
-        dataType: 'json',
-        data: function (params) {
-          return {
-              q: $.trim(params.term)
-          };
-        },
-        processResults: function (data) {
-            return {
-                results: data
-            };
-        },
-        cache: true
-      },
-    });
+    $( "#head_gudang" ).select2();
 
     $('#head_gudang').change(function(event) {
       clearInput();
