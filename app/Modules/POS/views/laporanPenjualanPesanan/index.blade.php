@@ -33,7 +33,7 @@
          <div id="alert-tab" class="tab-pane fade in active">
             <div class="row">
                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="col-md-3 col-sm-12 col-xs-12">
+                <!--   <div class="col-md-3 col-sm-12 col-xs-12">
                    <div class="row">
                         <div class="col-md-4 col-xs-12">
                            <label style="padding-top: 7px; font-size: 15px; margin-right:3mm;">Tanggal</label>
@@ -48,22 +48,26 @@
                            </div>
                         </div>
                      </div>
-                  </div>
+                  </div> -->
                   <div class="col-md-6 col-sm-12 col-xs-12" style="padding-bottom: 10px;">
 
                      <div class="row">
                         <div class="col-md-9 col-sm-12 col-xs-12">
                            <div class="row">
-                              <div class="col-md-3 col-sm-12 col-xs-12">
-                                 <label style="padding-top: 7px; font-size: 15px; margin-right:3mm;">Tanggal</label>
-                              </div>
-                              <div class="col-md-5 col-sm-12 col-xs-12">
-                                 <div class="form-group">
-                                    <div class="input-daterange form-group">
-                                       <input id='tgl_awal' class="form-control input-sm" name="tgl_awal" type="text">
+                                    
+                                    <div class="col-md-2 col-sm-3 col-xs-12">
+                                       <label class="tebal">Tanggal</label>
                                     </div>
-                                 </div>
-                              </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                     <div class="form-group">
+                                       <div class="input-daterange input-group">
+                                         <input id="tgl_awal" class="form-control input-sm datepicker2" name="tgl_awal" type="text">
+                                         <span class="input-group-addon">-</span>
+                                         <input id="tgl_akhir" "="" class="input-sm form-control datepicker2" name="tgl_akhir" type="text">
+                                       </div>
+                                     </div>
+                                   </div>
+
                            </div>
                         </div>
                         <div class="col-md-3 col-sm-12 col-xs-12" align="center">
@@ -93,19 +97,25 @@
                </div>
                <!-- Tambahan -->
                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">
-                  <div class="col-md-6 col-xs-12">
+                  <div class="col-md-4 col-xs-12">
                      <label>Total Diskon Percent</label>
                      <div class="form-group">
                         <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="percent">
                      </div>
                   </div>                  
-                  <div class="col-md-6 col-xs-12">
+                  <div class="col-md-4 col-xs-12">
                      <label>Total Penjualan</label>
                      <div class="form-group">
                         <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="total">
                      </div>
-                  </div>
-                  
+                  </div>                  
+
+                  <div class="col-md-4 col-xs-12">
+                     <label>Total Dp</label>
+                     <div class="form-group">
+                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="percent">
+                     </div>
+                  </div>                  
                </div>
 
                <div class="col-md-12 col-sm-12 col-xs-12">
@@ -122,8 +132,8 @@
                               <th align="center" rowspan="2"  width="15%">Sisa Hutang</th>                  
                            </tr>
                             <tr>                                 
-                                 <th width="8%">Tgl bayar</th>                                 
-                                 <th  width="10%">Jml Bayar</th>
+                                 <th width="13%">Tgl bayar</th>                                 
+                                 <th  width="15%">Jml Bayar</th>
                               </tr>
                         </thead>
                         <tbody>

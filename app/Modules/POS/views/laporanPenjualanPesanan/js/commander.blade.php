@@ -2,10 +2,28 @@
 
 	dateAwal();
 	function dateAwal(){	      
-	      $('#tgl_awal').datepicker({
-	            format:"dd-mm-yyyy",        
-	            autoclose: true,
-	      }).datepicker( "setDate", new Date());
+	   
+     var d = new Date();
+	      d.setDate(d.getDate()-7);
+
+
+
+		   $('#tgl_awal').datepicker({
+		        format:"dd-mm-yyyy",        
+		        autoclose: true,
+		  }).datepicker( "setDate", d);
+		  $('#tgl_akhir').datepicker({
+		        format:"dd-mm-yyyy",        
+		        autoclose: true,
+		  }).datepicker( "setDate", new Date());
+
+
+
+
+
+
+
+
 	}
 
 
@@ -81,6 +99,7 @@ function table(){
                     "type"  :"pesanan",
                     "shift" :$('#shift').val(),
                     "tgl_awal" :$('#tgl_awal').val(),                                        
+                    "tgl_akhir" :$('#tgl_akhir').val(),       
                     },
               },
             columns: [

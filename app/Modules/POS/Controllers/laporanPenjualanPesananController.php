@@ -51,21 +51,20 @@ class laporanPenjualanPesananController  extends Controller
        $shift      = $req->shift;                
        $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
        $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
+       
+          $data=d_receivable::
+                whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+                ->get();    
 
 
-       $data=d_receivable::
-             get();
-      /*$data2=d_receivable::
-              join('d_receivable_dt',function($join){
-                  $join->on('r_id','=','rd_receivable');                   
-                  $join->where('rd_status','N');
-              })
-             ->get();*/
+
+
+
       
 
       return Datatables::of($data)                       
                       ->addIndexColumn()                                                 
-                      ->editColumn('r_date', function ($data) {                            
+                      ->editColumn('r_date', function ($data) {   
                                 return date('d-m-Y',strtotime($data->r_date));                            
                         })
                       ->editColumn('r_reff', function ($data) {                            
@@ -91,8 +90,11 @@ class laporanPenjualanPesananController  extends Controller
                       ->editColumn('jml', function ($data) {                  
                                 $dt=$this->receivableDt($data->r_id);                                
                                 $html='';
-                                foreach ($dt as $key => $dataDt) {                                  
-                                  $html.= '<div style="width:100%;text-align:right">'.number_format($dataDt->rd_value,2,',','.').'<br>';
+                                foreach ($dt as $key => $dataDt) {                    
+                                  if($dataDt->rd_status=='Y'){
+                                      $html.='<div style="float:left">(DP)</div>';
+                                  }              
+                                  $html.= '<div style="float:right">'.number_format($dataDt->rd_value,2,',','.').'</div><br>';
                                 }
                                 return $html;                      
                       })           

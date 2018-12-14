@@ -36,7 +36,7 @@
                   <div class="col-md-3 col-sm-12 col-xs-12">
                    <div class="row">
                         <div class="col-md-4 col-xs-12">
-                           <label style="padding-top: 7px; font-size: 15px; margin-right:3mm;">Tanggal</label>
+                           <label style="padding-top: 7px; font-size: 15px; margin-right:3mm;">Pilih Shift</label>
                         </div>
                         <div class="col-md-8 col-xs-12">
                            <div class="form-group">
