@@ -85,11 +85,19 @@
                      </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-12 col-xs-12">
-                    <button class="btn btn-primary pull-right" onclick="print_laporan()">
+                  <div class="col-md-6 col-sm-12 col-xs-12 " align="right">
+                    <button class="btn btn-primary" title="Print" type="button" onclick="print_laporan()">
                       <i class="fa fa-print"></i>
-                      Print Laporan
                     </button>
+
+                    <button class="btn btn-success" title="Excel" type="button">
+                       <i class="fa fa-file" title="Excel"></i>
+                    </button>
+
+                    <button class="btn btn-warning" title="PDF" type="button">
+                       <i class="fa fa-file"></i>
+                    </button>
+
                   </div>
 
                   <!-- selesai -->
@@ -98,22 +106,22 @@
                <!-- Tambahan -->
                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">
                   <div class="col-md-4 col-xs-12">
-                     <label>Total Diskon Percent</label>
+                     <label>Total Piutang</label>
                      <div class="form-group">
-                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="percent">
+                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="r_value">
                      </div>
                   </div>                  
                   <div class="col-md-4 col-xs-12">
-                     <label>Total Penjualan</label>
+                     <label>Total Pembayaran</label>
                      <div class="form-group">
-                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="total">
+                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="r_pay">
                      </div>
                   </div>                  
 
                   <div class="col-md-4 col-xs-12">
-                     <label>Total Dp</label>
+                     <label>Sisa Piutang</label>
                      <div class="form-group">
-                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="percent">
+                        <input type="text" readonly="" class="form-control form-control-l text-right" name="" id="r_outstanding">
                      </div>
                   </div>                  
                </div>

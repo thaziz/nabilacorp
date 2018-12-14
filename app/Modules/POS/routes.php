@@ -208,6 +208,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	// Laporan penjualan pesanan
 	Route::get('penjualan/laporan-penjualan-pesanan/index', 'laporanPenjualanPesananController@index')->middleware('auth');	
 	Route::get('penjualan/laporan-penjualan-pesanan/table', 'laporanPenjualanPesananController@table')->middleware('auth');	
+	Route::get('penjualan/laporan-penjualan-pesanan/totalPiutang', 'laporanPenjualanPesananController@totalPiutang')->middleware('auth');	
 	
 	//selesai  Laporan penjualan pesanan
 
