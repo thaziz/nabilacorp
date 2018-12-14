@@ -40,6 +40,30 @@ class BelanjaHarianController extends Controller {
         return view('Purchase::belanjaharian/tambah_belanja', $data);
     }
 
+    public function hapus($id) { 
+      // Menghapus purchasing harian 
+
+      DB::beginTransaction();
+      try {
+        
+        $d_purchasingharian = d_purchasingharian::where('d_pcsh_id', $id);
+        $d_purchasingharian->delete();
+
+        $d_purchasingharian_dt = d_purchasingharian_dt::where('d_pcshdt_pcshid', $id);
+        $d_purchasingharian_dt->delete();
+
+        DB::commit();
+        $status = 'sukses';
+      }
+      catch(\Exception $e) {
+        DB::rollback();
+        $status = 'gagal. ' . $e;
+      }
+      $res = array( 'status' => $status);
+
+      return response()->json($res);
+    }
+
     function insert_d_purchasingharian(Request $request){
       $d_pcsh_date = $request->d_pcsh_date;
       $d_pcsh_date = $d_pcsh_date != null ? $d_pcsh_date : '';
@@ -171,25 +195,27 @@ class BelanjaHarianController extends Controller {
     }
 
     // Menampilkan form untuk mengupdate data
-    function form_perbarui($sp_id) {
-      $d_sales_plan = d_sales_plan::where('sp_id', $sp_id)->first();
-      $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id)->get();
-      
-      $grand_total = 0;
-      foreach($d_salesplan_dt as $item) {
-        $item['m_item'] = $item->m_item;
-        $item['satuan'] = '';
-        $item['subtotal'] = '';
-        if($item->m_item->m_satuan != null) {
-          $item['satuan'] = $item->m_item->m_satuan->s_detname;
-          $item['subtotal'] = $item->spdt_qty * $item->m_item->i_price; 
-          $grand_total += $item['subtotal'];
-        }
-      }
+    function form_perbarui($d_pcsh_id) {
+      // Daftar divisi
+      $m_divisi = m_divisi::all();
+        $data = array('m_divisi' => $m_divisi);
 
-      $d_sales_plan['d_salesplan_dt'] = $d_salesplan_dt;
-      $data = array('d_sales_plan' => $d_sales_plan, 'grand_total' => $grand_total, 'sp_id' => $sp_id);
-      return view('POS::rencanapenjualan/updateRencanaPenjualan', $data);
+      // Membuat form update belanja harian
+      $d_purchasingharian = d_purchasingharian::leftJoin('d_mem', 'd_pcsh_staff', '=', 'm_id');
+      $d_purchasingharian = $d_purchasingharian->leftJoin('m_divisi', 'd_pcsh_divisi', '=', 'd_id');
+
+      $d_purchasingharian = $d_purchasingharian->where('d_pcsh_id', $d_pcsh_id)->get()->first();
+
+      $d_purchasingharian_dt = d_purchasingharian_dt::where('d_pcshdt_pcshid', $d_pcsh_id)->get();
+
+      $res = array(
+          "d_purchasingharian" => $d_purchasingharian,
+          "d_purchasingharian_dt" => $d_purchasingharian_dt,
+          "m_divisi" => $m_divisi
+      );
+
+      return view('Purchase::belanjaharian/edit_belanja', $res);
+
     }
 
    

@@ -58,7 +58,8 @@ Route::get('/purchasing/belanjaharian/find_d_purchasingharian', 'BelanjaHarianCo
 Route::get('/purchasing/belanjaharian/find_m_divisi', 'BelanjaHarianController@find_m_divisi')->middleware('auth');
 Route::get('/purchasing/belanjaharian/find_m_item', 'BelanjaHarianController@find_m_item')->middleware('auth');
 
-Route::get('/purchasing/belanjaharian/form_perbarui', 'BelanjaHarianController@form_perbarui')->middleware('auth');
+Route::get('/purchasing/belanjaharian/form_perbarui/{id}', 'BelanjaHarianController@form_perbarui')->middleware('auth');
+Route::get('/purchasing/belanjaharian/hapus/{id}', 'BelanjaHarianController@hapus')->middleware('auth');
 // ============================================================
 
 Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchasingController@tambah_pembelian')->middleware('auth');

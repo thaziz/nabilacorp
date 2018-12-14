@@ -66,7 +66,7 @@
                <div class="col-md-3">
                   <label class="control-label tebal" name="qty">Jumlah</label>
                   <div class="input-group input-group-sm" style="width: 100%;">
-                     <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="fQty" onclick="" >   
+                     <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="d_pcshdt_qty" onclick="" >   
                      <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="">   
                   </div>
                </div>
