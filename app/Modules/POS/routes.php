@@ -232,7 +232,8 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/returnpenjualan/tambahreturn', 'ManajemenReturnPenjualanController@newreturn');
 	Route::get('/penjualan/returnpenjualan/carinota', 'ManajemenReturnPenjualanController@carinota');
 	Route::get('/penjualan/returnpenjualan/get-data/{id}', 'ManajemenReturnPenjualanController@getdata');
-	Route::get('/penjualan/returnpenjualan/tabelpnota/{id}', 'ManajemenReturnPenjualanController@tabelpnota');
+	Route::get('/penjualan/returnpenjualan/tabelpnota/{id}/{metode}', 'ManajemenReturnPenjualanController@tabelpnota');
+	Route::get('/penjualan/returnpenjualan/store/{id}', 'ManajemenReturnPenjualanController@store');
 	
 	// Routing untuk pembayaran piutang
 	Route::get('/penjualan/pembayaranpiutang/index', 'PembayaranPiutangController@index');

@@ -100,7 +100,7 @@ class ManajemenReturnPenjualanController extends Controller
     ->editColumn('description',function ($data)
             {
               return  '<div class="text-center">
-                        <select class="form-control">
+                        <select class="form-control" name="description[]">
                           <option value="Kelebihan">Kelebihan</option>
                           <option value="Rusak">Rusak</option>
                         </select>
@@ -279,7 +279,9 @@ class ManajemenReturnPenjualanController extends Controller
   }
   public function getdata($id)
   {
-    $data = DB::table('d_sales')->select('c_name',
+    $data = DB::table('d_sales')->select(
+                            'c_id',
+                            'c_name',
                             'c_hp1',
                             'c_hp2',
                             'c_address',
@@ -300,7 +302,7 @@ class ManajemenReturnPenjualanController extends Controller
 
       return Response::json($data);
   }
-  public function tabelpnota($id)
+  public function tabelpnota($id,$metode)
   {
     $data = DB::table('d_sales_dt')
       ->join('m_item','i_id','=','sd_item')
@@ -420,15 +422,26 @@ class ManajemenReturnPenjualanController extends Controller
       }
       
     })
-    ->editColumn('description',function ($data)
-          {
+    ->editColumn('description',function ($data) use ($metode)
+        {
+          if ($metode == 'TB') {
             return  '<div class="text-center">
-                      <select class="form-control">
-                        <option value="Kelebihan">Kelebihan</option>
-                        <option value="Rusak">Rusak</option>
-                      </select>
-                    </div>';# code...
-          })
+                    <select class="form-control" name="description[]">
+                      <option value="" selected>- pilih -</option>
+                      <option value="Rusak">Rusak</option>
+                    </select>
+                  </div>';# code...
+          }else{
+            return  '<div class="text-center">
+                    <select class="form-control" name="description[]">
+                      <option value="" selected>- pilih -</option>
+                      <option value="Kelebihan">Kelebihan</option>
+                      <option value="Rusak">Rusak</option>
+                    </select> 
+                  </div>';# code...
+          }
+        })
+
     ->editColumn('sd_return', function ($data) {
       return '<input  name="sd_return[]" readonly 
                       class="form-control text-right hasilReturn" 
@@ -450,4 +463,111 @@ class ManajemenReturnPenjualanController extends Controller
                     'sd_total'])
     ->make(true);
   }
+
+  public function store(Request $request,$id)
+  {
+    // dd($request->all());
+    if ($request->t_return == null) {
+       $t_return =0;    # code...
+    }else{
+      $t_return = str_replace(['Rp', '\\', '.', ' '], '', $request->t_return);
+    }
+    $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
+    $replaceCharPPN = (int)str_replace("%","",$request->ppnHarga);
+
+    $s_gross = str_replace(['Rp', '\\', '.', ' '], '', $request->s_gross);
+    $total_diskon = str_replace(['Rp', '\\', '.', ' '], '', $request->total_diskon);
+    $total_value = str_replace(['Rp', '\\', '.', ' '], '', $request->total_value);
+    $total_percent = str_replace(['Rp', '\\', '.', ' '], '', $request->total_percent);
+    $s_net = str_replace(['Rp', '\\', '.', ' '], '', $request->s_net);
+
+
+    
+
+
+      $sr_id = DB::table('d_sales_return')->max('sr_id')+1;
+     
+      $query = DB::select(DB::raw("SELECT MAX(RIGHT(sr_id,4)) as kode_max from d_sales_return WHERE DATE_FORMAT(sr_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+     
+      $kd = "";
+
+      if(count($query)>0)
+      {
+        foreach($query as $k)
+        {
+          $tmp = ((int)$k->kode_max)+1;
+          $kd = sprintf("%05s", $tmp);
+        }
+      }
+      else
+      {
+        $kd = "00001";
+      }
+      
+      $p_code = "RT-".date('ym')."-".$kd;
+
+    $data_head = DB::table('d_sales_return')->insert([
+          'sr_id'=>$sr_id,
+          'sr_sales'=>$request->id_sales,
+          'sr_customer'=>$request->idSup,
+          // 'sr_alamat'=>$request->,
+          'sr_code'=>$p_code,
+          'sr_method'=>$id,
+          // 'sr_jenis_return'=>$request->,
+          // 'sr_type_sales'=>$request->,
+          'sr_date'=>$request->tanggal,
+
+          'sr_price_return'=>$request->t_return,
+          'sr_sgross'=>$s_gross,  
+          'sr_disc_vpercent'=>$total_diskon,
+          'sr_disc_value'=>$total_value,
+          'sr_net'=>$s_net,
+          // 'sr_status'=>,
+          // 'sr_status_terima'=>, 
+          // 'sr_resi'=>, 
+          'sr_created'=>date('Y-md h:i:s'), 
+          // 'sr_updated'=>, 
+    ]);
+
+    for ($i=0; $i <count($request->i_id) ; $i++) { 
+      $sd_price = str_replace(['Rp', '\\', '.', ' '], '', $request->sd_price);
+      $sd_total = str_replace(['Rp', '\\', '.', ' '], '', $request->sd_total);
+      $sd_return = str_replace(['Rp', '\\', '.', ' '], '', $request->sd_return);
+
+        $data_head = DB::table('d_salesreturn_dt')->insert([
+          'srdt_salesreturn'=>$sr_id,
+          'srdt_detailid'=>$i+1,
+          'srdt_item'=>$request->i_id[$i],
+          'srdt_qty'=>$request->sd_qty[$i],
+          // 'sr_alamat'=>$request->,
+          'srdt_qty_confirm'=>$request->sd_qty_return[$i],
+          'srdt_price'=>$sd_price[$i],
+          // 'sr_jenis_return'=>$request->,
+          // 'sr_type_sales'=>$request->,
+          'srdt_disc_percent'=>$request->sd_disc_percent[$i],
+
+          'srdt_disc_vpercent'=>$request->value_disc_percent[$i],
+          'srdt_disc_vpercentreturn'=>$request->sd_disc[$i],  
+          'srdt_return_price'=>$sd_return[$i],
+          'srdt_disc_value'=>$request->sd_disc_value[$i],
+          'srdt_return_price'=>$s_net[$i],
+          // 'sr_status'=>,
+          // 'sr_status_terima'=>, 
+          'srdt_hasil'=>$sd_total[$i], 
+          'srdt_created'=>date('Y-md h:i:s'), 
+          // 'sr_updated'=>, 
+
+        ]);
+    
+        $data_stock = DB::table('d_stock')->insert([
+          'srdt_item'=>$request->i_id[$i],
+          'srdt_qty_confirm'=>$request->sd_qty_return[$i],
+          
+
+        ]);
+    
+    }
+  }
+
+
 }
