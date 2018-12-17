@@ -147,54 +147,14 @@ class laporanPenjualanPesananController  extends Controller
 
 
     }
-    public function print_laporan_excel(Request $req) {
-        $data = array();
-        $rows=null;
-
-        $shift      = $req->shift;        
-        
-       $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
-       $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
-    
-      if($shift=='A'){
-          $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));                    
-
-    $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_date', [$tgl_awal, $tgl_awal])     
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total')->orderBy('sd_date', 'ASC')
-            ->get();
-
-          
-        }else if($shift=='1'){          
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'06:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-
-           $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])    
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total')->orderBy('sd_date', 'ASC')
-            ->get();
-
-        }else if($shift=='2'){
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'21:00'));
-          
-          $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])      
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total')->orderBy('sd_date', 'ASC')
-            ->get();
-        }
-
-
-
+    public function printLaporanExcel(Request $req) {
+         $shift      = $req->shift;                
+         $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
+         $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
+       
+         $data=d_receivable::               
+               whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+               ->get();    
 
        // Menghitung total
        $total_discountPercent=0;
@@ -202,17 +162,17 @@ class laporanPenjualanPesananController  extends Controller
        $total_discountvalue = 0;
        $grand_total = 0;
 
-       foreach ($rows as $detail) {        
+       foreach ($data as $detail) {        
          $subtotal = ($detail->sd_qty * $detail->sd_price);
          $total_discountPercent += $detail->sd_disc_percentvalue;
          $total_discountvalue += $detail->sd_disc_value;
          $grand_total += $detail->sd_total;         
        }
 
-      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows){        
-            $excel->sheet('New sheet', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows) {
-                $sheet->loadView('POS::laporanPenjualanToko/print_laporan_excel')
-                ->with('data',$rows)
+      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data){        
+            $excel->sheet('New sheet', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$data) {
+                $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel')
+                ->with('data',$data)
                 ->with('grand_total',$grand_total)
                 ->with('total_discountPercent',$total_discountPercent)
                 ->with('total_discountvalue',$total_discountvalue);

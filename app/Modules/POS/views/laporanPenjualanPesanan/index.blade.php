@@ -90,13 +90,13 @@
                       <i class="fa fa-print"></i>
                     </button>
 
-                    <button class="btn btn-success" title="Excel" type="button">
+                    <button class="btn btn-success" title="Excel" type="button" onclick="print_excel()">
                        <i class="fa fa-file" title="Excel"></i>
                     </button>
 
-                    <button class="btn btn-warning" title="PDF" type="button">
+                  <!--   <button class="btn btn-warning" title="PDF" type="button">
                        <i class="fa fa-file"></i>
-                    </button>
+                    </button> -->
 
                   </div>
 

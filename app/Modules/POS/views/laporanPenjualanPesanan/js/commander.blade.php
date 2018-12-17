@@ -127,6 +127,22 @@ function table(){
     });
 }
 
+function print_excel(){	
+		var tgl_awal = $("#tgl_awal").val();
+	 	var tgl_akhir = $("#tgl_akhir").val();	 	
+	 	if(tgl_awal != '' && tgl_akhir != '') {
+		 	var arg = '?tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
+		 	var url_target =  "{{ url('/penjualan/laporan-penjualan-pesanan/print_laporan-excel') }}" + arg;
+		 	window.open(url_target, '_blank');
+	 	}
+	 	else {
+	 		iziToast.error({
+	 			title : 'Error!',
+	 			message : 'Masukkan tanggal dengan benar'
+	 		});
+	 	}
 
+	
+}
 
 </script>
