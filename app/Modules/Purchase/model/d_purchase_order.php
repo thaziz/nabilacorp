@@ -348,9 +348,11 @@ class d_purchase_order extends Model
           'i_price'=> str_replace('.', '', $request->podt_prevprice[$i]),
         ]);
 
-        // $update = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
-        //     'i_price'=>$request->podt_prevprice[$i]
-        // ]);
+
+
+        $update = DB::table('d_purchase_plan')->where('p_id',$request->cariKodePlan)->update([
+            'p_status'=>'FN',
+        ]);
 
 
       }

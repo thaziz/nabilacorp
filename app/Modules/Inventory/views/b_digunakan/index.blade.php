@@ -97,24 +97,7 @@
     });//datepicker("setDate", "0");
 
     //select2
-    $( "#head_gudang" ).select2({
-      placeholder: "Pilih Gudang...",
-      ajax: {
-        url: baseUrl + '/inventory/b_digunakan/lookup-data-gudang',
-        dataType: 'json',
-        data: function (params) {
-          return {
-              q: $.trim(params.term)
-          };
-        },
-        processResults: function (data) {
-            return {
-                results: data
-            };
-        },
-        cache: true
-      },
-    });
+    $( "#head_gudang" ).select2();
 
     $('#head_gudang').change(function(event) {
       clearInput();
@@ -381,20 +364,20 @@
   {
     var tgl1 = $('#tanggal1').val();
     var tgl2 = $('#tanggal2').val();
+    var comp = $('.mem_comp').val();
     $('#tbl-daftar').dataTable({
       "destroy": true,
       "processing" : true,
       "serverside" : true,
       "ajax" : {
-        url: baseUrl + "/inventory/b_digunakan/get-pemakaian-by-tgl/"+tgl1+"/"+tgl2,
+        url: baseUrl + "/inventory/b_digunakan/get-pemakaian-by-tgl/"+tgl1+"/"+tgl2+"/"+comp,
         type: 'GET'
       },
       "columns" : [
         {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
         {"data" : "tglBuat", "width" : "10%"},
         {"data" : "d_pb_code", "width" : "10%"},
-        {"data" : "m_name", "width" : "10%"},
-        {"data" : "cg_cabang", "width" : "15%"},
+        {"data" : "gc_gudang", "width" : "15%"},
         {"data" : "d_pb_peminta", "width" : "10%"},
         {"data" : "d_pb_keperluan", "width" : "15%"},
         {"data" : "action", orderable: false, searchable: false, "width" : "15%"}

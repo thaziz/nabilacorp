@@ -203,10 +203,19 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 
 	//menampilkan total pada ajax
 	Route::get('/penjualan/penjualanmobile/totalPenjualan', 'laporanPenjualanTokoController@totalPenjualan')->middleware('auth');
-	
-	
-
 	// ==========================================================================================
+
+	// Laporan penjualan pesanan
+	Route::get('penjualan/laporan-penjualan-pesanan/index', 'laporanPenjualanPesananController@index')->middleware('auth');	
+	Route::get('penjualan/laporan-penjualan-pesanan/table', 'laporanPenjualanPesananController@table')->middleware('auth');	
+	Route::get('penjualan/laporan-penjualan-pesanan/totalPiutang', 'laporanPenjualanPesananController@totalPiutang')->middleware('auth');	
+	Route::get('penjualan/laporan-penjualan-pesanan/print_laporan-excel', 'laporanPenjualanPesananController@printLaporanExcel')->middleware('auth');	
+	
+	
+	//selesai  Laporan penjualan pesanan
+
+
+
 	Route::get('penjualan/stok/index', 'PenjualanController@indexStok');
 	Route::get('penjualan/stok/data', 'PenjualanController@dataStok');
 
@@ -224,6 +233,9 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/returnpenjualan/tabel', 'ManajemenReturnPenjualanController@tabel');
 	Route::get('/penjualan/manajemenreturn/r_penjualan', 'ManajemenReturnPenjualanController@r_penjualan')->middleware('auth');
 	Route::get('/penjualan/returnpenjualan/tambahreturn', 'ManajemenReturnPenjualanController@newreturn');
+	Route::get('/penjualan/returnpenjualan/carinota', 'ManajemenReturnPenjualanController@carinota');
+	Route::get('/penjualan/returnpenjualan/get-data/{id}', 'ManajemenReturnPenjualanController@getdata');
+	Route::get('/penjualan/returnpenjualan/tabelpnota/{id}', 'ManajemenReturnPenjualanController@tabelpnota');
 	
 	// Routing untuk pembayaran piutang
 	Route::get('/penjualan/pembayaranpiutang/index', 'PembayaranPiutangController@index');

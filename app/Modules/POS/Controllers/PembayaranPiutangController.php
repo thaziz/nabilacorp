@@ -110,21 +110,4 @@ class PembayaranPiutangController extends Controller
       }
       return response()->json($res);
     }
-
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    
-   /* public function cut(){
-      $connector = new FilePrintConnector("\\\TAZIZ-PC\POS-80");
-      $printer = new Printer($connector);
-      $printer -> cut();
-      $printer -> close();
-
-    }*/
-    // =======================================================
 }
- /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/
