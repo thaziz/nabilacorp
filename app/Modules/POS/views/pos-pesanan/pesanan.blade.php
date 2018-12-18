@@ -2,7 +2,6 @@
   table#tSalesDetail{
     border: none;
   }
-
 </style>
 <div id="toko" class="tab-pane fade in active">
   <form method="post" id="dataPos">
@@ -370,7 +369,7 @@
     <th>Jumlah</th>
     <td class="hutang" style="display: none;">Jatuh Tempo</th>
   </thead>
-  <tbody class="tr_clone">
+  <tbody class="tr_clon">
       <tr>
         <td>
           <select style="width:90%" class="minu mx" name="sp_method[]" >

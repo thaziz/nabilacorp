@@ -1,6 +1,4 @@
 <style type="text/css">
-
-
 </style>
 <div id="toko" class="tab-pane fade in active">
   <form method="post" id="dataPos">

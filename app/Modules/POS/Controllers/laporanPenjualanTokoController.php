@@ -246,7 +246,7 @@ class laporanPenjualanTokoController  extends Controller
          $grand_total += $detail->sd_total;         
        }
 
-      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows){        
+      Excel::create('Laporan Penjualan Toko '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows){        
             $excel->sheet('New sheet', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows) {
                 $sheet->loadView('POS::laporanPenjualanToko/print_laporan_excel')
                 /*->mergeCells('A2:B3')*/

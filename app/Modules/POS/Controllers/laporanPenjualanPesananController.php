@@ -184,7 +184,7 @@ class laporanPenjualanPesananController  extends Controller
          
        }
 
-      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan,$totalPiutang,$jmlBayar,$sisaPiutang){        
+      Excel::create('Laporan Penjualan Pesanan '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan,$totalPiutang,$jmlBayar,$sisaPiutang){        
             $excel->sheet('Data Penjualan', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan) {
                 $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel_penjualan')
                 ->with('posPesanan',$posPesanan)                
