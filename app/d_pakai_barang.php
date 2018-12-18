@@ -13,6 +13,7 @@ class d_pakai_barang extends Model
     
     protected $fillable = [
         'd_pb_id', 
+        'd_pb_comp',
         'd_pb_code', 
         'd_pb_date',
         'd_pb_peminta',

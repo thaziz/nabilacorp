@@ -91,10 +91,14 @@
                                             </div> --}}
                                             <!-- Modal -->
                                             {!!$modalCreate!!}
+                                            <div class="col-md-3 col-sm-3 col-xs-12" align="right">
+                                                <button class="btn btn-primary PostingHasil" type="submit"
+                                                        onclick="simpanHasilProduct()">Simpan
+                                                </button>
+                                            </div>
                                             
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-
                                                     <table class="table tabelan table-bordered table-striped"
                                                            id="oProduct" width="100%">
                                                         <thead>
@@ -221,55 +225,40 @@
                             }
                         }
 
-                        // function simpanHasilProduct() {
-                        //     $('.PostingHasil').attr('disabled', 'disabled');
-                        //     var tgl = $('#TanggalHasilProduksi').val(),
-                        //         spk_id = $('#spk_id').val(),
-                        //         time = $('#time').val(),
-                        //         spk_item = $("#id_item").val(),
-                        //         spk_qty = $("#JumlahItem").val();
-                        //     prdt_produksi = $("#prdt_produksi").val();
-                        //     $.ajax({
-                        //         url: baseUrl + "/produksi/o_produksi/store",
-                        //         type: 'get',
-                        //         data: {
-                        //             tgl: tgl,
-                        //             spk_id: spk_id,
-                        //             spk_item: spk_item,
-                        //             spk_qty: spk_qty,
-                        //             time: time,
-                        //             prdt_produksi: prdt_produksi
-                        //         },
-                        //         success: function (response) {
-                        //             if (response.status == 'sukses') {
-                        //                 $("#JumlahItem").val('');
-                        //                 $("#NamaItem").val('');
-                        //                 $("#mySelect").val('');
-                        //                 $("#time").val('');
-                        //                 $("#spk_ref").val('');
-                        //                 $("#JumlahItemSpk").val('');
-                        //                 $("#TanggalProduksi").val('');
-                        //                 cariTanggal();
-                        //                 iziToast.success({
-                        //                     timeout: 5000,
-                        //                     position: "topRight",
-                        //                     icon: 'fa fa-chrome',
-                        //                     title: '',
-                        //                     message: 'Berhasil ditambahkan.'
-                        //                 });
-                        //                 $('.PostingHasil').removeAttr('disabled', 'disabled');
-                        //                 $("input[name='Tanggal_Produksi']").focus();
-                        //             } else {
-                        //                 iziToast.error({
-                        //                     position: "topRight",
-                        //                     title: '',
-                        //                     message: 'Gagal menyimpan.'
-                        //                 });
-                        //                 $('.PostingHasil').removeAttr('disabled', 'disabled');
-                        //             }
-                        //         }
-                        //     })
-                        // }
+                        function simpanHasilProduct() {
+                            $('.PostingHasil').attr('disabled', 'disabled');
+                            var spkId = $('.spk-id').serialize();
+                            var spkItem = $('.spk-item').serialize();
+                            var resultSpk = $('.result-spk').serialize();
+                            $.ajax({
+                                url: baseUrl + "/produksi/o_produksi/store",
+                                type: 'GET',
+                                data: spkId + '&' + spkItem + '&' + resultSpk,
+                                success: function (response) {
+                                    if (response.status == 'sukses') {
+                                        $(".spk-id").val('');
+                                        $(".spk-item").val('');
+                                        $(".result-spk").val('');
+                                        cariTanggal();
+                                        iziToast.success({
+                                            timeout: 5000,
+                                            position: "topRight",
+                                            icon: 'fa fa-chrome',
+                                            title: '',
+                                            message: 'Berhasil ditambahkan.'
+                                        });
+                                        $('.PostingHasil').removeAttr('disabled', 'disabled');
+                                    } else {
+                                        iziToast.error({
+                                            position: "topRight",
+                                            title: '',
+                                            message: 'Gagal menyimpan.'
+                                        });
+                                        $('.PostingHasil').removeAttr('disabled', 'disabled');
+                                    }
+                                }
+                            })
+                        }
 
                         function cariTanggal(){
                             $('#oProduct').dataTable().fnDestroy();

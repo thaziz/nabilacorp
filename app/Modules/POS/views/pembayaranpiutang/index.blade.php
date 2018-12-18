@@ -24,7 +24,7 @@
          </div>
       </div>
       <ul id="generalTab" class="nav nav-tabs">
-         <li class="active"><a href="#alert-tab" data-toggle="tab">Laporan Penjualan Mobile Sales</a></li>
+         <li class="active"><a href="#alert-tab" data-toggle="tab">Pembayaran Piutang</a></li>
          <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
             <li><a href="#label-badge-tab" data-toggle="tab">3</a></li> -->
       </ul>
@@ -48,12 +48,12 @@
                         </div>
                      </div>
                      <div class="" align="center" style="margin-left: 1.5mm">
-                        <button class="btn btn-warning btn-sm btn-flat" type="button" onclick='find_d_sales_dt()'>
+                        <button class="btn btn-warning btn-sm btn-flat" type="button" onclick='find_d_receivable()'>
                         <strong>
                         <i class="fa fa-search" aria-hidden="true"></i>
                         </strong>
                         </button>
-                        <button class="btn btn-danger btn-sm btn-flat" type="button" onclick='refresh_d_sales_dt()'>
+                        <button class="btn btn-danger btn-sm btn-flat" type="button" onclick='refresh_d_receivable()'>
                         <strong>
                         <i class="fa fa-undo" aria-hidden="true"></i>
                         </strong>
@@ -76,6 +76,8 @@
                               <th>Tanggal</th>
                               <th>Tanggal Jatuh Tempo</th>
                               <th>Kode</th>
+                              <th>Nama Pelanggan</th>
+                              <th>Alamat Pelanggan</th>
                               <th>Jumlah Piutang</th>
                               <th>Jumlah Terbayar</th>
                               <th>Sisa</th>

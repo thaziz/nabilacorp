@@ -74,7 +74,9 @@
               </div>
               <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">  
-                  <label id='p_outstanding' ></label>
+
+                  <p id='r_outstanding' ></p>
+
                 </div>
               </div>
 
@@ -89,11 +91,13 @@
                           <th>Bayar?</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        
+                      <tbody class="list_d_receivable_dt">
+                            
+                          </tr>
+                          
                       </tbody>
                     </table>
-                    <div class="list-group" id="list_d_receivable_dt"></div>
+                    <!-- <div class="list-group" id="list_d_receivable_dt"></div> -->
                 </div>
               </div>
 

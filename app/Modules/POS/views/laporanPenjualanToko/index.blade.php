@@ -5,12 +5,12 @@
 <!--BEGIN TITLE & BREADCRUMB PAGE-->
 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
    <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-      <div class="page-title">Laporan Penjualan Mobile Sales</div>
+      <div class="page-title">Laporan Penjualan Toko</div>
    </div>
    <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
       <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
       <li><i></i>&nbsp;Penjualan&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-      <li class="active">Laporan Penjualan Mobile Sales</li>
+      <li class="active">Laporan Penjualan Toko</li>
    </ol>
    <div class="clearfix">
    </div>
@@ -25,7 +25,7 @@
          </div>
       </div>
       <ul id="generalTab" class="nav nav-tabs">
-         <li class="active"><a href="#alert-tab" data-toggle="tab">Laporan Penjualan Mobile Sales</a></li>
+         <li class="active"><a href="#alert-tab" data-toggle="tab">Laporan Penjualan Toko</a></li>
          <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
             <li><a href="#label-badge-tab" data-toggle="tab">3</a></li> -->
       </ul>
@@ -36,7 +36,7 @@
                   <div class="col-md-3 col-sm-12 col-xs-12">
                    <div class="row">
                         <div class="col-md-4 col-xs-12">
-                           <label style="padding-top: 7px; font-size: 15px; margin-right:3mm;">Periode</label>
+                           <label style="padding-top: 7px; font-size: 15px; margin-right:3mm;">Pilih Shift</label>
                         </div>
                         <div class="col-md-8 col-xs-12">
                            <div class="form-group">

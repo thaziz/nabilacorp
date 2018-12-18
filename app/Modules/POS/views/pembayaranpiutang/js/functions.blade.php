@@ -1,21 +1,22 @@
 <script>
 	
 
-	 function refresh_d_receivable_dt() {
+	 function refresh_d_receivable() {
 	 	$('#tgl_awal, #tgl_akhir').val('')
-	 	tabel_d_receivable_dt.ajax.url("{{ url('/penjualan/penjualanmobile/find_d_receivable_dt') }}").load();
+	 	tabel_d_receivable.ajax.url("{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}").load();
 	 }
-	 function find_d_receivable_dt() {
+	 function find_d_receivable() {
 	 	var tgl_awal = $('[name="tgl_awal"]').val();
 	 	var tgl_akhir = $('[name="tgl_akhir"]').val();
 	 	var arg = '?tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
-	 	var url_target =  "{{ url('/penjualan/penjualanmobile/find_d_receivable_dt') }}" + arg;
-	 	tabel_d_receivable_dt.ajax.url(url_target).load();
+	 	var url_target =  "{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}" + arg;
+	 	tabel_d_receivable.ajax.url(url_target).load();
+	 	// tabel_d_receivable.ajax.reload();
 	 }
 
 	 function open_payment(obj) {
 	 	var tr = $(obj).parents('tr');
-	 	var data = tabel_d_receivable_dt.row( tr ).data();
+	 	var data = tabel_d_receivable.row( tr ).data();
 	 	var o_payment = $('#form_payment');
 	 	o_payment.find('#rd_receivable').val( 
 	 		get_currency(data.r_id )
@@ -28,18 +29,19 @@
 	 	);
 	 	o_payment.find('#r_code').val( data.r_code );
 	 	o_payment.find('#r_ref').val( data.r_ref );
-	 	o_payment.find('#p_outstanding').val( 
-	 		get_currency(data.p_outstanding )
+	 	o_payment.find('#r_outstanding').val( 
+	 		get_currency(data.r_outstanding )
 	 	);
 	 }
 
 	 function open_detail(obj) {
 	 	var tr = $(obj).parents('tr');
-	 	var data = tabel_d_receivable_dt.row( tr ).data();
+	 	var data = tabel_d_receivable.row( tr ).data();
 	 	var o_detail = $('#form_detail');
 	 	o_detail.find('#r_date').text( 
 	 		moment(data.r_date).format('DD/MM/YYYY') 
 	 	);
+	 	o_detail.find('#r_ref').text( data.r_ref );
 		o_detail.find('#r_duedate').text( data.r_duedate );
 		o_detail.find('#r_code').text( data.r_code );
 		o_detail.find('#r_value').text( 
@@ -48,8 +50,8 @@
 		o_detail.find('#r_pay').text( 
 			get_currency(data.r_pay) 
 		);
-		o_detail.find('#p_outstanding').text( 
-			get_currency(data.p_outstanding) 
+		o_detail.find('#r_outstanding').text( 
+			get_currency(data.r_outstanding) 
 		);
 
 		find_d_receivable_dt(data.r_id);
@@ -68,20 +70,19 @@
 	 }
 
 	 function render_d_receivable_dt(d_receivable_dt) {
-	 	var list_group = $('#list_d_receivable_dt');
-	 	list_group.html('');
+	 	var list_group = $('.list_d_receivable_dt');
+	 	list_group.html('');	 	
 	 	if(d_receivable_dt.length > 0) {
 	 		for(x = 0;x < d_receivable_dt.length;x++) {
 	 			var data = d_receivable_dt[x];
 	 			var rd_datepay = moment(data.rd_datepay).format('DD/MM/YYYY');
-	 			var list_group_item = $('<a href="#" class="list-group-item"></a>')
-	 			var rd_datepay_item = $('<h4>' + rd_datepay + '</h4>');
-	 			var rd_value_item = $('<p>' + get_currency(data.rd_value) + '</p>');
+	 			
+	 			
+	 			$a='<tr><td width="30%">'+rd_datepay+'</td>';
+	 			$a+='<td class="text-right" >'+get_currency(data.rd_value)+'</td></tr>';
+	 			
 
-	 			list_group_item.append(rd_datepay_item);
-	 			list_group_item.append(rd_value_item);
-
-	 			list_group.append(list_group_item);
+	 			list_group.append($a);
 	 		}
 	 	}
 	 	else {
@@ -103,7 +104,7 @@
 				  		message : 'Sukses menyimpan data'
 				  	});
 
-				  	tabel_d_receivable_dt.ajax.reload();
+				  	tabel_d_receivable.ajax.reload();
 				  }
 				  else {
 				  	iziToast.error({

@@ -1,7 +1,13 @@
 <?php
 
 Route::group(['namespace' => 'App\Modules\Purchase\Controllers', 'middleware'=>['web','auth']], function () {	
-	/*Purchasing plan*/	
+// Pembayaran hutang
+Route::get('/purchasing/pembayaran_hutang/index', 'PembayaranHutangController@index');
+Route::get('/purchasing/pembayaran_hutang/find_d_payable', 'PembayaranHutangController@find_d_payable');
+Route::get('/purchasing/pembayaran_hutang/find_d_payable_dt/{p_id}', 'PembayaranHutangController@find_d_payable_dt');
+Route::get('/purchasing/pembayaran_hutang/insert_d_payable_dt', 'PembayaranHutangController@insert_d_payable_dt');
+
+/*Purchasing plan*/	
 Route::get('/seach-item-purchase', 'purchasePlanController@seachItemPurchase')->middleware('auth');
 Route::get('/purcahse-plan/plan-index', 'purchasePlanController@planIndex')->middleware('auth');
 Route::get('/purcahse-plan/data-plan', 'purchasePlanController@dataPlan')->middleware('auth');
@@ -46,8 +52,22 @@ Route::get('/purchasing/returnpembelian/pembelian', 'PurchasingController@pembel
 Route::get('/purchasing/belanjasuplier/suplier', 'PurchasingController@suplier')->middleware('auth');
 Route::get('/purchasing/belanjalangsung/langsung', 'PurchasingController@langsung')->middleware('auth');
 Route::get('/purchasing/belanjaproduk/produk', 'PurchasingController@produk')->middleware('auth');
-Route::get('/purchasing/belanjaharian/belanja', 'PurchasingController@belanja')->middleware('auth');
-Route::get('/purchasing/belanjaharian/tambah_belanja', 'PurchasingController@tambah_belanja')->middleware('auth');
+
+// Routing untuk modul belanja harian
+Route::get('/purchasing/belanjaharian/belanja', 'BelanjaHarianController@index')->middleware('auth');
+Route::get('/purchasing/belanjaharian/tambah_belanja', 'BelanjaHarianController@tambah_belanja')->middleware('auth');
+Route::get('/purchasing/belanjaharian/insert_d_purchasingharian', 'BelanjaHarianController@insert_d_purchasingharian')->middleware('auth');
+Route::get('/purchasing/belanjaharian/update_d_purchasingharian', 'BelanjaHarianController@update_d_purchasingharian')->middleware('auth');
+Route::get('/purchasing/belanjaharian/update_d_purchasingharian', 'BelanjaHarianController@update_d_purchasingharian')->middleware('auth');
+Route::get('/purchasing/belanjaharian/find_d_purchasingharian', 'BelanjaHarianController@find_d_purchasingharian')->middleware('auth');
+
+Route::get('/purchasing/belanjaharian/find_m_divisi', 'BelanjaHarianController@find_m_divisi')->middleware('auth');
+Route::get('/purchasing/belanjaharian/find_m_item', 'BelanjaHarianController@find_m_item')->middleware('auth');
+
+Route::get('/purchasing/belanjaharian/form_perbarui/{id}', 'BelanjaHarianController@form_perbarui')->middleware('auth');
+Route::get('/purchasing/belanjaharian/hapus/{id}', 'BelanjaHarianController@hapus')->middleware('auth');
+// ============================================================
+
 Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchasingController@tambah_pembelian')->middleware('auth');
 /* ricky */
 Route::get('/purchasing/belanjapasar/pasar', 'PurchasingController@pasar')->middleware('auth');
@@ -65,4 +85,6 @@ Route::get('/purchasing/rencanabahanbaku/lookup-data-supplier', 'RencanaBahanCon
 Route::get('/purchasing/rencanabahanbaku/submit-data', 'RencanaBahanController@submitData');
 // pembelian bahan baku spk selesai
 });
+
+
 

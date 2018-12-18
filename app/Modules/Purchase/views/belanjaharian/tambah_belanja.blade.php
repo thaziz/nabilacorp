@@ -46,7 +46,7 @@
                            </div>
                          </div>
 
-                         <form method="post">
+                         <form id='form_d_purchasingharian'>
                               <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-top:30px;padding-bottom:20px;">
                                
                                
@@ -63,7 +63,7 @@
                                     <div class="input-icon ">
                                       <i class="glyphicon glyphicon-calendar"></i>
                                         <input type="text" maxlength="10" readonly="" class="form-control input-sm" value="{{ date('d/m/Y') }}">
-                                        <input type="hidden" name="tgl_beli" value="{{ date('d/m/Y') }}">
+                                        <input type="hidden" name="d_pcsh_date" id="d_pcsh_date" value="{{ date('d/m/Y') }}">
                                     </div>
                                   </div>
                                 </div>
@@ -84,21 +84,6 @@
                                 </div>
 
                                 <div class="col-md-2 col-sm-3 col-xs-12">
-                                   
-                                    <label class="tebal">Total Gross</label>
-                                  
-                                </div>
-                                <div class="col-md-4 col-sm-9 col-xs-12">
-                                  <div class="form-group">
-                                    <div class="input-icon ">
-                                      <i class="fa fa-money"></i>
-                                      <input type="text" class="form-control input-sm" readonly="">
-                                    </div>
-                                  </div>
-                                </div>
-
-
-                                <div class="col-md-2 col-sm-3 col-xs-12">
                                   
                                       <label class="tebal">Petugas Administrator</label>
                                   
@@ -106,79 +91,86 @@
 
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" readonly="" value="{{ Auth::user()->username }}" class="form-control input-sm">
-                                      <input type="hidden" value="{{ Auth::user()->id }}" name="">
+                                      <input type="text" readonly="" value="{{ Auth::user()->m_name }}" class="form-control input-sm" >
+                                      <input type="hidden" value="{{ Auth::user()->m_id }}" name="d_pcsh_staff">
                                   </div>
                                 </div>
 
                                 <div class="col-md-2 col-sm-3 col-xs-12">
                                   
-                                    <label class="tebal">Penyesuian</label>
+                                    <label class="tebal">Keperluan</label>
                                  
                                 </div>
 
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
                                    
-                                      <input type="text" id="penyesuian" name="penyesuian" class="form-control input-sm" ">
+                                      <input type="text" id="d_pcsh_keperluan" name="d_pcsh_keperluan" class="form-control input-sm" ">
                                     
                                   </div>
                                 </div>
 
                                 <div class="col-md-2 col-sm-3 col-xs-12">
                                   
-                                      <label class="tebal">Total Net</label>
+                                      <label class="tebal">Total bayar</label>
                                   
                                 </div>
 
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text"  readonly="" class="form-control input-sm">
+                                      <input type="text"  readonly id="total_bayar" class="form-control input-sm">
                                   </div>
                                 </div>
 
                                 <div class="col-md-2 col-sm-3 col-xs-12">
                                   
-                                      <label class="tebal">Jumlah Yang Dibayarkan</label>
+                                      <label class="tebal">Divisi Peminta</label>
                                   
                                 </div>
 
                                 <div class="col-md-4 col-sm-9 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text"  class="form-control input-sm">
+                                      <select name="d_pcsh_divisi" id="d_pcsh_divisi" class="form-control">
+                                      @foreach ($m_divisi as $data)
+                                          <option class="form-control"
+                                                  value="{{ $data->d_id }}">
+                                              {{ $data->d_divisi }}</option>
+                                      @endforeach
+                                      </select>
                                   </div>
                                 </div>
-
+                                
+                                <div class="col-md-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
+               <div class="col-md-6">
+                  <label class="control-label tebal" for="">Masukan Kode / Nama</label>
+                  <div class="input-group input-group-sm" style="width: 100%;">
+                    <input type="text" name="d_pcshdt_item" id="d_pcshdt_item" class="form-control">
+                  </div>
+               </div>
+               
+               <div class="col-md-6">
+                  <label class="control-label tebal" name="qty";>Jumlah</label>
+                  <div class="input-group input-group-sm" style="width: 100%;">
+                     <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" id="d_pcshdt_qty" onclick="" >   
+                  </div>
+               </div>
+            </div>
                               </div>
 
 
                               <div class="table-responsive">
-                                <table class="table tabelan table-bordered" id="data">
+                                <table class="table tabelan table-bordered" id="tabel_d_purchasingharian_dt">
                                   <thead>
                                     <tr>
-                                      <th>No</th>
                                       <th width="25%">Nama Barang</th>
                                       <th>QTY</th>
                                       <th width="5%">Satuan</th>
                                       <th>Harga Satuan</th>
                                       <th>Total Harga</th>
+                                      <th>Aksi</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>Tepung Beras</td>
-                                      <td>
-                                        <input type="text" class="form-control input-sm" name="">
-                                      </td>
-                                      <td>Kg</td>
-                                      <td>
-                                        <input class="form-control input-sm" type="text" readonly="" name="">
-                                      </td>
-                                      <td>
-                                        <input type="text" class="form-control input-sm" name="">
-                                      </td>
-                                    </tr>
 
                                   </tbody>
                                 </table>
@@ -186,7 +178,7 @@
 
                               <div align="right" style="margin-top:20px;">
                                 <div class="form-group" align="right">
-                                  <input type="submit" name="tambah_data" value="Simpan Data" class="btn btn-primary">
+                                  <input type="button" name="tambah_data" value="Simpan Data" class="btn btn-primary" onclick="insert_d_purchasingharian()">
                                 </div>
                               </div>
 
@@ -199,80 +191,7 @@
                 </div>
 @endsection
 @section("extra_scripts")
-    <script type="text/javascript">
-      $(document).ready(function() {
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-          
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data2').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data3').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-});
-
-      $("#perusahaan").load("/master/datasuplier/tambah_suplier", function(){
-      $("#perusahaan").focus();
-      });
-      $('.datepicker2').datepicker({
-        format:"dd-mm-yyyy"
-      });
-      </script>
+    @include('Purchase::belanjaharian/js/format_currency')
+    @include('Purchase::belanjaharian/js/form_functions')
+    @include('Purchase::belanjaharian/js/form_commander')
 @endsection()

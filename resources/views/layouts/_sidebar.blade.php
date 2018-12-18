@@ -162,7 +162,7 @@
 
                                 {{-- @if(Auth::user()->punyaAkses('Return Pembelian','ma_read')) --}}
                                 <li class="{{ Request::is('purchasing/pembayaran_hutang') ? 'active' : '' || Request::is('purchasing/pembayaran_hutang/*') ? 'active' : '' }}">
-                                        <a href="{{ url('/purchasing/pembayaran_hutang') }}"><span
+                                        <a href="{{ url('/purchasing/pembayaran_hutang/index') }}"><span
                                                     class="submenu-title">Pelunasan Hutang</span><span class="hidden">Purchasing</span></a>
                                 </li>
                             <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjasuplier/suplier') ? 'active' : '' || Request::is('purchasing/belanjasuplier/suplier*') ? 'active' : '' }}">
@@ -281,6 +281,9 @@
                             </li> -->
 
                             <li class="menu-sekunder {{ Request::is('penjualan/penjualanmobile/penjualanmobile') ? 'active' : '' || Request::is('penjualan/penjualanmobile/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanmobile/penjualanmobile') }}"><span class="submenu-title">Laporan Penjualan Toko</span><span class="hidden">Penjualan</span></a>
+                            </li>
+
+                            <li class="menu-sekunder {{ Request::is('penjualan/laporan-penjualan-pesanan/index') ? 'active' : '' || Request::is('penjualan/laporan-penjualan-pesanan/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/laporan-penjualan-pesanan/index') }}"><span class="submenu-title">Laporan Penjualan Pesanan</span><span class="hidden">Penjualan</span></a>
                             </li>
                             
                             <!-- <li class="menu-sekunder {{ Request::is('penjualan/mutasistok/mutasi') ? 'active' : '' || Request::is('penjualan/mutasistok/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/mutasistok/mutasi') }}"><span class="submenu-title">Mutasi Stock</span><span class="hidden">Penjualan</span></a>

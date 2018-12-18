@@ -52,7 +52,8 @@ Route::group(['namespace' => 'App\Modules\Produksi\Controllers', 'middleware'=>[
 	Route::get('/produksi/monitoringprogress/plan/{id}', 'MonitoringProgressController@plan');
 	Route::get('/produksi/monitoringprogress/save', 'MonitoringProgressController@save');
 	Route::get('/produksi/monitoringprogress/tabel-filter-monitoring', 'MonitoringProgressController@tabelFilterMonitoring');
-
+	Route::get('/produksi/monitoringprogress/tabel/autoplan', 'MonitoringProgressController@autoPlan');
+	Route::get('/produksi/monitoringprogress/save/autoplan', 'MonitoringProgressController@saveAutoPlan');
 	//monitoring order selesai
 
 	
