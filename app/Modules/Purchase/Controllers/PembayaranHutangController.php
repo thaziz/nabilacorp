@@ -39,28 +39,30 @@ class PembayaranHutangController extends Controller
     }
 
     public function find_d_payable(Request $req) {
+      $d_payable = d_payable::leftJoin('d_payable_dt', 'p_id', '=', 'pd_payable') ;
+
       $tgl_awal = $req->tgl_awal;
       $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
       $tgl_akhir = $req->tgl_akhir;
       $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
       if($tgl_awal != '' && $tgl_akhir != '') {
-        $tgl_awal = date('Y-d-m', strtotime($tgl_awal));
-        $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
-        die($tgl_akhir);
+        $tgl_awal = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_awal);
+        $tgl_akhir = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_akhir);
 
-        $d_payable = d_payable::whereBetween('p_date', array($tgl_awal, $tgl_akhir))->get();
-      }
-      else {
 
-        $d_payable = d_payable::all();
+        $d_payable = $d_payable->whereBetween('p_date', array($tgl_awal, $tgl_akhir));
       }
+
+      $d_payable = $d_payable->groupBy('p_id'); 
+      $d_payable = $d_payable->select('p_id', 'p_code', 'p_ref', 'p_supplier', 'p_date', 'p_value', 'p_duedate', 'p_duedate', 'p_outstanding', DB::raw('IFNULL(SUM(pd_value), 0) AS p_pay'))->get();
+
       $data = array('data' => $d_payable);
 
       return response()->json($data);
     }
 
-    public function find_d_payable_dt($r_id) {
-      $d_payable_dt = d_payable_dt::where('rd_payable', $r_id)->get();
+    public function find_d_payable_dt($p_id) {
+      $d_payable_dt = d_payable_dt::where('pd_payable', $p_id)->get();
       $data = array('data' => $d_payable_dt);
 
       return response()->json($data);
@@ -71,33 +73,32 @@ class PembayaranHutangController extends Controller
       DB::beginTransaction();
       try {
 
-        $rd_payable = $req->rd_payable;
-        $rd_payable = $rd_payable != null ? $rd_payable : '';
-        $rd_datepay = $req->rd_datepay;
-        $rd_datepay = $rd_datepay != null ? $rd_datepay : '';
-        $rd_datepay = date('Y-d-m', strtotime($rd_datepay));
+        $pd_payable = $req->pd_payable;
+        $pd_payable = $pd_payable != null ? $pd_payable : '';
+        $pd_datepay = $req->pd_datepay;
+        $pd_datepay = $pd_datepay != null ? $pd_datepay : '';
+        $pd_datepay = date('Y-d-m', strtotime($pd_datepay));
 
-        $rd_value = $req->rd_value;
-        $rd_value = $rd_value != null ? $rd_value : '';
+        $pd_value = $req->pd_value;
+        $pd_value = $pd_value != null ? $pd_value : '';
 
-        $rd_detailid = DB::table('d_payable_dt')->where('rd_payable', $rd_payable)->select( DB::raw('IFNULL(COUNT(rd_detailid), 0) AS count_detailid') )->get()->first();
-        $rd_detailid = $rd_detailid->count_detailid + 1;
+        $pd_detailid = DB::table('d_payable_dt')->where('pd_payable', $pd_payable)->select( DB::raw('IFNULL(MAX(pd_detailid), 0) AS count_detailid') )->get()->first();
+        $pd_detailid = $pd_detailid->count_detailid + 1;
         // Input ke tabel d_payable_dt
-        $d_payable_dt = new d_payable_dt;
-        $d_payable_dt->rd_payable = $rd_payable;
-        $d_payable_dt->rd_detailid = $rd_detailid;
-        $d_payable_dt->rd_datepay = $rd_datepay;
-        $d_payable_dt->rd_value = $rd_value;
+        $d_payable_dt = new d_payable_dt; 
+        $d_payable_dt->pd_payable = $pd_payable;
+        $d_payable_dt->pd_detailid = $pd_detailid;
+        $d_payable_dt->pd_datepay = $pd_datepay;
+        $d_payable_dt->pd_value = $pd_value;
         $d_payable_dt->save();
-        // ==========================================
+        // =================================s=========
 
         // Update jumlah terbayar dan sisa pembayaran ke tabel d_payable
-        $d_payable = d_payable::find($rd_payable);
+        $d_payable = d_payable::find($pd_payable);
         $d_payable_data = $d_payable->first();
-        $r_pay = $d_payable_dt->where('rd_payable', $rd_payable)->sum('rd_value');
-        $r_outstanding = d_payable::where('r_id', $rd_payable)->get()->first()->r_value - $r_pay;
-        $d_payable->r_pay = $r_pay;
-        $d_payable->r_outstanding = $r_outstanding;
+        $p_pay = $d_payable_dt->where('pd_payable', $pd_payable)->sum('pd_value');
+        $p_outstanding = d_payable::where('p_id', $pd_payable)->get()->first()->p_value - $p_pay;
+        $d_payable->p_outstanding = $p_outstanding;
         $d_payable->save();
         // ==================================================================
 

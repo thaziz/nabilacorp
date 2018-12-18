@@ -2,8 +2,8 @@
 
      $(document).ready(function(){
           // Datepicker 
-          $('#tgl_awal, #tgl_akhir, #rd_datepay').attr('autocomplete', 'off');
-	      $('#tgl_awal, #tgl_akhir, #rd_datepay').datepicker({
+          $('#tgl_awal, #tgl_akhir, #pd_datepay').attr('autocomplete', 'off');
+	      $('#tgl_awal, #tgl_akhir, #pd_datepay').datepicker({
 	        format:"dd/mm/yyyy"
 	      });   
 
@@ -12,7 +12,7 @@
 
 	      var req = 'tgl_awal=' + $('#tgl_awal').val() + '&tgl_akhir=' + $('#tgl_akhir').val();
 	      req = req.replace('/', '%2F');
-	      format_currency( $('#rd_value') );
+	      format_currency( $('#pd_value') );
 
 			tabel_d_payable = $("#tabel_d_payable").DataTable({
 		      ajax: {
@@ -83,15 +83,15 @@
 	          		var duedate = moment(data.p_duedate);
 	          		var difference = moment.duration( duedate.diff(today) ).asDays();
 
-	          		if(data.p_outstanding <= 0) {
-	          			$(row).addClass('text-success');
+	          		if(data.r_outstanding <= 0) {
+	          			$(row).css('background-color', '#9ce2c0');
 	          		}
 	          		else{
 	          			if(difference >= 1 && difference < 4) {
-		          			$(row).addClass('text-warning');
+		          			$(row).css('background-color', '#eff2b3');
 	          			}
 	          			else if(difference <= 0) {
-		          			$(row).addClass('text-danger');
+		          			$(row).css('background-color', '#f2cbcc');
 	          				
 	          			}
 	          		}

@@ -44,8 +44,8 @@ class PembayaranPiutangController extends Controller
       $tgl_akhir = $req->tgl_akhir;
       $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
       if($tgl_awal != '' && $tgl_akhir != '') {
-        $tgl_awal = date('Y-d-m', strtotime($tgl_awal));
-        $tgl_akhir = date('Y-d-m', strtotime($tgl_akhir));
+        $tgl_awal = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_awal);
+        $tgl_akhir = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_akhir);
         $d_receivable = d_receivable::whereBetween('r_date', array($tgl_awal, $tgl_akhir))->get();
       }
       else {
@@ -73,7 +73,7 @@ class PembayaranPiutangController extends Controller
         $rd_receivable = $rd_receivable != null ? $rd_receivable : '';
         $rd_datepay = $req->rd_datepay;
         $rd_datepay = $rd_datepay != null ? $rd_datepay : '';
-        $rd_datepay = date('Y-d-m', strtotime($rd_datepay));
+        $rd_datepay = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $rd_datepay);
 
         $rd_value = $req->rd_value;
         $rd_value = $rd_value != null ? $rd_value : '';
