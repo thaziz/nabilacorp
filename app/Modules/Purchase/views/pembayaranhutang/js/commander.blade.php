@@ -14,9 +14,9 @@
 	      req = req.replace('/', '%2F');
 	      format_currency( $('#rd_value') );
 
-			tabel_d_receivable = $("#tabel_d_receivable").DataTable({
+			tabel_d_payable = $("#tabel_d_payable").DataTable({
 		      ajax: {
-		        "url": "{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}?" + req,
+		        "url": "{{ url('/purchasing/pembayaran_hutang/find_d_payable') }}?" + req,
 		        "type": "get",
 		        data: {
 		          "_token": "{{ csrf_token() }}"
@@ -26,42 +26,40 @@
 		        { 
 		        	data : null,
 		        	render : function(res) {
-		        		var result = moment(res.r_date).format('DD/MM/YYYY');
+		        		var result = moment(res.p_date).format('DD/MM/YYYY');
 		        		return result;
 		        	}
 		        },
 		        { 
 		        	data : null,
 		        	render : function(res) {
-		        		var result = moment(res.r_duedate).format('DD/MM/YYYY');
+		        		var result = moment(res.p_duedate).format('DD/MM/YYYY');
 		        		return result;
 		        	}
 		        },
-				{ data : 'r_code'},
-				{ data : 'r_customer_name'},
-				{ data : 'r_alamat_cus'},
+				{ data : 'p_code'},
 				{ 
 					data : null,
 					render : function(res) {
-						return get_currency(res.r_value);
+						return get_currency(res.p_value);
 					}
 				},
 				{ 
 					data : null,
 					render : function(res) {
-						return get_currency(res.r_pay);
+						return get_currency(res.p_pay);
 					}
 				},
 				{ 
 					data : null,
 					render : function(res) {
-						return get_currency(res.r_outstanding);
+						return get_currency(res.p_outstanding);
 					}
 				},
 		        { 
 		        	data : null,
 		        	render : function(res) {
-		        		var is_paid_off = res.r_outstanding <= 0 ? 'disabled' : '';  
+		        		var is_paid_off = res.p_outstanding <= 0 ? 'disabled' : '';  
 		        		
 		        		var detail_btn = '<button id="detail_btn" onclick="open_detail(this)" class="btn btn-success btn-sm" title="detail" data-toggle="modal" data-target="#form_detail"  style="margin-right:2mm"><i class="fa fa-indent"></i></button>';
 		        		var payment_btn = '<button id="payment_btn" onclick="open_payment(this)" class="btn btn-primary btn-sm" title="payment" data-toggle="modal" data-target="#form_payment" ' + is_paid_off + '><i class="fa fa-money"></i></button>';
@@ -82,18 +80,18 @@
 	          ],				
 	          "createdRow": function( row, data, dataIndex ) {
 	          		var today = moment();
-	          		var duedate = moment(data.r_duedate);
+	          		var duedate = moment(data.p_duedate);
 	          		var difference = moment.duration( duedate.diff(today) ).asDays();
 
-	          		if(data.r_outstanding <= 0) {
-	          			$(row).css('background-color', '#9ce2c0');
+	          		if(data.p_outstanding <= 0) {
+	          			$(row).addClass('text-success');
 	          		}
 	          		else{
 	          			if(difference >= 1 && difference < 4) {
-		          			$(row).css('background-color', '#eff2b3');
+		          			$(row).addClass('text-warning');
 	          			}
 	          			else if(difference <= 0) {
-		          			$(row).css('background-color', '#f2cbcc');
+		          			$(row).addClass('text-danger');
 	          				
 	          			}
 	          		}
