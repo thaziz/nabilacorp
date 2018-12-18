@@ -672,8 +672,10 @@ $r_code = "DPR-".date('ym')."-".$kd;
                 'r_alamat_cus'=>$request->s_alamat_cus,
                 'r_ref'=>$note,
                 'r_value'=>$s_net,
-                'r_pay'=>$r_pay,
-                'p_outstanding'=>$p_outstanding,              
+
+                'r_pay'=>$bayar,
+                'r_outstanding'=>$s_net-$bayar,              
+
             ]);
         if($bayar!=0){
           d_receivable_dt::create([

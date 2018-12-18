@@ -26,8 +26,10 @@
                               tabel_d_purchasingharian.ajax.reload();
                             }
                             else {
-
-                              toastr.error('Data gagal di simpan.');
+                              iziToast.error({
+				                    title: 'Info',
+				                    message: 'Data gagal dihapus.'
+				              });
                             }
                           }
                        })
@@ -47,7 +49,7 @@
     }
 
     function open_form_update(id) {
-    	location.href = "{{ url('purchasing/belanjaharian/form_perbarui/=') }}/" + id;
+    	location.href = "{{ url('purchasing/belanjaharian/form_perbarui/') }}/" + id;
     }
 
     function find_d_purchasingharian() {
@@ -60,8 +62,8 @@
     }
 
     function refresh_d_purchasingharian() {
-    	var tgl_awal = moment()->subtract(7, 'days')->format('DD/MM/YYYY');
-    	var tgl_akhir = moment()->format('DD/MM/YYYY');
+    	var tgl_awal = moment().subtract(7, 'days').format('DD/MM/YYYY');
+    	var tgl_akhir = moment().format('DD/MM/YYYY');
     	$('#tgl_awal').val( tgl_awal );
     	$('#tgl_akhir').val( tgl_akhir );
 

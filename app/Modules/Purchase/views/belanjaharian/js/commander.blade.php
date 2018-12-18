@@ -33,8 +33,8 @@
           { 
             data : null,
             render : function(res) {
-              var edit_btn = '<button onclick="open_form_update(' + res.r_id + ')" class="btn btn-primary btn-sm" title="edit" style="margin-right:2mm"><i class="fa fa-pencil"></i></button>';
-                var hapus_btn = '<button onclick="hapus(' + res.r_id + ')" class="btn btn-danger btn-sm" title="hapus"><i class="glyphicon glyphicon-trash"></i></button>';
+              var edit_btn = '<button onclick="open_form_update(' + res.d_pcsh_id + ')" class="btn btn-primary btn-sm" title="edit" style="margin-right:2mm"><i class="fa fa-pencil"></i></button>';
+                var hapus_btn = '<button onclick="hapus(' + res.d_pcsh_id + ')" class="btn btn-danger btn-sm" title="hapus"><i class="glyphicon glyphicon-trash"></i></button>';
 
                 var result = edit_btn + hapus_btn;
 

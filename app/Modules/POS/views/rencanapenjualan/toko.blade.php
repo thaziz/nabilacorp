@@ -66,7 +66,7 @@
                <div class="col-md-3">
                   <label class="control-label tebal" name="qty">Jumlah</label>
                   <div class="input-group input-group-sm" style="width: 100%;">
-                     <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="fQty" onclick="" >   
+                     <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="d_pcshdt_qty" onclick="" >   
                      <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="">   
                   </div>
                </div>
@@ -130,9 +130,7 @@
                      <input type="text" id="discount" name="discount" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                   </div>
                </div>
-               <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
-                  <label class="control-label tebal" for="grand">Grand Total</label>
-               </div>
+               
                <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
                   <div class="form-group">
                      <input type="text" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
@@ -146,14 +144,7 @@
                      <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
                   </div>
                </div>
-               <div class="col-md-6 col-sm-6 col-xs-12">
-                  <label class="control-label tebal" for="jumlah">Grand Total </label>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12">
-                  <div class="form-group">
-                     <input type="text" id="grand_biaya" name="s_net" class="form-control input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
-                  </div>
-               </div>
+              
                <!--      <div class="col-md-6 col-sm-6 col-xs-12">
                   <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
                   </div>
@@ -205,9 +196,7 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
-                              <label class="control-label tebal" for="ongkos_kirim">Grand Total + Biaya Kirim</label>
-                           </div>
+                          
                            <div class="col-md-7 col-sm-6 col-xs-12" style="padding-top: 8px">
                               <div class="form-group">
                                  <div class="input-group input-group-sm pull-right" style="width: 93%;">
