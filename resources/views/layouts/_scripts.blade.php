@@ -220,4 +220,37 @@
     //         elem.slideUp( 100 );
     //     }
     // })
+
+        $('#logut_btn').click(function(event){
+            event.preventDefault();
+            iziToast.question({
+                timeout: 20000,
+                close: true,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'Logout?',
+                message: 'Apakah anda yakin?',
+                position: 'center',
+                buttons: [
+                    ['<button><b>Ya</b></button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        window.location.href = $('#logut_btn').attr('href');
+             
+                    }, true],
+                    ['<button>Tidak</button>', function (instance, toast) {
+             
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+             
+                    }],
+                ],
+                onClosing: function(instance, toast, closedBy){
+                    console.info('Closing | closedBy: ' + closedBy);
+                },
+                onClosed: function(instance, toast, closedBy){
+                    console.info('Closed | closedBy: ' + closedBy);
+                }
+            });
+        });
     </script>
