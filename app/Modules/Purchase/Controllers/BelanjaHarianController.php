@@ -249,17 +249,16 @@ class BelanjaHarianController extends Controller {
       $m_item = $m_item->leftJoin('m_price', 'i_id', '=', 'm_pitem');
 
       // Mencari data keyword
-      $keyword = $req->keyword;
-      $keyword = $keyword != null ? $keyword : '';
-      if($keyword != '') {
-        $m_item = $m_item->where('i_code', 'LIKE', '%' . $keyword . '%')->orWhere('i_name', 'LIKE', '%' . $keyword . '%');
+      $term = $req->term;
+      $term = $term != null ? $term : '';
+      if($term != '') {
+        $m_item = $m_item->where('i_code', 'LIKE', '%' . $term . '%')->orWhere('i_name', 'LIKE', '%' . $term . '%');
           
       }
-
+      $m_item = $m_item->select('i_id', 'i_code', 'i_name', 'm_pbuy1', 's_detname', DB::raw('CONCAT(i_code, " - ", i_name) AS label'));
       $m_item = $m_item->take(10)->get();
-      $data = array('data' => $m_item);
 
-      return response()->json($data);
+      return response()->json($m_item);
     }
 
 }

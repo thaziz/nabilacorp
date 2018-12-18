@@ -1,4 +1,6 @@
 <script>
+	current_item = null;
+
 	$(document).ready(function(){
 
 		$('#d_pcsh_divisi').select2();
@@ -11,42 +13,17 @@
 			   		}
 		   		]
 			});
-
-		$('#d_pcshdt_item').select2({
-		  ajax: {
-		    url: '{{ url("/purchasing/belanjaharian/find_m_item") }}',
-		    cache : true,
-		    data: function (params) {
-		      var query = {
-		        keyword: params.term
-		      }
-
-		      // Query parameters will be ?search=[term]&type=public
-		      return query;
-		    },
-		    processResults: function (res) {
-		      var list = [], item;
-		      for(x in res.data) {
-		      	item = res.data[x];
-		      	list.push({
-		      		id : item.i_id,
-		      		text : item.i_code + ' - ' + item.i_name,
-		      		s_detname : item.s_detname,
-		      		m_pbuy1 : item.m_pbuy1
-		      	});
-		      }
-
-		      // Tranforms the top-level key of the response object from 'items' to 'results'
-		      return {
-		        results: list
-		      };
+		$('#d_pcshdt_item').autocomplete({
+			source: '{{ url("/purchasing/belanjaharian/find_m_item") }}',
+		    minLength: 1,
+		    dataType: 'json',
+		    select : function(e, res) {
+		    	$('#d_pcshdt_qty').focus();
+		    	current_item = res.item;
+		    	console.log(current_item);
 		    }
-		  }
 		});
-
-		$('#d_pcshdt_item').on('select2:select', function() {
-			$('#d_pcshdt_qty').focus();
-		})
+		
 
 		$('#d_pcshdt_qty').keypress(function(e){
 			if(e.keyCode == 13) {
@@ -65,8 +42,8 @@
 				}
 				else {
 
-					var item_selected = $('#d_pcshdt_item').select2('data')[0];
-					var d_pcshdt_item = "<input type='hidden' name='d_pcshdt_item[]' value='" + item_selected.id + "'>" + item_selected.text;
+					var item_selected = current_item;
+					var d_pcshdt_item = "<input type='hidden' name='d_pcshdt_item[]' value='" + item_selected.i_id + "'>" + item_selected.label;
 					var d_pcshdt_qty = $(this).val();
 					var s_detname = item_selected.s_detname;
 					var m_pbuy1 = item_selected.m_pbuy1 ;

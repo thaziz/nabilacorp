@@ -645,7 +645,7 @@ class d_sales extends Model
                 'r_ref'=>$note,
                 'r_value'=>$s_net,
                 'r_pay'=>$bayar,
-                'p_outstanding'=>$s_net-$bayar,              
+                'r_outstanding'=>$s_net-$bayar,              
             ]);
 
   

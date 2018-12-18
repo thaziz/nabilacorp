@@ -93,9 +93,9 @@ class PembayaranPiutangController extends Controller
         $d_receivable = d_receivable::find($rd_receivable);
         $d_receivable_data = $d_receivable->first();
         $r_pay = $d_receivable_dt->where('rd_receivable', $rd_receivable)->sum('rd_value');
-        $p_outstanding = d_receivable::where('r_id', $rd_receivable)->get()->first()->r_value - $r_pay;
+        $r_outstanding = d_receivable::where('r_id', $rd_receivable)->get()->first()->r_value - $r_pay;
         $d_receivable->r_pay = $r_pay;
-        $d_receivable->p_outstanding = $p_outstanding;
+        $d_receivable->r_outstanding = $r_outstanding;
         $d_receivable->save();
         // ==================================================================
 

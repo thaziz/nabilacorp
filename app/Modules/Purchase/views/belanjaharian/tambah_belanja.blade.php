@@ -144,7 +144,7 @@
                <div class="col-md-6">
                   <label class="control-label tebal" for="">Masukan Kode / Nama</label>
                   <div class="input-group input-group-sm" style="width: 100%;">
-                    <select id="d_pcshdt_item" class="form-control"></select>
+                    <input type="text" name="d_pcshdt_item" id="d_pcshdt_item" class="form-control">
                   </div>
                </div>
                

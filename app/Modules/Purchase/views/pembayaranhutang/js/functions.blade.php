@@ -1,24 +1,24 @@
 <script>
 	
 
-	 function refresh_d_receivable() {
+	 function refresh_d_payable() {
 	 	$('#tgl_awal, #tgl_akhir').val('')
-	 	tabel_d_receivable.ajax.url("{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}").load();
+	 	tabel_d_payable.ajax.url("{{ url('/purchasing/pembayaran_hutang/find_d_payable') }}").load();
 	 }
-	 function find_d_receivable() {
+	 function find_d_payable() {
 	 	var tgl_awal = $('[name="tgl_awal"]').val();
 	 	var tgl_akhir = $('[name="tgl_akhir"]').val();
 	 	var arg = '?tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
-	 	var url_target =  "{{ url('/penjualan/pembayaranpiutang/find_d_receivable') }}" + arg;
-	 	tabel_d_receivable.ajax.url(url_target).load();
-	 	// tabel_d_receivable.ajax.reload();
+	 	var url_target =  "{{ url('/purchasing/pembayaran_hutang/find_d_payable') }}" + arg;
+	 	tabel_d_payable.ajax.url(url_target).load();
+	 	// tabel_d_payable.ajax.reload();
 	 }
 
 	 function open_payment(obj) {
 	 	var tr = $(obj).parents('tr');
-	 	var data = tabel_d_receivable.row( tr ).data();
+	 	var data = tabel_d_payable.row( tr ).data();
 	 	var o_payment = $('#form_payment');
-	 	o_payment.find('#rd_receivable').val( 
+	 	o_payment.find('#rd_payable').val( 
 	 		get_currency(data.r_id )
 	 	);
 	 	o_payment.find('#r_pay').val( 
@@ -36,7 +36,7 @@
 
 	 function open_detail(obj) {
 	 	var tr = $(obj).parents('tr');
-	 	var data = tabel_d_receivable.row( tr ).data();
+	 	var data = tabel_d_payable.row( tr ).data();
 	 	var o_detail = $('#form_detail');
 	 	o_detail.find('#r_date').text( 
 	 		moment(data.r_date).format('DD/MM/YYYY') 
@@ -53,27 +53,27 @@
 			get_currency(data.r_outstanding) 
 		);
 
-		find_d_receivable_dt(data.r_id);
+		find_d_payable_dt(data.r_id);
 
 	 }
 
-	 function find_d_receivable_dt(r_id) {
+	 function find_d_payable_dt(r_id) {
 	 	$.ajax({
-		      url: "{{ url('/penjualan/pembayaranpiutang/find_d_receivable_dt') }}/" + r_id,
+		      url: "{{ url('/purchasing/pembayaranhutang/find_d_payable_dt') }}/" + r_id,
 		      type: 'GET',
 		      dataType: 'json',
 		      success: function (response) {
-				  render_d_receivable_dt(response.data);
+				  render_d_payable_dt(response.data);
 		      }
 		});
 	 }
 
-	 function render_d_receivable_dt(d_receivable_dt) {
-	 	var list_group = $('#list_d_receivable_dt');
+	 function render_d_payable_dt(d_payable_dt) {
+	 	var list_group = $('#list_d_payable_dt');
 	 	list_group.html('');
-	 	if(d_receivable_dt.length > 0) {
-	 		for(x = 0;x < d_receivable_dt.length;x++) {
-	 			var data = d_receivable_dt[x];
+	 	if(d_payable_dt.length > 0) {
+	 		for(x = 0;x < d_payable_dt.length;x++) {
+	 			var data = d_payable_dt[x];
 	 			var rd_datepay = moment(data.rd_datepay).format('DD/MM/YYYY');
 	 			var list_group_item = $('<a href="#" class="list-group-item"></a>')
 	 			var rd_datepay_item = $('<h4>' + rd_datepay + '</h4>');
@@ -90,10 +90,10 @@
 	 	}
 	 }
 
-	 function insert_d_receivable_dt() {
+	 function insert_d_payable_dt() {
 	 	var data = $('#form_payment form').serialize();
 	 	$.ajax({
-		      url: "{{ url('/penjualan/pembayaranpiutang/insert_d_receivable_dt') }}",
+		      url: "{{ url('/purchasing/pembayaran_hutang/insert_d_payable_dt') }}",
 		      type: 'GET',
 		      data: data,
 		      dataType: 'json',
@@ -104,7 +104,7 @@
 				  		message : 'Sukses menyimpan data'
 				  	});
 
-				  	tabel_d_receivable.ajax.reload();
+				  	tabel_d_payable.ajax.reload();
 				  }
 				  else {
 				  	iziToast.error({

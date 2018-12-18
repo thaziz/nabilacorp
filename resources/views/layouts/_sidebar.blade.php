@@ -171,7 +171,7 @@
 
                                 {{-- @if(Auth::user()->punyaAkses('Return Pembelian','ma_read')) --}}
                                 <li class="{{ Request::is('purchasing/pembayaran_hutang') ? 'active' : '' || Request::is('purchasing/pembayaran_hutang/*') ? 'active' : '' }}">
-                                        <a href="{{ url('/purchasing/pembayaran_hutang') }}"><span
+                                        <a href="{{ url('/purchasing/pembayaran_hutang/index') }}"><span
                                                     class="submenu-title">Pelunasan Hutang</span><span class="hidden">Purchasing</span></a>
                                 </li>
                             <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjasuplier/suplier') ? 'active' : '' || Request::is('purchasing/belanjasuplier/suplier*') ? 'active' : '' }}">

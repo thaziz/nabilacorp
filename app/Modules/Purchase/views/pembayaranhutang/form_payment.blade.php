@@ -1,4 +1,4 @@
-<div class="modal fade" id="form_detail" role="dialog">
+<div class="modal fade" id="form_payment" role="dialog">
   <div class="modal-dialog" style="width: 90%;margin: auto;">
       
     <form method="get" action="#" id="form_m_price">
@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header" style="background-color: #e77c38;">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title" style="color: white;">Detail Pembayaran Piutang</h4>
+            <h4 class="modal-title" style="color: white;">Form Manajemen Harga</h4>
           </div>
 
           <div class="modal-body">
@@ -18,7 +18,8 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_code"></p>
+                  <input type="hidden" name="rd_payable" id="rd_payable">
+                  <input type="text" class="form-control input-sm" readonly name="r_code" id='r_code' readonly>
                 </div>
               </div>
                                         
@@ -27,64 +28,55 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_ref"></p>
-                </div>
-              </div>
-
-              
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Tanggal Piutang</label>
-              </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group">  
-                  <p id="r_date"></p>
+                  <input type="hidden" name="m_pid" id="m_pid">
+                  <input type="text" class="form-control input-sm" readonly name="r_ref" id='r_ref' >
                 </div>
               </div>
                     
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Tanggal Jatuh Tempo</label>
-              </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group">  
-                  <p id="r_duedate"></p>
-                </div>
-              </div>
-                    
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Jumlah Piutang</label>
-              </div>
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group">  
-                  <p id="r_value"></p>
-                </div>
-              </div>
-
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Jumlah Piutang Terbayar</label>
+                <label class="tebal">Jumlah Hutang</label>
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <p id='r_pay' ></p>
+                  <input type="text" class="form-control input-sm" readonly name="r_value" id='r_value' >
                 </div>
               </div>
 
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <label class="tebal">Sisa Pembayaran</label>
+                <label class="tebal">Tanggal Pembayaran</label>
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id='r_outstanding' ></p>
+                  <input type="text" class="form-control input-sm" name="rd_datepay" id='rd_datepay' >
                 </div>
               </div>
 
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="container-fluid" style="background: white">
-                  
-                    <h3>Daftar Pembayaran</h3>
-                    <div class="list-group" id="list_d_receivable_dt"></div>
+                <label class="tebal">Jumlah Pembayaran</label>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">  
+                  <input type="text" class="form-control input-sm" name="rd_value" id='rd_value' >
                 </div>
               </div>
+
+
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label class="tebal">Jumlah Hutang Terbayar</label>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">  
+                  <input type="hidden" name="m_pid" id="m_pid">
+                  <input type="text" class="form-control input-sm" readonly name="r_pay" id='r_pay' >
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-0 col-xs-0" style="height: 45px;">
+                
+              </div>
+
 
               
             </div>
@@ -93,7 +85,7 @@
       
           <div class="modal-footer" style="border-top: none;">
             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-            
+            <button type="button" class="btn btn-primary" id='insert_m_price_btn' onclick="insert_d_payable_dt()">Simpan Data</button>
           </div>
         </div>
       </form>   

@@ -1,7 +1,13 @@
 <?php
 
 Route::group(['namespace' => 'App\Modules\Purchase\Controllers', 'middleware'=>['web','auth']], function () {	
-	/*Purchasing plan*/	
+// Pembayaran hutang
+Route::get('/purchasing/pembayaran_hutang/index', 'PembayaranHutangController@index');
+Route::get('/purchasing/pembayaran_hutang/find_d_payable', 'PembayaranHutangController@find_d_payable');
+Route::get('/purchasing/pembayaran_hutang/find_d_payable_dt/{p_id}', 'PembayaranHutangController@find_d_payable_dt');
+Route::get('/purchasing/pembayaran_hutang/insert_d_payable_dt', 'PembayaranHutangController@insert_d_payable_dt');
+
+/*Purchasing plan*/	
 Route::get('/seach-item-purchase', 'purchasePlanController@seachItemPurchase')->middleware('auth');
 Route::get('/purcahse-plan/plan-index', 'purchasePlanController@planIndex')->middleware('auth');
 Route::get('/purcahse-plan/data-plan', 'purchasePlanController@dataPlan')->middleware('auth');
@@ -79,4 +85,6 @@ Route::get('/purchasing/rencanabahanbaku/lookup-data-supplier', 'RencanaBahanCon
 Route::get('/purchasing/rencanabahanbaku/submit-data', 'RencanaBahanController@submitData');
 // pembelian bahan baku spk selesai
 });
+
+
 
