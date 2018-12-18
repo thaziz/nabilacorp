@@ -76,6 +76,8 @@
                               <th>Tanggal</th>
                               <th>Tanggal Jatuh Tempo</th>
                               <th>Kode</th>
+                              <th>Nama Pelanggan</th>
+                              <th>Alamat Pelanggan</th>
                               <th>Jumlah Piutang</th>
                               <th>Jumlah Terbayar</th>
                               <th>Sisa</th>

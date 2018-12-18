@@ -1,3 +1,14 @@
+<style type="text/css">
+  .ui-autocomplete { z-index:2147483647; }
+  .error { border: 1px solid #f00; }
+  .valid { border: 1px solid #8080ff; }
+  .has-error .select2-selection {
+    border: 1px solid #f00 !important;
+  }
+  .has-valid .select2-selection {
+    border: 1px solid #8080ff !important;
+  }
+</style>
 <div class="modal fade" id="modal_pakai_barang" role="dialog">
   <div class="modal-dialog" style="width: 90%;margin: auto;">
     
@@ -19,7 +30,11 @@
 
             <div class="col-md-4 col-sm-12 col-xs-12">
               <div class="form-group" id="divSelectNota">
-                <select class="form-control input-sm select2" id="head_gudang" name="headGudang" style="width: 100% !important;">
+                <select class="form-control input-sm" id="head_gudang" name="headGudang" style="width: 100%;">
+                    <option>Pilih Gudang</option>
+                  @foreach ($gudang as $gud)
+                    <option value="{{ $gud->gc_id }}">{{ $gud->gc_gudang }}</option>
+                  @endforeach
                 </select>
               </div>  
             </div>

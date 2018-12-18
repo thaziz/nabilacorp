@@ -1,6 +1,30 @@
 @extends('main')
 @section('content')
 {!!$printPl!!}
+<style type="text/css">
+  @media screen {
+  #printSection {
+      display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
+  }
+}
+
+
+
+</style>
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -600,6 +624,27 @@ function validationForm(){
 }
 
 
+
+
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+    
+    var $printSection = document.getElementById("printSection");
+    
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+    
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+    $('#div_print').html('');
+}
+
+
+
 function simpanPos(status=''){
   $('#totalBayar').removeAttr('disabled');
   $('#kembalian').removeAttr('disabled');
@@ -646,12 +691,12 @@ function simpanPos(status=''){
 
 
 
- qz.findPrinter("POS-80");
+ /*qz.findPrinter("POS-80");
         window['qzDoneFinding'] = function() {
             var p = document.getElementById('printer');
             var printer = qz.getPrinter();
             window['qzDoneFinding'] = null;
-        };
+        };*/
 
 
  $.ajax({
@@ -659,12 +704,19 @@ function simpanPos(status=''){
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
+        $('#div_print').html(response);
+              /*qz.appendHTML(
+                  '<html>' +response +'</html>'
+              );
+              qz.printHTML();*/
+
+              
+    printElement(document.getElementById("div_print"));
         
-                qz.appendHTML(
-            '<html>' +response +'</html>'
-    );
-    qz.printHTML();
-        }
+
+
+
+    }
     })
 
 
