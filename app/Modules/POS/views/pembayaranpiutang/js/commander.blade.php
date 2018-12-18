@@ -55,7 +55,7 @@
 				{ 
 					data : null,
 					render : function(res) {
-						return get_currency(res.p_outstanding);
+						return get_currency(res.r_outstanding);
 					}
 				},
 		        { 

@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\mMember;
 use App\Modules\POS\model\d_receivable;
 use App\Modules\POS\model\d_receivable_dt;
+use App\Modules\POS\model\d_sales;
 use Datatables;
 use DB;
 use Excel;
@@ -151,9 +152,10 @@ class laporanPenjualanPesananController  extends Controller
          $shift      = $req->shift;                
          $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
          $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
-       
+         $posPesanan=d_sales::whereBetween('s_date', [$tgl_awal, $tgl_akhir])->where('s_channel','Pesanan')->get();              
          $data=d_receivable::               
-               whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+               Leftjoin('d_receivable_dt','r_id','=','rd_receivable')
+               ->whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
                ->get();    
 
        // Menghitung total
@@ -162,20 +164,41 @@ class laporanPenjualanPesananController  extends Controller
        $total_discountvalue = 0;
        $grand_total = 0;
 
-       foreach ($data as $detail) {        
-         $subtotal = ($detail->sd_qty * $detail->sd_price);
-         $total_discountPercent += $detail->sd_disc_percentvalue;
-         $total_discountvalue += $detail->sd_disc_value;
-         $grand_total += $detail->sd_total;         
+       foreach ($posPesanan as $detail) {        
+         /*$subtotal = $detail->s_gross;*/
+         $total_discountPercent += $detail->s_disc_percent;
+         $total_discountvalue += $detail->s_disc_value;
+         $grand_total += $detail->s_net;         
+         
        }
 
-      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data){        
-            $excel->sheet('New sheet', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$data) {
-                $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel')
-                ->with('data',$data)
+
+       $totalPiutang=0;
+       $jmlBayar=0;
+       $sisaPiutang=0;
+
+       foreach ($data as $piutang) {                 
+         $totalPiutang += $piutang->r_value;
+         $jmlBayar += $piutang->r_pay;
+         $sisaPiutang += $piutang->r_outstanding;         
+         
+       }
+
+      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan,$totalPiutang,$jmlBayar,$sisaPiutang){        
+            $excel->sheet('Data Penjualan', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan) {
+                $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel_penjualan')
+                ->with('posPesanan',$posPesanan)                
                 ->with('grand_total',$grand_total)
                 ->with('total_discountPercent',$total_discountPercent)
                 ->with('total_discountvalue',$total_discountvalue);
+
+            });
+            $excel->sheet('Data Pelunasan Hutang', function($sheet) use ($data,$totalPiutang,$jmlBayar,$sisaPiutang) {
+                $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel')
+                ->with('data',$data)
+                ->with('totalPiutang',$totalPiutang)
+                ->with('jmlBayar',$jmlBayar)
+                ->with('sisaPiutang',$sisaPiutang);                
 
             });
 

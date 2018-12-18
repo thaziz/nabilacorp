@@ -660,6 +660,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
             $p_outstanding=$s_net-$bayar;
             $r_pay=$bayar;
           }
+
           
           d_receivable::create([
                 'r_id'=>$r_id,
@@ -673,7 +674,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
                 'r_ref'=>$note,
                 'r_value'=>$s_net,
                 'r_pay'=>$r_pay,
-                'p_outstanding'=>$p_outstanding,              
+                'r_outstanding'=>$p_outstanding,              
             ]);
         if($bayar!=0){
           d_receivable_dt::create([
