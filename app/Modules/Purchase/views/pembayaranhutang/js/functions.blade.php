@@ -38,28 +38,30 @@
 	 	var tr = $(obj).parents('tr');
 	 	var data = tabel_d_payable.row( tr ).data();
 	 	var o_detail = $('#form_detail');
-	 	o_detail.find('#r_date').text( 
-	 		moment(data.r_date).format('DD/MM/YYYY') 
+	 	o_detail.find('#p_date').text( 
+	 		moment(data.p_date).format('DD/MM/YYYY') 
 	 	);
-		o_detail.find('#r_duedate').text( data.r_duedate );
-		o_detail.find('#r_code').text( data.r_code );
-		o_detail.find('#r_value').text( 
-			get_currency(data.r_value) 
+		o_detail.find('#p_duedate').text( 
+			moment(data.p_duedate).format('DD/MM/YYYY')
 		);
-		o_detail.find('#r_pay').text( 
-			get_currency(data.r_pay) 
+		o_detail.find('#p_code').text( data.p_code );
+		o_detail.find('#p_value').text( 
+			get_currency(data.p_value) 
 		);
-		o_detail.find('#r_outstanding').text( 
-			get_currency(data.r_outstanding) 
+		o_detail.find('#p_pay').text( 
+			get_currency(data.p_pay) 
+		);
+		o_detail.find('#p_outstanding').text( 
+			get_currency(data.p_outstanding) 
 		);
 
-		find_d_payable_dt(data.r_id);
+		find_d_payable_dt(data.p_id);
 
 	 }
 
-	 function find_d_payable_dt(r_id) {
+	 function find_d_payable_dt(p_id) {
 	 	$.ajax({
-		      url: "{{ url('/purchasing/pembayaranhutang/find_d_payable_dt') }}/" + r_id,
+		      url: "{{ url('/purchasing/pembayaran_hutang/find_d_payable_dt') }}/" + p_id,
 		      type: 'GET',
 		      dataType: 'json',
 		      success: function (response) {

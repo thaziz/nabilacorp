@@ -18,7 +18,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_code"></p>
+                  <p id="p_code"></p>
                 </div>
               </div>
                                         
@@ -27,7 +27,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_ref"></p>
+                  <p id="p_ref"></p>
                 </div>
               </div>
 
@@ -37,7 +37,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_date"></p>
+                  <p id="p_date"></p>
                 </div>
               </div>
                     
@@ -46,7 +46,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_duedate"></p>
+                  <p id="p_duedate"></p>
                 </div>
               </div>
                     
@@ -55,7 +55,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id="r_value"></p>
+                  <p id="p_value"></p>
                 </div>
               </div>
 
@@ -65,7 +65,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <p id='r_pay' ></p>
+                  <p id='p_pay' ></p>
                 </div>
               </div>
 
@@ -74,7 +74,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <p id='r_outstanding' ></p>
+                  <p id='p_outstanding' ></p>
                 </div>
               </div>
 
