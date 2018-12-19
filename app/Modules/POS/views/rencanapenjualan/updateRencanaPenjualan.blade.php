@@ -174,9 +174,7 @@
                               <input type="text" id="discount" name="discount" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
-                           <label class="control-label tebal" for="grand">Grand Total</label>
-                        </div>
+                        
                         <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
                            <div class="form-group">
                               <input type="text" value="{{ $grand_total }}" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
@@ -190,14 +188,7 @@
                               <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label class="control-label tebal" for="jumlah">Grand Total</label>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                           <div class="form-group">
-                              <input type="text" id="grand_biaya" name="s_net" value="{{ $grand_total }}" class="form-control input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
-                           </div>
-                        </div>
+                        
                         <!--      <div class="col-md-6 col-sm-6 col-xs-12">
                            <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
                            </div>
@@ -250,16 +241,7 @@
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
-                                       <label class="control-label tebal" for="ongkos_kirim">Grand Total + Biaya Kirim</label>
-                                    </div>
-                                    <div class="col-md-7 col-sm-6 col-xs-12" style="padding-top: 8px">
-                                       <div class="form-group">
-                                          <div class="input-group input-group-sm pull-right" style="width: 93%;">
-                                             <input type="text" id="akumulasiTotal" name="" class="form-control reset" style="text-align: right;" " readonly="">
-                                          </div>
-                                       </div>
-                                    </div>
+                                    
                                     <div class="col-md-12" style="border-bottom: 4px solid #9e5a2e; padding-top:8px ">                                  
                                     </div>
                                     <table style="width: 100%" class="table c">

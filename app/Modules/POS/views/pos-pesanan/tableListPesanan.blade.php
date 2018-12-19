@@ -90,7 +90,7 @@
                               <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" >
                                 
 
-
+<input type="hidden" id="idTerima">
 <label class="tebal">Status : </label>&nbsp;&nbsp;
           <span class="" id="txt_span_status"></span>
           <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
@@ -258,16 +258,13 @@
 
           </div>
 
-
-
-                              
-                             
-
                                           
                               </div>
                             </div>
                         
                             <div class="modal-footer">
+                              
+                  <button id="serah_terima" class="btn btn-success serah_terima" type="button" onclick="serahTerima()" disabled="">Serah Terima</button>
                               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                           </div>
@@ -332,9 +329,10 @@ function resetData(){
             $('#customer').val(c_name)
             $('#s_customer').val(s_customer)
             $('#totalBayar').val(s_bayar)
+            $('#nominal').val(s_bayar)
             $('#kembalian').val(s_kembalian)
 
-                if(parseInt(chek)>0){
+            if(parseInt(chek)>0){
                 $('.perbarui').css('display','');
                 $('.terima').css('display','none');
             }

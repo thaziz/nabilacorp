@@ -5,12 +5,12 @@
 <!--BEGIN TITLE & BREADCRUMB PAGE-->
 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
    <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-      <div class="page-title">Pembayaran Piutang</div>
+      <div class="page-title">Pembayaran Hutang</div>
    </div>
    <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
       <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
       <li><i></i>&nbsp;Penjualan&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-      <li class="active">Pembayaran Piutang</li>
+      <li class="active">Pembayaran Hutang</li>
    </ol>
    <div class="clearfix">
    </div>
@@ -24,7 +24,7 @@
          </div>
       </div>
       <ul id="generalTab" class="nav nav-tabs">
-         <li class="active"><a href="#alert-tab" data-toggle="tab">Pembayaran Piutang</a></li>
+         <li class="active"><a href="#alert-tab" data-toggle="tab">Pembayaran Hutang</a></li>
          <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
             <li><a href="#label-badge-tab" data-toggle="tab">3</a></li> -->
       </ul>
@@ -48,12 +48,12 @@
                         </div>
                      </div>
                      <div class="" align="center" style="margin-left: 1.5mm">
-                        <button class="btn btn-warning btn-sm btn-flat" type="button" onclick='find_d_receivable()'>
+                        <button class="btn btn-warning btn-sm btn-flat" type="button" onclick='find_d_payable()'>
                         <strong>
                         <i class="fa fa-search" aria-hidden="true"></i>
                         </strong>
                         </button>
-                        <button class="btn btn-danger btn-sm btn-flat" type="button" onclick='refresh_d_receivable()'>
+                        <button class="btn btn-danger btn-sm btn-flat" type="button" onclick='refresh_d_payable()'>
                         <strong>
                         <i class="fa fa-undo" aria-hidden="true"></i>
                         </strong>
@@ -70,15 +70,13 @@
                </div>
                <div class="col-md-12 col-sm-12 col-xs-12">
                   <div class="table-responsive">
-                     <table id="tabel_d_receivable" class="table tabelan  table-bordered" width="100%" cellspacing="0">
+                     <table id="tabel_d_payable" class="table tabelan table-hover table-bordered" width="100%" cellspacing="0">
                         <thead>
                            <tr>
                               <th>Tanggal</th>
                               <th>Tanggal Jatuh Tempo</th>
                               <th>Kode</th>
-                              <th>Nama Pelanggan</th>
-                              <th>Alamat Pelanggan</th>
-                              <th>Jumlah Piutang</th>
+                              <th>Jumlah Hutang</th>
                               <th>Jumlah Terbayar</th>
                               <th>Sisa</th>
                               <th></th>
@@ -114,12 +112,12 @@
    </div>
 </div>
 
-@include('POS::pembayaranpiutang/form_payment')
-@include('POS::pembayaranpiutang/form_detail')
+@include('Purchase::pembayaranhutang/form_payment')
+@include('Purchase::pembayaranhutang/form_detail')
 
 @endsection
 @section("extra_scripts")
-@include('POS::pembayaranpiutang/js/format_currency')
-@include('POS::pembayaranpiutang/js/functions')
-@include('POS::pembayaranpiutang/js/commander')
+@include('Purchase::pembayaranhutang/js/format_currency')
+@include('Purchase::pembayaranhutang/js/functions')
+@include('Purchase::pembayaranhutang/js/commander')
 @endsection()

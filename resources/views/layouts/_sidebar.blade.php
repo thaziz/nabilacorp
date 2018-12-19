@@ -22,20 +22,11 @@
                        @endforeach
                     </select>
                     </li>
-                    <li class="dropdown topbar-user"><a data-hover="dropdown" href="#" class="dropdown-toggle"><img src="{{ asset('assets/images/avatar/48.jpg')}}" alt="" class="img-responsive img-circle">&nbsp;<span class="hidden-xs">{{ Auth::user()->m_name }}</span>&nbsp;<span class="caret"></span></a>
-                        <ul class="dropdown-menu dropdown-user pull-right">
-                            <li><a href="#"><i class="fa fa-user"></i>My Profile</a></li>
-                            <li><a href="#"><i class="fa fa-calendar"></i>My Calendar</a></li>
-                            <li><a href="#"><i class="fa fa-envelope"></i>My Inbox<span class="badge badge-danger">3</span></a></li>
-                            <li><a href="#"><i class="fa fa-tasks"></i>My Tasks<span class="badge badge-success">7</span></a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-lock"></i>Lock Screen</a></li>
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i>Logout
-                                </a>
-                            </li>
-                        </ul>
+                    <li class="dropdown topbar-user"><a href="#"><img src="{{ asset('assets/images/avatar/48.jpg')}}" alt="" class="img-responsive img-circle">&nbsp;<span class="hidden-xs">{{ Auth::user()->m_name }}</span></a>
                     </li>
-                    <li id="topbar-chat" class="hidden-xs"><a href="javascript:void(0)" data-step="4" data-intro="&lt;b&gt;Form chat&lt;/b&gt; keep you connecting with other coworker" data-position="left" class="btn-chat"><i class="fa fa-comments"></i><span class="badge badge-info">3</span></a></li>
+                    <li class="dropdown">
+                        <a id="logut_btn" href="{{url('logout')}}"><i class="fa fa-sign-out"></i> Logout</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -171,7 +162,7 @@
 
                                 {{-- @if(Auth::user()->punyaAkses('Return Pembelian','ma_read')) --}}
                                 <li class="{{ Request::is('purchasing/pembayaran_hutang') ? 'active' : '' || Request::is('purchasing/pembayaran_hutang/*') ? 'active' : '' }}">
-                                        <a href="{{ url('/purchasing/pembayaran_hutang') }}"><span
+                                        <a href="{{ url('/purchasing/pembayaran_hutang/index') }}"><span
                                                     class="submenu-title">Pelunasan Hutang</span><span class="hidden">Purchasing</span></a>
                                 </li>
                             <!-- <li class="menu-sekunder {{ Request::is('purchasing/belanjasuplier/suplier') ? 'active' : '' || Request::is('purchasing/belanjasuplier/suplier*') ? 'active' : '' }}">
@@ -303,8 +294,8 @@
 
                             <li class="menu-sekunder {{ Request::is('penjualan/manajemenreturn/r_penjualan') ? 'active' : '' || Request::is('penjualan/manajemenreturn/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/manajemenreturn/r_penjualan') }}"><span class="submenu-title">Manajemen Return Penjualan</span><span class="hidden">Penjualan</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('penjualan/produklangsung/produklangsung') ? 'active' : '' || Request::is('penjualan/produklangsung/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/produklangsung/produklangsung') }}"><span class="submenu-title">Penjualan Produk Langsung Jual</span><span class="hidden">Penjualan</span></a>
-                            </li>
+                            <!-- <li class="menu-sekunder {{ Request::is('penjualan/produklangsung/produklangsung') ? 'active' : '' || Request::is('penjualan/produklangsung/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/produklangsung/produklangsung') }}"><span class="submenu-title">Penjualan Produk Langsung Jual</span><span class="hidden">Penjualan</span></a>
+                            </li> -->
                             <li class="menu-sekunder {{ Request::is('penjualan/penjualanexpired/penjualanexpired') ? 'active' : '' || Request::is('penjualan/penjualanexpired/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanexpired/penjualanexpired') }}"><span class="submenu-title">Penjualan Produk Expired</span><span class="hidden">Penjualan</span></a>
                             </li>
                             <!-- <li class="menu-sekunder {{ Request::is('penjualan/konsinyasi/konsinyasi') ? 'active' : '' || Request::is('penjualan/konsinyasi/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/konsinyasi/konsinyasi') }}"><span class="submenu-title">Konsinyasi</span><span class="hidden">Penjualan</span></a>
@@ -446,62 +437,4 @@
         <!--BEGIN BACK TO TOP-->
         <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
         <!--END BACK TO TOP-->
-            <!--BEGIN CHAT FORM-->
-            <div id="chat-form" class="fixed">
-                <div class="chat-inner">
-                    <h2 class="chat-header">
-                        <a href="javascript:;" class="chat-form-close pull-right"><i class="glyphicon glyphicon-remove">
-                        </i></a><i class="fa fa-users"></i>&nbsp; Message &nbsp;<span class="badge badge-info">3</span></h2>
-                    <div id="group-1" class="chat-group">
-                        <strong>Favorites</strong><a href="#"><span class="user-status is-online"></span> <small>
-                            Verna Morton</small> <span class="badge badge-info">2</span></a><a href="#"><span
-                                class="user-status is-online"></span> <small>Delores Blake</small> <span class="badge badge-info is-hidden">
-                                    0</span></a><a href="#"><span class="user-status is-busy"></span> <small>Nathaniel Morris</small>
-                                        <span class="badge badge-info is-hidden">0</span></a><a href="#"><span class="user-status is-idle"></span>
-                                            <small>Boyd Bridges</small> <span class="badge badge-info is-hidden">0</span></a><a
-                                                href="#"><span class="user-status is-offline"></span> <small>Meredith Houston</small>
-                                                <span class="badge badge-info is-hidden">0</span></a></div>
-                    <div id="group-2" class="chat-group">
-                        <strong>Office</strong><a href="#"><span class="user-status is-busy"></span> <small>
-                            Ann Scott</small> <span class="badge badge-info is-hidden">0</span></a><a href="#"><span
-                                class="user-status is-offline"></span> <small>Sherman Stokes</small> <span class="badge badge-info is-hidden">
-                                    0</span></a><a href="#"><span class="user-status is-offline"></span> <small>Florence
-                                        Pierce</small> <span class="badge badge-info">1</span></a></div>
-                    <div id="group-3" class="chat-group">
-                        <strong>Friends</strong><a href="#"><span class="user-status is-online"></span> <small>
-                            Willard Mckenzie</small> <span class="badge badge-info is-hidden">0</span></a><a
-                                href="#"><span class="user-status is-busy"></span> <small>Jenny Frazier</small>
-                                <span class="badge badge-info is-hidden">0</span></a><a href="#"><span class="user-status is-offline"></span>
-                                    <small>Chris Stewart</small> <span class="badge badge-info is-hidden">0</span></a><a
-                                        href="#"><span class="user-status is-offline"></span> <small>Olivia Green</small>
-                                        <span class="badge badge-info is-hidden">0</span></a></div>
-                </div>
-                <div id="chat-box" style="top: 400px">
-                    <div class="chat-box-header">
-                        <a href="#" class="chat-box-close pull-right"><i class="glyphicon glyphicon-remove">
-                        </i></a><span class="user-status is-online"></span><span class="display-name">Willard
-                            Mckenzie</span> <small>Online</small>
-                    </div>
-                    <div class="chat-content">
-                        <ul class="chat-box-body">
-                            <li>
-                                <p>
-                                    <img src="{{asset('assets/images/avatar/128.jpg')}}" class="avt" /><span class="user">John Doe</span><span
-                                        class="time">09:33</span></p>
-                                <p>
-                                    Hi Swlabs, we have some comments for you.</p>
-                            </li>
-                            <li class="odd">
-                                <p>
-                                    <img src="{{asset('assets/images/avatar/48.jpg')}}" class="avt" /><span class="user">Swlabs</span><span
-                                        class="time">09:33</span></p>
-                                <p>
-                                    Hi, we're listening you...</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="chat-textarea">
-                        <input placeholder="Type your message" class="form-control" /></div>
-                </div>
-            </div>
-            <!--END CHAT FORM-->
+            

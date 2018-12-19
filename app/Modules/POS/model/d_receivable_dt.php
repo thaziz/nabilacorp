@@ -34,6 +34,13 @@ class d_receivable_dt extends Model
 							'rd_value',							
 							'rd_status'
 						   ];
+    
+    static public function receivableDt ($id){
+       return $data=d_receivable_dt::
+              where('rd_receivable',$id)              
+             ->orderBy('rd_detailid')
+             ->get();
+    }
 }
 	
 ?>

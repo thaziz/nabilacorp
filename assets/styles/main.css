@@ -4018,8 +4018,8 @@ body.sidebar-icons #wrapper #page-wrapper {
 .table tbody tr.calendar-month-header:first-child th span {
   padding-bottom: 0;
 }
-.table tbody tr td {
-  /*border-top: 1px solid #efefef;*/
+.table.table-bordered tbody tr td {
+  border-top: 1px solid #efefef !important;
 }
 .ticker-wrapper.has-js {
   margin: 0;

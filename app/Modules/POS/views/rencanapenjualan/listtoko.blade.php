@@ -197,12 +197,6 @@
             </div>
 
           
-
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Grand Total + Biaya Kirim</label>
-            </div>
-
             <div class="col-md-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lTtl"></label>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\mMember;
 use App\Modules\POS\model\d_receivable;
 use App\Modules\POS\model\d_receivable_dt;
+use App\Modules\POS\model\d_sales;
 use Datatables;
 use DB;
 use Excel;
@@ -51,21 +52,20 @@ class laporanPenjualanPesananController  extends Controller
        $shift      = $req->shift;                
        $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
        $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
+       
+          $data=d_receivable::
+                whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+                ->get();    
 
 
-       $data=d_receivable::
-             get();
-      /*$data2=d_receivable::
-              join('d_receivable_dt',function($join){
-                  $join->on('r_id','=','rd_receivable');                   
-                  $join->where('rd_status','N');
-              })
-             ->get();*/
+
+
+
       
 
       return Datatables::of($data)                       
                       ->addIndexColumn()                                                 
-                      ->editColumn('r_date', function ($data) {                            
+                      ->editColumn('r_date', function ($data) {   
                                 return date('d-m-Y',strtotime($data->r_date));                            
                         })
                       ->editColumn('r_reff', function ($data) {                            
@@ -91,8 +91,11 @@ class laporanPenjualanPesananController  extends Controller
                       ->editColumn('jml', function ($data) {                  
                                 $dt=$this->receivableDt($data->r_id);                                
                                 $html='';
-                                foreach ($dt as $key => $dataDt) {                                  
-                                  $html.= '<div style="width:100%;text-align:right">'.number_format($dataDt->rd_value,2,',','.').'<br>';
+                                foreach ($dt as $key => $dataDt) {                    
+                                  if($dataDt->rd_status=='Y'){
+                                      $html.='<div style="float:left">(DP)</div>';
+                                  }              
+                                  $html.= '<div style="float:right">'.number_format($dataDt->rd_value,2,',','.').'</div><br>';
                                 }
                                 return $html;                      
                       })           
@@ -112,144 +115,32 @@ class laporanPenjualanPesananController  extends Controller
        
     }
 
-    public function find_d_sales_dt(Request $req) {
-       
-        $shift      = $req->shift;        
-        
-       $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
-       $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
-    
-      if($shift=='A'){
-          $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));                    
-
-    $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_date', [$tgl_awal, $tgl_awal])     
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total','sd_disc_percentvalue')->orderBy('sd_date', 'ASC')
-            ->get();
-
-          
-        }else if($shift=='1'){          
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'06:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-
-    $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])    
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total','sd_disc_percentvalue')->orderBy('sd_date', 'ASC')
-            ->get();
-
-        }else if($shift=='2'){
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'21:00'));
-          
-          $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])      
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total','sd_disc_percentvalue')->orderBy('sd_date', 'ASC')
-            ->get();
-        }
-
-
-
-
-
-
-
-
-
-
-
-  return Datatables::of($rows)                         
-                      ->editColumn('s_date', function ($rows) {                           
-                                return date('d-M-Y',strtotime($rows->s_date));
-                        })
-                      ->editColumn('sd_total', function ($rows) {                           
-                                return number_format($rows->sd_total,'2',',','.');
-                      })->editColumn('sd_disc_value', function ($rows) {                           
-                                return number_format($rows->sd_disc_value,'2',',','.');
-                      })->editColumn('sd_price', function ($rows) {                           
-                                return number_format($rows->sd_price,'2',',','.');
-                      })->make(true);    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-    
-    
-    public function totalPenjualan(Request $req){
+    public function totalPiutang(Request $req){
        $rows       ='';
        $shift      = $req->shift;                
        $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
        $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
-          
-      if($shift=='A'){
-          $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));                    
 
-    $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_date', [$tgl_awal, $tgl_awal])                             
-            ->select(DB::raw("SUM(sd_disc_value) as sd_disc_value"),
-                     DB::raw("SUM(sd_disc_percentvalue) as sd_disc_percentvalue"),
-                     DB::raw("SUM(sd_total) as sd_total")
+
+
+        $shift      = $req->shift;                
+       $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
+       $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
+       
+          $data=d_receivable::
+                whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+                ->select(DB::raw("SUM(r_value) as r_value"),
+                     DB::raw("SUM(r_pay) as r_pay"),
+                     DB::raw("SUM(r_outstanding) as r_outstanding")
                      )
-              ->orderBy('sd_date', 'ASC')
-            ->first();
-            
+                ->first();    
+
 
           
-        }else if($shift=='1'){          
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'06:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-
-    $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])                            
-            ->select(DB::raw("SUM(sd_disc_value) as sd_disc_value"),
-                     DB::raw("SUM(sd_disc_percentvalue) as sd_disc_percentvalue"),
-                     DB::raw("SUM(sd_total) as sd_total")
-                     )
-            ->orderBy('sd_date', 'ASC')
-            ->first();
-
-        }else if($shift=='2'){
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'21:00'));
-          
-          $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-            ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])      
-            ->select(DB::raw("SUM(sd_disc_value) as sd_disc_value"),
-                     DB::raw("SUM(sd_disc_percentvalue) as sd_disc_percentvalue"),
-                     DB::raw("SUM(sd_total) as sd_total")
-                     )
-            ->orderBy('sd_date', 'ASC')
-            ->first();
-        }
-        /*dd($rows->sd_disc_percentvalue);*/
         $data=[                
-                'sd_disc_value'=>number_format($rows->sd_disc_percentvalue+$rows->sd_disc_value,2,',','.'),
-                'sd_total'=>number_format($rows->sd_total,2,',','.')
+                'r_value'=>number_format($data->r_value,2,',','.'),
+                'r_pay'=>number_format($data->r_pay,2,',','.'),
+                'r_outstanding'=>number_format($data->r_outstanding,2,',','.')
 
                 ];
 
@@ -257,54 +148,15 @@ class laporanPenjualanPesananController  extends Controller
 
 
     }
-    public function print_laporan_excel(Request $req) {
-        $data = array();
-        $rows=null;
-
-        $shift      = $req->shift;        
-        
-       $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
-       $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
-    
-      if($shift=='A'){
-          $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));                    
-
-    $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_date', [$tgl_awal, $tgl_awal])     
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total')->orderBy('sd_date', 'ASC')
-            ->get();
-
-          
-        }else if($shift=='1'){          
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'06:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-
-           $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])    
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total')->orderBy('sd_date', 'ASC')
-            ->get();
-
-        }else if($shift=='2'){
-          $tgl_awal1   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'13:00'));
-          $tgl_awal2   = date('Y-m-d G:i:s',strtotime($req->tgl_awal.' '.'21:00'));
-          
-          $rows = d_sales_dt::leftJoin('d_sales', function($join) {
-                $join->on('sd_sales', '=', 's_id');
-              })->where('s_channel', 'Toko')
-              ->whereBetween('s_insert', [$tgl_awal1, $tgl_awal2])      
-            ->join('m_item','i_id','=','sd_item')
-            ->join('m_satuan','m_satuan.s_id','=','i_sat1')->select('m_item.i_name','s_note','s_date','s_nama_cus','s_detname','sd_qty','sd_price','sd_disc_value','sd_disc_percent','sd_total')->orderBy('sd_date', 'ASC')
-            ->get();
-        }
-
-
-
+    public function printLaporanExcel(Request $req) {
+         $shift      = $req->shift;                
+         $tgl_awal   = date('Y-m-d',strtotime($req->tgl_awal));
+         $tgl_akhir  = date('Y-m-d',strtotime($req->tgl_akhir));
+         $posPesanan=d_sales::whereBetween('s_date', [$tgl_awal, $tgl_akhir])->where('s_channel','Pesanan')->get();              
+         $data=d_receivable::               
+               Leftjoin('d_receivable_dt','r_id','=','rd_receivable')
+               ->whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+               ->get();    
 
        // Menghitung total
        $total_discountPercent=0;
@@ -312,20 +164,45 @@ class laporanPenjualanPesananController  extends Controller
        $total_discountvalue = 0;
        $grand_total = 0;
 
-       foreach ($rows as $detail) {        
-         $subtotal = ($detail->sd_qty * $detail->sd_price);
-         $total_discountPercent += $detail->sd_disc_percentvalue;
-         $total_discountvalue += $detail->sd_disc_value;
-         $grand_total += $detail->sd_total;         
+       foreach ($posPesanan as $detail) {        
+         /*$subtotal = $detail->s_gross;*/
+         $total_discountPercent += $detail->s_disc_percent;
+         $total_discountvalue += $detail->s_disc_value;
+         $grand_total += $detail->s_net;         
+         
        }
 
-      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows){        
-            $excel->sheet('New sheet', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$rows) {
-                $sheet->loadView('POS::laporanPenjualanToko/print_laporan_excel')
-                ->with('data',$rows)
+       $totalPiutang=0;
+       $jmlBayar=0;
+       $sisaPiutang=0;
+
+       $totalRe=d_receivable::
+                whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+                ->select(DB::raw("SUM(r_value) as r_value"),
+                     DB::raw("SUM(r_pay) as r_pay"),
+                     DB::raw("SUM(r_outstanding) as r_outstanding")
+                     )
+                ->first();    
+
+      $totalPiutang=$totalRe->r_value;
+      $jmlBayar=$totalRe->r_pay;
+      $sisaPiutang=$totalRe->r_outstanding;
+
+      Excel::create('Laporan Penjualan Pesanan '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan,$totalPiutang,$jmlBayar,$sisaPiutang){        
+            $excel->sheet('Data Penjualan', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan) {
+                $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel_penjualan')
+                ->with('posPesanan',$posPesanan)                
                 ->with('grand_total',$grand_total)
                 ->with('total_discountPercent',$total_discountPercent)
                 ->with('total_discountvalue',$total_discountvalue);
+
+            });
+            $excel->sheet('Data Pelunasan Hutang', function($sheet) use ($data,$totalPiutang,$jmlBayar,$sisaPiutang) {
+                $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel')
+                ->with('data',$data)
+                ->with('totalPiutang',$totalPiutang)
+                ->with('jmlBayar',$jmlBayar)
+                ->with('sisaPiutang',$sisaPiutang);                
 
             });
 

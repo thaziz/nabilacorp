@@ -1,6 +1,7 @@
 @extends('main')
 @section('content')
 {!!$printPl!!}
+
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -209,6 +210,17 @@ ctrl = 17;
   }) 
   }
   });   
+
+/*function jatuhTempo(){
+var s_date=$('#s_date').val();
+var s_finishdate=$('#s_finishdate').val();
+
+  var date1 = new Date("12/19/2018");
+  var date2 = new Date("12/21/2018");
+var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+alert(diffDays);
+}*/
 
 
   function jenis_bayar(){
@@ -561,17 +573,17 @@ function validationForm(){
 
 }
 
-
+$status=true;
 function simpanPos(status=''){
   if(chekPembayaran()==false){
     return false;
   }
+  
   $('#totalBayar').removeAttr('disabled');
   $('#kembalian').removeAttr('disabled');
   $('.btn-disabled').attr('disabled','disabled');
-
-  
-
+  if($status==true){ 
+  $status=false;   
   var formPos=$('#dataPos').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-pesanan/create',
@@ -579,8 +591,8 @@ function simpanPos(status=''){
           data    :  formPos+'&status='+status,
           dataType: 'json',
           success : function(response){    
-                    
-                    if(response.status=='sukses'){
+                     
+                    if(response.status=='sukses'){                      
                       $('#serah_terima').attr('disabled','disabled');                      
                       $('#nominal').val('');  
 
@@ -606,18 +618,12 @@ function simpanPos(status=''){
 
 
 
- qz.findPrinter("POS-80");
-
-        // Automatically gets called when "qz.findPrinter()" is finished.
+        /*qz.findPrinter("POS-80");
         window['qzDoneFinding'] = function() {
             var p = document.getElementById('printer');
             var printer = qz.getPrinter();
-
-            // Alert the printer name to user      
-
-            // Remove reference to this function
             window['qzDoneFinding'] = null;
-        };
+        };*/
 
 
  $.ajax({
@@ -626,12 +632,13 @@ function simpanPos(status=''){
     data    :  formPos+'&status='+status,
     success:function (response){
         
-                qz.appendHTML(
-            '<html>' +response +'</html>'
-    );
-                   
+            $('#div_print').html(response);              
+            printElement(document.getElementById("div_print"));
 
-    qz.printHTML();
+            /*qz.appendHTML(
+                '<html>' +response +'</html>'
+            );
+            qz.printHTML();*/
         }
     })
 
@@ -640,7 +647,7 @@ function simpanPos(status=''){
 
 batal();
 resetFrom();        
-
+$status=true;
 
                             /*window.open(baseUrl+'/penjualan/pos-pesanan/printNota/'+response.s_id,'_blank');*/               
                             }
@@ -651,7 +658,7 @@ resetFrom();
                       $('.btn-disabled').removeAttr('disabled');
                       $('#kembalian').attr('disabled','disabled');
                       $('#totalBayar').attr('disabled','disabled');
-                        
+                        $status=true;
                         iziToast.error({
                           position:'topRight',
                           timeout: 2000,
@@ -664,9 +671,29 @@ resetFrom();
                     }
           }
       });
+
+   }
 }
 
 
+
+
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+    
+    var $printSection = document.getElementById("printSection");
+    
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+    
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+    $('#div_print').html('');
+}
   
 
 function perbaruiData(){
@@ -762,12 +789,12 @@ function serahTerima(){
      $('#kembalian').removeAttr('disabled');
   $('#totalBayar').removeAttr('disabled');
   $('#btn-disabled').attr('disabled','disabled');
-
+  var idTerima=$('#idTerima').val()
   var formPos=$('#dataPos').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-pesanan/serah-terima',
           type    : 'GET', 
-          data    :  formPos+'&hapusdt='+hapusSalesDt,
+          data    :  formPos+'&hapusdt='+hapusSalesDt+'&idTerima='+idTerima,
           dataType: 'json',
           success : function(response){    
                     $('.tr_clone').html('');    
@@ -932,7 +959,22 @@ function caraxx(hutang_id){
 
 }
 
-function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
+function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar,s_alamat_cus) {  
+$('#serah_terima').css('display','');
+ if(s_net==s_bayar && s_status=='draft' || s_net==s_bayar && s_status=='final'){              
+              $('#serah_terima').removeAttr('disabled');
+            }else if (s_net!=s_bayar && s_status=='draft' || s_net!=s_bayar && s_status=='final'){              
+              $('#serah_terima').attr('disabled','disabled');
+            }else if(s_status=='lunas'){
+              $('#serah_terima').attr('disabled','disabled');
+            }
+            else if(s_status=='Terima'){
+              $('#serah_terima').css('display','none');
+            }
+            
+
+
+  $('#idTerima').val(s_id);
   var status='';
   if(s_status=='final'){
     status='<span class="label label-primary">Final</span>';

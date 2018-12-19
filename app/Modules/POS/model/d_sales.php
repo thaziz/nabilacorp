@@ -480,7 +480,7 @@ class d_sales extends Model
                             if($d_sales->s_status=='final' && $d_sales->s_channel=='Toko' ){
                               $disable='disabled';
                             }
-                            if($d_sales->s_status=='Terima' && $d_sales->s_channel=='Pesanan' ){
+                            if($d_sales->s_status=='final' && $d_sales->s_channel=='Pesanan' ){
                               $disable='disabled';
                             }
 
@@ -660,6 +660,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
             $p_outstanding=$s_net-$bayar;
             $r_pay=$bayar;
           }
+
           
           d_receivable::create([
                 'r_id'=>$r_id,
@@ -673,7 +674,8 @@ $r_code = "DPR-".date('ym')."-".$kd;
                 'r_ref'=>$note,
                 'r_value'=>$s_net,
                 'r_pay'=>$r_pay,
-                'p_outstanding'=>$p_outstanding,              
+                'r_outstanding'=>$p_outstanding,              
+
             ]);
         if($bayar!=0){
           d_receivable_dt::create([
@@ -925,19 +927,30 @@ $totalBayar=0;
 
     static function serahTerima($request){      
       return DB::transaction(function () use ($request) {   
-          $s_date=date('Y-m-d',strtotime($request->s_date));     
-          $jumlahJurnalHpp=0;
-          $updateSales=d_sales::where('s_id',$request->s_id);  
+        $jumlahJurnalHpp=0;
+        $id=$request->idTerima;
+
+        $d_sales=d_sales::where('s_id',$id)->first();
+        $updateSales=d_sales::where('s_id',$id);  
+
+        $s_date=date('Y-m-d',strtotime($d_sales->s_date));     
+
+          
           $status=$updateSales->first()->s_status;
           $updateSales->update([                    
                     's_status'=>'Terima',
-                    ]);       
-        for ($i=0; $i <count($request->sd_item); $i++) { 
+                   ]);       
 
-          $comp=$request->comp[$i];
-          $position=$request->position[$i]; 
+
+       $d_sales_dt=d_sales_dt::where('sd_sales',$id)->get();
+
+
+        for ($i=0; $i <count($d_sales_dt); $i++) { 
+          
+          $comp=$d_sales_dt[$i]->sd_comp;
+          $position=$d_sales_dt[$i]->sd_position; 
           $s_note=$updateSales->first()->s_note;
-          $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$request->sd_qty[$i],$comp,$position,$flag='',$s_note,$ket='',$s_date);
+          $simpanMutasi=mutasi::mutasiStok($d_sales_dt[$i]->sd_item,$d_sales_dt[$i]->sd_qty ,$comp,$position,$flag='',$s_note,$ket='',$s_date);          
             if($simpanMutasi['true']){     
             $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
             }else{

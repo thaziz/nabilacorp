@@ -2,7 +2,6 @@
   table#tSalesDetail{
     border: none;
   }
-
 </style>
 <div id="toko" class="tab-pane fade in active">
   <form method="post" id="dataPos">
@@ -117,7 +116,7 @@
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate">
+               <input onblur="jatuhTempo()" type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate">
              </div>
            </div>
 
@@ -370,7 +369,7 @@
     <th>Jumlah</th>
     <td class="hutang" style="display: none;">Jatuh Tempo</th>
   </thead>
-  <tbody class="tr_clone">
+  <tbody class="tr_clon">
       <tr>
         <td>
           <select style="width:90%" class="minu mx" name="sp_method[]" >
@@ -430,6 +429,7 @@
                             </div>
                         
                             <div class="modal-footer">
+                            <div id="div_print"></div>
                               <button type="button" class="minu mx btn btn-warning" data-dismiss="modal">Close</button>
                               <button class="btn final btn-primary minu mx" type="button" onclick="buttonSimpanPos('final')">Simpan & Print</button>
                               <button type="button" class="minu mx btn-primary btn btn-disabled perbarui" data-toggle="modal" disabled="" style="display: none;"  onclick="buttonSimpanPos()">Perbarui</button>
@@ -442,7 +442,8 @@
 
               
         </div>
-                  <div class="col-md-1 col-sm-1 col-xs-1"><button id="serah_terima" class="btn btn-success serah_terima" type="button" onclick="serahTerima()" disabled="">Serah Terima</button></div>
+                  <div class="col-md-1 col-sm-1 col-xs-1">
+                  </div>
                   <div class="col-md-11 col-sm-11 col-xs-11" align="right">
                     <button class="btn btn-danger btn-disabled" type="button" onclick="batal()">Batal</button>
                      <button style="display: none;" class="btn btn-warning btn-disabled terima" type="button" onclick="Terima('draft')">Terima</button>                              
