@@ -43,9 +43,14 @@ class PembayaranPiutangController extends Controller
       $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
       $tgl_akhir = $req->tgl_akhir;
       $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
+      $tgl_awal = str_replace('/', '-',$tgl_awal);
+      $tgl_akhir = str_replace('/', '-',$tgl_akhir);
+
       if($tgl_awal != '' && $tgl_akhir != '') {
+
         $tgl_awal = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_awal);
         $tgl_akhir = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_akhir);
+
         $d_receivable = d_receivable::whereBetween('r_date', array($tgl_awal, $tgl_akhir))->get();
       }
       else {
@@ -53,13 +58,6 @@ class PembayaranPiutangController extends Controller
         $d_receivable = d_receivable::all();
       }
       $data = array('data' => $d_receivable);
-
-      return response()->json($data);
-    }
-
-    public function find_d_receivable_dt($r_id) {
-      $d_receivable_dt = d_receivable_dt::where('rd_receivable', $r_id)->get();
-      $data = array('data' => $d_receivable_dt);
 
       return response()->json($data);
     }
@@ -78,6 +76,10 @@ class PembayaranPiutangController extends Controller
         $rd_value = $req->rd_value;
         $rd_value = $rd_value != null ? $rd_value : '';
 
+        $d_receivable = d_receivable::where('r_id',$rd_receivable);        
+        $tamp=$d_receivable;
+
+        
         $rd_detailid = DB::table('d_receivable_dt')->where('rd_receivable', $rd_receivable)->select( DB::raw('IFNULL(COUNT(rd_detailid), 0) AS count_detailid') )->get()->first();
         $rd_detailid = $rd_detailid->count_detailid + 1;
         // Input ke tabel d_receivable_dt
@@ -86,17 +88,19 @@ class PembayaranPiutangController extends Controller
         $d_receivable_dt->rd_detailid = $rd_detailid;
         $d_receivable_dt->rd_datepay = $rd_datepay;
         $d_receivable_dt->rd_value = $rd_value;
+        $d_receivable_dt->rd_outstanding=$tamp->first()->r_outstanding;
         $d_receivable_dt->save();
         // ==========================================
 
-        // Update jumlah terbayar dan sisa pembayaran ke tabel d_receivable
-        $d_receivable = d_receivable::find($rd_receivable);
-        $d_receivable_data = $d_receivable->first();
+        // Update jumlah terbayar dan sisa pembayaran ke tabel d_receivable        
         $r_pay = $d_receivable_dt->where('rd_receivable', $rd_receivable)->sum('rd_value');
         $r_outstanding = d_receivable::where('r_id', $rd_receivable)->get()->first()->r_value - $r_pay;
-        $d_receivable->r_pay = $r_pay;
-        $d_receivable->r_outstanding = $r_outstanding;
-        $d_receivable->save();
+
+        $d_receivable->update([
+          'r_pay' => $r_pay,
+          'r_outstanding' => $r_outstanding
+          ]);
+        
         // ==================================================================
 
 
