@@ -294,8 +294,8 @@
 
                             <li class="menu-sekunder {{ Request::is('penjualan/manajemenreturn/r_penjualan') ? 'active' : '' || Request::is('penjualan/manajemenreturn/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/manajemenreturn/r_penjualan') }}"><span class="submenu-title">Manajemen Return Penjualan</span><span class="hidden">Penjualan</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('penjualan/produklangsung/produklangsung') ? 'active' : '' || Request::is('penjualan/produklangsung/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/produklangsung/produklangsung') }}"><span class="submenu-title">Penjualan Produk Langsung Jual</span><span class="hidden">Penjualan</span></a>
-                            </li>
+                            <!-- <li class="menu-sekunder {{ Request::is('penjualan/produklangsung/produklangsung') ? 'active' : '' || Request::is('penjualan/produklangsung/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/produklangsung/produklangsung') }}"><span class="submenu-title">Penjualan Produk Langsung Jual</span><span class="hidden">Penjualan</span></a>
+                            </li> -->
                             <li class="menu-sekunder {{ Request::is('penjualan/penjualanexpired/penjualanexpired') ? 'active' : '' || Request::is('penjualan/penjualanexpired/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/penjualanexpired/penjualanexpired') }}"><span class="submenu-title">Penjualan Produk Expired</span><span class="hidden">Penjualan</span></a>
                             </li>
                             <!-- <li class="menu-sekunder {{ Request::is('penjualan/konsinyasi/konsinyasi') ? 'active' : '' || Request::is('penjualan/konsinyasi/*') ? 'active' : '' }}"><a href="{{ url('/penjualan/konsinyasi/konsinyasi') }}"><span class="submenu-title">Konsinyasi</span><span class="hidden">Penjualan</span></a>
