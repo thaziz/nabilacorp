@@ -18,19 +18,19 @@
 	 	var tr = $(obj).parents('tr');
 	 	var data = tabel_d_payable.row( tr ).data();
 	 	var o_payment = $('#form_payment');
-	 	o_payment.find('#rd_payable').val( 
-	 		get_currency(data.r_id )
+	 	o_payment.find('#pd_payable').val( 
+	 		get_currency(data.p_id )
 	 	);
-	 	o_payment.find('#r_pay').val( 
-	 		get_currency(data.r_pay )
+	 	o_payment.find('#p_pay').val( 
+	 		get_currency(data.p_pay )
 	 	);
-	 	o_payment.find('#r_value').val( 
-	 		get_currency(data.r_value )
+	 	o_payment.find('#p_value').val( 
+	 		get_currency(data.p_value )
 	 	);
-	 	o_payment.find('#r_code').val( data.r_code );
-	 	o_payment.find('#r_ref').val( data.r_ref );
-	 	o_payment.find('#r_outstanding').val( 
-	 		get_currency(data.r_outstanding )
+	 	o_payment.find('#p_code').val( data.p_code );
+	 	o_payment.find('#p_ref').val( data.p_ref );
+	 	o_payment.find('#p_outstanding').val( 
+	 		get_currency(data.p_outstanding )
 	 	);
 	 }
 
@@ -38,28 +38,30 @@
 	 	var tr = $(obj).parents('tr');
 	 	var data = tabel_d_payable.row( tr ).data();
 	 	var o_detail = $('#form_detail');
-	 	o_detail.find('#r_date').text( 
-	 		moment(data.r_date).format('DD/MM/YYYY') 
+	 	o_detail.find('#p_date').text( 
+	 		moment(data.p_date).format('DD/MM/YYYY') 
 	 	);
-		o_detail.find('#r_duedate').text( data.r_duedate );
-		o_detail.find('#r_code').text( data.r_code );
-		o_detail.find('#r_value').text( 
-			get_currency(data.r_value) 
+		o_detail.find('#p_duedate').text( 
+			moment(data.p_duedate).format('DD/MM/YYYY')
 		);
-		o_detail.find('#r_pay').text( 
-			get_currency(data.r_pay) 
+		o_detail.find('#p_code').text( data.p_code );
+		o_detail.find('#p_value').text( 
+			get_currency(data.p_value) 
 		);
-		o_detail.find('#r_outstanding').text( 
-			get_currency(data.r_outstanding) 
+		o_detail.find('#p_pay').text( 
+			get_currency(data.p_pay) 
+		);
+		o_detail.find('#p_outstanding').text( 
+			get_currency(data.p_outstanding) 
 		);
 
-		find_d_payable_dt(data.r_id);
+		find_d_payable_dt(data.p_id);
 
 	 }
 
-	 function find_d_payable_dt(r_id) {
+	 function find_d_payable_dt(p_id) {
 	 	$.ajax({
-		      url: "{{ url('/purchasing/pembayaranhutang/find_d_payable_dt') }}/" + r_id,
+		      url: "{{ url('/purchasing/pembayaran_hutang/find_d_payable_dt') }}/" + p_id,
 		      type: 'GET',
 		      dataType: 'json',
 		      success: function (response) {
@@ -74,13 +76,13 @@
 	 	if(d_payable_dt.length > 0) {
 	 		for(x = 0;x < d_payable_dt.length;x++) {
 	 			var data = d_payable_dt[x];
-	 			var rd_datepay = moment(data.rd_datepay).format('DD/MM/YYYY');
+	 			var pd_datepay = moment(data.pd_datepay).format('DD/MM/YYYY');
 	 			var list_group_item = $('<a href="#" class="list-group-item"></a>')
-	 			var rd_datepay_item = $('<h4>' + rd_datepay + '</h4>');
-	 			var rd_value_item = $('<p>' + get_currency(data.rd_value) + '</p>');
+	 			var pd_datepay_item = $('<h4>' + pd_datepay + '</h4>');
+	 			var pd_value_item = $('<p>' + get_currency(data.pd_value) + '</p>');
 
-	 			list_group_item.append(rd_datepay_item);
-	 			list_group_item.append(rd_value_item);
+	 			list_group_item.append(pd_datepay_item);
+	 			list_group_item.append(pd_value_item);
 
 	 			list_group.append(list_group_item);
 	 		}

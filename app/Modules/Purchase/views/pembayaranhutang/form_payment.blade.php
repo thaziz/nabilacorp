@@ -18,8 +18,8 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <input type="hidden" name="rd_payable" id="rd_payable">
-                  <input type="text" class="form-control input-sm" readonly name="r_code" id='r_code' readonly>
+                  <input type="hidden" name="pd_payable" id="pd_payable">
+                  <input type="text" class="form-control input-sm" readonly name="p_code" id='p_code' readonly>
                 </div>
               </div>
                                         
@@ -29,7 +29,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <input type="text" class="form-control input-sm" readonly name="r_ref" id='r_ref' >
+                  <input type="text" class="form-control input-sm" readonly name="p_ref" id='p_ref' >
                 </div>
               </div>
                     
@@ -39,7 +39,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <input type="text" class="form-control input-sm" readonly name="r_value" id='r_value' >
+                  <input type="text" class="form-control input-sm" readonly name="p_value" id='p_value' >
                 </div>
               </div>
 
@@ -48,7 +48,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <input type="text" class="form-control input-sm" name="rd_datepay" id='rd_datepay' >
+                  <input type="text" class="form-control input-sm" name="pd_datepay" id='pd_datepay' >
                 </div>
               </div>
 
@@ -57,7 +57,7 @@
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
-                  <input type="text" class="form-control input-sm" name="rd_value" id='rd_value' >
+                  <input type="text" class="form-control input-sm" name="pd_value" id='pd_value' >
                 </div>
               </div>
 
@@ -69,7 +69,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="form-group">  
                   <input type="hidden" name="m_pid" id="m_pid">
-                  <input type="text" class="form-control input-sm" readonly name="r_pay" id='r_pay' >
+                  <input type="text" class="form-control input-sm" readonly name="p_pay" id='p_pay' >
                 </div>
               </div>
 
