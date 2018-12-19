@@ -643,14 +643,15 @@ function printElement(elem) {
 }
 
 
-
+$status=true;
 function simpanPos(status=''){
   $('#totalBayar').removeAttr('disabled');
   $('#kembalian').removeAttr('disabled');
   $('.btn-disabled').attr('disabled','disabled');
 
   
-
+if($status==true){ 
+  $status=false;   
   var formPos=$('#dataPos').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-toko/create',
@@ -681,6 +682,7 @@ function simpanPos(status=''){
                         $('#s_date').val('{{date("d-m-Y")}}');                        
                         $('#s_created_by').val('{{Auth::user()->m_name}}');
                         $('#searchitem').focus();
+                        $status=true;
                         if(response.s_status=='final'){
                         
 
@@ -744,10 +746,11 @@ function simpanPos(status=''){
                         });
 
 
-
+                        $status=true;
                     }
           }
       });
+   }
 }
 
 
