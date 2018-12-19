@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\mMember;
 use App\Modules\POS\model\d_receivable;
 use App\Modules\POS\model\d_receivable_dt;
+use App\Modules\POS\model\d_sales;
 use DB;
 
 use Auth;
@@ -101,6 +102,12 @@ class PembayaranPiutangController extends Controller
           'r_outstanding' => $r_outstanding
           ]);
         
+        $codeSales=$d_receivable->first()->r_ref;
+        $d_sales=d_sales::where('s_note',$codeSales);
+        $d_sales->update([
+                  's_bayar'=>$r_pay
+                  ]);
+
         // ==================================================================
 
 

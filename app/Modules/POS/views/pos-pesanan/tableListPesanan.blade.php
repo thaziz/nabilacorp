@@ -90,7 +90,7 @@
                               <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" >
                                 
 
-<input type="number" id="idTerima">
+<input type="hidden" id="idTerima">
 <label class="tebal">Status : </label>&nbsp;&nbsp;
           <span class="" id="txt_span_status"></span>
           <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
