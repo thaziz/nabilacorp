@@ -16,7 +16,7 @@ use App\Modules\POS\model\d_receivable_dt;
 use DB;
 
 use Auth;
-
+use Excel;
 
 
 
@@ -113,5 +113,58 @@ class PembayaranPiutangController extends Controller
         $res = array('status' => 'Error. ' . $e);
       }
       return response()->json($res);
+    }
+
+    public function laporan_pembayaran_piutang(Request $req) {
+
+     $d_receivable = d_receivable::leftJoin('d_receivable_dt', 'r_id', '=', 'rd_receivable') ;
+
+      $tgl_awal = $req->tgl_awal;
+      $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
+      $tgl_akhir = $req->tgl_akhir;
+      $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
+      if($tgl_awal != '' && $tgl_akhir != '') {
+        $tgl_awal = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_awal);
+        $tgl_akhir = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_akhir);
+
+
+        $d_receivable = $d_receivable->whereBetween('r_date', array($tgl_awal, $tgl_akhir));
+      }
+
+      $d_receivable = $d_receivable->groupBy('r_id'); 
+      $d_receivable_data = $d_receivable->select('r_id', 'r_code', 'r_ref', 'r_date', 'r_value', 'r_duedate', 'r_duedate', 'r_outstanding', DB::raw('IFNULL(SUM(rd_value), 0) AS r_pay'))->get();
+      $d_receivable_total_piutang = $d_receivable->sum('r_value');
+      $d_receivable_total_piutang_belum_terbayar = $d_receivable->sum('r_outstanding');
+      $d_receivable_total_piutang_terbayar = $d_receivable->sum('rd_value');
+
+      $d_receivable_detail = $d_receivable_data;
+      foreach ($d_receivable_detail as $data) {
+        $payments = d_receivable_dt::where('rd_receivable', $data->r_id)->get();
+        $data['payments'] = $payments;
+      }
+
+      $d_receivable_data_req = array(
+        "d_receivable_data" => $d_receivable_data,
+        "d_receivable_total_piutang" => $d_receivable_total_piutang,
+        "d_receivable_total_piutang_belum_terbayar" => $d_receivable_total_piutang_belum_terbayar,
+        "d_receivable_total_piutang_terbayar" => $d_receivable_total_piutang_terbayar
+      );
+
+      $d_receivable_detail_req = array(
+        "d_receivable_detail" => $d_receivable_detail
+      );
+
+      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($d_receivable_data_req, $d_receivable_detail_req){        
+            $excel->sheet('Data Pembayaran Piutang', function($sheet) use ($d_receivable_data_req) {
+                $sheet->loadView('POS::pembayaranpiutang/laporan_pembayaran_piutang', $d_receivable_data_req);
+
+            });
+
+            $excel->sheet('Detail Pembayaran Piutang', function($sheet) use ($d_receivable_detail_req) {
+                $sheet->loadView('POS::pembayaranpiutang/laporan_detail_pembayaran_piutang', $d_receivable_detail_req);
+
+            });
+        })->download('xlsx');
+
     }
 }
