@@ -209,6 +209,7 @@ class laporanPenjualanPesananController  extends Controller
         })->download('xls');
 
     }
+    
     public function print_laporan(Request $req) {
          $data = array();
         $rows=null;

@@ -83,7 +83,7 @@
 	          		var duedate = moment(data.p_duedate);
 	          		var difference = moment.duration( duedate.diff(today) ).asDays();
 
-	          		if(data.r_outstanding <= 0) {
+	          		if(data.p_outstanding <= 0) {
 	          			$(row).css('background-color', '#9ce2c0');
 	          		}
 	          		else{
