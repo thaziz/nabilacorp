@@ -36,17 +36,25 @@ class PenerimaanBrgSupController extends Controller
         $term = trim($request->q);
         if (empty($term)) 
         {
-            $purchase = DB::table('d_purchasing_dt')->join('d_purchasing', 'd_purchasing_dt.d_pcs_id', '=', 'd_purchasing.d_pcs_id')->select('d_purchasing_dt.d_pcs_id', 'd_purchasing.d_pcs_code')->where('d_pcsdt_isreceived','=','FALSE')->where('d_purchasing_dt.d_pcsdt_isconfirm','=','TRUE')->orderBy('d_pcs_code', 'DESC')->limit(5)->groupBy('d_pcs_id')->get();
+            $purchase = DB::table('d_purchaseorder_dt')
+            ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
+            ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
+            // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
+            // ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
+            ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
+            ->orderBy('d_purchase_order.po_code', 'DESC')
+            ->limit(5)
+            ->groupBy('po_code')->get();
             foreach ($purchase as $val) 
             {
-                $formatted_tags[] = ['id' => $val->d_pcs_id, 'text' => $val->d_pcs_code];
+                $formatted_tags[] = ['id' => $val->podt_purchaseorder, 'text' => $val->po_code];
             }
             return Response::json($formatted_tags);
         }
         else
         { 
             $purchase = DB::table('d_purchaseorder_dt')
-            ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id')
+            ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
             ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
             // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
             ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
@@ -57,12 +65,47 @@ class PenerimaanBrgSupController extends Controller
 
             foreach ($purchase as $val) 
             {
-                $formatted_tags[] = ['id' => $val->d_pcs_id, 'text' => $val->d_pcs_code];
+                $formatted_tags[] = ['id' => $val->podt_purchaseorder, 'text' => $val->po_code];
             }
 
           return Response::json($formatted_tags);  
         }
     }
+    public function getdataform($id)
+    {
+      // return $id;
+        $data_header = DB::table('d_purchase_order')
+            ->join('m_supplier','m_supplier.s_id','=','d_purchase_order.po_supplier')
+            ->where('po_id', '=',$id)
+            ->first();  
+        $data_isi = DB::table('d_purchaseorder_dt')
+            ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
+            // ->leftjoin('d_terima_pembelian_dt','d_terima_pembelian_dt','=','d_purchaseorder_dt.')
+            ->join('m_item','m_item.i_id','=','d_purchaseorder_dt.podt_item')
+            ->join('m_satuan','m_satuan.s_id','=','d_purchaseorder_dt.podt_satuan')
+            ->where('d_purchase_order.po_id', '=',$id)
+            ->get();
+        // return $purchase;  
+           // dd($data_isi) ;
+        $item = [];
+        for ($i=0; $i <count($data_isi) ; $i++) { 
+            $item[$i] = $data_isi[$i]->podt_item;
+        }
+        $data_stock = DB::table('d_stock')
+            ->whereIn('s_item',$item)
+            ->get();
+        return response()->json([
+            'data_header'=>$data_header,
+            'data_isi'=>$data_isi,
+            'data_stock'=>$data_stock,
+        ]);          
+    }
+
+    public function simpan_penerimaan(Request $request)
+    {
+       dd($request->all());
+    }
+
 
     public function list_sj(Request $request)
     {
