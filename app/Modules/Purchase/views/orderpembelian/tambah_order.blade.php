@@ -369,7 +369,7 @@
 
                             +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
 
-                            +'<td><input type="text" value="" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" /></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" /></td>'
 
                             +'<td><input type="hidden" value="'+data.data_isi[key-1].id_satuan+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'+data.data_isi[key-1].s_name+''
 
@@ -561,17 +561,16 @@
             {
               if(response.status == "sukses")
               {
-                // iziToast.success({
-                //   position: 'center',
-                //   title: 'Pemberitahuan',
-                //   message: response.pesan,
-                //   onClosing: function(instance, toast, closedBy){
-                  alert('order tersimpan!');
+                iziToast.success({
+                  position: 'center',
+                  title: 'Pemberitahuan',
+                  message: 'Data Sukses Tersimpan !',
+                  onClosing: function(instance, toast, closedBy){
                     $('#button_save').text('Simpan Data');
                     $('#button_save').attr('disabled',false);
-                    window.location.href = baseUrl+"/purcahse-order/order-index";
-                //   }
-                // });
+                  }
+                });
+                window.location.href = baseUrl+"/purcahse-order/order-index";
               }
               else
               {
@@ -582,7 +581,7 @@
                   onClosing: function(instance, toast, closedBy){
                     $('#button_save').text('Simpan Data');
                     $('#button_save').attr('disabled',false);
-                    window.location.href = baseUrl+"/purchasing/rencanapembelian/rencana";
+                    // window.location.href = baseUrl+"/purchasing/rencanapembelian/rencana";
                   }
                 });
               }
