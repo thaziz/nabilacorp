@@ -84,8 +84,8 @@ class d_item_titip extends Model
                           </button>
                           */
     }
-    static function dataTitip($id){      
-             $itemTitip=d_item_titip::where('it_comp',Session::get('user_comp'))->where('it_id',$id)->first();             
+    static function dataTitip($id){            
+             $itemTitip=d_item_titip::where('it_comp',Session::get('user_comp'))->where('it_id',$id)->first();
              return $itemTitip;
 
     }
@@ -172,7 +172,7 @@ class d_item_titip extends Model
       });
     }
 
-static function chekQtyReturn($item,$comp,$position){
+static function chekQtyReturn($item,$comp,$position){  
   $chekQtyReturn=d_itemTitip_dt::where('idt_action',DB::raw("'Ditukar Harga'"))
                     ->select(DB::raw('sum(idt_return) as idt_return'))
                     ->where('idt_item',$item)
@@ -199,6 +199,7 @@ static function searchItemTitip($request){
     $cabang=Session::get('user_comp');
     $tujuan=DB::table('d_gudangcabang')->where('gc_gudang','GUDANG TITIP')->where('gc_comp',$cabang)->first();
     $comp=$tujuan->gc_id;
+    
     // stock mutasi hanya untuk barang kembali.
     for ($i=0; $i <count($request->idt_item) ; $i++) { 
 

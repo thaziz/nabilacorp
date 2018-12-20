@@ -168,7 +168,7 @@ class d_item_titipan extends Model
           $jumlahQty,
           $comp,$position,
           'BARANG TITIPAN',
-          12,
+          13,
           $it_id,
           '',
           '',
@@ -257,9 +257,9 @@ static function serahTerimaStore($request){
 
 
       if($request->idt_action[$i]!='-'){  
-        if($idt_return_lama!=$idt_return_titip){
-          $simpanMutasi=mutasi::updateMutasi($request->idt_item[$i],$permintaan,$comp,$position,$flag='BARANG TITIPAN',$request->it_id,$request->idt_action[$i]);
-
+        if($idt_return_lama!=$idt_return_titip){          
+          $simpanMutasi=mutasi::updateMutasi($request->idt_item[$i],$permintaan,$comp,$position,$flag='BARANG TITIPAN',$request->it_id,$request->idt_action[$i],date('Y-m-d'),15);
+          
           if($simpanMutasi['true']){          
 
           }else{

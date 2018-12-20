@@ -427,7 +427,7 @@ function table(){
 
           iSalesDetail+='<td width="4%"><input  onblur="validationForm();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapus(event,'+i_id.val()+');hitung(\'' + i_id.val() + '\');" onclick="setAwal(event,\'fQty' + i_id.val() + '\')" class="move up1  alignAngka jumlah fQty'+i_id.val()+' form-control" style="width:100%;border:none" name="idt_qty[]" value="'+SetFormRupiah(angkaDesimal(fQty.val()))+'" autocomplete="off" ></td>';
 
-          iSalesDetail+='<td width="4%"><input class="move up1  alignAngka jumlah returnHarga'+i_id.val()+' form-control" style="width:100%;" name="idt_return_qty[]" autocomplete="off" readonly=""></td>';
+       /*   iSalesDetail+='<td width="4%"><input class="move up1  alignAngka jumlah returnHarga'+i_id.val()+' form-control" style="width:100%;" name="idt_return_qty[]" autocomplete="off" readonly=""></td>';*/
 
 
           iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+s_satuan.val()+'</div></td>';

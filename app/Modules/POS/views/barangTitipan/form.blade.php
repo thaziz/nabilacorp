@@ -112,7 +112,7 @@
                  <th width="4%">Sisa</th>
                  <th width="4%" style="display:none">JumlahAwal</th>
                  <th width="4%">Jumlah</th>  
-                 <th width="4%">jml Return</th>  
+                 <!-- <th width="4%">jml Return</th>   -->
                  <th width="5%">Satuan</th>
                  <th width="6%">Harga</th>               
                  <th width="10%">Total</th>                 
