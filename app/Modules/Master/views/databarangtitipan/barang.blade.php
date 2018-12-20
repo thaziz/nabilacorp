@@ -5,12 +5,12 @@
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                     <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-                        <div class="page-title">Master Data Barang</div>
+                        <div class="page-title">Master Data Barang Titipan</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
                         <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                         <li><i></i>&nbsp;Master&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Master Data Barang</li>
+                        <li class="active">Master Data Barang Titipan</li>
                     </ol>
                     <div class="clearfix">
                     </div>
@@ -27,7 +27,7 @@
 
 
                               <ul id="generalTab" class="nav nav-tabs">
-                                <li class="active"><a href="#alert-tab" data-toggle="tab">Master Data Barang</a></li>
+                                <li class="active"><a href="#alert-tab" data-toggle="tab">Master Data Barang Titipan</a></li>
                                 <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
                                 <li><a href="#label-badge-tab" data-toggle="tab">3</a></li> -->
                               </ul>
@@ -130,22 +130,22 @@ function table(){
               "type": "get",              
               },
             columns: [
-              {data: 'it_code', name: 'it_code'}, 
-              {data: 'it_code', name: 'it_code'}, 
-              {data: 'it_name', name: 'it_name'},
+              {data: 'i_code', name: 'i_code'}, 
+              {data: 'i_code', name: 'i_code'}, 
+              {data: 'i_name', name: 'i_name'},
               {data: 's_name', name: 's_name'},            
               {
                 data: null, 
-                name: 'it_hpp',
+                name: 'i_hpp',
                 render : function(res) {
-                  return get_currency(res.it_hpp);
+                  return get_currency(res.i_hpp);
                 }
               },      
               {
                 data: null, 
-                name: 'it_price',
+                name: 'i_price',
                 render : function(res) {
-                  return get_currency(res.it_price);
+                  return get_currency(res.i_price);
                 }
               },      
               {data: 'g_name', name: 'g_name'},            

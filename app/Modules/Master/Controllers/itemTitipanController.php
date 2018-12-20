@@ -8,7 +8,8 @@ use App\m_customer;
 use App\m_satuan;
 use App\m_group;
 use App\m_price;
-use App\Modules\Master\model\m_item_titipan;
+use App\m_itemm;
+use App\Modules\Master\Model\m_item_titipan;
 use Carbon\carbon;
 use App\Http\Controllers\Controller;
 
@@ -77,35 +78,35 @@ class itemTitipanController extends Controller
       DB::beginTransaction();
       try {
 
-        $id = DB::table('m_item_titipan')
-              ->max('it_id');
+        $id = DB::table('m_item')
+              ->max('i_id');
 
         $tmp = $id + 1;
 
         $kode = sprintf("%04s", $tmp);
-        $it_code = 'BRG' . $kode;
-        $it_group = $request->it_group;
-        $it_group = $it_group != null ? $it_group : '';
-        $it_type = $request->it_type;
-        $it_type = $it_type != null ? $it_type : '';
-        $it_name = $request->it_name;
-        $it_name = $it_name != null ? $it_name : '';
-        $it_det = $request->it_det;
-        $it_det = $it_det != null ? $it_det : '';
-        $it_sat1 = $request->it_sat1;
-        $it_sat1 = $it_sat1 != null ? $it_sat1 : '';
-        $it_sat2 = $request->it_sat2;
-        $it_sat2 = $it_sat2 != null ? $it_sat2 : '';
-        $it_sat3 = $request->it_sat3;
-        $it_sat3 = $it_sat3 != null ? $it_sat3 : '';
-        $it_sat_isi1 = $request->it_sat_isi1;
-        $it_sat_isi1 = $it_sat_isi1 != null ? $it_sat_isi1 : '';
-        $it_sat_isi2 = $request->it_sat_isi2;
-        $it_sat_isi2 = $it_sat_isi2 != null ? $it_sat_isi2 : '';
-        $it_sat_isi3 = $request->it_sat_isi3;
-        $it_sat_isi3 = $it_sat_isi3 != null ? $it_sat_isi3 : '';
-        $it_min_stock = $request->it_min_stock;
-        $it_min_stock = $it_min_stock != null ? $it_min_stock : '';
+        $i_code = 'BRG' . $kode;
+        $i_group = $request->i_group;
+        $i_group = $i_group != null ? $i_group : '';
+        $i_type = $request->i_type;
+        $i_type = $i_type != null ? $i_type : '';
+        $i_name = $request->i_name;
+        $i_name = $i_name != null ? $i_name : '';
+        $i_det = $request->i_det;
+        $i_det = $i_det != null ? $i_det : '';
+        $i_sat1 = $request->i_sat1;
+        $i_sat1 = $i_sat1 != null ? $i_sat1 : '';
+        $i_sat2 = $request->i_sat2;
+        $i_sat2 = $i_sat2 != null ? $i_sat2 : '';
+        $i_sat3 = $request->i_sat3;
+        $i_sat3 = $i_sat3 != null ? $i_sat3 : '';
+        $i_sat_isi1 = $request->i_sat_isi1;
+        $i_sat_isi1 = $i_sat_isi1 != null ? $i_sat_isi1 : '';
+        $i_sat_isi2 = $request->i_sat_isi2;
+        $i_sat_isi2 = $i_sat_isi2 != null ? $i_sat_isi2 : '';
+        $i_sat_isi3 = $request->i_sat_isi3;
+        $i_sat_isi3 = $i_sat_isi3 != null ? $i_sat_isi3 : '';
+        $i_min_stock = $request->i_min_stock;
+        $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
         // Ke tabel m_price
         $m_pbuy1 = $request->m_pbuy1;
         $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
@@ -139,24 +140,24 @@ class itemTitipanController extends Controller
         //   }
         // }
 
-        DB::table('m_item_titipan')
+        DB::table('m_item')
           ->insert([
-            'it_id' => $tmp,
-            'it_code' => $it_code,
-            'it_group' => $it_group,
-            'it_type' => $it_type,
-            'it_name' => $it_name,
-            'it_sat1' => $it_sat1,
-            'it_sat2' => $it_sat2,
-            'it_sat3' => $it_sat3,
-            'it_sat_isi1' => $it_sat_isi1,
-            'it_sat_isi2' => $it_sat_isi2,
-            'it_sat_isi3' => $it_sat_isi3,
-            'it_min_stock' => $it_min_stock,
-            'it_det' => $it_det,
-            'it_status' => 'Y',
-            'it_active' => 'Y',
-            'it_insert' => Carbon::now('Asia/Jakarta')
+            'i_id' => $tmp,
+            'i_code' => $i_code,
+            'i_group' => $i_group,
+            'i_type' => $i_type,
+            'i_name' => $i_name,
+            'i_sat1' => $i_sat1,
+            'i_sat2' => $i_sat2,
+            'i_sat3' => $i_sat3,
+            'i_sat_isi1' => $i_sat_isi1,
+            'i_sat_isi2' => $i_sat_isi2,
+            'i_sat_isi3' => $i_sat_isi3,
+            'i_min_stock' => $i_min_stock,
+            'i_det' => $i_det,
+            'i_status' => 'Y',
+            'i_active' => 'Y',
+            'i_insert' => Carbon::now('Asia/Jakarta')
           ]);
       
 
@@ -201,12 +202,12 @@ class itemTitipanController extends Controller
 
     public function edit($id){
 
-      $m_item = DB::table('m_item_titipan')
-                    ->leftjoin('m_group', 'it_group', '=', 'g_id')
-                    ->leftjoin(DB::raw('m_satuan S1'), 'it_sat1', '=', 'S1.s_id')
-                    ->leftjoin(DB::raw('m_satuan S2'), 'it_sat2', '=', 'S2.s_id')
-                    ->leftjoin(DB::raw('m_satuan S3'), 'it_sat3', '=', 'S3.s_id')
-                    ->where('it_id', $id)
+      $m_item = DB::table('m_item')
+                    ->leftjoin('m_group', 'i_group', '=', 'g_id')
+                    ->leftjoin(DB::raw('m_satuan S1'), 'i_sat1', '=', 'S1.s_id')
+                    ->leftjoin(DB::raw('m_satuan S2'), 'i_sat2', '=', 'S2.s_id')
+                    ->leftjoin(DB::raw('m_satuan S3'), 'i_sat3', '=', 'S3.s_id')
+                    ->where('i_id', $id)
                     ->first();
       $m_price = m_price::where('m_pitem', $id)->get()->first();
       if($m_price == null) {
@@ -221,7 +222,7 @@ class itemTitipanController extends Controller
       $d_item_supplier = DB::table('d_item_supplier')
         ->leftjoin('m_supplier', 'its_supplier', '=', 's_id')->where('its_item', $id)->get();
       $res = array(
-        'm_item_titipan' => $m_item, 
+        'm_item' => $m_item, 
         'm_price' => $m_price, 
         'd_item_supplier' => $d_item_supplier, 
         'kelompok' => $m_group, 
@@ -229,7 +230,7 @@ class itemTitipanController extends Controller
       );
       
       // die(json_encode($res));
-      return view('Master::databarangtitipan/edit_barang', $res);
+      return view('Master::databarangtitipan/edi_barang', $res);
     }
 
     public function update(Request $request){
@@ -237,30 +238,30 @@ class itemTitipanController extends Controller
       DB::beginTransaction();
       try {
 
-        $it_id = $request->it_id;
-        $it_id = $it_id != null ? $it_id : '';
-        $it_group = $request->it_group;
-        $it_group = $it_group != null ? $it_group : '';
-        $it_type = $request->it_type;
-        $it_type = $it_type != null ? $it_type : '';
-        $it_name = $request->it_name;
-        $it_name = $it_name != null ? $it_name : '';
-        $it_det = $request->it_det;
-        $it_det = $it_det != null ? $it_det : '';
-        $it_sat1 = $request->it_sat1;
-        $it_sat1 = $it_sat1 != null ? $it_sat1 : '';
-        $it_sat2 = $request->it_sat2;
-        $it_sat2 = $it_sat2 != null ? $it_sat2 : '';
-        $it_sat3 = $request->it_sat3;
-        $it_sat3 = $it_sat3 != null ? $it_sat3 : '';
-        $it_sat_isi1 = $request->it_sat_isi1;
-        $it_sat_isi1 = $it_sat_isi1 != null ? $it_sat_isi1 : '';
-        $it_sat_isi2 = $request->it_sat_isi2;
-        $it_sat_isi2 = $it_sat_isi2 != null ? $it_sat_isi2 : '';
-        $it_sat_isi3 = $request->it_sat_isi3;
-        $it_sat_isi3 = $it_sat_isi3 != null ? $it_sat_isi3 : '';
-        $it_min_stock = $request->it_min_stock;
-        $it_min_stock = $it_min_stock != null ? $it_min_stock : '';
+        $i_id = $request->i_id;
+        $i_id = $i_id != null ? $i_id : '';
+        $i_group = $request->i_group;
+        $i_group = $i_group != null ? $i_group : '';
+        $i_type = $request->i_type;
+        $i_type = $i_type != null ? $i_type : '';
+        $i_name = $request->i_name;
+        $i_name = $i_name != null ? $i_name : '';
+        $i_det = $request->i_det;
+        $i_det = $i_det != null ? $i_det : '';
+        $i_sat1 = $request->i_sat1;
+        $i_sat1 = $i_sat1 != null ? $i_sat1 : '';
+        $i_sat2 = $request->i_sat2;
+        $i_sat2 = $i_sat2 != null ? $i_sat2 : '';
+        $i_sat3 = $request->i_sat3;
+        $i_sat3 = $i_sat3 != null ? $i_sat3 : '';
+        $i_sat_isi1 = $request->i_sat_isi1;
+        $i_sat_isi1 = $i_sat_isi1 != null ? $i_sat_isi1 : '';
+        $i_sat_isi2 = $request->i_sat_isi2;
+        $i_sat_isi2 = $i_sat_isi2 != null ? $i_sat_isi2 : '';
+        $i_sat_isi3 = $request->i_sat_isi3;
+        $i_sat_isi3 = $i_sat_isi3 != null ? $i_sat_isi3 : '';
+        $i_min_stock = $request->i_min_stock;
+        $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
         // Ke tabel m_price
         $m_pid = $request->m_pid;
         $m_pid = $m_pid != null ? $m_pid : '';
@@ -296,21 +297,21 @@ class itemTitipanController extends Controller
         //   }
         // }
 
-        DB::table('m_item_titipan')
-          ->where('it_id', $it_id)
+        DB::table('m_item')
+          ->where('i_id', $i_id)
           ->update([
-            'it_group' => $it_group,
-            'it_type' => $it_type,
-            'it_name' => $it_name,
-            'it_sat1' => $it_sat1,
-            'it_sat2' => $it_sat2,
-            'it_sat3' => $it_sat3,
-            'it_sat_isi1' => $it_sat_isi1,
-            'it_sat_isi2' => $it_sat_isi2,
-            'it_sat_isi3' => $it_sat_isi3,
-            'it_min_stock' => $it_min_stock,
-            'it_det' => $it_det,
-            'it_update' => Carbon::now('Asia/Jakarta')
+            'i_group' => $i_group,
+            'i_type' => $i_type,
+            'i_name' => $i_name,
+            'i_sat1' => $i_sat1,
+            'i_sat2' => $i_sat2,
+            'i_sat3' => $i_sat3,
+            'i_sat_isi1' => $i_sat_isi1,
+            'i_sat_isi2' => $i_sat_isi2,
+            'i_sat_isi3' => $i_sat_isi3,
+            'i_min_stock' => $i_min_stock,
+            'i_det' => $i_det,
+            'i_update' => Carbon::now('Asia/Jakarta')
           ]);
       
         DB::table('m_price')
@@ -326,7 +327,7 @@ class itemTitipanController extends Controller
 
           ]);
         // Ke tabel d_item_supplier
-        DB::table('d_item_supplier')->where('its_item', $it_id)->delete();
+        DB::table('d_item_supplier')->where('its_item', $i_id)->delete();
         for($x = 0; $x < count($its_supplier);$x++) {
           DB::table('d_item_supplier')
             ->insert([
@@ -360,11 +361,11 @@ class itemTitipanController extends Controller
             'its_active' => 'N'
           ]);
 
-        DB::table('m_item_titipan')
-          ->where('it_id', $request->id)
+        DB::table('m_item')
+          ->where('i_id', $request->id)
           ->update([
-            'it_active' => 'N',
-            'it_status' => 'N'
+            'i_active' => 'N',
+            'i_status' => 'N'
           ]);
 
         DB::commit();

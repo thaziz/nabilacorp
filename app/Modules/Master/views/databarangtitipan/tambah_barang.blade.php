@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="nama" name="it_name" class="form-control input-sm">
+                                      <input type="text" id="nama" name="i_name" class="form-control input-sm">
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="nama-error"><small>Nama harus diisi.</small></span>
                                   </div>
                                 </div>
@@ -82,7 +82,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='it_min_stock' name='it_min_stock' class="form-control">
+                                      <input type="number" id='i_min_stock' name='i_min_stock' class="form-control">
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Min. Stock Harus Diisi</small></span>
                                   </div>
                                 </div>
@@ -95,7 +95,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='it_type' id="it_type">
+                                      <select class="input-sm form-control select" name='i_type' id="i_type">
                                         <option value="">~ Pilih Type ~</option>
                                         <option value="BJ">Barang Jual</option>
                                         <option value="BP">Barang Produksi</option>
@@ -111,7 +111,7 @@
                                     
                                     <div class="col-md-3"><label class="tebal">Kelompok</label></div>
                                     <div class="form-group col-md-9">
-                                        <select class="input-sm form-control select" name='it_group' onchange="dinamis()" id="kelompok">
+                                        <select class="input-sm form-control select" name='i_group' onchange="dinamis()" id="kelompok">
                                           <option value="">~ Pilih Kelompok ~</option>
                                           @foreach ($kelompok as $key => $value)
                                             <option value="{{$value->g_id}}">{{$value->g_name}}</option>
@@ -136,7 +136,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='it_sat1' id="it_sat1">
+                                      <select class="input-sm form-control select" name='i_sat1' id="i_sat1">
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
                                           <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
@@ -154,7 +154,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='it_sat_isi1' name='it_sat_isi1' class="form-control" value='1' readonly>
+                                      <input type="number" id='i_sat_isi1' name='i_sat_isi1' class="form-control" value='1' readonly>
                                       
                                   </div>
                                 </div>                      
@@ -167,7 +167,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='it_sat2' id="it_sat2">
+                                      <select class="input-sm form-control select" name='i_sat2' id="i_sat2">
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
                                           <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
@@ -185,7 +185,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='it_sat_isi2' name='it_sat_isi2' class="form-control">
+                                      <input type="number" id='i_sat_isi2' name='i_sat_isi2' class="form-control">
                                       
                                   </div>
                                 </div>
@@ -198,7 +198,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='it_sat3' id="it_sat3">
+                                      <select class="input-sm form-control select" name='i_sat3' id="i_sat3">
                                         <option value="">~ Pilih Satuan ~</option>
                                         @foreach ($satuan as $key => $value)
                                           <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
@@ -217,7 +217,7 @@
 
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="number" id='it_sat_isi3' name='it_sat_isi3' class="form-control">
+                                      <input type="number" id='i_sat_isi3' name='i_sat_isi3' class="form-control">
                                       
                                   </div>
                                 </div>                                
@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <textarea class="form-control input-sm" name='it_det'></textarea>
+                                      <textarea class="form-control input-sm" name='i_det'></textarea>
                                   </div>
                                 </div>
                                 
