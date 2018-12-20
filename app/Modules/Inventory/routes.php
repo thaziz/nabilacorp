@@ -63,6 +63,8 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 
 //penerimaan supplier
 	Route::get('/inventory/p_suplier/suplier', 'PenerimaanBrgSupController@index')->middleware('auth');
+	Route::get('/inventory/p_suplier/get-penerimaan-by-tgl/{tgl1}/{tgl2}/{akses}/{comp}', 'PenerimaanBrgSupController@get_penerimaan_by_tgl');
+	
 	Route::get('/inventory/p_suplier/lookup-data-pembelian', 'PenerimaanBrgSupController@lookupDataPembelian');
 
 

@@ -41,7 +41,7 @@
             <li><a href="#wait-tab" data-toggle="tab" onclick="listWaitingByTgl()">Daftar Tunggu</a></li>
             <li><a href="#finish-tab" data-toggle="tab" onclick="listReceivedByTgl()">Daftar Hasil Penerimaan</a></li>
           </ul>
-
+          <input type="hidden" class="mem_comp" value="{{ $ssss }}">
           <div id="generalTabContent" class="tab-content responsive">
             
             {!! $tabIndex !!}
@@ -310,22 +310,24 @@
   {
     var tgl1 = $('#tanggal1').val();
     var tgl2 = $('#tanggal2').val();
+    var comp = $('.mem_comp').val();
+    var akses = 'inventory';
     $('#tbl-daftar').dataTable({
       "destroy": true,
       "processing" : true,
       "serverside" : true,
       "ajax" : {
-        url: baseUrl + "/inventory/p_suplier/get-penerimaan-by-tgl/"+tgl1+"/"+tgl2,
+        url: baseUrl + "/inventory/p_suplier/get-penerimaan-by-tgl/"+tgl1+"/"+tgl2+'/'+akses+'/'+comp,
         type: 'GET'
       },
       "columns" : [
         {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-        {"data" : "tglBuat", "width" : "10%"},
+        {"data" : "d_tb_duedate", "width" : "10%"},
         {"data" : "d_tb_code", "width" : "10%"},
         {"data" : "m_name", "width" : "10%"},
         {"data" : "s_company", "width" : "20%"},
-        {"data" : "d_pcs_code", "width" : "10%"},
-        {"data" : "d_pcs_date_created", "width" : "10%"},
+        {"data" : "po_code", "width" : "10%"},
+        {"data" : "po_date", "width" : "10%"},
         {"data" : "action", orderable: false, searchable: false, "width" : "10%"}
       ],
       "language": {
