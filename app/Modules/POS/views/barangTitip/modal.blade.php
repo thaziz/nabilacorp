@@ -23,7 +23,7 @@
           <td class="alignAngka">{{number_format($detail->idt_terjual,0,',','.')}}</td>
 
 
-          <td class="alignAngka">{{number_format($detail->idt_return_titip,0,',','.')}}
+          <td class="alignAngka">{{number_format($detail->idt_return,0,',','.')}}
           </td>
 
           
