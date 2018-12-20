@@ -79,7 +79,7 @@
                 <tr>                 
                  <th width="23%">Nama</th>                 
                  <th width="4%">Jumlah</th>                 
-                 <th width="4%">Sisa</th>                 
+                 <th width="4%" style="display: none;">Sisa</th>                 
                  <th width="4%">Terjual</th>                 
                  <th width="6%">Return</th>                 
                  <th width="5%">Satuan</th>

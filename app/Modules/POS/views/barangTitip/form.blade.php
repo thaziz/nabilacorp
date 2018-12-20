@@ -56,7 +56,7 @@
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
               <div class="form-group">
-                <textarea class="form-control" name="it_keterangan" id="it_keterangan" style="margin-top: 0px; margin-bottom: 0px; height: 71px;"></textarea>
+                <textarea class="form-control reset" name="it_keterangan" id="it_keterangan" style="margin-top: 0px; margin-bottom: 0px; height: 71px;"></textarea>
               </div>
         </div>
 

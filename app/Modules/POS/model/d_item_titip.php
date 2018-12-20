@@ -210,6 +210,10 @@ static function searchItemTitip($request){
 
       $idt_return= format::format($request->idt_return[$i]);  
 
+      $idt_price= format::format($request->idt_price[$i]);  
+
+      
+
 
       $updateTitipanDt->update([
             'idt_terjual'=>$idt_terjual,            
@@ -218,8 +222,28 @@ static function searchItemTitip($request){
       
 
       $position=$request->position[$i];
+      $rtposition=$request->comp[$i];
 
       $simpanMutasi=mutasi::mutasiStok($request->idt_item[$i],$idt_terjual,$comp,$position,$flag='PENJUALAN TITIP',$dataTitip->it_code,$ket='',$dataTitip->it_date);   
+
+
+      $simpanMutasi=mutasi::mutasiStok($request->idt_item[$i],$idt_return,$comp,$position,$flag='RETURN TITIP AMBIL BARANG',$dataTitip->it_code,$ket='',$dataTitip->it_date);  
+
+/*dd($request->all());*/
+      $SimpanTambah=mutasi::tambahmutasi(
+                          $request->idt_item[$i],
+                          $idt_return,
+                          $rtposition,
+                          $position,
+                          'RETURN TITIP TAMBAH BARANG',
+                          16,
+                          $request->code,
+                          '',
+                          '',
+                          $idt_price,
+                          date('Y-m-d')
+                          );
+
       
     }
     
