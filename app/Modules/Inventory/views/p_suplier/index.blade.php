@@ -328,6 +328,7 @@
         {"data" : "s_company", "width" : "20%"},
         {"data" : "po_code", "width" : "10%"},
         {"data" : "po_date", "width" : "10%"},
+        {"data" : "status", "width" : "10%"},
         {"data" : "action", orderable: false, searchable: false, "width" : "10%"}
       ],
       "language": {

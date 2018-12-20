@@ -16,6 +16,7 @@ use App\d_delivery_orderdt;
 use App\d_delivery_order;
 use App\d_gudangcabang;
 use App\d_stock_mutation;
+use Response;
 class PenerimaanBrgSupController extends Controller
 {
     public function index(){
@@ -43,8 +44,16 @@ class PenerimaanBrgSupController extends Controller
             return Response::json($formatted_tags);
         }
         else
-        {
-            $purchase = DB::table('d_purchasing_dt')->join('d_purchasing', 'd_purchasing_dt.d_pcs_id', '=', 'd_purchasing.d_pcs_id')->select('d_purchasing_dt.d_pcs_id', 'd_purchasing.d_pcs_code')->where('d_purchasing_dt.d_pcsdt_isreceived','=','FALSE')->where('d_purchasing.d_pcs_code', 'LIKE', '%'.$term.'%')->where('d_purchasing_dt.d_pcsdt_isconfirm','=','TRUE')->orderBy('d_purchasing.d_pcs_code', 'DESC')->limit(5)->groupBy('d_pcs_id')->get();
+        { 
+            $purchase = DB::table('d_purchaseorder_dt')
+            ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id')
+            ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
+            // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
+            ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
+            ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
+            ->orderBy('d_purchase_order.po_code', 'DESC')
+            ->limit(5)
+            ->groupBy('po_code')->get();
 
             foreach ($purchase as $val) 
             {
@@ -311,65 +320,55 @@ class PenerimaanBrgSupController extends Controller
         $tanggal2 = $y2.'-'.$m2.'-'.$d2;
         //dd(array($tanggal1, $tanggal2));
         
-        $query = DB::table('d_purchase_order')
-        // ->select('d_tb_code','d_tb_duedate','po_id','po_comp','po_date','po_code','po_supplier','s_company','po_mem','m_name')
-        ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
-        ->join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
-        ->leftjoin('d_terima_pembelian','d_purchase_order.po_code','=','d_terima_pembelian.d_tb_noreff')
-        ->where('po_comp',$comp)
-        ->get();
-        return $query;   
+        // $query = DB::table('d_purchase_order')
+        // ->select('d_tb_code','d_tb_duedate','po_id','po_comp','po_date','po_code','po_supplier','s_company','po_mem','m_name','d_tb_status')
+        // ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
+        // ->join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
+        // ->leftjoin('d_terima_pembelian','d_purchase_order.po_code','=','d_terima_pembelian.d_tb_noreff')
+        // ->where('po_comp',$comp)
+        // ->get();
+
+        $query = DB::table('d_terima_pembelian')
+                ->join('d_mem','d_terima_pembelian.d_tb_staff','=','d_mem.m_id')
+                ->join('m_supplier','d_terima_pembelian.d_tb_sup','=','m_supplier.s_id')
+                ->leftjoin('d_purchase_order','d_purchase_order.po_code','=','d_terima_pembelian.d_tb_noreff')
+                ->where('po_comp',$comp)
+                ->get();
+        // return $query;   
      
             return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('action', function($data)
             {
-                if ($data->dod_qty_received == '0') 
-                {
-                    return '<div class="text-center">
-                                <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Ubah Status"
-                                    onclick=ubahStatus("'.$data->dod_do.'","'.$data->dod_detailid.'")><i class="glyphicon glyphicon-ok"></i>
-                                </a>
-                            </div>';
-                }
-                else
-                {
-                    return '<div class="text-center">
-                                <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Ubah Status"
-                                    onclick=ubahStatus("'.$data->dod_do.'","'.$data->dod_detailid.'")><i class="glyphicon glyphicon-ok"></i>
-                                </a>
-                            </div>';
-                }     
+                return '<div class="text-center">
+                            <a class="btn btn-sm btn-success" href="javascript:void(0)" title="Ubah Status"
+                                onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-eye"></i>
+                            </a>
+                             <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Ubah Status"
+                                onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-pencil"></i>
+                            </a>
+                        </div>
+                        ';
+                    
             })
             ->editColumn('tanggalTerima', function ($data) 
             {
-                if ($data->dod_date_received == null) 
+                if ($data->d_tb_duedate == null) 
                 {
                     return '-';
                 }
                 else 
                 {
-                    return $data->dod_date_received ? with(new Carbon($data->dod_date_received))->format('d M Y') : '';
-                }
-            })
-            ->editColumn('jamTerima', function ($data) 
-            {
-                if ($data->dod_time_received == null) 
-                {
-                    return '-';
-                }
-                else 
-                {
-                    return $data->dod_time_received;
+                    return $data->d_tb_duedate ? with(new Carbon($data->d_tb_duedate))->format('d M Y') : '';
                 }
             })
             ->editColumn('status', function ($data) 
             {
-                if ($data->dod_status == "WT") 
+                if ($data->d_tb_status == "WT") 
                 {
                     return '<span class="label label-info">Waiting</span>';
                 }
-                elseif ($data->dod_status == "FN") 
+                elseif ($data->d_tb_status == "FN") 
                 {
                     return '<span class="label label-success">Final</span>';
                 }
