@@ -2,22 +2,27 @@
 
 Route::group(['namespace' => 'App\Modules\Master\Controllers', 'middleware'=>['web','auth']], function () {
 
+// Section master data barang
 Route::get('/master/item/index', 'itemController@index');
 Route::get('/master/item/data-barang', 'itemController@dataBarang');
-
-
 Route::get('/master/item/tambah', 'itemController@tambah');
-
 Route::get('/master/item/supplier', 'itemController@supplier');
-
 Route::get('/master/item/simpan', 'itemController@simpan');
-
 Route::get('/master/item/edit/{id}', 'itemController@edit');
-
 Route::get('/master/item/update', 'itemController@update');
-
 Route::get('/master/item/hapus', 'itemController@hapus');
+// ===============================================================
 
+// Section master data barang titipan
+Route::get('/master/item_titipan/index', 'itemTitipanController@index');
+Route::get('/master/item_titipan/data-barang', 'itemTitipanController@dataBarang');
+Route::get('/master/item_titipan/tambah', 'itemTitipanController@tambah');
+Route::get('/master/item_titipan/supplier', 'itemTitipanController@supplier');
+Route::get('/master/item_titipan/simpan', 'itemTitipanController@simpan');
+Route::get('/master/item_titipan/edit/{id}', 'itemTitipanController@edit');
+Route::get('/master/item_titipan/update', 'itemTitipanController@update');
+Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
+// ===============================================================
 
 
 //Master Formula Mahmud
