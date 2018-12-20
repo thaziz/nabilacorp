@@ -121,4 +121,12 @@
 		});	
 	 }
 
+	 function print_laporan_pembayaran_piutang() {
+	 	var tgl_awal = $('[name="tgl_awal"]').val();
+	 	var tgl_akhir = $('[name="tgl_akhir"]').val();
+	 	var arg = '?tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
+	 	arg = arg.replace(/\//g, '-');
+	 	var url_target =  "{{ url('/penjualan/pembayaranpiutang/laporan_pembayaran_piutang') }}" + arg;
+	 	location.href = url_target;
+	 }
 </script>

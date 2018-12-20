@@ -6,6 +6,7 @@ Route::get('/purchasing/pembayaran_hutang/index', 'PembayaranHutangController@in
 Route::get('/purchasing/pembayaran_hutang/find_d_payable', 'PembayaranHutangController@find_d_payable');
 Route::get('/purchasing/pembayaran_hutang/find_d_payable_dt/{p_id}', 'PembayaranHutangController@find_d_payable_dt');
 Route::get('/purchasing/pembayaran_hutang/insert_d_payable_dt', 'PembayaranHutangController@insert_d_payable_dt');
+Route::get('/purchasing/pembayaran_hutang/laporan_pembayaran_hutang', 'PembayaranHutangController@laporan_pembayaran_hutang');
 
 /*Purchasing plan*/	
 Route::get('/seach-item-purchase', 'purchasePlanController@seachItemPurchase')->middleware('auth');

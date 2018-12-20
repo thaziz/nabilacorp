@@ -61,10 +61,10 @@
                      </div>
                   </div>
 
-                  <div class="col-md-4 col-sm-12 col-xs-12 hidden">
-                    <button class="btn btn-primary pull-right" onclick="print_laporan()">
-                      <i class="fa fa-print"></i>
-                      Print Laporan
+                  <div class="col-md-4 col-sm-12 col-xs-12">
+                    <button class="btn btn-success pull-right" onclick="print_laporan_pembayaran_hutang()">
+                      <i class="fa fa-file-excel-o"></i>
+                      Export to Excel
                     </button>
                   </div>
                </div>

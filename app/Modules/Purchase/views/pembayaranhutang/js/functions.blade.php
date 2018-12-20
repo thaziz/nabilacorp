@@ -121,4 +121,12 @@
 		});	
 	 }
 
+	 function print_laporan_pembayaran_hutang() {
+	 	var tgl_awal = $('[name="tgl_awal"]').val();
+	 	var tgl_akhir = $('[name="tgl_akhir"]').val();
+	 	var arg = '?tgl_awal=' + tgl_awal + '&tgl_akhir=' + tgl_akhir;
+	 	arg = arg.replace(/\//g, '-');
+	 	var url_target =  "{{ url('/purchasing/pembayaran_hutang/laporan_pembayaran_hutang') }}" + arg;
+	 	location.href = url_target;
+	 }
 </script>
