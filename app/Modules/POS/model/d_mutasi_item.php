@@ -145,7 +145,11 @@ class d_mutasi_item extends Model
                     'mp_qty'=>$mp_qty,
                     'mp_hpp'=>$mp_hpp,
               ]);
-          mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,$mp_comp,$mp_position,'Mutasi Item',15,$mi_id,'','',$mp_hpp);
+
+
+          $simpanMutasi=mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,$mp_comp,$mp_position,'Mutasi Item',15,$mi_code,'','',$mp_hpp,date('Y-m-d',strtotime($request->mi_date)));
+
+
         }
 
           $data=['status'=>'sukses','data'=>'sukses'];
@@ -156,6 +160,7 @@ class d_mutasi_item extends Model
     static function perbarui($request,$id){
 
          return DB::transaction(function () use ($request,$id) {   
+
          $hapusdtBahan=[];
           if($request->hapusdtBahan!=null){
             $hapusdtBahan = explode(',',$request->hapusdtBahan);
@@ -300,7 +305,7 @@ class d_mutasi_item extends Model
                   $mp_hpp= format::format($request->mp_hpp[$i]);                  
                   
 
-              if(mutasi::perbaruimutasi($request->mp_item[$i],$permintaan,$comp=1,$position=1,$flag='Hasil Mutasi Item',$idFlag=1,$sm_reff=$id,$flagTujuan='',$idMutasiTujuan='',$mp_hpp)){
+              if(mutasi::perbaruimutasi($request->mp_item[$i],$permintaan,$comp=1,$position=1,$flag='Hasil Mutasi Item',$idFlag=1,$request->mi_code,$flagTujuan='',$idMutasiTujuan='',$mp_hpp)){
 
                 $update_product_dt=d_mutationitem_product::where('mp_mutationitem',$id)
                                   ->where('mp_detailid',$request->mp_detailid[$i])

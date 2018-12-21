@@ -6,8 +6,8 @@
                <input style="width:100%" type="hidden" name="mp_mutationitem[]" value="{{$detail->mp_mutationitem}}">
                <input style="width:100%" type="hidden" name="mp_detailid[]" value="{{$detail->mp_detailid}}">
                <input style="width:100%" type="hidden" name="mp_item[]" value="{{$detail->i_id}}">
-               <input value="{{$detail->mp_comp}}" style="width:100%" type="" name="mp_comp[]">
-               <input value="{{$detail->mp_position}}" style="width:100%" type="" name="mp_position[]">
+               <input value="{{$detail->mp_comp}}" style="width:100%" type="hidden" name="mp_comp[]">
+               <input value="{{$detail->mp_position}}" style="width:100%" type="hidden" name="mp_position[]">
                     <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
 
           <td><input class="stock stock{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" value="{{number_format($detail->s_qty,0,',','.')}}" readonly=""></td>

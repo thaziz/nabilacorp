@@ -7,8 +7,8 @@
                <input style="width:100%" type="hidden" name="mm_detailid[]" value="{{$detail->mm_detailid}}">
                <input style="width:100%" type="hidden" name="mm_item[]" value="{{$detail->i_id}}">
 
-          <input value="{{$detail->mm_comp}}" style="width:100%" type="" name="mm_comp[]">
-          <input value="{{$detail->mm_position}}" style="width:100%" type="" name="mm_position[]">
+          <input value="{{$detail->mm_comp}}" style="width:100%" type="hidden" name="mm_comp[]">
+          <input value="{{$detail->mm_position}}" style="width:100%" type="hidden" name="mm_position[]">
                     <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
 
           <td><input class="stock stock{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" value="{{number_format($detail->s_qty+$detail->mm_qty,0,',','.')}}" readonly=""></td>
