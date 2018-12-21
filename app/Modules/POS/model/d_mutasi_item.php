@@ -43,7 +43,16 @@ class d_mutasi_item extends Model
                                                 \''.$mutasiItem->mi_keterangan.'\'                                                
                           )"><i class="fa fa-eye"></i> 
                           </button>
-                          <button class="btn btn-sm btn-warning" title="Edit" onclick="editMutasi(
+                          
+                          </div>';
+                            return $html;
+                        })
+                        ->rawColumns(['action'])
+                      ->make(true);       
+
+
+
+                      /*<button class="btn btn-sm btn-warning" title="Edit" onclick="editMutasi(
                                                 '.$mutasiItem->mi_id.',          
                                                 \''.date('d-m-Y',strtotime($mutasiItem->mi_date)).'\',   
                                                 \''.$mutasiItem->mi_code.'\',
@@ -56,12 +65,7 @@ class d_mutasi_item extends Model
                                                 \''.$mutasiItem->mi_code.'\',
                                                 \''.$mutasiItem->mi_keterangan.'\'    
                           )" ><i class="fa fa-times"></i>
-                          </button>
-                          </div>';
-                            return $html;
-                        })
-                        ->rawColumns(['action'])
-                      ->make(true);                                  
+                          </button>*/                           
     }
 
      static function store($request){
