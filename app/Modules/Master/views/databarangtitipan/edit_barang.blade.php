@@ -322,8 +322,8 @@
 
 @endsection
 @section("extra_scripts")
-  @include('Master::databarang/js/format_currency')
-  @include('Master::databarang/js/form_commander')
+  @include('Master::databarangtitipan/js/format_currency')
+  @include('Master::databarangtitipan/js/form_commander')
   
   <script>
     $(document).ready(function(){

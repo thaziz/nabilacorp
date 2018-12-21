@@ -101,7 +101,7 @@
 
 @endsection
 @section("extra_scripts")
-    @include('Master::databarang/js/format_currency')
+    @include('Master::databarangtitipan/js/format_currency')
     <script type="text/javascript">
     tablex = null;
 

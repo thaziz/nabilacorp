@@ -87,8 +87,7 @@ class itemTitipanController extends Controller
         $i_code = 'BRG' . $kode;
         $i_group = $request->i_group;
         $i_group = $i_group != null ? $i_group : '';
-        $i_type = $request->i_type;
-        $i_type = $i_type != null ? $i_type : '';
+        $i_type = 'BTPN';
         $i_name = $request->i_name;
         $i_name = $i_name != null ? $i_name : '';
         $i_det = $request->i_det;
@@ -162,7 +161,7 @@ class itemTitipanController extends Controller
       
 
         for($x = 0; $x < count($its_supplier);$x++) {
-          DB::table('d_item_supplier')
+          DB::table('d_item_titipan_supplier')
             ->insert([
               'its_item' => $tmp,
               'its_supplier' => $its_supplier[$x],

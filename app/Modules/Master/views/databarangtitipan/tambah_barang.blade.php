@@ -46,71 +46,42 @@
 
 
                          <div class="col-md-12 col-sm-12 col-xs-12 " style="margin-top:15px;">
-                            <form id='data'>
-                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top:15px;padding-left:-10px;padding-right: -10px; ">
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
+                            <form id='data' class="tamma-bg" style="padding:5mm 2mm">
+                              <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
                                       <label class="tebal">Kode Barang</label>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                      <div class="form-group">
+                                          <input type="text" id="kode_barang" name="kode_barang" class="form-control input-sm" readonly placeholder="(Auto)">
+                                      </div>
+                                    </div>                                  
 
-                                </div>
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="text" id="kode_barang" name="kode_barang" class="form-control input-sm" readonly placeholder="(Auto)">
-                                  </div>
-                                </div>
-
-
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
                                       <label class="tebal">Nama</label>
-
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                      <div class="form-group">
+                                          <input type="text" id="nama" name="i_name" class="form-control input-sm">
+                                          <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="nama-error"><small>Nama harus diisi.</small></span>
+                                      </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="text" id="nama" name="i_name" class="form-control input-sm">
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="nama-error"><small>Nama harus diisi.</small></span>
-                                  </div>
-                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <label class="tebal">Min. Stock</label>
+                                    </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                      <div class="form-group">
+                                          <input type="number" id='i_min_stock' name='i_min_stock' class="form-control">
+                                          <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Min. Stock Harus Diisi</small></span>
+                                      </div>
+                                    </div>
 
-                                    <label class="tebal">Min. Stock</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="number" id='i_min_stock' name='i_min_stock' class="form-control">
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Min. Stock Harus Diisi</small></span>
-                                  </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Type</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_type' id="i_type">
-                                        <option value="">~ Pilih Type ~</option>
-                                        <option value="BJ">Barang Jual</option>
-                                        <option value="BP">Barang Produksi</option>
-                                        <option value="BB">Bahan Baku</option>
-                                      </select>
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="type-error"><small>Type harus dipilih.</small></span>
-                                  </div>
-                                </div>
-              
-
-                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                  <div class="row">
-                                    
                                     <div class="col-md-3"><label class="tebal">Kelompok</label></div>
-                                    <div class="form-group col-md-9">
+                                    <div class="form-group col-md-3">
                                         <select class="input-sm form-control select" name='i_group' onchange="dinamis()" id="kelompok">
                                           <option value="">~ Pilih Kelompok ~</option>
                                           @foreach ($kelompok as $key => $value)
@@ -118,54 +89,47 @@
                                           @endforeach
                                         </select>
                                         <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="kelompok-error"><small>Kelompok harus dipilih.</small></span>
+                                    </div>                                  
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-3 col-sm-3 col-xs-12">
+
+                                        <label class="tebal">Satuan Utama</label>
+
                                     </div>
-                                  </div>
+
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                      <div class="form-group">
+                                          <select class="input-sm form-control select" name='i_sat1' id="i_sat1">
+                                            <option value="">~ Pilih Satuan ~</option>
+                                            @foreach ($satuan as $key => $value)
+                                              <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
+                                            @endforeach
+                                          </select>
+                                          <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Satuan harus dipilih.</small></span>
+                                      </div>
+                                    </div>
+
+                                    <div class="row">
+                                      <div class="col-md-3 col-sm-3 col-xs-12">
+                                          <label class="tebal">Isi Sat. Utama</label>
+                                      </div>
+
+                                      <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="number" id='i_sat_isi1' name='i_sat_isi1' class="form-control" value='1' readonly>
+                                        </div>
+                                      </div>
+                                    </div>
                                 </div>
-
-                                
-                               
-
-                                
-
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Satuan Utama</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_sat1' id="i_sat1">
-                                        <option value="">~ Pilih Satuan ~</option>
-                                        @foreach ($satuan as $key => $value)
-                                          <option value="{{$value->s_id}}">{{$value->s_name}} ({{$value->s_detname}})</option>
-                                        @endforeach
-                                      </select>
-                                      <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="satuan-error"><small>Satuan harus dipilih.</small></span>
-                                  </div>
-                                </div>
-          
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
-                                    <label class="tebal">Isi Sat. Utama</label>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-8 col-xs-12">
-                                  <div class="form-group">
-                                      <input type="number" id='i_sat_isi1' name='i_sat_isi1' class="form-control" value='1' readonly>
-                                      
-                                  </div>
-                                </div>                      
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="row">
+                                  <div class="col-md-3 col-sm-3 col-xs-12">
 
                                     <label class="tebal">Satuan Alternatif 1</label>
 
                                 </div>
 
-                                <div class="col-md-3 col-sm-8 col-xs-12">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
                                   <div class="form-group">
                                       <select class="input-sm form-control select" name='i_sat2' id="i_sat2">
                                         <option value="">~ Pilih Satuan ~</option>
@@ -177,26 +141,25 @@
                                   </div>
                                 </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
 
                                     <label class="tebal">Isi Sat. Alternatif 1</label>
 
                                 </div>
 
-                                <div class="col-md-3 col-sm-8 col-xs-12">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
                                   <div class="form-group">
                                       <input type="number" id='i_sat_isi2' name='i_sat_isi2' class="form-control">
                                       
                                   </div>
                                 </div>
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-3 col-sm-3 col-xs-12">
                                     <label class="tebal">Satuan Alternatif 2</label>
-
                                 </div>
 
-                                <div class="col-md-3 col-sm-8 col-xs-12">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
                                   <div class="form-group">
                                       <select class="input-sm form-control select" name='i_sat3' id="i_sat3">
                                         <option value="">~ Pilih Satuan ~</option>
@@ -220,38 +183,39 @@
                                       <input type="number" id='i_sat_isi3' name='i_sat_isi3' class="form-control">
                                       
                                   </div>
-                                </div>                                
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12 col-sm-12 col-xs-12">
 
                                       <label class="tebal">Harga Satuan Utama</label>
 
                                 </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
                                       <input type="text" id="hargabeli" name="m_pbuy1" class="form-control input-sm">
                                       
                                   </div>
                                 </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
 
                                       <label class="tebal">Harga Satuan Alternatif 1</label>
 
                                 </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
                                       <input type="text" id="hargabeli" name="m_pbuy2" class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
 
                                       <label class="tebal">Harga Satuan Alternatif 2</label>
 
                                 </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
                                       <input type="text" id="hargabeli" name="m_pbuy3" class="form-control input-sm" readonly>
                                       
@@ -259,20 +223,20 @@
                                 </div>
 
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
 
                                       <label class="tebal">Detail</label>
 
                                 </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
                                       <textarea class="form-control input-sm" name='i_det'></textarea>
                                   </div>
                                 </div>
-                                
-                                
+                                </div>
 
-                                <div class="" id="dinamis">
+                                <div class="row">
+                                  <div class="" id="dinamis">
                                   <div class="col-md-2" style="margin-right: 68px;">
 
                                         <label class="tebal">Supplier</label>
@@ -299,9 +263,14 @@
                                     <button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
                                   </div>
                                 </div>
+                                </div>
 
-                                
+
+
+
+
                               </div>
+                              
 
                               <div class="row">
                                 <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
@@ -310,8 +279,8 @@
                               </div>
                           
 
-                      </form>
-                </div>
+                              </form>
+                        </div>
              </div>
            </div>
          </div>
@@ -319,9 +288,9 @@
 
 @endsection
 @section("extra_scripts")
-  @include('Master::databarang/js/format_currency')
+  @include('Master::databarangtitipan/js/format_currency')
 
-  @include('Master::databarang/js/form_commander')
+  @include('Master::databarangtitipan/js/form_commander')
   <script>
     $(document).ready(function(){
       format_currency( $("[name='is_price[]']") );
