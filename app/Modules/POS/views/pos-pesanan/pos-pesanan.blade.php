@@ -983,23 +983,23 @@ $('#serah_terima').css('display','');
     status='<span class="label label-success">Diterima</span>';
   }
   $('#txt_span_status').html(status);
-  $('#lCode').text(s_note);
-  $('#lTgl').text(s_date);
-  $('#lCustomer').text(c_name);
+  $('#lCode').val(s_note);
+  $('#lTgl').val(s_date);
+  $('#lCustomer').val(c_name);
   var c_bayar
   if(s_jenis_bayar==1){
     c_bayar='Tunai';
   }else{
     c_bayar='Tempo';
   }
-  $('#lBayar').text(c_bayar);
-  $('#lTempo').text(s_duedate);
-  $('#lJadi').text(s_finishdate);
-  $('#lSubttl').text(s_gross);
-  $('#lDiskon').text(SetFormRupiah(s_disc_value+s_disc_percent));
-  $('#lBkirim').text(s_ongkir);
-  $('#lTtl').text(s_net);
-  $('#lBiaya').text(s_bayar);
+  $('#lBayar').val(c_bayar);
+  $('#lTempo').val(s_duedate);
+  $('#lJadi').val(s_finishdate);
+  $('#lSubttl').val(s_gross);
+  $('#lDiskon').val(SetFormRupiah(s_disc_value+s_disc_percent));
+  $('#lBkirim').val(s_ongkir);
+  $('#lTtl').val(s_net);
+  $('#lBiaya').val(s_bayar);
   
     $('#modalDataDetail').modal('show');
      $.ajax({

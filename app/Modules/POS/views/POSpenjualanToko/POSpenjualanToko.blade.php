@@ -993,23 +993,23 @@ function setDatePicker(){
 
 function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
   $('#txt_span_status').text(s_status);
-  $('#lCode').text(s_note);
-  $('#lTgl').text(s_date);
-  $('#lCustomer').text(c_name);
+  $('#lCode').val(s_note);
+  $('#lTgl').val(s_date);
+  $('#lCustomer').val(c_name);
   var c_bayar
   if(s_jenis_bayar==1){
     c_bayar='Tunai';
   }else{
     c_bayar='Tempo';
   }
-  $('#lBayar').text(c_bayar);
-  $('#lTempo').text(s_duedate);
-  $('#lJadi').text(s_finishdate);
-  $('#lSubttl').text(s_gross);
-  $('#lDiskon').text(SetFormRupiah(s_disc_value+s_disc_percent));
-  $('#lBkirim').text(s_ongkir);
-  $('#lTtl').text(s_net);
-  $('#lBiaya').text(s_bayar);
+  $('#lBayar').val(c_bayar);
+  $('#lTempo').val(s_duedate);
+  $('#lJadi').val(s_finishdate);
+  $('#lSubttl').val(s_gross);
+  $('#lDiskon').val(SetFormRupiah(s_disc_value+s_disc_percent));
+  $('#lBkirim').val(s_ongkir);
+  $('#lTtl').val(s_net);
+  $('#lBiaya').val(s_bayar);
   
     $('#modalDataDetail').modal('show');
      $.ajax({
