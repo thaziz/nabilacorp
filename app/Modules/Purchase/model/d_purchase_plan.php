@@ -210,30 +210,35 @@ class d_purchase_plan extends Model
                       ->make(true);                              
     }
 
-     static function getDetailPlan($id,$type)
+     static function getDetailPlan($id)
     {
+
+      $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
+                                ->join('m_supplier','p_supplier','=','s_id')
+                                ->where('p_id', '=', $id)
+                                ->first();
      
-      if ($type == "all") 
-      {
-        $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->leftjoin('d_stock','s_item','=','i_id')
-                                ->select('i_id',
-                                         'm_item.i_code',
-                                         'm_item.i_name',
-                                         's_name',                                         
-                                         'ppdt_qty',
-                                         'ppdt_qtyconfirm',
-                                         's_qty',
-                                         'ppdt_pruchaseplan',
-                                         'ppdt_detailid'
-                                )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->orderBy('ppdt_created', 'DESC')
-                                ->get();
-      }
-      else
-      {
+      // if ($type == "all") 
+      // {
+      //   $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+      //                           ->join('m_satuan', 's_id', '=', 'i_satuan')
+      //                           ->leftjoin('d_stock','s_item','=','i_id')
+      //                           ->select('i_id',
+      //                                    'm_item.i_code',
+      //                                    'm_item.i_name',
+      //                                    's_name',                                         
+      //                                    'ppdt_qty',
+      //                                    'ppdt_qtyconfirm',
+      //                                    's_qty',
+      //                                    'ppdt_pruchaseplan',
+      //                                    'ppdt_detailid'
+      //                           )
+      //                           ->where('ppdt_pruchaseplan', '=', $id)
+      //                           ->orderBy('ppdt_created', 'DESC')
+      //                           ->get();
+      // }
+      // else
+      // {
           $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->join('d_stock','s_item','=','i_id')
@@ -251,12 +256,13 @@ class d_purchase_plan extends Model
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
-      }
+      // }
      
 
       return Response()->json([
           'status' => 'sukses',          
-          'data_isi' => $dataIsi
+          'data_isi' => $dataIsi,
+          'data_header' => $data_header,
       ]);
     }
 

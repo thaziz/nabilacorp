@@ -103,7 +103,74 @@ class PenerimaanBrgSupController extends Controller
 
     public function simpan_penerimaan(Request $request)
     {
-       dd($request->all());
+       // dd($request->all());
+      // return $request->session()->all();
+      // session::get()->all();
+       $increment = DB::table('d_terima_pembelian')->max('d_tb_id');
+       if ($increment == null) {
+         $increment = 1;
+       }else{
+         $increment += 1;
+       }
+       // return $increment;
+       date_default_timezone_set("Asia/Jakarta"); 
+      // return date('d/m/Y h:i:s');
+
+       $data_header = DB::table('d_terima_pembelian')->insert([
+          'd_tb_id'=>$increment,
+          'd_tb_pid'=>$request->headNotaPurchase,
+          'd_tb_sup'=>$request->headSupplierId,
+          // 'd_tb_code'=>,
+          'd_tb_staff'=>$request->headStaffId,
+          'd_tb_noreff'=>$request->headNotaTxt,
+          'd_tb_totalnett'=>$request->headTotalNett,
+          'd_tb_totalbyr'=>$request->headTotalTerima,
+          'd_tb_date'=>$request->headTglTerima,
+          'd_tb_created'=>date('d/m/Y h:i:s'),
+          'd_tb_comp'=>Session::get('user_comp'),
+       ]);
+
+       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
+           $data_detail = DB::table('d_terima_pembelian_dt')->insert([
+              'd_tbdt_id'=>$i+1,
+              'd_tbdt_idtb'=>$increment,
+              'd_tbdt_item'=>$request->fieldItemId[$i],
+              'd_tbdt_sat'=>$request->fieldSatuanId[$i],
+              'd_tbdt_qty'=>$request->fieldQtyterima[$i],
+              'd_tbdt_price'=>$request->fieldHargaRaw[$i],
+              'd_tbdt_comp'=>Session::get('user_comp'),
+              'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
+              'd_tbdt_date_received'=>date('Y-m-d',strtotime($request->headTglTerima)),
+
+           ]);
+       }
+
+       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
+           $update_stock = DB::table('d_stock')->insert([
+              's_comp'=>Session::get('user_comp'),
+              's_position'=>Session::get('user_comp'),
+              's_item'=>$request->fieldItemId[$i],
+              's_qty'=>$request->fieldQtyterima[$i],
+              'sm_insert'=>date('Y-m-d h:i:s'),
+           ]);
+       }
+
+       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
+           $update_po = DB::table('d_terima_pembelian_dt')->insert([
+              'd_tbdt_id'=>$i+1,
+              'd_tbdt_idtb'=>$increment,
+              'd_tbdt_item'=>$request->fieldItemId[$i],
+              'd_tbdt_sat'=>$request->fieldSatuanId[$i],
+              'd_tbdt_qty'=>$request->fieldQtyterima[$i],
+              'd_tbdt_price'=>$request->fieldHargaRaw[$i],
+              'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
+              'd_tbdt_date_received'=>date('Y-m-d',strtotime($request->headTglTerima)),
+
+           ]);
+       }
+
+
+
     }
 
 

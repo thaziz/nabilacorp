@@ -161,8 +161,8 @@ class purchasePlanController extends Controller
       ->make(true);
    }
 
-   public function getDetailPlan($id,$type){     
-      return d_purchase_plan::getDetailPlan($id,$type);
+   public function getDetailPlan($id){     
+      return d_purchase_plan::getDetailPlan($id);
    }
    public function getEditPlan($id){     
       return d_purchase_plan::getEditPlan($id);

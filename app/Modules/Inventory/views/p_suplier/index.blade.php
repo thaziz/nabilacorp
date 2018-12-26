@@ -180,12 +180,12 @@
           Object.keys(data.data_isi).forEach(function(){
             var hargaTotalItemGross = data.data_isi[key-1].po_total_gross;
             var qtyCost = data.data_isi[key-1].podt_qtyconfirm;
-            // var qtyTerima = data.data_isi[key-1];
+            var qtyTerima = data.data_isi[key-1].podt_send;
             // harga total per item setelah kena diskon & pajak
             var hargaTotalItemNet = Math.round(parseFloat(hargaTotalItemGross - (hargaTotalItemGross * percentDiscTotalGross/100) + ((hargaTotalItemGross - (hargaTotalItemGross * percentDiscTotalGross/100)) * taxPercent/100)).toFixed(2));
             console.log(hargaTotalItemNet);
             var hargaSatuanItemNet = hargaTotalItemNet/qtyCost;
-            var hargaTotalPerRow = hargaSatuanItemNet /** qtyTerima*/;
+            var hargaTotalPerRow = hargaSatuanItemNet * qtyTerima;
             //console.log(hargaSatuanItemNet);
             $('#tabel-modal-terima').append('<tr class="tbl_form_row" id="row'+i+'">'
                             +'<td style="text-align:center">'+key+'</td>'
@@ -258,7 +258,7 @@
     $(document).on('focus', '.field_qty_terima',  function(e){
         var qty = $(this).val();
         $(this).val(qty);
-        $('#btn_simpan').attr('disabled', true);
+        // $('#btn_simpan').attr('disabled', true);
     });
 
     $(document).on('blur', '.field_qty_terima',  function(e){
@@ -364,7 +364,6 @@
     console.log(hasil);
     var total = 0;
     for (var i = hasil.length - 1; i >= 0; i--){
-
       hasil[i] = convertToAngka(hasil[i]);
       hasil[i] = parseInt(hasil[i]);
       total = total + hasil[i];
@@ -489,7 +488,7 @@
             {
               $('#divSelectNota').removeClass('has-error');
               $('#btn_simpan').text('Updating...');
-              $('#btn_simpan').attr('disabled',true);
+              // $('#btn_simpan').attr('disabled',true);
               $.ajax({
                 url : baseUrl + "/inventory/p_suplier/simpan-penerimaan",
                 type: "POST",

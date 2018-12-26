@@ -12,7 +12,7 @@ Route::get('/purchasing/pembayaran_hutang/laporan_pembayaran_hutang', 'Pembayara
 Route::get('/seach-item-purchase', 'purchasePlanController@seachItemPurchase')->middleware('auth');
 Route::get('/purcahse-plan/plan-index', 'purchasePlanController@planIndex')->middleware('auth');
 Route::get('/purcahse-plan/data-plan', 'purchasePlanController@dataPlan')->middleware('auth');
-Route::get('/purcahse-plan/get-detail-plan/{id}/{type}', 'purchasePlanController@getDetailPlan')->middleware('auth');
+Route::get('/purcahse-plan/get-detail-plan/{id}', 'purchasePlanController@getDetailPlan')->middleware('auth');
 Route::get('/purcahse-plan/get-edit-plan/{id}', 'purchasePlanController@getEditPlan')->middleware('auth');
 
 Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->middleware('auth');
