@@ -47,58 +47,12 @@
                             </button></a>
     </div>
           <div class="table-responsive">
-            <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0" id="data">
+            <table class="table table-hover table-bordered" width="100%" cellspacing="0" id="tabel_d_purchase_return">
                           <thead>
-                            <tr>
-                              <th class="wd-15p">No.</th>
-                              <th class="wd-15p">No. Return</th>
-                              <th class="wd-15p">Tanggal Return</th>
-                              <th class="wd-15p">Jumlah Return</th>
-                              <th class="wd-15p">Status</th>
-                              <th class="wd-15p">Aksi</th>
-                            </tr>
-                          </thead>
+                <tr role="row"><th class="wd-10p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="Tgl Return: activate to sort column ascending" style="width: 84.0039px;">Tgl Return</th><th class="wd-15p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="ID Return: activate to sort column ascending" style="width: 84.0039px;">ID Return</th><th class="wd-10p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="Staff: activate to sort column ascending" style="width: 44.0039px;">Staff</th><th class="wd-10p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="Metode: activate to sort column ascending" style="width: 84.0039px;">Metode</th><th class="wd-15p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="Supplier: activate to sort column ascending" style="width: 151.004px;">Supplier</th><th class="wd-15p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="Total Retur: activate to sort column ascending" style="width: 151.004px;">Total Retur</th><th class="wd-15p sorting" tabindex="0" aria-controls="tabel-return" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 44.0039px;">Status</th><th class="wd-15p sorting_disabled" style="text-align: center; width: 246px;" rowspan="1" colspan="1" aria-label="Aksi">Aksi</th></tr>
+              </thead>
 
                           <tbody>
-                            <tr>
-                              <td>1</td>
-                              <td>1111</td>
-                              <td>31/12/2017</td>
-                              <td>1</td>
-                              <td><span class="badge badge-success">Sampai</span></td>
-                             <td class="text-center">
-                               <div class="">    
-                               <a href="#" class="btn btn-warning btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                               <a href="#" class="btn btn-danger btn-sm" title="Hapus"><i class="glyphicon glyphicon-trash"></i></a>
-                              </div>                                 
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>1112</td>
-                              <td>31/12/2017</td>
-                              <td>21</td>
-                              <td><span class="badge badge-success">Sampai</span></td>
-                             <td class="text-center">
-                               <div class="">    
-                               <a href="#" class="btn btn-warning btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                               <a href="#" class="btn btn-danger btn-sm" title="Hapus"><i class="glyphicon glyphicon-trash"></i></a>
-                              </div>                                 
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>1113</td>
-                              <td>30/12/2018</td>
-                              <td>1</td>
-                              <td><span class="badge badge-danger">Belum Sampai</span></td>
-                             <td class="text-center">
-                              <div class="">    
-                               <a href="#" class="btn btn-warning btn-sm" title="Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                               <a href="#" class="btn btn-danger btn-sm" title="Hapus"><i class="glyphicon glyphicon-trash"></i></a>
-                              </div>                                 
-                              </td>
-                            </tr>                     
                           </tbody>
 
                           
@@ -113,73 +67,6 @@
                             </div>
 @endsection
 @section("extra_scripts")
-    <script type="text/javascript">
-      $(document).ready(function() {
-    var extensions = {
-         "sFilterInput": "form-control input-sm",
-        "sLengthSelect": "form-control input-sm"
-    }
-    // Used when bJQueryUI is false
-    $.extend($.fn.dataTableExt.oStdClasses, extensions);
-    // Used when bJQueryUI is true
-    $.extend($.fn.dataTableExt.oJUIClasses, extensions);
-    $('#data').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data2').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-    $('#data3').dataTable({
-          "responsive":true,
-
-          "pageLength": 10,
-        "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
-        "language": {
-            "searchPlaceholder": "Cari Data",
-            "emptyTable": "Tidak ada data",
-            "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-            "sSearch": '<i class="fa fa-search"></i>',
-            "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-            "infoEmpty": "",
-            "paginate": {
-                    "previous": "Sebelumnya",
-                    "next": "Selanjutnya",
-                 }
-          }
-
-        });
-});    
-      </script>
+    @include("Purchase::returnpembelian/js/commander") 
+      
 @endsection

@@ -8,7 +8,7 @@ use App\m_customer;
 use Carbon\carbon;
 use DB;
 
-use App\m_itemm;
+use App\m_item;
 use App\d_stock;
 
 use App\Http\Controllers\Controller;
@@ -105,8 +105,13 @@ class rencanaPenjualanController extends Controller
     function find_d_sales_plan(Request $req) {
        $data = array();
        $sp_comp = Session::get('user_comp');
-       $rows = d_sales_plan::where('sp_comp', $sp_comp);
+       $rows = d_sales_plan::leftJoin('d_salesplan_dt', 'spdt_salesplan', '=', 'sp_id')
+          ->leftJoin('m_item', 'i_id', '=', 'spdt_item');
+      // memilih kolom yang akan ditampilkan
+      $rows = $rows->select('sp_id', 'sp_code', 'sp_comp', 'sp_mem', 'sp_date', DB::raw('IFNULL( SUM(i_price) , 0) AS total_harga'));    
 
+        // Memfilter data
+       $rows = $rows->where('sp_comp', $sp_comp);
        // Filter berdasarkan tanggal
        $tgl_awal = $req->tgl_awal;
        $tgl_awal = $tgl_awal != null ? $tgl_awal : '';
@@ -118,21 +123,10 @@ class rencanaPenjualanController extends Controller
         $rows = $rows->whereBetween('sp_date', array($tgl_awal, $tgl_akhir));
        }
 
-       $rows = $rows->get();
-       foreach ($rows as $row) {
-         $new_row = $row;
-         $new_row['i_price'] = 0;
-         $new_row['total_harga'] = 0;
-         if($row->d_salesplan_dt != null) {
-            $qty = $row->d_salesplan_dt->sum('spdt_qty');
-            if($row->d_salesplan_dt->m_item != null) {
-                $new_row['total_harga'] = $qty * $row->d_salesplan_dt->m_item->sum('i_price');
-            }
-         }
-         array_push($data, $new_row);
-       }
+       $rows = $rows->groupBy('sp_id')->get();
 
-       $res = array('data' => $data);
+
+       $res = array('data' => $rows);
        return response()->json($res);
     }
 

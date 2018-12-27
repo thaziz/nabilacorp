@@ -30,11 +30,6 @@
                     <i class="fa fa-undo" aria-hidden="true"></i>
                   </strong>
                 </button>
-                <button class="btn btn-default btn-sm btn-flat" type="button" title="cetak laporan penjualan" onclick="cetakData()">
-                  <strong>
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                  </strong>
-                </button>
               </div>
 
               <div class="col-md-3 col-sm-6 col-xs-12" align="right">
