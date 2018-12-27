@@ -72,8 +72,11 @@ Route::get('/purchasing/belanjaharian/hapus/{id}', 'BelanjaHarianController@hapu
 Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchaseReturnController@tambah_pembelian')->middleware('auth');
 Route::get('/purchasing/returnpembelian/pembelian', 'PurchaseReturnController@pembelian')->middleware('auth');
 Route::get('/purchasing/returnpembelian/find_d_purchase_return', 'PurchaseReturnController@find_d_purchase_return')->middleware('auth');
-Route::get('/purchasing/returnpembelian/insert_d_purchase_return', 'PurchaseReturnController@insert_d_purchase_return')->middleware('auth');
+Route::post('/purchasing/returnpembelian/insert_d_purchase_return', 'PurchaseReturnController@insert_d_purchase_return')->middleware('auth');
 Route::get('/purchasing/returnpembelian/delete_d_purchase_return', 'PurchaseReturnController@delete_d_purchase_return')->middleware('auth');
+
+Route::get('/purchasing/returnpembelian/find_d_purchasing', 'PurchaseReturnController@find_d_purchasing')->middleware('auth');
+Route::get('/purchasing/returnpembelian/find_d_purchasing_dt', 'PurchaseReturnController@find_d_purchasing_dt')->middleware('auth');
 // ====================================================================================
 
 /* ricky */

@@ -20,17 +20,19 @@
 				{ data : 'm_name' },
 				{ data : 'pr_method' },
 				{ data : 's_company' },
-				{ data : 'total_retur' },
+				{ data : 'pr_pricetotal' },
 				{ data : 'pr_status' },
 
 		        { 
 		        	data : null,
 		        	render : function(res) {
 		        		
-		        		var detail_btn = '<button id="detail_btn" onclick="open_detail(this)" class="btn btn-success btn-sm" title="detail" data-toggle="modal" data-target="#form_detail"  style="margin-right:2mm"><i class="fa fa-indent"></i></button>';
-		        		var payment_btn = '<button id="delete_btn" onclick="open_payment(this)" class="btn btn-primary btn-sm" title="payment" data-toggle="modal" data-target="#form_payment"><i class="fa fa-trash"></i></button>';
+		        		var detail_btn = '<button id="detail_btn" onclick="open_detail(this)" class="btn btn-warning btn-sm" title="detail" data-toggle="modal" data-target="#form_detail"  style="margin-right:2mm"><i class="fa fa-eye"></i></button>';
+		        		var edit_btn = '<button id="edit_btn" onclick="open_edit_form(this)" class="btn btn-primary btn-sm" title="payment" data-toggle="modal" data-target="#form_payment" style="margin-right:2mm"><i class="fa fa-pencil"></i></button>';
 
-		        		var result = detail_btn + payment_btn;
+		        		var remove_btn = '<button id="remove_btn" onclick="remove_data(this)" class="btn btn-danger btn-sm" title="payment"><i class="glyphicon glyphicon-trash"></i></button>';
+
+		        		var result = detail_btn + edit_btn + remove_btn;
 
 		        		return result;
 		        	}
