@@ -701,12 +701,10 @@ if($status==true){
 
 
  $.ajax({
-    url : 'http://localhost/git/nabilacorp/penjualan/pos-toko/printNota/1',
-    /*url : 'http://localhost/git/nabilacorp/penjualan/pos-toko/printNota/'+response.s_id,*/
+    url : baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
-      alert(response);
         $('#div_print').html(response);
               /*qz.appendHTML(
                   '<html>' +response +'</html>'
