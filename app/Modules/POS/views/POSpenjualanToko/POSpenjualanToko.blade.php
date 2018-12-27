@@ -701,7 +701,7 @@ if($status==true){
 
 
  $.ajax({
-    url : baseUrl+'/penjualan/pos-toko/printNota/'+response.s_id,
+    url : 'http://localhost/git/penjualan/pos-toko/printNota/'+response.s_id,
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){

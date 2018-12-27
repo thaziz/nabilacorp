@@ -61,6 +61,115 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="modalDataDetail" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        
+                    
+                        <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: #e77c38;">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title" style="color: white;">Detail Penjualan</h4>
+                            </div>
+
+                            <div class="modal-body" style="padding:0px">
+                              
+                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" >
+                                
+
+
+
+          
+          <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
+            
+
+            
+          </div>
+
+
+
+            <ul id="generalTab" class="nav nav-tabs">
+                 <li class="active"><a id="detail" href="#bahan" data-toggle="tab">Mutasi Item</a></li>
+                 <li><a href="#hasil" id="from" data-toggle="tab">Form Mutasi</a></li>
+            </ul> 
+
+
+            <div id="generalTabContent" class="tab-content responsive">     
+                                <!-- div gudangtogudang -->
+                  <div id="bahan" class="tab-pane fade in active">                                     
+                      <div class="row">       
+                          <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                      <th>Nama Item</th>                                      
+                                      <th>Qty</th>
+                                      <th>Satuan</th>     
+                                    </thead>
+                                    <tbody class="dtBahan">
+                                      
+                                    </tbody>
+                                </table>
+                          </div>
+                      </div>
+                  </div>
+                                <!-- /div gudangtogudang -->
+
+                  <div id="hasil" class="tab-pane fade">
+                      <div class="row">       
+                          <div class="col-md-12 col-sm-12 col-xs-12">
+                              <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                      <th>Nama Item</th>                                      
+                                      <th>Qty</th>
+                                      <th>Satuan</th>
+                                      <th>Harga Hpp</th>                                      
+                                    </thead>
+                                    <tbody class="dtHasil">
+                                      
+                                    </tbody>
+                                </table>
+
+                          </div>
+                      </div>
+                  </div>
+                          
+            </div>
+
+                              
+                                
+                             
+
+                                          
+                              </div>
+                            </div>
+                        
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                          
+                      </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
     
 var tablex;
@@ -120,12 +229,47 @@ function table(){
 }
 
 function detailMutasi(id,tgl,code,ket){  
-    $('#mi_id').val(id);
+    /*$('#mi_id').val(id);
     $('#mi_date').val(tgl);
     $('#mi_code').val(code);
-    $('#mi_keterangan').val(ket);
-    $('#from').tab('show');
+    $('#mi_keterangan').val(ket);*/
+    dtBahan=$('.dtBahan');
+    dtHasil=$('.dtHasil');
 
+
+       $.ajax({
+          url     :  baseUrl+'/penjualan/mutasi-item/mutasi-item-detail/'+id,
+          type    : 'GET',  
+          data: {
+                    "_token": "{{ csrf_token() }}",
+                    "type" :'Bahan',           
+                    "dt" :'dt',    
+            },
+          success : function(response){              
+            dtBahan.html(''); 
+            dtBahan.append(response);            
+          }
+          
+      });
+
+
+      $.ajax({
+          url     :  baseUrl+'/penjualan/mutasi-item/mutasi-item-detail/'+id,
+          type    : 'GET',  
+          data: {
+                  "_token": "{{ csrf_token() }}",
+                  "type" :'Hasil',
+                  "dt" :'dt',
+            },
+          success : function(response){              
+            dtHasil.html(''); 
+            dtHasil.append(response);              
+          }
+          
+      });
+
+
+    $('#modalDataDetail').modal('show');
 
 }
 function tambah(){
