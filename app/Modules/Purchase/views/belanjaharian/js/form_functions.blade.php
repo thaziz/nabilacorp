@@ -44,6 +44,8 @@
                     title: 'Info',
                     message: 'Data Berhasil Tersimpan.'
                 });
+
+                location.reload();
               }
               else {
               	iziToast.error({
