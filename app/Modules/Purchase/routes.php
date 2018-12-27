@@ -49,6 +49,7 @@ Route::get('/purcahse-plan/form-plan', 'purchasePlanController@formPlan')->middl
 
 Route::get('/purchasing/rencanapembelian/rencana', 'rencanapembelianController@rencana')->middleware('auth');
 Route::get('/purchasing/rencanapembelian/create', 'rencanapembelianController@create')->middleware('auth');
+Route::get('/purchasing/returnpembelian/pembelian', 'PurchasingController@pembelian')->middleware('auth');
 Route::get('/purchasing/belanjasuplier/suplier', 'PurchasingController@suplier')->middleware('auth');
 Route::get('/purchasing/belanjalangsung/langsung', 'PurchasingController@langsung')->middleware('auth');
 Route::get('/purchasing/belanjaproduk/produk', 'PurchasingController@produk')->middleware('auth');
@@ -68,17 +69,7 @@ Route::get('/purchasing/belanjaharian/form_perbarui/{id}', 'BelanjaHarianControl
 Route::get('/purchasing/belanjaharian/hapus/{id}', 'BelanjaHarianController@hapus')->middleware('auth');
 // ============================================================
 
-// Sesi return pembelian
-Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchaseReturnController@tambah_pembelian')->middleware('auth');
-Route::get('/purchasing/returnpembelian/pembelian', 'PurchaseReturnController@pembelian')->middleware('auth');
-Route::get('/purchasing/returnpembelian/find_d_purchase_return', 'PurchaseReturnController@find_d_purchase_return')->middleware('auth');
-Route::post('/purchasing/returnpembelian/insert_d_purchase_return', 'PurchaseReturnController@insert_d_purchase_return')->middleware('auth');
-Route::get('/purchasing/returnpembelian/delete_d_purchase_return', 'PurchaseReturnController@delete_d_purchase_return')->middleware('auth');
-
-Route::get('/purchasing/returnpembelian/find_d_purchasing', 'PurchaseReturnController@find_d_purchasing')->middleware('auth');
-Route::get('/purchasing/returnpembelian/find_d_purchasing_dt', 'PurchaseReturnController@find_d_purchasing_dt')->middleware('auth');
-// ====================================================================================
-
+Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchasingController@tambah_pembelian')->middleware('auth');
 /* ricky */
 Route::get('/purchasing/belanjapasar/pasar', 'PurchasingController@pasar')->middleware('auth');
 /*----*/
