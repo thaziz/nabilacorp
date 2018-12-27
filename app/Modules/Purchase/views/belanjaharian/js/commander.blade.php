@@ -24,11 +24,18 @@
             }  
           },
 
-          { data : 'm_username' },
+          { data : 'm_name' },
           { data : 'd_pcsh_code' },
           { data : 'd_divisi' },
           { data : 'd_pcsh_keperluan' },
-          { data : 'd_pcsh_totalprice' },
+          { 
+            data : null, 
+            render : function(res) {
+              var currency = 'Rp. ' + get_currency(res.d_pcsh_totalprice);
+
+              return currency;
+            }
+          },
           { data : 'd_pcsh_status' },
           { 
             data : null,
@@ -42,7 +49,12 @@
             } 
           }
       ],
-
+      'columnDefs' : [
+        {
+          targets : 5,
+          className : 'text-right'
+        }
+      ],
       "rowCallback": function (row, data, index) {
 
         /*$node = this.api().row(row).nodes().to$();*/
