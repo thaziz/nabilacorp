@@ -217,47 +217,23 @@ class d_purchase_plan extends Model
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
                                 ->first();
-     
-      // if ($type == "all") 
-      // {
-      //   $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-      //                           ->join('m_satuan', 's_id', '=', 'i_satuan')
-      //                           ->leftjoin('d_stock','s_item','=','i_id')
-      //                           ->select('i_id',
-      //                                    'm_item.i_code',
-      //                                    'm_item.i_name',
-      //                                    's_name',                                         
-      //                                    'ppdt_qty',
-      //                                    'ppdt_qtyconfirm',
-      //                                    's_qty',
-      //                                    'ppdt_pruchaseplan',
-      //                                    'ppdt_detailid'
-      //                           )
-      //                           ->where('ppdt_pruchaseplan', '=', $id)
-      //                           ->orderBy('ppdt_created', 'DESC')
-      //                           ->get();
-      // }
-      // else
-      // {
-          $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->join('d_stock','s_item','=','i_id')
-                                ->select('i_id',
-                                         'm_item.i_code',
-                                         'm_item.i_name',
-                                         's_name',                                         
-                                         'ppdt_qty',
-                                         'ppdt_qtyconfirm',
-                                         's_qty',
-                                         'ppdt_pruchaseplan',
-                                         'ppdt_detailid'
-                                )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_created', 'DESC')
-                                ->get();
-      // }
-     
+      $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+                            ->join('m_satuan', 's_id', '=', 'i_satuan')
+                            ->join('d_stock','s_item','=','i_id')
+                            ->select('i_id',
+                                     'm_item.i_code',
+                                     'm_item.i_name',
+                                     's_name',                                         
+                                     'ppdt_qty',
+                                     'ppdt_qtyconfirm',
+                                     's_qty',
+                                     'ppdt_pruchaseplan',
+                                     'ppdt_detailid'
+                            )
+                            ->where('ppdt_pruchaseplan', '=', $id)
+                            ->where('ppdt_isconfirm', '=', "TRUE")
+                            ->orderBy('ppdt_created', 'DESC')
+                            ->get();
 
       return Response()->json([
           'status' => 'sukses',          
@@ -271,30 +247,40 @@ class d_purchase_plan extends Model
     {
      
       
-        $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
-                                ->leftjoin('d_stock','s_item','=','i_id')
-                                ->select('i_id',
-                                         'm_item.i_code',
-                                         'm_item.i_name',
-                                         's_name',                                         
-                                         'ppdt_qty',
-                                         'ppdt_qtyconfirm',
-                                         's_qty',
-                                         'ppdt_prevcost',
-                                         'ppdt_pruchaseplan',
-                                         'ppdt_detailid'
-                                )
-                                ->where('ppdt_pruchaseplan', '=', $id)
-                                ->orderBy('ppdt_created', 'DESC')
-                                ->get();
-      
-     
-    
-      return Response()->json([
-          'status' => 'sukses',          
-          'data_isi' => $dataIsi
-      ]);
+        $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
+                                ->join('m_supplier','p_supplier','=','s_id')
+                                ->where('p_id', '=', $id)
+                                ->first();
+      $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+                            ->join('m_satuan', 's_id', '=', 'i_satuan')
+                            ->join('d_stock','s_item','=','i_id')
+                            ->select('i_id',
+                                     'm_item.i_code',
+                                     'm_item.i_name',
+                                     's_name',                                         
+                                     'ppdt_qty',
+                                     'ppdt_qtyconfirm',
+                                     's_qty',
+                                     'ppdt_pruchaseplan',
+                                     'ppdt_detailid'
+                            )
+                            ->where('ppdt_pruchaseplan', '=', $id)
+                            ->where('ppdt_isconfirm', '=', "TRUE")
+                            ->orderBy('ppdt_created', 'DESC')
+                            ->get();
+        $gudang = DB::table('d_gudangcabang')->select('gc_id','gc_gudang','c_name')->join('m_comp','m_comp.c_id','=','d_gudangcabang.gc_comp')
+        ->where('gc_id',1)
+        ->orWhere('gc_id',7)
+        ->orWhere('gc_id',8)
+        ->groupBy('gc_id')->get();
+
+      //   return Response()->json([
+      //     'data_isi' => $dataIsi,
+      //     'data_header' => $data_header,
+      //     'gudang' => $gudang,
+      // ]);
+      return view('Purchase::rencanapembelian/edit',compact('data_header','dataIsi','gudang'));
+
     }
 
     static function deletePlan($id){

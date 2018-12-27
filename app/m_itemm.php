@@ -193,8 +193,6 @@ class m_itemm extends Model
                   $join->where('is_supplier',$id_supplier); 
              })
              ->leftjoin('m_supplier','s_id','=','is_supplier')
-             /*->join('m_group','g_id','=','i_group')*/
-             
              ->leftjoin('d_stock',function($join) use ($comp,$position) {
                   $join->on('s_item','=','i_id');
                   $join->where('s_comp',$comp); 
@@ -203,7 +201,8 @@ class m_itemm extends Model
              ->join('m_satuan as ms_1','ms_1.s_id','=','i_satuan')
              ->join('m_satuan as ms_2','ms_2.s_id','=','i_sat2')
              ->join('m_satuan as ms_3','ms_3.s_id','=','i_sat3')
-             ->select('i_id','i_name','i_satuan','i_sat2','i_sat3','ms_1.s_name as satuan_1','ms_2.s_name as satuan_2','ms_3.s_name as satuan_3','is_price','s_qty','i_code');
+             ->leftjoin('m_price as prc','prc.m_pitem','=','i_id')
+             ->select('i_id','i_name','i_satuan','i_sat2','i_sat3','ms_1.s_name as satuan_1','ms_2.s_name as satuan_2','ms_3.s_name as satuan_3','is_price','s_qty','i_code','m_pbuy1','m_pbuy2','m_pbuy3');
         if($search!='' && $id_supplier!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                  
@@ -221,19 +220,34 @@ class m_itemm extends Model
                
         $sql=$sql->get();
 
+        // return $sql;
 
         $results = array();
                         
         if (count($sql)==0) {
           $results[] = [ 'id' => null, 'label' =>'tidak di temukan data terkait'];
-        } else {
+        }else{
           foreach ($sql as $data)
           {
-            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price,0,',','.').')', 'i_id' => $data->i_id,'satuan_1' =>$data->satuan_1,'satuan_2' =>$data->satuan_2,'satuan_3' =>$data->satuan_3,'sat1_id' =>$data->i_satuan,'sat2_id' =>$data->i_sat2,'sat3_id' =>$data->i_sat3,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price,0,',','.'),'item' => $data->i_name];
+            $results[] = [
+                    'label'    => $data->i_name, 
+                    'i_id'     => $data->i_id,
+                    'satuan_1' => $data->satuan_1,
+                    'satuan_2' => $data->satuan_2,
+                    'satuan_3' => $data->satuan_3,
+                    'sat1_id'  => $data->i_satuan,
+                    'sat2_id'  => $data->i_sat2,
+                    'sat3_id'  => $data->i_sat3,
+                    'm_pbuy1'  => number_format($data->m_pbuy1,0,',','.'),
+                    'm_pbuy2'  => number_format($data->m_pbuy2,0,',','.'),
+                    'm_pbuy3'  => number_format($data->m_pbuy3,0,',','.'),
+                    'stok'     => number_format($data->s_qty,0,',','.'),
+                    'i_code'   => $data->i_code,
+                    'i_price'  => number_format($data->is_price,0,',','.'),
+                    'item'     => $data->i_name];
           }
         } 
         return Response::json($results);
-
     }
 
 //pencarian barang titipan
