@@ -161,7 +161,7 @@ class m_itemm extends Model
         $search = $item->term;
         $id_supplier =$item->id_supplier;
 
-        $groupName=['BB'];
+        $groupName=['BB','BJ'];
         $cabang = Session::get('user_comp');                
         $position=DB::table('d_gudangcabang')
                       // ->where('gc_gudang',DB::raw("'GUDANG PEMBELIAN'"))
@@ -188,7 +188,9 @@ class m_itemm extends Model
              ->join('m_satuan as ms_2','ms_2.s_id','=','i_sat2')
              ->join('m_satuan as ms_3','ms_3.s_id','=','i_sat3')
              ->leftjoin('m_price as prc','prc.m_pitem','=','i_id')
-             ->select('i_id','i_name','i_satuan','i_sat2','i_sat3','ms_1.s_name as satuan_1','ms_2.s_name as satuan_2','ms_3.s_name as satuan_3','is_price','s_qty','i_code','m_pbuy1','m_pbuy2','m_pbuy3');
+             ->leftjoin('d_item_supplier as is_sup','is_sup.is_item','=','i_id')
+             ->select('i_id','i_name','i_satuan','i_sat2','i_sat3','ms_1.s_name as satuan_1','ms_2.s_name as satuan_2','ms_3.s_name as satuan_3','s_qty','i_code','m_pbuy1','m_pbuy2','m_pbuy3','is_sup.is_price1 as m_isup_price1','is_sup.is_price2 as m_isup_price2','is_sup.is_price3 as m_isup_price3');
+
         if($search!='' && $id_supplier!=''){          
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                  
@@ -204,7 +206,7 @@ class m_itemm extends Model
         }
 
                
-        $sql=$sql->get();
+        $sql=$sql->limit(10)->get();
 
         // return $sql;
 
@@ -227,9 +229,11 @@ class m_itemm extends Model
                     'm_pbuy1'  => number_format($data->m_pbuy1,0,',','.'),
                     'm_pbuy2'  => number_format($data->m_pbuy2,0,',','.'),
                     'm_pbuy3'  => number_format($data->m_pbuy3,0,',','.'),
+                    'm_isup_price1'  => number_format($data->m_isup_price1,0,',','.'),
+                    'm_isup_price2'  => number_format($data->m_isup_price2,0,',','.'),
+                    'm_isup_price3'  => number_format($data->m_isup_price3,0,',','.'),
                     'stok'     => number_format($data->s_qty,0,',','.'),
                     'i_code'   => $data->i_code,
-                    'i_price'  => number_format($data->is_price,0,',','.'),
                     'item'     => $data->i_name];
           }
         } 

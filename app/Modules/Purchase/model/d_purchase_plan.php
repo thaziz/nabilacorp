@@ -83,22 +83,6 @@ class d_purchase_plan extends Model
                           'ppdt_satuan'=>$request->satuan_pilih[$i],
                           'ppdt_isconfirm'=>'TRUE',
                            ]);
-         $chekItemSupplier=d_item_supplier::where('is_supplier',$request->id_supplier)->where('is_item',$request->ppdt_item[$i])->where('is_active','Y');
-
-         if(!$chekItemSupplier->first()){
-              $is_id=d_item_supplier::max('is_id')+1;
-              d_item_supplier::create([
-                'is_id'       =>$is_id,
-                'is_item'     =>$request->ppdt_item[$i],
-                'is_supplier' =>$request->id_supplier,
-                'is_price'    =>$ppdt_prevcost,
-                'is_active'   =>'Y',
-                ]);
-           }else{
-             $chekItemSupplier->update([
-                'is_price'    =>$ppdt_prevcost,
-              ]);
-           }
        }
 
         $data=['status'=>'sukses'];
