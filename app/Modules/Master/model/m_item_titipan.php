@@ -1,36 +1,29 @@
 <?php
 
-namespace App;
+namespace App\Modules\Master\model;
 
 use Illuminate\Database\Eloquent\Model;
 
 use DB;
-
 use Response;
-
 use Datatables;
-
 use Session;
 
-class m_itemm extends Model
+class m_item_titipan extends Model
 {
-	protected $table = 'm_item';
+    protected $table = 'm_item';  
     protected $primaryKey = 'i_id';
-    protected $fillable = ['i_id', 'i_code', 'i_type', 'i_group', 'i_name', 'i_unit','i_price'];
-
-    public $incrementing = false;
-    public $remember_token = false;
-    //public $timestamps = false;
     const CREATED_AT = 'i_insert';
     const UPDATED_AT = 'i_update';
-    
+
     public static function dataBarang(){
         $data = DB::table('m_item')
               ->join('m_group', 'g_id', '=', 'i_group')
               ->join('m_satuan', 's_id', '=', 'i_satuan')
               ->where('i_active', 'Y')
+              ->where('i_type', 'BTPN')
               ->get();
-         return Datatables::of($data)  ->editColumn('action', function ($data) {                            
+         return Datatables::of($data)->editColumn('action', function ($data) {                            
                                 return '<div class="">
                                         <a href="#" class="btn btn-warning btn-xs" title="Edit" onclick="edit('.$data->i_id.')"><i class="glyphicon glyphicon-pencil"></i></a>
                                         <a href="#" class="btn btn-danger btn-xs" title="Hapus" onclick="hapus('.$data->i_id.')"><i class="glyphicon glyphicon-trash"></i></a>
@@ -500,6 +493,4 @@ class m_itemm extends Model
 
         return $res;
   }
-
 }
-	
