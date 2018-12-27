@@ -195,7 +195,7 @@
                         timer: 900
                     });
                     setTimeout(function(){
-                          window.location.reload();
+                          window.Flocation.reload();
                   }, 850);
                 }
               }

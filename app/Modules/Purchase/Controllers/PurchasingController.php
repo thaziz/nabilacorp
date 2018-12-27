@@ -20,7 +20,7 @@ use App\Modules\POS\model\d_sales_dt;
 
 use Datatables;
 
-
+use Auth;
 
 
 
@@ -78,7 +78,7 @@ class PurchasingController extends Controller
 
     public function pembelian()
     {
-        return view('/purchasing/returnpembelian/pembelian');
+        return view('Purchase::returnpembelian/pembelian');
     }
 
     public function suplier()
@@ -105,7 +105,14 @@ class PurchasingController extends Controller
     }
     public function tambah_pembelian()
     {
-        return view('/purchasing/returnpembelian/tambah_pembelian');
+        
+        $staff['nama'] = Auth::user()->m_name;
+        $staff['id'] = Auth::User()->m_id;
+        $resp = array(
+          
+          'staff' => $staff
+        );
+        return view('Purchase::returnpembelian/tambah_pembelian', $resp);
     }
     public function tambah_order()
     {
