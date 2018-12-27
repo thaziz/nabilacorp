@@ -12,7 +12,7 @@ use Datatables;
 use Auth;
 
 use App\m_divisi;
-use App\m_itemm;
+use App\m_item;
 use App\Modules\Purchase\model\d_purchasingharian;
 use App\Modules\Purchase\model\d_purchasingharian_dt;
 
@@ -67,7 +67,7 @@ class BelanjaHarianController extends Controller {
     function insert_d_purchasingharian(Request $request){
       $d_pcsh_date = $request->d_pcsh_date;
       $d_pcsh_date = $d_pcsh_date != null ? $d_pcsh_date : '';
-      $d_pcsh_date = date('Y-d-m', strtotime($d_pcsh_date));
+      $d_pcsh_date = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $d_pcsh_date);;
 
       $d_pcsh_staff = $request->d_pcsh_staff;
       $d_pcsh_staff = $d_pcsh_staff != null ? $d_pcsh_staff : '';
@@ -237,7 +237,7 @@ class BelanjaHarianController extends Controller {
         $rows = $rows->whereBetween('d_pcsh_date', array($tgl_awal, $tgl_akhir));
        }
 
-       $rows = $rows->get();
+       $rows = $rows->select('d_pcsh_id', 'd_pcsh_code', 'd_pcsh_date', 'd_pcsh_noreff', 'd_pcsh_totalprice', 'd_pcsh_keperluan', 'd_divisi', 'm_name', DB::raw("CASE d_pcsh_status WHEN 'WT' THEN 'Waiting ' WHEN 'DE' THEN 'Dapat Diedit' WHEN 'CF' THEN 'Confirmed' END AS d_pcsh_status"))->get();
        
 
        $res = array('data' => $rows);
@@ -245,7 +245,7 @@ class BelanjaHarianController extends Controller {
     }
 
     function find_m_item(Request $req) {
-      $m_item = m_itemm::leftJoin('m_satuan', 'i_sat1', '=', 's_id');
+      $m_item = m_item::leftJoin('m_satuan', 'i_sat1', '=', 's_id');
       $m_item = $m_item->leftJoin('m_price', 'i_id', '=', 'm_pitem');
 
       // Mencari data keyword

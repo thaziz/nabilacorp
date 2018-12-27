@@ -532,7 +532,10 @@
             }
         }
       ],
-
+      'columnDefs': [{
+        "targets": 2,
+        "className": "text-right",
+      }],
       "rowCallback": function (row, data, index) {
 
         /*$node = this.api().row(row).nodes().to$();*/
