@@ -96,6 +96,7 @@ class BelanjaHarianController extends Controller {
             $d_pcshdt_price = $d_pcshdt_price != null ? $d_pcshdt_price : array();
 
             for($x = 0; $x < count($d_pcshdt_item);$x++) {
+                $d_purchasingharian_dt->d_pcshdt_id = $x + 1;
                 $d_purchasingharian_dt->d_pcshdt_pcshid = $d_pcsh_id;
                 $d_purchasingharian_dt->d_pcshdt_item = $d_pcshdt_item[$x];
                 $d_purchasingharian_dt->d_pcshdt_qty = $d_pcshdt_qty[$x];
@@ -134,64 +135,60 @@ class BelanjaHarianController extends Controller {
     }
     function update_d_purchasingharian(Request $request){
       $d_pcsh_id = $request->d_pcsh_id;
-      $d_pcsh_id = $d_pcsh_id != null ? $d_pcsh_id : '';
-      $d_pcsh_date = $request->d_pcsh_date;
-      $d_pcsh_date = $d_pcsh_date != null ? $d_pcsh_date : '';
-      $d_pcsh_staff = $request->d_pcsh_staff;
-      $d_pcsh_staff = $d_pcsh_staff != null ? $d_pcsh_staff : '';
-      $d_pcsh_divisi = $request->d_pcsh_divisi;
-      $d_pcsh_divisi = $d_pcsh_divisi != null ? $d_pcsh_divisi : '';
-      $d_pcsh_keperluan = $request->d_pcsh_keperluan;
-      $d_pcsh_keperluan = $d_pcsh_keperluan != null ? $d_pcsh_keperluan : '';
-      
-      DB::beginTransaction();
-      try {
-        $d_purchasingharian = new d_purchasingharian();
+      $d_pcsh_id = $d_pcsh_id != null ? $d_pcsh_id : '';  
 
-        $d_pcsh_id = DB::table('d_purchasingharian')->select(DB::raw('MAX(d_pcsh_id) + 1 AS new_id'))->get()->first()->new_id;
+      if($d_pcsh_id != '') {
+        DB::beginTransaction();
+        try {
+          d_purchasingharian_dt::where('d_pcshdt_pcshid', $d_pcsh_id)->delete();
+          $d_purchasingharian_dt = new d_purchasingharian_dt();
 
-        $d_purchasingharian->d_pcsh_date = $d_pcsh_date;
-        $d_purchasingharian->d_pcsh_staff = $d_pcsh_staff;
-        $d_purchasingharian->d_pcsh_divisi = $d_pcsh_divisi;
-        $d_purchasingharian->d_pcsh_keperluan = $d_pcsh_keperluan;
-        $d_purchasingharian->d_pcsh_status = 'DE';
-        $d_purchasingharian->d_pcsh_totalpaid = 0;
+          $d_pcshdt_item = $request->d_pcshdt_item;
+          $d_pcshdt_item = $d_pcshdt_item != null ? $d_pcshdt_item : array();
+          if( count($d_pcshdt_item) > 0 ) {
 
-        $d_purchasingharian->save();
+              $d_pcshdt_qty = $request->d_pcshdt_qty;
+              $d_pcshdt_qty = $d_pcshdt_qty != null ? $d_pcshdt_qty : array();
+              $d_pcshdt_qty = $request->d_pcshdt_qty;
+              $d_pcshdt_qty = $d_pcshdt_qty != null ? $d_pcshdt_qty : array();
+              $d_pcshdt_price = $request->d_pcshdt_price;
+              $d_pcshdt_price = $d_pcshdt_price != null ? $d_pcshdt_price : array();
 
-        $d_purchasingharian_dt = new d_purchasingharian_dt();
+              $data_d_purchasingharian_dt = array();
+              for($x = 0; $x < count($d_pcshdt_item);$x++) {
+                  array_push($data_d_purchasingharian_dt, array(
+                    "d_pcshdt_pcshid" => $d_pcsh_id,
+                    "d_pcshdt_id" => $x + 1,
+                    "d_pcshdt_item" => $d_pcshdt_item[$x],
+                    "d_pcshdt_qty" => $d_pcshdt_qty[$x],
+                    "d_pcshdt_price" => $d_pcshdt_price[$x],
+                    "d_pcshdt_pricetotal" => $d_pcshdt_price[$x] * $d_pcshdt_qty[$x]
 
-        $d_pcshdt_item = $request->d_pcshdt_item;
-        $d_pcshdt_item = $d_pcshdt_item != null ? $d_pcshdt_item : array();
-        if( count($d_pcshdt_item) > 0 ) {
-            $d_purchasingharian_dt->where('d_pcshdt_pcshid', $d_pcsh_id)->delete();
+                  ));
+              }
+          }
+          $d_purchasingharian_dt->insert($data_d_purchasingharian_dt);
 
-            $d_pcshdt_qty = $request->d_pcshdt_qty;
-            $d_pcshdt_qty = $d_pcshdt_qty != null ? $d_pcshdt_qty : array();
-            $d_pcshdt_qty = $request->d_pcshdt_qty;
-            $d_pcshdt_qty = $d_pcshdt_qty != null ? $d_pcshdt_qty : array();
-            $d_pcshdt_price = $request->d_pcshdt_price;
-            $d_pcshdt_price = $d_pcshdt_price != null ? $d_pcshdt_price : array();
-
-            for($x = 0; $x < count($d_pcshdt_item);$x++) {
-                $d_purchasingharian_dt->d_pcshdt_pcshid = $d_pcshdt_pcshid;
-                $d_purchasingharian_dt->d_pcshdt_item = $d_pcshdt_item[$x];
-                $d_purchasingharian_dt->d_pcshdt_qty = $d_pcshdt_qty[$x];
-                $d_purchasingharian_dt->d_pcshdt_price = $d_pcshdt_price[$x];
-                
-                $pricetotal = $d_pcshdt_qty[$x] * $d_pcshdt_price[$x];
-                $d_purchasingharian_dt->d_pcshdt_pricetotal = $pricetotal;
-                $d_purchasingharian_dt->save();
-            }
+          DB::commit();
+          $res = array(
+            'status' => 'sukses'
+          );
         }
-
-        DB::commit();
+        catch(\Exception $e) {
+          DB::rollback();
+          $res = array(
+            'status' => 'Gagal. ' . $e
+          );
+        }  
       }
-      catch(\Exception $e) {
-        DB::rollback();
+      else {
+        $res = array(
+          'status' => 'ID Kosong'
+        );
       }
+      
 
-      return d_sales_plan::simpan($request);
+      return response()->json($res);
     }
 
     // Menampilkan form untuk mengupdate data
@@ -206,7 +203,9 @@ class BelanjaHarianController extends Controller {
 
       $d_purchasingharian = $d_purchasingharian->where('d_pcsh_id', $d_pcsh_id)->get()->first();
 
-      $d_purchasingharian_dt = d_purchasingharian_dt::where('d_pcshdt_pcshid', $d_pcsh_id)->get();
+      $d_purchasingharian_dt = d_purchasingharian_dt::leftJoin('m_item', 'i_id', '=', 'd_pcshdt_item')
+        ->leftJoin('m_satuan', 'i_satuan', '=', 's_id'); 
+      $d_purchasingharian_dt = $d_purchasingharian_dt->where('d_pcshdt_pcshid', $d_pcsh_id)->get();
 
       $res = array(
           "d_purchasingharian" => $d_purchasingharian,
