@@ -231,7 +231,7 @@ class d_purchase_plan extends Model
     {
      
       
-        $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
+      $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
                                 ->first();

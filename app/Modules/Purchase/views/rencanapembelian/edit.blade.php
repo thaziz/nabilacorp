@@ -157,16 +157,17 @@
                               <div style="padding-top:6px">{{ $element->i_code }} - {{ $element->i_name }}</div>
                             </td>
                             <td width="4%">
-                              <input class="stock{{ $element->i_id }} form-control" style="width:100%;text-align:right;border:none" value='{{ $element->s_qty }}' readonly>
+                              <div style="padding-top:6px">{{ number_format($element->s_qty,0,'','.') }} - </div>
+                              <input type="hidden" class="stock{{ $element->i_id }} form-control" style="width:100%;text-align:right;border:none" value='{{ $element->s_qty }}' readonly>
                             </td>
                             
                             {{-- <td width="5%"><div style="padding-top:6px"></div></td> --}}
                             
                             {{-- <input style="width:100%" type="hidden" name="gudang_masuk[]" value=''> --}}
                             
-                            <td width="4%">
-                            <td width="4%"><input  onblur="validationForm();" class="move up1 form-control alignAngka jumlah fQty{{ $element->i_id }}" style="width:100%;border:none" name="ppdt_qty[]" value="{{ $element->i_id }}" autocomplete="off"></td>
-                            </td>
+                            <td width="4%"><input  onblur="validationForm();" class="move up1 form-control alignAngka jumlah fQty{{ $element->i_id }}" style="width:100%;border:none" name="ppdt_qty[]" value="{{ $element->ppdt_qty }}" autocomplete="off"></td>
+
+                            <td width="4%"><input  onblur="validationForm();" class="move up1 form-control alignAngka jumlah fQty{{ $element->i_id }}" style="width:100%;border:none" name="ppdt_qty[]" value="{{ $element->ppdt_qty }}" autocomplete="off"></td>
                             
                             <input style="width:100%" type="hidden" name="f_qty[]" value='{{ $element->s_qty }}'>
                             
