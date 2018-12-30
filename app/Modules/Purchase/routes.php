@@ -73,10 +73,14 @@ Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchaseReturnContro
 Route::get('/purchasing/returnpembelian/pembelian', 'PurchaseReturnController@pembelian')->middleware('auth');
 Route::get('/purchasing/returnpembelian/find_d_purchase_return', 'PurchaseReturnController@find_d_purchase_return')->middleware('auth');
 Route::post('/purchasing/returnpembelian/insert_d_purchase_return', 'PurchaseReturnController@insert_d_purchase_return')->middleware('auth');
-Route::get('/purchasing/returnpembelian/delete_d_purchase_return', 'PurchaseReturnController@delete_d_purchase_return')->middleware('auth');
+Route::post('/purchasing/returnpembelian/update_d_purchase_return', 'PurchaseReturnController@update_d_purchase_return')->middleware('auth');
+Route::get('/purchasing/returnpembelian/delete_d_purchase_return/{id}', 'PurchaseReturnController@delete_d_purchase_return')->middleware('auth');
 
-Route::get('/purchasing/returnpembelian/find_d_purchasing', 'PurchaseReturnController@find_d_purchasing')->middleware('auth');
-Route::get('/purchasing/returnpembelian/find_d_purchasing_dt', 'PurchaseReturnController@find_d_purchasing_dt')->middleware('auth');
+Route::get('/purchasing/returnpembelian/form_perbarui/{id}', 'PurchaseReturnController@form_perbarui')->middleware('auth');
+Route::get('/purchasing/returnpembelian/form_preview/{id}', 'PurchaseReturnController@form_preview')->middleware('auth');
+
+Route::get('/purchasing/returnpembelian/find_d_purchase_order', 'PurchaseReturnController@find_d_purchase_order')->middleware('auth');
+Route::get('/purchasing/returnpembelian/find_d_purchaseorders_dt', 'PurchaseReturnController@find_d_purchaseorder_dt')->middleware('auth');
 // ====================================================================================
 
 /* ricky */

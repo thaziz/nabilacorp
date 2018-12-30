@@ -67,6 +67,8 @@
                             </div>
 @endsection
 @section("extra_scripts")
+    @include("Purchase::returnpembelian/js/functions") 
+    @include("Purchase::returnpembelian/js/format_currency") 
     @include("Purchase::returnpembelian/js/commander") 
       
 @endsection

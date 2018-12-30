@@ -100,6 +100,97 @@
     });
   }
 
+  function updateReturn() {
+    iziToast.question({
+      close: false,
+      overlay: true,
+      displayMode: 'once',
+      zindex: 999,
+      title: 'Update Retur Pembelian',
+      message: 'Apakah anda yakin ?',
+      position: 'center',
+      buttons: [
+        ['<button><b>Ya</b></button>', function (instance, toast) {
+          var IsValid = $("form[name='formReturnPembelian']").valid();
+          if(IsValid)
+          {
+            var countRow = $('#div_item tr').length;
+            if(countRow >= 1)
+            {
+              $('#button_save').text('Menyimpan...'); //change button text
+              $('#button_save').attr('disabled',true); //set button disable 
+              $.ajax({
+                url : baseUrl + "/purchasing/returnpembelian/update_d_purchase_return",
+                type: "POST",
+                dataType: "JSON",
+                data: $('#form_return_pembelian').serialize(),
+                success: function(response) {
+
+                  $('#button_save').text('Simpan Data'); //change button text
+                  $('#button_save').removeAttr('disabled'); //set button disable 
+                  if(response.status == "sukses")
+                  {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    iziToast.success({
+                      position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                      title: 'Pemberitahuan',
+                      message: response.status,
+                      onClosing: function(instance, toast, closedBy){
+                        $('#button_save').text('Simpan Data'); //change button text
+                        $('#button_save').attr('disabled',false); //set button enable 
+                        window.location.href = baseUrl + "/purchasing/returnpembelian/pembelian";
+                      }
+                    });
+                  }
+                  else
+                  {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    iziToast.error({
+                      position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                      title: 'Pemberitahuan',
+                      message: response.status,
+                      onClosing: function(instance, toast, closedBy){
+                        $('#button_save').text('Simpan Data'); //change button text
+                        $('#button_save').attr('disabled',false); //set button enable 
+                      }
+                    }); 
+                  }
+                },
+                error: function(){
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                  iziToast.warning({
+                    icon: 'fa fa-times',
+                    message: 'Terjadi Kesalahan!'
+                  });
+                },
+                async: false
+              });
+            }
+            else
+            {
+              instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              iziToast.warning({
+                 position: 'center',
+                 message: "Mohon isi data pada tabel form !"
+              });
+            }//end check count form table
+          }
+          else
+          {
+            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            iziToast.warning({
+              position: 'center',
+              message: "Mohon Lengkapi data form !"
+            });
+          } //end check valid
+        }, true],
+        ['<button>Tidak</button>', function (instance, toast) {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+        }],
+      ]
+    });
+  }
+
   function convertDecimalToRupiah(decimal) 
   {
     var angka = parseInt(decimal);
@@ -180,36 +271,36 @@
     return hasil;
   }
 
-  function find_d_purchasing_dt() {
-      tabel_d_purchasing_dt.clear().draw();
+  function find_d_purchasereturn_dt() {
+      tabel_d_purchasereturn_dt.clear().draw();
 
       $.ajax({
-        url : "{{ url('purchasing/returnpembelian/find_d_purchasing_dt') }}",
+        url : "{{ url('purchasing/returnpembelian/find_d_purchasereturn_dt') }}",
         type: "GET",
-        data: 'd_pcs_id=' + $('[name="pr_purchase"]').val(),
+        data: 'po__id=' + $('[name="pr_purchase"]').val(),
         success: function(res) {
           if(res.data.length > 0) {
             var i_id;
-            var d_pcsdt_qty;
-            var d_pcsdt_price;
-            var d_pcsdt_total;
+            var po_dt_qty;
+            var po_dt_price;
+            var po_dt_total;
             var remove_btn, subtotal, stock, satuan;
 
             if(res.data.length > 0) {
               for(x = 0;x < res.data.length;x++) {
                   prdt_item = '<input type="hidden" name="prdt_item[]" value="' + res.data[x].i_id + '">' + res.data[x].i_id + ' | ' + res.data[x].i_name;
-                  prdt_qtyreturn = '<input type="hidden" name="prdt_qty[]" value="' + res.data[x].d_pcsdt_qty + '"><input type="text" name="prdt_qtyreturn[]" value="' + res.data[x].d_pcsdt_qty + '">';
-                  prdt_price = '<input type="hidden" name="prdt_price[]" value="' + res.data[x].d_pcsdt_price + '">' + get_currency(res.data[x].d_pcsdt_price);
+                  prdt_qtyreturn = '<input type="hidden" name="prdt_qty[]" value="' + res.data[x].po_dt_qty + '"><input type="text" name="prdt_qtyreturn[]" value="' + res.data[x].po_dt_qty + '">';
+                  prdt_price = '<input type="hidden" name="prdt_price[]" value="' + res.data[x].po_dt_price + '">' + get_currency(res.data[x].po_dt_price);
                   remove_btn = '<button type="button" class="btn btn-danger remove_btn"><i class="fa fa-times"></i></button>';
-                  subtotal = res.data[x].d_pcsdt_qty * res.data[x].d_pcsdt_price;
+                  subtotal = res.data[x].po_dt_qty * res.data[x].po_dt_price;
                   subtotal = get_currency(subtotal);
                   stock = '-';
                   s_name = res.data[x].s_name;
-                  tabel_d_purchasing_dt.row.add([
+                  tabel_d_purchasereturn_dt.row.add([
                     prdt_item, prdt_qtyreturn, s_name, prdt_price, subtotal, stock, remove_btn
                   ]);
               } 
-              tabel_d_purchasing_dt.draw()
+              tabel_d_purchasereturn_dt.draw()
             }
 
           }
