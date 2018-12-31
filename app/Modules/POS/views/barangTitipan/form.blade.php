@@ -48,7 +48,7 @@
             <div class="form-group">
                 <input type="" name="" class="form-control input-sm"  
                 id="supplier" onkeyup="clearSupplier()">
-                <input type="hidden" name="id_supplier" class="form-control input-sm" id="id_supplier" value="20">
+                <input type="hidden" name="id_supplier" class="form-control input-sm reset" id="id_supplier" value="20">
             </div>                
           </div>
 
@@ -59,7 +59,7 @@
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
               <div class="form-group">
-                <textarea class="form-control" name="it_keterangan" id="it_keterangan" style="margin-top: 0px; margin-bottom: 0px; height: 71px;"></textarea>
+                <textarea class="form-control reset" name="it_keterangan" id="it_keterangan" style="margin-top: 0px; margin-bottom: 0px; height: 71px;"></textarea>
               </div>
         </div>
 
@@ -112,7 +112,7 @@
                  <th width="4%">Sisa</th>
                  <th width="4%" style="display:none">JumlahAwal</th>
                  <th width="4%">Jumlah</th>  
-                 <th width="4%">jml Return</th>  
+                 <!-- <th width="4%">jml Return</th>   -->
                  <th width="5%">Satuan</th>
                  <th width="6%">Harga</th>               
                  <th width="10%">Total</th>                 

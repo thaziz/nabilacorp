@@ -214,15 +214,15 @@
                                           +'<thead>'
                                             +'<tr>'
                                                 +'<th>Nama</th>'
-                                                +'<th width="5%">Jumlah</th>'
-                                                +'<th width="5%">Tukar</th>'
+                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="2%">Tukar</th>'
                                                 +'<th>Satuan</th>'
-                                                +'<th width="15%">Desc</th>'
+                                                +'<th width="2%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
                                                 +'<th>Jumlah Tukar</th>'
-                                                +'<th width="20%">Total</th>'
+                                                +'<th width="10%">Total</th>'
                                             +'</tr>'
                                           +'</thead>'
                                           +'<tbody>'
@@ -324,15 +324,15 @@
                                           +'<thead>'
                                             +'<tr>'
                                                 +'<th>Nama</th>'
-                                                +'<th width="5%">Jumlah</th>'
-                                                +'<th width="5%">Return</th>'
+                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="2%">Return</th>'
                                                 +'<th>Satuan</th>'
-                                                +'<th width="15%">Desc</th>'
+                                                +'<th width="2%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
                                                 +'<th>Jumlah Return</th>'
-                                                +'<th width="20%">Total</th>'
+                                                +'<th width="10%">Total</th>'
                                             +'</tr>'
                                           +'</thead>'
                                           +'<tbody>'
@@ -441,15 +441,15 @@
                                           +'<thead>'
                                             +'<tr>'
                                                 +'<th>Nama</th>'
-                                                +'<th width="5%">Jumlah</th>'
-                                                +'<th width="5%">Kirim</th>'
+                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="2%">Kirim</th>'
                                                 +'<th>Satuan</th>'
-                                                +'<th width="15%">Desc</th>'
+                                                +'<th width="2%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
                                                 +'<th>Jumlah Kirim</th>'
-                                                +'<th width="20%">Total Barang Sesuai</th>'
+                                                +'<th width="10%">Total Barang Sesuai</th>'
                                             +'</tr>'
                                           +'</thead>'
                                           +'<tbody>'
@@ -602,15 +602,15 @@
                                           +'<thead>'
                                             +'<tr>'
                                                 +'<th>Nama</th>'
-                                                +'<th width="5%">Jumlah</th>'
-                                                +'<th width="5%">Kirim</th>'
+                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="2%">Kirim</th>'
                                                 +'<th>Satuan</th>'
-                                                +'<th width="15%">Desc</th>'
+                                                +'<th width="2%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
                                                 +'<th>Jumlah Kirim</th>'
-                                                +'<th width="20%">Total Barang Sesuai</th>'
+                                                +'<th width="10%">Total Barang Sesuai</th>'
                                             +'</tr>'
                                           +'</thead>'
                                           +'<tbody>'
@@ -762,15 +762,15 @@
                                           +'<thead>'
                                             +'<tr>'
                                                 +'<th>Nama</th>'
-                                                +'<th width="5%">Jumlah</th>'
-                                                +'<th width="5%">Kurang</th>'
+                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="2%">Kurang</th>'
                                                 +'<th>Satuan</th>'
-                                                +'<th width="15%">Desc</th>'
+                                                +'<th width="2%">Desc</th>'
                                                 +'<th>Harga</th>'
                                                 +'<th width="10%">Disc Percent</th>'
                                                 +'<th>Disc Value</th>'
                                                 +'<th>Jumlah Kurang</th>'
-                                                +'<th width="20%">Total Barang Sesuai</th>'
+                                                +'<th width="10%">Total Barang Sesuai</th>'
                                             +'</tr>'
                                           +'</thead>'
                                           +'<tbody>'
@@ -815,17 +815,20 @@
       $('#cari_nota_sales').change(function() {
         $('#tabel-return-sales').dataTable().fnDestroy();
         var id = $('#cari_nota_sales').val();
+        var metode = $('#pilih_metode_return').val();
         $.ajax({
           url : baseUrl + "/penjualan/returnpenjualan/get-data/"+id,
           type: "GET",
           dataType: "JSON",
           success: function(response){
             var c_name =  response[0].c_name;
+            var c_id =  response[0].c_name;
             var c_hp = response[0].c_hp1 +'/'+response[0].c_hp2;
             var c_address = response[0].c_address;
             if (c_address == null) {
               c_address = '';
             }
+            $('#id_sup').val(c_id);
             $('#c_name').val( c_name +'. '+ c_hp +'. '+ c_address);
               var s_gross = parseInt(response[0].s_gross);
               s_gross = convertToRupiah(s_gross);
@@ -856,7 +859,7 @@
               "paging":  false,
               "autoWidth": false,
               ajax: {
-                  url : baseUrl + "/penjualan/returnpenjualan/tabelpnota/"+id,
+                  url : baseUrl + "/penjualan/returnpenjualan/tabelpnota/"+id+'/'+metode,
               },
               columns: [
               {data: 'i_name', name: 'i_name'},

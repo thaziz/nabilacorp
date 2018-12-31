@@ -172,19 +172,23 @@ class laporanPenjualanPesananController  extends Controller
          
        }
 
-
        $totalPiutang=0;
        $jmlBayar=0;
        $sisaPiutang=0;
 
-       foreach ($data as $piutang) {                 
-         $totalPiutang += $piutang->r_value;
-         $jmlBayar += $piutang->r_pay;
-         $sisaPiutang += $piutang->r_outstanding;         
-         
-       }
+       $totalRe=d_receivable::
+                whereBetween('r_date', [$tgl_awal, $tgl_akhir])     
+                ->select(DB::raw("SUM(r_value) as r_value"),
+                     DB::raw("SUM(r_pay) as r_pay"),
+                     DB::raw("SUM(r_outstanding) as r_outstanding")
+                     )
+                ->first();    
 
-      Excel::create('Transaction '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan,$totalPiutang,$jmlBayar,$sisaPiutang){        
+      $totalPiutang=$totalRe->r_value;
+      $jmlBayar=$totalRe->r_pay;
+      $sisaPiutang=$totalRe->r_outstanding;
+
+      Excel::create('Laporan Penjualan Pesanan '.date('d-m-y'), function($excel) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan,$totalPiutang,$jmlBayar,$sisaPiutang){        
             $excel->sheet('Data Penjualan', function($sheet) use ($grand_total,$total_discountvalue,$total_discountPercent,$data,$posPesanan) {
                 $sheet->loadView('POS::laporanPenjualanPesanan/print_laporan_excel_penjualan')
                 ->with('posPesanan',$posPesanan)                

@@ -30,31 +30,24 @@
                            <!--  <li><a href="#label-badge-tab" data-toggle="tab">Belanja Harian</a></li> -->
               </ul>
         <div id="generalTabContent" class="tab-content responsive">
-            
          {!!$daftar!!}
          {!!$history!!}
-
-            
-
-                                <!-- div note-tab -->
-                                <div id="note-tab" class="tab-pane fade">
-                                  <div class="row">
-                                    <div class="panel-body">
-                                      <!-- Isi Content -->
-                                    </div>
-                                  </div>
-                                </div><!--/div note-tab -->
-
-
-                                <!-- div label-badge-tab -->
-                                <div id="label-badge-tab" class="tab-pane fade">
-                                  <div class="row">
-                                    <div class="panel-body">
-                                      <!-- Isi content -->
-                                    </div>
-                                  </div>
-                                </div><!-- /div label-badge-tab -->
-
+              <!-- div note-tab -->
+              <div id="note-tab" class="tab-pane fade">
+                <div class="row">
+                  <div class="panel-body">
+                    <!-- Isi Content -->
+                  </div>
+                </div>
+              </div><!--/div note-tab -->
+              <!-- div label-badge-tab -->
+              <div id="label-badge-tab" class="tab-pane fade">
+                <div class="row">
+                  <div class="panel-body">
+                    <!-- Isi content -->
+                  </div>
+                </div>
+              </div><!-- /div label-badge-tab -->
           </div>
         </div>
       </div>
@@ -103,7 +96,49 @@ setTimeout(function () {
       table();
       }, 1500);
 
+  function editPlanAll (argument){
+    window.location.href=(baseUrl+'/purcahse-plan/get-edit-plan/'+argument);
+  }
+  function detailPlanAll(argument) {
+    $.ajax({
+          url     :  baseUrl+'/purcahse-plan/get-detail-plan/'+argument,
+          type    : 'GET', 
+          dataType: 'json',
+          success : function(response){    
+                 $('#modal-detail').modal('show');
+                 console.log(response);
+                 $('#lblCodePlan').text(response.data_header.p_code);
+                 $('#lblTglPlan').text(response.data_header.p_date);
+                 $('#lblStaff').text(response.data_header.m_name);
+                 $('#lblSupplier').text(response.data_header.s_company);
 
+            $('#div_item').empty();
+            var key = 1;
+            Object.keys(response.data_isi).forEach(function(){
+            var i_id=response.data_isi[key-1].i_id;
+                if (response.data_header.p_status == 'WT') {
+                  $('#txt_span_status').text('Waiting');
+                }else if(response.data_header.p_status == 'DE') {
+                  $('#txt_span_status').text('Dapat di edit');
+                }else{
+                  $('#txt_span_status').text('Disetujui');
+                }
+            $('#div_item').append(
+                            '<tr class="tbl_form_row" id="row'+i_id+'">'
+                            +'<td style="text-align:center">'+key+'</td>'
+                            +'<td><input type="text" value="'+response.data_isi[key-1].i_code+' | '+response.data_isi[key-1].i_name+'" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+accounting.formatMoney(response.data_isi[key-1].s_qty,"",0,'.',',')+'" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+response.data_isi[key-1].ppdt_qty+'" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+response.data_isi[key-1].s_name+'" class="form-control input-sm" readonly/></td>'
+                            +'</tr>');
+            // tamp.push(i_id);
+            // i = randString(5);
+            key++;
+          });
+
+          }
+      });
+  }
 
       </script>
 @endsection()

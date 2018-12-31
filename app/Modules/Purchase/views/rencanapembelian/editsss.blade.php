@@ -15,7 +15,7 @@
                             <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                             <li><i></i>&nbsp;Purchasing&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                             <li>Rencana Pembelian&nbsp;&nbsp;</li><i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                            <li class="active">Form Rencana Penjualan</li>
+                            <li class="active">Form Rencana Pembelian</li>
                         </ol>
                         <div class="clearfix">
                         </div>
@@ -102,7 +102,6 @@
                   <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
                   <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
                   <input type="hidden" class="form-control input-sm reset-seach" name="stock_awal" id="stock_awal">
-                  <input type="hidden" class="form-control input-sm reset-seach" name="stock_index" id="stock_index">
               </div>
           </div>      
           <div class="col-md-2">
@@ -198,7 +197,7 @@ $(document).ready(function(){
       $('#date').datepicker({
           format:"dd-mm-yyyy",  
           autoclose: true,      
-      }).datepicker("setDate",'now');    
+      });    
 
        $("#searchitem").autocomplete({
         source: function(request, response) {
@@ -216,45 +215,48 @@ $(document).ready(function(){
         $('#searchitem').val(ui.item.label);
         $('#itemName').val(ui.item.item);
         $('.hilang').css('display','none');
-        $('#stock_index').val(1);
+        
+
 
         $('.drop_here').html(
         '<select name="satuan" id="satuan" class="form-control reset-seach satuan_S">'+
-            '<option value="'+ui.item.sat1_id+'" data-index="1" data-price1='+ui.item.m_isup_price1+' data-price_1='+ui.item.m_pbuy1+' data-name='+ui.item.satuan_1+'>'+ui.item.satuan_1+'</option>'+
-            '<option value="'+ui.item.sat2_id+'" data-index="2" data-price2='+ui.item.m_isup_price2+' data-price_2='+ui.item.m_pbuy2+' data-name='+ui.item.satuan_2+'>'+ui.item.satuan_2+'</option>'+
-            '<option value="'+ui.item.sat3_id+'" data-index="3" data-price3='+ui.item.m_isup_price3+' data-price_3='+ui.item.m_pbuy3+' data-name='+ui.item.satuan_3+'>'+ui.item.satuan_3+'</option>'+
+            '<option value="'+ui.item.sat1_id+'" data-index="1" data-price='+ui.item.i_price+' data-price_1='+ui.item.m_pbuy1+' data-name='+ui.item.satuan_1+'>'+ui.item.satuan_1+'</option>'+
+            '<option value="'+ui.item.sat2_id+'" data-index="2" data-price='+ui.item.i_price+' data-price_2='+ui.item.m_pbuy2+' data-name='+ui.item.satuan_2+'>'+ui.item.satuan_2+'</option>'+
+            '<option value="'+ui.item.sat3_id+'" data-index="3" data-price='+ui.item.i_price+' data-price_3='+ui.item.m_pbuy3+' data-name='+ui.item.satuan_3+'>'+ui.item.satuan_3+'</option>'+
         '</select>'
         );
 
-        if (ui.item.m_isup_price1 != 0) {
-          $('#i_price').val(ui.item.m_isup_price1);
+        if (ui.item.i_price != 0) {
+          $('#i_price').val(ui.item.i_price);
         }else{
           $('#i_price').val(ui.item.m_pbuy1);
         }
 
-
          $('.satuan_S').on("change",function(arg){
             if ($('#satuan').find(':selected').data('index') == 1) {
                 if ($('#satuan').find(':selected').data('price') != 0) {
-                  $('#i_price').val($('#satuan').find(':selected').data('price1'));
+                  console.log($('#satuan').find(':selected').data('price'));
+                  $('#i_price').val($('#satuan').find(':selected').data('price'));
                 }else{
+                  console.log($('#satuan').find(':selected').data('price_1'));
                   $('#i_price').val($('#satuan').find(':selected').data('price_1'));
                 }
-              $('#stock_index').val(1);
               }else if ($('#satuan').find(':selected').data('index') == 2) {
                 if ($('#satuan').find(':selected').data('price') != 0) {
-                  $('#i_price').val($('#satuan').find(':selected').data('price2'));
+                  console.log($('#satuan').find(':selected').data('price'));
+                  $('#i_price').val($('#satuan').find(':selected').data('price'));
                 }else{
+                  console.log($('#satuan').find(':selected').data('price_2'));
                   $('#i_price').val($('#satuan').find(':selected').data('price_2'));
                 }
-              $('#stock_index').val(2);
               }else if ($('#satuan').find(':selected').data('index') == 3) {
                 if ($('#satuan').find(':selected').data('price') != 0) {
-                  $('#i_price').val($('#satuan').find(':selected').data('price3'));
+                  console.log($('#satuan').find(':selected').data('price'));
+                  $('#i_price').val($('#satuan').find(':selected').data('price'));
                 }else{
+                  console.log($('#satuan').find(':selected').data('price_3'));
                   $('#i_price').val($('#satuan').find(':selected').data('price_3'));
                 }
-              $('#stock_index').val(3);
               }
        });
 
@@ -359,7 +361,6 @@ $(document).ready(function(){
           // iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+$('#stock_awal').val()+'</div></td>';
             //hidden gudang masuk.
             iSalesDetail+='<input style="width:100%" type="hidden" name="gudang_masuk[]" value='+$('#stock_awal').val()+'>'
-            iSalesDetail+='<input style="width:100%" type="hidden" name="index_satuan[]" value='+$('#stock_index').val()+'>'
           //qty
           iSalesDetail+='<td width="4%"><input  onblur="validationForm();" onkeyup="change('+i_id.val()+');" class="move up1 form-control alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="ppdt_qty[]" value="'+angkaDesimal(fQty.val())+'" autocomplete="off"></td>';
             //hidden qty

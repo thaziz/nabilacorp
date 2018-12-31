@@ -53,5 +53,10 @@
         .table{
             color: black;
         }
+        fieldset{
+            border-width: 1px;
+            border-style: solid;
+            padding-top: 15px;
+        }
     </style>
     

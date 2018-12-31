@@ -132,7 +132,7 @@ class purchasePlanController extends Controller
         {
           return '<div class="text-center">
                       <button class="btn btn-sm btn-success" title="Detail"
-                          onclick=detailPlan("'.$data->p_id.'")><i class="fa fa-eye"></i> 
+                          onclick=detailPlanAll("'.$data->p_id.'")><i class="fa fa-eye"></i> 
                       </button>
                       <button class="btn btn-sm btn-warning" title="Edit"
                           onclick=editPlan("'.$data->p_id.'")><i class="fa fa-edit"></i>
@@ -146,7 +146,7 @@ class purchasePlanController extends Controller
         {
           return '<div class="text-center">
                       <button class="btn btn-sm btn-success" title="Detail"
-                          onclick=detailPlan("'.$data->p_id.'")><i class="fa fa-eye"></i> 
+                          onclick=detailPlanAll("'.$data->p_id.'")><i class="fa fa-eye"></i> 
                       </button>
                       <button class="btn btn-sm btn-warning" title="Edit"
                           onclick=editPlan("'.$data->p_id.'") disabled><i class="fa fa-edit"></i>
@@ -161,8 +161,8 @@ class purchasePlanController extends Controller
       ->make(true);
    }
 
-   public function getDetailPlan($id,$type){     
-      return d_purchase_plan::getDetailPlan($id,$type);
+   public function getDetailPlan($id){     
+      return d_purchase_plan::getDetailPlan($id);
    }
    public function getEditPlan($id){     
       return d_purchase_plan::getEditPlan($id);

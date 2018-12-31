@@ -6,8 +6,8 @@
                <input style="width:100%" type="hidden" name="sd_sales[]" value="{{$detail->sd_sales}}">
                <input style="width:100%" type="hidden" name="sd_detailid[]" value="{{$detail->sd_detailid}}">
                <input style="width:100%" type="hidden" name="sd_item[]" value="{{$detail->i_id}}">
-               <input value="{{$detail->sd_comp}}" style="width:100%" type="" name="comp[]">
-               <input value="{{$detail->sd_position}}" style="width:100%" type="" name="position[]">
+               <input value="{{$detail->sd_comp}}" style="width:100%" type="hidden" name="comp[]">
+               <input value="{{$detail->sd_position}}" style="width:100%" type="hidden" name="position[]">
                     <div style="padding-top:6px">{{$detail->i_code}} - {{$detail->i_name}}</div></td>
 
           <td><input class="stock stock{{$detail->i_id}}" style="width:100%;text-align:right;border:none" @if($status=='final') value="{{number_format($detail->s_qty+$detail->sd_qty,0,',','.')}}" @else value="{{number_format($detail->s_qty,0,',','.')}}" @endif readonly=""></td>

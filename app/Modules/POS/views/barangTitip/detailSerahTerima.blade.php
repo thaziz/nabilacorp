@@ -5,12 +5,12 @@
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                     <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-                        <div class="page-title">Barang Titipan</div>
+                        <div class="page-title">Barang Titip</div>
                     </div>
                     <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
                         <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
                         <li><i></i>&nbsp;Penjualan&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Barang Titipan</li>
+                        <li class="active">Barang Titip</li>
                     </ol>
                     <div class="clearfix">
                     </div>
@@ -27,7 +27,7 @@
                   
                                 
                               <ul id="generalTab" class="nav nav-tabs">
-                                <li class="active"><a id="penjualan" href="#toko" data-toggle="tab">Form Barang Titipan</a></li>
+                                <li class="active"><a id="penjualan" href="#toko" data-toggle="tab">Form Barang Titip</a></li>
                               </ul>
                               <div id="generalTabContent" class="tab-content responsive">
                              
@@ -51,6 +51,7 @@
              <div class="form-group">
                <input type="text" class="move up1 form-control input-sm reset "  name="it_date" id="it_date" value="{{date('d-m-Y')}}" autocomplete="off" disabled="">
                <input type="hidden" class="form-control input-sm reset"  name="it_id" id="it_id" readonly="" value="{{$master->it_id}}">
+               <input type="hidden" class="form-control input-sm reset" name="code" id="code" value="{{$master->it_code}}">
                <input type="hidden" class="form-control input-sm reset"  name="it_status" id="it_status" readonly="">
              </div>
            </div>
@@ -61,7 +62,7 @@
 
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input type="text" class="form-control input-sm reset" name="it_code" id="it_code" placeholder="(Auto)" disabled="" value="{{$master->it_code}}" disabled="">
+               <input type="text" class="form-control input-sm reset" name="it_code" id="it_code" placeholder="(Auto)"  value="{{$master->it_code}}" disabled="">
              </div>
            </div>
 
@@ -153,11 +154,11 @@
 
           
           <td >
-          <input class="terjual{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" name="idt_terjual[]" value="{{number_format($detail->terjual,0,',','.')}}" autocomplete="off" onblur=";setQty(event,'terjual{{$detail->i_id}}')" onclick="setAwal(event,'terjual{{$detail->i_id}}')" onkeyup="setReturn('{{$detail->i_id}}')">
+          <input class="terjual{{$detail->i_id}} form-control" style="width:100%;text-align:right;border:none" name="idt_terjual[]"  autocomplete="off" onblur=";setQty(event,'terjual{{$detail->i_id}}')" onclick="setAwal(event,'terjual{{$detail->i_id}}')" onkeyup="setReturn('{{$detail->i_id}}')">
           </td>
 
 
-   <td><input onblur=";setQty(event,'return{{$detail->i_id}}')" onclick="setAwal(event,'return{{$detail->i_id}}')" class="return return{{$detail->i_id}} form-control" name="idt_return[]" value="{{number_format($detail->idt_return,0,',','.')}}" style="width:100%;text-align:right;border:none" readonly="">
+   <td><input onblur=";setQty(event,'return{{$detail->i_id}}')" onclick="setAwal(event,'return{{$detail->i_id}}')" class="return return{{$detail->i_id}} form-control" name="idt_return[]" value="{{number_format($detail->idt_qty,0,',','.')}}" style="width:100%;text-align:right;border:none" readonly="">
           </td>
 
 
@@ -212,23 +213,23 @@
                       </div>
                   </div>
 
-                   <div class="col-md-6 col-sm-6 col-xs-12">                    
+                   <!-- <div class="col-md-6 col-sm-6 col-xs-12">                    
                       <label class="control-label tebal" for="penjualan">Total Terjual</label>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="form-group">
                         <input type="text"  name="total_terjual" readonly="true" class="form-control input-sm reset" style="text-align: right;" value="{{number_format($totalTerjual,'0',',','.')}}" readonly="">
                       </div>
-                  </div>
+                  </div> -->
                
-                  <div class="col-md-6 col-sm-6 col-xs-12">                    
+                 <!--  <div class="col-md-6 col-sm-6 col-xs-12">                    
                       <label class="control-label tebal" for="penjualan">Total Dibayar</label>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="form-group">
                         <input type="text"  name="total_terjual" class="form-control input-sm reset" style="text-align: right;" value="{{number_format($totalTerjual,'0',',','.')}}" >
                       </div>
-                  </div>
+                  </div> -->
                
                           
                 

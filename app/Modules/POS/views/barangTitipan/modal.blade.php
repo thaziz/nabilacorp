@@ -18,7 +18,7 @@
           <td class="alignAngka">{{number_format($detail->idt_qty,0,',','.')}} </td>
 
 
-            <td class="alignAngka">{{number_format($detail->s_qty,0,',','.')}} </td>
+            <td class="alignAngka" style="display: none;">{{number_format($detail->s_qty,0,',','.')}} </td>
 
           <td class="alignAngka">{{number_format($detail->idt_terjual,0,',','.')}}</td>
 
