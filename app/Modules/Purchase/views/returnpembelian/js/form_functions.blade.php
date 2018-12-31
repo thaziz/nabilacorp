@@ -277,7 +277,7 @@
       $.ajax({
         url : "{{ url('purchasing/returnpembelian/find_d_purchasereturn_dt') }}",
         type: "GET",
-        data: 'po__id=' + $('[name="pr_purchase"]').val(),
+        data: 'po_id=' + $('[name="pr_purchase"]').val(),
         success: function(res) {
           if(res.data.length > 0) {
             var i_id;
