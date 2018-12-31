@@ -207,7 +207,7 @@
             total_harga = get_currency(total_harga);
 
             tabel_d_purchasingharian_dt.row.add(
-              [d_pcshdt_item, d_pcshdt_qty, s_detname, m_pbuy1, total_harga, aksi]
+              [d_pcshdt_item, d_pcshdt_qty, s_detname, i_price, total_harga, aksi]
             );
 
           }
