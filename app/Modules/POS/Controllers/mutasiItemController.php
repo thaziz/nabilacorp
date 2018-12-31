@@ -60,6 +60,7 @@ class mutasiItemController extends Controller
 
     function mutasiItemDt($id,Request $request){
       $chek=$request->type;
+      $dt=$request->dt;
         if($chek=='Bahan'){
           $status=$request->s_status;
           $data=d_mutationitem_material::mutasiItemDt($id);
@@ -68,7 +69,7 @@ class mutasiItemController extends Controller
               $tamp[$key]=$value->i_id;
           }
           $tamp=array_map("strval",$tamp);
-          return view('POS::mutasiItem/editDetailBahan',compact('data','tamp','status'));
+          return view('POS::mutasiItem/editDetailBahan',compact('data','tamp','status','dt'));
         }
 
         else if($chek=='Hasil'){
@@ -79,7 +80,7 @@ class mutasiItemController extends Controller
               $tamp[$key]=$value->i_id;
           }
           $tamp=array_map("strval",$tamp);
-          return view('POS::mutasiItem/editDetailHasil',compact('data','tamp','status'));
+          return view('POS::mutasiItem/editDetailHasil',compact('data','tamp','status','dt'));
         }
     }
 

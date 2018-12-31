@@ -1,4 +1,4 @@
-<div id="form-mutasi" class="tab-panel fade">
+<div id="form-mutasi" class="tab-pane fade">
   <form id="datab">      
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-top: 15px;margin-bottom: 15px;">

@@ -70,7 +70,7 @@
                </div>
                <div class="col-md-12 col-sm-12 col-xs-12">
                   <div class="table-responsive">
-                     <table id="tabel_d_receivable" class="table tabelan table-hover table-bordered" width="100%" cellspacing="0">
+                     <table id="tabel_d_receivable" class="table tabelan  table-bordered" width="100%" cellspacing="0">
                         <thead>
                            <tr>
                               <th>Tanggal</th>

@@ -369,7 +369,7 @@
 
                             +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQty[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" readonly/></td>'
 
-                            +'<td><input type="text" value="" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" /></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" /></td>'
 
                             +'<td><input type="hidden" value="'+data.data_isi[key-1].id_satuan+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'+data.data_isi[key-1].s_name+''
 
@@ -380,9 +380,12 @@
                               '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
 
-                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
+
                             +'<td><input type="text" value="'+s_stock+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
+                            
                             +'</tr>');
             tamp.push(i_id);
             i = randString(5);
@@ -561,17 +564,16 @@
             {
               if(response.status == "sukses")
               {
-                // iziToast.success({
-                //   position: 'center',
-                //   title: 'Pemberitahuan',
-                //   message: response.pesan,
-                //   onClosing: function(instance, toast, closedBy){
-                  alert('order tersimpan!');
+                iziToast.success({
+                  position: 'center',
+                  title: 'Pemberitahuan',
+                  message: 'Data Sukses Tersimpan !',
+                  onClosing: function(instance, toast, closedBy){
                     $('#button_save').text('Simpan Data');
                     $('#button_save').attr('disabled',false);
-                    window.location.href = baseUrl+"/purcahse-order/order-index";
-                //   }
-                // });
+                  }
+                });
+                window.location.href = baseUrl+"/purcahse-order/order-index";
               }
               else
               {
@@ -582,7 +584,7 @@
                   onClosing: function(instance, toast, closedBy){
                     $('#button_save').text('Simpan Data');
                     $('#button_save').attr('disabled',false);
-                    window.location.href = baseUrl+"/purchasing/rencanapembelian/rencana";
+                    // window.location.href = baseUrl+"/purchasing/rencanapembelian/rencana";
                   }
                 });
               }

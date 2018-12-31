@@ -41,7 +41,7 @@
             <li><a href="#wait-tab" data-toggle="tab" onclick="listWaitingByTgl()">Daftar Tunggu</a></li>
             <li><a href="#finish-tab" data-toggle="tab" onclick="listReceivedByTgl()">Daftar Hasil Penerimaan</a></li>
           </ul>
-
+          <input type="hidden" class="mem_comp" value="{{ $ssss }}">
           <div id="generalTabContent" class="tab-content responsive">
             
             {!! $tabIndex !!}
@@ -135,50 +135,53 @@
         dataType: "JSON",
         success: function(data)
         {
-          var totalPembelianGross = data.data_header[0].d_pcs_total_gross;
-          var totalPembelianNett = data.data_header[0].d_pcs_total_net;
-          var totalDisc = parseInt(data.data_header[0].d_pcs_disc_value) + parseInt(data.data_header[0].d_pcs_discount);
-          var taxPercent = data.data_header[0].d_pcs_tax_percent;
-          if(data.data_header[0].d_pcs_method != "CASH")
+         // console.log(data.data_header);
+         // console.log(data.data_isi);
+         console.log(data);
+
+          var totalPembelianNett = data.data_header.po_total_net;
+          var totalPembelianGross = data.data_header.po_total_gross;
+          var totalDisc = parseInt(data.data_header.po_disc_value) + parseInt(data.data_header.po_discount);
+          var taxPercent = data.data_header.po_tax_percent;
+          if(data.data_header.po_method != "CASH")
           {
-            var date = data.data_header[0].d_pcs_duedate;
+            var date = data.data_header.po_duedate;
             var newDueDate = date.split("-").reverse().join("-");
           }
-          //console.log(totalDisc);
+          // //console.log(totalDisc);
           $('#head_nota_txt').val($('#head_nota_purchase').text());
-          $('#head_supplier').val(data.data_header[0].s_company);
-          $('#head_supplier_id').val(data.data_header[0].s_id);
-          $('#head_total_gross').val(convertDecimalToRupiah(totalPembelianGross));
-          $('#head_total_disc').val(convertDecimalToRupiah(totalDisc));
-          $('#head_total_tax').val(taxPercent+' %');
-          $('#head_total_nett').val(convertDecimalToRupiah(totalPembelianNett));
-          $('#head_total_terima').val(convertDecimalToRupiah(totalPembelianNett));
-          $('#head_method').val(data.data_header[0].d_pcs_method);
-          if (data.data_header[0].d_pcs_method == "DEPOSIT") 
+          $('#head_supplier').val(data.data_header.s_company);
+          $('#head_supplier_id').val(data.data_header.s_id);
+          $('#head_total_gross').val(convertDecimalToRupiah(data.data_header.po_total_gross));
+          $('#head_total_disc').val(convertDecimalToRupiah(data.data_header.po_disc_value));
+          $('#head_total_tax').val(data.data_header.po_tax_percent+' %');
+          $('#head_total_tax').val(data.data_header.po_tax_percent+' %');
+          $('#head_total_nett').val(convertDecimalToRupiah(data.data_header.po_total_net));
+          // $('#head_total_terima').val(convertDecimalToRupiah(data.data_header. ));
+           if (data.data_header.d_pcs_method == "DEPOSIT") 
           {
             $('#appending div').remove();
             $('#appending').append('<div class="form-group">'
                                       +'<input type="hidden" id="apd_tgl" name="apdTgl" class="form-control datepicker3 input-sm" readonly value="'+newDueDate+'">'
                                     +'</div>');
           }
-          else if (data.data_header[0].d_pcs_method == "CREDIT")
+          else if (data.data_header.d_pcs_method == "CREDIT")
           {
             $('#appending div').remove();
             $('#appending').append('<div class="form-group">'
                                       +'<input type="hidden" id="apd_tgl" name="apdTgl" class="form-control datepicker3 input-sm" readonly value="'+newDueDate+'">'
                                     +'</div>');
           }
-
           //persentase diskon berdasarkan total harga bruto
           var percentDiscTotalGross = parseFloat(totalDisc*100/totalPembelianGross);
           var key = 1;
           i = randString(5);
-          //loop data
+          // //loop data
           Object.keys(data.data_isi).forEach(function(){
-            var hargaTotalItemGross = data.data_isi[key-1].d_pcsdt_total;
-            var qtyCost = data.data_isi[key-1].d_pcsdt_qtyconfirm;
-            var qtyTerima = data.data_qty[key-1];
-            //harga total per item setelah kena diskon & pajak
+            var hargaTotalItemGross = data.data_isi[key-1].po_total_gross;
+            var qtyCost = data.data_isi[key-1].podt_qtyconfirm;
+            var qtyTerima = data.data_isi[key-1].podt_send;
+            // harga total per item setelah kena diskon & pajak
             var hargaTotalItemNet = Math.round(parseFloat(hargaTotalItemGross - (hargaTotalItemGross * percentDiscTotalGross/100) + ((hargaTotalItemGross - (hargaTotalItemGross * percentDiscTotalGross/100)) * taxPercent/100)).toFixed(2));
             console.log(hargaTotalItemNet);
             var hargaSatuanItemNet = hargaTotalItemNet/qtyCost;
@@ -188,24 +191,27 @@
                             +'<td style="text-align:center">'+key+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'" name="fieldNamaItem[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="fieldItemId[]" class="form-control input-sm"/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcsdt_id+'" name="fieldIdPurchaseDet[]" class="form-control input-sm"/></td>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_item+'" name="fieldIdPurchaseDet[]" class="form-control input-sm"/></td>'
                             +'<td><input type="text" value="'+qtyCost+'" name="fieldQty[]" class="form-control numberinput input-sm field_qty" readonly/></td>'
-                            +'<td><input type="text" value="'+qtyTerima+'" name="fieldQtyterima[]" class="form-control numberinput input-sm field_qty_terima" id="'+i+'"/>'
-                            +'<input type="hidden" value="'+qtyTerima+'" name="fieldQtyterimaHidden[]" class="form-control numberinput input-sm" id="qtymskhidden_'+i+'"/></td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].m_sname+'" name="fieldSatuanTxt[]" class="form-control input-sm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].m_sid+'" name="fieldSatuanId[]" class="form-control input-sm" readonly/>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_send+'" name="fieldQtyterima[]" class="form-control numberinput input-sm field_qty_terima" id="'+i+'"/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_send+'" name="fieldQtysendHidden[]" class="form-control numberinput input-sm" id="qtymskhidden_'+i+'"/></td>'
+                            +'<td><input type="hidden" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuanTxt[]" class="form-control input-sm" readonly/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].s_id+'" name="fieldSatuanId[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+convertDecimalToRupiah(hargaSatuanItemNet)+'" name="fieldHarga[]" id="cost_'+i+'" class="form-control input-sm field_harga numberinput" readonly/>'
-                            +'<input type="hidden" value="'+hargaSatuanItemNet+'" name="fieldHargaRaw[]" id="costRaw_'+i+'" class="form-control input-sm field_harga_raw numberinput" readonly/>'
+                            +'<input type="text" value="'+hargaSatuanItemNet+'" name="fieldHargaRaw[]" id="costRaw_'+i+'" class="form-control input-sm field_harga_raw numberinput" readonly/>'
                             +'<input type="hidden" value="'+convertDecimalToRupiah(hargaTotalPerRow)+'" name="fieldHargaTotal[]" class="form-control input-sm hargaTotalItem" id="total_'+i+'" readonly/>'
                             +'<input type="hidden" value="'+hargaTotalPerRow+'" name="fieldHargaTotalRaw[]" id="totalRaw_'+i+'" class="form-control input-sm field_hargatotal_raw numberinput" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'" name="fieldStokTxt[]" class="form-control input-sm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_stok[key-1].qtyStok+'" name="fieldStokVal[]" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+data.data_stock[key-1].s_qty+'" name="fieldStokTxt[]" class="form-control input-sm" readonly/>'
+                            +'<input type="hidden" value="'+data.data_stock[key-1].s_qty+'" name="fieldStokVal[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');
             i = randString(5);
             key++;
           });
           totalNilaiPenerimaan();
+
+
+
         },
         error: function(){
           iziToast.warning({
@@ -252,7 +258,7 @@
     $(document).on('focus', '.field_qty_terima',  function(e){
         var qty = $(this).val();
         $(this).val(qty);
-        $('#btn_simpan').attr('disabled', true);
+        // $('#btn_simpan').attr('disabled', true);
     });
 
     $(document).on('blur', '.field_qty_terima',  function(e){
@@ -271,8 +277,9 @@
     $(document).on('keyup', '.field_qty_terima', function(e) {
       var val = parseInt($(this).val());
       var getid = $(this).attr("id");
-      var qtyRemain = $('#qtymskhidden_'+getid+'').val();
-      console.log(getid);
+      var qtyRemain = $('#qtymskhidden_'+getid).val();
+      console.log(val);
+      console.log(qtyRemain);
       if (val > qtyRemain || $(this).val() == "" || val == 0) {
         $(this).val(qtyRemain);
       }
@@ -310,22 +317,25 @@
   {
     var tgl1 = $('#tanggal1').val();
     var tgl2 = $('#tanggal2').val();
+    var comp = $('.mem_comp').val();
+    var akses = 'inventory';
     $('#tbl-daftar').dataTable({
       "destroy": true,
       "processing" : true,
       "serverside" : true,
       "ajax" : {
-        url: baseUrl + "/inventory/p_suplier/get-penerimaan-by-tgl/"+tgl1+"/"+tgl2,
+        url: baseUrl + "/inventory/p_suplier/get-penerimaan-by-tgl/"+tgl1+"/"+tgl2+'/'+akses+'/'+comp,
         type: 'GET'
       },
       "columns" : [
         {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-        {"data" : "tglBuat", "width" : "10%"},
+        {"data" : "d_tb_duedate", "width" : "10%"},
         {"data" : "d_tb_code", "width" : "10%"},
         {"data" : "m_name", "width" : "10%"},
         {"data" : "s_company", "width" : "20%"},
-        {"data" : "d_pcs_code", "width" : "10%"},
-        {"data" : "d_pcs_date_created", "width" : "10%"},
+        {"data" : "po_code", "width" : "10%"},
+        {"data" : "po_date", "width" : "10%"},
+        {"data" : "status", "width" : "10%"},
         {"data" : "action", orderable: false, searchable: false, "width" : "10%"}
       ],
       "language": {
@@ -354,7 +364,6 @@
     console.log(hasil);
     var total = 0;
     for (var i = hasil.length - 1; i >= 0; i--){
-
       hasil[i] = convertToAngka(hasil[i]);
       hasil[i] = parseInt(hasil[i]);
       total = total + hasil[i];
@@ -407,7 +416,7 @@
                           +'<td>'+data.data_isi[key-1].m_sname+'</td>'
                           // +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_tbdt_price)+'</td>'
                           // +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_tbdt_pricetotal)+'</td>'
-                          +'<td class="text-right">'+separatorRibuan(data.data_stok[key-1].qtyStok)+' '+data.data_satuan[key-1]+'</td>'
+                          +'<td class="text-right">'+separatorRibuan(data.data_stock[key-1].qtyStok)+' '+data.data_satuan[key-1]+'</td>'
                           +'</tr>');
           key++;
         });
@@ -479,7 +488,7 @@
             {
               $('#divSelectNota').removeClass('has-error');
               $('#btn_simpan').text('Updating...');
-              $('#btn_simpan').attr('disabled',true);
+              // $('#btn_simpan').attr('disabled',true);
               $.ajax({
                 url : baseUrl + "/inventory/p_suplier/simpan-penerimaan",
                 type: "POST",

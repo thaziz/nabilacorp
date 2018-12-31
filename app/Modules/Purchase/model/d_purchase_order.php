@@ -18,7 +18,7 @@ use Carbon\Carbon;
 
 use Response;
 
-
+use Session;
 
 class d_purchase_order extends Model
 {
@@ -225,6 +225,9 @@ class d_purchase_order extends Model
      static function getDataCodePlan($request)
     {
       // return 'a';
+      // return Session::get('user_comp');
+      // return $request->session()->all();
+        // return $dt = DB::table('')->get();
         $formatted_tags = array();
         $term = $request->term;
 
@@ -252,6 +255,7 @@ class d_purchase_order extends Model
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
                      ->where('ppdt_ispo', '=', "FALSE")
+                     ->where('p_status', '=', "WT")
                      ->where('p_code', 'LIKE', '%'.$term.'%')
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
@@ -325,6 +329,7 @@ class d_purchase_order extends Model
       $dataHeader->po_status = 'CF';
       $dataHeader->po_created = date('Y-m-d');
       $dataHeader->po_updated =  date('Y-m-d');
+      $dataHeader->po_comp = Session::get('user_comp');
       $dataHeader->save();
 
 

@@ -221,23 +221,23 @@
                       </div>
                   </div>
 
-                   <div class="col-md-6 col-sm-6 col-xs-12">                    
+                 <!--   <div class="col-md-6 col-sm-6 col-xs-12">                    
                       <label class="control-label tebal" for="penjualan">Total Terjual</label>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="form-group">
                         <input type="text"  name="total_terjual" readonly="true" class="form-control input-sm reset" style="text-align: right;" value="{{number_format($totalTerjual,'0',',','.')}}" readonly="">
                       </div>
-                  </div>
+                  </div> -->
                
-                  <div class="col-md-6 col-sm-6 col-xs-12">                    
+                 <!--  <div class="col-md-6 col-sm-6 col-xs-12">                    
                       <label class="control-label tebal" for="penjualan">Total Dibayar</label>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="form-group">
                         <input type="text"  name="total_terjual" class="form-control input-sm reset" style="text-align: right;" value="{{number_format($totalTerjual,'0',',','.')}}" >
                       </div>
-                  </div>
+                  </div> -->
                
                           
                 

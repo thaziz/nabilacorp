@@ -12,7 +12,7 @@ Route::get('/purchasing/pembayaran_hutang/laporan_pembayaran_hutang', 'Pembayara
 Route::get('/seach-item-purchase', 'purchasePlanController@seachItemPurchase')->middleware('auth');
 Route::get('/purcahse-plan/plan-index', 'purchasePlanController@planIndex')->middleware('auth');
 Route::get('/purcahse-plan/data-plan', 'purchasePlanController@dataPlan')->middleware('auth');
-Route::get('/purcahse-plan/get-detail-plan/{id}/{type}', 'purchasePlanController@getDetailPlan')->middleware('auth');
+Route::get('/purcahse-plan/get-detail-plan/{id}', 'purchasePlanController@getDetailPlan')->middleware('auth');
 Route::get('/purcahse-plan/get-edit-plan/{id}', 'purchasePlanController@getEditPlan')->middleware('auth');
 
 Route::get('/purcahse-plan/update-plan', 'purchasePlanController@updatePlan')->middleware('auth');
@@ -49,6 +49,7 @@ Route::get('/purcahse-plan/form-plan', 'purchasePlanController@formPlan')->middl
 
 Route::get('/purchasing/rencanapembelian/rencana', 'rencanapembelianController@rencana')->middleware('auth');
 Route::get('/purchasing/rencanapembelian/create', 'rencanapembelianController@create')->middleware('auth');
+Route::get('/purchasing/returnpembelian/pembelian', 'PurchasingController@pembelian')->middleware('auth');
 Route::get('/purchasing/belanjasuplier/suplier', 'PurchasingController@suplier')->middleware('auth');
 Route::get('/purchasing/belanjalangsung/langsung', 'PurchasingController@langsung')->middleware('auth');
 Route::get('/purchasing/belanjaproduk/produk', 'PurchasingController@produk')->middleware('auth');
@@ -68,6 +69,7 @@ Route::get('/purchasing/belanjaharian/form_perbarui/{id}', 'BelanjaHarianControl
 Route::get('/purchasing/belanjaharian/hapus/{id}', 'BelanjaHarianController@hapus')->middleware('auth');
 // ============================================================
 
+///// syaifuddin
 // Sesi return pembelian
 Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchaseReturnController@tambah_pembelian')->middleware('auth');
 Route::get('/purchasing/returnpembelian/pembelian', 'PurchaseReturnController@pembelian')->middleware('auth');
@@ -83,6 +85,8 @@ Route::get('/purchasing/returnpembelian/find_d_purchase_order', 'PurchaseReturnC
 Route::get('/purchasing/returnpembelian/find_d_purchaseorders_dt', 'PurchaseReturnController@find_d_purchaseorder_dt')->middleware('auth');
 // ====================================================================================
 
+Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchasingController@tambah_pembelian')->middleware('auth');
+//// master
 /* ricky */
 Route::get('/purchasing/belanjapasar/pasar', 'PurchasingController@pasar')->middleware('auth');
 /*----*/

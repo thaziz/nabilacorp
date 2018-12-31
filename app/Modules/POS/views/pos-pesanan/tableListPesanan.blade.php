@@ -30,11 +30,6 @@
                     <i class="fa fa-undo" aria-hidden="true"></i>
                   </strong>
                 </button>
-                <button class="btn btn-default btn-sm btn-flat" type="button" title="cetak laporan penjualan" onclick="cetakData()">
-                  <strong>
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                  </strong>
-                </button>
               </div>
 
               <div class="col-md-3 col-sm-6 col-xs-12" align="right">
@@ -87,187 +82,196 @@
 
                             <div class="modal-body" style="padding:0px">
                               
-                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" >
+                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="border-radius: 0">
                                 
 
+                                <input type="hidden" id="idTerima">
+                                <label class="tebal">Status : </label>&nbsp;&nbsp;
+                                <span class="" id="txt_span_status"></span>
+                                <div class="row">
+                                  <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
+                                    <fieldset>
 
-<label class="tebal">Status : </label>&nbsp;&nbsp;
-          <span class="" id="txt_span_status"></span>
-          <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Tanggal</label>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Tanggal</label>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lTgl"></label>
-              </div>  
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lTgl"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm" id="" name="">
+                                        </div>  
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">No. Nota</label>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">No. Nota</label>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lCode"></label>
-              </div>  
-            </div>
-            
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Nama Pelanggan</label>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lCode"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm" id="lCode" name="">
+                                        </div>  
+                                      </div>
+                                      
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Nama Pelanggan</label>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lCustomer"></label>
-              </div>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lCustomer"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm" id="lCustomer" name="">
+                                        </div>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Pembayaran</label>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Pembayaran</label>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lBayar"></label>
-              </div>
-            </div>
-
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Jatuh Tempo</label>
-            </div>
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lTempo"></label>
-              </div>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lBayar"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm" id="lBayar" name="">
+                                        </div>
+                                      </div>
 
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Tanggal Jadi</label>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Jatuh Tempo</label>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lJadi"></label>
-              </div>
-            </div>
-
-          </div>
-
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lTempo"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm" id="lTempo" name="">
+                                        </div>
+                                      </div>
 
 
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Tanggal Jadi</label>
+                                      </div>
 
-
-
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lJadi"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm" id="lJadi" name="">
+                                        </div>
+                                      </div>
+                                    </fieldset>
+                                  </div>
+                                </div>
                               
                                 
-<div class="table-responsive">
-              <table class="table tabelan table-bordered table-hover dt-responsive">
-               <thead align="right">
-                <tr>                 
-                 <th width="25%">Nama</th>
-                 <th width="4%">Jumlah</th>
-                 <th width="5%">Satuan</th>
-                 <th width="6%">Harga</th>
-                 <th width="4%">Disc(Rp.)</th>
-                 <th width="3%">Disc(%)</th>
-                 <th width="10%">Total</th>                 
-                 
-                </tr>
-               </thead> 
-               <tbody class="dataDetail">
-               </tbody>
-              </table>
-</div>
+                                <div class="table-responsive">
+                                  <table class="table tabelan table-bordered table-hover dt-responsive">
+                                   <thead align="right">
+                                    <tr>                 
+                                     <th width="25%">Nama</th>
+                                     <th width="4%">Jumlah</th>
+                                     <th width="5%">Satuan</th>
+                                     <th width="6%">Harga</th>
+                                     <th width="4%">Disc(Rp.)</th>
+                                     <th width="3%">Disc(%)</th>
+                                     <th width="10%">Total</th>                 
+                                     
+                                    </tr>
+                                   </thead> 
+                                   <tbody class="dataDetail">
+                                   </tbody>
+                                  </table>
+                                </div>
 
 
 
 
 
-
-<div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
-       
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Sub Total</label>
-            </div>
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lSubttl"></label>
-              </div>  
-            </div>
-           
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Total Diskon</label>
-            </div>
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lDiskon"></label>
-              </div>
-            </div>
+                                <div class="row">
+                                  <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
+                                    <fieldset>
 
 
-          
+                                           
 
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Sub Total</label>
+                                      </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Biaya Kirim</label>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lSubttl"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm text-right" id="lSubttl" name="">
+                                        </div>  
+                                      </div>
+                                     
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lBkirim"></label>
-              </div>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Total Diskon</label>
+                                      </div>
 
-          
-
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Grand Total + Biaya Kirim</label>
-            </div>
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lTtl"></label>
-              </div>
-            </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lDiskon"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm text-right" id="lDiskon" name="">
+                                        </div>
+                                      </div>
 
 
 
-         
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Total Bayar</label>
-            </div>
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lBiaya"></label>
-              </div>
-            </div>
 
 
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Biaya Kirim</label>
+                                      </div>
 
-          </div>
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lBkirim"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm text-right" id="lBkirim" name="">
+                                        </div>
+                                      </div>
 
 
 
-                              
-                             
 
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Grand Total + Biaya Kirim</label>
+                                      </div>
+
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lTtl"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm text-right" id="lTtl" name="">
+                                        </div>
+                                      </div>
+
+
+
+
+
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <label class="tebal">Total Bayar</label>
+                                      </div>
+
+                                      <div class="col-md-3 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                          {{-- <label id="lBiaya"></label> --}}
+                                          <input type="text" readonly="" class="form-control input-sm text-right" id="lBiaya" name="">
+                                        </div>
+                                      </div>
+                                    </fieldset>
+
+
+                                  </div>
+                                </div>
                                           
                               </div>
                             </div>
                         
                             <div class="modal-footer">
+                              
+                              <button id="serah_terima" class="btn btn-success serah_terima" type="button" onclick="serahTerima()" disabled="">Serah Terima</button>
                               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
                           </div>
@@ -332,9 +336,10 @@ function resetData(){
             $('#customer').val(c_name)
             $('#s_customer').val(s_customer)
             $('#totalBayar').val(s_bayar)
+            $('#nominal').val(s_bayar)
             $('#kembalian').val(s_kembalian)
 
-                if(parseInt(chek)>0){
+            if(parseInt(chek)>0){
                 $('.perbarui').css('display','');
                 $('.terima').css('display','none');
             }
