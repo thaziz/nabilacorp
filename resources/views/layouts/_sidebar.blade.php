@@ -323,6 +323,12 @@
                         <ul class="nav nav-second-level">
                             <!-- <li class="menu-sekunder {{ Request::is('hrd/datakaryawan/karyawan') ? 'active' : '' || Request::is('hrd/datakaryawan/*') ? 'active' : '' }}"><a href="{{ url('/hrd/datakaryawan/karyawan')}}"><span class="submenu-title">Data Karyawan</span><span class="hidden">HRD</span></a>
                             </li> -->
+                            <li class="menu-sekunder {{ Request::is('hrd/absensi/index') ? 'active' : '' || Request::is('hrd/absensi/*') ? 'active' : '' }}"><a href="{{ url('/hrd/absensi/index')}}"><span class="submenu-title">Absensi</span><span class="hidden">HRD</span></a>
+                            </li>
+                            <li class="menu-sekunder {{ Request::is('hrd/datalemburpegawai/index') ? 'active' : '' || Request::is('hrd/datalemburpegawai/*') ? 'active' : '' }}"><a href="{{ url('/hrd/datalemburpegawai/index')}}"><span class="submenu-title">Data Lembur Pegawai</span><span class="hidden">HRD</span></a>
+                            </li>
+                            <li class="menu-sekunder {{ Request::is('hrd/payroll/index') ? 'active' : '' || Request::is('hrd/payroll/*') ? 'active' : '' }}"><a href="{{ url('/hrd/payroll/index')}}"><span class="submenu-title">Payroll</span><span class="hidden">HRD</span></a>
+                            </li>
                             <li class="menu-sekunder {{ Request::is('hrd/dataadministrasi/admin') ? 'active' : '' || Request::is('hrd/dataadministrasi/*') ? 'active' : '' }}"><a href="{{ url('/hrd/dataadministrasi/admin')}}"><span class="submenu-title">Data Administrasi Pegawai</span><span class="hidden">HRD</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('hrd/datalembur/lembur') ? 'active' : '' || Request::is('hrd/datalembur/*') ? 'active' : '' }}"><a href="{{ url('/hrd/datalembur/lembur')}}"><span class="submenu-title">Data Lembur Pegawai</span><span class="hidden">HRD</span></a>
