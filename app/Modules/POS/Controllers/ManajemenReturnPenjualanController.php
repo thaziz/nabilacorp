@@ -280,188 +280,29 @@ class ManajemenReturnPenjualanController extends Controller
   public function getdata($id)
   {
     $data = DB::table('d_sales')->select(
-                            'c_id',
-                            'c_name',
-                            'c_hp1',
-                            'c_hp2',
-                            'c_address',
-                            'c_type',
                             's_gross',
                             's_disc_percent',
                             's_disc_value',
                             's_net',
-                            's_channel',
-                            'pm_name')
-      ->join('m_customer','c_id','=','s_customer')
+                            's_nama_cus',
+                            's_alamat_cus',
+                            's_channel')
       ->join('d_sales_dt','sd_sales','=','s_id')
-      ->join('m_item','i_id','=','sd_item')
-      ->join('d_sales_payment','sp_sales','=','s_id')
-      ->join('m_paymentmethod','pm_id','=','sp_paymentid')
+      ->join('m_item','i_id','=','sd_item')      
       ->where('s_id',$id)
-      ->get();
+      ->first();
 
       return Response::json($data);
   }
   public function tabelpnota($id,$metode)
   {
-    $data = DB::table('d_sales_dt')
+    $sales = DB::table('d_sales_dt')
       ->join('m_item','i_id','=','sd_item')
       ->join('m_satuan','m_satuan.s_id','=','i_sat1')
       ->where('sd_sales',$id)
       ->get();
-
-    return DataTables::of($data)
-    ->editColumn('i_name', function ($data) {
-      return '<input  name="i_name[]" readonly 
-                      class="form-control text-right" 
-                      value="'.$data->i_name.'">
-              <input  name="i_id[]" readonly 
-                      type="hidden"
-                      class="form-control text-right" 
-                      value="'.$data->i_id.'">';
-    })
-    ->editColumn('sd_qty', function ($data) {
-      return '<input  name="sd_qty[]" readonly 
-                      class="form-control text-right qty-item" 
-                      value="'.$data->sd_qty.'">';
-    })
-    ->editColumn('sd_qty_return', function ($data) {
-      return '<input  name="sd_qty_return[]"  
-                      class="form-control text-right qtyreturn" 
-                      value="0"
-                      type="text"
-                      onkeyup="qtyReturn(this, event);autoJumlahNet();">
-              <input  name="sd_qty-return[]"  
-                      class="form-control text-right qty-return"
-                      style="display:none" 
-                      value="0">';
-    })
-    ->editColumn('sd_price', function ($data) {
-      return '<input name="sd_price[]" readonly 
-                    class="form-control text-right harga-item" 
-                    value="Rp. '.number_format($data->sd_price,2,',','.').'">';
-    })
-    ->editColumn('sd_disc_percent', function ($data) {
-      if ($data->sd_disc_percent == 0 && $data->sd_disc_value == 0.00) {
-        return '<div class="input-group">
-                <input  name="sd_disc_percent[]" 
-                        class="form-control text-right dPersen-item discpercent" 
-                        value="'.$data->sd_disc_percent.'" 
-                        onkeyup="discpercent(this, event);autoJumlahDiskon()">
-                        <span class="input-group-addon" id="basic-addon1">%</span>
-              </div>
-                <input  name="value_disc_percent[]" 
-                        class="form-control value-persen totalPersen" 
-                        style="display:none"
-                        value="'.(int)$data->sd_disc_percentvalue.'">';
-      }else if ($data->sd_disc_percent == 0) {
-        return '<div class="input-group">
-                <input  name="sd_disc_percent[]" 
-                        class="form-control text-right dPersen-item discpercent" 
-                        value="'.$data->sd_disc_percent.'" 
-                        readonly
-                        onkeyup="discpercent(this, event);autoJumlahDiskon()">
-                        <span class="input-group-addon" id="basic-addon1">%</span>
-              </div>
-                <input  name="value_disc_percent[]" 
-                        class="form-control value-persen totalPersen" 
-                        style="display:none"
-                        value="'.(int)$data->sd_disc_percentvalue.'">';
-      }else{
-        return '<div class="input-group">
-                <input  name="sd_disc_percent[]" 
-                        class="form-control text-right dPersen-item discpercent" 
-                        value="'.$data->sd_disc_percent.'" 
-                        onkeyup="discpercent(this, event);autoJumlahDiskon()">
-                        <span class="input-group-addon" id="basic-addon1">%</span>
-              </div>
-                <input  name="value_disc_percent[]" 
-                        class="form-control value-persen totalPersen" 
-                        style="display:none"
-                        value="'.(int)$data->sd_disc_percentvalue.'">';
-      }
+    return view('POS::manajemenreturn.data-detail-return',compact('sales','metode'));
       
-    })
-    ->editColumn('sd_disc_value', function ($data) {
-      if ($data->sd_disc_value == 0.00 && $data->sd_disc_percent == 0) {
-        return '<input  name="sd_disc[]" 
-                      type="text"
-                      class="form-control text-right field_harga discvalue dValue-item" 
-                      onkeyup="discvalue(this, event);autoJumlahDiskon()"
-                      value="Rp. '.number_format($data->sd_disc_value / $data->sd_qty,2,',','.').'">
-                <input  name="sd_disc_value[]" 
-                      type="text"
-                      style="display:none"
-                      class="form-control text-right sd_disc_value totalPersen" 
-                      value="'.(int)$data->sd_disc_value.'">';
-
-      }else if($data->sd_disc_value == 0.00 ) {
-        return '<input  name="sd_disc[]" 
-                      type="text"
-                      class="form-control text-right field_harga discvalue dValue-item" 
-                      onkeyup="discvalue(this, event);autoJumlahDiskon()"
-                      readonly
-                      value="Rp. '.number_format($data->sd_disc_value / $data->sd_qty,2,',','.').'">
-                <input  name="sd_disc_value[]" 
-                      type="text"
-                      style="display:none"
-                      class="form-control text-right sd_disc_value totalPersen"
-                      value="'.(int)$data->sd_disc_value.'">';
-
-      }else{
-        return '<input  name="sd_disc[]" 
-                      type="text"
-                      class="form-control text-right field_harga discvalue dValue-item" 
-                      onkeyup="discvalue(this, event);autoJumlahDiskon()"
-                      value="Rp. '.number_format($data->sd_disc_value / $data->sd_qty,2,',','.').'">
-                <input  name="sd_disc_value[]" 
-                      type="text"
-                      style="display:none"
-                      class="form-control text-right sd_disc_value totalPersen" 
-                      value="'.(int)$data->sd_disc_value.'">';
-      }
-      
-    })
-    ->editColumn('description',function ($data) use ($metode)
-        {
-          if ($metode == 'TB') {
-            return  '<div class="text-center">
-                    <select class="form-control" name="description[]">
-                      <option value="" selected>- pilih -</option>
-                      <option value="Rusak">Rusak</option>
-                    </select>
-                  </div>';# code...
-          }else{
-            return  '<div class="text-center">
-                    <select class="form-control" name="description[]">
-                      <option value="" selected>- pilih -</option>
-                      <option value="Kelebihan">Kelebihan</option>
-                      <option value="Rusak">Rusak</option>
-                    </select> 
-                  </div>';# code...
-          }
-        })
-
-    ->editColumn('sd_return', function ($data) {
-      return '<input  name="sd_return[]" readonly 
-                      class="form-control text-right hasilReturn" 
-                      value="0">';
-    })
-    ->editColumn('sd_total', function ($data) {
-      return '<input  name="sd_total[]" readonly 
-                      class="form-control text-right totalHarga totalNet" 
-                      value="Rp. '.number_format($data->sd_total,2,',','.').'">';
-    })
-    ->rawColumns([  'i_name',
-                    'sd_qty',
-                    'description',
-                    'sd_qty_return',
-                    'sd_price',
-                    'sd_disc_percent',
-                    'sd_disc_value',
-                    'sd_return',
-                    'sd_total'])
-    ->make(true);
   }
 
   public function store(Request $request,$id)
