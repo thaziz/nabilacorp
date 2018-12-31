@@ -323,8 +323,8 @@
             },
             processResults: function (res) {
                 for(x = 0;x < res.data.length;x++) {
-                  res.data[x]['id'] = res.data[x].po__id;
-                  res.data[x]['text'] = res.data[x].po__code;
+                  res.data[x]['id'] = res.data[x].po_id;
+                  res.data[x]['text'] = res.data[x].po_code;
                 }
 
                 return {
