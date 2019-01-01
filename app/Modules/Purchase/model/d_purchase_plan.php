@@ -91,31 +91,40 @@ class d_purchase_plan extends Model
       }
 
 
-    static function perbaruiPlan ($request){      
-      return DB::transaction(function () use ($request) {  
-        $hitung=count($request->ppdt_pruchaseplan);
-        if($hitung>0){
-                $chekStatus=d_purchase_plan::select('p_status')->where('p_id',$request->ppdt_pruchaseplan[0])->first();
-                if($chekStatus->p_status=='FN'){
-                   $data=['status'=>'gagal'];
-                   return json_encode($data);
-                } 
-        }else{
-            $data=['status'=>'gagal'];
-            return json_encode($data);
-        }
-            for ($i=0; $i <$hitung ; $i++) {                   
-                    if($request->oldppdt_qty[$i]!=$request->ppdt_qty[$i]){
-                      $updatePpdt=d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->ppdt_pruchaseplan[$i])
-                                  ->where('ppdt_detailid',$request->ppdt_detailid[$i]);
-                      $updatePpdt->update([
-                                    'ppdt_qty'=>$request->ppdt_qty[$i]
-                                  ]);
-                    }
-                  }      
-          $data=['status'=>'sukses'];
-          return json_encode($data);
-         });
+    static function perbaruiPlan ($request){
+
+    // dd($request->all());      
+
+
+      for ($i=0; $i <count($request->ppdt_detailid_old) ; $i++) { 
+        $update_data = d_purchaseplan_dt::where('ppdt_pruchaseplan','=',$request->id_purchaseplan)
+                    ->where('ppdt_detailid','=',$request->ppdt_detailid_old[$i])
+                    ->update([
+                      'ppdt_qty'=>$request->ppdt_qty[$i],  
+                      'ppdt_totalcost'=>$request->harga_total[$i],
+                      'ppdt_qtyconfirm'=>'update'
+                    ]);
+      }
+      for ($i=0; $i <count($request->ppdt_detailid_remove) ; $i++) { 
+        $delete_data = d_purchaseplan_dt::where('ppdt_pruchaseplan','=',$request->id_purchaseplan)
+                    ->where('ppdt_detailid','=',$request->ppdt_detailid_remove[$i])
+                    ->delete();
+      }
+      for ($i=0; $i <count($request->ppdt_detailid_new) ; $i++) { 
+        $detailid=d_purchaseplan_dt::where('ppdt_pruchaseplan',$request->id_purchaseplan)->max('ppdt_detailid')+1;
+
+        $insert_data = d_purchaseplan_dt::create([
+                    'ppdt_pruchaseplan'=>$request->id_purchaseplan,
+                    'ppdt_detailid'=>$detailid,
+                    'ppdt_item'=>$request->ppdt_item[$i],
+                    'ppdt_qty'=>$request->ppdt_qty[$i],  
+                    'ppdt_totalcost'=>$request->harga_total[$i],
+                    'ppdt_prevcost'=>$request->harga_awal[$i],
+                    'ppdt_satuan'=>$request->satuan_pilih[$i],
+                    'ppdt_isconfirm'=>'TRUE',
+                    'ppdt_qtyconfirm'=>'insert'
+                     ]);
+       }
       }
         
 
@@ -231,27 +240,40 @@ class d_purchase_plan extends Model
     {
      
       
-      $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
+       $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
                                 ->first();
-      $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-                            ->join('m_satuan', 's_id', '=', 'i_satuan')
+       /*return*/ $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+                            ->join('m_satuan', 's_id', '=', 'i_sat1')
+                            ->join('m_satuan as ms', 'ms.s_id', '=', 'ppdt_satuan')
                             ->join('d_stock','s_item','=','i_id')
                             ->select('i_id',
+                                     'm_item.i_sat1',
+                                     'ms.s_name as satuan_pilih',
                                      'm_item.i_code',
                                      'm_item.i_name',
-                                     's_name',                                         
+                                     'm_satuan.s_name as satuan_awal',                                         
                                      'ppdt_qty',
                                      'ppdt_qtyconfirm',
                                      's_qty',
                                      'ppdt_pruchaseplan',
-                                     'ppdt_detailid'
+                                     'ppdt_detailid',
+                                     'ppdt_prevcost',
+                                     'ppdt_totalcost'
                             )
                             ->where('ppdt_pruchaseplan', '=', $id)
                             ->where('ppdt_isconfirm', '=', "TRUE")
-                            ->orderBy('ppdt_created', 'DESC')
                             ->get();
+
+        
+        $tamp=[];
+        foreach ($dataIsi as $key => $value) {
+          $tamp[$key]=$value->i_id;
+        }     
+        $urut_index = count($tamp);
+        $tamp=array_map("strval",$tamp); 
+        
         $gudang = DB::table('d_gudangcabang')->select('gc_id','gc_gudang','c_name')->join('m_comp','m_comp.c_id','=','d_gudangcabang.gc_comp')
         ->where('gc_id',1)
         ->orWhere('gc_id',7)
@@ -263,7 +285,7 @@ class d_purchase_plan extends Model
       //     'data_header' => $data_header,
       //     'gudang' => $gudang,
       // ]);
-      return view('Purchase::rencanapembelian/edit',compact('data_header','dataIsi','gudang'));
+      return view('Purchase::rencanapembelian/edit',compact('data_header','dataIsi','gudang','tamp','urut_index'));
 
     }
 
