@@ -193,7 +193,7 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name="m_pbuy1" class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name="its_price1" class="form-control input-sm">
                                       
                                   </div>
                                 </div>
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name="m_pbuy2" class="form-control input-sm" readonly>
+                                      <input type="text" id="hargabeli" name="its_price2" class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name="m_pbuy3" class="form-control input-sm" readonly>
+                                      <input type="text" id="hargabeli" name="its_price3" class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -245,20 +245,13 @@
 
                                   <div class="col-md-9">
                                     <div class="form-group col-sm-5">
-                                      <select class="input-sm form-control" name="is_supplier[]" >
+                                      <select class="input-sm form-control" name="its_supplier[]" >
                                           <option value="">~ Pilih Supplier ~</option>
                                       </select>
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
                                     </div>
-                                    <div class="col-md-2">
-
-                                          <label for="">Harga </label>
-
-                                    </div>
-                                  <div class="form-group col-sm-3">
-                                    <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0">
-                                    <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
-                                  </div>
+                                    
+                                  
                                   <div class="form-group col-sm-2">
                                     <button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
                                   </div>
@@ -293,7 +286,7 @@
   @include('Master::databarangtitipan/js/form_commander')
   <script>
     $(document).ready(function(){
-      format_currency( $("[name='is_price[]']") );
+      format_currency( $("[name='its_price[]']") );
     });
   </script>
 

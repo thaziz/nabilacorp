@@ -47,9 +47,10 @@
 
                          <div class="col-md-12 col-sm-12 col-xs-12 " style="margin-top:15px;">
                             <form id='data'>
-                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top:15px;padding-left:-10px;padding-right: -10px; ">
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                              <input type="hidden" name="i_id" value="{{ $m_item->i_id }}">
+                              <div class="container-fluid tamma-bg" style="padding: 5mm">
+                                <div class="row">
+                                  <div class="col-md-3 col-sm-4 col-xs-12">
 
                                       <label class="tebal">Kode Barang</label>
 
@@ -73,7 +74,9 @@
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="nama-error"><small>Nama harus diisi.</small></span>
                                   </div>
                                 </div>
-
+                                </div>
+                                <div class="row">
+                                    
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
                                     <label class="tebal">Min. Stock</label>
@@ -89,46 +92,21 @@
 
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                    <label class="tebal">Type</label>
+                                    <label class="tebal">Kelompok</label>
 
                                 </div>
-
                                 <div class="col-md-3 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <select class="input-sm form-control select" name='i_type' data-selected='{{ $m_item->i_type }}' id="i_type">
-                                        <option value="">~ Pilih Type ~</option>
-                                        <option value="BJ">Barang Jual</option>
-                                        <option value="BP">Barang Produksi</option>
-                                        <option value="BB">Bahan Baku</option>
+                                      <select class="input-sm form-control select" name='i_group' data-selected='{{ $m_item->i_group }}' data-text="{{ $m_item->g_name }}" id="i_group">
+                                       
                                       </select>
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="type-error"><small>Type harus dipilih.</small></span>
                                   </div>
                                 </div>
-              
-
-                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                  <div class="row">
-                                    
-                                    <div class="col-md-3"><label class="tebal">Kelompok</label></div>
-                                    <div class="form-group col-md-9">
-                                        <select class="input-sm form-control select" name='i_group' data-selected='{{ $m_item->i_group }}' onchange="dinamis()" id="kelompok">
-                                          <option value="">~ Pilih Kelompok ~</option>
-                                          @foreach ($kelompok as $key => $value)
-                                            <option value="{{$value->g_id}}">{{$value->g_name}}</option>
-                                          @endforeach
-                                        </select>
-                                        <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="kelompok-error"><small>Kelompok harus dipilih.</small></span>
-                                    </div>
-                                  </div>
+                                  
                                 </div>
-
-                                
-                               
-
-                                
-
-
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="row">
+                                  <div class="col-md-3 col-sm-4 col-xs-12">
 
                                     <label class="tebal">Satuan Utama</label>
 
@@ -157,8 +135,10 @@
                                       <input type="number" id='i_sat_isi1' name='i_sat_isi1' value='{{ $m_item->i_sat_isi1 }}' class="form-control" value='1' readonly>
                                       
                                   </div>
-                                </div>                      
-
+                                </div>          
+                                </div>
+                                <div class="row">
+                                  
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
                                     <label class="tebal">Satuan Alternatif 1</label>
@@ -189,7 +169,9 @@
                                       
                                   </div>
                                 </div>
-
+                                </div>
+                                <div class="row">
+                                  
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
                                     <label class="tebal">Satuan Alternatif 2</label>
@@ -220,20 +202,24 @@
                                       <input type="number" id='i_sat_isi3' name='i_sat_isi3' value='{{ $m_item->i_sat_isi3 }}' class="form-control">
                                       
                                   </div>
-                                </div>                                
+                                </div>    
+                                </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                <div class="row">
+                                  <div class="col-md-3 col-sm-4 col-xs-12">
 
                                       <label class="tebal">Harga Satuan Utama</label>
 
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy1' value='{{ $m_price->m_pbuy1 }}' class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name='its_price1' value='{{ count($d_item_titipan_supplier) == 0 ? 0 : $d_item_titipan_supplier[0]->its_price1 }}' class="form-control input-sm">
                                       
                                   </div>
                                 </div>
-
+                                </div>
+                                <div class="row">
+                                  
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
                                       <label class="tebal">Harga Satuan Alternatif 1</label>
@@ -241,27 +227,31 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy2' value='{{ $m_price->m_pbuy2 }}' class="form-control input-sm" readonly>
+                                      <input type="text" id="hargabeli" name='its_price2' value='{{ count($d_item_titipan_supplier) == 0 ? 0 : $d_item_titipan_supplier[0]->its_price2 }}' class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
 
-                                <div class="col-md-3 col-sm-4 col-xs-12">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-4 col-xs-12">
 
                                       <label class="tebal">Harga Satuan Alternatif 2</label>
 
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy3' value='{{ $m_price->m_pbuy3 }}' class="form-control input-sm" readonly>
+                                      <input type="text" id="hargabeli" name='its_price3' value='{{ count($d_item_titipan_supplier) == 0 ? 0 : $d_item_titipan_supplier[0]->its_price3 }}' class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
-
+                                </div>
+                                <div class="row">
+                                  
 
                                 <div class="col-md-3 col-sm-4 col-xs-12">
 
-                                      <label class="tebal">Detail</label>
+                                      <label class="tebal">Detail </label>
 
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
@@ -270,47 +260,75 @@
                                   </div>
                                 </div>
                                 
-                                
+                                </div>
 
-                                <div class="" id="dinamis">
-                                  <div class="col-md-2" style="margin-right: 68px;">
+                                <div class="row">
+                                  @php ($x = 0)
+              
+                                  @if( count($d_item_titipan_supplier) == 0 )
 
-                                        <label class="tebal">Supplier</label>
+                                    <div id="dinamis">
+                                      <div class="">
+                                        <div class="col-md-2" style="margin-right: 68px;">
 
-                                  </div>
-                                  
-                                  @foreach ($d_item_supplier as $supplier)
-                                      <div class="col-md-9">
-                                        <div class="form-group col-sm-5">
-                                          <select class="input-sm form-control" name="is_supplier[]" data-selected="{{ $supplier->s_id }}" data-text="{{ $supplier->s_company }}">
-                                              <option value="">~ Pilih Supplier ~</option>
-                                          </select>
-                                          <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
+                                                <label class="tebal">Supplier</label>
+
+                                          </div>
+                                          <div class="col-md-9">
+                                            <div class="form-group col-sm-5">
+                                              <select class="input-sm form-control" name="its_supplier[]" >
+                                                  <option value="">~ Pilih Supplier ~</option>
+                                              </select>
+                                              <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
+                                            </div>
+                                          
+                                          <div class="form-group col-sm-2" style="display: flex;">
+                                            <button style="margin-right: 1mm" type="button" class="btn btn-primary" name='button'  onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                              
+                                          </div>
                                         </div>
-                                        <div class="col-md-2">
-
-                                              <label for="">Harga </label>
-
-                                        </div>
-                                      <div class="form-group col-sm-3">
-                                        <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0" value="{{ $supplier->s_company }}">
-                                        <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
-                                      </div>
-                                      <div class="form-group col-sm-2">
-                                        <button type="button" class="btn btn-primary" name='button'  onclick="perbarui()"> <i class="fa fa-plus"></i> </button>
                                       </div>
                                     </div>
-                                  @endforeach
-                                  
+                                  @else
 
-                                
-                              </div>
+                                    <div class="" id="dinamis">
+                                    @foreach ($d_item_titipan_supplier as $x => $supplier)
+                                        <div class="dinamis{{ $x }}">  
+                                          <div class="col-md-2" style="margin-right: 68px;">
 
-                              <div class="row">
+                                                <label class="tebal">Supplier</label>
+
+                                          </div>
+                                          <div class="col-md-9">
+                                            <div class="form-group col-sm-5">
+                                              <select class="input-sm form-control" name="its_supplier[]" data-selected="{{ $supplier->s_id }}" data-text="{{ $supplier->s_company }}">
+                                                  <option value="">~ Pilih Supplier ~</option>
+                                              </select>
+                                              <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
+                                            </div>
+                                          
+                                          <div class="form-group col-sm-2" style="display: flex;">
+                                            <button style="margin-right: 1mm" type="button" class="btn btn-primary" name='button'  onclick="tambah()"> <i class="fa fa-plus"></i> </button>
+                                            @if($x > 0)
+                                              <button type="button" class="btn btn-danger" name='button'  onclick="kurang({{ $x }})"> <i class="fa fa-minus"></i> </button>
+                                            @endif  
+                                          </div>
+                                        </div>
+                                      </div>  
+                                    @endforeach
+                                    </div>
+                                  @endif
+                                </div>
+
+                                 <div class="row">
                                 <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
                                   <button class="btn btn-primary" type="button" onclick="perbarui()">Simpan</button>
                                 </div>
                               </div>
+                              </div>
+                              
+                               
+                             
                           
 
                       </form>
@@ -327,6 +345,7 @@
   
   <script>
     $(document).ready(function(){
+        iddinamis = {{ $x != null ? $x : 0}};
         $('select').each(function(){
             var value = $(this).attr('data-selected');
             var text = $(this).attr('data-text');

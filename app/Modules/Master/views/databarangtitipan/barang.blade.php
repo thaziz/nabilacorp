@@ -143,9 +143,9 @@ function table(){
               },      
               {
                 data: null, 
-                name: 'i_price',
+                name: 'its_price1',
                 render : function(res) {
-                  return get_currency(res.i_price);
+                  return get_currency(res.its_price1);
                 }
               },      
               {data: 'g_name', name: 'g_name'},            

@@ -47,6 +47,7 @@
 
                          <div class="col-md-12 col-sm-12 col-xs-12 " style="margin-top:15px;">
                             <form id='data'>
+                              <input type="hidden" name="i_id" value="{{ $m_item->i_id }}">
                               <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top:15px;padding-left:-10px;padding-right: -10px; ">
 
                                 <div class="col-md-3 col-sm-4 col-xs-12">
@@ -229,7 +230,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy1' value='{{ $m_price->m_pbuy1 }}' class="form-control input-sm">
+                                      <input type="text" id="hargabeli" name='is_price1' value='{{ $d_item_supplier[0]->is_price1 }}' class="form-control input-sm">
                                       
                                   </div>
                                 </div>
@@ -241,7 +242,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy2' value='{{ $m_price->m_pbuy2 }}' class="form-control input-sm" readonly>
+                                      <input type="text" id="hargabeli" name='is_price2' value='{{ $d_item_supplier[0]->is_price2 }}' class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -253,7 +254,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-8 col-xs-12">
                                   <div class="form-group">
-                                      <input type="text" id="hargabeli" name='m_pbuy3' value='{{ $m_price->m_pbuy3 }}' class="form-control input-sm" readonly>
+                                      <input type="text" id="hargabeli" name='is_price3' value='{{ $d_item_supplier[0]->is_price3 }}' class="form-control input-sm" readonly>
                                       
                                   </div>
                                 </div>
@@ -271,15 +272,15 @@
                                 </div>
                                 
                                 
+                                <div id="dinamis"> 
+                                  @foreach ($d_item_supplier as $x => $supplier)
+                                    <div class="dinamis{{ $x }}">
+                                      <div class="col-md-2" style="margin-right: 68px;">
 
-                                <div class="" id="dinamis">
-                                  <div class="col-md-2" style="margin-right: 68px;">
+                                            <label class="tebal">Supplier</label>
 
-                                        <label class="tebal">Supplier</label>
-
-                                  </div>
-                                  
-                                  @foreach ($d_item_supplier as $supplier)
+                                      </div>
+                                      
                                       <div class="col-md-9">
                                         <div class="form-group col-sm-5">
                                           <select class="input-sm form-control" name="is_supplier[]" data-selected="{{ $supplier->s_id }}" data-text="{{ $supplier->s_company }}">
@@ -287,25 +288,18 @@
                                           </select>
                                           <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
                                         </div>
-                                        <div class="col-md-2">
-
-                                              <label for="">Harga </label>
-
-                                        </div>
-                                      <div class="form-group col-sm-3">
-                                        <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0" value="{{ $supplier->s_company }}">
-                                        <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
-                                      </div>
-                                      <div class="form-group col-sm-2">
-                                        <button type="button" class="btn btn-primary" name='button'  onclick="perbarui()"> <i class="fa fa-plus"></i> </button>
+                                        
+                                    
+                                      <div class="form-group col-sm-2" style="display: flex">
+                                        <button style="margin-right: 1mm" type="button" class="btn btn-primary" type="button" name='button'  onclick="tambah()"> <i class="fa fa-plus" ></i> </button>
+                                        @if($x > 0)
+                                          <button type="button" class="btn btn-danger" type="button" name='button'  onclick="kurang({{ $x }})"> <i class="fa fa-minus"></i> </button>
+                                        @endif
                                       </div>
                                     </div>
+                                  </div>
                                   @endforeach
-                                  
-
-                                
-                              </div>
-
+                                </div>
                               <div class="row">
                                 <div class="col-xs-12" style="display: flex;justify-content: flex-end;"> 
                                   <button class="btn btn-primary" type="button" onclick="perbarui()">Simpan</button>
@@ -326,6 +320,7 @@
   @include('Master::databarang/js/form_commander')
   
   <script>
+    iddinamis = {{ $x }};
     $(document).ready(function(){
         $('select').each(function(){
             var value = $(this).attr('data-selected');
