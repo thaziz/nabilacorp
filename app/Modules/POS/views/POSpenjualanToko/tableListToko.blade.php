@@ -87,9 +87,9 @@
                         <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;">
                           
 
+                       
+                           <label class="tebal">Status : </label> &nbsp;&nbsp; <span class="label status_s" id="txt_span_status"> </span> 
 
-                          <label class="tebal">Status : </label>&nbsp;&nbsp;
-                          <span class="" id="txt_span_status"></span>
                           <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
                               <fieldset>
@@ -102,6 +102,12 @@
                                     <div class="form-group">
                                       {{-- <label id="lTgl"></label> --}}
                                       <input type="text" class="form-control input-sm" readonly="" id="lTgl" name="">
+
+                                         <input type="text" class="form-control input-sm sid" readonly="" id="sid" name="">
+                                  
+
+                                    
+
                                     </div>  
                                   </div>
 
@@ -159,7 +165,7 @@
                           <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px;padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">                          
                               <fieldset>        
-
+                                  <div id="div_prints"> </div>
                                 <div class="col-md-3 col-sm-12 col-xs-12">
                                   <label class="tebal">Sub Total</label>
                                 </div>
@@ -238,6 +244,7 @@
                       </div>
                   
                       <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="cetak()"> <i class="fa fa-print"> </i> &nbsp; Cetak </button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                       </div>
                     </div>
@@ -247,8 +254,24 @@
 
                 <!-- End Modal Proses -->
 <script type="text/javascript">
+
+
      function cari(){
       table();
+     }
+
+     function cetak(){
+       s_id = $('.sid').val();
+       
+       $.ajax({
+        url : baseUrl+'/penjualan/pos-toko/printNota/'+s_id,
+        type: 'get',
+        success:function (response){
+            $('#div_prints').html(response);
+             
+            printElement(document.getElementById("div_prints"));  
+        }
+        })
      }
 
     dateAwal();
@@ -275,7 +298,7 @@
   
 
                                                 
-    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek) {
+    function editPenjualan(s_id,s_note,s_machine,s_date,edate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek) {
 
             $('.reset').val('');
             $('#s_created_by').val('{{Auth::user()->m_name}}')
