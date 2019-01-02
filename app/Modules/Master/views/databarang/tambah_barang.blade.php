@@ -286,15 +286,6 @@
                                       </select>
                                       <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error0"><small>Supplier harus diisi.</small></span>
                                     </div>
-                                    <div class="col-md-2">
-
-                                          <label for="">Harga </label>
-
-                                    </div>
-                                  <div class="form-group col-sm-3">
-                                    <input type="text" class="form-control rp" name="is_price[]" id="hargasupplier0">
-                                    <span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error0"><small>Harga harus diisi.</small></span>
-                                  </div>
                                   <div class="form-group col-sm-2">
                                     <button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>
                                   </div>
