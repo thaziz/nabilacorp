@@ -640,6 +640,7 @@ function printElement(elem) {
     $printSection.appendChild(domClone);
     window.print();
     $('#div_print').html('');
+    $('#div_prints').html('');
 }
 
 
@@ -714,9 +715,6 @@ if($status==true){
               
     printElement(document.getElementById("div_print"));
         
-
-
-
     }
     })
 
@@ -931,6 +929,8 @@ function dataDetailView(s_id){
                   
           }
       });
+
+
 }
 
 function resetUlang(){
@@ -991,10 +991,13 @@ function setDatePicker(){
   $('#s_date').datepicker('hide');  
 }
 
+
+
 function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
   $('#txt_span_status').text(s_status);
   $('#lCode').val(s_note);
   $('#lTgl').val(s_date);
+  $('#sid').val(s_id);
   $('#lCustomer').val(c_name);
   var c_bayar
   if(s_jenis_bayar==1){
@@ -1002,6 +1005,21 @@ function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gr
   }else{
     c_bayar='Tempo';
   }
+       
+     /* if(s_status == 'draft') {
+          $('.status_s').html('<span class="txt_span_status label label-warning" > Draft </span>');
+      }
+      else if(s_status == 'final'){
+          $('.status_s').html('<span class="txt_span_status label label-success" > Final </span>');
+      }
+*/
+        if(s_status == 'draft') {
+          $('.status_s').addClass('label-warning').text('Draft');
+      }
+      else if(s_status == 'final'){
+          $('.status_s').addClass('label-success').text('Final');
+      }
+
   $('#lBayar').val(c_bayar);
   $('#lTempo').val(s_duedate);
   $('#lJadi').val(s_finishdate);
