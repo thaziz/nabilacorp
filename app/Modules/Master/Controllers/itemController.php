@@ -106,13 +106,13 @@ class itemController extends Controller
         $i_sat_isi3 = $i_sat_isi3 != null ? $i_sat_isi3 : '';
         $i_min_stock = $request->i_min_stock;
         $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
-        // Ke tabel m_price
-        $m_pbuy1 = $request->m_pbuy1;
-        $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
-        $m_pbuy2 = $request->m_pbuy2;
-        $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
-        $m_pbuy3 = $request->m_pbuy3;
-        $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
+        
+        $is_price1 = $request->is_price1;
+        $is_price1 = $is_price1 != null ? $is_price1 : '';
+        $is_price2 = $request->is_price2;
+        $is_price2 = $is_price2 != null ? $is_price2 : '';
+        $is_price3 = $request->is_price3;
+        $is_price3 = $is_price3 != null ? $is_price3 : '';
         // Ke tabel d_item_supplier
         $is_supplier = $request->is_supplier;
         $is_supplier = $is_supplier != null ? $is_supplier : array();
@@ -165,24 +165,13 @@ class itemController extends Controller
             ->insert([
               'is_item' => $tmp,
               'is_supplier' => $is_supplier[$x],
+              'is_price1' => $is_price1,
+              'is_price2' => $is_price2,
+              'is_price3' => $is_price3,
               'is_active' => 'Y',
               'is_created' => Carbon::now('Asia/Jakarta')
             ]);
         }
-      
-        DB::table('m_price')
-          ->insert([
-            'm_pitem' => $tmp,
-            'm_pbuy1' => $m_pbuy1,
-            'm_pbuy2' => $m_pbuy2,
-            'm_pbuy3' => $m_pbuy3,
-            'm_psell1' => $m_pbuy1,
-            'm_psell2' => $m_pbuy2,
-            'm_psell3' => $m_pbuy3,
-            'm_pcreated' => Carbon::now('Asia/Jakarta'),
-
-          ]);
-      
 
 
         DB::commit();
@@ -207,21 +196,12 @@ class itemController extends Controller
                     ->leftjoin(DB::raw('m_satuan S3'), 'i_sat3', '=', 'S3.s_id')
                     ->where('i_id', $id)
                     ->first();
-      $m_price = m_price::where('m_pitem', $id)->get()->first();
-      if($m_price == null) {
-        $m_price = array( 
-          'm_pbuy1' => 0, 
-          'm_pbuy2' => 0, 
-          'm_pbuy3' => 0 
-        );
-      }
       $m_group = m_group::all();                    
       $m_satuan = m_satuan::all();                    
       $d_item_supplier = DB::table('d_item_supplier')
         ->leftjoin('m_supplier', 'is_supplier', '=', 's_id')->where('is_item', $id)->get();
       $res = array(
         'm_item' => $m_item, 
-        'm_price' => $m_price, 
         'd_item_supplier' => $d_item_supplier, 
         'kelompok' => $m_group, 
         'satuan' => $m_satuan
@@ -261,19 +241,16 @@ class itemController extends Controller
         $i_min_stock = $request->i_min_stock;
         $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
         // Ke tabel m_price
-        $m_pid = $request->m_pid;
-        $m_pid = $m_pid != null ? $m_pid : '';
-        $m_pbuy1 = $request->m_pbuy1;
-        $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
-        $m_pbuy2 = $request->m_pbuy2;
-        $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
-        $m_pbuy3 = $request->m_pbuy3;
-        $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
+        $is_price1 = $request->is_price1;
+        $is_price1 = $is_price1 != null ? $is_price1 : '';
+        $is_price2 = $request->is_price2;
+        $is_price2 = $is_price2 != null ? $is_price2 : '';
+        $is_price3 = $request->is_price3;
+        $is_price3 = $is_price3 != null ? $is_price3 : '';
         // Ke tabel m_supplier
         $is_supplier = $request->is_supplier;
         $is_supplier = $is_supplier != null ? $is_supplier : array();
-        $is_price = $request->is_price;
-        $is_price = $is_price != null ? $is_price : array();
+        
         // ===============================================
         // if (!empty($request->supplier)) {
         //   for ($i=0; $i < count($request->supplier); $i++) {
@@ -312,28 +289,19 @@ class itemController extends Controller
             'i_update' => Carbon::now('Asia/Jakarta')
           ]);
       
-        DB::table('m_price')
-          ->where('m_pid', $m_pid)
-          ->update([
-            'm_pbuy1' => $m_pbuy1,
-            'm_pbuy2' => $m_pbuy2,
-            'm_pbuy3' => $m_pbuy3,
-            'm_psell1' => $m_pbuy1,
-            'm_psell2' => $m_pbuy2,
-            'm_psell3' => $m_pbuy3,
-            'm_pupdated' => Carbon::now('Asia/Jakarta'),
-
-          ]);
+        
         // Ke tabel d_item_supplier
         DB::table('d_item_supplier')->where('is_item', $i_id)->delete();
         for($x = 0; $x < count($is_supplier);$x++) {
           DB::table('d_item_supplier')
             ->insert([
-              'is_item' => $tmp,
+              'is_item' => $i_id,
               'is_supplier' => $is_supplier[$x],
-              'is_price' => $is_price[$x],
+              'is_price1' => $is_price1,
+              'is_price2' => $is_price2,
+              'is_price3' => $is_price3,
               'is_active' => 'Y',
-              'is_created' => Carbon::now('Asia/Jakarta')
+              'is_updated' => Carbon::now('Asia/Jakarta')
             ]);
         }
 

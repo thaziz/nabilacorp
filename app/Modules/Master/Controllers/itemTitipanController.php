@@ -73,8 +73,7 @@ class itemTitipanController extends Controller
 
       return response()->json($supplier);
     }
-
-    public function simpan(Request $request){
+public function simpan(Request $request){
       DB::beginTransaction();
       try {
 
@@ -106,29 +105,29 @@ class itemTitipanController extends Controller
         $i_sat_isi3 = $i_sat_isi3 != null ? $i_sat_isi3 : '';
         $i_min_stock = $request->i_min_stock;
         $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
-        // Ke tabel m_price
-        $m_pbuy1 = $request->m_pbuy1;
-        $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
-        $m_pbuy2 = $request->m_pbuy2;
-        $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
-        $m_pbuy3 = $request->m_pbuy3;
-        $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
-        // Ke tabel d_item_supplier
+        
+        $its_price1 = $request->its_price1;
+        $its_price1 = $its_price1 != null ? $its_price1 : '';
+        $its_price2 = $request->its_price2;
+        $its_price2 = $its_price2 != null ? $its_price2 : '';
+        $its_price3 = $request->its_price3;
+        $its_price3 = $its_price3 != null ? $its_price3 : '';
+        // Ke tabel d_item_titipan_supplier
         $its_supplier = $request->its_supplier;
         $its_supplier = $its_supplier != null ? $its_supplier : array();
-        $its_price = $request->its_price;
-        $its_price = $its_price != null ? $its_price : array();
+        // $its_price = $request->its_price;
+        // $its_price = $its_price != null ? $its_price : array();
         // ===============================================
         // if (!empty($request->supplier)) {
         //   for ($i=0; $i < count($request->supplier); $i++) {
         //     $tmp = str_replace('.', '', $request->hargasupplier[$i]);
         //     $hargasupplier = str_replace('Rp ', '', $tmp);
 
-        //     $idsupplier = DB::table('d_item_supplier')
+        //     $idsupplier = DB::table('d_item_titipan_supplier')
         //                   ->max('its_id');
 
 
-        //       DB::table('d_item_supplier')
+        //       DB::table('d_item_titipan_supplier')
         //       ->insert([
         //         'its_id' => $idsupplier + 1,
         //         'its_item' => $id + 1,
@@ -165,25 +164,13 @@ class itemTitipanController extends Controller
             ->insert([
               'its_item' => $tmp,
               'its_supplier' => $its_supplier[$x],
-              'its_price' => $its_price[$x],
+              'its_price1' => $its_price1,
+              'its_price2' => $its_price2,
+              'its_price3' => $its_price3,
               'its_active' => 'Y',
               'its_created' => Carbon::now('Asia/Jakarta')
             ]);
         }
-      
-        DB::table('m_price')
-          ->insert([
-            'm_pitem' => $tmp,
-            'm_pbuy1' => $m_pbuy1,
-            'm_pbuy2' => $m_pbuy2,
-            'm_pbuy3' => $m_pbuy3,
-            'm_psell1' => $m_pbuy1,
-            'm_psell2' => $m_pbuy2,
-            'm_psell3' => $m_pbuy3,
-            'm_pcreated' => Carbon::now('Asia/Jakarta'),
-
-          ]);
-      
 
 
         DB::commit();
@@ -208,28 +195,19 @@ class itemTitipanController extends Controller
                     ->leftjoin(DB::raw('m_satuan S3'), 'i_sat3', '=', 'S3.s_id')
                     ->where('i_id', $id)
                     ->first();
-      $m_price = m_price::where('m_pitem', $id)->get()->first();
-      if($m_price == null) {
-        $m_price = array( 
-          'm_pbuy1' => 0, 
-          'm_pbuy2' => 0, 
-          'm_pbuy3' => 0 
-        );
-      }
       $m_group = m_group::all();                    
       $m_satuan = m_satuan::all();                    
-      $d_item_supplier = DB::table('d_item_supplier')
+      $d_item_titipan_supplier = DB::table('d_item_titipan_supplier')
         ->leftjoin('m_supplier', 'its_supplier', '=', 's_id')->where('its_item', $id)->get();
       $res = array(
         'm_item' => $m_item, 
-        'm_price' => $m_price, 
-        'd_item_supplier' => $d_item_supplier, 
+        'd_item_titipan_supplier' => $d_item_titipan_supplier, 
         'kelompok' => $m_group, 
         'satuan' => $m_satuan
       );
       
       // die(json_encode($res));
-      return view('Master::databarangtitipan/edi_barang', $res);
+      return view('Master::databarangtitipan/edit_barang', $res);
     }
 
     public function update(Request $request){
@@ -241,8 +219,6 @@ class itemTitipanController extends Controller
         $i_id = $i_id != null ? $i_id : '';
         $i_group = $request->i_group;
         $i_group = $i_group != null ? $i_group : '';
-        $i_type = $request->i_type;
-        $i_type = $i_type != null ? $i_type : '';
         $i_name = $request->i_name;
         $i_name = $i_name != null ? $i_name : '';
         $i_det = $request->i_det;
@@ -262,30 +238,27 @@ class itemTitipanController extends Controller
         $i_min_stock = $request->i_min_stock;
         $i_min_stock = $i_min_stock != null ? $i_min_stock : '';
         // Ke tabel m_price
-        $m_pid = $request->m_pid;
-        $m_pid = $m_pid != null ? $m_pid : '';
-        $m_pbuy1 = $request->m_pbuy1;
-        $m_pbuy1 = $m_pbuy1 != null ? $m_pbuy1 : '';
-        $m_pbuy2 = $request->m_pbuy2;
-        $m_pbuy2 = $m_pbuy2 != null ? $m_pbuy2 : '';
-        $m_pbuy3 = $request->m_pbuy3;
-        $m_pbuy3 = $m_pbuy3 != null ? $m_pbuy3 : '';
+        $its_price1 = $request->its_price1;
+        $its_price1 = $its_price1 != null ? $its_price1 : '';
+        $its_price2 = $request->its_price2;
+        $its_price2 = $its_price2 != null ? $its_price2 : '';
+        $its_price3 = $request->its_price3;
+        $its_price3 = $its_price3 != null ? $its_price3 : '';
         // Ke tabel m_supplier
         $its_supplier = $request->its_supplier;
         $its_supplier = $its_supplier != null ? $its_supplier : array();
-        $its_price = $request->its_price;
-        $its_price = $its_price != null ? $its_price : array();
+        
         // ===============================================
         // if (!empty($request->supplier)) {
         //   for ($i=0; $i < count($request->supplier); $i++) {
         //     $tmp = str_replace('.', '', $request->hargasupplier[$i]);
         //     $hargasupplier = str_replace('Rp ', '', $tmp);
 
-        //     $idsupplier = DB::table('d_item_supplier')
+        //     $idsupplier = DB::table('d_item_titipan_supplier')
         //                   ->max('its_id');
 
 
-        //       DB::table('d_item_supplier')
+        //       DB::table('d_item_titipan_supplier')
         //       ->insert([
         //         'its_id' => $idsupplier + 1,
         //         'its_item' => $id + 1,
@@ -300,7 +273,6 @@ class itemTitipanController extends Controller
           ->where('i_id', $i_id)
           ->update([
             'i_group' => $i_group,
-            'i_type' => $i_type,
             'i_name' => $i_name,
             'i_sat1' => $i_sat1,
             'i_sat2' => $i_sat2,
@@ -313,28 +285,19 @@ class itemTitipanController extends Controller
             'i_update' => Carbon::now('Asia/Jakarta')
           ]);
       
-        DB::table('m_price')
-          ->where('m_pid', $m_pid)
-          ->update([
-            'm_pbuy1' => $m_pbuy1,
-            'm_pbuy2' => $m_pbuy2,
-            'm_pbuy3' => $m_pbuy3,
-            'm_psell1' => $m_pbuy1,
-            'm_psell2' => $m_pbuy2,
-            'm_psell3' => $m_pbuy3,
-            'm_pupdated' => Carbon::now('Asia/Jakarta'),
-
-          ]);
-        // Ke tabel d_item_supplier
-        DB::table('d_item_supplier')->where('its_item', $i_id)->delete();
+        
+        // Ke tabel d_item_titipan_supplier
+        DB::table('d_item_titipan_supplier')->where('its_item', $i_id)->delete();
         for($x = 0; $x < count($its_supplier);$x++) {
-          DB::table('d_item_supplier')
+          DB::table('d_item_titipan_supplier')
             ->insert([
-              'its_item' => $tmp,
+              'its_item' => $i_id,
               'its_supplier' => $its_supplier[$x],
-              'its_price' => $its_price[$x],
+              'its_price1' => $its_price1,
+              'its_price2' => $its_price2,
+              'its_price3' => $its_price3,
               'its_active' => 'Y',
-              'its_created' => Carbon::now('Asia/Jakarta')
+              'its_updated' => Carbon::now('Asia/Jakarta')
             ]);
         }
 
@@ -349,7 +312,6 @@ class itemTitipanController extends Controller
         ]);
       }
     }
-
     public function hapus(Request $request){
       DB::beginTransaction();
       try {
