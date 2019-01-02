@@ -229,6 +229,7 @@ public function getDataRencanaPembelian(Request $request)
    }
    public function getdatatableOrder()
    {
+    // return 'a';
      $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
               ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
@@ -361,9 +362,10 @@ public function getDataRencanaPembelian(Request $request)
 
   public function confirmOrderPembelian($id,$type)
   {
+    // return 'a';
     $dataHeader = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
                 ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
-                ->select('po_created','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id')
+                ->select('po_created','s_company','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id')
                 ->where('po_id', '=', $id)
                 // ->orderBy('d_pcs_date_created', 'DESC')
                 ->get();
@@ -396,16 +398,15 @@ public function getDataRencanaPembelian(Request $request)
     }
     else
     {
-      // return $id;
       $dataIsi = d_purchaseorder_dt::join('m_item', 'd_purchaseorder_dt.podt_item', '=', 'm_item.i_id')
                 ->join('m_satuan', 'd_purchaseorder_dt.podt_satuan', '=', 'm_satuan.s_id')
                 ->select('d_purchaseorder_dt.*', 'm_item.*','m_satuan.*')
-                ->where('d_purchaseorder_dt.podt_purchaseorder', '=', $id)
+                // ->where('podt_purchaseorder',$id)
                 // ->where('d_purchase_order.d_pcsdt_isconfirm', '=', "TRUE")
                 // ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
                 ->get();
     }
-    // return $dataIsi;
+    return $dataIsi;
     foreach ($dataIsi as $val) 
     {
       //cek item type

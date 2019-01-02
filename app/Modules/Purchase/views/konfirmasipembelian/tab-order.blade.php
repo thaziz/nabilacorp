@@ -1,4 +1,4 @@
-<div id="order-tab" class="tab-pane fade">
+<div id="order-tab" class="tab-pane fade in active">
   <div class="row">
 
   <div class="col-md-12 col-sm-12 col-xs-12" align="right">

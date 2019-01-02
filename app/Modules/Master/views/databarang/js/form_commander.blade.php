@@ -6,20 +6,20 @@
         i_sat_isi2 = i_sat_isi2 != '' ? i_sat_isi2 : 0;
         var i_sat_isi3 = $('[name="i_sat_isi3"]').val();
         i_sat_isi3 = i_sat_isi3 != '' ? i_sat_isi3 : 0;
-        var m_pbuy1 = $('[name="m_pbuy1"]').val();
-        m_pbuy1 = m_pbuy1 != '' ? m_pbuy1 : 0;
+        var is_price1 = $('[name="is_price1"]').val();
+        is_price1 = is_price1 != '' ? is_price1 : 0;
 
-        $('[name="m_pbuy2"]').next().val(
-          get_currency( m_pbuy1 * i_sat_isi2 )
+        $('[name="is_price2"]').next().val(
+          get_currency( is_price1 * i_sat_isi2 )
         );
-        $('[name="m_pbuy2"]').val(
-          m_pbuy1 * i_sat_isi2
+        $('[name="is_price2"]').val(
+          is_price1 * i_sat_isi2
         );
-        $('[name="m_pbuy3"]').next().val(
-          get_currency( m_pbuy1 * i_sat_isi3 )
+        $('[name="is_price3"]').next().val(
+          get_currency( is_price1 * i_sat_isi3 )
         );
-        $('[name="m_pbuy3"]').val(
-          m_pbuy1 * i_sat_isi3
+        $('[name="is_price3"]').val(
+          is_price1 * i_sat_isi3
         );
       }
 
@@ -35,18 +35,16 @@
         $(document).ready(function(){
           $('.select').select2();
           $('.dinamis').hide();
-          format_currency( $('[name="m_pbuy1"]') );
-          format_currency( $('[name="m_pbuy2"]') );
-          format_currency( $('[name="m_pbuy3"]') );
+          format_currency( $('[name="is_price1"]') );
+          format_currency( $('[name="is_price2"]') );
+          format_currency( $('[name="is_price3"]') );
 
           // Mentrigger penghitungan harga satuan
           $('[name="i_sat_isi2"]').on('keyup change paste', hitung_harga_satuan);
           $('[name="i_sat_isi3"]').on('keyup change paste', hitung_harga_satuan);
-          $('[name="m_pbuy1"]').next().on('keyup change paste', hitung_harga_satuan);
+          $('[name="is_price1"]').next().on('keyup change paste', hitung_harga_satuan);
           // ===================================
 
-
-          format_currency( $("[name='is_price[]']") );
           $('[name="is_supplier[]"]').select2({
               width : '100%',
               ajax : {
@@ -119,22 +117,14 @@
                                 '</select>' +
                                 '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>'+
                                 '</div>' +
-                                '<div class="col-md-2">'+
-            
-                                  '<label for="">Harga </label>'+
-            
-                                '</div>'+
-                                '<div class="form-group col-sm-3">'+
-                                '<input type="text" class="form-control rp" name="is_price[]" id="hargasupplier'+iddinamis+'">'+
-                                '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>' + '</div>'+
-                                '<div class="form-group col-sm-2">'+
-                                '<button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>'+
+                                
+                                '<div class="form-group col-sm-2" style="display:flex">'+
+                                '<button type="button" class="btn btn-primary" name="button" onclick="tambah()" style="margin-right:1mm"> <i class="fa fa-plus"></i> </button>'+
                                 '&nbsp;'+
                                 '<button type="button" class="btn btn-danger" name="button" onclick="kurang('+iddinamis+')"> <i class="fa fa-minus"></i> </button>'+
                                 '</div>'+
                                 '</div></div>');
 
-            format_currency( html.find("[name='is_price[]']") );
             html.find('select').select2({
               width : '100%',
               ajax : {

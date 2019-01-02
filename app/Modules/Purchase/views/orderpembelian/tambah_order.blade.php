@@ -371,16 +371,16 @@
 
                             +'<td><input type="text" value="'+data.data_isi[key-1].ppdt_qty+'" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQty'+i_id+'" id="qty_'+i+'" /></td>'
 
-                            +'<td><input type="hidden" value="'+data.data_isi[key-1].id_satuan+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'+data.data_isi[key-1].s_name+''
+                            +'<td><input type="hidden" value="'+data.data_isi[key-1].satuan+'" name="fieldSatuan[]" class="form-control input-sm" readonly/>'+data.data_isi[key-1].s_name+''
 
                             +'<td>'+
                               '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_prevcost)+'" name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
 
                             +'<td>'+
-                              '<input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price)+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga' + i_id + '\')" onblur="setRupiah(event,\'harga' + i_id+ '\')" onkeyup="rege(event,\'harga' + i_id+ '\');hitungPurchaseItem(\'' + i_id+ '\')"  /></td>'
+                              '<input type="text" value="'+SetFormRupiah(data.data_prev[key-1])+'" name="podt_price[]" id="'+i+'" class="form-control field_harga input-sm harga'+i_id+' numberinput alignAngka"  /></td>'
 
 
-                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].i_price * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_totalcost * data.data_isi[key-1].ppdt_qty)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
 
                             +'<td><input type="text" value="'+s_stock+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
                             

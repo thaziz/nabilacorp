@@ -142,7 +142,7 @@ function table(){
               },      
               {
                 data: null, 
-                name: 'i_price',
+                name: 'is_price1',
                 render : function(res) {
                   return get_currency(res.i_price);
                 }

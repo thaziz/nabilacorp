@@ -233,43 +233,36 @@ class d_purchase_order extends Model
               $prev_harga[$i] = DB::table('d_item_supplier')
                                 ->where('is_item',$dataIsi[$i]->i_id)
                                 ->get();
-              
-              // if ($prev_harga == null) {
-              //   $harga == 0;
-              // }else{
 
-              //   if ($dataIsi[$i]->satuan_position == 1) {
-              //     if ($dataIsi[$i]->is_price1 == null) {
-                    
-              //     }else{
-
-              //     }
-              //   }
-              //   if ($dataIsi[$i]->satuan_position == 2) {
-              //     if ($dataIsi[$i]->is_price2 == null) {
-              //       # code...
-              //     }else{
-
-              //     }
-              //   }
-              //   if ($dataIsi[$i]->satuan_position == 3) {
-              //     if ($dataIsi[$i]->is_price3 == null) {
-              //       # code...
-              //     }else{
-
-              //     }
-              //   }
-
-              // }
+                if ($dataIsi[$i]->satuan_position == 1) {
+                  if ($dataIsi[$i]->is_price1 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price1;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }elseif ($dataIsi[$i]->satuan_position == 2) {
+                  if ($dataIsi[$i]->is_price2 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price2;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }elseif ($dataIsi[$i]->satuan_position == 3) {
+                  if ($dataIsi[$i]->is_price3 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price3;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }
             }
 
-            return $prev_harga;
+            // return $prev_harga;
+            // return $harga;
 
 
         return response()->json([
             'status' => 'sukses',
             'data_isi' => $dataIsi,
-            'data_prev' => $prev_harga,
+            'data_prev' => $harga,
         ]);
     }
 
@@ -311,7 +304,7 @@ class d_purchase_order extends Model
                      ->where('p_code', 'LIKE', '%'.$term.'%')
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
-            return $sup;
+            // return $sup;
             foreach ($sup as $val) {
                 $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
             }
@@ -378,7 +371,7 @@ class d_purchase_order extends Model
       $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
       $dataHeader->po_date_confirm = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_duedate = date('Y-m-d',strtotime($request->tanggal));
-      $dataHeader->po_status = 'CF';
+      $dataHeader->po_status = 'WT';
       $dataHeader->po_created = date('Y-m-d');
       $dataHeader->po_updated =  date('Y-m-d');
       $dataHeader->po_comp = Session::get('user_comp');
@@ -430,7 +423,7 @@ class d_purchase_order extends Model
      }
 
 
-
+     
 
 
 
