@@ -18,8 +18,8 @@ class m_item_titipan extends Model
 
     public static function dataBarang(){
         $data = DB::table('m_item')
-              ->join('m_group', 'g_id', '=', 'i_group')
-              ->join('m_satuan', 's_id', '=', 'i_satuan')
+              ->leftJoin('m_group', 'g_id', '=', 'i_group')
+              ->leftJoin('m_satuan', 's_id', '=', 'i_satuan')
               ->where('i_active', 'Y')
               ->where('i_type', 'BTPN')
               ->get();

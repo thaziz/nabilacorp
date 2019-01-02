@@ -116,8 +116,8 @@ class itemController extends Controller
         // Ke tabel d_item_supplier
         $is_supplier = $request->is_supplier;
         $is_supplier = $is_supplier != null ? $is_supplier : array();
-        $is_price = $request->is_price;
-        $is_price = $is_price != null ? $is_price : array();
+        // $is_price = $request->is_price;
+        // $is_price = $is_price != null ? $is_price : array();
         // ===============================================
         // if (!empty($request->supplier)) {
         //   for ($i=0; $i < count($request->supplier); $i++) {
@@ -165,7 +165,6 @@ class itemController extends Controller
             ->insert([
               'is_item' => $tmp,
               'is_supplier' => $is_supplier[$x],
-              'is_price' => $is_price[$x],
               'is_active' => 'Y',
               'is_created' => Carbon::now('Asia/Jakarta')
             ]);

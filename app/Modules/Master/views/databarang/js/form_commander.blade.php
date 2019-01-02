@@ -45,8 +45,6 @@
           $('[name="m_pbuy1"]').next().on('keyup change paste', hitung_harga_satuan);
           // ===================================
 
-
-          format_currency( $("[name='is_price[]']") );
           $('[name="is_supplier[]"]').select2({
               width : '100%',
               ajax : {
@@ -119,22 +117,14 @@
                                 '</select>' +
                                 '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="supplier-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>'+
                                 '</div>' +
-                                '<div class="col-md-2">'+
-            
-                                  '<label for="">Harga </label>'+
-            
-                                '</div>'+
-                                '<div class="form-group col-sm-3">'+
-                                '<input type="text" class="form-control rp" name="is_price[]" id="hargasupplier'+iddinamis+'">'+
-                                '<span style="color:#ed5565;display:none;" class="help-block m-b-none" id="harga-error'+iddinamis+'"><small>Supplier harus diisi.</small></span>' + '</div>'+
-                                '<div class="form-group col-sm-2">'+
-                                '<button type="button" class="btn btn-primary" name="button" onclick="tambah()"> <i class="fa fa-plus"></i> </button>'+
+                                
+                                '<div class="form-group col-sm-2" style="display:flex">'+
+                                '<button type="button" class="btn btn-primary" name="button" onclick="tambah()" style="margin-right:1mm"> <i class="fa fa-plus"></i> </button>'+
                                 '&nbsp;'+
                                 '<button type="button" class="btn btn-danger" name="button" onclick="kurang('+iddinamis+')"> <i class="fa fa-minus"></i> </button>'+
                                 '</div>'+
                                 '</div></div>');
 
-            format_currency( html.find("[name='is_price[]']") );
             html.find('select').select2({
               width : '100%',
               ajax : {
