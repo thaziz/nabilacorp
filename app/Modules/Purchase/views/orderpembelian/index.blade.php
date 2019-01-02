@@ -58,6 +58,7 @@
       <!-- modal detail peritem -->
       {!!$modaldetail!!}
       <!-- /modal -->
+      {!!$modaldetail_show!!}
   </div>
 
 @endsection
@@ -215,75 +216,46 @@
 
   function detailOrder(id) 
   {
+    $('#modal-confirm-order').modal('show');
     $('#append-modal-detail div').remove();
     $.ajax({
-      url : baseUrl + "/purchasing/orderpembelian/get-data-detail/" + id,
+      url : baseUrl + "/purcahse-order/get-data-detail/" + id,
       type: "GET",
       dataType: "JSON",
       success: function(data)
       {
+        console.log(data)
         var i = randString(5);
         var key = 1;
         $('#txt_span_status_detail').text(data.spanTxt);
         $("#txt_span_status_detail").addClass('label'+' '+data.spanClass);
-        $('#lblNoOrder').text(data.header[0].d_pcs_code);
-        $('#lblCaraBayar').text(data.header[0].d_pcs_method);
-        $('#lblTglOrder').text(data.header[0].d_pcs_date_created);
-        $('#lblTglKirim').text(data.header[0].d_pcs_date_received);
-        $('#lblStaff').text(data.header[0].m_name);
-        $('#lblSupplier').text(data.header[0].s_company);
-        $('[name="totalHarga"]').val(data.header2.hargaBruto);
-        $('[name="diskonHarga"]').val(data.header2.nilaiDiskon);
-        $('[name="ppnHarga"]').val(data.header2.nilaiPajak);
-        $('[name="totalHargaFinal"]').val(data.header2.hargaNet);
-        if (data.header[0].d_pcs_method != "CASH") 
-        {
-          $('#append-modal-detail div').remove();
-          var metode = data.header[0].d_pcs_method;
-          if (metode == "DEPOSIT") 
-          {
-            $('#append-modal-detail div').remove();
-            $('#append-modal-detail').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                      +'<label class="tebal">Batas Terakhir Pengiriman</label>'
-                                  +'</div>'
-                                  +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                    +'<div class="form-group">'
-                                      +'<label id="dueDate">'+data.header[0].d_pcs_duedate+'</label>'
-                                    +'</div>'
-                                  +'</div>');
-          }
-          else if(metode == "CREDIT")
-          {
-            $('#append-modal-detail div').remove();
-            $('#append-modal-detail').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                      +'<label class="tebal">TOP (Termin Of Payment)</label>'
-                                  +'</div>'
-                                  +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                    +'<div class="form-group">'
-                                      +'<label id="dueDate">'+data.header[0].d_pcs_duedate+'</label>'
-                                    +'</div>'
-                                  +'</div>');
-          }
-        }
+        $('#lblNoOrder').text(data.header.po_id);
+        $('#lblCodeOrder').text(data.header.po_code);
+        $('#lblTglOrder').text(data.header.po_created);
+        $('#lblStaffOrder').text(data.header.m_name);
+        $('#lblSupplierOrder').text(data.header.s_company);
+        $('.drop_here').empty();
         //loop data
         Object.keys(data.data_isi).forEach(function(){
-          $('#tabel-order').append('<tr class="tbl_modal_row" id="row'+i+'">'
+          $('.drop_here').append(
+                          '<tr id="row'+key+'">'
                           +'<td>'+key+'</td>'
                           +'<td>'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'</td>'
-                          +'<td>'+data.data_isi[key-1].m_sname+'</td>'
-                          +'<td>'+data.data_isi[key-1].d_pcsdt_qty+'</td>'
-                          +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
-                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_prevcost)+'</td>'
-                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_price)+'</td>'
-                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_total)+'</td>'
+                          +'<td>'+data.data_isi[key-1].i_code+'</td>'
+                          +'<td>'+data.data_isi[key-1].i_code+'</td>'
+                          +'<td>'+data.data_isi[key-1].i_code+'</td>'
+                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
+                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
+                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
                           +'</tr>');
+
+          // $('.drop_here').append(key);
           key++;  
           i = randString(5);
         });
-        $('#btn-modal').html('<a target="_blank" class="btn btn-primary" href="'+ 
-          baseUrl +'/purchasing/orderpembelian/print/'+ id +'"><i class="fa fa-print"></i>&nbsp;Print</a>'+
-          '<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>');
-        $('#modal-detail').modal('show');
+
+          // $('.drop_here').html('aa');
+        
       },
       error: function (jqXHR, textStatus, errorThrown)
       {

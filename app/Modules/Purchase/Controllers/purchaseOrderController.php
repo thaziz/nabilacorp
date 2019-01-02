@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 
 use App\mMember;
 use App\Modules\Purchase\model\d_purchase_order;
+use App\Modules\Purchase\model\d_purchaseorder_dt;
 
 use App\m_supplier;
 
@@ -63,8 +64,9 @@ class purchaseOrderController extends Controller
     $modaledit =view('Purchase::orderpembelian/modal-edit');
 
     $modaldetail=view('Purchase::orderpembelian/modal-detail-peritem');
+    $modaldetail_show=view('Purchase::orderpembelian/modal-detail-order');
 
-     return view('Purchase::orderpembelian/index',compact('tindex','history','to','modal','modaledit','modaldetail'));
+     return view('Purchase::orderpembelian/index',compact('tindex','history','to','modal','modaledit','modaldetail','modaldetail_show'));
    }
    public function dataOrder(Request $request){
       return d_purchase_order::dataOrder($request);
@@ -96,6 +98,90 @@ class purchaseOrderController extends Controller
       return d_purchase_order::savePo($request);
 
      }
+     public function getDataDetail(Request $request,$id)
+     {
+        // return 'a';
+        $dataHeader = d_purchase_order::join('m_supplier', 's_id', '=', 'po_supplier')
+                            ->join('d_mem','m_id','=','po_mem')
+                            ->where('po_id',$id)->first();
+        // $dataHeader = d_purchase_order::where('po_id',$id)->first();
+        $dataIsi = d_purchaseorder_dt::
+                                join('d_purchase_order','podt_purchaseorder','=','po_id')
+                                ->leftjoin('m_item','podt_item','=','i_id')
+                                ->leftjoin('d_item_supplier','is_item','=','i_id')
+                                ->leftjoin('m_price','m_pitem','=','i_id')
+                                ->leftjoin('m_satuan', 's_id', '=', 'podt_satuan')
+                                ->leftjoin('d_stock','s_item','=','i_id')
+                                ->select('i_id',
+                                         'm_item.i_code',
+                                         'm_item.i_name',
+                                         'po_total_gross',
+                                         's_name',
+                                         'podt_qty',
+                                         'podt_qtyconfirm',
+                                         'podt_prevcost',
+                                         's_qty',
+                                         'podt_purchaseorder',
+                                         'podt_detailid',
+                                         'po_comp',
+                                         'i_sat1',
+                                         'i_sat2',
+                                         'i_sat3',
+                                         // 'p_gudang',
+                                         'is_price1',
+                                         'is_price2',
+                                         'is_price3',
+                                         'm_pbuy1',
+                                         'm_pbuy2',
+                                         'm_pbuy3'
+                                )
+                                ->where('podt_purchaseorder', '=', $id)
+                                // ->where('po_comp',$gudang->p_comp)
+                                // ->where('popen(command, mode)_gudang',$gudang->p_gudang)
+                                // ->where('podt_ispo', '=', "FALSE")
+                                // ->where('podt_isconfirm', '=', "TRUE")
+                                ->orderBy('podt_created', 'DESC')
+                                ->get();
+            // $prev_harga = [];
+            $harga = [];
 
+            for ($i=0; $i <count($dataIsi) ; $i++) {
+              // $prev_harga = '';
+              $prev_harga[$i] = DB::table('d_item_supplier')
+                                ->where('is_item',$dataIsi[$i]->i_id)
+                                ->get();
+
+                if ($dataIsi[$i]->satuan_position == 1) {
+                  if ($dataIsi[$i]->is_price1 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price1;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }elseif ($dataIsi[$i]->satuan_position == 2) {
+                  if ($dataIsi[$i]->is_price2 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price2;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }elseif ($dataIsi[$i]->satuan_position == 3) {
+                  if ($dataIsi[$i]->is_price3 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price3;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }
+            }
+
+            // return $prev_harga;
+            // return $harga;
+
+
+        return response()->json([
+            'status' => 'sukses',
+            'data_isi' => $dataIsi,
+            'header' => $dataHeader,
+            'data_prev' => $harga,
+        ]);
+     }
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/
