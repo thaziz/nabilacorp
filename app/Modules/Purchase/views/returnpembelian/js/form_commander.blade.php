@@ -342,22 +342,21 @@
         var idPo = $('#pr_purchase').val();
         var pr_purchase = $(this).select2('data');
         pr_purchase = pr_purchase[0];
-        console.log(pr_purchase);
 
             //total diskon didapat dari value diskon + percentase diskon
-            var discTotalVal = parseInt(pr_purchase.po__discount)+parseInt(pr_purchase.po__disc_value);
-            var totalGross = pr_purchase.po__total_gross;
-            var taxPercent = pr_purchase.po__tax_percent;
-            var totalTax = pr_purchase.po__tax_value;
+            var discTotalVal = parseInt(pr_purchase.po_discount)+parseInt(pr_purchase.po_disc_value);
+            var totalGross = pr_purchase.po_total_gross;
+            var taxPercent = pr_purchase.po_tax_percent;
+            var totalTax = pr_purchase.po_tax_value;
             //persentase diskon berdasarkan total harga bruto
             var percentDiscTotalGross = parseFloat(discTotalVal*100/totalGross);
             //console.log(percentDiscTotalGross);
             //harga total setelah diskon dan 
-            var totalNett = pr_purchase.po__total_net;
+            var totalNett = pr_purchase.po_total_net;
             //data header
             $('#nama_sup').val(pr_purchase.s_company);
             $('#id_sup').val(pr_purchase.s_id);
-            $('#method_bayar').val(pr_purchase.po__method);
+            $('#method_bayar').val(pr_purchase.po_method);
             $('[name="metodeReturn"]').val($('#pilih_metode_return').val());
             $('#nilai_total_gross').val(convertDecimalToRupiah(totalGross));
             $('#nilai_total_disc').val(convertDecimalToRupiah(discTotalVal));

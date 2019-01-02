@@ -186,18 +186,18 @@ class d_purchase_order extends Model
      static function getDataForm($id)
     {
           $gudang = d_purchase_plan::where('p_id',$id)->first();
-          
           $dataIsi = d_purchaseplan_dt::
                                 join('d_purchase_plan','ppdt_pruchaseplan','=','p_id')
                                 ->join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+                                ->leftjoin('d_item_supplier','is_item','=','i_id')
+                                ->leftjoin('m_price','m_pitem','=','i_id')
+                                ->join('m_satuan', 's_id', '=', 'ppdt_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
-                                         'm_item.i_price',
+                                         'ppdt_totalcost',
                                          's_name',
-                                         'm_satuan.s_id as id_satuan',
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
                                          'ppdt_prevcost',
@@ -205,7 +205,18 @@ class d_purchase_order extends Model
                                          'ppdt_pruchaseplan',
                                          'ppdt_detailid',
                                          'p_comp',
-                                         'p_gudang'
+                                         'ppdt_satuan_position as satuan_position',
+                                         'ppdt_satuan as satuan',
+                                         'i_sat1',
+                                         'i_sat2',
+                                         'i_sat3',
+                                         'p_gudang',
+                                         'is_price1',
+                                         'is_price2',
+                                         'is_price3',
+                                         'm_pbuy1',
+                                         'm_pbuy2',
+                                         'm_pbuy3'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
                                 ->where('p_comp',$gudang->p_comp)
@@ -214,17 +225,58 @@ class d_purchase_order extends Model
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
+            // $prev_harga = [];
+            $harga = [];
+
+            for ($i=0; $i <count($dataIsi) ; $i++) {
+              // $prev_harga = '';
+              $prev_harga[$i] = DB::table('d_item_supplier')
+                                ->where('is_item',$dataIsi[$i]->i_id)
+                                ->get();
+              
+              // if ($prev_harga == null) {
+              //   $harga == 0;
+              // }else{
+
+              //   if ($dataIsi[$i]->satuan_position == 1) {
+              //     if ($dataIsi[$i]->is_price1 == null) {
+                    
+              //     }else{
+
+              //     }
+              //   }
+              //   if ($dataIsi[$i]->satuan_position == 2) {
+              //     if ($dataIsi[$i]->is_price2 == null) {
+              //       # code...
+              //     }else{
+
+              //     }
+              //   }
+              //   if ($dataIsi[$i]->satuan_position == 3) {
+              //     if ($dataIsi[$i]->is_price3 == null) {
+              //       # code...
+              //     }else{
+
+              //     }
+              //   }
+
+              // }
+            }
+
+            return $prev_harga;
+
 
         return response()->json([
             'status' => 'sukses',
             'data_isi' => $dataIsi,
+            'data_prev' => $prev_harga,
         ]);
     }
 
 
      static function getDataCodePlan($request)
     {
-      // return 'a';
+      // return 'a'; 
       // return Session::get('user_comp');
       // return $request->session()->all();
         // return $dt = DB::table('')->get();
@@ -259,7 +311,7 @@ class d_purchase_order extends Model
                      ->where('p_code', 'LIKE', '%'.$term.'%')
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
-            // return $sup;
+            return $sup;
             foreach ($sup as $val) {
                 $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
             }
