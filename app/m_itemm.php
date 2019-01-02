@@ -18,10 +18,11 @@ class m_itemm extends Model
 
     public static function dataBarang(){
         $data = DB::table('m_item')
-              ->join('m_group', 'g_id', '=', 'i_group')
-              ->join('m_satuan', 's_id', '=', 'i_satuan')
+              ->leftJoin('m_group', 'g_id', '=', 'i_group')
+              ->leftJoin('m_satuan', 's_id', '=', 'i_sat1')
+              ->leftJoin('d_item_supplier', 'i_id', '=', 'is_item')
               ->where('i_active', 'Y')
-              ->where('i_type', 'BTPN')
+              ->where('i_type', '!=', 'BTPN')
               ->get();
          return Datatables::of($data)->editColumn('action', function ($data) {                            
                                 return '<div class="">
