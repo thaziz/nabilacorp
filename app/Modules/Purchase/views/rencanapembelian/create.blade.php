@@ -232,24 +232,24 @@ $(document).ready(function(){
           $('#i_price').val(ui.item.m_pbuy1);
         }
 
-
          $('.satuan_S').on("change",function(arg){
             if ($('#satuan').find(':selected').data('index') == 1) {
-                if ($('#satuan').find(':selected').data('price') != 0) {
+                if ($('#satuan').find(':selected').data('price1') != 0) {
                   $('#i_price').val($('#satuan').find(':selected').data('price1'));
                 }else{
                   $('#i_price').val($('#satuan').find(':selected').data('price_1'));
                 }
               $('#stock_index').val(1);
               }else if ($('#satuan').find(':selected').data('index') == 2) {
-                if ($('#satuan').find(':selected').data('price') != 0) {
+                if ($('#satuan').find(':selected').data('price2') != 0) {
                   $('#i_price').val($('#satuan').find(':selected').data('price2'));
                 }else{
                   $('#i_price').val($('#satuan').find(':selected').data('price_2'));
                 }
               $('#stock_index').val(2);
               }else if ($('#satuan').find(':selected').data('index') == 3) {
-                if ($('#satuan').find(':selected').data('price') != 0) {
+                // alert('a');
+                if ($('#satuan').find(':selected').data('price3') != 0) {
                   $('#i_price').val($('#satuan').find(':selected').data('price3'));
                 }else{
                   $('#i_price').val($('#satuan').find(':selected').data('price_3'));

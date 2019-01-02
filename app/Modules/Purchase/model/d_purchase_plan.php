@@ -70,9 +70,10 @@ class d_purchase_plan extends Model
         ]);
         // dd($request->all());
         for ($i=0; $i <count($request->ppdt_item); $i++) {  
-
+          // dd($request->index_satuan[$i]);
         $ppdt_prevcost= format::format($request->is_price[$i]);
         $detailid=d_purchaseplan_dt::where('ppdt_pruchaseplan',$p_id)->max('ppdt_detailid')+1;
+
          d_purchaseplan_dt::create([
                           'ppdt_pruchaseplan'=>$p_id,
                           'ppdt_detailid'=>$detailid,
@@ -82,6 +83,7 @@ class d_purchase_plan extends Model
                           'ppdt_prevcost'=>$ppdt_prevcost,
                           'ppdt_satuan'=>$request->satuan_pilih[$i],
                           'ppdt_isconfirm'=>'TRUE',
+                          'ppdt_satuan_position'=>$request->index_satuan[$i],
                            ]);
        }
 
@@ -210,9 +212,11 @@ class d_purchase_plan extends Model
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
                                 ->first();
+                                
       $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
-                            ->join('m_satuan', 's_id', '=', 'i_satuan')
-                            ->join('d_stock','s_item','=','i_id')
+                            ->join('d_purchase_plan','p_id','=','ppdt_pruchaseplan')
+                            ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
+                            ->leftjoin('d_stock','s_item','=','i_id')
                             ->select('i_id',
                                      'm_item.i_code',
                                      'm_item.i_name',
@@ -224,6 +228,7 @@ class d_purchase_plan extends Model
                                      'ppdt_detailid'
                             )
                             ->where('ppdt_pruchaseplan', '=', $id)
+                            ->where('p_comp', '=', Session::get('user_comp'))
                             ->where('ppdt_isconfirm', '=', "TRUE")
                             ->orderBy('ppdt_created', 'DESC')
                             ->get();
