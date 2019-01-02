@@ -252,6 +252,7 @@ class d_purchase_plan extends Model
        /*return*/ $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                             ->join('m_satuan', 's_id', '=', 'i_sat1')
                             ->join('m_satuan as ms', 'ms.s_id', '=', 'ppdt_satuan')
+                            ->join('d_purchase_plan','p_id','=','ppdt_pruchaseplan')
                             ->join('d_stock','s_item','=','i_id')
                             ->select('i_id',
                                      'm_item.i_sat1',
@@ -268,6 +269,7 @@ class d_purchase_plan extends Model
                                      'ppdt_totalcost'
                             )
                             ->where('ppdt_pruchaseplan', '=', $id)
+                            ->where('p_comp', '=', Session::get('user_comp'))
                             ->where('ppdt_isconfirm', '=', "TRUE")
                             ->get();
 
