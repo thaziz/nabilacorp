@@ -87,13 +87,6 @@
                         <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;">
                           
 
-                          {{-- <table border=0>
-                              <tr>
-                                <td>    <label class="tebal">Status : </label> &nbsp;&nbsp;
-                                </td>
-                                <td>    <span class="status_s"> </span>  </td>
-                              </tr>
-                          </table> --}}
                        
                            <label class="tebal">Status : </label> &nbsp;&nbsp; <span class="label status_s" id="txt_span_status"> </span> 
 

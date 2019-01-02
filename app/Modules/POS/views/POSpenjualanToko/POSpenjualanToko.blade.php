@@ -1006,13 +1006,7 @@ function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gr
     c_bayar='Tempo';
   }
        
-     /* if(s_status == 'draft') {
-          $('.status_s').html('<span class="txt_span_status label label-warning" > Draft </span>');
-      }
-      else if(s_status == 'final'){
-          $('.status_s').html('<span class="txt_span_status label label-success" > Final </span>');
-      }
-*/
+
         if(s_status == 'draft') {
           $('.status_s').addClass('label-warning').text('Draft');
       }
