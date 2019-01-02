@@ -39,12 +39,20 @@
                                                     <div class="col-md-6 col-sm-6 col-xs-6" style="margin-top: -10px;margin-bottom: 10px;">
                                                         <div class="form-group">
                                                           <h4>Form Rencana Pembelian</h4>
+
+
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-6" align="right">
                                                         <a href="{{ url('/purcahse-plan/plan-index') }}" class="btn"><i class="fa fa-arrow-left"></i></a>
                                                     </div>  
                                                     <form id="data">
+                                                        <input type="hidden" name="id_purchaseplan" value="{{ $data_header->p_id }}">
+                                                        <div class="taruh_sini"> 
+
+
+                                                        </div>
+                                                        
                                                         <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
                                                             <div class="col-md-3 col-sm-12 col-xs-12">
                                                                     <label class="tebal">Kode Rencana Pembelian</label>
@@ -105,6 +113,8 @@
                   <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
                   <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
                   <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
+                   <input type="hidden" class="form-control input-sm reset-seach" name="stock_awal" id="stock_awal">
+                  <input type="hidden" class="form-control input-sm reset-seach" name="stock_index" id="stock_index">
               </div>
           </div>      
           <div class="col-md-2">
@@ -151,38 +161,41 @@
                         @foreach ($dataIsi as $element)
                           <tr class="detail{{ $element->i_id }}">
                             <td width="23%">
-                              <input style="width:100%" type="hidden" name="ppdt_item[]" value='{{ $element->i_id }}'> 
-                              <input style="width:100%" type="hidden" name="ppdt_pruchaseplan[]" value="">
+                              <input type="hidden" name="ppdt_detailid_old[]" class="ppdt_detailid_old{{ $element->i_id }}" value="{{ $element->ppdt_detailid }}" >
+                              <input style="width:100%" type="hidden" name="ppdt_item_old[]" value='{{ $element->i_id }}'> 
+                              <input style="width:100%" type="hidden" name="ppdt_pruchaseplan_old[]" value="">
                               <input style="width:100%" type="hidden" name="ppdt_detailid[]" value="">
                               <div style="padding-top:6px">{{ $element->i_code }} - {{ $element->i_name }}</div>
                             </td>
                             <td width="4%">
-                              <div style="padding-top:6px">{{ number_format($element->s_qty,0,'','.') }} - </div>
+                              
+                              <div style="padding-top:6px">{{ number_format($element->s_qty,0,'','.') }} - {{ $element->satuan_awal }}</div>
+                              
                               <input type="hidden" class="stock{{ $element->i_id }} form-control" style="width:100%;text-align:right;border:none" value='{{ $element->s_qty }}' readonly>
-                            </td>
-                            
-                            {{-- <td width="5%"><div style="padding-top:6px"></div></td> --}}
-                            
-                            {{-- <input style="width:100%" type="hidden" name="gudang_masuk[]" value=''> --}}
-                            
-                            <td width="4%"><input  onblur="validationForm();" class="move up1 form-control alignAngka jumlah fQty{{ $element->i_id }}" style="width:100%;border:none" name="ppdt_qty[]" value="{{ $element->ppdt_qty }}" autocomplete="off"></td>
 
-                            <td width="4%"><input  onblur="validationForm();" class="move up1 form-control alignAngka jumlah fQty{{ $element->i_id }}" style="width:100%;border:none" name="ppdt_qty[]" value="{{ $element->ppdt_qty }}" autocomplete="off"></td>
-                            
-                            <input style="width:100%" type="hidden" name="f_qty[]" value='{{ $element->s_qty }}'>
-                            
+                            </td>
                             <td width="4%">
-                              <input style="width:100%;border:none" class="is_price alignAngka is_price" name="is_price[]" value='' readonly>
+                              <input style="width:100%" type="hidden" name="f_qty_old[]" value='{{ $element->ppdt_qty }}'>
+                              
+                              <input  onblur="validationForm();" onkeyup="change({{ $element->i_id }});" class="move up1 form-control alignAngka jumlah fQty{{ $element->i_id }}" style="width:100%;border:none" name="ppdt_qty_old[]" value="{{ $element->ppdt_qty }}" autocomplete="off">
+  
+                            </td>
+
+                            <td width="4%">
+                              <div style="padding-top:6px" class="alignAngka">{{ number_format($element->ppdt_prevcost,0,'','.') }}</div>
+
+                              <input type="hidden" style="width:100%;border:none" class="is_price alignAngka is_price{{ $element->i_id }}" name="is_price_old[]" value='{{ number_format($element->ppdt_prevcost,0,'','') }}' readonly>
                             </td>
                             
-                            <input style="width:100%" type="hidden" name="harga_awal[]" value=''>
                             
-                            {{-- <td width="5%"><div style="padding-top:6px"></div></td> --}}
-                            <input style="width:100%" type="hidden" name="satuan_pilih[]" value=''>
+                            <input style="width:100%" type="hidden" name="harga_awal_old[]" value=''>
                             
-                            <td width="4%"><input style="width:100%;border:none" class="alignAngka " name="total_price[]" value='' readonly></td>
+                            <td width="5%"><div style="padding-top:6px">{{ $element->satuan_pilih }}</div></td>
+                            <input style="width:100%" type="hidden" name="satuan_pilih_old[]" value='{{ $element->satuan_pilih }}'>
+                            
+                            <td width="4%"><input style="width:100%;border:none" class="alignAngka si_price{{ $element->i_id }}" name="total_price_old[]" value='{{ number_format($element->ppdt_totalcost,0,'','.') }}' readonly></td>
 
-                            <input style="width:100%" type="hidden" name="harga_total[]" value='+hitung+'>
+                            <input style="width:100%" type="hidden" class="total_price{{ $element->i_id }}" name="harga_total_old[]" value='{{ number_format($element->ppdt_totalcost,0,'','') }}'>
 
                             <td width="3%">
                               <button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButton({{ $element->i_id }})"><i class="fa fa-trash-o"></i></button>
@@ -221,7 +234,8 @@
     
   var fQty              = $("#fQty");  
   var cQty              = $("#cQty");  
-  
+  var tamp              = [];
+  var cunt              = 0;
   var s_satuan          = $('#s_satuan') ;
   var bplanDetail       = $(".bplanDetail");
   var i_price           = $('#i_price');
@@ -233,7 +247,11 @@
 
   var hapusPlanDt =[];             
 
+  tamp=<?php echo json_encode($tamp); ?>;
 
+  cunt = <?php echo $urut_index ?>; 
+
+  console.log(cunt);
 
 $(document).ready(function(){     
 
@@ -258,18 +276,55 @@ $(document).ready(function(){
         $('#i_code').val(ui.item.i_code);     
         $('#searchitem').val(ui.item.label);
         $('#itemName').val(ui.item.item);
-        $('#i_price').val(ui.item.i_price);
         $('.hilang').css('display','none');
+        $('#stock_index').val(1);
+
         $('.drop_here').html(
-        '<select name="satuan" id="satuan" class="form-control reset-seach">'+
-            '<option value="'+ui.item.sat1_id+'" data-name='+ui.item.satuan_1+'>'+ui.item.satuan_1+'</option>'+
-            '<option value="'+ui.item.sat2_id+'" data-name='+ui.item.satuan_2+'>'+ui.item.satuan_2+'</option>'+
-            '<option value="'+ui.item.sat3_id+'" data-name='+ui.item.satuan_3+'>'+ui.item.satuan_3+'</option>'+
+        '<select name="satuan" id="satuan" class="form-control reset-seach satuan_S">'+
+            '<option value="'+ui.item.sat1_id+'" data-index="1" data-price1='+ui.item.m_isup_price1+' data-price_1='+ui.item.m_pbuy1+' data-name='+ui.item.satuan_1+'>'+ui.item.satuan_1+'</option>'+
+            '<option value="'+ui.item.sat2_id+'" data-index="2" data-price2='+ui.item.m_isup_price2+' data-price_2='+ui.item.m_pbuy2+' data-name='+ui.item.satuan_2+'>'+ui.item.satuan_2+'</option>'+
+            '<option value="'+ui.item.sat3_id+'" data-index="3" data-price3='+ui.item.m_isup_price3+' data-price_3='+ui.item.m_pbuy3+' data-name='+ui.item.satuan_3+'>'+ui.item.satuan_3+'</option>'+
         '</select>'
         );
 
+        if (ui.item.m_isup_price1 != 0) {
+          $('#i_price').val(ui.item.m_isup_price1);
+        }else{
+          $('#i_price').val(ui.item.m_pbuy1);
+        }
+
+
+         $('.satuan_S').on("change",function(arg){
+            if ($('#satuan').find(':selected').data('index') == 1) {
+                if ($('#satuan').find(':selected').data('price') != 0) {
+                  $('#i_price').val($('#satuan').find(':selected').data('price1'));
+                }else{
+                  $('#i_price').val($('#satuan').find(':selected').data('price_1'));
+                }
+              $('#stock_index').val(1);
+              }else if ($('#satuan').find(':selected').data('index') == 2) {
+                if ($('#satuan').find(':selected').data('price') != 0) {
+                  $('#i_price').val($('#satuan').find(':selected').data('price2'));
+                }else{
+                  $('#i_price').val($('#satuan').find(':selected').data('price_2'));
+                }
+              $('#stock_index').val(2);
+              }else if ($('#satuan').find(':selected').data('index') == 3) {
+                if ($('#satuan').find(':selected').data('price') != 0) {
+                  $('#i_price').val($('#satuan').find(':selected').data('price3'));
+                }else{
+                  $('#i_price').val($('#satuan').find(':selected').data('price_3'));
+                }
+              $('#stock_index').val(3);
+              }
+       });
+
         $('#s_satuan').val(ui.item.satuan);        
+        $('#s_price').val(ui.item.satuan);        
         $('#stock').val(ui.item.stok);   
+
+        $('#stock_awal').val(ui.item.satuan_1);
+        console.log($('#stock_awal').val(ui.item.satuan_1));
         fQty.val(1);
         cQty.val(1);
         fQty.focus();
@@ -339,14 +394,16 @@ $(document).ready(function(){
       // alert($('#satuan').find(':selected').attr('data-name'));  
       // alert($('#satuan').find(':selected').data('name'));  
       var str = i_price.val();
-      console.log(str);
+      // console.log(str);
       var res = str.replace(/\./g, "");
-      console.log(res);
-      var hitung_dengan_titik = parseInt(fQty.val())*parseInt(res);
       var hitung = parseInt(fQty.val())*parseInt(res);
       console.log(hitung);
-      var index = tamp.indexOf(i_id.val());   
-      console.log(index);
+
+      var res_hitung = accounting.formatMoney(hitung,"",0,'.',',');
+
+      var index = tamp.indexOf(i_id.val());  
+      // console.log(index);
+      // alert(index);
       if ( index == -1){                
       var Hapus = '<button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButton('+i_id.val()+')"><i class="fa fa-trash-o"></i></button>';                  
       var vTotalPerItem = angkaDesimal(fQty.val())*angkaDesimal(i_price.val());
@@ -355,34 +412,39 @@ $(document).ready(function(){
           iSalesDetail+='<tr class="detail'+i_id.val()+'">';
           iSalesDetail+='<td width="23%"><input style="width:100%" type="hidden" name="ppdt_item[]" value='+i_id.val()+'>'; 
           iSalesDetail+='<input style="width:100%" type="hidden" name="ppdt_pruchaseplan[]" value="">';
-          iSalesDetail+='<input style="width:100%" type="hidden" name="ppdt_detailid[]" value="">';
+          // iSalesDetail+='<input style="width:100%" type="hidden" name="ppdt_detailid[]" value="">';
+          iSalesDetail+='<input style="width:100%" type="hidden" name="ppdt_detailid_new[]" value="'+(cunt+1)+'">';
           //item
           iSalesDetail+='<div style="padding-top:6px">'+i_code.val()+' - '+itemName.val()+'</div></td>';
           //stock gudang
-          iSalesDetail+='<td width="4%"><input class="stock stock'+i_id.val()+' form-control" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
+          iSalesDetail+='<td width="4%"><div style="padding-top:6px">'+$('#stock').val()+' - '+$('#stock_awal').val()+'</div><input type="hidden" class="stock stock'+i_id.val()+' form-control" style="width:100%;text-align:right;border:none" value='+$('#stock').val()+' readonly></td>';
           //gudang masuk
-          // iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+$('#gudang').find(':selected').data("name")+'</div></td>';
+          // iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+$('#stock_awal').val()+'</div></td>';
             //hidden gudang masuk.
-            // iSalesDetail+='<input style="width:100%" type="hidden" name="gudang_masuk[]" value='+gudang.val()+'>'
+            iSalesDetail+='<input style="width:100%" type="hidden" name="gudang_masuk[]" value='+$('#stock_awal').val()+'>'
+            iSalesDetail+='<input style="width:100%" type="hidden" name="index_satuan[]" value='+$('#stock_index').val()+'>'
           //qty
-          iSalesDetail+='<td width="4%"><input  onblur="validationForm();" onkeyup="hapus(event,'+i_id.val()+');" class="move up1 form-control alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="ppdt_qty[]" value="'+angkaDesimal(fQty.val())+'" autocomplete="off"></td>';
+          iSalesDetail+='<td width="4%"><input  onblur="validationForm();" onkeyup="change('+i_id.val()+');" class="move up1 form-control alignAngka jumlah fQty'+i_id.val()+'" style="width:100%;border:none" name="ppdt_qty[]" value="'+angkaDesimal(fQty.val())+'" autocomplete="off"></td>';
             //hidden qty
             iSalesDetail+='<input style="width:100%" type="hidden" name="f_qty[]" value='+fQty.val()+'>'
           //harga
           iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="is_price alignAngka is_price'+i_id.val()+'" name="is_price[]" value='+i_price.val()+' readonly></td>';
             //hidden harga
-            iSalesDetail+='<input style="width:100%" type="hidden" name="harga_awal[]" value='+i_price.val()+'>'
+            iSalesDetail+='<input style="width:100%" type="hidden" name="harga_awal[]" value='+res+'>'
           //satuan
           iSalesDetail+='<td width="5%"><div style="padding-top:6px">'+$("#satuan").find(':selected').data("name")+'</div></td>';
             //hidden satuan
             iSalesDetail+='<input style="width:100%" type="hidden" name="satuan_pilih[]" value='+$("#satuan").val()+'>'
           //harga total
-          iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="alignAngka si_price'+i_id.val()+'" name="total_price[]" value='+hitung_dengan_titik+' readonly></td>';
+          iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="alignAngka si_price'+i_id.val()+'" name="total_price[]" value='+res_hitung+' readonly></td>';
             //hidden total
-            iSalesDetail+='<input style="width:100%" type="hidden" name="harga_total[]" value='+hitung+'>'
+            iSalesDetail+='<input style="width:100%" class="total_price'+i_id.val()+'" type="hidden" name="harga_total[]" value='+hitung+'>'
             //hapus tombol
           iSalesDetail+='<td width="3%">'+Hapus+'</td>'                            
           iSalesDetail+='</tr>';       
+
+          cunt += 1;
+
 
           if(validationForm()){
           bplanDetail.append(iSalesDetail);        
@@ -424,12 +486,21 @@ $(document).ready(function(){
               }
       });
       }          
-      }else{                  
+      }else{   
         var updateQty=0;        
         var updateTotalPerItem=0;
         var fStok=parseFloat($('.stock'+i_id.val()).val());
         var a=0;
         var b=0;
+
+        var price_total = $('.total_price'+i_id.val()).val();
+        var place_price = parseInt(hitung)+parseInt(price_total);
+        console.log(hitung);
+        console.log(price_total);
+        console.log(place_price);
+        $('.si_price'+i_id.val()).val(accounting.formatMoney(place_price,"",0,'.',','));
+        $('.total_price'+i_id.val()).val(place_price);
+
         a=angkaDesimal($('.fQty'+i_id.val()).val()) || 0;
         b=angkaDesimal(fQty.val()) || 0;
         updateQty=parseFloat(a)+parseFloat(b);                          
@@ -494,6 +565,17 @@ function validationForm(){
 
 
 
+function change(argument) {
+  // console.log(argument);
+  var ck = $('.fQty'+argument).val();
+  var hit =$('.is_price'+argument).val();
+  var res = hit.replace(/\./g, "");
+  // console.log(ck);
+  var hitung = parseInt(ck)*parseInt(res);
+  var hit =$('.si_price'+argument).val(accounting.formatMoney(hitung,"",0,'.',','));
+}
+
+
 
 function hapus(e,a){
     if(e.which===46 && e.ctrlKey){
@@ -503,20 +585,27 @@ function hapus(e,a){
         if(index!==-1)
         tamp.splice(index,1);        
         buttonDisable();
+    
     }
 }
 
 
 function hapusButton(a){
-      a=''+a;
-      hapusPlanDt.push(a);
+        console.log(a);
+        var old = $('.ppdt_detailid_old'+a).val();
+        if(typeof old != 'undefined'){
+            $('.taruh_sini').append('<input style="width:100%" type="hidden" name="ppdt_detailid_remove[]" value='+old+'>');
+        }
+        a=''+a;
+        hapusPlanDt.push(a);
         $('.detail'+a).remove();
         var index = tamp.indexOf(''+a);  
+        console.log(index);
         if(index!==-1)
         tamp.splice(index,1);        
         buttonDisable();
-        
-    
+        cunt -= 1;
+
 }
 
 
