@@ -28,7 +28,7 @@
           </div>
              
           <ul id="generalTab" class="nav nav-tabs">
-            <li class="active"><a href="#alert-tab" data-toggle="tab">Daftar Rencana Pembelian</a></li>
+            {{-- <li class="active"><a href="#alert-tab" data-toggle="tab">Daftar Rencana Pembelian</a></li> --}}
             <li><a href="#order-tab" data-toggle="tab" onclick="daftarTabelOrder()">Daftar Order Pembelian</a></li>
             <li><a href="#return-tab" data-toggle="tab" onclick="daftarTabelReturn()">Daftar Return Pembelian</a></li>
             <li><a href="#belanjaharian-tab" data-toggle="tab" onclick="daftarTabelBelanja()">Daftar Belanja Harian</a></li>
@@ -36,7 +36,7 @@
 
           <div id="generalTabContent" class="tab-content responsive">
             <!-- tab daftar pembelian plan -->            
-            {!!$td!!}            
+            {{-- {!!$td!!}             --}}
             <!-- tab daftar pembelian order -->
             {!!$to!!}            
             <!-- tab daftar return pembelian -->            
