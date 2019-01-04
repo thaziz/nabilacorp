@@ -1,8 +1,9 @@
 <?php
 
-Route::group(['namespace' => 'App\Modules\Master\Controllers', 'middleware'=>['web','auth']], function () {
+Route::group(['namespace' => 'App\Modules\Master\Controllers', 'middleware'=>['web']], function () {
 
 // Section master data barang
+Route::get('/master/item/contoh_dokumen', 'itemController@contoh_dokumen');
 Route::get('/master/item/index', 'itemController@index');
 Route::get('/master/item/data-barang', 'itemController@dataBarang');
 Route::get('/master/item/tambah', 'itemController@tambah');
