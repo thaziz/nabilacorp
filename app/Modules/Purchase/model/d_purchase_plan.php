@@ -249,11 +249,11 @@ class d_purchase_plan extends Model
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
                                 ->first();
-       /*return*/ $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+       $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                             ->join('m_satuan', 's_id', '=', 'i_sat1')
                             ->join('m_satuan as ms', 'ms.s_id', '=', 'ppdt_satuan')
                             ->join('d_purchase_plan','p_id','=','ppdt_pruchaseplan')
-                            ->join('d_stock','s_item','=','i_id')
+                            ->leftjoin('d_stock','s_item','=','i_id')
                             ->select('i_id',
                                      'm_item.i_sat1',
                                      'ms.s_name as satuan_pilih',
