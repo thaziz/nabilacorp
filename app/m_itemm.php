@@ -198,7 +198,6 @@ class m_itemm extends Model
                   $query->whereIn('i_type',$groupName);                          
                   // $query->orWhere('i_code','like','%'.$search.'%');
                   // $query->whereIn('i_type',$groupName);        
-                  
                   });
                   }                                  
         else{
@@ -209,7 +208,7 @@ class m_itemm extends Model
                
         $sql=$sql->limit(10)->get();
 
-        return $sql;
+        // return $sql;
 
         $results = array();
                         
