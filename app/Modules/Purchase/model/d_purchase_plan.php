@@ -127,6 +127,11 @@ class d_purchase_plan extends Model
                     'ppdt_qtyconfirm'=>'insert'
                      ]);
        }
+
+        $data=['status'=>'sukses'];
+        return json_encode($data);
+
+
       }
         
 
