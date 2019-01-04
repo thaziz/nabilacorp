@@ -24,17 +24,15 @@
                 <label id="lblCodeOrder"></label>
               </div>  
             </div>
-
             <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Tanggal Order Pembelian</label>
+              <label class="tebal">Staff</label>
             </div>
 
             <div class="col-md-3 col-sm-12 col-xs-12">
               <div class="form-group">
-                <label id="lblTglOrder"></label>
-              </div>  
+                <label id="lblOrderDate"></label>
+              </div>
             </div>
-            
             <div class="col-md-3 col-sm-12 col-xs-12">
               <label class="tebal">Staff</label>
             </div>
@@ -54,23 +52,6 @@
                 <label id="lblSupplierOrder"></label>
               </div>
             </div>
-{{-- 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Status</label>
-            </div> --}}
-
-          {{--   <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <select name="statusOrderConfirm" id="status_order_confirm" class="form-control input-sm">
-                  <option value="WT">Waiting</option>
-                  <option value="DE">Dapat diedit</option>
-                  <option value="CF">Dikonfirmasi</option>
-                </select>
-              </div>
-            </div> --}}
-
-            <div id="append-modal-order"></div>
-
           </div>
           
           <div class="table-responsive ">
@@ -82,7 +63,7 @@
                   <th width="5%;">Qty</th>
                   <th width="5%;">Qty Confirm</th>
                   <th width="10%;">Satuan</th>
-                  <th width="15%;">Harga prev</th>
+                  {{-- <th width="15%;">Harga prev</th> --}}
                   <th width="15%;">Harga Satuan</th>
                   <th class="15%">Harga Total</th>
                   {{-- <th width="5%;">Stok Gudang</th> --}}

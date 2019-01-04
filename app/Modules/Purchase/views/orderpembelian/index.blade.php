@@ -231,9 +231,11 @@
         $("#txt_span_status_detail").addClass('label'+' '+data.spanClass);
         $('#lblNoOrder').text(data.header.po_id);
         $('#lblCodeOrder').text(data.header.po_code);
-        $('#lblTglOrder').text(data.header.po_created);
+        $('#lblOrderDate').text(data.header.po_date);
         $('#lblStaffOrder').text(data.header.m_name);
         $('#lblSupplierOrder').text(data.header.s_company);
+        $('#txt_span_status_order_').text(data.header.po_status)
+
         $('.drop_here').empty();
         //loop data
         Object.keys(data.data_isi).forEach(function(){
@@ -241,12 +243,12 @@
                           '<tr id="row'+key+'">'
                           +'<td>'+key+'</td>'
                           +'<td>'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'</td>'
-                          +'<td>'+data.data_isi[key-1].i_code+'</td>'
-                          +'<td>'+data.data_isi[key-1].i_code+'</td>'
-                          +'<td>'+data.data_isi[key-1].i_code+'</td>'
-                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
-                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
-                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
+                          +'<td>'+data.data_isi[key-1].podt_qty+'</td>'
+                          +'<td>'+data.data_isi[key-1].podt_qtyconfirm+'</td>'
+                          +'<td>'+data.data_isi[key-1].s_name+'</td>'
+                          // +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].i_code)+'</td>'
+                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
+                          +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].podt_total)+'</td>'
                           +'</tr>');
 
           // $('.drop_here').append(key);
@@ -345,86 +347,8 @@
 
   function editOrder(id) 
   {
-    $('#append-modal-edit div').remove();
-    $.ajax({
-      url : baseUrl + "/purchasing/orderpembelian/get-edit-order/"+id,
-      type: "GET",
-      dataType: "JSON",
-      success: function(data)
-      {
-        var totalHarga = 0;
-        var key = 1;
-        i = randString(5);
-        $('#txt_span_status_edit').text(data.spanTxt);
-        $("#txt_span_status_edit").addClass('label'+' '+data.spanClass);
-        $('#id_purchase_edit').val(data.header[0].d_pcs_id);
-        $('#lblNoOrderEdit').text(data.header[0].d_pcs_code);
-        $('#lblCaraBayarEdit').text(data.header[0].d_pcs_method);
-        $('#lblTglOrderEdit').text(data.header[0].d_pcs_date_created);
-        $('#lblStaffEdit').text(data.header[0].m_name);
-        $('#lblTglKirimEdit').text(data.header[0].d_pcs_date_received);
-        $('#lblSupplierEdit').text(data.header[0].s_company);
-        $('#total_gross').val(convertDecimalToRupiah(data.header[0].d_pcs_total_gross))
-        $('#potongan_harga').val(convertDecimalToRupiah(data.header[0].d_pcs_discount))
-        $('#diskon_harga').val(data.header[0].d_pcs_disc_percent+'%')
-        $('#ppn_harga').val(data.header[0].d_pcs_tax_percent+'%')
-        $('#total_nett').val(convertDecimalToRupiah(data.header[0].d_pcs_total_net))
-        if (data.header[0].d_pcs_method != "CASH") 
-        {
-          $('#append-modal-edit div').remove();
-          var metode = data.header[0].d_pcs_method;
-          if (metode == "DEPOSIT") 
-          {
-            $('#append-modal-edit div').remove();
-            $('#append-modal-edit').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                      +'<label class="tebal">Batas Terakhir Pengiriman</label>'
-                                  +'</div>'
-                                  +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                    +'<div class="form-group">'
-                                      +'<label id="dueDate">'+data.header[0].d_pcs_duedate+'</label>'
-                                    +'</div>'
-                                  +'</div>');
-          }
-          else if(metode == "CREDIT")
-          {
-            $('#append-modal-edit div').remove();
-            $('#append-modal-edit').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                      +'<label class="tebal">TOP (Termin Of Payment)</label>'
-                                  +'</div>'
-                                  +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                    +'<div class="form-group">'
-                                      +'<label id="dueDate">'+data.header[0].d_pcs_duedate+'</label>'
-                                    +'</div>'
-                                  +'</div>');
-          }
-        }
-        //loop data
-        Object.keys(data.data_isi).forEach(function(){
-          var qtyCost = data.data_isi[key-1].d_pcsdt_qty;
-          $('#tabel-edit').append('<tr class="tbl_modal_edit_row">'
-                            +'<td style="text-align:center">'+key+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'" name="fieldNamaItem[]" class="form-control input-sm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="fieldItemId[]" class="form-control input-sm"/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcsdt_id+'" name="fieldIdPurchaseDt[]" class="form-control input-sm"/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].d_pcsdt_idpdt+'" name="fieldIdPlanDt[]" class="form-control input-sm"/></td>'
-                            +'<td><input type="text" value="'+qtyCost+'" name="fieldQty[]" class="form-control numberinput input-sm" id="qty_'+i+'" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].m_sname+'" name="fieldSatuan[]" class="form-control input-sm" readonly/></td>'
-                            +'<td><input type="text" value="'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_prevcost)+'" name="fieldHargaPrev[]" class="form-control input-sm" readonly/></td>'
-                            +'<td><input type="text" value="'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_price)+'" name="fieldHarga[]" id="'+i+'" class="form-control input-sm field_harga numberinput"/></td>'
-                            +'<td><input type="text" value="'+convertDecimalToRupiah(data.data_isi[key-1].d_pcsdt_total)+'" name="fieldHargaTotal[]" class="form-control input-sm hargaTotalItem" id="total_'+i+'" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
-                            +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
-                            +'</tr>');
-          i = randString(5);
-          key++;
-        });
-        $('#modal-edit').modal('show');
-      },
-      error: function (jqXHR, textStatus, errorThrown)
-      {
-          alert('Error get data from ajax');
-      }
-    });
+    // console.log();
+    window.location.href=('get-data-edit/'+id);
   }
 
   function submitEdit()
@@ -493,7 +417,7 @@
     });
   }
 
-  function deleteOrder(idPo, idPlan)  {
+  function deleteOrder(idPo)  {
     iziToast.question({
       close: false,
       overlay: true,
@@ -505,10 +429,10 @@
       buttons: [
         ['<button><b>Ya</b></button>', function (instance, toast) {
           $.ajax({
-            url : baseUrl + "/purchasing/orderpembelian/delete-data-order",
-            type: "POST",
+            url : baseUrl + "/purcahse-order/delete-data-order",
+            type: "GET",
             dataType: "JSON",
-            data: {idPo:idPo, idPlan:idPlan, "_token": "{{ csrf_token() }}"},
+            data: {idPo:idPo},
             success: function(response)
             {
               if(response.status == "sukses")

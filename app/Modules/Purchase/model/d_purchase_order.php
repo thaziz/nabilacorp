@@ -223,7 +223,7 @@ class d_purchase_order extends Model
                                 ->where('p_gudang',$gudang->p_gudang)
                                 ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();
             // $prev_harga = [];
             $harga = [];
@@ -321,16 +321,16 @@ class d_purchase_order extends Model
     static function savePo($request)
      {
       // dd($request->all());
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
       $totalGross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
       // $totalGross = $this->konvertRp();
-      $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
+      $discValue = (int)str_replace("%","",$request->diskonHarga);
       $replaceCharPPN = (int)str_replace("%","",$request->ppnHarga);
       // $diskonPotHarga = $this->konvertRp($request->potonganHarga);
       $prev_harga = str_replace(['Rp', '\\', '.', ' '], '', $request->prev_harga);
       $diskonPotHarga = str_replace(['Rp', '\\', '.', ' '], '', $request->potonganHarga);
-      $discValue = $totalGross * $replaceCharDisc / 100;
+      // $discValue = $totalGross * $replaceCharDisc / 100;
 
       $p_id=d_purchase_order::max('po_id')+1;
 
@@ -362,18 +362,19 @@ class d_purchase_order extends Model
       $dataHeader->po_mem = $request->idStaff;
       $dataHeader->po_method = $request->methodBayar;
       $dataHeader->po_total_gross = $totalGross;
-      $dataHeader->po_discount = $diskonPotHarga;
-      $dataHeader->po_disc_percent = $replaceCharDisc;
+      // $dataHeader->po_discount = $diskonPotHarg;
+      // $dataHeader->po_disc_percent = $replaceCharDisc;
       $dataHeader->po_disc_value = $discValue;
       $dataHeader->po_tax_percent = $replaceCharPPN;
       $dataHeader->po_tax_value = ($totalGross - $diskonPotHarga - $discValue) * $replaceCharPPN / 100;
-      $dataHeader->po_total_net = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
-      $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
+      $dataHeader->po_total_net = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett_after_disc);
+      $dataHeader->po_total_gross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
+      // $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett);
       $dataHeader->po_date_confirm = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_duedate = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_status = 'WT';
-      $dataHeader->po_created = date('Y-m-d');
-      $dataHeader->po_updated =  date('Y-m-d');
+      $dataHeader->po_created = date('Y-m-d h:i:s');
+      $dataHeader->po_updated =  date('Y-m-d h:i:s');
       $dataHeader->po_comp = Session::get('user_comp');
       $dataHeader->save();
 
@@ -387,11 +388,14 @@ class d_purchase_order extends Model
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
         $dataDetail->podt_qtyconfirm = $request->fieldQtyconfirm[$i];
-        $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
-        $dataDetail->podt_price = $request->podt_price[$i];
+        $dataDetail->podt_disc =  str_replace(['Rp', '\\', '.', ' '], '', $request->podt_disc_detail[$i]);
+        $dataDetail->podt_prevcost = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_prevprice[$i]);
+        $dataDetail->podt_price = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_price[$i]);
+        $dataDetail->podt_total = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_total[$i]);
+        $dataDetail->podt_gross = $request->podt_total_net[$i];
         $dataDetail->podt_isconfirm = 'TRUE';
-        $dataDetail->podt_created = date('Y-m-d');
-        $dataDetail->podt_updated = date('Y-m-d');
+        $dataDetail->podt_created = date('Y-m-d h:i:s');
+        $dataDetail->podt_updated = date('Y-m-d h:i:s');
         $dataDetail->save();
 
         $dataBrg = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
@@ -406,17 +410,17 @@ class d_purchase_order extends Model
 
 
       }
-      DB::commit();
+      // DB::commit();
     return response()->json([
           'status' => 'sukses',
       ]);
-    } catch (\Exception $e) {
-    DB::rollback();
-    return response()->json([
-        'status' => 'gagal',
-        'data' => $e
-      ]);
-    }
+    // } catch (\Exception $e) {
+    // DB::rollback();
+    // return response()->json([
+    //     'status' => 'gagal',
+    //     'data' => $e
+    //   ]);
+    // }
 
 
 

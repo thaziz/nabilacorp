@@ -51,6 +51,7 @@ function hitungTotalPurchase(){
     var total_gross = 0;
     var total_nett  = 0;
     var diskon=0;
+    var diskon_val=0;
     var potongan_harga = angkaDesimal($('#potongan_harga').val()); 
     var diskon_harga = $('#diskon_harga').val(); 
     var ppn_harga = $('#ppn_harga').val(); 
@@ -64,20 +65,39 @@ function hitungTotalPurchase(){
     if(isNaN(ppn_harga)) {
         ppn_harga =0;
     } 
-
+      
+    var key= 1;
     $(".totalPerItem").each(function() {
-    var value = angkaDesimal($(this).val());    
+    var value = angkaDesimal($(this).val()); 
+    // console.log(value + " value ke "+ key);   
     // add only if the value is number
-    if(!isNaN(value) && value.length != 0) {
-        total_gross += parseFloat(value);
-    }    
+        if(!isNaN(value) && value.length != 0) {
+            total_gross += parseFloat(value);
+        }    
+        key++;
     });
-    if(diskon_harga!='' && diskon_harga!='0'){
-    diskon=((total_gross*diskon_harga)/100);
-    }     
-    total_nett= total_gross - potongan_harga -diskon;
 
-
+    if(diskon_harga!='' && diskon_harga !='0'){
+        diskon=(diskon_harga);
+        diskon_val=(diskon_harga/total_gross);
+        // console.log(diskon);
+        // console.log(diskon_val);
+    }  
+    var index = 1;
+    var hit = 0;    
+    $(".totalPerItem").each(function() {
+        var value = angkaDesimal($(this).val()); 
+        var total_disc = value*diskon_val;
+        $('.disc_detail_'+index).val(parseFloat(total_disc).toFixed(2));
+        var total_hit = value-parseFloat(total_disc).toFixed(2);
+        // console.log(parseFloat(total_disc).toFixed(2) + " value ke "+ index);   
+        // console.log(parseFloat(total_hit).toFixed(2) + " value ke "+ index);   
+        $('.hargaTotalItem_net_'+index).val(parseFloat(total_hit).toFixed(2));
+        index++;
+    });
+     
+    total_nett= total_gross - potongan_harga - diskon;
+  
     $('#total_gross').val(SetFormRupiah(total_gross));    
     $('#total_nett').val(SetFormRupiah(total_nett));    
     

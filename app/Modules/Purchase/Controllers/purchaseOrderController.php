@@ -108,33 +108,10 @@ class purchaseOrderController extends Controller
         $dataIsi = d_purchaseorder_dt::
                                 join('d_purchase_order','podt_purchaseorder','=','po_id')
                                 ->leftjoin('m_item','podt_item','=','i_id')
-                                ->leftjoin('d_item_supplier','is_item','=','i_id')
-                                ->leftjoin('m_price','m_pitem','=','i_id')
+                                // ->leftjoin('d_item_supplier','is_item','=','i_id')
+                                // ->leftjoin('m_price','m_pitem','=','i_id')
                                 ->leftjoin('m_satuan', 's_id', '=', 'podt_satuan')
-                                ->leftjoin('d_stock','s_item','=','i_id')
-                                ->select('i_id',
-                                         'm_item.i_code',
-                                         'm_item.i_name',
-                                         'po_total_gross',
-                                         's_name',
-                                         'podt_qty',
-                                         'podt_qtyconfirm',
-                                         'podt_prevcost',
-                                         's_qty',
-                                         'podt_purchaseorder',
-                                         'podt_detailid',
-                                         'po_comp',
-                                         'i_sat1',
-                                         'i_sat2',
-                                         'i_sat3',
-                                         // 'p_gudang',
-                                         'is_price1',
-                                         'is_price2',
-                                         'is_price3',
-                                         'm_pbuy1',
-                                         'm_pbuy2',
-                                         'm_pbuy3'
-                                )
+                                // ->leftjoin('d_stock','s_item','=','i_id')
                                 ->where('podt_purchaseorder', '=', $id)
                                 // ->where('po_comp',$gudang->p_comp)
                                 // ->where('popen(command, mode)_gudang',$gudang->p_gudang)
@@ -183,5 +160,21 @@ class purchaseOrderController extends Controller
             'data_prev' => $harga,
         ]);
      }
+     public function deleteDataOrder(Request $request)
+     {
+      $dataHeader = d_purchase_order::where('po_id',$request->idPo)->delete();
+      $dataDetail = d_purchaseorder_dt::where('podt_purchaseorder',$request->idPo)->delete();
+       // dd($request->all()); 
+        return response()->json([
+            'status' => 'sukses',
+        ]);
+     }
+     public function getDataEdit($id)
+     {    
+        $dataHeader = d_purchase_order::where('po_id',$id)->get();
+        $dataDetail = d_purchaseorder_dt::where('podt_purchaseorder',$id)->get();
+        return view('Purchase::orderpembelian/edit_order',compact('data'));
+     }
+
 }
  /*<button class="btn btn-outlined btn-info btn-sm" type="button" data-target="#detail" data-toggle="modal">Detail</button>*/
