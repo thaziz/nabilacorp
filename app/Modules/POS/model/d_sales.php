@@ -8,6 +8,8 @@ use App\Modules\POS\model\d_sales_dt;
 
 use App\Modules\POS\model\d_receivable;
 
+use App\Modules\POS\model\d_item_titipan;
+
 use App\Lib\mutasi;
 
 use App\Lib\format;
@@ -100,6 +102,19 @@ class d_sales extends Model
                   $comp = $request->comp[$i];
 
                   $position = $request->position[$i];
+
+
+                  $item_titipan_qty=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i])->select('idt_terjual','idt_sisa')->first();
+
+                  $item_titipan=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i]);
+                  
+                  $item_titipan->update([
+                                  'idt_terjual'=>$item_titipan_qty->idt_terjual+$sd_qty,
+                                  'idt_sisa'=>$item_titipan_qty->idt_sisa-$sd_qty
+                                  ]);
+
+                  
+
 
                   d_sales_dt::create([
                             'sd_sales' =>$s_id ,
@@ -480,7 +495,8 @@ class d_sales extends Model
                             if($d_sales->s_status=='final' && $d_sales->s_channel=='Toko' ){
                               $disable='disabled';
                             }
-                            if($d_sales->s_status=='final' && $d_sales->s_channel=='Pesanan' ){
+                            if($d_sales->s_status=='final' && $d_sales->s_channel=='Pesanan' ||
+                            $d_sales->s_status=='Terima' && $d_sales->s_channel=='Pesanan' ){
                               $disable='disabled';
                             }
 
@@ -950,6 +966,22 @@ $totalBayar=0;
           $comp=$d_sales_dt[$i]->sd_comp;
           $position=$d_sales_dt[$i]->sd_position; 
           $s_note=$updateSales->first()->s_note;
+
+
+        $item_titipan_qty=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$d_sales_dt[$i]->sd_item)->select('idt_terjual','idt_sisa')->first();
+/*dd($d_sales_dt[$i]->sd_item);*/
+if($item_titipan_qty){
+        $item_titipan=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$d_sales_dt[$i]->sd_item);
+                  
+        $item_titipan->update([
+                                  'idt_terjual'=>$item_titipan_qty->idt_terjual+$d_sales_dt[$i]->sd_qty,
+                                  'idt_sisa'=>$item_titipan_qty->idt_sisa-$d_sales_dt[$i]->sd_qty
+                                  ]);
+}
+
+
+
+
           $simpanMutasi=mutasi::mutasiStok($d_sales_dt[$i]->sd_item,$d_sales_dt[$i]->sd_qty ,$comp,$position,$flag='',$s_note,$ket='',$s_date);          
             if($simpanMutasi['true']){     
             $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];

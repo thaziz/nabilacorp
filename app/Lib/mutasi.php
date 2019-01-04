@@ -239,6 +239,8 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_detail'] =$flag;
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
                             $newMutasi[$k]['sm_reff'] = $sm_reff;  
+                            $newMutasi[$k]['sm_stockreff'] = $getBarang[$k]->sm_stock;  
+                            $newMutasi[$k]['sm_detailreff'] = $getBarang[$k]->sm_detailid;  
                             // $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;
                             $newMutasi[$k]['sm_mutcat'] =$mutcat;      
                             $totalHpp+=$totalPermintaan*$getBarang[$k]->sm_hpp;        
@@ -271,6 +273,9 @@ public static function hapusMutasi($item,$permintaan,$comp,$position,$flag,$sm_r
                             $newMutasi[$k]['sm_detail'] =$flag;
                             $newMutasi[$k]['sm_reff'] = $sm_reff; 
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
+
+                            $newMutasi[$k]['sm_stockreff'] = $getBarang[$k]->sm_stock;  
+                            $newMutasi[$k]['sm_detailreff'] = $getBarang[$k]->sm_detailid;  
                             // $newMutasi[$k]['sm_mutcat'] =$getBarang[$k]->sm_mutcat;    
                             $newMutasi[$k]['sm_mutcat'] =$mutcat;
                             $totalHpp+=$totalQty*$getBarang[$k]->sm_hpp;        
@@ -506,7 +511,11 @@ $totalPermintaan=abs($awaltotalPermintaan);
                             $newMutasi[$k]['sm_detail'] =$detailTujuan;
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
                             $newMutasi[$k]['sm_reff'] = $sm_reff;  
-                            $newMutasi[$k]['sm_mutcat'] =$mutcatTujuan;      
+                            $newMutasi[$k]['sm_mutcat'] =$mutcatTujuan;  
+
+                            $newMutasi[$k]['sm_stockreff'] = $getBarang[$k]->sm_stock;  
+                            $newMutasi[$k]['sm_detailreff'] = $getBarang[$k]->sm_detailid;  
+
                             $totalHpp+=$totalPermintaan*$getBarang[$k]->sm_hpp;        
 
 
@@ -551,6 +560,10 @@ $mutasiStok->tambahmutasi($item,$totalPermintaan,$compTujuan,$positionTujuan,'Tr
                             $newMutasi[$k]['sm_reff'] = $sm_reff; 
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
                             $newMutasi[$k]['sm_mutcat'] =$mutcatTujuan;    
+
+                            $newMutasi[$k]['sm_stockreff'] = $getBarang[$k]->sm_stock;  
+                            $newMutasi[$k]['sm_detailreff'] = $getBarang[$k]->sm_detailid;  
+
                             $totalHpp+=$totalQty*$getBarang[$k]->sm_hpp;        
                             
                             $totalPermintaan = $totalPermintaan - $totalQty;
