@@ -196,9 +196,8 @@ class m_itemm extends Model
             $sql->where(function ($query) use ($search,$groupName) {
                   $query->where('i_name','like','%'.$search.'%');                  
                   $query->whereIn('i_type',$groupName);                          
-                  $query->orWhere('i_code','like','%'.$search.'%');
-                  $query->whereIn('i_type',$groupName);        
-                  
+                  // $query->orWhere('i_code','like','%'.$search.'%');
+                  // $query->whereIn('i_type',$groupName);        
                   });
                   }                                  
         else{
