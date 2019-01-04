@@ -11,5 +11,6 @@ return  [
        'System',
        'Inventory',
        'keuangan',
+       'print_terminal'
     ]
 ];
