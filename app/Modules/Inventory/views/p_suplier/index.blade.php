@@ -197,10 +197,10 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldQtysendHidden[]" class="form-control numberinput input-sm" id="qtymskhidden_'+i+'"/></td>'
                             +'<td><input type="hidden" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuanTxt[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].s_id+'" name="fieldSatuanId[]" class="form-control input-sm" readonly/>'
-                            +'<input type="text" value="'+convertDecimalToRupiah(hargaSatuanItemNet)+'" name="fieldHarga[]" id="cost_'+i+'" class="form-control input-sm field_harga numberinput" readonly/>'
-                            +'<input type="hidden" value="'+hargaTotalPerRow+'" name="fieldHargaRaw[]" id="costRaw_'+i+'" class="form-control input-sm field_harga_raw numberinput" readonly/>'
-                            +'<input type="hidden" value="'+hargaSatuanItemNet+'" name="fieldHargaTotal[]" class="form-control input-sm hargaTotalItem" id="total_'+i+'" readonly/>'
-                            +'<input type="hidden" value="'+hargaTotalPerRow+'" name="fieldHargaTotalRaw[]" id="totalRaw_'+i+'" class="form-control input-sm field_hargatotal_raw numberinput" readonly/></td>'
+                            +'<input type="text" value="'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'" name="fieldHarga[]" id="cost_'+i+'" class="form-control input-sm field_harga numberinput" readonly/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_price+'" name="fieldHargaRaw[]" id="costRaw_'+i+'" class="form-control input-sm field_harga_raw numberinput" readonly/>'
+                            +'<input type="hidden" value="'+convertDecimalToRupiah(data.data_isi[key-1].podt_total)+'" name="fieldHargaTotal[]" class="form-control input-sm hargaTotalItem" id="total_'+i+'" readonly/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_total+'" name="fieldHargaTotalRaw[]" id="totalRaw_'+i+'" class="form-control input-sm field_hargatotal_raw numberinput" readonly/></td>'
                             +'<td><input type="text" value="'+/*data.data_stock[key-1].s_qty+*/'" name="fieldStokTxt[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+/*data.data_stock[key-1].s_qty+*/'" name="fieldStokVal[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
@@ -491,8 +491,8 @@
               // $('#btn_simpan').attr('disabled',true);
               $.ajax({
                 url : baseUrl + "/inventory/p_suplier/simpan-penerimaan",
-                type: "POST",
-                dataType: "JSON",
+                type: "get",
+                // dataType: "JSON",
                 data: $('#form-terima-beli').serialize(),
                 success: function(response)
                 {
