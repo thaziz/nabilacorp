@@ -31,7 +31,7 @@
                         <div class="row">
                           <div class="col-md-12 col-sm-12 col-xs-12">
                             <div align="right" style="margin-bottom: 10px;">
-                              <a href="{{ url('/penjualan/returnpenjualan/tambahreturn') }}">
+                              <a href="{{ url('/penjualan/manajemenreturn/tambahreturn') }}">
                                 <button type="button" class="btn btn-box-tool" title="Tambahkan Data Item">
                                   <i class="fa fa-plus" aria-hidden="true">&nbsp;</i>
                                   Tambah Data
@@ -48,7 +48,6 @@
                                     <th class="wd-10p">Jenis Return</th>
                                     <th class="wd-15p">Type Sales</th>
                                     <th class="wd-15p">Status</th>
-                                    <th class="wd-15p">Resi dari Cus</th>
                                     <th class="wd-15p">Aksi</th>
                                   </tr>
                                 </thead>
@@ -174,9 +173,8 @@
 
   var tableRetur =  $('#tabel-sales-return').DataTable({
     processing: true,
-    serverSide: true,
     ajax: {
-        url : baseUrl + "/penjualan/returnpenjualan/tabel",
+        url : baseUrl + "/penjualan/manajemenreturn/tabel",
     },
     columns: [
       //{data: 'DT_Row_Index', name: 'DT_Row_Index'},
@@ -186,7 +184,6 @@
       {data: 'dsr_jenis_return', name: 'dsr_jenis_return'},
       {data: 'dsr_type_sales', name: 'dsr_type_sales'},
       {data: 'dsr_status', name: 'dsr_status'},
-      {data: 'dsr_resi', name: 'dsr_resi'},
       {data: 'action', name: 'action', orderable: false, searchable: false},
     ],
     language: {
@@ -205,7 +202,7 @@
 
   function lihatDetail(id){
      $.ajax({
-          url: baseUrl + "/penjualan/returnpenjualan/getdata",
+          url: baseUrl + "/penjualan/manajemenreturn/getdata",
           type: 'get',
           data: {x: id},
           success: function (response) {
@@ -216,7 +213,7 @@
 
   function lihatDetailSB(id){
      $.ajax({
-          url: baseUrl + "/penjualan/returnpenjualan/getdata/SB",
+          url: baseUrl + "/penjualan/manajemenreturn/getdata/SB",
           type: 'get',
           data: {x: id},
           success: function (response) {
@@ -227,7 +224,7 @@
 
   function lihatDetailTerimaSB(id){
      $.ajax({
-          url: baseUrl + "/penjualan/returnpenjualan/getdata/terimaSB",
+          url: baseUrl + "/penjualan/manajemenreturn/getdata/terimaSB",
           type: 'get',
           data: {x: id},
           success: function (response) {
@@ -238,7 +235,7 @@
 
   function simpanReturn(id){
       $.ajax({
-          url: baseUrl + "/penjualan/returnpenjualan/return/"+ id,
+          url: baseUrl + "/penjualan/manajemenreturn/return/"+ id,
           type: 'GET',
           success: function (response) {
             if (response.status == 'sukses') {
@@ -252,8 +249,8 @@
                         title: '',
                         message: 'Data customer tersimpan.'
                     });
-              window.open(baseUrl + "/penjualan/returnpenjualan/printreturn/" + id );
-              window.open(baseUrl + "/penjualan/returnpenjualan/printfaktur/" + id );
+              window.open(baseUrl + "/penjualan/manajemenreturn/printreturn/" + id );
+              window.open(baseUrl + "/penjualan/manajemenreturn/printfaktur/" + id );
             }else{
               iziToast.error({
                         position: "topRight",
@@ -267,7 +264,7 @@
 
     function simpanReturnKB(id){
       $.ajax({
-          url: baseUrl + "/penjualan/returnpenjualan/return/"+ id,
+          url: baseUrl + "/penjualan/manajemenreturn/return/"+ id,
           type: 'GET',
           success: function (response) {
             if (response.status == 'sukses') {
@@ -281,7 +278,7 @@
                         title: '',
                         message: 'Data customer tersimpan.'
                     });
-              window.open(baseUrl + "/penjualan/returnpenjualan/printfaktur/" + id );
+              window.open(baseUrl + "/penjualan/manajemenreturn/printfaktur/" + id );
             }else{
               iziToast.error({
                         position: "topRight",
@@ -295,7 +292,7 @@
 
     function simpanReturnSB(id){
       $.ajax({
-          url: baseUrl + "/penjualan/returnpenjualan/return/"+ id,
+          url: baseUrl + "/penjualan/manajemenreturn/return/"+ id,
           type: 'GET',
           success: function (response) {
             if (response.status == 'sukses') {
@@ -309,7 +306,7 @@
                         title: '',
                         message: 'Data customer tersimpan.'
                     });
-              window.open(baseUrl + "/penjualan/returnpenjualan/printfaktur/" + id );
+              window.open(baseUrl + "/penjualan/manajemenreturn/printfaktur/" + id );
             }else{
               iziToast.error({
                         position: "topRight",
@@ -322,13 +319,13 @@
     }
 
   function printReturn(id){
-    window.open(baseUrl + "/penjualan/returnpenjualan/printfaktur/" + id );
+    window.open(baseUrl + "/penjualan/manajemenreturn/printfaktur/" + id );
   }
 
   function terimaSB(id){
     var a = $('#resi').serialize();
     $.ajax({
-    url: baseUrl + "/penjualan/returnpenjualan/terimasb/"+ id,
+    url: baseUrl + "/penjualan/manajemenreturn/terimasb/"+ id,
     type: 'GET',
     data: a,
     success: function (response) {
@@ -369,7 +366,7 @@
                             }, toast);
                             $.ajax({
                                 type: 'get',
-                                url: baseUrl + "/penjualan/returnpenjualan/deleteretur/" + id,
+                                url: baseUrl + "/penjualan/manajemenreturn/deleteretur/" + id,
                                 success: function () {
                                     tableRetur.ajax.reload();
                                 }
