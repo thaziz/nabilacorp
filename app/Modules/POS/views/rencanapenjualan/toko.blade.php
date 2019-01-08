@@ -67,26 +67,21 @@
                   <label class="control-label tebal" name="qty">Jumlah</label>
                   <div class="input-group input-group-sm" style="width: 100%;">
                      <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="d_pcshdt_qty" onclick="" >   
-                     <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="">   
+                        
                   </div>
                </div>
             </div>
          </div>
          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div style="padding-top: 20px;padding-bottom: 20px;">
-               <div class="table-responsive" style="overflow-y : auto;height : 350px; border: solid 1.5px #bb936a">
+            <div style="padding-top: 20px;;">
+               <div class="table-responsive" ">
                   <table class="table tabelan table-bordered table-hover dt-responsive" id="tSalesDetail">
                      <thead align="right">
                         <tr>
                            <th width="23%">Nama</th>
-                           <th width="4%">stok</th>
-                           <th width="4%" style="display:none">JumlahAwal</th>
+                           <th width="4%">Stok</th>
                            <th width="4%">Jumlah</th>
                            <th width="5%">Satuan</th>
-                           <th width="6%">Harga</th>
-                           <th width="3%" style="display:none">DiscValue(%)</th>
-                           <th width="10%" style="display:none">Total+Diskon</th>
-                           <th width="10%">Total</th>
                            <th width="3%">Aksi</th>
                         </tr>
                      </thead>
@@ -98,53 +93,21 @@
          </div>
          <div class="col-md-12 col-sm-12 col-xs-12" >
             <div class="col-md-5 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top: 10px;">
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                  <label class="control-label tebal" for="penjualan">Sub Total</label>
+               <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;justify-content: flex-end">
+                  <label class="control-label tebal" for="penjualan">Total QTY</label>
                </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden">
+               <div class="col-md-6 col-sm-6 col-xs-12 ">
                   <div class="form-group">
-                     <input type="text" id="s_gross" name="s_gross" readonly="true" class="form-control input-sm reset" style="text-align: right;">
+                     <input type="text" id="grandtotal" name="s_gross" readonly="true" class="form-control input-sm reset" style="text-align: right;">
                   </div>
                </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                  <label class="control-label tebal" for="discount">Total Diskon(%)</label>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                  <div class="form-group">
-                     <input type="text" id="discountP" name="s_disc_percent" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                  </div>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                  <label class="control-label tebal" for="discount">Total Diskon(Rp.)</label>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                  <div class="form-group">
-                     <input type="text" id="discountRp" name="s_disc_value" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                  </div>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                  <label class="control-label tebal" for="discount">Total Diskon</label>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                  <div class="form-group">
-                     <input type="text" id="discount" name="discount" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                  </div>
-               </div>
-               
+              
                <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
                   <div class="form-group">
                      <input type="text" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
                   </div>
                </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                  <label class="control-label tebal" for="grand">Biaya Kirim</label>
-               </div>
-               <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                  <div class="form-group">
-                     <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
-                  </div>
-               </div>
-              
+                   
                <!--      <div class="col-md-6 col-sm-6 col-xs-12">
                   <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
                   </div>
