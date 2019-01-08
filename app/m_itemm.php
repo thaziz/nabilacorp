@@ -32,6 +32,8 @@ class m_itemm extends Model
                         })->make(true);        
     }
 
+    
+
     public static function seachItem($item) {      
         //cari barang jual
 
@@ -111,6 +113,29 @@ class m_itemm extends Model
         return Response::json($results);
 
     }
+
+
+
+    
+      public static function itemRencana(Request $request)
+    {
+        $term = $request->term;
+        $search = $item->term;
+        $groupName=['BTPN','BJ','BP'];
+        $sql=DB::table('m_item')             
+             ->join('m_satuan','m_satuan.s_id','=','i_satuan')
+             ->where('i_name','like','%'.$search.'%')                                    
+             ->whereIn('i_type',$groupName)
+             ->orWhere('i_code','like','%'.$search.'%')
+             ->whereIn('i_type',$groupName); 
+               
+        $sql=$sql->get();
+        
+
+    }
+
+    
+
 
     public static function searchItemCode($item) {      
 

@@ -109,6 +109,9 @@
                             <li class="menu-sekunder {{ Request::is('master/item_titipan/index') ? 'active' : '' || Request::is('/master/item_titipan/*') ? 'active' : '' }}"><a href="{{ url('/master/item_titipan/index') }}"><span class="submenu-title">Master Data Barang Titipan</span></a>
                             </li>
 
+                            <li class="menu-sekunder {{ Request::is('master/grouphargakhusus/index') ? 'active' : '' || Request::is('master/grouphargakhusus/*') ? 'active' : '' }}"><a href="{{ url('master/grouphargakhusus/index') }}"><span class="submenu-title">Group Harga Khusus</span></a>
+                            </li>
+
 
                             @if(Auth::user()->punyaAkses('Master Formula','ma_read'))
                                     <li class="{{ Request::is('master/masterproduksi/index') ? 'active' : '' || Request::is('master/masterproduksi/*') ? 'active' : '' }}">
