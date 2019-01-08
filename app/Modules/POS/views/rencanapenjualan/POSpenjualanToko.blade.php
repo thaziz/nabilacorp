@@ -51,6 +51,9 @@
 @section("extra_scripts")
 
 @include('POS::rencanapenjualan/js/format_currency')
+@include('POS::rencanapenjualan/js/form_functions')
+@include('POS::rencanapenjualan/js/form_commander')
+@include('POS::rencanapenjualan/js/functions')
 @include('POS::rencanapenjualan/js/commander')
 
 @endsection

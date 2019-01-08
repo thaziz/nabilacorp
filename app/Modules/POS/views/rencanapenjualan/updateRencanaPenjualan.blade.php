@@ -27,7 +27,7 @@
       </div>
       <ul id="generalTab" class="nav nav-tabs">
          <li class="active"><a id="penjualan" href="#toko" data-toggle="tab">Update Rencana Penjualan</a></li>
-         <li><a id="list" href="{{ url('/penjualan/rencanapenjualan/rencana') }}">List Rencana Penjualan</a></li>
+         
          <!-- 
             <li><a href="#mobil" data-toggle="tab">Penjualan Mobil</a></li>
             <li><a href="#listmobil" data-toggle="tab">List Mobil</a></li> -->
@@ -43,6 +43,14 @@
          <style type="text/css">
          </style>
          <div id="toko" class="tab-pane fade in active">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: -10px;margin-bottom: 15px;">  
+            <div class="col-md-5 col-sm-6 col-xs-8">
+              <h4>Form Update Rencana Penjualan</h4>
+            </div>
+            <div class="col-md-7 col-sm-6 col-xs-4" align="right" style="margin-top:5px;margin-right: -25px;">
+              <a href="{{ url('/penjualan/rencanapenjualan/rencana#list') }}" class="btn"><i class="fa fa-arrow-left"></i></a>
+            </div>
+          </div>
             <form method="post" id="form_sales_plan">
                <div class="row">
                   {{ csrf_field() }}
@@ -53,7 +61,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                            <div class="form-group">
-                              <input type="text" class="move up1 form-control input-sm reset "  name="s_date" id="s_date" value="{{date('d-m-Y')}}" autocomplete="off">
+                              <input readonly type="text" class="move up1 form-control input-sm reset "  name="s_date" id="s_date" value="{{date('d-m-Y')}}" autocomplete="off">
                               <input type="hidden" class="form-control input-sm reset"  name="s_id" id="s_id" readonly="">
                               <input type="hidden" class="form-control input-sm reset"  name="s_status" id="s_status" readonly="">
                            </div>
@@ -63,7 +71,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                            <div class="form-group">
-                              <input type="hidden"  name="sp_id" id="sp_id" value="{{ $sp_id }}">
+                              <input type="hidden"  name="sp_id" id="sp_id" value="{{ $d_sales_plan->sp_id }}">
                               <input type="text" class="form-control input-sm reset" name="s_note" id="s_note" value="{{ $d_sales_plan->sp_code }}" disabled="">
                            </div>
                         </div>
@@ -109,7 +117,7 @@
                         <div class="col-md-3">
                            <label class="control-label tebal" name="qty">Jumlah</label>
                            <div class="input-group input-group-sm" style="width: 100%;">
-                              <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="fQty" onclick="validationForm();" >   
+                              <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="d_pcshdt_qty" onclick="validationForm();" >   
                               <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="validationForm();">   
                            </div>
                         </div>
@@ -117,24 +125,18 @@
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                      <div style="padding-top: 20px;padding-bottom: 20px;">
-                        <div class="table-responsive" style="overflow-y : auto;height : 350px; border: solid 1.5px #bb936a">
+                        <div class="table-responsive" >
                            <table class="table tabelan table-bordered table-hover dt-responsive" id="tSalesDetail">
                               <thead align="right">
                                  <tr>
                                     <th width="23%">Nama</th>
-                                    <th width="4%">stok</th>
-                                    <th width="4%" style="display:none">JumlahAwal</th>
+                                    <th width="4%">Stok</th>
                                     <th width="4%">Jumlah</th>
                                     <th width="5%">Satuan</th>
-                                    <th width="6%">Harga</th>
-                                    <th width="3%" style="display:none">DiscValue(%)</th>
-                                    <th width="10%" style="display:none">Total+Diskon</th>
-                                    <th width="10%">Total</th>
                                     <th width="3%">Aksi</th>
                                  </tr>
                               </thead>
                               <tbody class="bSalesDetail">
-                                 @include('POS::rencanapenjualan/editDetailRencanaPenjualan')
                               </tbody>
                            </table>
                         </div>
@@ -142,62 +144,30 @@
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12" >
                      <div class="col-md-5 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top: 10px;">
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                           <label class="control-label tebal" for="penjualan">Sub Total</label>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                           <div class="form-group">
-                              <input type="text" id="s_gross" name="s_gross" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                           <label class="control-label tebal" for="discount">Total Diskon(%)</label>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                           <div class="form-group">
-                              <input type="text" id="discountP" name="s_disc_percent" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                           <label class="control-label tebal" for="discount">Total Diskon(Rp.)</label>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden" style="display: none;">
-                           <div class="form-group">
-                              <input type="text" id="discountRp" name="s_disc_value" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                           <label class="control-label tebal" for="discount">Total Diskon</label>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                           <div class="form-group">
-                              <input type="text" id="discount" name="discount" readonly="true" class="form-control input-sm reset" style="text-align: right;">
-                           </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
-                           <div class="form-group">
-                              <input type="text" value="{{ $grand_total }}" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
-                           </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                           <label class="control-label tebal" for="grand">Biaya Kirim</label>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12 hidden">
-                           <div class="form-group">
-                              <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
-                           </div>
-                        </div>
-                        
-                        <!--      <div class="col-md-6 col-sm-6 col-xs-12">
-                           <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
-                           </div>
-                           <div class="col-md-6 col-sm-6 col-xs-12">
-                           <div class="form-group">
-                             <input type="text" id="jml_bayar" name="" class="form-control input-sm jml_bayar reset" style="text-align: right;" onkeyup="numberOnly()" disabled="">
-                           </div>
-                           </div> -->
-                     </div>
+               <div class="col-md-6 col-sm-6 col-xs-12" style="display: flex;justify-content: flex-end">
+                  <label class="control-label tebal" for="penjualan">Total QTY</label>
+               </div>
+               <div class="col-md-6 col-sm-6 col-xs-12 ">
+                  <div class="form-group">
+                     <input type="text" id="grandtotal" name="s_gross" readonly="true" class="form-control input-sm reset" style="text-align: right;">
+                  </div>
+               </div>
+              
+               <div class="col-md-6 col-sm-6 col-xs-12" style="display: none;">
+                  <div class="form-group">
+                     <input type="text" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
+                  </div>
+               </div>
+                   
+               <!--      <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <input type="text" id="jml_bayar" name="" class="form-control input-sm jml_bayar reset" style="text-align: right;" onkeyup="numberOnly()" disabled="">
+                  </div>
+                  </div> -->
+            </div>
                      <!-- Start Modal Proses -->
                      <div class="modal fade" id="proses" role="dialog">
                         <div class="modal-dialog">
@@ -314,13 +284,29 @@
 </div>
 @endsection
 @section("extra_scripts")
-@include('POS::rencanapenjualan/js/commander')
+@include('POS::rencanapenjualan/js/format_currency')
+@include('POS::rencanapenjualan/js/form_functions')
+@include('POS::rencanapenjualan/js/form_commander')
 <script>
    $(document).ready(function(){
       // Memformat grand total
-      var grand_total = {{ $grand_total }};
-      var currency = get_currency(grand_total);
-      $('#grand_biaya').val(currency);
+      var d_salesplan_dt = {!! $d_salesplan_dt !!};
+     
+
+       var unit;
+       for(x = 0;x < d_salesplan_dt.length;x++) {
+            unit = d_salesplan_dt[x];
+             var spdt_item = "<input type='hidden' name='spdt_unit[]' value='" + unit.i_id + "'>" + unit.i_name;
+             var spdt_qty = "<input type='number' class='form-control' name='spdt_qty[]' value='" + unit.spdt_qty + "'>";
+             var stok = '-';
+             var satuan = unit.s_name;
+
+             var aksi = "<button class='btn btn-danger' type='button'><i class='glyphicon glyphicon-trash'></i></button>";
+             tSalesDetail.row.add(
+               [spdt_item, stok, spdt_qty, satuan, aksi]
+             );
+       }
+       tSalesDetail.draw();
    });
 </script>
 @endsection

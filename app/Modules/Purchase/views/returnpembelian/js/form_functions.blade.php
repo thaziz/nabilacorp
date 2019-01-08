@@ -54,6 +54,8 @@
                   else
                   {
                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    $('#button_save').text('Simpan Data'); //change button text
+                        $('#button_save').attr('disabled',false); //set button enable 
                     iziToast.error({
                       position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                       title: 'Pemberitahuan',
@@ -271,28 +273,28 @@
     return hasil;
   }
 
-  function find_d_purchasereturn_dt() {
+  function find_d_purchaseorder_dt() {
       tabel_d_purchasereturn_dt.clear().draw();
 
       $.ajax({
-        url : "{{ url('purchasing/returnpembelian/find_d_purchasereturn_dt') }}",
+        url : "{{ url('purchasing/returnpembelian/find_d_purchaseorder_dt') }}",
         type: "GET",
         data: 'po_id=' + $('[name="pr_purchase"]').val(),
         success: function(res) {
           if(res.data.length > 0) {
             var i_id;
-            var po_dt_qty;
-            var po_dt_price;
-            var po_dt_total;
+            var podt_qty;
+            var podt_price;
+            var podt_total;
             var remove_btn, subtotal, stock, satuan;
 
             if(res.data.length > 0) {
               for(x = 0;x < res.data.length;x++) {
                   prdt_item = '<input type="hidden" name="prdt_item[]" value="' + res.data[x].i_id + '">' + res.data[x].i_id + ' | ' + res.data[x].i_name;
-                  prdt_qtyreturn = '<input type="hidden" name="prdt_qty[]" value="' + res.data[x].po_dt_qty + '"><input type="text" name="prdt_qtyreturn[]" value="' + res.data[x].po_dt_qty + '">';
-                  prdt_price = '<input type="hidden" name="prdt_price[]" value="' + res.data[x].po_dt_price + '">' + get_currency(res.data[x].po_dt_price);
-                  remove_btn = '<button type="button" class="btn btn-danger remove_btn"><i class="fa fa-times"></i></button>';
-                  subtotal = res.data[x].po_dt_qty * res.data[x].po_dt_price;
+                  prdt_qtyreturn = '<input type="hidden" name="prdt_qty[]" value="' + res.data[x].podt_qty + '"><input type="text" name="prdt_qtyreturn[]" value="' + res.data[x].podt_qty + '">';
+                  prdt_price = '<input type="hidden" name="prdt_price[]" value="' + res.data[x].podt_price + '">' + get_currency(res.data[x].podt_price);
+                  remove_btn = '<button type="button" class="btn btn-danger remove_btn"><i class="glyphicon glyphicon-trash"></i></button>';
+                  subtotal = res.data[x].podt_qty * res.data[x].podt_price;
                   subtotal = get_currency(subtotal);
                   stock = '-';
                   s_name = res.data[x].s_name;

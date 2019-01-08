@@ -1,5 +1,7 @@
 <script type="text/javascript">
   dataIndex = null;
+  // Global variable
+  item = null;
 
   // Function untuk meng-insert sales plan
   function insert_sales_plan() {
@@ -44,7 +46,7 @@
             timeout: 1000,
             message: 'Data berhasil diperbarui',
             onClosing : function() {
-              location.href = "{{ url('/penjualan/rencanapenjualan/rencana') }}";
+              location.href = "{{ url('/penjualan/rencanapenjualan/rencana#list') }}";
             }
           });
 
@@ -485,70 +487,6 @@
     /*$('.dataDetail').*/
   }
 
-
-  function table() {
-    tablex = $("#tableListToko").DataTable({
-      responsive: true,
-      "language": dataTableLanguage,
-      processing: true,
-      ajax: {
-        "url": "{{ url('/penjualan/rencanapenjualan/find_d_sales_plan') }}",
-        "type": "get",
-        data: {
-          "_token": "{{ csrf_token() }}",
-          "type": "toko",
-          "tanggal1": $('#tanggal1').val(),
-          "tanggal2": $('#tanggal2').val(),
-        },
-      },
-      columns: [
-        { 
-          data : null,
-          render : function(res) {
-            var date = new Date(res.sp_date);
-            var day = date.getDate();
-            var month = date.getMonth() + 1;
-            var year = date.getFullYear();
-
-            var content = day + '/' + month + '/' + year;
-            return content;
-          } 
-        },
-        { data : 'sp_code' },
-        { 
-          data : null,
-          render : function(res) {
-            var currency = get_currency( res.total_harga );
-            var content = 'RP ' + currency;
-            return content;
-          }
-        },
-        { 
-            data : null,
-            render : function(res) {
-              var content = '<div style="display:flex;justify-content:center"><button id="edit" style="margin-right:1mm" onclick="location.href=\'{{ url("/penjualan/rencanapenjualan/form_perbarui") }}/' + res.sp_id + '\'" class="btn btn-warning btn-xs" title="Edit" type="button"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
-
-              return content;
-            }
-        }
-      ],
-      'columnDefs': [{
-        "targets": 2,
-        "className": "text-right",
-      }],
-      "rowCallback": function (row, data, index) {
-
-        /*$node = this.api().row(row).nodes().to$();*/
-
-        if (data['s_status'] == 'draft') {
-          $('td', row).addClass('warning');
-        }
-      }
-
-    });
-  }
-
-
   function setFormDetail() {
     console.log('sebelum' + tamp);
     if (fQty.val() <= 0) {
@@ -676,53 +614,6 @@
     console.log('setelah' + tamp);
   }
 
-
-  function hapus(id) {
-          iziToast.show({
-            color: 'red',
-            title: 'Peringatan',
-            message: 'Apakah anda yakin!',
-            position: 'center', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-            progressBarColor: 'rgb(0, 255, 184)',
-            buttons: [
-              [
-                '<button>Ok</button>',
-                function (instance, toast) {
-                  instance.hide({
-                    transitionOut: 'fadeOutUp'
-                  }, toast);
-                  
-                  $.ajax({
-                       type: "get",
-                       url: '{{ url("/penjualan/rencanapenjualan/hapus") }}/' + id,
-                       success: function(response){
-                            if (response.status =='sukses') {
-                              toastr.info('Data berhasil di hapus.');
-                              tablex.ajax.reload();
-                            }
-                            else {
-
-                              toastr.error('Data gagal di simpan.');
-                            }
-                          }
-                       })
-                }
-              ],
-              [
-                '<button>Close</button>',
-                 function (instance, toast) {
-                  instance.hide({
-                    transitionOut: 'fadeOutUp'
-                  }, toast);
-                }
-              ]
-            ]
-          });
-
-        }
-
-
-
   function hapusButton(a) {
     a = '' + a;
     hapusSalesDt.push(a);
@@ -737,6 +628,47 @@
   }  
 
   $(document).ready(function () {
+    tSalesDetail = $('#tSalesDetail').DataTable(
+      {
+        columnDefs : [
+          {
+            'targets' : 2,
+            'createdCell' : function(td) {
+                var spdt_qty = $(td).find('[name="spdt_qty[]"]');
+                if(spdt_qty.length > 0) {
+                  spdt_qty.on('change keyup', function(){
+                    var tr = $(this).parents('tr');
+                    var price = tr.find('[name="price[]"]').val();
+                    var qty = $(this).val();
+                    var total = get_currency(price * qty); 
+                    tr.find('td:eq( 5 )').text(total);
+                    count_total();
+                  })
+                }
+            }
+          },
+          {
+            'targets' : 4,
+            'createdCell' : function(td) {
+                var remove_btn = $(td).find('button');
+                if(remove_btn.length > 0) {
+                  remove_btn.click(function(){
+                    var tr = $(this).parents('tr');
+                    tSalesDetail.row(tr).remove().draw();
+                  });
+                }
+            }
+          },
+          {
+            'targets' : [1, 2],
+            'className' : 'text-right'
+          },
+        ]
+      }
+    );
+    tSalesDetail.on('draw.dt', function(){
+      count_total();
+    });
     //define class dan id
     searchitem = $("#searchitem");
     i_id = $("#i_id");
@@ -768,44 +700,61 @@
       });
 
     $("#searchitem").autocomplete({
-      source: "{{ url('') }}" + '/item-rencana',
+      source: "{{ url('') }}" + '/item',
       minLength: 1,
       dataType: 'json',
       select: function (event, ui) {
-        $('#i_id').val(ui.item.i_id);
-        $('#i_code').val(ui.item.i_code);
-        $('#searchitem').val(ui.item.label);
-        $('#itemName').val(ui.item.item);
-        $('#i_price').val(ui.item.i_price);
+        item = ui.item;
+        $('#d_pcshdt_qty').focus();
+        $('#stock').val(item.stok);
+      }
+    });
 
-        $('#fComp').val(ui.item.comp);
-        $('#fPosition').val(ui.item.position);
+    $('#searchitem').keypress(function (e) {
+      if (e.which == 13 || e.keyCode == 13) {
+        alert('dd');
+        $('#d_pcshdt_qty').focus();
 
-        $('#s_satuan').val(ui.item.satuan);
-        var jumlah = 0;
+      }
+    });
+    
+    $('#d_pcshdt_qty').keypress(function (e) {
+      if (e.which == 13 || e.keyCode == 13) {
+        e.preventDefault();
+        var is_exists = $('[name="spdt_item[]"][value="' + item.i_id + '"]').length;
+        if(is_exists < 1) {
+          var spdt_item = "<input type='hidden' name='spdt_item[]' value='" + item.i_id + "'>" + item.item;
+          var spdt_qty = "<input type='number' class='form-control' name='spdt_qty[]' value='" + $(this).val() + "'>";
+          var stok = item.stok;
+          var satuan = item.satuan;
 
+          var aksi = "<button class='btn btn-danger' type='button'><i class='glyphicon glyphicon-trash'></i></button>";
+          tSalesDetail.row.add(
+            [spdt_item, stok, spdt_qty, satuan, aksi]
+          ).draw();
 
-        if ($('.jumlahAwal' + i_id.val()).val() != undefined && $('.jumlahAwal' + i_id.val()).val() != 0) {
-          /*jumlah=parseFloat(ui.item.stok)+parseFloat($('.jumlahAwal'+i_id.val()).val());*/
-          if ($('#s_status').val() == 'final') {
-            jumlah = parseFloat(angkaDesimal(ui.item.stok)) + parseFloat(angkaDesimal($('.jumlahAwal' + i_id.val()).val()));
-
-            $('#stock').val(SetFormRupiah(jumlah));
-          } else if ($('#s_status').val() == 'draft') {
-
-            $('#stock').val(ui.item.stok);
-          }
-
-
-        } else {
-          $('#stock').val(ui.item.stok);
+          
+        }  
+        else {
+          var existing_item = $('[name="spdt_item[]"][value="' + item.i_id + '"]');
+          var tr = existing_item.parents('tr');
+          var spdt_qty = tr.find('[name="spdt_qty[]"]');
+          var price = tr.find('[name="price[]"]');
+          var total = tr.find('td:eq( 5 )');
+          var qty_amount = parseInt( $(this).val() ) + parseInt( spdt_qty.val() );
+          // memproses data
+          spdt_qty.val( 
+            qty_amount 
+          );
+          total.text(
+            get_currency( qty_amount * price.val() )
+          );
 
         }
-
-        fQty.val(1);
-        cQty.val(1);
-        fQty.focus();
-
+        $(this).val('');
+        $('#stock').val('')
+        $("#searchitem").val('');
+        $("#searchitem").focus();
       }
     });
 
@@ -857,64 +806,16 @@
 
 
   //fungsi barcode
-  $('#searchitem').keypress(function (e) {
-    if (e.which == 13 || e.keyCode == 13) {
-      var code = $('#searchitem').val();
-      $.ajax({
-        url: "{{ url('') }}" + "/item/search-item/code",
-        type: 'get',
-        dataType: 'json',
-        data: {
-          code: code
-        },
-        success: function (response) {
-
-          $('#i_id').val(response[0].i_id);
-          $('#i_code').val(response[0].i_code);
-          $('#searchitem').val(response[0].label);
-          $('#itemName').val(response[0].item);
-          $('#i_price').val(response[0].i_price);
-
-          $('#s_satuan').val(response[0].satuan);
-          var jumlah = 0;
-
-          if ($('.jumlahAwal' + i_id.val()).val() != undefined) {
-            /*jumlah=parseFloat(response[0].stok)+parseFloat($('.jumlahAwal'+i_id.val()).val());
-            $('#stock').val(response[0]); */
-            if ($('#s_status').val() == 'final') {
-              jumlah = parseFloat(angkaDesimal(response[0].stok)) + parseFloat(angkaDesimal($('.jumlahAwal' + i_id.val()).val()));
-              $('#stock').val(SetFormRupiah(jumlah));
-            } else if ($('#s_status').val() == 'draft') {
-              $('#stock').val(response[0].stok);
-            }
-
-          } else {
-            $('#stock').val(response[0].stok);
-          }
-
-          fQty.val(1);
-          fQty.focus();
-
-
-        }
-      })
-    }
-  });
 
 
   $('#fQty').keypress(function (e) {
     if (e.which == 13 || e.keyCode == 13) {
-      setFormDetail();
-      totalPerItem();
+      // setFormDetail();
+      // totalPerItem();
     }
   });
 
 
-  var tablex;
-  setTimeout(function () {
-
-    table();
-  }, 1500);
 
   
 
@@ -927,17 +828,7 @@
   payment();
 
 
-  $('#fQty').keyup(function (e) {
 
-    if ($('#cQty').val() === '1' && e.which != 13) {
-      $('#cQty').val('');
-      $('#fQty').val($('#fQty').val().substring(1));
-    }
-  })
-
-  $('#searchitem').click(function () {
-    $('.reset-seach').val('');
-  });
 
   /*function g(){
     $('.reset-seach').val('');      
@@ -1024,6 +915,7 @@
   }
 
   $(document).keydown(function (e) {
+
     if (e.which == 121 && e.ctrlKey) {
       if ($('#proses').is(':visible') == false) {
         if ($('#grand_biaya').val() != '' && $('#grand_biaya').val() != '0') {
@@ -1151,85 +1043,5 @@
     }
 
   })
-
-=======
-<script>
-	$(document).ready(function(){
-		// Jika menggunakan hashtag list
-		var hashtag = window.location.hash;
-		if( hashtag == '#list' ) {
-			$('#list').trigger('click');
-		}
-
-		$('[name="tgl_awal"]').val( moment().subtract(7, 'days').format('DD/MM/YYYY') );
-	    $('[name="tgl_akhir"]').val( moment().format('DD/MM/YYYY') );
-	    var url_request = "{{ url('/penjualan/rencanapenjualan/find_d_sales_plan') }}?tgl_awal=" + $('[name="tgl_awal"]').val() + "&tgl_akhir=" + $('[name="tgl_akhir"]').val();
-		tablex = $("#tableListToko").DataTable({
-	      responsive: true,
-	      "language": dataTableLanguage,
-	      processing: true,
-	      ajax: {
-	        "url": url_request,
-	        "type": "get",
-	        data: {
-	          "_token": "{{ csrf_token() }}",
-	          "type": "toko"
-	        },
-	      },
-	      columns: [
-	        { 
-	          data : null,
-	          render : function(res) {
-	            var date = new Date(res.sp_date);
-	            var day = date.getDate();
-	            var month = date.getMonth() + 1;
-	            var year = date.getFullYear();
-
-	            var content = day + '/' + month + '/' + year;
-	            return content;
-	          } 
-	        },
-	        { data : 'sp_code' },
-	        { 
-	            data : null,
-	            render : function(res) {
-	              var content = '<div style="display:flex;justify-content:center"><button id="edit" style="margin-right:1mm" onclick="location.href=\'{{ url("/penjualan/rencanapenjualan/form_perbarui") }}/' + res.sp_id + '\'" class="btn btn-warning btn-xs" title="Edit" type="button"><i class="glyphicon glyphicon-pencil"></i></button><button id="delete" onclick="hapus(' + res.sp_id + ')" class="btn btn-danger btn-xs" title="Hapus" type="button"><i class="glyphicon glyphicon-trash"></i></button></div>';
-
-	              return content;
-	            }
-	        }
-	      ],
-	      'columnDefs': [{
-	        "targets": 2,
-	        "className": "text-right",
-	      }],
-	      "rowCallback": function (row, data, index) {
-
-	        /*$node = this.api().row(row).nodes().to$();*/
-
-	        if (data['s_status'] == 'draft') {
-	          $('td', row).addClass('warning');
-	        }
-	      }
-
-	    });
-
-	    $('.search_btn').click(function(){
-	    	cari();
-	    });
-	    $('.reset_btn').click(function(){
-	    	resetData();
-	    });
-	    $('[name="tgl_awal"]').keypress(function(e){
-	    	if(e.keyCode == 13) {
-	    		$('[name="tgl_akhir"]').focus();
-	    	}
-	    });
-	    $('[name="tgl_akhir"]').keypress(function(e){
-	    	if(e.keyCode == 13) {
-	    		$('.search_btn').trigger('click');
-	    	}
-	    });
-	});
 
 </script>
