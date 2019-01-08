@@ -73,6 +73,11 @@ class PenjualanController extends Controller
       return view('POS::POSpenjualan/POSpenjualan',compact('pilihan'));
     }
     //auto complete barang
+    
+    public function itemRencana(Request $item)
+    { 
+      return m_itemm::itemRencana($item);
+    }
     public function item(Request $item)
     { 
       return m_itemm::seachItem($item);

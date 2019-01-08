@@ -768,7 +768,7 @@
       });
 
     $("#searchitem").autocomplete({
-      source: "{{ url('') }}" + '/item',
+      source: "{{ url('') }}" + '/item-rencana',
       minLength: 1,
       dataType: 'json',
       select: function (event, ui) {
