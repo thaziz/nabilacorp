@@ -359,8 +359,8 @@
             console.log(data.data_isi[key-1].i_name);
             var i_id=data.data_isi[key-1].i_id;
 
-            $('.drop_here').append(
-                            '<tr class="tbl_form_row" id="row'+i_id+'">'
+
+            var dropin = '<tr class="tbl_form_row" id="row'+i_id+'">'
                             +'<td style="text-align:center">'+key+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'" name="fieldNamaItem[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="podt_item[]" class="form-control input-sm"/>'
@@ -381,7 +381,7 @@
                               '<input type="text" value="'+SetFormRupiah(data.data_prev[key-1])+'" readonly name="podt_prevprice[]" id="'+i+'" class="form-control field_harga input-sm harga_prev'+i_id+' numberinput alignAngka" onclick="setAwal(event,\'harga_prev' + i_id + '\')" onblur="setRupiah(event,\'harga_prev' + i_id+ '\')" onkeyup="rege(event,\'harga_prev' + i_id+ '\');" /></td>'
 
 
-                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_totalcost+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
+                            +'<td><input type="text" value="'+SetFormRupiah(data.data_isi[key-1].ppdt_totalcost)+'" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem'+i_id+'" id="total_'+i+'" readonly/></td>'
 
 
                             +'<td hidden><input type="hidden" name="podt_total_net[]" class="alignAngka totalPerItem_net form-control input-sm hargaTotalItem_net_'+key+'" id="total_net_'+i+'" readonly/></td>'
@@ -392,7 +392,9 @@
                             
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             
-                            +'</tr>');
+                            +'</tr>';
+
+            $('.drop_here').append(dropin);
             tamp.push(i_id);
             i = randString(5);
             key++;

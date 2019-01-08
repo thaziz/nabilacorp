@@ -330,6 +330,7 @@ class d_purchase_order extends Model
       // $diskonPotHarga = $this->konvertRp($request->potonganHarga);
       $prev_harga = str_replace(['Rp', '\\', '.', ' '], '', $request->prev_harga);
       $diskonPotHarga = str_replace(['Rp', '\\', '.', ' '], '', $request->potonganHarga);
+      $diskonPotHarga = str_replace(',', '.', $diskonPotHarga);
       // $discValue = $totalGross * $replaceCharDisc / 100;
 
       $p_id=d_purchase_order::max('po_id')+1;
@@ -366,7 +367,8 @@ class d_purchase_order extends Model
       // $dataHeader->po_disc_percent = $replaceCharDisc;
       $dataHeader->po_disc_value = $discValue;
       $dataHeader->po_tax_percent = $replaceCharPPN;
-      $dataHeader->po_tax_value = ($totalGross - $diskonPotHarga - $discValue) * $replaceCharPPN / 100;
+      
+      $dataHeader->po_tax_value = ($totalGross - $diskonPotHarga - $discValue) * ($replaceCharPPN / 100);
       $dataHeader->po_total_net = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett_after_disc);
       $dataHeader->po_total_gross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
       // $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett);

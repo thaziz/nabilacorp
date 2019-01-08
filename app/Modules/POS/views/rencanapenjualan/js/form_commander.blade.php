@@ -700,7 +700,7 @@
       });
 
     $("#searchitem").autocomplete({
-      source: "{{ url('') }}" + '/item',
+      source: "{{ url('') }}" + '/penjualan/rencanapenjualan/find_m_item',
       minLength: 1,
       dataType: 'json',
       select: function (event, ui) {

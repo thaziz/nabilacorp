@@ -228,6 +228,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/rencanapenjualan/hapus/{id}', 'rencanaPenjualanController@hapus')->middleware('auth');
 	Route::get('/penjualan/rencanapenjualan/form_perbarui/{id}', 'rencanaPenjualanController@form_perbarui')->middleware('auth');
 	Route::get('/penjualan/rencanapenjualan/perbarui', 'rencanaPenjualanController@perbarui')->middleware('auth');
+	Route::get('/penjualan/rencanapenjualan/find_m_item', 'rencanaPenjualanController@find_m_item')->middleware('auth');
 	//rencana penjualan selesai
 
 	//mahmud retur
