@@ -109,8 +109,8 @@ class MasterFormulaController extends Controller
         $results[] = [  'id' => $query->i_id, 
                         'label' => $query->i_code .' - '.$query->i_name,
                         'name' => $query->i_name,
-                        'id_satuan' => [$query->i_sat1, $query->i_sat2, $query->i_sat3],
-                        'satuan' => [$txtSat1->s_name, $txtSat2->s_name, $txtSat3->s_name],
+                        'id_satuan' => [$query->i_sat1],
+                        'satuan' => [$txtSat1->s_name],
                         'i_code' => $query->i_code ];
       }
     } 
@@ -141,8 +141,8 @@ class MasterFormulaController extends Controller
         $results[] = [  'id' => $query->i_id, 
                         'label' => $query->i_code .' - '.$query->i_name,
                         'name' => $query->i_name,
-                        'id_satuan' =>[$query->i_sat1, $query->i_sat2, $query->i_sat3],
-                        'satuan' =>[$txtSat1->s_name, $txtSat2->s_name, $txtSat3->s_name] ];
+                        'id_satuan' =>[$query->i_sat1],
+                        'satuan' =>[$txtSat1->s_name] ];
       }
     } 
 
