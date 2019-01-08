@@ -82,7 +82,7 @@ class PurchaseReturnController extends Controller
        if($tgl_awal != '' && $tgl_akhir != '') {
           $tgl_awal = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_awal);
           $tgl_akhir = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_akhir);
-          $d_purchase_return = $d_purchase_return->whereBetween('pr_date', array($tgl_awal, $tgl_akhir));
+          $d_purchase_return = $d_purchase_return->whereBetween('pr_datecreated', array($tgl_awal, $tgl_akhir));
        }  
 
       $d_purchase_return = $d_purchase_return->select('pr_id', 'pr_purchase', 'pr_code', 'm_name', 's_company', 'pr_pricetotal', DB::raw("CASE pr_method WHEN 'TK' THEN 'TUKAR BARANG ' WHEN 'PN' THEN 'POTONG NOTA' END AS pr_method"), DB::raw("CASE pr_status WHEN 'WT' THEN 'Waiting ' WHEN 'CF' THEN 'Confirmed ' WHEN 'DE' THEN 'Dapat diedit ' WHEN 'RC' THEN 'RECEIVED' END AS pr_status"))->get();
@@ -108,24 +108,24 @@ class PurchaseReturnController extends Controller
       $pr_method = $pr_method != null ? $pr_method : '';
       $pr_staff = $req->pr_staff;
       $pr_staff = $pr_staff != null ? $pr_staff : '';
-      $pr_date = $req->pr_date;
-      $pr_date = $pr_date != null ? $pr_date : '';
-      $pr_date = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $pr_date);
+      $pr_datecreated = $req->pr_datecreated;
+      $pr_datecreated = $pr_datecreated != null ? $pr_datecreated : '';
+      $pr_datecreated = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $pr_datecreated);
 
-      $pr_date_first = date("Y-m-01", strtotime($pr_date));
-      $pr_date_last = date("Y-m-31", strtotime($pr_date));
+      $pr_datecreated_first = date("Y-m-01", strtotime($pr_datecreated));
+      $pr_datecreated_last = date("Y-m-31", strtotime($pr_datecreated));
       $pr_code = d_purchase_return::select( 
         DB::raw(
           "CONCAT(
           'RTR-',
-          DATE_FORMAT('$pr_date', '%y%m'), 
+          DATE_FORMAT('$pr_datecreated', '%y%m'), 
           '-', 
           LPAD(COUNT(`pr_id`) + 1, 5, '0')) 
         AS pr_code"
         ) 
       );
       
-      $pr_code = $pr_code->whereBetween('pr_date', array($pr_date_first, $pr_date_last))->get()->first()->pr_code;
+      $pr_code = $pr_code->whereBetween('pr_datecreated', array($pr_datecreated_first, $pr_datecreated_last))->get()->first()->pr_code;
 
 
       DB::beginTransaction();
@@ -168,7 +168,7 @@ class PurchaseReturnController extends Controller
         $d_purchase_return->pr_supplier = $pr_supplier;
         $d_purchase_return->pr_method = $pr_method;
         $d_purchase_return->pr_staff = $pr_staff;
-        $d_purchase_return->pr_date = $pr_date;
+        $d_purchase_return->pr_datecreated = $pr_datecreated;
         $d_purchase_return->pr_pricetotal = $pr_pricetotal;
 
         $d_purchase_return->save();
@@ -254,7 +254,7 @@ class PurchaseReturnController extends Controller
       $d_purchase_return = d_purchase_return::leftJoin('d_mem', 'pr_staff', '=', 'm_id');
       $d_purchase_return = $d_purchase_return->leftJoin('d_purchase_order', 'pr_purchase', '=', 'po_code');
       $d_purchase_return = $d_purchase_return->leftJoin('m_supplier', 's_id', '=', 'pr_supplier');
-      $d_purchase_return = $d_purchase_return->where('pr_id', $pr_id)->select('pr_id', 'pr_purchase', 'pr_code', 'm_name', 's_company', 'pr_pricetotal', DB::raw('DATE_FORMAT(pr_datecreated, "%d/%m/%Y") AS pr_datecreated'), 'po_method', 'po_total_gross', 'po_disc_percent', 'po_disc_value', 'po_tax_value', 'po_disc_value',DB::raw("CASE pr_method WHEN 'TK' THEN 'TUKAR BARANG ' WHEN 'PN' THEN 'POTONG NOTA' END AS pr_method"))->get()->first();
+      $d_purchase_return = $d_purchase_return->where('pr_id', $pr_id)->select('pr_id', 'pr_purchase', 'pr_code', 'm_name', 's_company', 'pr_pricetotal', DB::raw('DATE_FORMAT(pr_datecreatedcreated, "%d/%m/%Y") AS pr_datecreatedcreated'), 'po_method', 'po_total_gross', 'po_disc_percent', 'po_disc_value', 'po_tax_value', 'po_disc_value',DB::raw("CASE pr_method WHEN 'TK' THEN 'TUKAR BARANG ' WHEN 'PN' THEN 'POTONG NOTA' END AS pr_method"))->get()->first();
 
       
       $d_purchasereturn_dt = d_purchasereturn_dt::leftJoin('m_item', 'i_id', '=', 'prdt_item')
@@ -280,7 +280,7 @@ class PurchaseReturnController extends Controller
       $d_purchase_return = d_purchase_return::leftJoin('d_mem', 'pr_staff', '=', 'm_id');
       $d_purchase_return = $d_purchase_return->leftJoin('d_purchase_order', 'pr_purchase', '=', 'po_code');
       $d_purchase_return = $d_purchase_return->leftJoin('m_supplier', 's_id', '=', 'pr_supplier');
-      $d_purchase_return = $d_purchase_return->where('pr_id', $pr_id)->select('pr_id', 'pr_purchase', 'pr_code', 'm_name', 's_company', 'pr_pricetotal', DB::raw('DATE_FORMAT(pr_datecreated, "%d/%m/%Y") AS pr_datecreated'), 'po_method', 'po_total_gross', 'po_disc_percent', 'po_disc_value', 'po_tax_value', 'po_disc_value',DB::raw("CASE pr_method WHEN 'TK' THEN 'TUKAR BARANG ' WHEN 'PN' THEN 'POTONG NOTA' END AS pr_method"))->get()->first();
+      $d_purchase_return = $d_purchase_return->where('pr_id', $pr_id)->select('pr_id', 'pr_purchase', 'pr_code', 'm_name', 's_company', 'pr_pricetotal', DB::raw('DATE_FORMAT(pr_datecreatedcreated, "%d/%m/%Y") AS pr_datecreatedcreated'), 'po_method', 'po_total_gross', 'po_disc_percent', 'po_disc_value', 'po_tax_value', 'po_disc_value',DB::raw("CASE pr_method WHEN 'TK' THEN 'TUKAR BARANG ' WHEN 'PN' THEN 'POTONG NOTA' END AS pr_method"))->get()->first();
 
       
       $d_purchasereturn_dt = d_purchasereturn_dt::leftJoin('m_item', 'i_id', '=', 'prdt_item')
@@ -348,13 +348,13 @@ class PurchaseReturnController extends Controller
     }    
     
     public function find_d_purchaseorder_dt(Request $req) {
-      $d_purchaseorder_dt = d_purchaseorder_dt::leftJoin(DB::raw('m_item I'), DB::raw('I.i_id'), '=', DB::raw('d_purchaseorder_dt.i_id'));
+      $d_purchaseorder_dt = d_purchaseorder_dt::leftJoin('m_item', 'i_id', '=', 'podt_item');
       $d_purchaseorder_dt = $d_purchaseorder_dt->leftJoin('m_satuan', 's_id', '=', 'i_satuan') ;
 
-      $d_pcs_id = $req->d_pcs_id;
-      $d_pcs_id = $d_pcs_id != null ? $d_pcs_id : '';
-      if($d_pcs_id != '') {
-        $d_purchaseorder_dt = $d_purchaseorder_dt->where('d_pcs_id', $d_pcs_id);  
+      $po_id = $req->po_id;
+      $po_id = $po_id != null ? $po_id : '';
+      if($po_id != '') {
+        $d_purchaseorder_dt = $d_purchaseorder_dt->where('podt_purchaseorder', $po_id);  
       }
 
       $d_purchaseorder_dt = $d_purchaseorder_dt->get();
