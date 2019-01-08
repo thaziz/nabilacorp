@@ -5,6 +5,10 @@ namespace App\Modules\POS\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\d_sales_return;
+
+use App\Modules\POS\model\d_sales;
+use App\Modules\POS\model\d_sales_dt;
+
 use App\d_sales_returndt;
 use App\d_sales_returnsb;
 use Datatables;
@@ -21,6 +25,8 @@ class ManajemenReturnPenjualanController extends Controller
 
     public function tabel(){
     $return = d_sales_return::all();
+
+    $url = url('/penjualan/manajemenreturn/preview/');
 
     return DataTables::of($return)
 
@@ -115,9 +121,9 @@ class ManajemenReturnPenjualanController extends Controller
                       <button type="button"
                           class="btn btn-success fa fa-eye btn-sm"
                           title="detail"
-                          data-toggle="modal"
-                          onclick="lihatDetailSB('.$data->dsr_id.')"
-                          data-target="#myItemSB">
+                          
+                          onclick="location.href=\'' . $url . $data->dsr_id . '\'"
+                          >
                       </button>
                       <a  onclick="distroyNota('.$data->dsr_id.')"
                           class="btn btn-danger btn-sm"
@@ -129,9 +135,8 @@ class ManajemenReturnPenjualanController extends Controller
                         <button type="button"
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
-                            data-toggle="modal"
-                            onclick="lihatDetailSB('.$data->dsr_id.')"
-                            data-target="#myItemSB">
+                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
+                            >
                         </button>
                         <a  onclick="distroyNota('.$data->dsr_id.')"
                             class="btn btn-danger btn-sm"
@@ -145,7 +150,7 @@ class ManajemenReturnPenjualanController extends Controller
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
                             data-toggle="modal"
-                            onclick="lihatDetailSB('.$data->dsr_id.')"
+                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
                             data-target="#myItemSB">
                         </button>
                         <button type="button"
@@ -161,9 +166,8 @@ class ManajemenReturnPenjualanController extends Controller
                         <button type="button"
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
-                            data-toggle="modal"
-                            onclick="lihatDetailSB('.$data->dsr_id.')"
-                            data-target="#myItemSB">
+                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
+                            >
                         </button>
                       </div>';
             }
@@ -223,77 +227,61 @@ class ManajemenReturnPenjualanController extends Controller
   public function newreturn(){
     
     $nota = DB::table('d_sales')->get();
-    return view('POS::manajemenreturn.return-pembelian',compact('nota'));
+    return view('POS::manajemenreturn.return-penjualan',compact('nota'));
   }
 
   public function carinota(Request $request){
     // return 's';
     // dd($request->all());
     // $nota = DB::table('d_sales')->get();
-    $formatted_tags = array();
-    $term = trim($request->q);
-    if (empty($term)) {
-      $sup = DB::table('d_sales')->
-        where(function ($query){
-          $query->where('s_channel', '=', 'Toko')
-                ->where('s_status', '=', 'final');
-        })
-        // ->orWhere(function ($query){
-        //   $query->where('s_channel', '=', 'GR')
-        //         ->where('s_status', '=', 'RC');
-        // })
-        ->limit(50)
-        ->get();
-      foreach ($sup as $val) {
-          $formatted_tags[] = [ 'id' => $val->s_id, 
-                                'text' => $val->s_note .'-'. 
-                                          $val->s_channel .'-'.
-                                          date('d M Y', strtotime($val->s_date))];
-      }
-      return Response::json($formatted_tags);
-    }
-    else
-    {
-      $sup = DB::table('d_sales')->
-        where(function ($query){
-          $query->where('s_channel', '=', 'Toko')
-                ->where('s_status', '=', 'final');
-        })    
-        ->where(function ($b) use ($term) {
-                $b->orWhere('s_note', 'LIKE', '%'.$term.'%')
-                  ->orWhere('s_channel', 'LIKE', '%'.$term.'%')
-                  ->orWhere('s_date', 'LIKE', '%'.$term.'%');
-            })
-        ->limit(50)
-        ->get();
-      foreach ($sup as $val) {
-          $formatted_tags[] = [ 'id' => $val->s_id, 
-                                'text' => $val->s_note .'-'. 
-                                          $val->s_channel .'-'.
-                                          date('d M Y', strtotime($val->s_date))];
-      }
+      // $formatted_tags = array();
+      $term = trim($request->q);
 
-      return Response::json($formatted_tags);  
-    }
+      $condition = [
+        ['s_status', '=', 'final'],
+        ['s_channel', '=', 'Toko']
+      ];
+      $d_sales = d_sales::where($condition);
+      if($term != '') {
+        $d_sales = $d_sales->where('s_note', $term);
+      }
+      $d_sales = $d_sales->take(50)->get();
+      return Response::json($d_sales);
 
   }
-  public function getdata($id)
-  {
-    $data = DB::table('d_sales')->select(
-                            's_gross',
-                            's_disc_percent',
-                            's_disc_value',
-                            's_net',
-                            's_nama_cus',
-                            's_alamat_cus',
-                            's_channel')
-      ->join('d_sales_dt','sd_sales','=','s_id')
-      ->join('m_item','i_id','=','sd_item')      
+  public function getdata($id) {
+    $data = d_sales::leftJoin('d_sales_dt','sd_sales','=','s_id')
+      ->leftJoin('m_item','i_id','=','sd_item');
+
+    $data = select(
+      's_gross',
+      's_disc_percent',
+      's_disc_value',
+      's_net',
+      's_nama_cus',
+      's_alamat_cus',
+      's_channel')     
       ->where('s_id',$id)
       ->first();
 
       return Response::json($data);
   }
+
+  public function preview($id) {
+    $d_sales_return = d_sales_return::leftJoin('m_customer', 'dsr_cus', '=', 'c_id');
+    $d_sales_return = $d_sales_return->where('dsr_id', $id)->first();
+
+    $d_sales_returndt = d_sales_returndt::leftJoin('m_item', 'i_id', '=', 'dsrdt_item');
+    $d_sales_returndt = $d_sales_returndt->where('dsrdt_idsr', $id);
+
+    $res = [
+        'd_sales_return' => $d_sales_return,
+        'd_sales_returndt' => $d_sales_returndt
+    ];
+
+    return view('POS::manajemenreturn.preview', $res);
+  }
+
   public function tabelpnota($id,$metode)
   {
     $sales = DB::table('d_sales_dt')
