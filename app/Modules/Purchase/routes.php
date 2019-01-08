@@ -82,7 +82,7 @@ Route::get('/purchasing/returnpembelian/form_perbarui/{id}', 'PurchaseReturnCont
 Route::get('/purchasing/returnpembelian/form_preview/{id}', 'PurchaseReturnController@form_preview')->middleware('auth');
 
 Route::get('/purchasing/returnpembelian/find_d_purchase_order', 'PurchaseReturnController@find_d_purchase_order')->middleware('auth');
-Route::get('/purchasing/returnpembelian/find_d_purchaseorders_dt', 'PurchaseReturnController@find_d_purchaseorder_dt')->middleware('auth');
+Route::get('/purchasing/returnpembelian/find_d_purchaseorder_dt', 'PurchaseReturnController@find_d_purchaseorder_dt')->middleware('auth');
 // ====================================================================================
 
 Route::get('/purchasing/returnpembelian/tambah_pembelian', 'PurchasingController@tambah_pembelian')->middleware('auth');
@@ -101,6 +101,10 @@ Route::get('/purchasing/rencanabahanbaku/proses-purchase-plan', 'RencanaBahanCon
 Route::get('/purchasing/rencanabahanbaku/suggest-item', 'RencanaBahanController@suggestItem');
 Route::get('/purchasing/rencanabahanbaku/lookup-data-supplier', 'RencanaBahanController@lookupSupplier');
 Route::get('/purchasing/rencanabahanbaku/submit-data', 'RencanaBahanController@submitData');
+
+// Routing laporan pembelian
+Route::get('/purchasing/lap-pembelian/index', 'LaporanPembelianController@index');
+
 // pembelian bahan baku spk selesai
 });
 

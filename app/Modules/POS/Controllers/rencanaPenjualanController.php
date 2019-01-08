@@ -56,23 +56,14 @@ class rencanaPenjualanController extends Controller
 
     // Menampilkan form untuk mengupdate data
     function form_perbarui($sp_id) {
-      $d_sales_plan = d_sales_plan::where('sp_id', $sp_id)->first();
-      $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id)->get();
+      $d_sales_plan = d_sales_plan::leftJoin('d_mem', 'm_id', '=', 'sp_mem')->where('sp_id', $sp_id)->first();
+      $d_salesplan_dt = d_salesplan_dt::leftJoin('m_item', 'i_id', '=', 'spdt_item')->leftJoin('m_satuan', 'i_sat1', '=', 's_id');
+      $d_salesplan_dt = $d_salesplan_dt->where('spdt_salesplan', $sp_id)->select('i_name', 's_name', 'spdt_qty', 'i_id')->get();
       
-      $grand_total = 0;
-      foreach($d_salesplan_dt as $item) {
-        $item['m_item'] = $item->m_item;
-        $item['satuan'] = '';
-        $item['subtotal'] = '';
-        if($item->m_item->m_satuan != null) {
-          $item['satuan'] = $item->m_item->m_satuan->s_detname;
-          $item['subtotal'] = $item->spdt_qty * $item->m_item->i_price; 
-          $grand_total += $item['subtotal'];
-        }
-      }
-
-      $d_sales_plan['d_salesplan_dt'] = $d_salesplan_dt;
-      $data = array('d_sales_plan' => $d_sales_plan, 'grand_total' => $grand_total, 'sp_id' => $sp_id);
+      $data = [
+        'd_sales_plan' => $d_sales_plan,
+        'd_salesplan_dt' => $d_salesplan_dt
+      ];
       return view('POS::rencanapenjualan/updateRencanaPenjualan', $data);
     }
 
@@ -118,8 +109,8 @@ class rencanaPenjualanController extends Controller
        $tgl_akhir = $req->tgl_akhir;
        $tgl_akhir = $tgl_akhir != null ? $tgl_akhir : '';
        if($tgl_awal != '' && $tgl_akhir != '') {
-        $tgl_awal = date('Y-m-d', strtotime($tgl_awal));
-        $tgl_akhir = date('Y-m-d', strtotime($tgl_akhir));
+        $tgl_awal = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_awal);
+        $tgl_akhir = preg_replace('/([0-9]+)([\/-])([0-9]+)([\/-])([0-9]+)/', '$5-$3-$1', $tgl_akhir);
         $rows = $rows->whereBetween('sp_date', array($tgl_awal, $tgl_akhir));
        }
 

@@ -29,29 +29,47 @@ class printTerminalController extends Controller
         $raw_print_queue = Storage::get('print_queue.txt') ;
         // die($raw_print_queue);
         $print_queue = json_decode($raw_print_queue);
-        $will_print = $print_queue->{$m_username}[0];
-        unset($print_queue->{$m_username}[0]);
-        // Encode
-        $rest_print_queue = [];
-        foreach ($print_queue as $key => $unit) {
-          $rest_print_queue[$key] = [];
-          foreach ($unit as $x => $subunit) {
-            array_push($rest_print_queue[$key], $subunit);
+        if( count($print_queue->{$m_username}) > 0 ) {
+
+          $will_print = $print_queue->{$m_username}[0];
+          $is_exists = Storage::exists($will_print);
+          if($is_exists == true) {
+
+              unset($print_queue->{$m_username}[0]);
+              // Encode
+              $rest_print_queue = [];
+              foreach ($print_queue as $key => $unit) {
+                $rest_print_queue[$key] = [];
+                foreach ($unit as $x => $subunit) {
+                  array_push($rest_print_queue[$key], $subunit);
+                }
+              }
+
+              $rewrite_print_queue = json_encode($rest_print_queue);
+              Storage::put('print_queue.txt', $rewrite_print_queue);
+
+              $headers = [
+                  'Content-Type' => 'application/text',
+                  "filename" => $will_print,
+                  "status" => 1
+              ];
+              
+
+              $path = public_path('../storage/app/' . $will_print);
+              return response()->download($path, $will_print, $headers);
+          }
+          else {        
+              
+              return response(null, 200)->header('status', 0)->header('message', 'File tidak ada');  
           }
         }
-
-        $rewrite_print_queue = json_encode($rest_print_queue);
-        Storage::put('print_queue.txt', $rewrite_print_queue);
-
-        $filename = public_path($will_print);
-        $headers = [
-            'Content-Type' => 'application/text',
-            "filename" => $will_print
-        ];
-        return response()->download($filename, $will_print, $headers);
+        else {
+          
+          return response(null, 200)->header('status', 0)->header('message', 'Tidak ada antrian print');  
+        }
       }
       else {
-        return response(null, 500);
+        return response(null, 200)->header('status', 0)->header('message', 'Username kosong');
       }
     }
 
