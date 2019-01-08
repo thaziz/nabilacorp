@@ -281,7 +281,7 @@ public function getDataRencanaPembelian(Request $request)
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
-                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check">'.$data->po_id.'</i>
+                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
                       </button>
                   </div>'; 
         }
@@ -363,6 +363,8 @@ public function getDataRencanaPembelian(Request $request)
   public function confirmOrderPembelian($id,$type)
   {
     // return 'a';
+    // dd($request->all());
+
     $dataHeader = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
                 ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
                 ->select('po_created','s_company','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id')
@@ -401,7 +403,7 @@ public function getDataRencanaPembelian(Request $request)
       $dataIsi = d_purchaseorder_dt::join('m_item', 'd_purchaseorder_dt.podt_item', '=', 'm_item.i_id')
                 ->join('m_satuan', 'd_purchaseorder_dt.podt_satuan', '=', 'm_satuan.s_id')
                 ->select('d_purchaseorder_dt.*', 'm_item.*','m_satuan.*')
-                // ->where('podt_purchaseorder',$id)
+                ->where('podt_purchaseorder',$id)
                 // ->where('d_purchase_order.d_pcsdt_isconfirm', '=', "TRUE")
                 // ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
                 ->get();
@@ -438,7 +440,6 @@ public function getDataRencanaPembelian(Request $request)
 
   public function confirmOrderSubmit(Request $request)
   {
-    // dd($request->all());
 
     if ($request->statusOrderConfirm == 'CF') {
         
@@ -454,6 +455,8 @@ public function getDataRencanaPembelian(Request $request)
     }else{
       return 'lol';
     }
+
+    return response()->json(['status'=>'sukses']);
 
 
   }

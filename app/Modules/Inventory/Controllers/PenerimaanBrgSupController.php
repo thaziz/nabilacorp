@@ -92,8 +92,12 @@ class PenerimaanBrgSupController extends Controller
             $item[$i] = $data_isi[$i]->podt_item;
         }
         $data_stock = DB::table('d_stock')
+            // ->select('s_qty')
             ->whereIn('s_item',$item)
             ->get();
+        // if (condition) {
+          # code...
+        // }
         return response()->json([
             'data_header'=>$data_header,
             'data_isi'=>$data_isi,
