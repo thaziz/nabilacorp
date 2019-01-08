@@ -406,7 +406,7 @@ public function getDataRencanaPembelian(Request $request)
                 // ->orderBy('d_purchase_order.d_pcsdt_created', 'DESC')
                 ->get();
     }
-    return $dataIsi;
+    // return $dataIsi;
     foreach ($dataIsi as $val) 
     {
       //cek item type

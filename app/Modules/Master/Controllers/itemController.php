@@ -13,8 +13,10 @@ use Carbon\carbon;
 use App\Http\Controllers\Controller;
 
 use DB;
-
+use File;
+use Storage;
 use Datatables;
+
 
 use Auth;
 
@@ -32,7 +34,7 @@ class itemController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -48,6 +50,23 @@ class itemController extends Controller
       $printer -> close();
 
     }*/
+
+    public function contoh_dokumen() {
+      $filename = public_path('print_queue.txt');
+      $content = File::get($filename);
+      Storage::put('print_queue.txt', '["Your name", "My Name"]');
+      $data = Storage::get('print_queue.txt') ;
+      
+      $res = ['data' => $data];
+      return response()->json($res)->header('Filename', 'Echo.txt');
+      // $headers = [
+      //     'Content-Type' => 'application/text'
+      // ];
+      // $file = public_path('..\assets\contoh_dokumen.pdf');
+
+      // return response()->download($file, 'contoh_dokumen.pdf', $headers);
+    }
+
     public function index(){
       return view('Master::databarang/barang');
     }
