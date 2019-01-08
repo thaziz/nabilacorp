@@ -116,58 +116,63 @@ class PenerimaanBrgSupController extends Controller
        date_default_timezone_set("Asia/Jakarta"); 
       // return date('d/m/Y h:i:s');
 
-       $data_header = DB::table('d_terima_pembelian')->insert([
-          'd_tb_id'=>$increment,
-          'd_tb_pid'=>$request->headNotaPurchase,
-          'd_tb_sup'=>$request->headSupplierId,
-          'd_tb_staff'=>$request->headStaffId,
-          'd_tb_noreff'=>$request->headNotaTxt,
-          'd_tb_totalnett'=>$request->headTotalNett,
-          'd_tb_totalbyr'=>$request->headTotalTerima,
-          'd_tb_date'=>$request->headTglTerima,
-          'd_tb_created'=>date('d/m/Y h:i:s'),
-          'd_tb_comp'=>Session::get('user_comp'),
-       ]);
+       // $data_header = DB::table('d_terima_pembelian')->insert([
+       //    'd_tb_id'=>$increment,
+       //    'd_tb_pid'=>$request->headNotaPurchase,
+       //    'd_tb_sup'=>$request->headSupplierId,
+       //    'd_tb_staff'=>$request->headStaffId,
+       //    'd_tb_noreff'=>$request->headNotaTxt,
+       //    'd_tb_totalnett'=>$request->headTotalNett,
+       //    'd_tb_totalbyr'=>$request->headTotalTerima,
+       //    'd_tb_date'=>$request->headTglTerima,
+       //    'd_tb_created'=>date('d/m/Y h:i:s'),
+       //    'd_tb_comp'=>Session::get('user_comp'),
+       // ]);
 
-       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
-           $data_detail = DB::table('d_terima_pembelian_dt')->insert([
-              'd_tbdt_idtb'=>$increment,
-              'd_tbdt_item'=>$request->fieldItemId[$i],
-              'd_tbdt_sat'=>$request->fieldSatuanId[$i],
-              'd_tbdt_qty'=>$request->fieldQtyterima[$i],
-              'd_tbdt_price'=>$request->fieldHargaRaw[$i],
-              'd_tbdt_comp'=>Session::get('user_comp'),
-              'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
-              'd_tbdt_date_received'=>date('Y-m-d',strtotime($request->headTglTerima)),
+       // for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
+       //     $data_detail = DB::table('d_terima_pembelian_dt')->insert([
+       //        'd_tbdt_idtb'=>$increment,
+       //        'd_tbdt_item'=>$request->fieldItemId[$i],
+       //        'd_tbdt_sat'=>$request->fieldSatuanId[$i],
+       //        'd_tbdt_qty'=>$request->fieldQtyterima[$i],
+       //        'd_tbdt_price'=>$request->fieldHargaRaw[$i],
+       //        'd_tbdt_comp'=>Session::get('user_comp'),
+       //        'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
+       //        'd_tbdt_date_received'=>date('Y-m-d',strtotime($request->headTglTerima)),
 
-           ]);
-       }
+       //     ]);
+       // }
            // return 'a';
 
         
          for ($i=0; $i <count($request->fieldNamaItem); $i++) {
             $check[$i] = DB::table('d_stock')/*->where('s_comp')*/->where('s_item','=',$request->fieldItemId[$i])->get();
                 // echo $filtered = array_filter($check);
+            
+            $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
+            
       
               if(count($check[$i]) == 0) 
               {   
                 // $checks = /*count($check)*/$request->fieldItemId[$i] ;
                 // echo $checks.'     c      ';
-                $insert_stock = DB::table('d_stock')->insert([
-                  's_comp'=>1,
-                  's_position'=>1,
-                  's_qty'=>$request->fieldQtyterima[$i],
-                  's_item'=>$request->fieldItemId[$i],
-                ]);
+                // $insert_stock = DB::table('d_stock')->insert([
+                //   's_comp'=>1,
+                //   's_position'=>1,
+                //   's_qty'=>$request->fieldQtyterima[$i],
+                //   's_item'=>$request->fieldItemId[$i],
+                //   's_insert'=>date('Y-m-d h:i:s'),
+                // ]);
               }else{
-                // $checks = $check[$i][0]->s_qty+$request->fieldQtyterima[$i] ;
+                $checks = $check[$i][0]->s_qty+$request->fieldQtyterima[$i] ;
                 // echo $checks.'     u       ';
-                
-                $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
-                  's_comp'=>1,
-                  's_position'=>1,
-                  's_qty'=>$check[$i][0]->s_qty+$request->fieldQtyterima[$i],
-                ]);
+
+                // $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
+                //   's_comp'=>1,
+                //   's_position'=>1,
+                //   's_qty'=>$check[$i][0]->s_qty+$request->fieldQtyterima[$i],
+                //   's_update'=>date('Y-m-d h:i:s'),
+                // ]);
               }
 
              // $update_stock = DB::table('d_stock')->insert([
@@ -179,7 +184,7 @@ class PenerimaanBrgSupController extends Controller
              // ]);
          }
 
-         // return $check;
+         return $check_satuan;
      
 
 
