@@ -48,16 +48,16 @@
                   'sp_date' => $sp_date
               ]);
    
-              for ($i=0; $i < count($request->sd_item); $i++) {  
-                  $sd_qty = format::format($request->sd_qty[$i]);
-                  $sd_item = format::format($request->sd_item[$i]);
+              for ($i=0; $i < count($request->spdt_item); $i++) {  
+                  $spdt_qty = format::format($request->spdt_qty[$i]);
+                  $spdt_item = format::format($request->spdt_item[$i]);
                   $spdt_detailid = $i + 1;             
 
                   d_salesplan_dt::create([
                       'spdt_salesplan' => $sp_id,
                       'spdt_detailid' => $spdt_detailid,
-                      'spdt_item' => $sd_item,
-                      'spdt_qty' => $sd_qty
+                      'spdt_item' => $spdt_item,
+                      'spdt_qty' => $spdt_qty
                   ]);               
               }
    
@@ -73,19 +73,19 @@
 
           $d_salesplan_dt = d_salesplan_dt::where('spdt_salesplan', $sp_id);
           $d_salesplan_dt->delete();
-          $sd_items = $request->sd_item;
-          $sd_items = $sd_items != null ? $sd_items : array();
-          if(count($sd_items) > 0) {
-            for($x = 0;$x < count($sd_items);$x++) {
-                $sd_qty = format::format($request->sd_qty[$x]);
-                  $sd_item = $sd_items[$x];
+          $spdt_item = $request->spdt_item;
+          $spdt_item = $spdt_item != null ? $spdt_item : array();
+          if(count($spdt_item) > 0) {
+            for($x = 0;$x < count($spdt_item);$x++) {
+                $spdt_qty = format::format($request->spdt_qty[$x]);
+                  $unit_item = $spdt_item[$x];
                   $spdt_detailid = $x + 1;             
 
                   d_salesplan_dt::create([
                       'spdt_salesplan' => $sp_id,
                       'spdt_detailid' => $spdt_detailid,
-                      'spdt_item' => $sd_item,
-                      'spdt_qty' => $sd_qty
+                      'spdt_item' => $unit_item,
+                      'spdt_qty' => $spdt_qty
                   ]);
             }
           }

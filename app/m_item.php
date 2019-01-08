@@ -38,11 +38,13 @@ class m_item extends Model
               g_name,
               i_name,
               s_name,
-              group_concat(DISTINCT i_price separator ',') as i_price,sum(s_qty) as s_qty
+              group_concat(DISTINCT i_price separator ',') as i_price,
+              i_price AS real_price,
+              sum(s_qty) as s_qty
               from m_item
-              join m_satuan on i_satuan=s_id
-              join m_group on g_id=i_group
-              join d_stock on s_item=i_id 
+              left join m_satuan on i_satuan=s_id
+              left join m_group on g_id=i_group
+              left join d_stock on s_item=i_id 
               where FIND_IN_SET (s_comp,(select ag_gudang from m_acces_gudangitem where ag_fitur='Penjualan'))
               AND FIND_IN_SET (s_position,(select ag_gudang from m_acces_gudangitem where ag_fitur='Penjualan'))
               ".$item."
