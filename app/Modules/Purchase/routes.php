@@ -37,8 +37,11 @@ Route::get('/purcahse-order/order-index', 'purchaseOrderController@orderIndex')-
 Route::get('/purcahse-order/data-order', 'purchaseOrderController@dataOrder')->middleware('auth');
 Route::get('/purcahse-order/form-order', 'purchaseOrderController@formOrder')->middleware('auth');
 Route::get('/purcahse-order/get-data-form/{id}', 'purchaseOrderController@getDataForm')->middleware('auth');
+Route::get('/purcahse-order/get-data-detail/{id}', 'purchaseOrderController@getDataDetail')->middleware('auth');
+Route::get('/purcahse-order/get-data-edit/{id}', 'purchaseOrderController@getDataEdit')->middleware('auth');
 Route::get('/purcahse-order/get-data-code-plan', 'purchaseOrderController@getDataCodePlan')->middleware('auth');
 Route::get('/purcahse-order/seach-supplier', 'purchaseOrderController@seachSupplier')->middleware('auth');
+Route::get('/purcahse-order/delete-data-order', 'purchaseOrderController@deleteDataOrder')->middleware('auth');
 Route::get('/purcahse-order/save-po', 'purchaseOrderController@savePo')->middleware('auth');
 
 Route::get('/purcahse-plan/store-plan', 'purchasePlanController@storePlan')->middleware('auth');

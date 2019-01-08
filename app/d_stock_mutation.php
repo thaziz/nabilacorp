@@ -22,6 +22,8 @@ class d_stock_mutation extends Model
 							'sm_qty_sisa',
 							'sm_qty_expired' ,
 							'sm_detail' ,
+							'sm_stockreff' ,
+							'sm_detailreff' ,
 							'sm_keterangan',
 							'sm_hpp' ,
 							'sm_reff' ,

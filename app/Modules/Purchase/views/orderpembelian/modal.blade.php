@@ -17,63 +17,53 @@
               <label class="tebal">No Order Pembelian</label>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblNoOrder"></label>
               </div>  
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <label class="tebal">Cara Pembayaran</label>
-            </div>
-
-            <div class="col-md-3 col-sm-12 col-xs-12">
-              <div class="form-group">
-                <label id="lblCaraBayar"></label>
-              </div>  
-            </div>
-            
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <label class="tebal">Tanggal Order Pembelian</label>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <div class="form-group">
-                <label id="lblTglOrder"></label>
+                <label id="lblTglOrderShow"></label>
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <label class="tebal">Nama Staff</label>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblStaff"></label>
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <label class="tebal">Tanggal Pengiriman</label>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblTglKirim"></label>
               </div>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <label class="tebal">Suplier</label>
             </div>
 
-            <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="col-sm-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblSupplier"></label>
               </div>
             </div>
 
-            <div id="append-modal-detail"></div>
+            {{-- <div id="append-modal-detail"></div> --}}
 
           </div>
 

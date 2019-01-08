@@ -232,24 +232,24 @@ $(document).ready(function(){
           $('#i_price').val(ui.item.m_pbuy1);
         }
 
-
          $('.satuan_S').on("change",function(arg){
             if ($('#satuan').find(':selected').data('index') == 1) {
-                if ($('#satuan').find(':selected').data('price') != 0) {
+                if ($('#satuan').find(':selected').data('price1') != 0) {
                   $('#i_price').val($('#satuan').find(':selected').data('price1'));
                 }else{
                   $('#i_price').val($('#satuan').find(':selected').data('price_1'));
                 }
               $('#stock_index').val(1);
               }else if ($('#satuan').find(':selected').data('index') == 2) {
-                if ($('#satuan').find(':selected').data('price') != 0) {
+                if ($('#satuan').find(':selected').data('price2') != 0) {
                   $('#i_price').val($('#satuan').find(':selected').data('price2'));
                 }else{
                   $('#i_price').val($('#satuan').find(':selected').data('price_2'));
                 }
               $('#stock_index').val(2);
               }else if ($('#satuan').find(':selected').data('index') == 3) {
-                if ($('#satuan').find(':selected').data('price') != 0) {
+                // alert('a');
+                if ($('#satuan').find(':selected').data('price3') != 0) {
                   $('#i_price').val($('#satuan').find(':selected').data('price3'));
                 }else{
                   $('#i_price').val($('#satuan').find(':selected').data('price_3'));
@@ -268,13 +268,7 @@ $(document).ready(function(){
         cQty.val(1);
         fQty.focus();
         }
-      });
-
-
-
-       
-       
-     
+      });     
      });
 
  $('#searchitem').keypress(function(e) {        
@@ -335,13 +329,15 @@ $(document).ready(function(){
       // alert($('#satuan').find(':selected').attr('data-name'));  
       // alert($('#satuan').find(':selected').data('name'));  
       var str = i_price.val();
-      console.log(str);
+      // console.log(str);
       var res = str.replace(/\./g, "");
-      console.log(res);
+      // console.log(res);
       var hitung = parseInt(fQty.val())*parseInt(res);
       var res_hitung = accounting.formatMoney(hitung,"",0,'.',',');
 
-      var index = tamp.indexOf(i_id.val());      
+      var index = tamp.indexOf(i_id.val()); 
+      // console.log(index);     
+        // alert('b');
        if ( index == -1){                
       var Hapus = '<button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButton('+i_id.val()+')"><i class="fa fa-trash-o"></i></button>';                  
       var vTotalPerItem = angkaDesimal(fQty.val())*angkaDesimal(i_price.val());
@@ -375,7 +371,7 @@ $(document).ready(function(){
           //harga total
           iSalesDetail+='<td width="4%"><input style="width:100%;border:none" class="alignAngka si_price'+i_id.val()+'" name="total_price[]" value='+res_hitung+' readonly></td>';
             //hidden total
-            iSalesDetail+='<input style="width:100%" type="hidden" name="harga_total[]" value='+hitung+'>'
+            iSalesDetail+='<input style="width:100%" class="total_price'+i_id.val()+'" type="hidden" name="harga_total[]" value='+hitung+'>'
             //hapus tombol
           iSalesDetail+='<td width="3%">'+Hapus+'</td>'                            
           iSalesDetail+='</tr>';       
@@ -426,6 +422,15 @@ $(document).ready(function(){
         var fStok=parseFloat($('.stock'+i_id.val()).val());
         var a=0;
         var b=0;
+
+        var price_total = $('.total_price'+i_id.val()).val();
+        var place_price = parseInt(hitung)+parseInt(price_total);
+        // console.log(hitung);
+        // console.log(price_total);
+        $('.si_price'+i_id.val()).val(accounting.formatMoney(place_price,"",0,'.',','));
+        $('.total_price'+i_id.val()).val(place_price);
+
+        // alert('b');
         a=angkaDesimal($('.fQty'+i_id.val()).val()) || 0;
         b=angkaDesimal(fQty.val()) || 0;
         updateQty=parseFloat(a)+parseFloat(b);                          

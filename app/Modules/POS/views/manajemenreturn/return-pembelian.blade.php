@@ -213,19 +213,17 @@
                                           +'{{ csrf_field() }}'
                                           +'<thead>'
                                             +'<tr>'
-                                                +'<th>Nama</th>'
-                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="18%">Nama</th>'                     
                                                 +'<th width="2%">Tukar</th>'
-                                                +'<th>Satuan</th>'
-                                                +'<th width="2%">Desc</th>'
-                                                +'<th>Harga</th>'
-                                                +'<th width="10%">Disc Percent</th>'
-                                                +'<th>Disc Value</th>'
-                                                +'<th>Jumlah Tukar</th>'
-                                                +'<th width="10%">Total</th>'
+                                                +'<th width="2%">Satuan</th>'                    
+                                                +'<th width="10%">Harga</th>'
+                                                +'<th width="5%">Disc Percent</th>'
+                                                +'<th width="9%">Disc Value</th>'                
+                                                +'<th width="11%">Total</th>'
+                                                +'<th width="6%">Desc</th>'
                                             +'</tr>'
                                           +'</thead>'
-                                          +'<tbody>'
+                                          +'<tbody id="dataDt">'
                                           +'</tbody>'
                                         +'</form>'
                                       +'</table>'
@@ -323,19 +321,17 @@
                                           +'{{ csrf_field() }}'
                                           +'<thead>'
                                             +'<tr>'
-                                                +'<th>Nama</th>'
-                                                +'<th width="2%">Jumlah</th>'
+                                                +'<th width="18%">Nama</th>'                      
                                                 +'<th width="2%">Return</th>'
-                                                +'<th>Satuan</th>'
-                                                +'<th width="2%">Desc</th>'
-                                                +'<th>Harga</th>'
-                                                +'<th width="10%">Disc Percent</th>'
-                                                +'<th>Disc Value</th>'
-                                                +'<th>Jumlah Return</th>'
-                                                +'<th width="10%">Total</th>'
+                                                +'<th width="2%">Satuan</th>'                     
+                                                +'<th width="10%">Harga</th>'
+                                                +'<th width="5%">Disc Percent</th>'
+                                                +'<th width="9%">Disc Value</th>'               
+                                                +'<th width="11%">Total</th>'
+                                                +'<th width="6%">Desc</th>'
                                             +'</tr>'
-                                          +'</thead>'
-                                          +'<tbody>'
+                                          +'</thead>'                                          
+                                          +'<tbody id="dataDt">'
                                           +'</tbody>'
                                       +'</table>'
                                     +'</div>'
@@ -452,7 +448,7 @@
                                                 +'<th width="10%">Total Barang Sesuai</th>'
                                             +'</tr>'
                                           +'</thead>'
-                                          +'<tbody>'
+                                          +'<tbody id="dataDt">'
                                           +'</tbody>'
                                       +'</table>'
                                     +'</div>'
@@ -613,7 +609,7 @@
                                                 +'<th width="10%">Total Barang Sesuai</th>'
                                             +'</tr>'
                                           +'</thead>'
-                                          +'<tbody>'
+                                          +'<tbody id="dataDt">'
                                           +'</tbody>'
                                       +'</table>'
                                     +'</div>'
@@ -773,7 +769,7 @@
                                                 +'<th width="10%">Total Barang Sesuai</th>'
                                             +'</tr>'
                                           +'</thead>'
-                                          +'<tbody>'
+                                          +'<tbody id="dataDt">'
                                           +'</tbody>'
                                       +'</table>'
                                     +'</div>'
@@ -813,7 +809,7 @@
       });
       //event onchange select option
       $('#cari_nota_sales').change(function() {
-        $('#tabel-return-sales').dataTable().fnDestroy();
+        var e=$('#tabel-return-sales').dataTable().fnDestroy();                
         var id = $('#cari_nota_sales').val();
         var metode = $('#pilih_metode_return').val();
         $.ajax({
@@ -821,39 +817,42 @@
           type: "GET",
           dataType: "JSON",
           success: function(response){
-            var c_name =  response[0].c_name;
-            var c_id =  response[0].c_name;
-            var c_hp = response[0].c_hp1 +'/'+response[0].c_hp2;
-            var c_address = response[0].c_address;
-            if (c_address == null) {
-              c_address = '';
+              var c_name =  response.s_nama_cus;            
+            var c_address = response.s_alamat_cus;
+            if (response.s_alamat_cus == null) {
+              c_address = '';              
             }
-            $('#id_sup').val(c_id);
-            $('#c_name').val( c_name +'. '+ c_hp +'. '+ c_address);
-              var s_gross = parseInt(response[0].s_gross);
+            $('#c_name').val( c_name +'. '+ c_address);
+              var s_gross = parseInt(response.s_gross);
               s_gross = convertToRupiah(s_gross);
             $('#s_gross').val(s_gross); 
-              var persen = parseInt(response[0].s_disc_percent);
-              var value = (response[0].s_disc_value);
+              var persen = parseInt(response.s_disc_percent);
+              var value = (response.s_disc_value);
               value = parseFloat(value);
               var total_diskon = persen + value;
               total_diskon = convertToRupiah(total_diskon);      
             $('#total_diskon').val(total_diskon);
-              var s_net = parseInt(response[0].s_net);
+              var s_net = parseInt(response.s_net);
               s_net = convertToRupiah(s_net);
-            $('#s_net').val(s_net);
-            $('#pm_name').val(response[0].pm_name);
-              var s_disc_value = parseInt(response[0].s_disc_value);
+            $('#s_net').val(s_net);            
+              var s_disc_value = parseInt(response.s_disc_value);
               s_disc_value = convertToRupiah(s_disc_value);
             $('#total_value').val(s_disc_value);
-              var s_disc_percent = parseInt(response[0].s_disc_percent);
+              var s_disc_percent = parseInt(response.s_disc_percent);
               s_disc_percent = convertToRupiah(s_disc_percent);
             $('#total_percent').val(s_disc_percent);
-            $('#typeSales').val(response[0].s_channel);
+            $('#typeSales').val(response.s_channel);
 
-            var tableReturn = $('#tabel-return-sales').DataTable({
-              // processing: true,
-              // serverSide: true,
+
+         $.ajax({
+              url : baseUrl + "/penjualan/returnpenjualan/tabelpnota/"+id+'/'+metode,          
+          type    : 'GET',                     
+          success : function(response){    
+            $('#dataDt').append(response);
+
+           }
+        });
+          /*  var tableReturn = $('#tabel-return-sales').DataTable({              
               "scrollY": 500,
               "scrollX": true,
               "paging":  false,
@@ -863,15 +862,13 @@
               },
               columns: [
               {data: 'i_name', name: 'i_name'},
-              {data: 'sd_qty', name: 'sd_qty'},
-              {data: 'sd_qty_return', name: 'sd_qty_return'},
-              {data: 's_name', name: 's_name'},
-              {data: 'description', name: 'description'},
+              {data: 'sd_qty', name: 'sd_qty'},              
+              {data: 's_name', name: 's_name'},              
               {data: 'sd_price', name: 'sd_price'},
               {data: 'sd_disc_percent', name: 'sd_disc_percent', orderable: false},
-              {data: 'sd_disc_value', name: 'sd_disc_value', orderable: false},
-              {data: 'sd_return', name: 'sd_return', orderable: false},
+              {data: 'sd_disc_value', name: 'sd_disc_value', orderable: false},              
               {data: 'sd_total', name: 'sd_total', orderable: false},
+              {data: 'description', name: 'description'},
               ],
               "responsive":true,
                 "pageLength": 10,
@@ -888,7 +885,7 @@
                           "next": "Selanjutnya",
                  }
                 }
-            });
+            });*/
           },
         });
       });
@@ -1044,6 +1041,14 @@
               toastr.warning('Barang yang di beli melebihi stok');
           }
         }
+
+     $(document).on('blur', '.qty-item',  function(e){
+    var index = $('.qty-item').index(this);
+                index.find(".qty-item").val('3')
+    /*alert(index);*/
+    });
+
+
 
   function discpercent(inField, e){
     var a = 0;

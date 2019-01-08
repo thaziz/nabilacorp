@@ -186,18 +186,18 @@ class d_purchase_order extends Model
      static function getDataForm($id)
     {
           $gudang = d_purchase_plan::where('p_id',$id)->first();
-          
           $dataIsi = d_purchaseplan_dt::
                                 join('d_purchase_plan','ppdt_pruchaseplan','=','p_id')
                                 ->join('m_item','ppdt_item','=','i_id')
-                                ->join('m_satuan', 's_id', '=', 'i_satuan')
+                                ->leftjoin('d_item_supplier','is_item','=','i_id')
+                                ->leftjoin('m_price','m_pitem','=','i_id')
+                                ->join('m_satuan', 's_id', '=', 'ppdt_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
-                                         'm_item.i_price',
+                                         'ppdt_totalcost',
                                          's_name',
-                                         'm_satuan.s_id as id_satuan',
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
                                          'ppdt_prevcost',
@@ -205,26 +205,71 @@ class d_purchase_order extends Model
                                          'ppdt_pruchaseplan',
                                          'ppdt_detailid',
                                          'p_comp',
-                                         'p_gudang'
+                                         'ppdt_satuan_position as satuan_position',
+                                         'ppdt_satuan as satuan',
+                                         'i_sat1',
+                                         'i_sat2',
+                                         'i_sat3',
+                                         'p_gudang',
+                                         'is_price1',
+                                         'is_price2',
+                                         'is_price3',
+                                         'm_pbuy1',
+                                         'm_pbuy2',
+                                         'm_pbuy3'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
                                 ->where('p_comp',$gudang->p_comp)
                                 ->where('p_gudang',$gudang->p_gudang)
                                 ->where('ppdt_ispo', '=', "FALSE")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
-                                ->orderBy('ppdt_created', 'DESC')
+                                ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();
+            // $prev_harga = [];
+            $harga = [];
+
+            for ($i=0; $i <count($dataIsi) ; $i++) {
+              // $prev_harga = '';
+              $prev_harga[$i] = DB::table('d_item_supplier')
+                                ->where('is_item',$dataIsi[$i]->i_id)
+                                ->get();
+
+                if ($dataIsi[$i]->satuan_position == 1) {
+                  if ($dataIsi[$i]->is_price1 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price1;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }elseif ($dataIsi[$i]->satuan_position == 2) {
+                  if ($dataIsi[$i]->is_price2 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price2;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }elseif ($dataIsi[$i]->satuan_position == 3) {
+                  if ($dataIsi[$i]->is_price3 != null) {
+                      $harga[$i] = $dataIsi[$i]->is_price3;
+                  }else{
+                      $harga[$i] = 0;
+                  }
+                }
+            }
+
+            // return $prev_harga;
+            // return $harga;
+
 
         return response()->json([
             'status' => 'sukses',
             'data_isi' => $dataIsi,
+            'data_prev' => $harga,
         ]);
     }
 
 
      static function getDataCodePlan($request)
     {
-      // return 'a';
+      // return 'a'; 
       // return Session::get('user_comp');
       // return $request->session()->all();
         // return $dt = DB::table('')->get();
@@ -276,16 +321,16 @@ class d_purchase_order extends Model
     static function savePo($request)
      {
       // dd($request->all());
-      DB::beginTransaction();
-      try {
+      // DB::beginTransaction();
+      // try {
       $totalGross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
       // $totalGross = $this->konvertRp();
-      $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
+      $discValue = (int)str_replace("%","",$request->diskonHarga);
       $replaceCharPPN = (int)str_replace("%","",$request->ppnHarga);
       // $diskonPotHarga = $this->konvertRp($request->potonganHarga);
       $prev_harga = str_replace(['Rp', '\\', '.', ' '], '', $request->prev_harga);
       $diskonPotHarga = str_replace(['Rp', '\\', '.', ' '], '', $request->potonganHarga);
-      $discValue = $totalGross * $replaceCharDisc / 100;
+      // $discValue = $totalGross * $replaceCharDisc / 100;
 
       $p_id=d_purchase_order::max('po_id')+1;
 
@@ -317,18 +362,19 @@ class d_purchase_order extends Model
       $dataHeader->po_mem = $request->idStaff;
       $dataHeader->po_method = $request->methodBayar;
       $dataHeader->po_total_gross = $totalGross;
-      $dataHeader->po_discount = $diskonPotHarga;
-      $dataHeader->po_disc_percent = $replaceCharDisc;
+      // $dataHeader->po_discount = $diskonPotHarg;
+      // $dataHeader->po_disc_percent = $replaceCharDisc;
       $dataHeader->po_disc_value = $discValue;
       $dataHeader->po_tax_percent = $replaceCharPPN;
       $dataHeader->po_tax_value = ($totalGross - $diskonPotHarga - $discValue) * $replaceCharPPN / 100;
-      $dataHeader->po_total_net = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
-      $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett)/*$this->konvertRp($request->totalNett)*/;
+      $dataHeader->po_total_net = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett_after_disc);
+      $dataHeader->po_total_gross = str_replace(['Rp', '\\', '.', ' '], '', $request->totalGross);
+      // $dataHeader->po_received = str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett);
       $dataHeader->po_date_confirm = date('Y-m-d',strtotime($request->tanggal));
       $dataHeader->po_duedate = date('Y-m-d',strtotime($request->tanggal));
-      $dataHeader->po_status = 'CF';
-      $dataHeader->po_created = date('Y-m-d');
-      $dataHeader->po_updated =  date('Y-m-d');
+      $dataHeader->po_status = 'WT';
+      $dataHeader->po_created = date('Y-m-d h:i:s');
+      $dataHeader->po_updated =  date('Y-m-d h:i:s');
       $dataHeader->po_comp = Session::get('user_comp');
       $dataHeader->save();
 
@@ -342,11 +388,14 @@ class d_purchase_order extends Model
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
         $dataDetail->podt_qtyconfirm = $request->fieldQtyconfirm[$i];
-        $dataDetail->podt_prevcost = $request->podt_prevprice[$i];
-        $dataDetail->podt_price = $request->podt_price[$i];
+        $dataDetail->podt_disc =  str_replace(['Rp', '\\', '.', ' '], '', $request->podt_disc_detail[$i]);
+        $dataDetail->podt_prevcost = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_prevprice[$i]);
+        $dataDetail->podt_price = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_price[$i]);
+        $dataDetail->podt_total = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_total[$i]);
+        $dataDetail->podt_gross = $request->podt_total_net[$i];
         $dataDetail->podt_isconfirm = 'TRUE';
-        $dataDetail->podt_created = date('Y-m-d');
-        $dataDetail->podt_updated = date('Y-m-d');
+        $dataDetail->podt_created = date('Y-m-d h:i:s');
+        $dataDetail->podt_updated = date('Y-m-d h:i:s');
         $dataDetail->save();
 
         $dataBrg = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
@@ -361,24 +410,24 @@ class d_purchase_order extends Model
 
 
       }
-      DB::commit();
+      // DB::commit();
     return response()->json([
           'status' => 'sukses',
       ]);
-    } catch (\Exception $e) {
-    DB::rollback();
-    return response()->json([
-        'status' => 'gagal',
-        'data' => $e
-      ]);
-    }
+    // } catch (\Exception $e) {
+    // DB::rollback();
+    // return response()->json([
+    //     'status' => 'gagal',
+    //     'data' => $e
+    //   ]);
+    // }
 
 
 
      }
 
 
-
+     
 
 
 
