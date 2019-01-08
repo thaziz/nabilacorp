@@ -453,7 +453,7 @@ public function getDataRencanaPembelian(Request $request)
           ]);
         }
     }else{
-      return 'lol';
+      return 'ini belum';
     }
 
     return response()->json(['status'=>'sukses']);
