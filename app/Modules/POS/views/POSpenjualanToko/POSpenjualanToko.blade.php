@@ -99,7 +99,9 @@
   var dataIndex         =1;
 
   var hapusSalesDt =[];
-
+$('#harga').change(function(){
+  batal();
+})
 $(document).ready(function(){      
 
 
@@ -706,6 +708,7 @@ if($status==true){
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
+      
         $('#div_print').html(response);
               /*qz.appendHTML(
                   '<html>' +response +'</html>'
@@ -842,8 +845,8 @@ function detail(s_id){
 }
 function batal(){                        
          bSalesDetail.html('');
-         $('.tr_clone').html('');  
-          payment();                      
+         $('#nominal').val('');     
+          /*payment();                */      
          $('.reset').val('');
          $('#s_date').val('{{date("d-m-Y")}}');                        
                         $('#s_created_by').val('{{Auth::user()->m_name}}');
@@ -855,7 +858,7 @@ function batal(){
             $('.draft').css('display','');
             dataIndex=1;
 
-            $('#s_date').focus();
+            $('#searchitem').focus();
 }
 
 listPenjualan();

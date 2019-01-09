@@ -1,6 +1,6 @@
 @extends('main')
 @section('content')
-{!!$printPl!!}
+
 
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
@@ -1170,11 +1170,7 @@ else if(e.which==27){
 })
 
 
-
-
-
-
-function buttonSimpanPos($status){
+function buttonSimpanPos($status){      
       if($('#s_id').val()!='' && $status=='draft'){
                 iziToast.error({
                           position:'topRight',
