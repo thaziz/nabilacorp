@@ -105,7 +105,7 @@ class d_sales extends Model
 
 
                   $item_titipan_qty=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i])->select('idt_terjual','idt_sisa')->first();
-                  if(count($item_titipan_qty)!=0){
+                  if($item_titipan_qty){
                   $item_titipan=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i]);
                   
                   $item_titipan->update([

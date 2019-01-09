@@ -62,8 +62,8 @@ class mutasiItemController extends Controller
       $chek=$request->type;
       $dt=$request->dt;
         if($chek=='Bahan'){
-          $status=$request->s_status;
-          $data=d_mutationitem_material::mutasiItemDt($id);
+          $status=$request->s_status;          
+          $data=d_mutationitem_material::mutasiItemDt($id);          
           $tamp=[];
           foreach ($data as $key => $value) {
               $tamp[$key]=$value->i_id;

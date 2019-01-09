@@ -35,6 +35,21 @@ Route::get('/penjualan/mutasi-item/store', 'mutasiItemController@store');
 Route::get('/penjualan/mutasi-item/perbarui/{id}', 'mutasiItemController@perbarui');
 Route::get('/penjualan/mutasi-item/mutasi-item-detail/{id}', 'mutasiItemController@mutasiItemDt');
 Route::get('/penjualan/mutasi-item/destroy/{id}', 'mutasiItemController@destroy');
+/*
+
+//mutasi item
+	//update mi
+	Route::get('/penjualan/mutasi-item/index', 'mutasiItemController@mutasiItemIndex');
+	Route::get('/penjualan/mutasi-item/data-mutasi', 'mutasiItemController@dataMutasiItem');
+	Route::get('/penjualan/mutasi-item/tambah-mutasi-item', 'mutasiItemController@tambahMutasiItem');
+	Route::get('/penjualan/mutasi-item/store', 'mutasiItemController@store');
+	Route::get('/penjualan/mutasi-item/perbarui/{id}', 'mutasiItemController@perbarui');
+	Route::get('/penjualan/mutasi-item/mutasi-item-detail/{id}', 'mutasiItemController@mutasiItemDt');
+	Route::get('/penjualan/mutasi-item/destroy/{id}', 'mutasiItemController@destroy');
+*/
+
+
+
 
 
 //pencatatan barang titipan
@@ -125,16 +140,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 
 
 
-	//mutasi item
-	//update mi
-	Route::get('/penjualan/mutasi-item/index', 'mutasiItemController@mutasiItemIndex');
-	Route::get('/penjualan/mutasi-item/data-mutasi', 'mutasiItemController@dataMutasiItem');
-	Route::get('/penjualan/mutasi-item/tambah-mutasi-item', 'mutasiItemController@tambahMutasiItem');
-	Route::get('/penjualan/mutasi-item/store', 'mutasiItemController@store');
-	Route::get('/penjualan/mutasi-item/perbarui/{id}', 'mutasiItemController@perbarui');
-	Route::get('/penjualan/mutasi-item/mutasi-item-detail/{id}', 'mutasiItemController@mutasiItemDt');
-	Route::get('/penjualan/mutasi-item/destroy/{id}', 'mutasiItemController@destroy');
-
+	
 
 	//pencatatan barang titipan
 	Route::get('/penjualan/barang-titipan/index', 'itemTitipanController@index');
