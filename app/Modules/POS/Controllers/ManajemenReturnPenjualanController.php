@@ -18,7 +18,7 @@ use Response;
 
 class ManajemenReturnPenjualanController extends Controller
 {
-    public function r_penjualan(){
+  public function r_penjualan(){
     
     return view('POS::manajemenreturn.index');
   }
@@ -31,7 +31,7 @@ class ManajemenReturnPenjualanController extends Controller
     return DataTables::of($return)
 
     ->editColumn('dsr_date', function ($data) {
-       return date('d M Y', strtotime($data->dsr_date));
+       return date('d-M-Y', strtotime($data->dsr_date));
     })
 
     ->editColumn('dsr_type_sales', function ($data)  {
@@ -227,7 +227,16 @@ class ManajemenReturnPenjualanController extends Controller
   public function newreturn(){
     
     $nota = DB::table('d_sales')->get();
-    return view('POS::manajemenreturn.return-penjualan',compact('nota'));
+    $pn_template = view('POS::manajemenreturn/includes/pn_template');
+    $pn_template = preg_replace("/\r\n|\r|\n/", ' ', $pn_template);
+    $tb_template = view('POS::manajemenreturn/includes/tb_template');
+    $tb_template = preg_replace("/\r\n|\r|\n/", ' ', $tb_template);
+    $data = [
+      'pn_template' => $pn_template,
+      'tb_template' => $tb_template,
+      'nota' => $nota
+    ];
+    return view('POS::manajemenreturn.return-penjualan', $data);
   }
 
   public function carinota(Request $request){
@@ -271,8 +280,8 @@ class ManajemenReturnPenjualanController extends Controller
     $d_sales_return = d_sales_return::leftJoin('m_customer', 'dsr_cus', '=', 'c_id');
     $d_sales_return = $d_sales_return->where('dsr_id', $id)->first();
 
-    $d_sales_returndt = d_sales_returndt::leftJoin('m_item', 'i_id', '=', 'dsrdt_item');
-    $d_sales_returndt = $d_sales_returndt->where('dsrdt_idsr', $id);
+    $d_sales_returndt = d_sales_returndt::leftJoin('m_item', 'i_id', '=', 'ddsrdt_item');
+    $d_sales_returndt = $d_sales_returndt->where('ddsrdt_idsr', $id);
 
     $res = [
         'd_sales_return' => $d_sales_return,
@@ -295,107 +304,121 @@ class ManajemenReturnPenjualanController extends Controller
 
   public function store(Request $request,$id)
   {
-    // dd($request->all());
-    if ($request->t_return == null) {
-       $t_return =0;    # code...
-    }else{
-      $t_return = str_replace(['Rp', '\\', '.', ' '], '', $request->t_return);
-    }
-    $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
-    $replaceCharPPN = (int)str_replace("%","",$request->ppnHarga);
-
-    $s_gross = str_replace(['Rp', '\\', '.', ' '], '', $request->s_gross);
-    $total_diskon = str_replace(['Rp', '\\', '.', ' '], '', $request->total_diskon);
-    $total_value = str_replace(['Rp', '\\', '.', ' '], '', $request->total_value);
-    $total_percent = str_replace(['Rp', '\\', '.', ' '], '', $request->total_percent);
-    $s_net = str_replace(['Rp', '\\', '.', ' '], '', $request->s_net);
-
-
-    
-
-
-      $sr_id = DB::table('d_sales_return')->max('sr_id')+1;
-     
-      $query = DB::select(DB::raw("SELECT MAX(RIGHT(sr_id,4)) as kode_max from d_sales_return WHERE DATE_FORMAT(sr_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
-     
-      $kd = "";
-
-      if(count($query)>0)
-      {
-        foreach($query as $k)
-        {
-          $tmp = ((int)$k->kode_max)+1;
-          $kd = sprintf("%05s", $tmp);
+    DB::beginTransaction();
+    try {
+        // DB::enableQueryLog();
+        // dd($request->all());
+        if ($request->t_return == null) {
+           $t_return =0;    # code...
         }
-      }
-      else
-      {
-        $kd = "00001";
-      }
-      
-      $p_code = "RT-".date('ym')."-".$kd;
+        else {
+          $t_return = str_replace(['Rp', '\\', '.', ' '], '', $request->t_return);
+        }
+        $replaceCharDisc = (int)str_replace("%","",$request->diskonHarga);
+        $replaceCharPPN = (int)str_replace("%","",$request->ppnHarga);
 
-    $data_head = DB::table('d_sales_return')->insert([
-          'sr_id'=>$sr_id,
-          'sr_sales'=>$request->id_sales,
-          'sr_customer'=>$request->idSup,
-          // 'sr_alamat'=>$request->,
-          'sr_code'=>$p_code,
-          'sr_method'=>$id,
-          // 'sr_jenis_return'=>$request->,
-          // 'sr_type_sales'=>$request->,
-          'sr_date'=>$request->tanggal,
+        $s_gross = str_replace(['Rp', '\\', '.', ' '], '', $request->s_gross);
+        $total_diskon = str_replace(['Rp', '\\', '.', ' '], '', $request->total_diskon);
+        $total_value = str_replace(['Rp', '\\', '.', ' '], '', $request->total_value);
+        $total_percent = str_replace(['Rp', '\\', '.', ' '], '', $request->total_percent);
+        $s_net = str_replace(['Rp', '\\', '.', ' '], '', $request->s_net);
 
-          'sr_price_return'=>$request->t_return,
-          'sr_sgross'=>$s_gross,  
-          'sr_disc_vpercent'=>$total_diskon,
-          'sr_disc_value'=>$total_value,
-          'sr_net'=>$s_net,
-          // 'sr_status'=>,
-          // 'sr_status_terima'=>, 
-          // 'sr_resi'=>, 
-          'sr_created'=>date('Y-md h:i:s'), 
-          // 'sr_updated'=>, 
-    ]);
+          $dsr_id = DB::table('d_sales_return')->max('dsr_id')+1;
+         
+          $query = DB::select(DB::raw("SELECT MAX(RIGHT(dsr_id,4)) as kode_max from d_sales_return WHERE DATE_FORMAT(dsr_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+         
+          $kd = "";
 
-    for ($i=0; $i <count($request->i_id) ; $i++) { 
-      $sd_price = str_replace(['Rp', '\\', '.', ' '], '', $request->sd_price);
-      $sd_total = str_replace(['Rp', '\\', '.', ' '], '', $request->sd_total);
-      $sd_return = str_replace(['Rp', '\\', '.', ' '], '', $request->sd_return);
-
-        $data_head = DB::table('d_salesreturn_dt')->insert([
-          'srdt_salesreturn'=>$sr_id,
-          'srdt_detailid'=>$i+1,
-          'srdt_item'=>$request->i_id[$i],
-          'srdt_qty'=>$request->sd_qty[$i],
-          // 'sr_alamat'=>$request->,
-          'srdt_qty_confirm'=>$request->sd_qty_return[$i],
-          'srdt_price'=>$sd_price[$i],
-          // 'sr_jenis_return'=>$request->,
-          // 'sr_type_sales'=>$request->,
-          'srdt_disc_percent'=>$request->sd_disc_percent[$i],
-
-          'srdt_disc_vpercent'=>$request->value_disc_percent[$i],
-          'srdt_disc_vpercentreturn'=>$request->sd_disc[$i],  
-          'srdt_return_price'=>$sd_return[$i],
-          'srdt_disc_value'=>$request->sd_disc_value[$i],
-          'srdt_return_price'=>$s_net[$i],
-          // 'sr_status'=>,
-          // 'sr_status_terima'=>, 
-          'srdt_hasil'=>$sd_total[$i], 
-          'srdt_created'=>date('Y-md h:i:s'), 
-          // 'sr_updated'=>, 
-
-        ]);
-    
-        $data_stock = DB::table('d_stock')->insert([
-          'srdt_item'=>$request->i_id[$i],
-          'srdt_qty_confirm'=>$request->sd_qty_return[$i],
+          if(count($query)>0)
+          {
+            foreach($query as $k)
+            {
+              $tmp = ((int)$k->kode_max)+1;
+              $kd = sprintf("%05s", $tmp);
+            }
+          }
+          else
+          {
+            $kd = "00001";
+          }
           
+          $p_code = "RT-".date('ym')."-".$kd;
 
+        $dsr_date = $request->tanggal;
+        $dsr_date = preg_replace('/(\d+)[-\/](\d+)[-\/](\d+)/', '$3-$2-$1', $dsr_date);  
+        $data_head = DB::table('d_sales_return')->insert([
+              'dsr_id'=>$dsr_id,
+              'dsr_sid' => $request->id_sales,
+              'dsr_customer'=> $request->dsr_customer,
+              'dsr_alamat_customer'=> $request->dsr_alamat_customer,
+              // 'dsr_alamat'=>$request->,
+              'dsr_code'=>$p_code,
+              'dsr_method'=>$id,
+              // 'dsr_jenis_return'=>$request->,
+              // 'dsr_type_sales'=>$request->,
+              'dsr_date'=>$dsr_date,
+
+              'dsr_price_return'=>$request->t_return,
+              'dsr_sgross'=>$s_gross,  
+              'dsr_disc_vpercent'=>$total_diskon,
+              'dsr_disc_value'=>$total_value,
+              'dsr_net'=>$s_net,
+              // 'dsr_status'=>,
+              // 'dsr_status_terima'=>, 
+              // 'dsr_resi'=>, 
+              'dsr_created'=>date('Y-m-d h:i:s'), 
+              // 'dsr_updated'=>, 
         ]);
-    
+
+        $dsrdt_item = $request->dsrdt_item;;
+        $dsrdt_item = $dsrdt_item != null ? $dsrdt_item : [];
+        $dsrdt_price = $request->dsrdt_price;;
+        $dsrdt_price = $dsrdt_price != null ? $dsrdt_price : [];
+        $dsrdt_price_disc = $request->dsrdt_price_disc;;
+        $dsrdt_price_disc = $dsrdt_price_disc != null ? $dsrdt_price_disc : [];
+        $dsrdt_qty = $request->dsrdt_qty;;
+        $dsrdt_qty = $dsrdt_qty != null ? $dsrdt_qty : [];
+        $dsrdt_qty_confirm = $request->dsrdt_qty_confirm;;
+        $dsrdt_qty_confirm = $dsrdt_qty_confirm != null ? $dsrdt_qty_confirm : [];
+
+        for ($i=0; $i <count($dsrdt_item) ; $i++) { 
+
+            $dsrdt_total = $dsrdt_price[$i] * $dsrdt_qty_confirm[$i];
+
+            $data_head = DB::table('d_sales_returndt')->insert([
+              'dsrdt_idsr'=>$dsr_id,
+              'dsrdt_detailid'=>$i+1,
+              'dsrdt_item'=>$dsrdt_item[$i],
+              'dsrdt_qty'=>$dsrdt_qty[$i],
+              // 'dsr_alamat'=>$request->,
+              'dsrdt_qty_confirm'=>$dsrdt_qty_confirm[$i],
+              'dsrdt_price'=>$dsrdt_price[$i],
+              // 'dsr_jenis_return'=>$request->,
+              // 'dsr_type_sales'=>$request->,
+              'dsrdt_return_price'=>$dsrdt_price_disc[$i],
+              'dsrdt_created'=>date('Y-m-d h:i:s'), 
+              // 'dsr_updated'=>, 
+
+            ]);
+            
+            
+            // $data_stock = DB::table('d_stock')->insert([
+            //   'dsrdt_item'=>$request->i_id[$i],
+            //   'dsrdt_qty_confirm'=>$request->dsrdt_qty_return[$i],
+              
+
+            // ]);
+            DB::commit();
+            $status = 'sukses';
+        }
     }
+    catch(\Exception $e) {
+        DB::rollback();
+        $status = 'Terjadi Kesalahan. ' . $e;
+    }
+
+    $res = ['status' => $status];
+    return response()->json($res);
   }
 
 

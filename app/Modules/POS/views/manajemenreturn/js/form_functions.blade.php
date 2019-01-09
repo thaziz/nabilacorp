@@ -1,4 +1,44 @@
 <script>
+  function counting_subtotal() {
+    // Function untuk mentrigger perhitungan subtotal return
+    var dsrdt_qty_confirm = $('[name="dsrdt_qty_confirm[]"]');
+    if(dsrdt_qty_confirm.length > 0) {
+      dsrdt_qty_confirm.each(function(){
+        $(this).on('change keyup', function(){
+           var tr = $(this).parents('tr');
+           var dsrdt_price = tr.find('[name="dsrdt_price_disc[]"]');
+           var dsrdt_total = tr.find('[name="dsrdt_total[]"]');
+           var price = dsrdt_price.val() != '' ? parseInt(dsrdt_price.val()) : 0;
+           var qty = $(this).val() != '' ? parseInt($(this).val()) : 0;
+           console.log(price);
+           console.log(qty);
+           var subtotal = price * qty;
+           dsrdt_total.val('Rp. ' + SetFormRupiah(subtotal));
+
+           count_grandtotal();
+        })
+      });
+    }
+  }
+
+  function count_grandtotal() {
+      // Function untuk mentrigger perhitungan subtotal return
+    var dsrdt_qty_confirm = $('[name="dsrdt_qty_confirm[]"]');
+    var unit_price, unit_qty_confirm;
+    var grandtotal = 0;
+    if(dsrdt_qty_confirm.length > 0) {
+      var dsrdt_price = $('[name="dsrdt_price_disc[]"]');
+      for(x = 0;x < dsrdt_qty_confirm.length;x++) {
+          unit_price = $(dsrdt_price[x]).val();
+          unit_price = unit_price != '' ? parseInt(unit_price) : 0;
+          unit_qty_confirm = $(dsrdt_qty_confirm[x]).val();
+          unit_qty_confirm = unit_qty_confirm != '' ? parseInt(unit_qty_confirm) : 0;
+          grandtotal += (unit_price * unit_qty_confirm);
+      }
+    }
+
+    $('#t_return').val(grandtotal); 
+  }
 	function tambah() {
              var kode = $('#kode').val();
              var nama = $('#detailnama').val();
@@ -19,7 +59,7 @@
                  tableDetail.row.add([
                      nama + '<input type="hidden" name="kode_itemsb[]" class="kode_item kode" value="' + kode + '"><input type="hidden" name="nama_item[]" class="nama_item" value="' + nama + '"> ',
    
-                     '<input size="30" style="text-align:right" type="number"  name="sd_qtysb[]" class="sd_qty form-control qty-' + kode + '" value="' + qty + '" onkeyup="qtyInput(\'' + stok + '\', \'' + kode + '\')" onchange="qtyInput(\'' + stok + '\', \'' + kode + '\')"> ',
+                     '<input size="30" style="text-align:right" type="number"  name="dsrdt_qty_confirmsb[]" class="dsrdt_qty_confirm form-control qty-' + kode + '" value="' + qty + '" onkeyup="qtyInput(\'' + stok + '\', \'' + kode + '\')" onchange="qtyInput(\'' + stok + '\', \'' + kode + '\')"> ',
    
                      satuan + '<input type="hidden" name="satuan[]" class="satuan" value="' + satuan + '"> ',
    
@@ -43,7 +83,7 @@
              }
    
              $(function () {
-                 var values = $("input[name='sd_qty[]']")
+                 var values = $("input[name='dsrdt_qty_confirm[]']")
                      .map(function () {
                          return $(this).val();
                      }).get();
@@ -129,12 +169,12 @@
          var dataInput = $('input.discvalue:text:eq('+getIndex+')').val();
          var qty = $('input.qty-item:text:eq('+getIndex+')').val();
          var hargaItem = $('input.harga-item:text:eq('+getIndex+')').val();
-         // var dValue = $('input.sd_disc_value:text:eq('+getIndex+')').val();
+         // var dValue = $('input.dsrdt_disc_value:text:eq('+getIndex+')').val();
          var retur = $('input.qtyreturn:text:eq('+getIndex+')').val();
          hargaItem = convertToAngka(hargaItem);
          x = hargaItem * (qty - retur);
          y = (qty - retur) * dataInput;
-         var dValue = $('input.sd_disc_value:text:eq('+getIndex+')').val(y);
+         var dValue = $('input.dsrdt_disc_value:text:eq('+getIndex+')').val(y);
          if (dValue >= x) {
            dValue = 0;
            $('input.discvalue:text:eq('+getIndex+')').val(0);
@@ -157,7 +197,7 @@
      var getIndex = $('input.qtyreturn:text').index(inField);
      $('input.discpercent:text:eq('+getIndex+')').val(0);
      $('input.dValue-item:text:eq('+getIndex+')').val(0);
-     $('input.sd_disc_value:text:eq('+getIndex+')').val(0);
+     $('input.dsrdt_disc_value:text:eq('+getIndex+')').val(0);
      var dataInput = $('input.qtyreturn:text:eq('+getIndex+')').val();
      var qty = $('input.qty-item:text:eq('+getIndex+')').val();
      var totalHarga = $('input.totalHarga:text:eq('+getIndex+')').val();
@@ -332,7 +372,7 @@
    }
    
    function autoJumValue(){
-     var inputs = document.getElementsByClassName( 'sd_disc_value' ),
+     var inputs = document.getElementsByClassName( 'dsrdt_disc_value' ),
      hasil  = [].map.call(inputs, function( input ) {
          return input.value;
      });
@@ -373,9 +413,6 @@
              data: a,
              success: function (response) {
                  if (response.status == 'sukses') {
-                     $('#form_return_pembelian')[0].reset();
-                     $('#tabel-return-sales').dataTable().fnClearTable();
-                     tableDetail.row().clear().draw(false);
                      iziToast.success({
                          timeout: 5000,
                          position: "topRight",
@@ -393,7 +430,7 @@
                      iziToast.error({
                          position: "topRight",
                          title: '',
-                         message: 'Mohon melengkapi data.'
+                         message: 'Terjadi kesalahan.'
                      });
                      $('.button_save').removeAttr('disabled', 'disabled');
                  }

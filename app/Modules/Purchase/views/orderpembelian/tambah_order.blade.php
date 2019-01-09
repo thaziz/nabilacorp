@@ -60,6 +60,7 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <form method="POST" id="form_create_po" name="formCreatePo">
                       {{ csrf_field() }}
+                      
                       <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
