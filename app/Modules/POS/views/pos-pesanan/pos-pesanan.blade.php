@@ -633,7 +633,7 @@ function simpanPos(status=''){
     success:function (response){
         
             $('#div_print').html(response);              
-            //printElement(document.getElementById("div_print"));
+            printElement(document.getElementById("div_print"));
 
             /*qz.appendHTML(
                 '<html>' +response +'</html>'
@@ -1175,7 +1175,6 @@ else if(e.which==27){
 
 
 function buttonSimpanPos($status){
-      alert('sa');
       if($('#s_id').val()!='' && $status=='draft'){
                 iziToast.error({
                           position:'topRight',

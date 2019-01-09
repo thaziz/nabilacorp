@@ -4,7 +4,6 @@ namespace App\Modules\POS\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use html2text;
 use App\m_customer;
 use Carbon\carbon;
 use DB;
@@ -158,9 +157,8 @@ class PenjualanPesananController extends Controller
       $kembalian=$request->kembalian;
 
       $data=d_sales::printNota($id);
-      $printout = view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','sp_nominal','ttlBayar'));
-      $result = html2text::convert($printout);
-      return $printout;
+     return view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','sp_nominal','ttlBayar'));
+     
    
   }
 
