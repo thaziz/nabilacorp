@@ -292,7 +292,7 @@
       dataType: "JSON",
       success: function(data)
       {
-
+        // console.log(data);
         var key = 1;
         var i = randString(5);
         //ambil data ke json->modal
@@ -341,14 +341,16 @@
             $('#tabel-order-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                             +'<td>'+key+'</td>'
                             +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                            +'<td>'+data.data_isi[key-1].podt_qtyconfirm+'</td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" />'
+                            +'<td class="qty_awal_'+data.data_isi[key-1].i_id+'">'+data.data_isi[key-1].podt_qtyconfirm+'</td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm  qty_confirm_'+data.data_isi[key-1].i_id+'"  onkeyup="change('+data.data_isi[key-1].i_id+');" />'
                             // +'<td><input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="fieldiddetil[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" />'
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="fieldIdDtOrder[]" class="form-control input-sm"/></td>'
                             +'<td>'+data.data_isi[key-1].s_name+'</td>'
                             +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].podt_prevcost)+'</td>'
-                            +'<td id="price_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
-                            +'<td id="total_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price * data.data_isi[key-1].podt_qty)+'</td>'
+                            +'<td id="price_'+i+'" >'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
+                            +'<td id="total_'+i+'" class="total_tot_'+data.data_isi[key-1].i_id+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_total)+'</td>'
+                            +'<td hidden><input type="hidden" class="price_'+data.data_isi[key-1].i_id+'" value="'+data.data_isi[key-1].podt_price+'"></td>'
+                            +'<td hidden><input type="hidden" class="total_'+data.data_isi[key-1].i_id+'" value="'+data.data_isi[key-1].podt_total+'"></td>'
                             // +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row_order btn-sm" disabled>X</button></td>'
                             +'</tr>');
@@ -363,14 +365,17 @@
             $('#tabel-order-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                              +'<td>'+key+'</td>'
                             +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                            +'<td>'+data.data_isi[key-1].podt_qtyconfirm+'</td>'
-                            +'<td><input type="text" value="" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" />'
+                            +'<td  class="qty_awal_'+data.data_isi[key-1].i_id+'">'+data.data_isi[key-1].podt_qtyconfirm+'</td>'
+                            +'<td><input type="text" value="" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm  qty_confirm_'+data.data_isi[key-1].i_id+'"  onkeyup="change('+data.data_isi[key-1].i_id+');" />'
                             // +'<td><input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="fieldiddetil[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" />'
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="fieldIdDtOrder[]" class="form-control input-sm"/></td>'
                             +'<td>'+data.data_isi[key-1].s_name+'</td>'
                             +'<td>'+convertDecimalToRupiah(data.data_isi[key-1].podt_prevcost)+'</td>'
-                            +'<td id="price_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
-                            +'<td id="total_'+i+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_price * data.data_isi[key-1].podt_qty)+'</td>'
+                            +'<td id="price_'+i+'" >'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'</td>'
+                            +'<td id="total_'+i+'" class="total_tot_'+data.data_isi[key-1].i_id+'">'+convertDecimalToRupiah(data.data_isi[key-1].podt_total)+'</td>'
+                            // +'<input type="'+awal+'">'
+                            +'<td hidden><input type="hidden" class="price_'+data.data_isi[key-1].i_id+'" value="'+data.data_isi[key-1].podt_price+'"></td>'
+                            +'<td hidden><input type="hidden" class="total_'+data.data_isi[key-1].i_id+'" value="'+data.data_isi[key-1].podt_total+'"></td>'
                             // +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row_order btn-sm" disabled>X</button></td>'
                             +'</tr>');
@@ -402,6 +407,29 @@
             }
         }
     });
+  }
+
+
+  function change(argument) {
+    var ck = $('.qty_confirm_'+argument).val();
+    var awal = $('.qty_awal_'+argument).text();
+    if (parseInt(ck) > parseInt(awal)) {
+       iziToast.warning({
+            icon: 'fa fa-info',
+            message: 'Qty lebih besar dari yg disetujui!'
+      });
+      $('.qty_confirm_'+argument).val(0);
+    }
+    console.log(argument);
+
+    var hit =$('.price_'+argument).val();
+    // console.log(parseInt(res));
+    console.log(parseInt(hit));
+    // console.log(parseInt(ck));
+    var hitung = parseInt(ck)*parseInt(hit);
+    // console.log(hitung);
+    var hit =$('.total_tot_'+argument).text('Rp. '+accounting.formatMoney(hitung,"",2,'.',','));
+    var hitu =$('.total_'+argument).val(hitung);
   }
 
   function konfirmasiReturn(id,type) 
@@ -670,6 +698,7 @@
             data: $('#form-confirm-order').serialize(),
             success: function(response)
             {
+              console.log(response);
               if(response.status == "sukses")
               {
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
