@@ -1,6 +1,26 @@
 @extends('main')
 @section('content')
+<style type="text/css">
+  @media screen {
+  #printSection {
+      display: none;
+  }
+}
 
+@media print {
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
+  }
+}
+</style>
 
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
