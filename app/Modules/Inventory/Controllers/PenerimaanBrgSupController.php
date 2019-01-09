@@ -115,7 +115,6 @@ class PenerimaanBrgSupController extends Controller
        // return $increment;
        date_default_timezone_set("Asia/Jakarta"); 
       // return date('d/m/Y h:i:s');
-       // $check_header = 
        $data_header = DB::table('d_terima_pembelian')->insert([
           'd_tb_id'=>$increment,
           'd_tb_pid'=>$request->headNotaPurchase,
@@ -144,10 +143,8 @@ class PenerimaanBrgSupController extends Controller
         
          for ($i=0; $i <count($request->fieldNamaItem); $i++) {
             $check[$i] = DB::table('d_stock')->where('s_item','=',$request->fieldItemId[$i])->get();
-            $check_po[$i] = DB::table('d_purchaseorder_dt')->where('s_item','=',$request->fieldItemId[$i])->get();
+            // $check_po[$i] = DB::table('d_purchaseorder_dt')->where('s_item','=',$request->fieldItemId[$i])->get();
             $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
-
-      
             if(count($check[$i]) == 0) 
               {   
                 $insert_stock = DB::table('d_stock')->insert([
@@ -165,18 +162,31 @@ class PenerimaanBrgSupController extends Controller
                   's_update'=>date('Y-m-d h:i:s'),
                 ]);
             }
-
-
-
          }
-
-         // return $check_satuan;
-     
-
+       // dd($request->all());
+      for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
+          $data_detail_check[$i] = DB::table('d_purchaseorder_dt')
+                  ->where('podt_detailid',$request->order_id[$i])
+                  ->where('podt_purchaseorder',$request->headNotaPurchase)
+                  ->get();
+          // $data_detail_check[$i]->podt_qtysend;
+          $send[$i] =  $data_detail_check[$i][0]->podt_qtyreceive+($request->fieldQty[$i] - $request->fieldQtyterima[$i]);
+          $data_detail_order = DB::table('d_purchaseorder_dt')
+              ->where('podt_detailid',$request->order_id[$i])
+              ->where('podt_purchaseorder',$request->headNotaPurchase)
+              ->update([
+                 'podt_qtysend'=>$send[$i],
+                 'podt_qtyreceive'=>$data_detail_check[$i][0]->podt_qtyreceive+$request->fieldQtyterima[$i],
+           ]);
+       }
+       // return $chek;
+       // return $data_detail_order;
+       return response()->json([
+            'status' => 'Sukses',
+            'pesan' => 'Data Telah Berhasil di Simpan'
+        ]);
 
     }
-
-
     public function list_sj(Request $request)
     {
         $id_sj = trim($request->sj_code);
@@ -459,7 +469,7 @@ class PenerimaanBrgSupController extends Controller
                                 onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-eye"></i>
                             </a>
                              <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Ubah Status"
-                                onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-pencil"></i>
+                                onclick=editStatus("'.$data->po_id.'")><i class="fa fa-pencil"></i>
                             </a>
                         </div>
                         ';
