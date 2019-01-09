@@ -73,5 +73,17 @@ Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
     Route::post('/produksi/namaitem/update/formula', 'MasterFormulaController@updateFormula');
 //End Master Formula
 
-
+//group
+    Route::get('/master/grouphargakhusus/index', 'hargaKhususController@index');
+    Route::get('/master/grouphargakhusus/tablegroup/{id}', 'hargaKhususController@tableGroup');
+    Route::get('/master/grouphargakhusus/mastergroup', 'hargaKhususController@tableMasterGroup');
+    Route::get('/master/grouphargakhusus/tambahgroup', 'hargaKhususController@tambahGroup');
+    Route::get('/master/grouphargakhusus/tambahgroup/baru', 'hargaKhususController@insertGroup');
+    Route::get('/master/grouphargakhusus/ubahstatusgrup/{id}', 'hargaKhususController@moveStatusGroup');
+    Route::get('/master/grouphargakhusus/editgroupharga/{id}', 'hargaKhususController@editGroup');
+    Route::get('/master/grouphargakhusus/updategroup/{id}', 'hargaKhususController@updateGroup');
+    Route::get('/master/grouphargakhusus/autocomplete', 'hargaKhususController@autocomplete');
+    Route::get('/master/grouphargakhusus/tambahItemHarga', 'hargaKhususController@saveHargaItem');
+    Route::get('/master/grouphargakhusus/itemharga/hapus/{id}', 'hargaKhususController@deleteItemHarga');
+//end group
 });

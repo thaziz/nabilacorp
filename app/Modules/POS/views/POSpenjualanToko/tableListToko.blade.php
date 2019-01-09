@@ -268,7 +268,6 @@
         type: 'get',
         success:function (response){
             $('#div_prints').html(response);
-             
             printElement(document.getElementById("div_prints"));  
         }
         })

@@ -73,6 +73,11 @@ class PenjualanController extends Controller
       return view('POS::POSpenjualan/POSpenjualan',compact('pilihan'));
     }
     //auto complete barang
+    
+    public function itemRencana(Request $item)
+    { 
+      return m_itemm::itemRencana($item);
+    }
     public function item(Request $item)
     { 
       return m_itemm::seachItem($item);
@@ -113,9 +118,10 @@ class PenjualanController extends Controller
       $printPl=view('Produksi::sam');
       $flag='Toko';
       $paymentmethod=m_paymentmethod::pm();       
+      $daftarHarga=DB::table('m_price_group')->where('pg_active','=','TRUE')->get();             
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
       $machine=m_machine::showMachineActive();      
-      $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine','paymentmethod'));      
+      $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine','paymentmethod','daftarHarga'));      
       $data['listtoko']=view('POS::POSpenjualanToko/listtoko');   
       return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm','printPl','paymentmethod'));
     }
