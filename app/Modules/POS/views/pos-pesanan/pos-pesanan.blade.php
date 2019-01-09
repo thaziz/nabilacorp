@@ -1170,10 +1170,6 @@ else if(e.which==27){
 })
 
 
-
-
-
-
 function buttonSimpanPos($status){      
       if($('#s_id').val()!='' && $status=='draft'){
                 iziToast.error({

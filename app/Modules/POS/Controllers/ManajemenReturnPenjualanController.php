@@ -253,7 +253,7 @@ class ManajemenReturnPenjualanController extends Controller
     $data = d_sales::leftJoin('d_sales_dt','sd_sales','=','s_id')
       ->leftJoin('m_item','i_id','=','sd_item');
 
-    $data = select(
+    $data = $data->select(
       's_gross',
       's_disc_percent',
       's_disc_value',
