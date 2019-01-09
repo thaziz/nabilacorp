@@ -179,8 +179,11 @@ class PenjualanController extends Controller
       
     }
   function printNota($id, Request $request){
-      $jumlah=count(($request->sd_item));     
-      dd($jumlah);
+      /*$jumlah=count(($request->sd_item));     */
+      $jumlah=1;     
+
+      
+
       $bayar=$request->s_bayar;
       $kembalian=$request->kembalian;
       $data=d_sales::printNota($id);
