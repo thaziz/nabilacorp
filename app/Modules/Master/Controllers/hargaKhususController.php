@@ -155,7 +155,7 @@ class hargaKhususController extends Controller
     public function editGroup($id){
     	$group = m_price_group::where('pg_id',$id)
     		->first();
-    	return view('master.harga_khusus.edit_group',compact('group'));
+    	return view('Master::harga_khusus.edit_group',compact('group'));
     }
 
     public function updateGroup(Request $request, $id){

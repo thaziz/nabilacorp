@@ -105,13 +105,14 @@ class d_sales extends Model
 
 
                   $item_titipan_qty=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i])->select('idt_terjual','idt_sisa')->first();
-
+                  if(count($item_titipan_qty)!=0){
                   $item_titipan=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i]);
                   
                   $item_titipan->update([
                                   'idt_terjual'=>$item_titipan_qty->idt_terjual+$sd_qty,
                                   'idt_sisa'=>$item_titipan_qty->idt_sisa-$sd_qty
                                   ]);
+                }
 
                   
 
@@ -125,6 +126,7 @@ class d_sales extends Model
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
+                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                             'sd_disc_percent'=>$request->sd_disc_percent[$i],
                             'sd_disc_value'=>$sd_disc_value,
                             'sd_disc_percentvalue'=>$sd_disc_percentvalue,
@@ -169,6 +171,7 @@ class d_sales extends Model
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
+                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                             'sd_disc_percent'=>$request->sd_disc_percent[$i],
                             'sd_disc_value'=>$sd_disc_value,
                             'sd_disc_percentvalue'=>$sd_disc_percentvalue,
@@ -318,6 +321,7 @@ class d_sales extends Model
                 $upadte_sales_dt->update([
                                   'sd_qty'=>$sd_qty,
                                   'sd_price' =>$sd_price,
+                                  'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                                   'sd_disc_percent'=>$request->sd_disc_percent[$i],
                                   'sd_disc_value'=>$sd_disc_value,
                                   'sd_disc_percentvalue'=>$sd_disc_percentvalue,
@@ -363,6 +367,7 @@ class d_sales extends Model
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
+                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                             'sd_disc_percent'=>$request->sd_disc_percent[$i],
                             'sd_disc_value'=>$sd_disc_value,
                             'sd_disc_percentvalue'=>$sd_disc_percentvalue,
@@ -733,6 +738,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
+                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                             'sd_disc_percent'=>$request->sd_disc_percent[$i],
                             'sd_disc_value'=>$sd_disc_value,
                             'sd_disc_percentvalue'=>$sd_disc_percentvalue,
@@ -841,6 +847,7 @@ $totalBayar=0;
                 $upadte_sales_dt->update([
                                   'sd_qty'=>$sd_qty,
                                   'sd_price' =>$sd_price,
+                                  'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                                   'sd_disc_percent'=>$request->sd_disc_percent[$i],
                                   'sd_disc_value'=>$sd_disc_value,
                                   'sd_disc_percentvalue'=>$sd_disc_percentvalue,
@@ -883,6 +890,7 @@ $totalBayar=0;
                             'sd_item'=>$request->sd_item[$i],
                             'sd_qty'=>$sd_qty,                    
                             'sd_price' =>$sd_price,
+                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
                             'sd_disc_percent'=>$request->sd_disc_percent[$i],
                             'sd_disc_value'=>$sd_disc_value,
                             'sd_disc_percentvalue'=>$sd_disc_percentvalue,

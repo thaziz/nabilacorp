@@ -6,7 +6,7 @@
 <style type="text/css">
   
   *{
-    /*font-family: consolas;*/
+    font-family: consolas;
   }
   .div-width{
     width: 80mm;
@@ -115,12 +115,12 @@
         </td>
       </tr>
       <tr>
-        <td width="30%">Item: {{$jumlah}}</td>
-        <td class="text-right bold" >Total</td>
+        <td width="50px" style="font-size: 5px">Item: {{$jumlah}}</td>
+        <td class="text-right bold" width="25%">Total</td>
         <td width="30%"><div style="text-align: right">{{number_format($data['sales']->s_net,0,',','.')}}</div></td>        
       </tr>
       <tr>
-        <td></td>
+        <td style="font-size: 5px">Master</td>
         <td class="text-right bold" width="25%">Diskon</td>
         <td width="30%"><div style="text-align: right">{{number_format($data['sales']->s_disc_percent+$data['sales']->s_disc_value,0,',','.')}}</div></td>        
       </tr>
@@ -137,7 +137,7 @@
       
     </table>
     <br>
-    <div>
+    <div style="font-size: 5px">
       
           Terima kasih Semoga berkah, rejekinya lancar
         
