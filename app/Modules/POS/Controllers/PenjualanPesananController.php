@@ -147,18 +147,25 @@ class PenjualanPesananController extends Controller
       
     }
   function printNotaPesanan($id, Request $request){
-      $sp_nominal=[];
+      /*$sp_nominal=[];
       for ($i=0; $i <count($request->sp_nominal) ; $i++) { 
         $sp_nominal['nominal'][$i]=$request->sp_nominal[$i];
         $sp_nominal['date'][$i]=date('d-m-Y',strtotime($request->sp_date[$i]));
-      }            
+      }         */   
+
+      
+
       $ttlBayar=$s_gross = format::format($request->s_bayar);      
-      $jumlah=count(($request->sd_item));      
+      /*$jumlah=count(($request->sd_item));      */
       $bayar=$request->s_bayar;
       $kembalian=$request->kembalian;
 
       $data=d_sales::printNota($id);
-     return view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','sp_nominal','ttlBayar'));
+      $dt=d_sales_dt::where('sd_sales',$id)->select('sd_sales')->get();
+      $jumlah=count($dt);
+      $reff=$data['sales']->s_note;
+      $piutang=DB::table('d_receivable')->join('d_receivable_dt','r_id','=','rd_receivable')->where('r_ref','=',$reff)->get();      
+     return view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','piutang','ttlBayar'));
      
    
   }

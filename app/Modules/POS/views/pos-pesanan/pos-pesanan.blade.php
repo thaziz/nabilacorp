@@ -992,7 +992,7 @@ $('#serah_terima').css('display','');
               $('#serah_terima').css('display','none');
             }
             
-
+$('#sid').val(s_id);
 
   $('#idTerima').val(s_id);
   var status='';

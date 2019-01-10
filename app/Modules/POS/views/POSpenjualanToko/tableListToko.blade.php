@@ -103,7 +103,7 @@
                                       {{-- <label id="lTgl"></label> --}}
                                       <input type="text" class="form-control input-sm" readonly="" id="lTgl" name="">
 
-                                         <input type="text" class="form-control input-sm sid" readonly="" id="sid" name="">
+                                         <input type="hidden" class="form-control input-sm sid" readonly="" id="sid" name="">
                                   
 
                                     

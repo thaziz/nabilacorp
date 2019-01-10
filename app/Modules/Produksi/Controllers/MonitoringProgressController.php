@@ -77,7 +77,7 @@ class MonitoringProgressController extends Controller
 
       for ($i=0; $i <count($position) ; $i++) { 
         $stock->orWhere(function($query) use ($position,$i){
-                    $query->where('s_comp',DB::raw("'1'"))->where('s_position',DB::raw($position[$i]->gc_id));
+                    $query->where('s_comp',DB::raw($position[$i]->gc_id))->where('s_position',DB::raw($position[$i]->gc_id));
                 }); 
       }
       $stock->groupBy('s_item');

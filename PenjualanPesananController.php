@@ -82,8 +82,7 @@ class PenjualanPesananController extends Controller
       return d_sales::perbaruiPesanan($request);
     }
 
-    function penjualanDtPesanan($id,Request $request){  
-    dd($id);
+    function penjualanDtPesanan($id,Request $request){      
       $status=$request->s_status;      
       $data=d_sales_dt::penjualanDt($id);
       $tamp=[];

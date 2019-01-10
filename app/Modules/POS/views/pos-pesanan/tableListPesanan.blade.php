@@ -99,6 +99,8 @@
                                       <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                           {{-- <label id="lTgl"></label> --}}
+                                             <input type="hidden" class="form-control input-sm sid" readonly="" id="sid" name="">
+                                  
                                           <input type="text" readonly="" class="form-control input-sm" id="" name="">
                                         </div>  
                                       </div>
@@ -270,7 +272,8 @@
                             </div>
                         
                             <div class="modal-footer">
-                              
+                            <div id="div_prints"> </div>
+                              <button type="button" class="btn btn-primary" onclick="cetak()"> <i class="fa fa-print"> </i> &nbsp; Cetak </button>
                               <button id="serah_terima" class="btn btn-success serah_terima" type="button" onclick="serahTerima()" disabled="">Serah Terima</button>
                               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
@@ -280,6 +283,20 @@
                   </div>
                 <!-- End Modal Proses -->
           <script type="text/javascript">
+
+function cetak(){
+   var xxx = $('.sid').val();
+   alert(xxx);
+   $.ajax({
+    url : baseUrl+'/penjualan/pos-pesanan/printNota/'+xxx,
+    type: 'get',
+    success:function (response){
+        $('#div_prints').html(response);
+        printElement(document.getElementById("div_prints"));  
+    }
+    })
+}
+
 dateAwal();
 function dateAwal(){
       var d = new Date();
