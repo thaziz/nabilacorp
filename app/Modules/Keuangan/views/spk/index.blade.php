@@ -131,7 +131,8 @@
       }
     });
 
-  function total(inField, e){
+  function total(inField, e)
+  {
     $('.draft').removeAttr('disabled','disabled');
     $('.final').removeAttr('disabled','disabled');
     var a = 0;
@@ -143,11 +144,12 @@
       dataValue = parseFloat(dataValue).toFixed(2);
       var hasil = dataStok - dataValue;      
       hasil = parseFloat(hasil).toFixed(2);
-      if (hasil < 0.00) {
+      if (hasil < 0.00) 
+      {
          $('.final').attr('disabled','disabled');
       }
-
-      if(hasil<0){
+      if(hasil<0)
+      {
         $simbol='-';
       }
       var convHasil = ubahFormat(hasil);

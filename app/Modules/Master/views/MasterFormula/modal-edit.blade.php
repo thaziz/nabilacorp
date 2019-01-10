@@ -20,7 +20,7 @@
 
               <div class="col-md-8 col-sm-8 col-xs-12">
                 <div class="form-group">  
-                 <input style="text-align: right;" autocomplete="off" type="number" class="form-control input-sm" name="hasil_item" id="hasil_itemEdit" value="{{ $item->fr_result }}">
+                 <input style="text-align: right;" autocomplete="off" type="number" class="form-control input-sm" name="hasil_item" id="hasil_itemEdit" value="{{ (int)$item->fr_result }}">
                 </div>
               </div>
 
@@ -32,8 +32,8 @@
                 <div class="form-group">  
                   <select class="form-control" id="satuan-itemEdit" name="satuanItem[]">
                     <option value="{{ $item->i_sat1 }}">{{ $item->s_name }}</option>
-                    <option value="{{ $item->i_sat2 }}">{{ $item->s_name }}</option>
-                    <option value="{{ $item->i_sat3 }}">{{ $item->s_name }}</option>
+                    {{-- <option value="{{ $item->i_sat2 }}">{{ $item->s_name }}</option>
+                    <option value="{{ $item->i_sat3 }}">{{ $item->s_name }}</option> --}}
                   </select>
                 </div>
               </div>
@@ -88,7 +88,7 @@
                         </td>
                         <td>
                           <input type="number" name="qty[]" id="" class="form-control text-right" 
-                          value="{{ $data->f_value }}">
+                          value="{{ (int)$data->f_value }}">
                         </td>
                         <td>
                           {{ $data->s_name }}
