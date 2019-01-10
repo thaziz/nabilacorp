@@ -4,13 +4,13 @@ namespace App\Modules\POS\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\d_sales_return;
 
 use App\Modules\POS\model\d_sales;
 use App\Modules\POS\model\d_sales_dt;
+use App\Modules\POS\model\d_sales_return;
+use App\Modules\POS\model\d_sales_returndt;
 
-use App\d_sales_returndt;
-use App\d_sales_returnsb;
+
 use Datatables;
 use App\Http\Requests;
 use DB;
@@ -23,10 +23,34 @@ class ManajemenReturnPenjualanController extends Controller
     return view('POS::manajemenreturn.index');
   }
 
+  public function deleteretur($id) {
+
+    DB::beginTransaction();
+    try {
+      $d_sales_returndt = d_sales_returndt::where('dsrdt_idsr', $id);
+      $d_sales_returndt->delete();
+
+      $d_sales_return = d_sales_return::where('dsr_id', $id);
+      $d_sales_return->delete();
+
+
+
+      DB::commit();
+      $status = 'sukses';
+    }
+    catch(\Exception $e) {
+      DB::rollback();
+      $status = 'Terjadi kesalahan. ' . $e;
+    }
+
+    $res = ['status' => $status];
+
+    return response()->json($res);
+  }
+
     public function tabel(){
     $return = d_sales_return::all();
 
-    $url = url('/penjualan/manajemenreturn/preview/');
 
     return DataTables::of($return)
 
@@ -46,6 +70,7 @@ class ManajemenReturnPenjualanController extends Controller
         })
 
     ->editColumn('dsr_status', function ($data)  {
+            $url = url('/penjualan/manajemenreturn/preview/');
             if ($data->dsr_status == "WT")
             {
                 return '<div class="text-center">
@@ -114,6 +139,7 @@ class ManajemenReturnPenjualanController extends Controller
             })
 
     ->addColumn('action', function($data){
+      $url = url('/penjualan/manajemenreturn/preview/') . '/';
       if ($data->dsr_method == 'SB' || $data->dsr_method == 'SA') {
 
         if ($data->dsr_status == "WT"){
@@ -121,11 +147,10 @@ class ManajemenReturnPenjualanController extends Controller
                       <button type="button"
                           class="btn btn-success fa fa-eye btn-sm"
                           title="detail"
-                          
-                          onclick="location.href=\'' . $url . $data->dsr_id . '\'"
-                          >
+                          onclick="location.href=\'' . $url . '/' . $data->dsr_id . '\'"
+                       >
                       </button>
-                      <a  onclick="distroyNota('.$data->dsr_id.')"
+                      <a onclick="distroyNota('.$data->dsr_id.')"
                           class="btn btn-danger btn-sm"
                           title="Hapus">
                           <i class="fa fa-trash-o"></i></a>
@@ -149,15 +174,14 @@ class ManajemenReturnPenjualanController extends Controller
                         <button type="button"
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
-                            data-toggle="modal"
-                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
-                            data-target="#myItemSB">
+                            
+                            onclick="location.href=\'' . $url . '/' . $data->dsr_id . '\'"
+                            >
                         </button>
                         <button type="button"
                             class="btn btn-success fa fa-check btn-sm"
                             title="Terima Barang"
                             data-toggle="modal"
-                            onclick="lihatDetailTerimaSB('.$data->dsr_id.')"
                             data-target="#myItemTerimaSB">
                         </button>
                       </div>';
@@ -166,7 +190,7 @@ class ManajemenReturnPenjualanController extends Controller
                         <button type="button"
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
-                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
+                            onclick="location.href=\'' . $url . '/' . $data->dsr_id . '\'"
                             >
                         </button>
                       </div>';
@@ -174,16 +198,15 @@ class ManajemenReturnPenjualanController extends Controller
             
          }
 
-      }else{
+      }
+      else{
 
         if ($data->dsr_status == "WT"){
           return  '<div class="text-center">
                       <button type="button"
                           class="btn btn-success fa fa-eye btn-sm"
                           title="detail"
-                          data-toggle="modal"
-                          onclick="lihatDetail('.$data->dsr_id.')"
-                          data-target="#myItem">
+                          onclick="location.href=\'' . $url . $data->dsr_id . '\'">
                       </button>
                       <a  onclick="distroyNota('.$data->dsr_id.')"
                           class="btn btn-danger btn-sm"
@@ -196,7 +219,7 @@ class ManajemenReturnPenjualanController extends Controller
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
                             data-toggle="modal"
-                            onclick="lihatDetail('.$data->dsr_id.')"
+                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
                             data-target="#myItem">
                         </button>
                         <a  onclick="distroyNota('.$data->dsr_id.')"
@@ -210,7 +233,7 @@ class ManajemenReturnPenjualanController extends Controller
                             class="btn btn-success fa fa-eye btn-sm"
                             title="detail"
                             data-toggle="modal"
-                            onclick="lihatDetail('.$data->dsr_id.')"
+                            onclick="location.href=\'' . $url . $data->dsr_id . '\'"
                             data-target="#myItem">
                         </button>
                       </div>';
@@ -277,8 +300,7 @@ class ManajemenReturnPenjualanController extends Controller
   }
 
   public function preview($id) {
-    $d_sales_return = d_sales_return::leftJoin('m_customer', 'dsr_cus', '=', 'c_id');
-    $d_sales_return = $d_sales_return->where('dsr_id', $id)->first();
+    $d_sales_return = d_sales_return::where('dsr_id', $id)->first();
 
     $d_sales_returndt = d_sales_returndt::leftJoin('m_item', 'i_id', '=', 'ddsrdt_item');
     $d_sales_returndt = $d_sales_returndt->where('ddsrdt_idsr', $id);
