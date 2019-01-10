@@ -235,11 +235,12 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/manajemenreturn/tabel', 'ManajemenReturnPenjualanController@tabel');
 	Route::get('/penjualan/manajemenreturn/r_penjualan', 'ManajemenReturnPenjualanController@r_penjualan')->middleware('auth');
 	Route::get('/penjualan/manajemenreturn/tambahreturn', 'ManajemenReturnPenjualanController@newreturn');
-	Route::get('/penjualan/manajemenreturn/preview', 'ManajemenReturnPenjualanController@newreturn');
+	Route::get('/penjualan/manajemenreturn/preview/{id}', 'ManajemenReturnPenjualanController@preview');
 	Route::get('/penjualan/manajemenreturn/carinota', 'ManajemenReturnPenjualanController@carinota');
 	Route::get('/penjualan/manajemenreturn/get-data/{id}', 'ManajemenReturnPenjualanController@getdata');
 	Route::get('/penjualan/manajemenreturn/tabelpnota/{id}/{metode}', 'ManajemenReturnPenjualanController@tabelpnota');
 	Route::get('/penjualan/manajemenreturn/store/{id}', 'ManajemenReturnPenjualanController@store');
+	Route::get('/penjualan/manajemenreturn/deleteretur/{id}', 'ManajemenReturnPenjualanController@deleteretur');
 	
 	// Routing untuk pembayaran piutang
 	Route::get('/penjualan/pembayaranpiutang/index', 'PembayaranPiutangController@index');
