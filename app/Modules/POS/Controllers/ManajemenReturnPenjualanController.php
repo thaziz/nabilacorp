@@ -300,10 +300,13 @@ class ManajemenReturnPenjualanController extends Controller
   }
 
   public function preview($id) {
-    $d_sales_return = d_sales_return::where('dsr_id', $id)->first();
+    $d_sales_return = d_sales_return::leftJoin('d_sales', 'dsr_sid', '=', 's_id');
+    $d_sales_return = $d_sales_return->where('dsr_id', $id)
+      ->select('s_note', 'dsr_id', 'dsr_customer', 'dsr_alamat_customer', 'dsr_code', 'dsr_method', 'dsr_jenis_return', 'dsr_type_sales', 'dsr_date', 'dsr_price_return', DB::raw('CONCAT("Rp. ", FORMAT(dsr_price_return, 2)) AS dsr_price_return_currency'), 'dsr_sgross', DB::raw('CONCAT("Rp. ", FORMAT(dsr_sgross, 2)) AS dsr_sgross_currency'), 'dsr_disc_vpercent', 'dsr_disc_value', 'dsr_net', DB::raw('CONCAT("Rp. ", FORMAT(dsr_net, 2)) AS dsr_net_currency'), 'dsr_status', DB::raw('CASE dsr_method WHEN "PN" THEN "Potong Nota" WHEN "TB" THEN "Tukar Barang" END AS dsr_method_label'))
+      ->first();
 
-    $d_sales_returndt = d_sales_returndt::leftJoin('m_item', 'i_id', '=', 'ddsrdt_item');
-    $d_sales_returndt = $d_sales_returndt->where('ddsrdt_idsr', $id);
+    $d_sales_returndt = d_sales_returndt::leftJoin('m_item', 'i_id', '=', 'dsrdt_item');
+    $d_sales_returndt = $d_sales_returndt->where('dsrdt_idsr', $id)->get();
 
     $res = [
         'd_sales_return' => $d_sales_return,
