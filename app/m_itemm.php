@@ -66,7 +66,9 @@ class m_itemm extends Model
              ->join('m_satuan','m_satuan.s_id','=','i_sat1')                          
              ->join('m_item_price','ip_item','=','i_id')
              ->join('m_price_group','pg_id','=','ip_group');        
+
         if($search!=''){          
+
             $sql->where(function ($query) use ($search,$groupName,$harga) {
                   $query->where('i_name','like','%'.$search.'%');                                    
                   $query->where('pg_id',$harga);                                    
@@ -76,18 +78,18 @@ class m_itemm extends Model
                   $query->where('pg_id',$harga);                                                       
                   $query->whereIn('i_type',$groupName); 
                   });
-                  }                                  
+
+                  }                                                    
         else{
           $results[] = [ 'id' => null, 'label' =>'Data belum lengkap'];
           return Response::json($results);
         }
                
         $sql=$sql->get();
-                        
+            
         if (count($sql)==0) {
                 
           if($harga!=1){
-
         $sql=DB::table('m_item')
              ->leftjoin('d_stock',function($join) use ($comp,$position) {
                   $join->on('s_item','=','i_id');
@@ -124,7 +126,7 @@ class m_itemm extends Model
           }
         } else {
           foreach ($sql as $data)
-          {
+          {            
             $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->ip_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->ip_price,0,',','.'),'item' => $data->i_name ,'position'=>$position,
               'comp'=>$comp];
           }
