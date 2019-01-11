@@ -142,7 +142,7 @@ class PenjualanController extends Controller
       foreach ($data as $key => $value) {
           $tamp[$key]=$value->i_id;
       }      
-      $tamp=array_map("strval",$tamp);      
+      $tamp=array_map("strval",$tamp);           
       return view('POS::POSpenjualanToko/editDetailPenjualan',compact('data','tamp','status'));
       
     }

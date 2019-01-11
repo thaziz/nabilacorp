@@ -56,7 +56,7 @@
            </div>     
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">             
-               <select class="move up1 form-control input-sm" id="harga" onchange="harga()">
+               <select class="move up1 form-control input-sm" id="harga" onchange="harga()" name="s_type_price">
                 @foreach($daftarHarga as $daftar)
                  <option value="{{$daftar->pg_id}}">
                    {{$daftar->pg_name}}

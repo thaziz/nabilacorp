@@ -319,7 +319,8 @@ function resetData(){
   table();
 }
                                                 
-    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar,s_alamat_cus) {      
+    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar,s_alamat_cus,a) {      
+            $('#harga').val(a);
             $('.reset').val('');
             $('#s_created_by').val('{{Auth::user()->m_name}}')
             $('#s_id').val(s_id);

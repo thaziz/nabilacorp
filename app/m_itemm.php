@@ -65,8 +65,7 @@ class m_itemm extends Model
              })
              ->join('m_satuan','m_satuan.s_id','=','i_sat1')                          
              ->join('m_item_price','ip_item','=','i_id')
-             ->join('m_price_group','pg_id','=','ip_group');
-
+             ->join('m_price_group','pg_id','=','ip_group');        
         if($search!=''){          
             $sql->where(function ($query) use ($search,$groupName,$harga) {
                   $query->where('i_name','like','%'.$search.'%');                                    
