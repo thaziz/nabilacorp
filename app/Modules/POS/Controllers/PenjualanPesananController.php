@@ -4,7 +4,6 @@ namespace App\Modules\POS\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use html2text;
 use App\m_customer;
 use Carbon\carbon;
 use DB;
@@ -78,10 +77,11 @@ class PenjualanPesananController extends Controller
 
       $printPl=view('Produksi::sam');
       $flag='Pesanan';
+      $daftarHarga=DB::table('m_price_group')->where('pg_active','=','TRUE')->get();  
       $paymentmethod=m_paymentmethod::pm();       
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
       $machine=m_machine::showMachineActive();      
-      $data['toko']=view('POS::pos-pesanan/pesanan',compact('machine','paymentmethod'));      
+      $data['toko']=view('POS::pos-pesanan/pesanan',compact('machine','paymentmethod','daftarHarga'));      
       $data['listtoko']=view('POS::pos-pesanan/listpesanan');   
       return view('POS::pos-pesanan/pos-pesanan',compact('data','pm','printPl'));
 
@@ -147,20 +147,26 @@ class PenjualanPesananController extends Controller
       
     }
   function printNotaPesanan($id, Request $request){
-      $sp_nominal=[];
+      /*$sp_nominal=[];
       for ($i=0; $i <count($request->sp_nominal) ; $i++) { 
         $sp_nominal['nominal'][$i]=$request->sp_nominal[$i];
         $sp_nominal['date'][$i]=date('d-m-Y',strtotime($request->sp_date[$i]));
-      }            
+      }         */   
+
+      
+
       $ttlBayar=$s_gross = format::format($request->s_bayar);      
-      $jumlah=count(($request->sd_item));      
+      /*$jumlah=count(($request->sd_item));      */
       $bayar=$request->s_bayar;
       $kembalian=$request->kembalian;
 
       $data=d_sales::printNota($id);
-      $printout = view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','sp_nominal','ttlBayar'));
-      $result = html2text::convert($printout);
-      return $printout;
+      $dt=d_sales_dt::where('sd_sales',$id)->select('sd_sales')->get();
+      $jumlah=count($dt);
+      $reff=$data['sales']->s_note;
+      $piutang=DB::table('d_receivable')->join('d_receivable_dt','r_id','=','rd_receivable')->where('r_ref','=',$reff)->get();      
+     return view('POS::pos-pesanan/printNota',compact('data','kembalian','bayar','jumlah','piutang','ttlBayar'));
+     
    
   }
 

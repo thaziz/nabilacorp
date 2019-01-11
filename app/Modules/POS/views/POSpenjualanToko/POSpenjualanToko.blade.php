@@ -99,7 +99,9 @@
   var dataIndex         =1;
 
   var hapusSalesDt =[];
-
+$('#harga').change(function(){
+  batal();
+})
 $(document).ready(function(){      
 
 
@@ -706,6 +708,7 @@ if($status==true){
     type: 'get',
     data    :  formPos+'&status='+status,
     success:function (response){
+      
         $('#div_print').html(response);
               /*qz.appendHTML(
                   '<html>' +response +'</html>'
@@ -842,8 +845,8 @@ function detail(s_id){
 }
 function batal(){                        
          bSalesDetail.html('');
-         $('.tr_clone').html('');  
-          payment();                      
+         $('#nominal').val('');     
+          /*payment();                */      
          $('.reset').val('');
          $('#s_date').val('{{date("d-m-Y")}}');                        
                         $('#s_created_by').val('{{Auth::user()->m_name}}');
@@ -855,7 +858,7 @@ function batal(){
             $('.draft').css('display','');
             dataIndex=1;
 
-            $('#s_date').focus();
+            $('#searchitem').focus();
 }
 
 listPenjualan();
@@ -993,7 +996,7 @@ function setDatePicker(){
 
 
 
-function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {  
+function dataDetailView(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar) {    
   $('#txt_span_status').text(s_status);
   $('#lCode').val(s_note);
   $('#lTgl').val(s_date);

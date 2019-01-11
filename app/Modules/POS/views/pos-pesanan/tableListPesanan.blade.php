@@ -99,6 +99,8 @@
                                       <div class="col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                           {{-- <label id="lTgl"></label> --}}
+                                             <input type="hidden" class="form-control input-sm sid" readonly="" id="sid" name="">
+                                  
                                           <input type="text" readonly="" class="form-control input-sm" id="" name="">
                                         </div>  
                                       </div>
@@ -270,7 +272,8 @@
                             </div>
                         
                             <div class="modal-footer">
-                              
+                            <div id="div_prints"> </div>
+                              <button type="button" class="btn btn-primary" onclick="cetak()"> <i class="fa fa-print"> </i> &nbsp; Cetak </button>
                               <button id="serah_terima" class="btn btn-success serah_terima" type="button" onclick="serahTerima()" disabled="">Serah Terima</button>
                               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                             </div>
@@ -280,6 +283,20 @@
                   </div>
                 <!-- End Modal Proses -->
           <script type="text/javascript">
+
+function cetak(){
+   var xxx = $('.sid').val();
+   alert(xxx);
+   $.ajax({
+    url : baseUrl+'/penjualan/pos-pesanan/printNota/'+xxx,
+    type: 'get',
+    success:function (response){
+        $('#div_prints').html(response);
+        printElement(document.getElementById("div_prints"));  
+    }
+    })
+}
+
 dateAwal();
 function dateAwal(){
       var d = new Date();
@@ -302,7 +319,8 @@ function resetData(){
   table();
 }
                                                 
-    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar,s_alamat_cus) {      
+    function editPenjualan(s_id,s_note,s_machine,s_date,s_duedate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,s_jenis_bayar,s_alamat_cus,a) {      
+            $('#harga').val(a);
             $('.reset').val('');
             $('#s_created_by').val('{{Auth::user()->m_name}}')
             $('#s_id').val(s_id);

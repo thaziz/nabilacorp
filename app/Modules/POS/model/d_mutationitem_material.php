@@ -16,10 +16,14 @@ class d_mutationitem_material extends Model
 
       protected $fillable = ['mm_mutationitem','mm_comp','mm_position','mm_detailid','mm_item','mm_qty','mm_hpp'];
 
-      static function mutasiItemDt($id){
+      static function mutasiItemDt($id){        
       	 $mm=d_mutationitem_material::join('m_item','mm_item','=','i_id')
-      							 ->join('m_satuan','i_satuan','=','s_id')
-      							 ->join('d_stock','s_item','=','mm_item')
+      							 ->join('m_satuan','i_satuan','=','s_id')      							 
+                     ->leftjoin('d_stock',function($join) {
+                          $join->on('s_item','=','mm_item');
+                          $join->on('s_comp','=','mm_comp'); 
+                          $join->where('s_position','=','mm_position');
+                      })
       							 ->where('mm_mutationitem',$id)
       							 ->get();
       							 

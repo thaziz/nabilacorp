@@ -1,4 +1,4 @@
-@extends('main')
+  @extends('main')
 @section('content')
 <!--BEGIN PAGE WRAPPER-->
 <div id="page-wrapper">
@@ -60,7 +60,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-2 col-sm-3 col-xs-12">
+                      {{-- <div class="col-md-2 col-sm-3 col-xs-12">
                         <label class="tebal">Nama Pemilik</label>
                       </div>
 
@@ -71,7 +71,7 @@
                             <input type="text" id="owner" name="owner" class="form-control input-sm">
                           </div>
                         </div>
-                      </div>
+                      </div> --}}
                              
                       <div class="col-md-2 col-sm-3 col-xs-12">
                         <label class="tebal">No. Telp 1</label>

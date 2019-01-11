@@ -136,7 +136,7 @@ class SuplierController extends Controller
       $edit_suplier = DB::table("m_supplier")->where("s_id", $s_id)->first();
       // return json_encode($edit_suplier); 
       json_encode($edit_suplier);
-      return view('/master/datasuplier/edit_suplier', ['edit_suplier' => $edit_suplier] , compact('edit_suplier', 's_id'));
+      return view('Master::datasuplier/edit_suplier', ['edit_suplier' => $edit_suplier] , compact('edit_suplier', 's_id'));
     }
 
     public function suplier_edit_proses(Request $request)

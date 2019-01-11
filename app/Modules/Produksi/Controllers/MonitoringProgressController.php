@@ -19,12 +19,67 @@ use Session;
 
 class MonitoringProgressController extends Controller
 {
-   public function monitoring()
-   {
-      if (Auth::user()->punyaAkses('Monitoring Order & Stock','ma_read')) 
-      {      
-         $autoPlan = view('Produksi::monitoringprogress.auto_plan');  
-         return view('Produksi::monitoringprogress.index',compact('autoPlan'));
+
+  public function monitoring(){
+    
+    if (Auth::user()->punyaAkses('Monitoring Order & Stock','ma_read')) {      
+      $autoPlan = view('Produksi::monitoringprogress.auto_plan');  
+      return view('Produksi::monitoringprogress.index',compact('autoPlan'));
+    }else{
+      return view('system.hakakses.errorakses');
+    }
+  }
+
+  public function tabel(Request $request){
+
+    if($request->fil=='A'){
+        $comp=Session::get('user_comp');    
+    $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
+               ->where('sp_status',DB::raw("'N'"))
+               // ->where('sp_comp',DB::raw("$comp"))               
+               ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
+
+    $pp = DB::Table('d_productplan')
+      ->where(function($query){
+        $query->where('pp_isspk',DB::raw("'N'"))
+              ->orwhere('pp_isspk',DB::raw("'Y'"))
+              ->orwhere('pp_isspk',DB::raw("'P'"));
+        })
+      ->select(DB::raw("sum(pp_qty) as pp_qty"), 'pp_item')
+      // ->where('pp_comp',DB::raw("$comp"))               
+      ->groupBy('pp_item');
+
+    $sales = DB::Table('d_sales')
+      ->where('s_channel', DB::raw("'Pesanan'"))
+      ->where(function ($query) {
+          $query->where('s_status',DB::raw("'final'"));
+        })
+      // ->where('s_comp',DB::raw("$comp"))               
+      ->leftjoin('d_sales_dt','d_sales.s_id', '=' , 'd_sales_dt.sd_sales');
+    /*dd($sales->toSql());*/
+
+  $cabang=Session::get('user_comp');            
+  $position=DB::table('d_gudangcabang')
+                      ->whereIn('gc_gudang',['GUDANG PENJUALAN','GUDANG PRODUKSI'])
+                      ->where('gc_comp',$cabang)
+                      ->select('gc_id')->get();    
+
+    $stock = DB::Table('d_stock')
+      ->select('s_item',DB::raw("sum(s_qty) as s_qty"));
+      /*->where(function($query){
+          $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'2'"));
+        })
+      ->orWhere(function($query){
+          $query->where('s_comp',DB::raw("'6'"))->where('s_position',DB::raw("'6'"));
+        })
+      ->orWhere(function($query){
+          $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'5'"));
+        });*/
+
+      for ($i=0; $i <count($position) ; $i++) { 
+        $stock->orWhere(function($query) use ($position,$i){
+                    $query->where('s_comp',DB::raw($position[$i]->gc_id))->where('s_position',DB::raw($position[$i]->gc_id));
+                }); 
       }
       else
       {

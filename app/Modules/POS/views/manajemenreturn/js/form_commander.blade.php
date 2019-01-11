@@ -21,6 +21,7 @@
      //autofill
      $('#pilih_metode_return').change(function() {
        //remove child div inside appending-form before appending
+       var template;
        $('#appending-form div').remove();
        var method = $(this).val();
        var methodTxt = $(this).text();
@@ -31,220 +32,18 @@
        else if(method == "TB")
        {
          //remove child div inside appending-form before appending
+         template = '{!! $tb_template !!}';
+
          $('#appending-form div').remove();
-         $('#appending-form').append(
-                                   '<div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 10px; padding-top:25px;padding-bottom:20px;">'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Nota Penjualan<font color="red">*</font></label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<select class="form-control input-sm select2" id="cari_nota_sales" name="id_sales" style="width: 100% !important;">'
-                                           +'<option> - Pilih Nota Penjualan</option>'+
-                                          
-                                         '</select>'
-                                       +'</div>'
-                                     +'</div>'
-                                     
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Tanggal Return</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input id="tanggalReturn" class="form-control input-sm datepicker2 " name="tanggal" type="text" value="{{ date('d-m-Y') }}">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Metode Pembayaran</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="pm_name" readonly="" class="form-control input-sm" id="pm_name">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'</div>'                                   
-                                      +'<div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 10px; padding-top:25px;padding-bottom:20px;">'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Detail Pelanggan</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-10 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="c_name" readonly="" class="form-control input-sm" id="c_name">'
-                                         +'<input type="hidden" name="idSup" readonly="" class="form-control input-sm" id="id_sup">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Total Tukar</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="t_return" readonly="" class="form-control input-sm" id="t_return" value="">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">S Gross</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="s_gross" readonly="" class="form-control input-sm" id="s_gross">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Total Diskon</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="total_diskon" readonly="" class="form-control input-sm totalGross" id="total_diskon">'
-                                         +'<input type="hidden" name="total_value" readonly="" class="form-control input-sm total_value" id="total_value">'
-                                         +'<input type="hidden" name="total_percent" readonly="" class="form-control input-sm total_percent" id="total_percent">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Total Penjualan (Nett)</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="s_net" readonly="" class="form-control input-sm totalGross" id="s_net">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'</div>'
-   
-                                     +'<div class="table-responsive">'
-                                       +'<table class="table tabelan table-bordered" id="tabel-return-sales" width="100%">'
-                                         +'<form method="GET" id="form_create">'
-                                           +'{{ csrf_field() }}'
-                                           +'<thead>'
-                                             +'<tr>'
-                                                 +'<th width="18%">Nama</th>'                     
-                                                 +'<th width="2%">Tukar</th>'
-                                                 +'<th width="2%">Satuan</th>'                    
-                                                 +'<th width="10%">Harga</th>'
-                                                 +'<th width="5%">Disc Percent</th>'
-                                                 +'<th width="9%">Disc Value</th>'                
-                                                 +'<th width="11%">Total</th>'
-                                                 +'<th width="6%">Desc</th>'
-                                             +'</tr>'
-                                           +'</thead>'
-                                           +'<tbody id="dataDt">'
-                                           +'</tbody>'
-                                         +'</form>'
-                                       +'</table>'
-                                     +'</div>'
-   
-                                       +'<div align="right" style="padding-top: 15px;">'
-                                         +'<div id="div_button_save" class="form-group">'
-                                           +'<button type="button" id="button_save" class="btn btn-primary" onclick="simpanReturn()">Simpan Data</button>'
-                                         +'</div>'
-                                       +'</div>');
+         $('#appending-form').append(template);
        }
        else if(method == "PN")
        {
+
+         template = '{!! $pn_template !!}'; 
          //remove child div inside appending-form before appending
          $('#appending-form div').remove();
-         $('#appending-form').append(
-                                   '<div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 10px; padding-top:25px;padding-bottom:20px;">'
-                                     // +'<form id="data-return">'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Nota Penjualan<font color="red">*</font></label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<select class="form-control input-sm select2" id="cari_nota_sales" name="id_sales" style="width: 100% !important;">'
-                                           +'<option> - Pilih Nota Penjualan</option>'
-                                         +'</select>'
-                                       +'</div>'
-                                     +'</div>'
-                                     
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Tanggal Return</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input id="tanggalReturn" class="form-control input-sm datepicker2 " name="tanggal" type="text" value="{{ date('d-m-Y') }}">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Metode Pembayaran</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="pm_name" readonly="" class="form-control input-sm" id="pm_name">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'</div>'                                   
-                                      +'<div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 10px; padding-top:25px;padding-bottom:20px;">'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Detail Pelanggan</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-10 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="c_name" readonly="" class="form-control input-sm" id="c_name">'
-                                         +'<input type="hidden" name="idSup" readonly="" class="form-control input-sm" id="id_sup">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Total Return</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="t_return" readonly="" class="form-control input-sm" id="t_return" value="">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">S Gross</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="s_gross" readonly="" class="form-control input-sm" id="s_gross">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Total Diskon</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="total_diskon" readonly="" class="form-control input-sm totalGross" id="total_diskon">'
-                                         +'<input type="hidden" name="total_value" readonly="" class="form-control input-sm total_value" id="total_value">'
-                                         +'<input type="hidden" name="total_percent" readonly="" class="form-control input-sm total_percent" id="total_percent">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'<div class="col-md-2 col-sm-3 col-xs-12">'
-                                       +'<label class="tebal">Total Penjualan (Nett)</label>'
-                                     +'</div>'
-                                     +'<div class="col-md-4 col-sm-9 col-xs-12">'
-                                       +'<div class="form-group">'
-                                         +'<input type="text" name="s_net" readonly="" class="form-control input-sm totalGross" id="s_net">'
-                                       +'</div>'
-                                     +'</div>'
-                                     +'</div>'
-   
-                                     +'<div class="table-responsive">'
-                                       +'<table class="table tabelan table-bordered" id="tabel-return-sales" width="100%">'
-                                           +'{{ csrf_field() }}'
-                                           +'<thead>'
-                                             +'<tr>'
-                                                 +'<th width="18%">Nama</th>'                      
-                                                 +'<th width="2%">Return</th>'
-                                                 +'<th width="2%">Satuan</th>'                     
-                                                 +'<th width="10%">Harga</th>'
-                                                 +'<th width="5%">Disc Percent</th>'
-                                                 +'<th width="9%">Disc Value</th>'               
-                                                 +'<th width="11%">Total</th>'
-                                                 +'<th width="6%">Desc</th>'
-                                             +'</tr>'
-                                           +'</thead>'                                          
-                                           +'<tbody id="dataDt">'
-                                           +'</tbody>'
-                                       +'</table>'
-                                     +'</div>'
-                                     // +'</form>'
-   
-                                       +'<div align="right" style="padding-top: 15px;">'
-                                         +'<div id="div_button_save" class="form-group">'
-                                           +'<button type="button" id="button_save" class="btn btn-primary" onclick="simpanReturn()">Simpan Data</button>'
-                                         +'</div>'
-                                       +'</div>'
-         );
+         $('#appending-form').append(template);
        }
 
        //select2
@@ -289,8 +88,10 @@
            type: "GET",
            dataType: "JSON",
            success: function(response){
-               var c_name =  response.s_nama_cus;            
+             var c_name =  response.s_nama_cus;            
              var c_address = response.s_alamat_cus;
+             $('#dsr_customer').val(c_name);
+             $('#dsr_alamat_customer').val(c_address);
              if (response.s_alamat_cus == null) {
                c_address = '';              
              }
@@ -321,8 +122,10 @@
            type    : 'GET',                     
            success : function(response){    
              $('#dataDt').append(response);
+             counting_subtotal();
+             count_grandtotal();
    
-            }
+           }
          });
            /*  var tableReturn = $('#tabel-return-sales').DataTable({              
                "scrollY": 500,
@@ -334,12 +137,12 @@
                },
                columns: [
                {data: 'i_name', name: 'i_name'},
-               {data: 'sd_qty', name: 'sd_qty'},              
+               {data: 'dsrdt_qty', name: 'dsrdt_qty'},              
                {data: 's_name', name: 's_name'},              
-               {data: 'sd_price', name: 'sd_price'},
-               {data: 'sd_disc_percent', name: 'sd_disc_percent', orderable: false},
-               {data: 'sd_disc_value', name: 'sd_disc_value', orderable: false},              
-               {data: 'sd_total', name: 'sd_total', orderable: false},
+               {data: 'dsrdt_price', name: 'dsrdt_price'},
+               {data: 'dsrdt_disc_percent', name: 'dsrdt_disc_percent', orderable: false},
+               {data: 'dsrdt_disc_value', name: 'dsrdt_disc_value', orderable: false},              
+               {data: 'dsrdt_total', name: 'dsrdt_total', orderable: false},
                {data: 'description', name: 'description'},
                ],
                "responsive":true,
@@ -390,7 +193,7 @@
              $("#namaitem").val('');
          });
    
-       tableDetail = $('#detail-penjualan').DataTable();
+       // tableDetail = $('#detail-penjualan').DataTable();
    
          $('#qty').keypress(function (e) {
              var charCode;
@@ -428,11 +231,6 @@
          var tamp = [];
          
    
-      $(document).on('blur', '.qty-item',  function(e){
-                  var index = $('.qty-item').index(this);
-                 index.find(".qty-item").val('3')
-     /*alert(index);*/
-     });
    
    //event focus on input harga
    $(document).on('focus', '.field_harga',  function(e){
