@@ -98,11 +98,7 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <a style="margin-top: 20px; margin-right:10px; "
                                                class="btn btn-primary pull-right"
-                                       {{--         href="{{url('produksi/suratjalan/print')}}" target="_blank" --}}
                                                onclick="saveDelevery()"><i class="fa fa-print"></i>&nbsp;Cetak</a>
-                                            {{-- <button style="margin-top: 20px; margin-right:10px; " class="btn btn-warning pull-right kirim" type="button" onclick="saveDelevery()">Cetak
-                                              <i class="fa fa-print"></i>
-                                            </button> --}}
                                         </div>
                                     </div>
                                 </div>
