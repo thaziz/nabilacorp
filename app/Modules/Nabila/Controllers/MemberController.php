@@ -32,9 +32,19 @@ class MemberController extends Controller {
 
     public function form_alter($id) {
         $m_member = member::where('m_id', $id);
-        $m_member = $m_member->select('m_id', 'm_name', 'm_nik', 'm_birth', 'm_telp', 'm_address', 'm_email', DB::raw('DATE_FORMAT(m_birth, "%m-%d") AS m_birth_label'))->first();
+        $m_member = $m_member->select('m_id', 'm_name', 'm_nik', 'm_birth', 'm_telp', 'm_address', 'm_email', DB::raw('DATE_FORMAT(m_birth, "%d-%m-%Y") AS m_birth_label'))->first();
         $data = ['m_member' => $m_member];
+        // print_r($m_member);
+        // die('');
         return view('Nabila::member/form_alter', $data); 
+    }
+    public function preview($id) {
+        $m_member = member::where('m_id', $id);
+        $m_member = $m_member->select('m_id', 'm_name', 'm_nik', 'm_birth', 'm_telp', 'm_address', 'm_email', DB::raw('DATE_FORMAT(m_birth, "%d-%m-%Y") AS m_birth_label'))->first();
+        $data = ['m_member' => $m_member];
+        // print_r($m_member);
+        // die('');
+        return view('Nabila::member/preview', $data); 
     }
 
     public function get_data_all()
@@ -144,9 +154,17 @@ class MemberController extends Controller {
                     try {
 
                       $data['m_birth'] = preg_replace('/(\d+)[\/-](\d+)[\/-](\d+)/', '$3-$2-$1', $data['m_birth']);
-
-                        
-
+                      $m_member = member::where('m_id', $data['m_id']);
+                      
+                      $m_member->update([
+                          "m_name" => $data['name'],
+                          "m_nik" => $data['nik'],
+                          "m_birth" => $data['m_birth'],
+                          "m_telp" => $data['telp'],
+                          "m_address" => $data['address'],
+                          "m_email" => $data['email']
+                      ]);
+     
                         DB::commit();
                         
 

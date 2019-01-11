@@ -57,4 +57,8 @@
 	function open_form_alter(id) {
 		location.href = '{{ url("nabila/membership/form_alter") }}/' + id;
 	}
+
+	function open_preview(id) {
+		location.href = '{{ url("nabila/membership/preview") }}/' + id;
+	}
 </script>
