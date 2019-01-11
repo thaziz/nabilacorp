@@ -1,6 +1,6 @@
 @extends('main')
 @section('content')
-{!!$printPl!!}
+<!-- $printPl -->
 <style type="text/css">
   @media screen {
   #printSection {
