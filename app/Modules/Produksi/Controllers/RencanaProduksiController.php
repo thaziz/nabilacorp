@@ -26,16 +26,13 @@ class RencanaProduksiController extends Controller
   }
 
   public function produksi(){    
-    if (Auth::user()->punyaAkses('Rencana Produksi','ma_read')) {
+    if (Auth::user()->punyaAkses('Rencana Produksi','ma_read')) 
+    {
       $modalEdit =view('Produksi::rencanaproduksi.modal');
-/*   $daftar =view('Purchase::rencanapembelian/daftar');   
-     $history =view('Purchase::rencanapembelian/history');   
-     $modalDetail =view('Purchase::rencanapembelian/modal-detail');   
-     $modalEdit =view('Produksi::rencanaproduksi.modal');   */
-  /*   return view('Purchase::rencanapembelian/rencana',compact('daftar','history','modalDetail','modalEdit'));*/
-
       return view('Produksi::rencanaproduksi.index',compact('modalEdit'));
-    }else{
+    }
+    else
+    {
       return view('system.hakakses.errorakses');
     }
   }

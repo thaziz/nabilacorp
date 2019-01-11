@@ -165,19 +165,15 @@ class ManOutputProduksiController extends Controller
 
         return Response::json($d_spk);
     }
-
+    //$res = array_filter($values, 'myFilter');
     public function store(Request $request)
-    {   
+    { //dd($request->all());   
         DB::beginTransaction();
         try {
-        for ($i=0; $i <count($request->spk_qty) ; $i++) 
+        for ($i=0; $i <count($request->spk_id) ; $i++) 
         { 
-            if ($request->spk_qty[$i] != '0') 
+            if ($request->spk_qty[$i] != null) 
             {
-                $cek = DB::table('d_productresult')
-                    ->where('pr_spk', $request->spk_id[$i])
-                    ->get();
-
                 $status = d_spk::where('spk_id', $request->spk_id[$i])
                     ->first();
 
@@ -186,23 +182,20 @@ class ManOutputProduksiController extends Controller
                         'pp_isspk' => 'P'
                     ]);
 
-                $nota = d_spk::select('spk_code')
-                    ->where('spk_id', $request->spk_id[$i])
+                $cek = DB::table('d_productresult')
+                    ->where('pr_spk', $request->spk_id[$i])
                     ->first();
-
-                $maxid1 = DB::Table('d_productresult_dt')->select('prdt_detail')->max('prdt_detail')+1;
-                $maxid = DB::Table('d_productresult')->select('pr_id')->max('pr_id')+1;
-
-                if (count($cek) == 0) 
+                    
+                if ($cek == null) 
                 {
-
+                    $maxid1 = DB::Table('d_productresult_dt')->select('prdt_detail')->max('prdt_detail')+1;
+                    $maxid = DB::Table('d_productresult')->select('pr_id')->max('pr_id')+1;
                     d_productresult::insert([
                         'pr_id' => $maxid,
                         'pr_spk' => $request->spk_id[$i],
                         'pr_date' => Carbon::now(),
                         'pr_item' => $request->spk_item[$i]
                     ]);
-
                     d_productresult_dt::insert([
                         'prdt_productresult' => $maxid,
                         'prdt_detail' => $maxid1,
@@ -212,14 +205,11 @@ class ManOutputProduksiController extends Controller
                         'prdt_status' => 'RD',
                         'prdt_date' => Carbon::now(),
                         'prdt_time' => Carbon::now()
-
                     ]);
 
                 } 
                 else 
-                {
-
-
+                { 
                     $pr = d_productresult::where('pr_spk', $request->spk_id[$i])
                         ->get();
 
@@ -227,7 +217,8 @@ class ManOutputProduksiController extends Controller
                         ->where('prdt_status', 'RD')
                         ->first();
 
-                    if ($prdt != null) {
+                    if ($prdt != null) 
+                    {
 
                         $hasil = $prdt->prdt_qty + $request->spk_qty[$i];
                         $sisa = $prdt->prdt_sisa + $request->spk_qty[$i];
@@ -239,7 +230,9 @@ class ManOutputProduksiController extends Controller
                                 'prdt_sisa' => $sisa,
                             ]);
 
-                    } else {
+                    } 
+                    else 
+                    {
 
                         d_productresult_dt::insert([
                             'prdt_productresult' => $pr[0]->pr_id,
@@ -256,19 +249,20 @@ class ManOutputProduksiController extends Controller
 
                 }
                 // dd($status);
+                $nota = d_spk::select('spk_code')
+                    ->where('spk_id', $request->spk_id[$i])
+                    ->first();
                 $gc_id = d_gudangcabang::select('gc_id')
                   ->where('gc_gudang','GUDANG PRODUKSI')
                   ->first();
                 $gudang = $gc_id->gc_id;
-
                 $stockProduksi = d_stock::where('s_comp', $gudang)
                     ->where('s_position', $gudang)
                     ->where('s_item', $request->spk_item[$i])
                     ->first();
-
+                // dd($stockProduksi);
                 if ($stockProduksi == null) 
                 {
-
                     $maxid = DB::Table('d_stock')->select('s_id')->max('s_id')+1;
                     d_stock::insert([
                         's_id' => $maxid,
@@ -299,7 +293,6 @@ class ManOutputProduksiController extends Controller
                 } 
                 else 
                 {
-
                     $sm_detailid = d_stock_mutation::select('sm_detailid')
                             ->where('sm_item', $request->spk_item[$i])
                             ->where('sm_comp', $gudang)
@@ -311,7 +304,7 @@ class ManOutputProduksiController extends Controller
                         ->where('s_position', $gudang)
                         ->where('s_id', $stockProduksi->s_id)
                         ->update(['s_qty' => $stokBaru]);
-
+                    
                     d_stock_mutation::create([
                         'sm_stock' => $stockProduksi->s_id,
                         'sm_detailid' => $sm_detailid,
@@ -338,13 +331,11 @@ class ManOutputProduksiController extends Controller
                     ->where('pr_spk',$request->spk_id[$i])
                     ->join('d_productresult_dt','d_productresult_dt.prdt_productresult','=','pr_id')
                     ->get();
-                // dd($cek);
                 $totalHasil = 0;
-                for ($i=0; $i <count($cek) ; $i++) 
-                 { 
-                    $totalHasil += $cek[$i]->prdt_qty;
+                for ($j=0; $j <count($cek) ; $j++) 
+                { 
+                    $totalHasil += $cek[$j]->prdt_qty;
                 }
-                // dd($cek[0]);
                 $autoStatus = d_spk::select('spk_id',
                     'spk_ref',
                     'spk_status',
@@ -353,7 +344,6 @@ class ManOutputProduksiController extends Controller
                     ->join('d_productplan','d_productplan.pp_id','=','spk_ref')
                     ->where('spk_id',$cek[0]->pr_spk)
                     ->first();
-
                 if ($autoStatus->pp_qty == $totalHasil) {
                     $autoStatus->update([
                         'spk_status' => 'FN'
@@ -363,9 +353,8 @@ class ManOutputProduksiController extends Controller
                         'pp_isspk' => 'C'
                     ]);
                 }
-            }
-        }
-
+            }  
+        }   
         DB::commit();
 	    return response()->json([
 	          'status' => 'sukses'
