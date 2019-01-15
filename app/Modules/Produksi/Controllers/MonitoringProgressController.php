@@ -10,6 +10,7 @@ use App\d_spk;
 use App\m_itemm;
 use App\d_productplan;
 use App\d_sales_dt;
+use App\Modules\POS\model\d_sales;
 use DataTables;
 use Auth;
 use Response;
@@ -31,63 +32,6 @@ class MonitoringProgressController extends Controller
   }
 
   public function tabel(Request $request){
-
-    if($request->fil=='A'){
-        $comp=Session::get('user_comp');    
-    $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
-               ->where('sp_status',DB::raw("'N'"))
-               // ->where('sp_comp',DB::raw("$comp"))               
-               ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
-
-    $pp = DB::Table('d_productplan')
-      ->where(function($query){
-        $query->where('pp_isspk',DB::raw("'N'"))
-              ->orwhere('pp_isspk',DB::raw("'Y'"))
-              ->orwhere('pp_isspk',DB::raw("'P'"));
-        })
-      ->select(DB::raw("sum(pp_qty) as pp_qty"), 'pp_item')
-      // ->where('pp_comp',DB::raw("$comp"))               
-      ->groupBy('pp_item');
-
-    $sales = DB::Table('d_sales')
-      ->where('s_channel', DB::raw("'Pesanan'"))
-      ->where(function ($query) {
-          $query->where('s_status',DB::raw("'final'"));
-        })
-      // ->where('s_comp',DB::raw("$comp"))               
-      ->leftjoin('d_sales_dt','d_sales.s_id', '=' , 'd_sales_dt.sd_sales');
-    /*dd($sales->toSql());*/
-
-  $cabang=Session::get('user_comp');            
-  $position=DB::table('d_gudangcabang')
-                      ->whereIn('gc_gudang',['GUDANG PENJUALAN','GUDANG PRODUKSI'])
-                      ->where('gc_comp',$cabang)
-                      ->select('gc_id')->get();    
-
-    $stock = DB::Table('d_stock')
-      ->select('s_item',DB::raw("sum(s_qty) as s_qty"));
-      /*->where(function($query){
-          $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'2'"));
-        })
-      ->orWhere(function($query){
-          $query->where('s_comp',DB::raw("'6'"))->where('s_position',DB::raw("'6'"));
-        })
-      ->orWhere(function($query){
-          $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'5'"));
-        });*/
-
-      for ($i=0; $i <count($position) ; $i++) { 
-        $stock->orWhere(function($query) use ($position,$i){
-                    $query->where('s_comp',DB::raw($position[$i]->gc_id))->where('s_position',DB::raw($position[$i]->gc_id));
-                }); 
-      }
-      else
-      {
-         return view('system.hakakses.errorakses');
-      }
-   }
-
-   public function tabel(Request $request){
 
       if($request->fil=='A')
       {
@@ -339,42 +283,40 @@ class MonitoringProgressController extends Controller
     }
   }
 
-
-
-
-  
-
-
-
   public function bukaNota($id){
-    $data = m_itemm::where('i_id',$id)->first();
-    
-    return view('Produksi::monitoringprogress.nota',compact('data'));
+    // $data = m_itemm::where('i_id',$id)->first();
+    $pesanan = d_sales::select('s_note','s_finishdate','s_date','sd_qty')
+      ->join('d_sales_dt','d_sales_dt.sd_sales','=','s_id')
+      ->join('m_item','m_item.i_id','=','sd_item')
+      ->where('i_id',$id)
+      ->get();
+ 
+    return view('Produksi::monitoringprogress.nota',compact('pesanan'));
   }
 
-  public function nota($id){
-    $data = d_sales_dt::
-              select( 's_note',
-                      'c_name',
-                      's_date',
-                      'sd_qty'
-              )
-            ->where('sd_item',$id)
-            ->join('d_sales','d_sales.s_id','=','d_sales_dt.sd_sales')
-            ->join('m_customer','m_customer.c_id','=','d_sales.s_customer')
-            ->where('s_channel','GR')
-            ->where('s_status','PR')
-            ->orderBy('s_date','asc')
-            ->get();
+  // public function nota($id){
+  //   $data = d_sales_dt::
+  //             select( 's_note',
+  //                     'c_name',
+  //                     's_date',
+  //                     'sd_qty'
+  //             )
+  //           ->where('sd_item',$id)
+  //           ->join('d_sales','d_sales.s_id','=','d_sales_dt.sd_sales')
+  //           ->join('m_customer','m_customer.c_id','=','d_sales.s_customer')
+  //           ->where('s_channel','GR')
+  //           ->where('s_status','PR')
+  //           ->orderBy('s_date','asc')
+  //           ->get();
+  
+  //   return DataTables::of($data)
+  //   ->editColumn('s_date', function ($user) {
+  //       return $user->s_date ? with(new Carbon($user->s_date))->format('d M Y') : '';
+  //     })
+  //   ->addIndexColumn()   
+  //   ->make(true);
 
-    return DataTables::of($data)
-    ->editColumn('s_date', function ($user) {
-        return $user->s_date ? with(new Carbon($user->s_date))->format('d M Y') : '';
-      })
-    ->addIndexColumn()   
-    ->make(true);
-
-  }
+  // }
 
   public function plan($id){
 

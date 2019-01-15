@@ -4,7 +4,7 @@ namespace App\Modules\Hrd\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DataTables;
+use Datatables;
 use URL;
 use Carbon\Carbon;
 use DB;
@@ -13,8 +13,8 @@ use App\Http\Requests;
 use App\m_pegawai_man;
 use App\m_divisi;
 use App\m_produksi;
-use App\Modules\Hrd\model\abs_pegawai_man;
-use App\Modules\Hrd\model\abs_pegawai_pro;
+use App\abs_pegawai_man;
+use App\abs_pegawai_pro;
 use Excel;
 use Illuminate\Support\Facades\Input;
 

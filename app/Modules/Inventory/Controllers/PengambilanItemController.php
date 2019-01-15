@@ -161,7 +161,7 @@ class PengambilanItemController extends Controller
     function store(Request $request)
     {  
         DB::beginTransaction();
-        try { //dd($request->all());
+        try { 
             $gudTujuan = d_gudangcabang::select('gc_id','gc_comp')
                   ->where('gc_id',$request->prdt_produksi)
                   ->first();
