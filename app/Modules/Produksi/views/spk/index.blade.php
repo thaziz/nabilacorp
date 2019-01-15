@@ -39,14 +39,14 @@
                         <div id="generalTabContent" class="tab-content responsive">
 
 
-{!!$formulaTab!!}
-<!-- /div index-tab -->
-{!!$indexTab!!}
-<!-- /div index-tab -->
-{!!$inputTab!!}
-<!-- div finishResult-tab -->
-{!!$finishTab!!}
-<!-- End DIv finishResult-tab -->                        
+                            {!!$formulaTab!!}
+                            <!-- /div index-tab -->
+                            {!!$indexTab!!}
+                            <!-- /div index-tab -->
+                            {!!$inputTab!!}
+                            <!-- div finishResult-tab -->
+                            {!!$finishTab!!}
+                            <!-- End DIv finishResult-tab -->                        
                         
 
                         </div>
@@ -120,6 +120,7 @@
                                 {"data": 'spk_code', name: 'spk_code', "width": "10%"},
                                 {"data": 'i_name', name: 'i_name', "width": "25%"},
                                 {"data": 'pp_qty', name: 'pp_qty', "width": "10%"},
+                                {"data": 'produksi', name: 'produksi', "width": "10%", "className": "right"},
                                 {"data": "status", "width": "10%"},
                                 {"data": "action", orderable: false, searchable: false, "width": "10%"},
                             ],

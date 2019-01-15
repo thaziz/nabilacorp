@@ -118,9 +118,10 @@ class PenjualanController extends Controller
       $printPl=view('Produksi::sam');
       $flag='Toko';
       $paymentmethod=m_paymentmethod::pm();       
+      $daftarHarga=DB::table('m_price_group')->where('pg_active','=','TRUE')->get();             
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
       $machine=m_machine::showMachineActive();      
-      $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine','paymentmethod'));      
+      $data['toko']=view('POS::POSpenjualanToko/toko',compact('machine','paymentmethod','daftarHarga'));      
       $data['listtoko']=view('POS::POSpenjualanToko/listtoko');   
       return view('POS::POSpenjualanToko/POSpenjualanToko',compact('data','pm','printPl','paymentmethod'));
     }
@@ -141,7 +142,7 @@ class PenjualanController extends Controller
       foreach ($data as $key => $value) {
           $tamp[$key]=$value->i_id;
       }      
-      $tamp=array_map("strval",$tamp);      
+      $tamp=array_map("strval",$tamp);           
       return view('POS::POSpenjualanToko/editDetailPenjualan',compact('data','tamp','status'));
       
     }
@@ -178,10 +179,16 @@ class PenjualanController extends Controller
       
     }
   function printNota($id, Request $request){
-      $jumlah=count(($request->sd_item));      
+      /*$jumlah=count(($request->sd_item));     */      
+      
+
+      
+
       $bayar=$request->s_bayar;
       $kembalian=$request->kembalian;
       $data=d_sales::printNota($id);
+      $dt=d_sales_dt::where('sd_sales',$id)->select('sd_sales')->get();
+      $jumlah=count($dt);
       
       return view('POS::POSpenjualanToko/printNota',compact('data','kembalian','bayar','jumlah'));
    

@@ -115,7 +115,6 @@ class PenerimaanBrgSupController extends Controller
        // return $increment;
        date_default_timezone_set("Asia/Jakarta"); 
       // return date('d/m/Y h:i:s');
-
        $data_header = DB::table('d_terima_pembelian')->insert([
           'd_tb_id'=>$increment,
           'd_tb_pid'=>$request->headNotaPurchase,
@@ -139,53 +138,55 @@ class PenerimaanBrgSupController extends Controller
               'd_tbdt_comp'=>Session::get('user_comp'),
               'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
               'd_tbdt_date_received'=>date('Y-m-d',strtotime($request->headTglTerima)),
-
            ]);
        }
-           // return 'a';
-
         
          for ($i=0; $i <count($request->fieldNamaItem); $i++) {
-            $check[$i] = DB::table('d_stock')/*->where('s_comp')*/->where('s_item','=',$request->fieldItemId[$i])->get();
-                // echo $filtered = array_filter($check);
-      
-              if(count($check[$i]) == 0) 
+            $check[$i] = DB::table('d_stock')->where('s_item','=',$request->fieldItemId[$i])->get();
+            // $check_po[$i] = DB::table('d_purchaseorder_dt')->where('s_item','=',$request->fieldItemId[$i])->get();
+            $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
+            if(count($check[$i]) == 0) 
               {   
-                // $checks = /*count($check)*/$request->fieldItemId[$i] ;
-                // echo $checks.'     c      ';
                 $insert_stock = DB::table('d_stock')->insert([
                   's_comp'=>1,
                   's_position'=>1,
                   's_qty'=>$request->fieldQtyterima[$i],
                   's_item'=>$request->fieldItemId[$i],
+                  's_insert'=>date('Y-m-d h:i:s'),
                 ]);
               }else{
-                // $checks = $check[$i][0]->s_qty+$request->fieldQtyterima[$i] ;
-                // echo $checks.'     u       ';
-                
                 $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
                   's_comp'=>1,
                   's_position'=>1,
-                  's_qty'=>$check[$i][0]->s_qty+$request->fieldQtyterima[$i],
+                  's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
+                  's_update'=>date('Y-m-d h:i:s'),
                 ]);
-              }
-
-             // $update_stock = DB::table('d_stock')->insert([
-             //    's_comp'=>Session::get('user_comp'),
-             //    's_position'=>Session::get('user_comp'),
-             //    's_item'=>$request->fieldItemId[$i],
-             //    's_qty'=>$request->fieldQtyterima[$i],
-             //    's_insert'=>date('Y-m-d h:i:s'),
-             // ]);
+            }
          }
-
-         // return $check;
-     
-
+       // dd($request->all());
+      for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
+          $data_detail_check[$i] = DB::table('d_purchaseorder_dt')
+                  ->where('podt_detailid',$request->order_id[$i])
+                  ->where('podt_purchaseorder',$request->headNotaPurchase)
+                  ->get();
+          // $data_detail_check[$i]->podt_qtysend;
+          $send[$i] =  $data_detail_check[$i][0]->podt_qtyreceive+($request->fieldQty[$i] - $request->fieldQtyterima[$i]);
+          $data_detail_order = DB::table('d_purchaseorder_dt')
+              ->where('podt_detailid',$request->order_id[$i])
+              ->where('podt_purchaseorder',$request->headNotaPurchase)
+              ->update([
+                 'podt_qtysend'=>$send[$i],
+                 'podt_qtyreceive'=>$data_detail_check[$i][0]->podt_qtyreceive+$request->fieldQtyterima[$i],
+           ]);
+       }
+       // return $chek;
+       // return $data_detail_order;
+       return response()->json([
+            'status' => 'Sukses',
+            'pesan' => 'Data Telah Berhasil di Simpan'
+        ]);
 
     }
-
-
     public function list_sj(Request $request)
     {
         $id_sj = trim($request->sj_code);
@@ -468,7 +469,7 @@ class PenerimaanBrgSupController extends Controller
                                 onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-eye"></i>
                             </a>
                              <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Ubah Status"
-                                onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-pencil"></i>
+                                onclick=editStatus("'.$data->po_id.'")><i class="fa fa-pencil"></i>
                             </a>
                         </div>
                         ';

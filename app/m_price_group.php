@@ -10,6 +10,7 @@ class m_price_group extends Model
     protected $primaryKey = 'pg_id';
     protected $fillable = [ 'pg_id', 
                             'pg_name',
+                            'pg_type',
                             'pg_active'
                         ];
 

@@ -68,6 +68,8 @@
                         <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:15px;" id="header_form">
                            <form method="post" id="form_return_pembelian">
                               {{ csrf_field() }}
+                              <input type="hidden" name="dsr_customer" id="dsr_customer">
+                              <input type="hidden" name="dsr_alamat_customer" id="dsr_alamat_customer">
                               <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 10px; padding-top:10px;padding-bottom:20px;" id="appending-form">
                               </div>
                            </form>
@@ -84,7 +86,7 @@
 <!--END PAGE WRAPPER-->              
 @endsection
 @section("extra_scripts")
-<script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
-@include('POS::manajemenreturn/js/form_functions')
-@include('POS::manajemenreturn/js/form_commander')
+   <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
+   @include('POS::manajemenreturn/js/form_functions')
+   @include('POS::manajemenreturn/js/form_commander', ['pn_template' => $pn_template, 'tb_template' => $tb_template])
 @endsection

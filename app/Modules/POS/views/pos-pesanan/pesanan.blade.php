@@ -73,7 +73,7 @@
                
              </div>
            </div>
-<!-- 
+            <!-- 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
                <input class="move up2 form-control input-sm reset ui-autocomplete-input" id="customer" autocomplete="off">
@@ -116,10 +116,12 @@
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input onblur="jatuhTempo()" type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate">
+               <input onblur="jatuhTempo()" type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate" onchange="tglf()">
              </div>
            </div>
 
+
+        
 
 
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -127,16 +129,12 @@
            </div>     
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
-               <select class="move up2 form-control input-sm" id="harga">
-                 <option value="1">
-                   Level 1
+                <select class="move up1 form-control input-sm" id="harga" name="s_type_price" onchange="harga()">
+                @foreach($daftarHarga as $daftar)
+                 <option value="{{$daftar->pg_id}}">
+                   {{$daftar->pg_name}}
                  </option>
-                 <option value="2">
-                   Level 2
-                 </option>
-                 <option value="3">
-                   Level 3
-                 </option>
+                 @endforeach
                </select>
              </div>
            </div>
@@ -153,35 +151,35 @@
 
 
 
- <div class="col-md-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
-         <div class="col-md-6">
-           <label class="control-label tebal" for="">Masukan Kode / Nama</label>
-              <div class="input-group input-group-sm" style="width: 100%;">
-                  <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">1 result is available, use up and down arrow keys to navigate.</span>
-                  <input  class="move up1 form-control input-sm reset-seach" id="searchitem" >
-                  <input type="hidden" class="form-control input-sm reset-seach" id="itemName">
-                  <input type="hidden" class="form-control input-sm " name="i_id" id="i_id">
-                  <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
-                  <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
-                  <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
-                  <input type="hidden" class="fComp form-control input-sm reset-seach" name="" id="fComp">
-                  <input type="hidden" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
-              </div>
-          </div>      
-          <div class="col-md-3">
-           <label class="control-label tebal" name="qty">Stok</label>
-              <div class="input-group input-group-sm" style="width: 100%;">
-                  <input type="number" class="form-control input-sm alignAngka reset reset-seach" name="stock" id="stock" disabled="">  
-              </div>
+           <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
+               <div class="col-md-6">
+                 <label class="control-label tebal" for="">Masukan Kode / Nama</label>
+                    <div class="input-group input-group-sm" style="width: 100%;">
+                        <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">1 result is available, use up and down arrow keys to navigate.</span>
+                        <input  class="move up1 form-control input-sm reset-seach" id="searchitem" >
+                        <input type="hidden" class="form-control input-sm reset-seach" id="itemName">
+                        <input type="hidden" class="form-control input-sm " name="i_id" id="i_id">
+                        <input type="hidden" class="form-control input-sm reset-seach" name="i_code" id="i_code">
+                        <input type="hidden" class="form-control input-sm reset-seach" id="i_price">
+                        <input type="hidden" class="form-control input-sm reset-seach" name="s_satuan" id="s_satuan">
+                        <input type="hidden" class="fComp form-control input-sm reset-seach" name="" id="fComp">
+                        <input type="hidden" class="fPosition form-control input-sm reset-seach" name="" id="fPosition">
+                    </div>
+                </div>      
+                <div class="col-md-3">
+                 <label class="control-label tebal" name="qty">Stok</label>
+                    <div class="input-group input-group-sm" style="width: 100%;">
+                        <input type="number" class="form-control input-sm alignAngka reset reset-seach" name="stock" id="stock" disabled="">  
+                    </div>
+                </div>
+                <div class="col-md-3">
+                 <label class="control-label tebal" name="qty">Jumlah</label>
+                    <div class="input-group input-group-sm" style="width: 100%;">
+                       <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="fQty" onclick="validationForm();" >   
+                       <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="validationForm();">   
+                    </div>
+                </div>
           </div>
-          <div class="col-md-3">
-           <label class="control-label tebal" name="qty">Jumlah</label>
-              <div class="input-group input-group-sm" style="width: 100%;">
-                 <input type="number" class="move up3 form-control input-sm alignAngka reset reset-seach" name="fQty" id="fQty" onclick="validationForm();" >   
-                 <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="validationForm();">   
-              </div>
-          </div>
-    </div>
 
 
         </div>

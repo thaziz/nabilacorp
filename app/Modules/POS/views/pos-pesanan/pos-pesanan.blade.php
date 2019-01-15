@@ -1,6 +1,26 @@
 @extends('main')
 @section('content')
-{!!$printPl!!}
+<style type="text/css">
+  @media screen {
+  #printSection {
+      display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left:0;
+    top:0;
+  }
+}
+</style>
 
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
@@ -82,6 +102,24 @@
 
 
 
+function tglf(){
+    var start = $('#s_date').val();
+    var end = $('#s_finishdate').val();
+    var start = start.split("-").reverse().join("-");
+    var end = end.split("-").reverse().join("-");
+    var start=new Date(start);
+    var end =new Date(end);
+    var diff = new Date(end - start);
+    var days = diff/1000/60/60/24;
+    
+    if($('#s_finishdate').val()==''){
+        $('#s_duedate').val('0 Hari');  
+    }
+    if($('#s_finishdate').val()!=''){
+        $('#s_duedate').val(days +' Hari');  
+    }
+    
+}
 $(document).ready(function(){      
 
 
@@ -633,7 +671,7 @@ function simpanPos(status=''){
     success:function (response){
         
             $('#div_print').html(response);              
-            //printElement(document.getElementById("div_print"));
+            printElement(document.getElementById("div_print"));
 
             /*qz.appendHTML(
                 '<html>' +response +'</html>'
@@ -972,7 +1010,7 @@ $('#serah_terima').css('display','');
               $('#serah_terima').css('display','none');
             }
             
-
+$('#sid').val(s_id);
 
   $('#idTerima').val(s_id);
   var status='';
@@ -1170,12 +1208,7 @@ else if(e.which==27){
 })
 
 
-
-
-
-
-function buttonSimpanPos($status){
-      alert('sa');
+function buttonSimpanPos($status){      
       if($('#s_id').val()!='' && $status=='draft'){
                 iziToast.error({
                           position:'topRight',

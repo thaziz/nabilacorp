@@ -57,10 +57,19 @@
 
                   <form method="GET" id="group">
                     <table class="table">
-                      <div class="col-md-2 col-sm-4 col-xs-12">
-                        <label class="tebal">Nama Posisi</label>
+                     <div class="col-md-2 col-sm-4 col-xs-12">
+                        <label class="tebal">Nama Group</label>
                       </div>
-                      <div class="col-md-10 col-sm-8 col-xs-12">
+                      <div class="col-md-4 col-sm-8 col-xs-12">
+                        <div class="form-group">                        
+                          <input required type="text" name="pg_type" id="pg_type" class="form-control input-sm" @if($group->pg_type=='M') value="Moslem" @elseif($group->pg_type=='B') value="Bakery" @endif >
+                        </div>
+                      </div>
+
+                      <div class="col-md-2 col-sm-4 col-xs-12">
+                        <label class="tebal">Nama Group</label>
+                      </div>
+                      <div class="col-md-4 col-sm-8 col-xs-12">
                         <div class="form-group">
                           <input required type="text" name="pg_name" id="c_posisi" class="form-control input-sm" value="{{ $group->pg_name}}">
                         </div>

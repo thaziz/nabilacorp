@@ -1,47 +1,54 @@
+	<div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">  
+		<div class="col-md-3 col-sm-3 col-xs-12" align="left">
+        	<h4 id="judul-item" style="padding-bottom: 5px; margin-left: 10px">Nota Rencana</h4>
+        </div>  
+		<table class="table tabelan table-hover table-bordered" id="tableNotaPlan">
+			<thead>
+			<tr>
+				<th>No</th>
+				<th>No Nota</th>
+				<th>Nama</th>
+				<th>Tanggal</th>
+				<th style="width:13%;">Jumlah Order</th>
+			</tr>
+			</thead>
+			<tbody>
 
-<table class="table tabelan table-hover table-bordered" id="tableNotaPlan">
-	<thead>
-	  <tr>
-	  	<th>No</th>
-	    <th>No Nota</th>
-	    <th>Nama</th>
-	    <th>Tanggal</th>
-	    <th style="width:13%;">Jumlah Order</th>
-	  </tr>
-	</thead>
-	<tbody>
+			</tbody>
+		</table>
+	</div>
 
-	</tbody>
-</table>
+	<div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 10px;">  
+		<div class="col-md-3 col-sm-3 col-xs-12" align="left">
+        	<h4 id="judul-item" style="padding-bottom: 5px; margin-left: 10px">Nota Pesanan</h4>
+        </div>  
+		<table class="table tabelan table-hover table-bordered" id="tableNotaPlan1">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>Nota</th>
+					<th>Tanggal Pemesanan</th>
+					<th>Tanggal Selesai</th>
+					<th style="width:13%;">Jumlah Order</th>
+				</tr>
+			</thead>
+			@foreach ($pesanan as $index => $item)
+				<tr>
+					<td>{{$index+1}}</td>
+					<td>{{$item->s_note}}</td>
+					<td>{{date('d M Y', strtotime($item->s_date))}}</td>
+					<td>{{date('d M Y', strtotime($item->s_finishdate))}}</td>
+					<td class="text-right">{{$item->sd_qty}}</td>
+				</tr>
+			@endforeach
+			<tbody>
 
-
+			</tbody>
+		</table>
+	</div>
 
 <script type="text/javascript">
 
-	var tableNotaPlan = $('#tableNotaPlan').DataTable({
-	      processing: true,
-	      serverSide: true,
-	      ajax: {
-	          url : baseUrl + "/penjualan/monitoringorder/nota/tabel/"+ {{ $data->i_id }},
-	      },
-       columns: [
-        {data: 'DT_Row_Index', name: 'DT_Row_Index', orderable: false, searchable: false},
-        {data: 's_note', name: 's_note'},
-        {data: 'c_name', name: 'c_name'},
-        {data: 's_date', name: 's_date'},
-        {data: 'sd_qty', name: 'sd_qty'},
-    	],
-    	language: {
-	      searchPlaceholder: "Cari Data",
-	      emptyTable: "Tidak ada data",
-	      sInfo: "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-	      sSearch: '<i class="fa fa-search"></i>',
-	      sLengthMenu: "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-	      infoEmpty: "",
-	      paginate: {
-	            previous: "Sebelumnya",
-	            next: "Selanjutnya",
-	         }
-    }
-   });
+	$('#tableNotaPlan').DataTable();
+	$('#tableNotaPlan1').DataTable();
 </script>

@@ -103,7 +103,7 @@
                                       {{-- <label id="lTgl"></label> --}}
                                       <input type="text" class="form-control input-sm" readonly="" id="lTgl" name="">
 
-                                         <input type="text" class="form-control input-sm sid" readonly="" id="sid" name="">
+                                         <input type="hidden" class="form-control input-sm sid" readonly="" id="sid" name="">
                                   
 
                                     
@@ -268,7 +268,6 @@
         type: 'get',
         success:function (response){
             $('#div_prints').html(response);
-             
             printElement(document.getElementById("div_prints"));  
         }
         })
@@ -298,8 +297,9 @@
   
 
                                                 
-    function editPenjualan(s_id,s_note,s_machine,s_date,edate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek) {
-
+    function editPenjualan(s_id,s_note,s_machine,s_date,edate,s_finishdate,s_gross,s_disc_percent,s_disc_value,s_grand,s_ongkir,s_bulat,s_net,s_bayar,s_kembalian,s_customer,c_name,s_status,chek,c,cx,a) {
+            
+            $('#harga').val(a);            
             $('.reset').val('');
             $('#s_created_by').val('{{Auth::user()->m_name}}')
             $('#s_id').val(s_id);

@@ -69,10 +69,10 @@ $query = DB::select(DB::raw("SELECT MAX(RIGHT(mi_code,4)) as kode_max from d_mut
  DB::table('d_mutasi_item')->insert([
 			 'mi_id'=>$mi_id,
 			 'mi_comp'=>Session::get('user_comp'),
-			 'type' => 'BB',
 			 'mi_code'=>$mi_code,
 			 'mi_date'=>date('Y-m-d',strtotime($request->mi_date)),
 			 'mi_keterangan'=>$request->mi_keterangan,
+			 'mi_created'=> date('Y-m-d H:i:s'),
 	 ]);
 
 
@@ -273,9 +273,8 @@ for ($s=0; $s <$jumlah ; $s++) {
 		$search = $request->term;
 
 		$cabang=Session::get('user_comp');
-
 		$position=DB::table('d_gudangcabang')
-									->where('gc_gudang',DB::raw("'GUDANG PRODUKSI'"))
+									->where('gc_gudang','GUDANG PRODUKSI')
 									->where('gc_comp',$cabang)
 									->select('gc_id')->first();
 
@@ -292,7 +291,7 @@ for ($s=0; $s <$jumlah ; $s++) {
 
 
 				 })
-				 ->join('m_satuan','m_satuan.s_id','=','i_satuan')
+				 ->leftJoin('m_satuan','m_satuan.s_id','=','i_satuan')
 				 /*->join('m_group','g_id','=','i_group')*/
 				 ->select('i_id','i_name','m_satuan.s_name as s_name','i_price','s_qty','i_code');
 

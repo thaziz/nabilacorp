@@ -54,17 +54,6 @@
                                     </div>
                                   </div>
                                 </div>
-
-                                <div class="col-md-3 col-sm-3 col-xs-12" align="center">
-                                  <button class="btn btn-primary btn-sm btn-flat fa fa-search" type="button" id="cariTanggal">
-                                   
-                                  </button>
-                                  <button class="btn btn-info btn-sm btn-flat" type="button" id="refresh">
-                                    <strong>
-                                      <i class="fa fa-undo" aria-hidden="true"></i>
-                                    </strong>
-                                  </button>
-                                </div>
                                 
                               </div>
 

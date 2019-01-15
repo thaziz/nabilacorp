@@ -98,8 +98,6 @@
                             </li> -->
                             <!-- <li class="menu-sekunder {{ Request::is('master/datajenis/jenis') ? 'active' : '' || Request::is('master/datajenis/*') ? 'active' : '' }}"><a href="{{ url('/master/datajenis/jenis') }}"><span class="submenu-title">Master Data Jenis Produksi</span></a>
                             </li> -->
-                            <li class="menu-sekunder {{ Request::is('master/datapegawai/pegawai') ? 'active' : '' || Request::is('master/datapegawai/*') ? 'active' : '' }}"><a href="{{ url('/master/datapegawai/pegawai') }}"><span class="submenu-title">Master Data Pegawai</span></a>
-                            </li>
                             <li class="menu-sekunder {{ Request::is('master/datakeuangan/keuangan') ? 'active' : '' || Request::is('master/datakeuangan/*') ? 'active' : '' }}"><a href="{{ url('/master/datakeuangan/keuangan') }}"><span class="submenu-title">Master Data Akun Keuangan</span></a>
                             </li>
                           <!--   <li class="menu-sekunder {{ Request::is('master/datatransaksi/transaksi') ? 'active' : '' || Request::is('master/datatransaksi/*') ? 'active' : '' }}"><a href="{{ url('/master/datatransaksi/transaksi') }}"><span class="submenu-title">Master Data Transaksi Keuangan</span></a>
@@ -108,17 +106,55 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('master/item_titipan/index') ? 'active' : '' || Request::is('/master/item_titipan/*') ? 'active' : '' }}"><a href="{{ url('/master/item_titipan/index') }}"><span class="submenu-title">Master Data Barang Titipan</span></a>
                             </li>
-
                             <li class="menu-sekunder {{ Request::is('master/grouphargakhusus/index') ? 'active' : '' || Request::is('master/grouphargakhusus/*') ? 'active' : '' }}"><a href="{{ url('master/grouphargakhusus/index') }}"><span class="submenu-title">Group Harga Khusus</span></a>
                             </li>
-
-
                             @if(Auth::user()->punyaAkses('Master Formula','ma_read'))
-                                    <li class="{{ Request::is('master/masterproduksi/index') ? 'active' : '' || Request::is('master/masterproduksi/*') ? 'active' : '' }}">
+                                <li class="{{ Request::is('master/masterproduksi/index') ? 'active' : '' || Request::is('master/masterproduksi/*') ? 'active' : '' }}">
                                         <a href="{{ url('master/masterproduksi/index') }}"><span
                                                     class="submenu-title">Master Formula</span><span
                                                     class="hidden">Master</span></a>
-                                    </li>
+                                </li>
+                            @endif
+                            @if(Auth::user()->punyaAkses('Data Jabatan','ma_read'))
+                                <li class="{{ Request::is('master/datajabatan') ? 'active' : '' || Request::is('master/datajabatan/*') ? 'active' : '' }}">
+                                        <a href="{{ url('/master/datajabatan')}}">
+                                            <span class="submenu-title">Data Jabatan</span>
+                                        </a>
+                                </li>
+                            @endif
+
+                            @if(Auth::user()->punyaAkses('Data Pegawai','ma_read'))
+                                <li class="{{ Request::is('master/datapegawai/pegawai') ? 'active' : '' || Request::is('master/datapegawai/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/master/datapegawai/pegawai') }}"><span class="submenu-title">Data Pegawai</span><span
+                                                class="hidden">Master</span></a>
+                                </li>
+                            @endif
+
+                            @if(Auth::user()->punyaAkses('Data Divisi & Posisi','ma_read'))
+                                <li class="{{ Request::is('master/divisi/pos/index') ? 'active' : '' || Request::is('master/divisi/pos/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/master/divisi/pos/index') }}"><span class="submenu-title">Data Divisi & Posisi</span><span
+                                                class="hidden">Master</span></a>
+                                </li>
+                            @endif
+                            @if(Auth::user()->punyaAkses('Data Lowongan','ma_read'))
+                                <li class="{{ Request::is('master/datalowongan/index') ? 'active' : '' || Request::is('master/datalowongan/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/master/datalowongan/index') }}"><span class="submenu-title">Data Lowongan</span><span
+                                                class="hidden">Master</span></a>
+                                </li>
+                            @endif
+
+                            @if(Auth::user()->punyaAkses('Data Scoreboard','ma_read'))
+                                <li class="{{ Request::is('master/datascore/index') ? 'active' : '' || Request::is('master/datascore/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/master/datascore/index') }}"><span class="submenu-title">Data Scoreboard</span><span
+                                                class="hidden">Master</span></a>
+                                </li>
+                            @endif
+
+                            @if(Auth::user()->punyaAkses('Data KPI','ma_read'))
+                                <li class="{{ Request::is('master/datakpi/index') ? 'active' : '' || Request::is('master/datakpi/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/master/datakpi/index') }}"><span class="submenu-title">Data KPI</span><span
+                                                class="hidden">Master</span></a>
+                                </li>
                             @endif
                         </ul>
                     </li>
@@ -330,15 +366,12 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('hrd/datalemburpegawai/index') ? 'active' : '' || Request::is('hrd/datalemburpegawai/*') ? 'active' : '' }}"><a href="{{ url('/hrd/datalemburpegawai/index')}}"><span class="submenu-title">Data Lembur Pegawai</span><span class="hidden">HRD</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('hrd/payroll/index') ? 'active' : '' || Request::is('hrd/payroll/*') ? 'active' : '' }}"><a href="{{ url('/hrd/payroll/index')}}"><span class="submenu-title">Payroll</span><span class="hidden">HRD</span></a>
+                            <li class="menu-sekunder {{ Request::is('hrd/payroll/setting-gaji') ? 'active' : '' || Request::is('hrd/payroll/*') ? 'active' : '' }}"><a href="{{ url('/hrd/payroll/setting-gaji')}}"><span class="submenu-title">Payroll</span><span class="hidden">HRD</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('hrd/dataadministrasi/admin') ? 'active' : '' || Request::is('hrd/dataadministrasi/*') ? 'active' : '' }}"><a href="{{ url('/hrd/dataadministrasi/admin')}}"><span class="submenu-title">Data Administrasi Pegawai</span><span class="hidden">HRD</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('hrd/datalembur/lembur') ? 'active' : '' || Request::is('hrd/datalembur/*') ? 'active' : '' }}"><a href="{{ url('/hrd/datalembur/lembur')}}"><span class="submenu-title">Data Lembur Pegawai</span><span class="hidden">HRD</span></a>
-                            </li>
+                            
                             <li class="menu-sekunder {{ Request::is('hrd/scoreboard/score') ? 'active' : '' || Request::is('hrd/scoreboard/*') ? 'active' : '' }}"><a href="{{ url('/hrd/scoreboard/score')}}"><span class="submenu-title">Scoreboard Pegawai Per Hari</span><span class="hidden">HRD</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('hrd/payroll/payroll') ? 'active' : '' || Request::is('hrd/payroll/*') ? 'active' : '' }}"><a href="{{ url('/hrd/payroll/payroll') }}"><span class="submenu-title">Payroll</span><span class="hidden">HRD</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('hrd/manajemenkpipegawai/kpi') ? 'active' : '' || Request::is('hrd/manajemenkpipegawai/*') ? 'active' : '' }}"><a href="{{ url('/hrd/manajemenkpipegawai/kpi') }}"><span class="submenu-title">Manajemen KPI Pegawai</span><span class="hidden">HRD</span></a>
                             </li>

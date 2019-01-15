@@ -60,6 +60,7 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <form method="POST" id="form_create_po" name="formCreatePo">
                       {{ csrf_field() }}
+                      
                       <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -474,10 +475,10 @@
   // console.log(argument);
   var ck = $('.fQty_confirm'+argument).val();
   var po = $('.fQty_awal'+argument).val();
-  // console.log(ck);
-  // console.log(po);
+  // console.log(parseFloat(ck).toFixed(2));
+  // console.log(parseFloat(po).toFixed(2));
   if(ck != 0){
-    if(parseFloat(ck).toFixed(2) > parseFloat(po).toFixed(2)){
+    if(parseFloat(ck)/*.toFixed(2)*/ > parseFloat(po)/*.toFixed(2)*/){
       // console.log('a');
       iziToast.warning({
           position: 'topRight',

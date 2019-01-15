@@ -389,6 +389,7 @@ class d_purchase_order extends Model
         $dataDetail->podt_item = $request->podt_item[$i];
         $dataDetail->podt_purchaseplandt = $request->podt_purchaseorder[$i];
         $dataDetail->podt_qty = $request->fieldQty[$i];
+        $dataDetail->podt_qtysend = $request->fieldQty[$i];
         $dataDetail->podt_qtyconfirm = $request->fieldQtyconfirm[$i];
         $dataDetail->podt_disc =  str_replace(['Rp', '\\', '.', ' '], '', $request->podt_disc_detail[$i]);
         $dataDetail->podt_prevcost = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_prevprice[$i]);

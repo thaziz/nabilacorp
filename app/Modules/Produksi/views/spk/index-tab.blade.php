@@ -38,7 +38,8 @@
                         <th width="10%">Tanggal</th>
                         <th width="30%">No Spk</th>
                         <th>Item</th>
-                        <th>Jumlah</th>
+                        <th>Jumlah Spk</th>
+                        <th>Hasil Spk</th>
                         <th>Status</th>
                         <th style="text-align: center;">Aksi</th>
                     </tr>

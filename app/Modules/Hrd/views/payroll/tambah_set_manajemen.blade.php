@@ -116,19 +116,19 @@
                         </div>
                       </div>
                       <div class="col-md-2 col-sm-4 col-xs-12">
-                        <label class="tebal">D2</label>
-                      </div>
-                      <div class="col-md-4 col-sm-8 col-xs-12">
-                        <div class="form-group">
-                          <input type="number" id="d2" name="c_d2" class="form-control input-sm">
-                        </div>
-                      </div>
-                      <div class="col-md-2 col-sm-4 col-xs-12">
                         <label class="tebal">D3</label>
                       </div>
                       <div class="col-md-4 col-sm-8 col-xs-12">
                         <div class="form-group">
                           <input type="number" id="d3" name="c_d3" class="form-control input-sm">
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-4 col-xs-12">
+                        <label class="tebal">D2</label>
+                      </div>
+                      <div class="col-md-4 col-sm-8 col-xs-12">
+                        <div class="form-group">
+                          <input type="number" id="d2" name="c_d2" class="form-control input-sm">
                         </div>
                       </div>
                       <div class="col-md-2 col-sm-4 col-xs-12">
@@ -139,11 +139,13 @@
                           <input type="number" id="s1" name="c_s1" class="form-control input-sm">
                         </div>
                       </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">
-                        <input type="button" value="Batal" class="btn btn-danger btn-block">
-                      </div>
-                      <div class="col-md-6 col-sm-12 col-xs-12">
-                        <input type="submit" value="Simpan" class="btn btn-primary btn-block">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                          <input type="button" value="Batal" class="btn btn-danger btn-block">
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                          <input type="submit" value="Simpan" class="btn btn-primary btn-block">
+                        </div>
                       </div>
                   </form>
                   </div>

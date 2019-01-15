@@ -441,8 +441,8 @@ public function getDataRencanaPembelian(Request $request)
   public function confirmOrderSubmit(Request $request)
   {
 
-    if ($request->statusOrderConfirm == 'CF') {
-        
+dd($request->statusOrderConfirm);
+    if ($request->statusOrderConfirm == 'WT') {        
         $dataHeader = DB::table('d_purchase_order')->where('po_id',$request->idOrder)->update([
           'po_status'=>'FN'
         ]);
