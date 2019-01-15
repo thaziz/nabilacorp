@@ -123,10 +123,9 @@ public static function hapusMutasiMasuk($comp,$position,$item,$permintaan,$sm_re
     return $data;
     });
 }
-
-public static function mutasiTransaksi($item,$totalPermintaan,$comp,$position,$flag='Penjualan Toko',$sm_reff,$sm_ket='',$date,$mutcat=null){	
-        return DB::transaction(function () use ($item,$totalPermintaan,$comp,$position,$flag,$sm_reff,$sm_ket,$date,
-            $mutcat) {   
+// satu tujuan
+public static function mutasiTransaksiOne($date,$comp,$position,$item,$totalPermintaan,$sm_detailid='',$mutcat='',$sm_reff='',$sm_ket=''){	
+        return DB::transaction(function () use ($date,$comp,$position,$item,$totalPermintaan,$sm_detailid,$mutcat,$sm_reff,$sm_ket) {   
 
 
             $totalPermintaan= format::format($totalPermintaan);
@@ -199,7 +198,7 @@ public static function mutasiTransaksi($item,$totalPermintaan,$comp,$position,$f
                             $newMutasi[$k]['sm_item'] = $item;
                             $newMutasi[$k]['sm_qty'] = -$totalPermintaan;
                             $newMutasi[$k]['sm_hpp'] = $getBarang[$k]->sm_hpp;
-                            $newMutasi[$k]['sm_detail'] =$flag;
+                            $newMutasi[$k]['sm_detail'] =$sm_detail;
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
                             $newMutasi[$k]['sm_reff'] = $sm_reff;  
                             $newMutasi[$k]['sm_stockreff'] = $getBarang[$k]->sm_stock;  
@@ -233,7 +232,7 @@ public static function mutasiTransaksi($item,$totalPermintaan,$comp,$position,$f
                             $newMutasi[$k]['sm_item'] = $item;
                             $newMutasi[$k]['sm_qty'] = -$totalQty;
                             $newMutasi[$k]['sm_hpp'] = $getBarang[$k]->sm_hpp;
-                            $newMutasi[$k]['sm_detail'] =$flag;
+                            $newMutasi[$k]['sm_detail'] =$sm_detail;
                             $newMutasi[$k]['sm_reff'] = $sm_reff; 
                             $newMutasi[$k]['sm_keterangan'] =$sm_ket;
 
@@ -373,15 +372,7 @@ $totalPermintaan=abs($awaltotalPermintaan);
     });
 
     }
-    public static function u(){
-        $m=new mutasi;
-
-        return $m->v();
-    }
-     public function v(){
-        return 'f';
-    }
-
+ 
     public static function deleteMutasi($item,$totalPermintaan,$comp,$position,$flag='',$sm_reff=''){
           $getBarang=d_stock_mutation::where('sm_item',$item)->where('sm_comp',$comp)
                        ->where('sm_position',$position)->where('sm_reff',$sm_reff)

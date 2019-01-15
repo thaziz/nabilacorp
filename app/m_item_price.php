@@ -10,7 +10,8 @@ class m_item_price extends Model
     protected $primaryKey = 'ip_group';
     protected $fillable = [ 'ip_group', 
                             'ip_item',
-                            'ip_price'
+                            'ip_price',
+                            'ip_edit'
                         ];
 
     public $incrementing = false;

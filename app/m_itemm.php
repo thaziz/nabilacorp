@@ -319,7 +319,7 @@ class m_itemm extends Model
              })
              ->LEFTjoin('m_satuan','m_satuan.s_id','=','i_satuan')
              /*->join('m_group','g_id','=','i_group')*/
-             ->select('i_id','i_name','m_satuan.s_name as s_name','is_price','s_qty','i_code');
+             ->select('i_id','i_name','m_satuan.s_name as s_name','is_price1','s_qty','i_code');
 
         if($search!='' && $id_supplier!=''){          
 
@@ -349,7 +349,7 @@ class m_itemm extends Model
         } else {
           foreach ($sql as $data)
           {
-            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price,0,',','.'),'item' => $data->i_name, 'position'=>$position,  
+            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->is_price1,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->is_price1,0,',','.'),'item' => $data->i_name, 'position'=>$position,  
               'comp'=>$comp];
           }
         } 

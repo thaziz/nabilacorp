@@ -116,7 +116,7 @@
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input onblur="jatuhTempo()" type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate">
+               <input onblur="jatuhTempo()" type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate" onchange="tglf()">
              </div>
            </div>
 
