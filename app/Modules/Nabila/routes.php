@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['web','auth']], function () {
 	// Nabila Moslem
 
@@ -24,5 +25,9 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/return/return', 'NabilaController@return')->middleware('auth');
 	Route::get('/nabila/purchasing/purchasing', 'NabilaController@purchasing')->middleware('auth');
 	
+=======
+Route::group(['namespace' => 'App\Modules\Contoh\Controllers', 'middleware'=>['web','auth']], function () {
+	Route::get('/contoh', 'ContohController@index');
+>>>>>>> parent of 25cc2a5... Pembuatan fitur membership
 });
 
