@@ -93,7 +93,7 @@ class MasterFormulaController extends Controller
     $queries = m_itemm::where('m_item.i_name', 'LIKE', '%'.$term.'%')
       ->join('m_satuan','s_id','=','i_sat1')
       ->where('i_type','BB')
-      ->where('i_isactive','TRUE')
+      ->where('i_active','Y')
       ->orderBy('i_name')
       ->take(15)->get();
     
@@ -126,7 +126,7 @@ class MasterFormulaController extends Controller
     $queries = m_itemm::where('m_item.i_name', 'LIKE', '%'.$term.'%')
       ->join('m_satuan','s_id','=','i_sat1')
       ->where('i_type','BP')
-      ->where('i_isactive','TRUE')
+      ->where('i_active','Y')
       ->take(15)->get();
     
     if ($queries == null) {

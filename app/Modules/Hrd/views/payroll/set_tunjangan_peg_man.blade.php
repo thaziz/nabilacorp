@@ -81,7 +81,7 @@
 @endsection 
 @section('extra_scripts')
 <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
-<script src="{{ asset("js/inputmask/inputmask.jquery.js") }}"></script>
+<script src="{{ asset("assets/inputmask/inputmask.jquery.js") }}"></script>
 <script type="text/javascript">
   $(document).ready(function() { 
     var extensions = {

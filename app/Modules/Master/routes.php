@@ -25,19 +25,6 @@ Route::get('/master/item_titipan/update', 'itemTitipanController@update');
 Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
 // ===============================================================
 
-
-//Master Formula Mahmud
-    Route::get('/master/masterproduksi/index', 'MasterFormulaController@index');
-    Route::get('/produksi/masterformula/table', 'MasterFormulaController@table');
-    Route::get('/produksi/masterformula/autocomplete', 'MasterFormulaController@autocompFormula');
-    Route::get('/produksi/namaitem/autocomplete', 'MasterFormulaController@autocompNamaItem');
-    Route::post('/produksi/namaitem/save/formula', 'MasterFormulaController@saveFormula');
-    Route::get('/produksi/namaitem/distroy/formula/{id}', 'MasterFormulaController@distroyFormula');
-    Route::get('/produksi/namaitem/view/formula', 'MasterFormulaController@viewFormula');
-    Route::get('/produksi/namaitem/edit/formula', 'MasterFormulaController@editFormula');
-    Route::post('/produksi/namaitem/update/formula', 'MasterFormulaController@updateFormula');    
-//End Master Formula
-
 //data supplier
     Route::get('/master/datasuplier/find_m_suplier', 'SuplierController@find_m_suplier')->name('find_m_suplier');    
     Route::get('/master/datasuplier/suplier', 'SuplierController@suplier')->name('suplier');    
@@ -49,8 +36,6 @@ Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
     Route::post('master/datasuplier/suplier_edit_proses/{s_id}', 'SuplierController@suplier_edit_proses');
     Route::get('master/datasuplier/suplier_hapus', 'SuplierController@suplier_hapus');
 //data supplier selesai
-
-
 //customer
     Route::get('/master/datacust/cust', 'custController@cust')->name('cust');
     Route::get('/master/datacust/tambah_cust', 'custController@tambah_cust')->name('tambah_cust');
@@ -60,7 +45,6 @@ Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
     Route::get('/master/datacust/update_cust', 'custController@update_cust')->name('update_cust');
     Route::get('/master/datacust/datatable_cust', 'custController@datatable_cust')->name('datatable_cust');
 //customer selesai
-
 //Master Formula Mahmud
     Route::get('/master/masterproduksi/index', 'MasterFormulaController@index');
     Route::get('/produksi/masterformula/table', 'MasterFormulaController@table');
@@ -72,7 +56,6 @@ Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
     Route::get('/produksi/namaitem/edit/formula', 'MasterFormulaController@editFormula');
     Route::post('/produksi/namaitem/update/formula', 'MasterFormulaController@updateFormula');
 //End Master Formula
-
 //group
     Route::get('/master/grouphargakhusus/index', 'hargaKhususController@index');
     Route::get('/master/grouphargakhusus/tablegroup/{id}', 'hargaKhususController@tableGroup');

@@ -32,10 +32,10 @@
               <a href="#transfer" data-toggle="tab">Manajemen</a>
             </li>
             <li>
-              <a href="#tunjangan-tab" data-toggle="tab">Tunjangan</a>
+              <a href="#tunjangan-tab" data-toggle="tab" onclick="tblTunjangan()">Tunjangan</a>
             </li>
             <li>
-              <a href="#alert-tab" data-toggle="tab">Produksi</a>
+              <a href="#alert-tab" data-toggle="tab" onclick="tblPro()">Produksi</a>
             </li>
     {{--         <li>
               <a href="#potongan" data-toggle="tab">Potongan</a>
@@ -203,6 +203,7 @@
         </div>
       </div>
       @endsection @section('extra_scripts')
+      
       <script type="text/javascript">
         function samakan() {
           var jum = $('#jumlah').val();
@@ -261,6 +262,9 @@
             }
           }
         });
+      
+      function tblTunjangan(){
+        $('#tbl_tunjangan').dataTable().fnDestroy();
         $('#tbl_tunjangan').DataTable({
           processing: true,
           // responsive:true, 
@@ -297,6 +301,10 @@
             }
           }
         });
+      }
+        
+      function tblPro(){
+        $('#tbl_pro').dataTable().fnDestroy();
         $('#tbl_pro').DataTable({
           processing: true,
           // responsive:true, 
@@ -334,6 +342,8 @@
             }
           }
         });
+      }
+        
         $('#tbl_pot').DataTable({
           processing: true,
           // responsive:true, 
