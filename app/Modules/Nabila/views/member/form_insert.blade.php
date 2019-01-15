@@ -40,7 +40,7 @@
                               <h4>Form Membership</h4>
                            </div>
                            <div class="col-md-7 col-sm-6 col-xs-4 " align="right" style="margin-top:5px;margin-right: -25px;">
-                              <a href="{{ url('nabila/member/index') }}" class="btn">
+                              <a href="{{ url('nabila/membership/member') }}" class="btn">
                               <i class="fa fa-arrow-left"></i>
                               </a>
                            </div>
@@ -51,9 +51,7 @@
                            <form id="form_m_member" class="form-horizontal" method="post" style="padding: 3mm;margin-left:2mm;margin-right: 2mm">
                               {{ csrf_field() }}
                               
-                                 <legend>
-                                    Form Tambah Master
-                                 </legend>
+                                 
                                  <div class="row">
                                     <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                        <div class="form-group">
@@ -113,7 +111,7 @@
                               
                                  <div class="row">
                                     <div class="col-md-12">
-                                       <button class="btn btn-default" type="reset" onclick="window.location = '{{url("/nabila/member/index")}}'">
+                                       <button class="btn btn-default" type="reset" onclick="window.location = '{{url("/nabila/membership/member")}}'">
                                        <i class="fa fa-times"></i>
                                        &nbsp;Batal
                                        </button>

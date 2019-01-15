@@ -12,6 +12,7 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/membership/simpan_edit', 'MemberController@simpan_edit')->middleware('auth');
 	Route::get('/nabila/membership/form_insert', 'MemberController@form_insert')->middleware('auth');
 	Route::get('/nabila/membership/form_alter/{id}', 'MemberController@form_alter')->middleware('auth');
+	Route::get('/nabila/membership/preview/{id}', 'MemberController@preview')->middleware('auth');
 	Route::get('/nabila/membership/delete/{id}', 'MemberController@delete')->middleware('auth');
 
 	// =========================================================================================
