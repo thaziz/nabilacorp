@@ -22,7 +22,7 @@
 		<div class="col-md-3 col-sm-3 col-xs-12" align="left">
         	<h4 id="judul-item" style="padding-bottom: 5px; margin-left: 10px">Nota Pesanan</h4>
         </div>  
-		<table class="table tabelan table-hover table-bordered" id="tableNotaPlan">
+		<table class="table tabelan table-hover table-bordered" id="tableNotaPlan1">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -49,5 +49,6 @@
 
 <script type="text/javascript">
 
-
+	$('#tableNotaPlan').DataTable();
+	$('#tableNotaPlan1').DataTable();
 </script>
