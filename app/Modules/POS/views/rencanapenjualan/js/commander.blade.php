@@ -767,48 +767,6 @@
             autoclose: true,
       });
 
-    $("#searchitem").autocomplete({
-      source: "{{ url('') }}" + '/item',
-      minLength: 1,
-      dataType: 'json',
-      select: function (event, ui) {
-        $('#i_id').val(ui.item.i_id);
-        $('#i_code').val(ui.item.i_code);
-        $('#searchitem').val(ui.item.label);
-        $('#itemName').val(ui.item.item);
-        $('#i_price').val(ui.item.i_price);
-
-        $('#fComp').val(ui.item.comp);
-        $('#fPosition').val(ui.item.position);
-
-        $('#s_satuan').val(ui.item.satuan);
-        var jumlah = 0;
-
-
-        if ($('.jumlahAwal' + i_id.val()).val() != undefined && $('.jumlahAwal' + i_id.val()).val() != 0) {
-          /*jumlah=parseFloat(ui.item.stok)+parseFloat($('.jumlahAwal'+i_id.val()).val());*/
-          if ($('#s_status').val() == 'final') {
-            jumlah = parseFloat(angkaDesimal(ui.item.stok)) + parseFloat(angkaDesimal($('.jumlahAwal' + i_id.val()).val()));
-
-            $('#stock').val(SetFormRupiah(jumlah));
-          } else if ($('#s_status').val() == 'draft') {
-
-            $('#stock').val(ui.item.stok);
-          }
-
-
-        } else {
-          $('#stock').val(ui.item.stok);
-
-        }
-
-        fQty.val(1);
-        cQty.val(1);
-        fQty.focus();
-
-      }
-    });
-
     var arrow = {
         left: 37,
         up: 38,
