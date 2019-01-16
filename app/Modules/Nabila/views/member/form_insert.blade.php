@@ -48,7 +48,7 @@
                        
                         <!-- START div#header_form -->
                         <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:15px;" id="header_form">
-                           <form id="form_m_member" class="form-horizontal" method="post" style="padding: 3mm;margin-left:2mm;margin-right: 2mm">
+                           <form id="form_m_customer" class="form-horizontal" method="post" style="padding: 3mm;margin-left:2mm;margin-right: 2mm">
                               {{ csrf_field() }}
                               
                                  
@@ -59,16 +59,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-user" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="name" name="name" v-model="form_data.name" placeholder="Masukkan Nama Member" style="text-transform: uppercase" />
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="form-group">
-                                          <label class="col-xs-4 col-lg-4 control-label text-left">No. Identitas</label>
-                                          <div class="col-xs-8 col-lg-8 inputGroupContainer">
-                                             <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-credit-card" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="nik" name="nik" v-model="form_data.nik" placeholder="Masukkan Nomor Identitas" />
+                                                <input type="text" class="form-control" id="name" name="c_name" v-model="form_data.name" placeholder="Masukkan Nama Member" style="text-transform: uppercase" />
                                              </div>
                                           </div>
                                        </div>
@@ -78,7 +69,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-phone" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="telp" name="telp" v-model="form_data.telp" placeholder="Masukkan Nomor Telepon" />
+                                                <input type="text" class="form-control" id="telp" name="c_hp" placeholder="Masukkan Nomor Telepon" />
                                              </div>
                                           </div>
                                        </div>
@@ -87,7 +78,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-envelope" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="email" name="email" v-model="form_data.email" placeholder="Masukkan Alamat Email" />
+                                                <input type="text" class="form-control" id="email" name="c_email" placeholder="Masukkan Alamat Email" />
                                              </div>
                                           </div>
                                        </div>
@@ -96,13 +87,13 @@
                                        <div class="form-group">
                                           <label class="col-xs-4 col-lg-4 control-label text-left">Tanggal Lahir</label>
                                           <div class="col-xs-8 col-lg-8">
-                                             <input type="text" name="m_birth" id="m_birth" class="form-control" value="{{ $m_member->m_birth_label }}">
+                                             <input type="text" name="c_birthday" id="c_birthday" class="form-control">
                                           </div>
                                        </div>
                                        <div class="form-group">
                                           <label class="col-xs-4 col-lg-4 control-label text-left">Alamat Member</label>
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
-                                             <textarea class="form-control" rows="5" style="resize: none;" placeholder="Masukkan Alamat Member" id="address" name="address" v-model="form_data.address"></textarea>
+                                             <textarea class="form-control" rows="5" style="resize: none;" placeholder="Masukkan Alamat Member" id="address" name="c_address"></textarea>
                                           </div>
                                        </div>
                                     </article>
@@ -111,11 +102,11 @@
                               
                                  <div class="row">
                                     <div class="col-md-12">
-                                       <button class="btn btn-default" type="reset" onclick="window.location = '{{url("/nabila/membership/member")}}'">
+                                       <button class="btn btn-default" type="reset" onclick="window.location = '{{route("customer")}}'">
                                        <i class="fa fa-times"></i>
                                        &nbsp;Batal
                                        </button>
-                                       <button class="btn btn-primary" type="button"  onclick="btnform()">
+                                       <button class="btn btn-primary" type="button"  onclick="insert_m_customer()">
                                        <i class="fa fa-floppy-o"></i>
                                        &nbsp;Simpan
                                        </button>
@@ -137,6 +128,6 @@
 @endsection
 @section("extra_scripts")
 <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
-@include('Nabila::member/js/form_commander')
 @include('Nabila::member/js/form_functions')
+@include('Nabila::member/js/form_commander')
 @endsection

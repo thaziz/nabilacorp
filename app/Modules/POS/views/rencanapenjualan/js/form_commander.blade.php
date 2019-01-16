@@ -68,133 +68,7 @@
     /*$('.dataDetail').*/
   }
 
-  function setFormDetail() {
-    console.log('sebelum' + tamp);
-    if (fQty.val() <= 0) {
-      iziToast.error({
-        position: 'topRight',
-        timeout: 2000,
-        title: '',
-        message: "Ma'af, jumlah permintaan tidak boleh 0.",
-      });
-      return false;
-    }
-    var index = tamp.indexOf(i_id.val());
-    if (index == -1) {
-      var Hapus = '<button type="button" class="btn btn-sm btn-danger hapus" onclick="hapusButton(' + i_id.val() + ')"><i class="fa fa-trash-o"></i></button>';
-      var vTotalPerItem = angkaDesimal(fQty.val()) * angkaDesimal(i_price.val());
-      var iSalesDetail = ''; //isi
-      /*iSalesDetail+='<tr>';        */
-      iSalesDetail += '<tr class="detail' + i_id.val() + '">';
-      iSalesDetail += '<td width="23%"><input style="width:100%" type="hidden" name="sd_item[]" value=' + i_id.val() + '>';
-      iSalesDetail += '<input style="width:100%" type="hidden" name="sd_sales[]" value="">';
-      iSalesDetail += '<input style="width:100%" type="hidden" name="sd_detailid[]" value="">';
-      iSalesDetail += '<input value="' + $('#fComp').val() + '" style="width:100%" type="hidden" name="comp[]">';
-      iSalesDetail += '<input value="' + $('#fPosition').val() + '" style="width:100%" type="hidden" name="position[]">';
-      iSalesDetail += '<div style="padding-top:6px">' + i_code.val() + ' - ' + itemName.val() + '</div></td>';
-
-      iSalesDetail += '<td width="4%"><input class="stock stock' + i_id.val() + '" style="width:100%;text-align:right;border:none" value=' + $('#stock').val() + ' readonly></td>';
-
-      iSalesDetail += '<td width="4%" style="display:none"><input class="jumlahAwal' + i_id.val() + '" style="width:100%;text-align:right;border:none" name="jumlahAwal[]" value="0"></td>';
-
-      iSalesDetail += '<td width="4%"><input  onblur="validationForm();setQty(event,\'fQty' + i_id.val() + '\')" onkeyup="hapus(event,' + i_id.val() + ');hitungTotalPerItem(\'' + i_id.val() + '\');" onclick="setAwal(event,\'fQty' + i_id.val() + '\')" class="move up1  alignAngka jumlah fQty' + i_id.val() + '" style="width:100%;border:none" name="sd_qty[]" value="' + SetFormRupiah(angkaDesimal(fQty.val())) + '" autocomplete="off" ></td>';
-
-      iSalesDetail += '<td width="5%"><div style="padding-top:6px">' + s_satuan.val() + '</div></td>';
-
-      iSalesDetail += '<td width="6%"><input class="harga' + i_id.val() + ' alignAngka" style="width:100%;border:none" name="sd_price[]" value="' + i_price.val() + '"" readonly></td>';
-      
-      iSalesDetail += '<td width="10%" style="display:none"><input style="width:100%;border:none" name="sd_total[]" class="totalPerItem alignAngka totalPerItem' + i_id.val() + '" readonly></td>';
-
-      iSalesDetail += '<td width="10%""><input style="width:100%;border:none" name="sd_total_disc[]" class="totalPerItemDisc alignAngka totalPerItemDisc' + i_id.val() + '" readonly></td>';
-      iSalesDetail += '<td width="3%">' + Hapus + '</td>'
-      iSalesDetail += '</tr>';
-      if (validationForm()) {
-        bSalesDetail.append(iSalesDetail);
-        $('.totalPerItem' + i_id.val()).val(SetFormRupiah(vTotalPerItem));
-        $('.totalPerItemDisc' + i_id.val()).val(SetFormRupiah(vTotalPerItem));
-        searchitem.focus();
-        itemName.val('');
-        searchitem.val('');
-        fQty.val('');
-        $('#stock').val('');
-
-        tamp.push(i_id.val());
-
-
-        /*
-        var index = hapusSalesDt.indexOf(i_id.val());
-        if(index!==-1)
-        hapusSalesDt.splice(index,1);*/
-
-
-        $('.reset-seach').val('');
-
-
-        var arrow = {
-            left: 37,
-            up: 38,
-            right: 39,
-            down: 40
-          },
-
-          ctrl = 17;
-        $('.move').keydown(function (e) {
-          if (e.ctrlKey && e.which === arrow.right) {
-            setDatePicker();
-            var index = $('.move').index(this) + 1;
-            $('.move').eq(index).focus();
-
-          }
-          if (e.ctrlKey && e.which === arrow.left) {
-            setDatePicker();
-            var index = $('.move').index(this) - 1;
-            $('.move').eq(index).focus();
-          }
-          if (e.ctrlKey && e.which === arrow.up) {
-            setDatePicker();
-            var upd = $(this).attr('class').split(' ')[1];
-            var index = $('.' + upd).index(this) - 1;
-            $('.' + upd).eq(index).focus();
-          }
-          if (e.ctrlKey && e.which === arrow.down) {
-            setDatePicker();
-            var upd = $(this).attr('class').split(' ')[1];
-            var index = $('.' + upd).index(this) + 1;
-            $('.' + upd).eq(index).focus();
-          }
-
-        });
-
-
-      }
-
-    } else {
-      var updateQty = 0;
-      var updateTotalPerItem = 0;
-      var fStok = parseFloat(angkaDesimal($('.stock' + i_id.val()).val()));
-      var a = 0;
-      var b = 0;
-
-      a = angkaDesimal($('.fQty' + i_id.val()).val()) || 0;
-
-      b = angkaDesimal(fQty.val()) || 0;
-
-
-      updateQty = SetFormRupiah(parseFloat(a) + parseFloat(b));
-      
-        $('.fQty' + i_id.val()).val(updateQty)
-        itemName.val('');
-        fQty.val('');
-        $('#stock').val('');
-        searchitem.val('');
-        searchitem.focus();
-        // hitungTotalPerItem(i_id.val());
-        $('.reset-seach').val('');
-      
-    }
-    console.log('setelah' + tamp);
-  }
-
+  
   function hapusButton(a) {
     a = '' + a;
     hapusSalesDt.push(a);
@@ -282,7 +156,7 @@
 
     $("#searchitem").autocomplete({
 
-      source: "{{ url('penjualan/rencanapenjualan/rencana') }}" + '/find_m_item',
+      source: "{{ url('penjualan/rencanapenjualan/find_m_item') }}",
       minLength: 1,
       dataType: 'json',
       select: function (event, ui) {
@@ -292,72 +166,66 @@
       }
     });
 
-    $('#searchitem').keypress(function (e) {
-      if (e.which == 13 || e.keyCode == 13) {
+    $('#searchitem').keyup(function (e) {
+      if (e.which == 13 || e.keyCode == 13 || e.keyCode == 39) {
         $('#d_pcshdt_qty').focus();
 
       }
     });
     
     $('#d_pcshdt_qty').keypress(function (e) {
-      if (e.which == 13 || e.keyCode == 13) {
-        e.preventDefault();
-        var is_exists = $('[name="spdt_item[]"][value="' + item.i_id + '"]').length;
-        if(is_exists < 1) {
-          var spdt_item = "<input type='hidden' name='spdt_item[]' value='" + item.i_id + "'>" + item.item;
-          var spdt_qty = "<input type='number' class='form-control' name='spdt_qty[]' value='" + $(this).val() + "'>";
-          var stok = item.stok;
-          var satuan = item.satuan;
-
-          var aksi = "<button class='btn btn-danger' type='button'><i class='glyphicon glyphicon-trash'></i></button>";
-          tSalesDetail.row.add(
-            [spdt_item, stok, spdt_qty, satuan, aksi]
-          ).draw();
-
-          
-        }  
-        else {
-          var existing_item = $('[name="spdt_item[]"][value="' + item.i_id + '"]');
-          var tr = existing_item.parents('tr');
-          var spdt_qty = tr.find('[name="spdt_qty[]"]');
-          var price = tr.find('[name="price[]"]');
-          var total = tr.find('td:eq( 5 )');
-          var qty_amount = parseInt( $(this).val() ) + parseInt( spdt_qty.val() );
-          // memproses data
-          spdt_qty.val( 
-            qty_amount 
-          );
-          total.text(
-            get_currency( qty_amount * price.val() )
-          );
-
+      if (e.keyCode == 13) {
+        if( $(this).val() == '' || $(this).val() == 0 ) {
+          iziToast.error({
+            title : 'Info',
+            message : 'QTY tidak boleh kosong'
+          })
         }
-        $(this).val('');
-        $('#stock').val('')
-        $("#searchitem").val('');
-        $("#searchitem").focus();
+        else {
+
+            e.preventDefault();
+            var is_exists = $('[name="spdt_item[]"][value="' + item.i_id + '"]').length;
+            if(is_exists < 1) {
+              var spdt_item = "<input type='hidden' name='spdt_item[]' value='" + item.i_id + "'>" + item.item;
+              var spdt_qty = "<input type='number' class='form-control' name='spdt_qty[]' value='" + $(this).val() + "'>";
+              var stok = item.stok;
+              var satuan = item.satuan;
+
+              var aksi = "<button class='btn btn-danger' type='button'><i class='glyphicon glyphicon-trash'></i></button>";
+              tSalesDetail.row.add(
+                [spdt_item, stok, spdt_qty, satuan, aksi]
+              ).draw();
+
+              
+            }  
+            else {
+              var existing_item = $('[name="spdt_item[]"][value="' + item.i_id + '"]');
+              var tr = existing_item.parents('tr');
+              var spdt_qty = tr.find('[name="spdt_qty[]"]');
+              var price = tr.find('[name="price[]"]');
+              var total = tr.find('td:eq( 5 )');
+              var qty_amount = parseInt( $(this).val() ) + parseInt( spdt_qty.val() );
+              // memproses data
+              spdt_qty.val( 
+                qty_amount 
+              );
+              total.text(
+                get_currency( qty_amount * price.val() )
+              );
+
+            }
+            $(this).val('');
+            $('#stock').val('')
+            $("#searchitem").val('');
+            $("#searchitem").focus();
+        }
       }
+      
     });
 
-    var arrow = {
-        left: 37,
-        up: 38,
-        right: 39,
-        down: 40
-      },
-
-      ctrl = 17;
-    $('.minu').keydown(function (e) {
-      if (e.ctrlKey && e.which === arrow.right) {
-
-        var index = $('.minu').index(this) + 1;
-        $('.minu').eq(index).focus();
-
-      }
-      if (e.ctrlKey && e.which === arrow.left) {
-        /*if (e.keyCode == ctrl && arrow.left) {*/
-        var index = $('.minu').index(this) - 1;
-        $('.minu').eq(index).focus();
+    $('#d_pcshdt_qty').keyup(function (e) {
+      if(e.keyCode == 37) {
+        $('#searchitem').focus();
       }
     });
 

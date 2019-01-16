@@ -10,7 +10,7 @@ use Response;
 use DB;
 use Auth;
 
-use App\Modules\Nabila\model\member;
+use App\Modules\Nabila\model\m_customer;
 
 use Session;
 
@@ -31,43 +31,25 @@ class MemberController extends Controller {
     }
 
     public function form_alter($id) {
-        $m_member = member::where('m_id', $id);
-        $m_member = $m_member->select('m_id', 'm_name', 'm_nik', 'm_birth', 'm_telp', 'm_address', 'm_email', DB::raw('DATE_FORMAT(m_birth, "%d-%m-%Y") AS m_birth_label'))->first();
-        $data = ['m_member' => $m_member];
-        // print_r($m_member);
+        $m_customer = m_customer::where('c_id', $id);
+        $m_customer = $m_customer->select('c_id', 'c_name', 'c_birthday', 'c_hp', 'c_address', 'c_email', DB::raw('DATE_FORMAT(c_birthday, "%d-%m-%Y") AS c_birthday_label'))->first();
+        $data = ['m_customer' => $m_customer];
+        // print_r($c_member);
         // die('');
         return view('Nabila::member/form_alter', $data); 
     }
     public function preview($id) {
-        $m_member = member::where('m_id', $id);
-        $m_member = $m_member->select('m_id', 'm_name', 'm_nik', 'm_birth', 'm_telp', 'm_address', 'm_email', DB::raw('DATE_FORMAT(m_birth, "%d-%m-%Y") AS m_birth_label'))->first();
-        $data = ['m_member' => $m_member];
-        // print_r($m_member);
-        // die('');
+        $m_customer = m_customer::where('c_id', $id);
+        $m_customer = $m_customer->select('c_id', 'c_name', 'c_birthday', 'c_hp', 'c_address', 'c_email', DB::raw('DATE_FORMAT(c_birthday, "%d-%m-%Y") AS c_birthday_label'))->first();
+        $data = ['m_customer' => $m_customer];
         return view('Nabila::member/preview', $data); 
     }
 
     public function get_data_all()
     {
-        $all = member::orderBy('m_insert', 'desc')->get();
+        $all = m_customer::orderBy('c_insert', 'desc')->get();
 
         $res = ['data' => $all];
-        return response()->json($res);
-    }
-
-    public function get_data_active()
-    {
-        $active = member::where('m_status', 'AKTIF')->orderBy('m_insert', 'desc')->get();
-
-        $res = ['data' => $active];
-        return response()->json($res);
-    }
-
-    public function get_data_nonactive()
-    {
-        $nonactive = member::where('m_status', 'NONAKTIF')->orderBy('m_insert', 'desc')->get();
-
-        $res = ['res' => $nonactive];
         return response()->json($res);
     }
 
@@ -77,7 +59,7 @@ class MemberController extends Controller {
         
 
             
-            $member = member::where('m_nik', $id)->first();
+            $member = m_customer::where('c_id', $id)->first();
             $res = [
                 'data' => $member,
             ];
@@ -88,7 +70,7 @@ class MemberController extends Controller {
     public function getDataId()
     {
         $cek = DB::table('d_mem')
-            ->select(DB::raw('max(right(m_id, 7)) as id'))
+            ->select(DB::raw('max(right(c_id, 7)) as id'))
             ->get();
 
         foreach ($cek as $x) {
@@ -108,18 +90,16 @@ class MemberController extends Controller {
 
                     try {
 
-                      $data['m_birth'] = preg_replace('/(\d+)[\/-](\d+)[\/-](\d+)/', '$3-$2-$1', $data['m_birth']);
-
-                        member::insert([
-                            'm_name' => strtoupper($data['name']),
-                            'm_nik' => $data['nik'],
-                            'm_telp' => $data['telp'],
-                            'm_email' => $data['email'],
-                            'm_address' => $data['address'],
-                            'm_birth' => $data['m_birth'],
-                            'm_status' => 'AKTIF',
-                            'm_insert' => Carbon::now('Asia/Jakarta'),
-                            'm_update' => Carbon::now('Asia/Jakarta')
+                      $data['c_birthday'] = preg_replace('/(\d+)[\/-](\d+)[\/-](\d+)/', '$3-$2-$1', $data['c_birthday']);
+                      $c_date = date('my');
+                      $c_code = DB::raw("(SELECT CONCAT('CUS$c_date/C001/', LPAD(MAX(c_id) + 1, 3, '0')) FROM m_customer C)");
+                        m_customer::insert([
+                            'c_code' => $c_code,
+                            'c_name' => strtoupper($data['c_name']),
+                            'c_hp' => $data['c_hp'],
+                            'c_email' => $data['c_email'],
+                            'c_address' => $data['c_address'],
+                            'c_birthday' => $data['c_birthday']
                         ]);
 
                         DB::commit();
@@ -127,7 +107,6 @@ class MemberController extends Controller {
 
                         return response()->json([
                             'status' => 'sukses',
-                            'name' => strtoupper($data['name'])
                         ]);                            
                     } catch (\Exception $e) {
 
@@ -153,24 +132,22 @@ class MemberController extends Controller {
 
                     try {
 
-                      $data['m_birth'] = preg_replace('/(\d+)[\/-](\d+)[\/-](\d+)/', '$3-$2-$1', $data['m_birth']);
-                      $m_member = member::where('m_id', $data['m_id']);
+                      $data['c_birthday'] = preg_replace('/(\d+)[\/-](\d+)[\/-](\d+)/', '$3-$2-$1', $data['c_birthday']);
+                      $c_member = m_customer::where('c_id', $data['c_id']);
                       
-                      $m_member->update([
-                          "m_name" => $data['name'],
-                          "m_nik" => $data['nik'],
-                          "m_birth" => $data['m_birth'],
-                          "m_telp" => $data['telp'],
-                          "m_address" => $data['address'],
-                          "m_email" => $data['email']
+                      $c_member->update([
+                          "c_name" => $data['c_name'],
+                          "c_birthday" => $data['c_birthday'],
+                          "c_hp" => $data['c_hp'],
+                          "c_address" => $data['c_address'],
+                          "c_email" => $data['c_email']
                       ]);
      
                         DB::commit();
                         
 
                         return response()->json([
-                            'status' => 'sukses',
-                            'name' => strtoupper($data['name'])
+                            'status' => 'sukses'
                         ]);                            
                     } catch (\Exception $e) {
 
@@ -186,80 +163,7 @@ class MemberController extends Controller {
                     }   
     }
 
-    public function active($id)
-    {
-            DB::beginTransaction();
-            try {
-                $cek = member::where('m_nik', Crypt::decrypt($id))->count();
-
-                if ($cek != 0) {
-
-                    member::where('m_nik', Crypt::decrypt($id))->update(['m_status' => 'AKTIF']);
-
-                    DB::commit();
-
-                    $data = member::where('m_nik', Crypt::decrypt($id))->select('m_name', 'm_telp')->first();
-                    $log = 'Mengubah Status Member ' . $data->m_name . ' (' . $data->m_telp . ') = AKTIF';
-                    Plasma::logActivity($log);
-
-                    return json_encode([
-                        'status' => 'aktifberhasil',
-                        'name' => $data->m_name
-                    ]);
-                } else {
-                    return json_encode([
-                        'status' => 'tidak ada'
-                    ]);
-                }
-            } catch (\Exception $e) {
-                DB::rollback();
-                return json_encode([
-                    'status' => 'gagal',
-                    'msg' => $e
-                ]);
-            }
-       
-    }
-
-    public function nonactive($id)
-    {
-        if (Plasma::checkAkses(47, 'update') == true) {
-            DB::beginTransaction();
-            try {
-                $cek = member::where('m_nik', Crypt::decrypt($id))->count();
-
-                if ($cek != 0) {
-
-                    member::where('m_nik', Crypt::decrypt($id))->update(['m_status' => 'NONAKTIF']);
-
-                    DB::commit();
-
-                    $data = member::where('m_nik', Crypt::decrypt($id))->select('m_name', 'm_telp')->first();
-                    $log = 'Mengubah Status Member ' . $data->m_name . ' (' . $data->m_telp . ') = NONAKTIF';
-                    Plasma::logActivity($log);
-
-                    return json_encode([
-                        'status' => 'nonaktifberhasil',
-                        'name' => $data->m_name
-                    ]);
-                } else {
-                    return json_encode([
-                        'status' => 'tidak ada'
-                    ]);
-                }
-            } catch (\Exception $e) {
-                DB::rollback();
-                return json_encode([
-                    'status' => 'gagal',
-                    'msg' => $e
-                ]);
-            }
-        } else {
-            return json_encode([
-                'status' => 'ditolak'
-            ]);
-        }
-    }
+    
 
     public function delete($id)
     {
@@ -270,7 +174,7 @@ class MemberController extends Controller {
 
             try {
                 if($id != '') {
-                    $member = member::where('m_id', $id);
+                    $member = m_customer::where('c_id', $id);
                     $member->delete();
 
                     DB::commit();
