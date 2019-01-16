@@ -58,5 +58,9 @@
             border-style: solid;
             padding-top: 15px;
         }
+        .topbar-mem_comp{
+            max-width: 200px;
+            min-width: 100px;
+        }
     </style>
     

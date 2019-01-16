@@ -1,6 +1,6 @@
 @extends('main')
 @section('content')
-{!!$printPl!!}
+
 <!--BEGIN PAGE WRAPPER-->
 <div id="page-wrapper">
 <!--BEGIN TITLE & BREADCRUMB PAGE-->
