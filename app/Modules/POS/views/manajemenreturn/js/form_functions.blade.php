@@ -37,7 +37,9 @@
       }
     }
 
-    $('#t_return').val(grandtotal); 
+    $('#t_return').val(
+      'Rp. ' + accounting.formatMoney(grandtotal,"",0,'.',',')
+    ); 
   }
 	function tambah() {
              var kode = $('#kode').val();
