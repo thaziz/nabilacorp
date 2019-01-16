@@ -15,7 +15,7 @@
                 <div class="news-update-box hidden-xs"><span class="text-uppercase mrm pull-left text-white">News:</span>
                 </div>
                 <ul class="nav navbar navbar-top-links navbar-right mbn">
-                    <li class="dropdown" style="width: 200px">
+                    <li class="dropdown" style="max-width: 200px;min-width: 100px;">
                     <select class="form-control input-sm mem_comp" onchange="regeneratedSession()" name="mem_comp">
                     @foreach(App\mMember::perusahaan() as $data)
                         <option  @if(Session::get('user_comp')==$data->c_id) selected="" @endif  value="{{$data->c_id}}">{{$data->c_name}}</option>
@@ -25,7 +25,7 @@
                     <li class="dropdown topbar-user"><a href="#"><img src="{{ asset('assets/images/avatar/48.jpg')}}" alt="" class="img-responsive img-circle">&nbsp;<span class="hidden-xs">{{ Auth::user()->m_name }}</span></a>
                     </li>
                     <li class="dropdown">
-                        <a id="logut_btn" href="{{url('logout')}}"><i class="fa fa-sign-out"></i> Logout</a>
+                        <a id="logut_btn" href="{{url('logout')}}"><i class="fa fa-sign-out"></i><span class="hidden-xs"> Logout</span></a>
                     </li>
                 </ul>
             </div>
