@@ -16,7 +16,7 @@
   <!--BEGIN TITLE & BREADCRUMB PAGE-->
   <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
     <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-      <div class="page-title">Data Lembur Pegawai</div>
+      <div class="page-title">Input Data Scoreboard</div>
     </div>
     <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
       <li>
@@ -26,7 +26,7 @@
       <li>
         <i></i>&nbsp;HRD&nbsp;&nbsp;
         <i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-      <li class="active">Data Lembur Pegawai</li>
+      <li class="active">Input Data Scoreboard</li>
     </ol>
     <div class="clearfix">
     </div>
@@ -43,22 +43,22 @@
 
           <ul id="generalTab" class="nav nav-tabs">
             <li class="active">
-              <a href="#alert-tab" data-toggle="tab">Data Lembur Pegawai</a>
+              <a href="#alert-tab" data-toggle="tab">Input Data Scoreboard</a>
             </li>
           </ul>
 
           <div id="generalTabContent" class="tab-content responsive">
             <!-- /div alert-tab -->
-            @include('hrd.datalembur.tab-index')
+            {!!$tabIndex!!}
           </div>
 
         </div>
       </div>
     </div>
   </div> 
-  @include('hrd.datalembur.modal')
-  @include('hrd.datalembur.modal-detail')
-  @include('hrd.datalembur.modal-edit')
+  {!!$modal!!}
+  {!!$modalDetail!!}
+  {!!$modalEdit!!}
 </div>
 @endsection 
 @section("extra_scripts")
@@ -81,22 +81,6 @@
       var newdate = new Date(date);
       newdate.setDate(newdate.getDate()-30);
       var nd = new Date(newdate);
-
-      //timepicker
-      var timepicker = new TimePicker(['jam_awal', 'jam_akhir','jam_awal_edit', 'jam_akhir_edit'], {
-        theme: 'dark', // 'blue-grey'
-        lang: 'en'
-      });
-
-      timepicker.on('change', function(evt) {
-        var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-        if (evt.element.id == 'jam_awal') {
-          evt.element.value = value;
-        } else {
-          evt.element.value = value;
-        }
-      });
-      //end timepicker
       
       //datepicker
       $('.datepicker1').datepicker({
@@ -115,26 +99,23 @@
       // fungsi jika modal hidden
       $(".modal").on("hidden.bs.modal", function(){
         //remove append tr
-        $('tr').remove('.tbl_modal_detail_row');
+        //$('tr').remove('.tbl_modal_detail_row');
+        $('#appending div').remove();
+        $('#e_appending div').remove();
+        $('#d_appending div').remove();
         //remove class all jquery validation error
         $('.form-group').find('.error').removeClass('error');
         $('.form-group').removeClass('has-valid has-error');
         //reset all input txt field
-        $('#form-lembur')[0].reset();
-        $('#form-lembur-detail')[0].reset();
-        //empty select2 field
-        $('.jenis_pegawai').val('');
-        $('.kode_divisi').empty();
-        $('.kode_jabatan').empty();
-        $('.pegawai').empty();
+        $('#form-input-kpi')[0].reset();
+        $('#form-edit-kpi')[0].reset();
+        $('#form-detail-kpi')[0].reset();
       });
 
       //select2
       $('.select2').select2({
       });
 
-      var jenis;
-      var divisi;
       $('.jenis_pegawai').change(function() 
       {
         if($(this).val() != ""){
@@ -151,7 +132,7 @@
 
         $('.kode_divisi').empty().attr('disabled', false);
         $('.kode_jabatan').empty().attr('disabled', false);
-        jenis = $(this).val();
+        var jenis = $(this).val();
 
         $(".kode_divisi").select2({
           placeholder: "Pilih Divisi",
@@ -174,96 +155,10 @@
         });
       });
 
-      $('.kode_divisi').change(function() 
-      {
-        if($(this).val() != ""){
-          $('.divDivisi').removeClass('has-error').addClass('has-valid');
-        }else{
-          $('.divDivisi').addClass('has-error').removeClass('has-valid');
-        }
-        $('.kode_jabatan').empty().attr('disabled', false);
-        divisi = $(this).val();
-        var jenis2 = jenis;
-        // console.log(jenis2);
-        $(".kode_jabatan").select2({
-          placeholder: "Pilih Jabatan...",
-          ajax: {
-            url: baseUrl + '/hrd/datalembur/lookup-data-jabatan',
-            dataType: 'json',
-            data: function (params) {
-              return {
-                  q: $.trim(params.term),
-                  divisi : divisi,
-                  jenis : jenis2
-              };
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-          }, 
-        });
-      });
-
-      $('.kode_jabatan').change(function() 
-      {
-        if($(this).val() != ""){
-          $('.divJabatan').removeClass('has-error').addClass('has-valid');
-        }else{
-          $('.divJabatan').addClass('has-error').removeClass('has-valid');
-        }
-        $('.pegawai').empty().attr('disabled', false);
-        var divisi2 = divisi;
-        var jabatan = $(this).val();
-        var jenis3 = jenis;
-        $(".pegawai").select2({
-          placeholder: "Pilih Nama Pegawai...",
-          ajax: {
-            url: baseUrl + '/hrd/datalembur/lookup-data-pegawai',
-            dataType: 'json',
-            data: function (params) {
-              return {
-                  q: $.trim(params.term),
-                  divisi : divisi2,
-                  jabatan : jabatan,
-                  jenis : jenis3,
-              };
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-          }, 
-        });
-      });
-
-      $('.pegawai').change(function(event) {
-        if($(this).val() != ""){
-          $('.divPegawai').removeClass('has-error').addClass('has-valid');
-          $('#namapeg').val($(this).text());
-          $('#namapeg_edit').val($(this).text());
-        }else{
-          $('.divPegawai').addClass('has-error').removeClass('has-valid');
-          $('#namapeg').val("");
-          $('#namapeg_edit').val("");
-        }
-      });
-
       //validasi
-      $("#form-lembur").validate({
+      $("#form-input-kpi").validate({
         rules:{
-          jenis_pegawai: "required",
-          tglLembur: "required",
-          jamAwal: "required",
-          jamAkhir: "required",
-          kodeDivisi: "required",
-          kodeJabatan: "required",
-          pegawai: "required",
-          keperluan: "required",
+          tglKpi : "required"
         },
         errorPlacement: function() {
             return false;
@@ -273,16 +168,9 @@
         }
       });
 
-      $("#form-lembur-edit").validate({
+      $("#form-edit-kpi").validate({
         rules:{
-          jenis_pegawai_edit: "required",
-          tglLemburEdit: "required",
-          jamAwalEdit: "required",
-          jamAkhirEdit: "required",
-          kodeDivisiEdit: "required",
-          kodeJabatanEdit: "required",
-          pegawai_edit: "required",
-          keperluan_edit: "required",
+          eTglKpi : "required"
         },
         errorPlacement: function() {
             return false;
@@ -293,11 +181,11 @@
       });
 
       //load fungsi
-      lihatLemburByTanggal();
-
+      lihatKpiByTgl();
+      //setFieldBySesion();
     });//end jquery
 
-    function lihatLemburByTanggal()
+    function lihatKpiByTgl()
     {
       var tgl1 = $('#tanggal1').val();
       var tgl2 = $('#tanggal2').val();
@@ -306,16 +194,15 @@
         "processing" : true,
         "serverside" : true,
         "ajax" : {
-          url: baseUrl + "/hrd/datalembur/get-lembur-by-tgl/"+tgl1+"/"+tgl2,
+          url: baseUrl + "/hrd/inputkpi/get-kpi-by-tgl/"+tgl1+"/"+tgl2,
           type: 'GET'
         },
         "columns" : [
           {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-          {"data" : "tglBuat", "width" : "10%"},
-          {"data" : "d_lembur_code", "width" : "10%"},
-          {"data" : "jenis_peg", "width" : "10%"},
-          {"data" : "d_lembur_nama", "width" : "20%"},
-          {"data" : "d_lembur_keperluan", "width" : "20%"},
+          {"data" : "tglBuat", "width" : "15%"},
+          {"data" : "d_kpi_code", "width" : "15%"},
+          {"data" : "c_nama", "width" : "35%"},
+          {"data" : "tglConfirm", "width" : "15%"},
           {"data" : "action", orderable: false, searchable: false, "width" : "15%"}
         ],
         "language": {
@@ -333,69 +220,177 @@
       });
     }
 
-    function detailLembur(id, $jenis) 
+    function setFieldBySesion()
     {
       $.ajax({
-        url : baseUrl + "/hrd/datalembur/get-detail/"+id+"/"+$jenis,
+        url : baseUrl + "/hrd/inputkpi/set-field-modal",
         type: "GET",
         dataType: "JSON",
-        success: function(data)
+        success: function(response)
         {
-          var date = data.data[0].d_lembur_date;
-          if(date != null) { var newDueDate = date.split("-").reverse().join("-"); }
-          var jenpeg = data.data[0].d_lembur_jenispeg;
-          if(jenpeg != "MAN") { var newJenPeg = "Manajemen"; } else{ var newJenPeg = "Produksi"; }
-          
-          //ambil data ke json->modal
-          $('#jenis_peg_det').val(newJenPeg);
-          $('#tgl_lembur_det').val(newDueDate);
-          $('#jam_awal_det').val(data.data[0].d_lembur_stime);
-          $('#jam_akhir_det').val(data.data[0].d_lembur_etime);
-          $('#divisi_det').val(data.divisi);
-          $('#jabatan_det').val(data.jabatan);
-          $('#pegawai_det').val(data.pegawai);
-          $('#keperluan_det').val(data.data[0].d_lembur_keperluan);
-          $('#append-detail').html(
-            '<a href="'+ baseUrl +'/hrd/datalembur/print/'+ id +'/'+ jenpeg +'" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i>&nbsp;Print</a>'
-            +'<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>');
-          $('#modal_detail_data').modal('show');
+          if(response.status == "sukses")
+          {
+            $('#idpegawai').val(response.id_peg);
+            $('#pegawai').val(response.data.c_nama);
+            $('#divisi').val(response.data.c_divisi);
+            $('#iddivisi').val(response.data.c_divisi_id);
+            $('#jabatan').val(response.data.c_posisi);
+            $('#idjabatan').val(response.data.c_jabatan_id);
+
+            var i = randString(5);
+            var key = 1;
+            //loop data
+            Object.keys(response.kpi).forEach(function()
+            {
+              $('#appending').append(
+                  '<div class="col-md-12 col-sm-12 col-xs-12">'
+                    +'<label class="tebal">'+response.kpi[key-1].kpi_name+'</label>'
+                  +'</div>'
+                  +'<div class="col-md-12 col-sm-12 col-xs-12" id="row'+i+'">'
+                    +'<div class="form-group">'
+                      +'<textarea class="form-control input-sm" id="value_kpi" name="value_kpi[]" rows="3"></textarea>'
+                      +'<input type="hidden" id="index_kpi" name="index_kpi[]" class="form-control input-sm" value="'+response.kpi[key-1].kpi_id+'">'
+                    +'</div>'
+                  +'</div>');
+              i = randString(5);
+              key++;
+            });
+
+          }
         },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
+        error: function(){
+          console.log('terjadi kesalahan pada set nama pada modal');
+        },
+        async: false
       });
     }
 
-    function editLembur(id, $jenis) 
+    function submitKpi() 
+    {
+      iziToast.question({
+        close: false,
+        overlay: true,
+        displayMode: 'once',
+        //zindex: 999,
+        title: 'Simpan Data KPI',
+        message: 'Apakah anda yakin ?',
+        position: 'center',
+        buttons: [
+          ['<button><b>Ya</b></button>', function (instance, toast) {
+            var IsValid = $("form[name='formInputKpi']").valid();
+            if(IsValid)
+            {
+              $('#btn_simpan').text('Saving...');
+              $('#btn_simpan').attr('disabled',true);
+              $.ajax({
+                url : baseUrl + "/hrd/inputkpi/simpan-data",
+                type: "POST",
+                dataType: "JSON",
+                data: $('#form-input-kpi').serialize(),
+                success: function(response)
+                {
+                  if(response.status == "sukses")
+                  {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    iziToast.success({
+                      position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                      title: 'Pemberitahuan',
+                      message: response.pesan,
+                      onClosing: function(instance, toast, closedBy){
+                        $('#btn_simpan').text('Submit'); //change button text
+                        $('#btn_simpan').attr('disabled',false); //set button enable
+                        $('#modal_tambah_data').modal('hide');
+                        $('#tbl-index').DataTable().ajax.reload();
+                      }
+                    });
+                  }
+                  else
+                  {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                    iziToast.error({
+                      position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                      title: 'Pemberitahuan',
+                      message: response.pesan,
+                      onClosing: function(instance, toast, closedBy){
+                        $('#btn_simpan').text('Submit'); //change button text
+                        $('#btn_simpan').attr('disabled',false); //set button enable
+                        $('#modal_tambah_data').modal('hide');
+                        $('#tbl-index').DataTable().ajax.reload();
+                      }
+                    }); 
+                  }
+                },
+                error: function(){
+                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                  iziToast.warning({
+                    icon: 'fa fa-times',
+                    message: 'Terjadi Kesalahan!'
+                  });
+                },
+                async: false
+              }); 
+            }
+            else
+            {
+              instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+              iziToast.warning({
+                position: 'center',
+                message: "Mohon Lengkapi data form !",
+                onClosing: function(instance, toast, closedBy){
+                  $('.divjenis').addClass('has-error');
+                  $('.divDivisi').addClass('has-error');
+                  $('.divJabatan').addClass('has-error');
+                  $('.divPegawai').addClass('has-error');
+                }
+              });
+            } //end check valid
+          }, true],
+          ['<button>Tidak</button>', function (instance, toast) {
+            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+          }],
+        ]
+      });
+    }
+
+    function editKpi(id) 
     {
       $.ajax({
-        url : baseUrl + "/hrd/datalembur/get-edit/"+id+"/"+$jenis,
+        url : baseUrl + "/hrd/inputkpi/get-edit/"+id,
         type: "GET",
         dataType: "JSON",
-        success: function(data)
+        success: function(response)
         {
-          var date = data.data[0].d_lembur_date;
+          var date = response.data[0].d_kpi_date;
           if(date != null) { var newDueDate = date.split("-").reverse().join("-"); }
 
-          var jenpeg = data.data[0].d_lembur_jenispeg;
-          if(jenpeg != "MAN") { var newJenPeg = "pro"; } else{ var newJenPeg = "man"; }
+          $('#e_old').val(response.data[0].d_kpi_id);
+          $('#e_idpegawai').val(response.data[0].d_kpi_pid);
+          $('#e_pegawai').val(response.pegawai.c_nama);
+          $('#e_tgl_kpi').val(newDueDate);
+          $('#e_divisi').val(response.pegawai.c_divisi);
+          $('#e_iddivisi').val(response.data[0].kpi_div_id);
+          $('#e_jabatan').val(response.pegawai.c_posisi);
+          $('#e_idjabatan').val(response.data[0].kpi_jabatan_id);
           
-          $('#tgl_lembur_edit').val(newDueDate);
-          $('#jam_awal_edit').val(data.data[0].d_lembur_stime);
-          $('#jam_akhir_edit').val(data.data[0].d_lembur_etime);
-          
-          $("#jenis_pegawai_edit").val(newJenPeg).trigger('change');
-          var selectedDivisi = $("<option></option>").val(data.divisi).text(data.divisiTxt);
-          $("#kode_divisi_edit").append(selectedDivisi);
-          var selectedJabatan = $("<option></option>").val(data.jabatan).text(data.jabatanTxt);
-          $('#kode_jabatan_edit').append(selectedJabatan);
-          var selectedPegawai = $("<option></option>").val(data.data[0].d_lembur_pid).text(data.pegawai);
-          $('#pegawai_edit').append(selectedPegawai);
-
-          $('#keperluan_edit').val(data.data[0].d_lembur_keperluan);
-          $('#namapeg_edit').val(data.pegawai);
-          $('#lemburid_edit').val(data.data[0].d_lembur_id);
+          var i = randString(5);
+          var key = 1;
+          //loop data
+          Object.keys(response.data).forEach(function()
+          {
+            $('#e_appending').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12">'
+                  +'<label class="tebal">'+response.data[key-1].kpi_name+'</label>'
+                +'</div>'
+                +'<div class="col-md-12 col-sm-12 col-xs-12" id="row'+i+'">'
+                  +'<div class="form-group">'
+                    +'<textarea class="form-control input-sm" id="e_value_kpi" name="e_value_kpi[]" rows="3">'+response.data[key-1].d_kpidt_value+'</textarea>'
+                    +'<input type="hidden" id="e_index_kpi" name="e_index_kpi[]" class="form-control input-sm" value="'+response.data[key-1].kpi_id+'">'
+                     +'<input type="hidden" id="e_dt" name="e_index_dt[]" class="form-control input-sm" value="'+response.data[key-1].d_kpidt_id+'">'
+                  +'</div>'
+                +'</div>');
+            i = randString(5);
+            key++;
+          });
           $('#modal_edit_data').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown)
@@ -405,121 +400,75 @@
       });
     }
 
-    function submitLembur() {
+    function detailKpi(id) 
+    {
+      $.ajax({
+        url : baseUrl + "/hrd/inputkpi/get-edit/"+id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(response)
+        {
+          var date = response.data[0].d_kpi_date;
+          if(date != null) { var newDueDate = date.split("-").reverse().join("-"); }
+
+          $('#d_old').val(response.data[0].d_kpi_id);
+          $('#d_idpegawai').val(response.data[0].d_kpi_pid);
+          $('#d_pegawai').val(response.pegawai.c_nama);
+          $('#d_tgl_kpi').val(newDueDate);
+          $('#d_divisi').val(response.pegawai.c_divisi);
+          $('#d_iddivisi').val(response.data[0].kpi_div_id);
+          $('#d_jabatan').val(response.pegawai.c_posisi);
+          $('#d_idjabatan').val(response.data[0].kpi_jabatan_id);
+          
+          var i = randString(5);
+          var key = 1;
+          //loop data
+          Object.keys(response.data).forEach(function()
+          {
+            $('#d_appending').append(
+                '<div class="col-md-12 col-sm-12 col-xs-12">'
+                  +'<label class="tebal">'+response.data[key-1].kpi_name+'</label>'
+                +'</div>'
+                +'<div class="col-md-12 col-sm-12 col-xs-12" id="row'+i+'">'
+                  +'<div class="form-group">'
+                    +'<textarea class="form-control input-sm" id="d_value_kpi" name="d_value_kpi[]" rows="3" readonly>'+response.data[key-1].d_kpidt_value+'</textarea>'
+                    +'<input type="hidden" id="d_index_kpi" name="d_index_kpi[]" class="form-control input-sm" value="'+response.data[key-1].kpi_id+'" readonly>'
+                  +'</div>'
+                +'</div>');
+            i = randString(5);
+            key++;
+          });
+          $('#modal_detail_data').modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+      });
+    }
+
+    function updateKpi() 
+    {
       iziToast.question({
         close: false,
         overlay: true,
         displayMode: 'once',
         //zindex: 999,
-        title: 'Simpan Data Lembur',
+        title: 'Update Data KPI',
         message: 'Apakah anda yakin ?',
         position: 'center',
         buttons: [
           ['<button><b>Ya</b></button>', function (instance, toast) {
-            var IsValid = $("form[name='formLembur']").valid();
+            var IsValid = $("form[name='formEditKpi']").valid();
             if(IsValid)
             {
-              $('.divjenis').removeClass('has-error');
-              $('.divDivisi').removeClass('has-error');
-              $('.divJabatan').removeClass('has-error');
-              $('.divPegawai').removeClass('has-error');
-              $('#btn_simpan').text('Saving...');
-              $('#btn_simpan').attr('disabled',true);
-              $.ajax({
-                url : baseUrl + "/hrd/datalembur/simpan-lembur",
-                type: "POST",
-                dataType: "JSON",
-                data: $('#form-lembur').serialize(),
-                success: function(response)
-                {
-                  if(response.status == "sukses")
-                  {
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                    iziToast.success({
-                      position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                      title: 'Pemberitahuan',
-                      message: response.pesan,
-                      onClosing: function(instance, toast, closedBy){
-                        $('#btn_simpan').text('Submit'); //change button text
-                        $('#btn_simpan').attr('disabled',false); //set button enable
-                        $('#modal_tambah_data').modal('hide');
-                        $('#tbl-index').DataTable().ajax.reload();
-                      }
-                    });
-                  }
-                  else
-                  {
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                    iziToast.error({
-                      position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-                      title: 'Pemberitahuan',
-                      message: response.pesan,
-                      onClosing: function(instance, toast, closedBy){
-                        $('#btn_simpan').text('Submit'); //change button text
-                        $('#btn_simpan').attr('disabled',false); //set button enable
-                        $('#modal_tambah_data').modal('hide');
-                        $('#tbl-index').DataTable().ajax.reload();
-                      }
-                    }); 
-                  }
-                },
-                error: function(){
-                  instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-                  iziToast.warning({
-                    icon: 'fa fa-times',
-                    message: 'Terjadi Kesalahan!'
-                  });
-                },
-                async: false
-              }); 
-            }
-            else
-            {
-              instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-              iziToast.warning({
-                position: 'center',
-                message: "Mohon Lengkapi data form !",
-                onClosing: function(instance, toast, closedBy){
-                  $('.divjenis').addClass('has-error');
-                  $('.divDivisi').addClass('has-error');
-                  $('.divJabatan').addClass('has-error');
-                  $('.divPegawai').addClass('has-error');
-                }
-              });
-            } //end check valid
-          }, true],
-          ['<button>Tidak</button>', function (instance, toast) {
-            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-          }],
-        ]
-      });
-    }
-
-    function updateLembur() {
-      iziToast.question({
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        //zindex: 999,
-        title: 'Update Data Lembur',
-        message: 'Apakah anda yakin ?',
-        position: 'center',
-        buttons: [
-          ['<button><b>Ya</b></button>', function (instance, toast) {
-            var IsValid2 = $("form[name='formLemburEdit']").valid();
-            if(IsValid2)
-            {
-              $('.divjenis').removeClass('has-error');
-              $('.divDivisi').removeClass('has-error');
-              $('.divJabatan').removeClass('has-error');
-              $('.divPegawai').removeClass('has-error');
-              $('#btn_update').text('Saving...');
+              $('#btn_update').text('Update...');
               $('#btn_update').attr('disabled',true);
               $.ajax({
-                url : baseUrl + "/hrd/datalembur/update-lembur",
+                url : baseUrl + "/hrd/inputkpi/update-data",
                 type: "POST",
                 dataType: "JSON",
-                data: $('#form-lembur-edit').serialize(),
+                data: $('#form-edit-kpi').serialize(),
                 success: function(response)
                 {
                   if(response.status == "sukses")
@@ -530,7 +479,7 @@
                       title: 'Pemberitahuan',
                       message: response.pesan,
                       onClosing: function(instance, toast, closedBy){
-                        $('#btn_update').text('Submit'); //change button text
+                        $('#btn_update').text('Update'); //change button text
                         $('#btn_update').attr('disabled',false); //set button enable
                         $('#modal_edit_data').modal('hide');
                         $('#tbl-index').DataTable().ajax.reload();
@@ -545,7 +494,7 @@
                       title: 'Pemberitahuan',
                       message: response.pesan,
                       onClosing: function(instance, toast, closedBy){
-                        $('#btn_update').text('Submit'); //change button text
+                        $('#btn_update').text('Update'); //change button text
                         $('#btn_update').attr('disabled',false); //set button enable
                         $('#modal_edit_data').modal('hide');
                         $('#tbl-index').DataTable().ajax.reload();
@@ -585,7 +534,7 @@
       });
     }
 
-    function hapuslLembur(id) 
+    function hapusKpi(id) 
     {
       iziToast.question({
         timeout: 20000,
@@ -598,7 +547,7 @@
         buttons: [
           ['<button><b>Ya</b></button>', function (instance, toast) {
             $.ajax({
-              url : baseUrl + "/hrd/datalembur/delete-lembur",
+              url : baseUrl + "/hrd/inputkpi/delete-data",
               type: "POST",
               dataType: "JSON",
               data: {id:id, "_token": "{{ csrf_token() }}"},
@@ -643,6 +592,22 @@
           }],
         ]
       });
+    }
+
+    function randString(angka) 
+    {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      for (var i = 0; i < angka; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
+    }
+
+    function refreshTabelIndex() 
+    {
+      $('#tbl-index').DataTable().ajax.reload();
     }
     
   </script> 
