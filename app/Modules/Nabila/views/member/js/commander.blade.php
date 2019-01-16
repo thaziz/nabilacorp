@@ -11,7 +11,7 @@
 		       
 				{ data : 'c_name'},
 				{ data : 'c_email'},
-				{ data : 'c_hp'},
+				{ data : 'c_hp1'},
 				{
 					data : null,
 					render : function(data) {
