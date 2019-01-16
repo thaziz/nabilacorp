@@ -16,7 +16,23 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 
 	// =========================================================================================
 
-	Route::get('/nabila/belanjakaryawan/belanja', 'NabilaController@belanja')->middleware('auth');
+
+
+	Route::get('/nabila/belanjakaryawan/index', 'BelanjaKaryawanController@posPesanan')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/create', 'BelanjaKaryawanController@create')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/update', 'BelanjaKaryawanController@update')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/serah-terima', 'BelanjaKaryawanController@serahTerima')->middleware('auth');
+
+Route::get('/nabila/belanjakaryawan/{id}/edit', 'BelanjaKaryawanController@nabilaDtPesanan')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/detail-view/{id}', 'BelanjaKaryawanController@nabilaViewDtPesanan')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/listPenjualan', 'BelanjaKaryawanController@listPenjualanPesanan')->middleware('auth');
+Route::post('/nabila/belanjakaryawan/listPenjualan', 'BelanjaKaryawanController@listPenjualanPesanan')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/listPenjualan/data', 'BelanjaKaryawanController@listPenjualanDataPesanan')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/printNota/{id}', 'BelanjaKaryawanController@printNotaPesanan')->middleware('auth');
+Route::get('/nabila/belanjakaryawan/find_pegawai', 'BelanjaKaryawanController@find_pegawai')->middleware('auth');
+
+
+
 	Route::get('/nabila/voucherbelanja/voucher', 'NabilaController@voucher')->middleware('auth');
 	Route::get('/nabila/reseller/reseller', 'NabilaController@reseller')->middleware('auth');
 	Route::get('/nabila/marketer/marketer', 'NabilaController@marketer')->middleware('auth');

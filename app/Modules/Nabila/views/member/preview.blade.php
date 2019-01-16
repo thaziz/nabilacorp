@@ -69,7 +69,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-phone" style="width: 15px"></i></span>
-                                                <input readonly type="text" class="form-control" id="telp" name="c_hp" value="{{ $m_customer->c_hp }}"  placeholder="Masukkan Nomor Telepon" />
+                                                <input readonly type="text" class="form-control" id="telp" name="c_hp1" value="{{ $m_customer->c_hp1 }}"  placeholder="Masukkan Nomor Telepon" />
                                              </div>
                                           </div>
                                        </div>
