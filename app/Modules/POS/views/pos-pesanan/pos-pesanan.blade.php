@@ -273,6 +273,9 @@ alert(diffDays);
   
   
      fQty.keypress(function(e) {        
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ // some code..
+}
       if(e.which == 13 || e.keyCode == 13){  
           setFormDetail();
           totalPerItem();
