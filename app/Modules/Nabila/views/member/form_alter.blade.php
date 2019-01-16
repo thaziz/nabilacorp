@@ -9,13 +9,13 @@
    <!--BEGIN TITLE & BREADCRUMB PAGE-->
    <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
       <div class="page-header pull-left" style="font-family: 'Raleway', sans-serif;">
-         <div class="page-title">Form Update Membership</div>
+         <div class="page-title">Form Membership</div>
       </div>
       <ol class="breadcrumb page-breadcrumb pull-right" style="font-family: 'Raleway', sans-serif;">
          <li><i class="fa fa-home"></i>&nbsp;<a href="{{ url('/home') }}">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
          <li><i></i>&nbsp;Purchasing&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
          <li class="active">Membership</li>
-         <li><i class="fa fa-angle-right"></i>&nbsp;Form Update Membership&nbsp;&nbsp;</i>&nbsp;&nbsp;</li>
+         <li><i class="fa fa-angle-right"></i>&nbsp;Form Membership&nbsp;&nbsp;</i>&nbsp;&nbsp;</li>
       </ol>
       <div class="clearfix"></div>
    </div>
@@ -28,7 +28,7 @@
                   </div>
                </div>
                <ul id="generalTab" class="nav nav-tabs">
-                  <li class="active"><a href="#alert-tab" data-toggle="tab">Form Update Membership</a></li>
+                  <li class="active"><a href="#alert-tab" data-toggle="tab">Form Membership</a></li>
                   <!-- <li><a href="#note-tab" data-toggle="tab">2</a></li>
                      <li><a href="#label-badge-tab-tab" data-toggle="tab">3</a></li> -->
                </ul>
@@ -37,7 +37,7 @@
                      <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: -10px;margin-bottom: 15px;">
                            <div class="col-md-5 col-sm-6 col-xs-8">
-                              <h4>Form Update Membership</h4>
+                              <h4>Form Membership</h4>
                            </div>
                            <div class="col-md-7 col-sm-6 col-xs-4 " align="right" style="margin-top:5px;margin-right: -25px;">
                               <a href="{{ url('nabila/membership/member') }}" class="btn">
@@ -48,13 +48,10 @@
                        
                         <!-- START div#header_form -->
                         <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top:15px;" id="header_form">
-                           <form id="form_m_member" class="form-horizontal" method="post" style="padding: 3mm;margin-left:2mm;margin-right: 2mm">
-                              <input type="hidden" name="m_id" value="{{ $m_member->m_id }}">
+                           <form id="form_m_customer" class="form-horizontal" method="post" style="padding: 3mm;margin-left:2mm;margin-right: 2mm">
                               {{ csrf_field() }}
-                              
-                                 <legend>
-                                    Form Tambah Master
-                                 </legend>
+                                 <input type="hidden" name="c_id" value="{{ $m_customer->c_id }}">
+                                 
                                  <div class="row">
                                     <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                        <div class="form-group">
@@ -62,16 +59,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-user" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan Nama Member" style="text-transform: uppercase" value="{{ $m_member->m_name }}" />
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <div class="form-group">
-                                          <label class="col-xs-4 col-lg-4 control-label text-left">No. Identitas</label>
-                                          <div class="col-xs-8 col-lg-8 inputGroupContainer">
-                                             <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-credit-card" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="nik" name="nik" v-model="form_data.nik" placeholder="Masukkan Nomor Identitas"  value="{{ $m_member->m_nik }}" />
+                                                <input type="text" class="form-control" id="name" name="c_name" value="{{ $m_customer->c_name }}"   placeholder="Masukkan Nama Member" style="text-transform: uppercase" />
                                              </div>
                                           </div>
                                        </div>
@@ -81,7 +69,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-phone" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="telp" name="telp" value="{{ $m_member->m_telp }}" placeholder="Masukkan Nomor Telepon" />
+                                                <input type="text" class="form-control" id="telp" name="c_hp" value="{{ $m_customer->c_hp }}"  placeholder="Masukkan Nomor Telepon" />
                                              </div>
                                           </div>
                                        </div>
@@ -90,7 +78,7 @@
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
                                              <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-envelope" style="width: 15px"></i></span>
-                                                <input type="text" class="form-control" id="email" name="email" value="{{ $m_member->m_email }}" placeholder="Masukkan Alamat Email" />
+                                                <input type="text" class="form-control" id="email" name="c_email" value="{{ $m_customer->c_email }}"  placeholder="Masukkan Alamat Email" />
                                              </div>
                                           </div>
                                        </div>
@@ -99,13 +87,13 @@
                                        <div class="form-group">
                                           <label class="col-xs-4 col-lg-4 control-label text-left">Tanggal Lahir</label>
                                           <div class="col-xs-8 col-lg-8">
-                                             <input type="text" name="m_birth" id="m_birth" class="form-control" value="{{ $m_member->m_birth_label }}">
+                                             <input type="text" name="c_birthday" value="{{ $m_customer->c_birthday_label }}"  id="c_birthday" class="form-control">
                                           </div>
                                        </div>
                                        <div class="form-group">
                                           <label class="col-xs-4 col-lg-4 control-label text-left">Alamat Member</label>
                                           <div class="col-xs-8 col-lg-8 inputGroupContainer">
-                                             <textarea class="form-control" rows="5" style="resize: none;" placeholder="Masukkan Alamat Member" id="address" name="address" v-model="form_data.address">{{ $m_member->m_address }}</textarea>
+                                             <textarea class="form-control" rows="5" style="resize: none;" placeholder="Masukkan Alamat Member" id="address" name="c_address">{{ $m_customer->c_address }}</textarea>
                                           </div>
                                        </div>
                                     </article>
@@ -114,11 +102,11 @@
                               
                                  <div class="row">
                                     <div class="col-md-12">
-                                       <button class="btn btn-default" type="reset" onclick="window.location = '{{url("/nabila/membership/member")}}'">
+                                       <button class="btn btn-default" type="reset" onclick="window.location = '{{route("customer")}}'">
                                        <i class="fa fa-times"></i>
                                        &nbsp;Batal
                                        </button>
-                                       <button class="btn btn-primary" type="button"  onclick="simpan_edit()">
+                                       <button class="btn btn-primary" type="button"  onclick="update_m_customer()">
                                        <i class="fa fa-floppy-o"></i>
                                        &nbsp;Simpan
                                        </button>
@@ -140,6 +128,6 @@
 @endsection
 @section("extra_scripts")
 <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
-@include('Nabila::member/js/form_commander')
 @include('Nabila::member/js/form_functions')
+@include('Nabila::member/js/form_commander')
 @endsection

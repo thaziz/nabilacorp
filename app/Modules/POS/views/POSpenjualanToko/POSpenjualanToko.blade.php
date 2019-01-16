@@ -87,7 +87,8 @@
   var i_code            = $("#i_code");
   var itemName          = $("#itemName");    
   var fQty             = $("#fQty");  
-  var cQty             = $("#cQty");  
+  var cQty             = $("#cQty");
+  
   
   var s_satuan          =$('#s_satuan') ;
   var bSalesDetail      = $(".bSalesDetail");
@@ -102,6 +103,7 @@
 $('#harga').change(function(){
   batal();
 })
+
 $(document).ready(function(){      
 
 
@@ -192,6 +194,8 @@ ctrl = 17;
 
      });
 
+
+
    /*   $('#s_date').datepicker({
           format:"dd-mm-yyyy",        
           autoclose: true,
@@ -248,7 +252,6 @@ ctrl = 17;
 
   
   
-  
     fQty.keypress(function(e) {        
       if(e.which == 13 || e.keyCode == 13){                   
       if(parseFloat(angkaDesimal(fQty.val())) > parseFloat(angkaDesimal($('#stock').val())) || 
@@ -259,8 +262,9 @@ ctrl = 17;
                 title: '',
                 message: "Ma'af, jumlah permintaan melebihi stok gudang.",
               });
-        return false;
-      }else if($('#stock').val()==''){         
+        return true;
+      }
+      else if($('#stock').val()==''){         
           iziToast.error({
                 position:'topRight',
                 timeout: 2000,
@@ -279,6 +283,7 @@ ctrl = 17;
         }
       }
     } );
+    
  
 
 var tablex;
