@@ -257,7 +257,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/pembayaranpiutang/laporan_pembayaran_piutang', 'PembayaranPiutangController@laporan_pembayaran_piutang');
 
 
-	Route::get('/penjualan/pos-mobile/index', 'PenjualanController@posToko')->middleware('auth');
+	Route::get('/penjualan/pos-mobile/index', 'posMobileController@posMobile')->middleware('auth');
 	
 	// Section return penjualan
 	
