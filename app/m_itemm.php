@@ -115,8 +115,15 @@ class m_itemm extends Model
           } else {
           foreach ($sql as $data)
           {
-            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->ip_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->ip_price,0,',','.'),'item' => $data->i_name ,'position'=>$position,
-              'comp'=>$comp];
+            $results[] = [
+              'label' => $data->i_name.'  (Rp. ' .number_format($data->ip_price,0,',','.').')', 'i_id' => $data->i_id,
+              'satuan' =>$data->s_name,
+              'stok' =>number_format($data->s_qty,0,',','.'),
+              'i_code' =>$data->i_code,'i_price' =>number_format($data->ip_price,0,',','.'),
+              'item' => $data->i_name ,'position'=>$position, 
+              'comp'=>$comp,
+              'ip_edit' => $data->ip_edit
+            ];
           }
         } 
 
@@ -125,8 +132,17 @@ class m_itemm extends Model
         } else {
           foreach ($sql as $data)
           {
-            $results[] = ['label' => $data->i_name.'  (Rp. ' .number_format($data->ip_price,0,',','.').')', 'i_id' => $data->i_id,'satuan' =>$data->s_name,'stok' =>number_format($data->s_qty,0,',','.'),'i_code' =>$data->i_code,'i_price' =>number_format($data->ip_price,0,',','.'),'item' => $data->i_name ,'position'=>$position,
-              'comp'=>$comp];
+            $results[] = [
+              'label' => $data->i_name.'  (Rp. ' .number_format($data->ip_price,0,',','.').')', 'i_id' => $data->i_id,
+              'satuan' =>$data->s_name,
+              'stok' =>number_format($data->s_qty,0,',','.'),
+              'i_code' =>$data->i_code,
+              'i_price' =>number_format($data->ip_price,0,',','.'),
+              'item' => $data->i_name ,
+              'position'=>$position,
+              'comp'=>$comp,
+              'ip_edit' => $data->ip_edit
+            ];
           }
         } 
         return Response::json($results);
