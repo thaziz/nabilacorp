@@ -149,6 +149,9 @@
             var newDueDate = date.split("-").reverse().join("-");
           }
           // //console.log(totalDisc);
+          $('#head_po_positioncomp').val(data.data_header.po_comp);
+          $('#head_po_positionposition').val(data.data_header.po_position);
+
           $('#head_nota_txt').val($('#head_nota_purchase').text());
           $('#head_supplier').val(data.data_header.s_company);
           $('#head_supplier_id').val(data.data_header.s_id);
