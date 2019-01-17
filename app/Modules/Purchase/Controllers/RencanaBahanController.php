@@ -212,7 +212,6 @@ class RencanaBahanController extends Controller
 
           $aa = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $list_sup[$i]->is_supplier)->first();
           // $aa = DB::table('m_supplier')->select('s_id','s_company')->where('s_id', $list_sup[$i]->d_bs_supid)->first();
-
           $d_sup[] = array('sup_id' => $aa->s_id, 'sup_txt'=> $aa->s_company);
 
         }

@@ -22,6 +22,8 @@
             <div class="col-md-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblCodeOrderConfirm"></label>
+                <input type="text" name="comp_gudang" class="comp_gudang">
+                <input type="text" name="position_gudang" class="position_gudang">
               </div>  
             </div>
 

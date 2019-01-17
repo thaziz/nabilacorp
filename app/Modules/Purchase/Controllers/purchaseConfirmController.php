@@ -154,7 +154,7 @@ public function getDataRencanaPembelian(Request $request)
                             ->where('po_id', '=', $id)
                             ->orderBy('po_date', 'DESC')
                             ->get();
-    $statusLabel = $dataHeader[0]->p_status;
+    return $statusLabel = $dataHeader[0]->p_status;
     $dataHeader[0]->p_date=date('d-m-Y',strtotime($dataHeader[0]->p_date));
     if ($statusLabel == "WT") 
     {
@@ -166,7 +166,7 @@ public function getDataRencanaPembelian(Request $request)
         $spanTxt = 'Dapat Diedit';
         $spanClass = 'label-warning';
     }
-    else
+    elseif ($statusLabel == 'FN')
     {
         $spanTxt = 'Di setujui';
         $spanClass = 'label-success';
@@ -229,7 +229,7 @@ public function getDataRencanaPembelian(Request $request)
    }
    public function getdatatableOrder()
    {
-    // return 'a';
+      // return 'a';
      $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
               ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
@@ -238,8 +238,7 @@ public function getDataRencanaPembelian(Request $request)
     // return $data;    
     return DataTables::of($data)
     ->addIndexColumn()
-    ->editColumn('status', function ($data)
-      {
+    ->editColumn('status', function ($data){
       if ($data->po_status == "WT") 
       {
         return '<span class="label label-info">Waiting</span>';
@@ -367,12 +366,13 @@ public function getDataRencanaPembelian(Request $request)
 
     $dataHeader = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
                 ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
-                ->select('po_created','s_company','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id')
+                ->select('po_created','s_company','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id','po_status')
                 ->where('po_id', '=', $id)
                 // ->orderBy('d_pcs_date_created', 'DESC')
                 ->get();
+    // return $dataHeader;
 
-    $statusLabel = $dataHeader[0]->d_pcs_status;
+    $statusLabel = $dataHeader[0]->po_status;
     if ($statusLabel == "WT") 
     {
         $spanTxt = 'Waiting';
@@ -383,7 +383,7 @@ public function getDataRencanaPembelian(Request $request)
         $spanTxt = 'Dapat Diedit';
         $spanClass = 'label-warning';
     }
-    else
+    elseif ($statusLabel == "CF")
     {
         $spanTxt = 'Di setujui';
         $spanClass = 'label-success';
@@ -442,9 +442,9 @@ public function getDataRencanaPembelian(Request $request)
   {
 
 // dd($request->all());
-    if ($request->statusOrderConfirm == 'WT') {        
+    if ($request->statusOrderConfirm == 'CF') {        
         $dataHeader = DB::table('d_purchase_order')->where('po_id',$request->idOrder)->update([
-          'po_status'=>'FN'
+          'po_status'=>'CF'
         ]);
 
         for ($i=0; $i <count($request->fieldConfirmOrder) ; $i++) { 
@@ -453,7 +453,7 @@ public function getDataRencanaPembelian(Request $request)
           ]);
         }
     }else{
-      return 'ini belum ';
+      // return 'ini belum ';
     }
 
     return response()->json(['status'=>'sukses']);
