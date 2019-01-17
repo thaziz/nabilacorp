@@ -87,18 +87,38 @@ class PenerimaanBrgSupController extends Controller
             ->where('d_purchase_order.po_id', '=',$id)
             ->get();
 
-        $item = [];
+        // $item = [];
+        // $s_position = [];
+        // $s_comp = [];
+        // for ($i=0; $i <count($data_isi) ; $i++) { 
+        //     $item[$i] = $data_isi[$i]->podt_item;
+        //     $s_comp[$i] = $data_isi[$i]->po_comp;
+        //     $s_position[$i] = $data_isi[$i]->po_position;
+        // }
+        // $data_stock = DB::table('d_stock')
+        //     ->whereIn('s_item',$item)
+        //     ->whereIn('s_comp',$s_comp)
+        //     ->whereIn('s_position',$s_position)
+        //     ->get();
+
         for ($i=0; $i <count($data_isi) ; $i++) { 
-            $item[$i] = $data_isi[$i]->podt_item;
+          $dataStock[$i] = DB::table('d_stock')
+                            ->where('s_comp',$data_isi[$i]->po_comp)
+                            ->where('s_position',$data_isi[$i]->po_position)
+                            ->where('s_item',$data_isi[$i]->podt_item)
+                            ->get(); 
+          if(count($dataStock[$i]) != 0){
+            $qty[$i] = $dataStock[$i][0]->s_qty;
+          }else{
+            $qty[$i] = 0;
+          }
+          
         }
-        $data_stock = DB::table('d_stock')
-            ->whereIn('s_item',$item)
-            ->get();
-        
+          
         return response()->json([
             'data_header'=>$data_header,
             'data_isi'=>$data_isi,
-            'data_stock'=>$data_stock,
+            'data_stock'=>$qty,
         ]);          
     }
 
