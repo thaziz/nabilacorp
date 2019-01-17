@@ -155,12 +155,5 @@ Route::get('/system/thnfinansial/finansial', 'SystemController@finansial')->midd
 Route::get('/system/hakuser/tambah_user', 'SystemController@tambah_user')->middleware('auth');
 Route::get('/system/hakakses/tambah_akses', 'SystemController@tambah_akses')->middleware('auth');
 
-// Nabila Moslem
-Route::get('/nabila/membership/member', 'NabilaController@member')->middleware('auth');
-Route::get('/nabila/belanjakaryawan/belanja', 'NabilaController@belanja')->middleware('auth');
-Route::get('/nabila/voucherbelanja/voucher', 'NabilaController@voucher')->middleware('auth');
-Route::get('/nabila/reseller/reseller', 'NabilaController@reseller')->middleware('auth');
-Route::get('/nabila/marketer/marketer', 'NabilaController@marketer')->middleware('auth');
-Route::get('/nabila/return/return', 'NabilaController@return')->middleware('auth');
-Route::get('/nabila/purchasing/purchasing', 'NabilaController@purchasing')->middleware('auth');
+
 });
