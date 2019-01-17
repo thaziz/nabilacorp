@@ -104,7 +104,7 @@ class PenerimaanBrgSupController extends Controller
 
     public function simpan_penerimaan(Request $request)
     {
-       // dd($request->all());
+       dd($request->all());
       // return $request->session()->all();
       // session::get()->all();
        $increment = DB::table('d_terima_pembelian')->max('d_tb_id');
