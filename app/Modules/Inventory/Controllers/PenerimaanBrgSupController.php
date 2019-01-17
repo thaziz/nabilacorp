@@ -175,21 +175,10 @@ class PenerimaanBrgSupController extends Controller
          // for ($i=0; $i <count($request->fieldNamaItem); $i++) {
          //    $check[$i] = DB::table('d_stock')->where('s_item','=',$request->fieldItemId[$i])->get();
          //    $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
-         //    if(count($check[$i]) == 0) 
-         //      {   
-         //        $insert_stock = DB::table('d_stock')->insert([
-         //          's_comp'=>$request->head_po_comp,
-         //          's_position'=>$request->head_po_position,
-         //          's_qty'=>$request->fieldQtyterima[$i],
-         //          's_item'=>$request->fieldItemId[$i],
-         //          's_insert'=>date('Y-m-d h:i:s'),
-         //        ]);
-         //      }else{
-         //        $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
-         //          's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
-         //          's_update'=>date('Y-m-d h:i:s'),
-         //        ]);
-         //    }
+         //    $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
+         //      's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
+         //      's_update'=>date('Y-m-d h:i:s'),
+         //    ]);
          // }
 
          
@@ -205,7 +194,7 @@ class PenerimaanBrgSupController extends Controller
               ->where('podt_detailid',$request->order_id[$i])
               ->where('podt_purchaseorder',$request->headNotaPurchase)
               ->update([
-                 'podt_qtysend'=>$send[$i],
+                 'podt_qtysend'=>$data_detail_check[$i][0]->podt_qtysend-$request->fieldQtyterima[$i],
                  'podt_qtyreceive'=>$data_detail_check[$i][0]->podt_qtyreceive+$request->fieldQtyterima[$i],
            ]);
        }
