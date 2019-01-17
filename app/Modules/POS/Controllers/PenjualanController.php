@@ -142,7 +142,7 @@ class PenjualanController extends Controller
       foreach ($data as $key => $value) {
           $tamp[$key]=$value->i_id;
       }      
-      $tamp=array_map("strval",$tamp);      
+      $tamp=array_map("strval",$tamp);           
       return view('POS::POSpenjualanToko/editDetailPenjualan',compact('data','tamp','status'));
       
     }
@@ -179,10 +179,16 @@ class PenjualanController extends Controller
       
     }
   function printNota($id, Request $request){
-      $jumlah=count(($request->sd_item));      
+      /*$jumlah=count(($request->sd_item));     */      
+      
+
+      
+
       $bayar=$request->s_bayar;
       $kembalian=$request->kembalian;
       $data=d_sales::printNota($id);
+      $dt=d_sales_dt::where('sd_sales',$id)->select('sd_sales')->get();
+      $jumlah=count($dt);
       
       return view('POS::POSpenjualanToko/printNota',compact('data','kembalian','bayar','jumlah'));
    

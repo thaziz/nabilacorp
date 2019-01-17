@@ -23,62 +23,39 @@
     <script src="{{ asset ('assets/script/jquery.flot.categories.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.tooltip.js') }}"></script>
-
     <script src="{{ asset ('assets/script/jquery.flot.fillbetween.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.stack.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.flot.spline.js') }}"></script>
     <script src="{{ asset ('assets/script/zabuto_calendar.min.js') }}"></script>
     <script src="{{ asset ('assets/script/index.js') }}"></script>
-
     <script src="{{ asset ('assets/toastr/toastr.min.js') }}"></script>
-    {{-- <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset ('vendor/unisharp/laravel-ckeditor/adapters/jquery.js') }}"></script>
-     --}}    
     <script src="{{ asset ('assets/bootstrap-live-search/js/bootstrap-select.js') }}"></script>
     <script src="{{ asset ('assets/sliptree-multiselect/bootstrap-tokenfield.js') }}"></script>
-
     <!--LOADING SCRIPTS FOR CHARTS-->
-
     <script src="{{ asset ('assets/script/data.js') }}"></script>
     <script src="{{ asset ('assets/script/drilldown.js') }}"></script>
     <script src="{{ asset ('assets/script/exporting.js') }}"></script>
     <script src="{{ asset ('assets/script/highcharts-more.js') }}"></script>
     <script src="{{ asset ('assets/script/charts-highchart-pie.js') }}"></script>
     <script src="{{ asset ('assets/script/charts-highchart-more.js') }}"></script>
-
     <script src="{{ asset ('assets/izi-toast/js/iziToast.js') }}"></script>
-
     <!--CORE JAVASCRIPT-->
     <script src="{{ asset ('assets/script/main.js') }}"></script>
-
-    
-
-
-<!--     <script src="{{ asset ('assets/c/qz-websocket.js') }}"></script>
-    <script src="{{ asset ('assets/c/3rdparty/deployJava.js') }}"></script>
-
-    <script src="{{ asset ('assets/c/3rdparty/html2canvas.js') }}"></script>
-    <script src="{{ asset ('assets/c/3rdparty/jquery.plugin.html2canvas.js') }}"></script> -->
-
     <script src="{{ asset ('assets/select2/select2.js') }}"></script>
-
-
-
-        <!--CORE JAVASCRIPT-->
+    <!--CORE JAVASCRIPT-->
     <script src="{{ asset ('assets/rupiah-js/formatRp.js?v='.time()) }}"></script>
     <script src="{{ asset ('assets/rupiah-js/formatQty.js?v='.time()) }}"></script>
-
     <script src="{{ asset('assets/script/jquery.maskMoney.js') }}"></script>
     <script src="{{ asset('assets/jquery-validation.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/accounting/accounting.min.js') }}"></script>
-
-    
-
     <script type="text/javascript">
         var baseUrl = '{{url('/')}}';
     </script>
-
+    <script src="{{ asset('assets/inputmask/inputmask.jquery.js') }}"></script>
+    <script src="{{ asset ('assets/script/timepicker.min.js') }}"></script>
     <script type="text/javascript">
 
         function numberOnly(){

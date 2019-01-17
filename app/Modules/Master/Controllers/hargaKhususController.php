@@ -100,14 +100,16 @@ class hargaKhususController extends Controller
     	return view('Master::harga_khusus.tambah_group');
     }
 
-    public function insertGroup(Request $request){
+    public function insertGroup(Request $request){        
     	DB::beginTransaction();
             try {
     	$id = m_price_group::select('pg_id')->max('pg_id')+1;
     	m_price_group::create([
     		'pg_id' => $id,
             'pg_name' => $request->pg_name,
+            "pg_type" => $request->pg_type,  
             'pg_created' => Carbon::now()
+
     	]);
     	DB::commit();
 	    return response()->json([
@@ -249,9 +251,16 @@ $results=[];
 
     }
 
-    public function saveHargaItem(Request $request){
+    public function saveHargaItem(Request $request){        
     	DB::beginTransaction();
         try{
+
+            if($request->editprice=='on'){
+                $ip_edit='Y';
+            }
+            if($request->editprice=='off' || $request->editprice==null){
+                $ip_edit='N';   
+            }
         	$cek = m_item_price::where('ip_group',$request->group)
         		->where('ip_item',$request->i_id)
         		->first();
@@ -261,7 +270,8 @@ $results=[];
         		m_item_price::where('ip_group',$request->group)
         		->where('ip_item',$request->i_id)
         		->update([
-        			'ip_price' => $request->price
+        			'ip_price' => $request->price,
+                    'ip_edit'=> $ip_edit
         		]);
         	}
         	else
@@ -270,6 +280,7 @@ $results=[];
 	        		'ip_group' => $request->group,
 	        		'ip_item' => $request->i_id,
 	        		'ip_price' => $request->price,
+                    'ip_edit'=> $ip_edit
 	        	]);	
         	}
         	

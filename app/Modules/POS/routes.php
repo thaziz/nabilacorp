@@ -35,6 +35,21 @@ Route::get('/penjualan/mutasi-item/store', 'mutasiItemController@store');
 Route::get('/penjualan/mutasi-item/perbarui/{id}', 'mutasiItemController@perbarui');
 Route::get('/penjualan/mutasi-item/mutasi-item-detail/{id}', 'mutasiItemController@mutasiItemDt');
 Route::get('/penjualan/mutasi-item/destroy/{id}', 'mutasiItemController@destroy');
+/*
+
+//mutasi item
+	//update mi
+	Route::get('/penjualan/mutasi-item/index', 'mutasiItemController@mutasiItemIndex');
+	Route::get('/penjualan/mutasi-item/data-mutasi', 'mutasiItemController@dataMutasiItem');
+	Route::get('/penjualan/mutasi-item/tambah-mutasi-item', 'mutasiItemController@tambahMutasiItem');
+	Route::get('/penjualan/mutasi-item/store', 'mutasiItemController@store');
+	Route::get('/penjualan/mutasi-item/perbarui/{id}', 'mutasiItemController@perbarui');
+	Route::get('/penjualan/mutasi-item/mutasi-item-detail/{id}', 'mutasiItemController@mutasiItemDt');
+	Route::get('/penjualan/mutasi-item/destroy/{id}', 'mutasiItemController@destroy');
+*/
+
+
+
 
 
 //pencatatan barang titipan
@@ -125,16 +140,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 
 
 
-	//mutasi item
-	//update mi
-	Route::get('/penjualan/mutasi-item/index', 'mutasiItemController@mutasiItemIndex');
-	Route::get('/penjualan/mutasi-item/data-mutasi', 'mutasiItemController@dataMutasiItem');
-	Route::get('/penjualan/mutasi-item/tambah-mutasi-item', 'mutasiItemController@tambahMutasiItem');
-	Route::get('/penjualan/mutasi-item/store', 'mutasiItemController@store');
-	Route::get('/penjualan/mutasi-item/perbarui/{id}', 'mutasiItemController@perbarui');
-	Route::get('/penjualan/mutasi-item/mutasi-item-detail/{id}', 'mutasiItemController@mutasiItemDt');
-	Route::get('/penjualan/mutasi-item/destroy/{id}', 'mutasiItemController@destroy');
-
+	
 
 	//pencatatan barang titipan
 	Route::get('/penjualan/barang-titipan/index', 'itemTitipanController@index');
@@ -228,6 +234,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/rencanapenjualan/hapus/{id}', 'rencanaPenjualanController@hapus')->middleware('auth');
 	Route::get('/penjualan/rencanapenjualan/form_perbarui/{id}', 'rencanaPenjualanController@form_perbarui')->middleware('auth');
 	Route::get('/penjualan/rencanapenjualan/perbarui', 'rencanaPenjualanController@perbarui')->middleware('auth');
+	Route::get('/penjualan/rencanapenjualan/find_m_item', 'rencanaPenjualanController@find_m_item')->middleware('auth');
 	//rencana penjualan selesai
 
 	//mahmud retur
@@ -235,11 +242,12 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/manajemenreturn/tabel', 'ManajemenReturnPenjualanController@tabel');
 	Route::get('/penjualan/manajemenreturn/r_penjualan', 'ManajemenReturnPenjualanController@r_penjualan')->middleware('auth');
 	Route::get('/penjualan/manajemenreturn/tambahreturn', 'ManajemenReturnPenjualanController@newreturn');
-	Route::get('/penjualan/manajemenreturn/preview', 'ManajemenReturnPenjualanController@newreturn');
+	Route::get('/penjualan/manajemenreturn/preview/{id}', 'ManajemenReturnPenjualanController@preview');
 	Route::get('/penjualan/manajemenreturn/carinota', 'ManajemenReturnPenjualanController@carinota');
 	Route::get('/penjualan/manajemenreturn/get-data/{id}', 'ManajemenReturnPenjualanController@getdata');
 	Route::get('/penjualan/manajemenreturn/tabelpnota/{id}/{metode}', 'ManajemenReturnPenjualanController@tabelpnota');
 	Route::get('/penjualan/manajemenreturn/store/{id}', 'ManajemenReturnPenjualanController@store');
+	Route::get('/penjualan/manajemenreturn/deleteretur/{id}', 'ManajemenReturnPenjualanController@deleteretur');
 	
 	// Routing untuk pembayaran piutang
 	Route::get('/penjualan/pembayaranpiutang/index', 'PembayaranPiutangController@index');

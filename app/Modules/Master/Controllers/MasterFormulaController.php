@@ -93,7 +93,7 @@ class MasterFormulaController extends Controller
     $queries = m_itemm::where('m_item.i_name', 'LIKE', '%'.$term.'%')
       ->join('m_satuan','s_id','=','i_sat1')
       ->where('i_type','BB')
-      ->where('i_isactive','TRUE')
+      ->where('i_active','Y')
       ->orderBy('i_name')
       ->take(15)->get();
     
@@ -109,8 +109,8 @@ class MasterFormulaController extends Controller
         $results[] = [  'id' => $query->i_id, 
                         'label' => $query->i_code .' - '.$query->i_name,
                         'name' => $query->i_name,
-                        'id_satuan' => [$query->i_sat1, $query->i_sat2, $query->i_sat3],
-                        'satuan' => [$txtSat1->s_name, $txtSat2->s_name, $txtSat3->s_name],
+                        'id_satuan' => [$query->i_sat1],
+                        'satuan' => [$txtSat1->s_name],
                         'i_code' => $query->i_code ];
       }
     } 
@@ -126,7 +126,7 @@ class MasterFormulaController extends Controller
     $queries = m_itemm::where('m_item.i_name', 'LIKE', '%'.$term.'%')
       ->join('m_satuan','s_id','=','i_sat1')
       ->where('i_type','BP')
-      ->where('i_isactive','TRUE')
+      ->where('i_active','Y')
       ->take(15)->get();
     
     if ($queries == null) {
@@ -141,8 +141,8 @@ class MasterFormulaController extends Controller
         $results[] = [  'id' => $query->i_id, 
                         'label' => $query->i_code .' - '.$query->i_name,
                         'name' => $query->i_name,
-                        'id_satuan' =>[$query->i_sat1, $query->i_sat2, $query->i_sat3],
-                        'satuan' =>[$txtSat1->s_name, $txtSat2->s_name, $txtSat3->s_name] ];
+                        'id_satuan' =>[$query->i_sat1],
+                        'satuan' =>[$txtSat1->s_name] ];
       }
     } 
 

@@ -60,6 +60,7 @@
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <form method="POST" id="form_create_po" name="formCreatePo">
                       {{ csrf_field() }}
+                      
                       <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -359,8 +360,8 @@
             console.log(data.data_isi[key-1].i_name);
             var i_id=data.data_isi[key-1].i_id;
 
-            $('.drop_here').append(
-                            '<tr class="tbl_form_row" id="row'+i_id+'">'
+
+            var dropin = '<tr class="tbl_form_row" id="row'+i_id+'">'
                             +'<td style="text-align:center">'+key+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].i_code+' | '+data.data_isi[key-1].i_name+'" name="fieldNamaItem[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="podt_item[]" class="form-control input-sm"/>'
@@ -392,7 +393,9 @@
                             
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             
-                            +'</tr>');
+                            +'</tr>';
+
+            $('.drop_here').append(dropin);
             tamp.push(i_id);
             i = randString(5);
             key++;

@@ -33,9 +33,9 @@ class d_sales extends Model
     const CREATED_AT = 's_insert';
     const UPDATED_AT = 's_update';
     
-      protected $fillable = ['s_id','s_comp','s_jenis_bayar','s_channel','s_machine','s_date','s_finishdate','s_duedate','s_note','s_create_by','s_customer','s_gross','s_disc_percent','s_disc_value','s_tax','s_ongkir','s_bulat','s_net','s_status','s_bayar','s_kembalian','s_jurnal','s_nama_cus','s_alamat_cus'];
+      protected $fillable = ['s_id','s_comp','s_jenis_bayar','s_channel','s_machine','s_date','s_finishdate','s_duedate','s_note','s_create_by','s_customer','s_gross','s_disc_percent','s_disc_value','s_tax','s_ongkir','s_bulat','s_net','s_status','s_bayar','s_kembalian','s_jurnal','s_nama_cus','s_alamat_cus','s_type_price'];
 
-      static function simpan($request){        
+    static function simpan($request){        
         return DB::transaction(function () use ($request) {      
           
 
@@ -63,6 +63,7 @@ class d_sales extends Model
                     's_note'=>$note,
                     's_machine'=>Session::get('kasir'),
                     's_create_by'=>Auth::user()->m_id,
+                    's_type_price'=>$request->s_type_price,
                     /*'s_customer'=>$request->s_customer,*/
                     's_nama_cus'=>$request->s_nama_cus,
                     's_alamat_cus'=>$request->s_alamat_cus,
@@ -105,7 +106,7 @@ class d_sales extends Model
 
 
                   $item_titipan_qty=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i])->select('idt_terjual','idt_sisa')->first();
-                  if(count($item_titipan_qty)!=0){
+                  if($item_titipan_qty){
                   $item_titipan=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i]);
                   
                   $item_titipan->update([
@@ -221,6 +222,7 @@ class d_sales extends Model
           return json_encode($data);
       });
     }
+
     static function perbarui ($request){
       
       return DB::transaction(function () use ($request) {   
@@ -439,7 +441,7 @@ class d_sales extends Model
 
              
       $d_sales = DB::table('d_sales')
-                ->join('m_machine','m_id','=','s_machine')
+                ->join('m_machine','m_id','=','s_machine')                
                 ->where('s_channel',$request->type)
                  ->whereBetween('s_date', [$from, $to])->where('s_comp',Session::get('user_comp'))->get();
       
@@ -558,6 +560,8 @@ class d_sales extends Model
                                                 \''.$d_sales->s_jenis_bayar.'\',
                                                 
                                                 \''.$d_sales->s_alamat_cus.'\',
+                                                \''.$d_sales->s_type_price.'\',
+
                                                 )" '.$disable.' ><i class="fa fa-edit"></i>
                           </button>
                           <button type="button" class="btn btn-xs btn-danger" title="Hapus" onclick="deleteProduksi(
@@ -565,7 +569,6 @@ class d_sales extends Model
                           )" '.$disable.'><i class="fa fa-times"></i>
                           </button>
                           </div>';
-
                             return $html;
                         })
 
@@ -658,6 +661,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
                     's_note'=>$note,
                     's_machine'=>Session::get('kasir'),
                     's_create_by'=>Auth::user()->m_id,
+                    's_type_price'=>$request->s_type_price,
                     /*'s_customer'=>$request->s_customer,*/
                     's_nama_cus'=>$request->s_nama_cus,
                     's_alamat_cus'=>$request->s_alamat_cus,

@@ -14,6 +14,7 @@ use App\d_productplan;
 use App\spk_formula;
 use App\spk_actual;
 use App\d_gudangcabang;
+use App\d_productresult_dt;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Lib\mutasi;
@@ -166,7 +167,15 @@ class spkProductionController extends Controller
             ->editColumn('spk_date', function ($user) {
                 return $user->spk_date ? with(new Carbon($user->spk_date))->format('d M Y') : '';
             })
-            ->rawColumns(['status', 'action'])
+
+            ->editColumn('produksi', function ($user) {
+                return $result = d_productresult_dt::
+                    join('d_productresult','d_productresult.pr_id','=','prdt_productresult')
+                    ->where('pr_spk',$user->spk_id)
+                    ->sum('d_productresult_dt.prdt_qty');
+            })
+
+            ->rawColumns(['status', 'action','produksi'])
             ->make(true);
     }
 
@@ -239,10 +248,9 @@ class spkProductionController extends Controller
             ->get();
         // dd($spkDt);
         if ($spk->spk_status == "AP") {
-            // dd($spkDt);
             //update status to PB
-            for ($i=0; $i <count($spkDt) ; $i++) { 
-                $a[] = $spkDt[$i]->fr_value;
+            for ($i=0; $i <count($spkDt) ; $i++) 
+            { 
                 
                 if(mutasi::mutasiStok(  $spkDt[$i]->fr_formula,
                                         number_format($spkDt[$i]->fr_value,2,',','.'),

@@ -161,7 +161,7 @@ class PengambilanItemController extends Controller
     function store(Request $request)
     {  
         DB::beginTransaction();
-        try {
+        try { 
             $gudTujuan = d_gudangcabang::select('gc_id','gc_comp')
                   ->where('gc_id',$request->prdt_produksi)
                   ->first();
@@ -187,129 +187,135 @@ class PengambilanItemController extends Controller
                 'do_insert' => Carbon::now()
             ]);
 
-            for ($i = 0; $i < count($request->prdt_item); $i++) {
-                d_delivery_orderdt::insert([
-                    'dod_do' => $maxid,
-                    'dod_detailid' => $i + 1,
-                    'dod_prdt_productresult' => $request->prdt_productresult[$i],
-                    'dod_prdt_detail' => $request->prdt_detail[$i],
-                    'dod_item' => $request->prdt_item[$i],
-                    'dod_qty_send' => $request->prdt_qtyKirim[$i],
-                    'dod_date_send' => Carbon::now(),
-                    'dod_time_send' => Carbon::now(),
-                    'dod_qty_received' => 0,
-                    'dod_status' => 'WT'
-                ]);
-
-                $cek = d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
-                    ->where('prdt_detail', $request->prdt_detail[$i])
-                    ->first();
-
-                d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
-                    ->where('prdt_detail', $request->prdt_detail[$i])
-                    ->update([
-                        'prdt_kirim' => $request->prdt_qtyKirim[$i] + $cek->prdt_kirim, 
-                        'prdt_sisa' =>$cek->prdt_sisa - $request->prdt_qtyKirim[$i], 
+            for ($i = 0; $i < count($request->prdt_item); $i++) 
+            {
+                if ($request->prdt_qtyKirim[$i] != null) 
+                {
+                    d_delivery_orderdt::insert([
+                        'dod_do' => $maxid,
+                        'dod_detailid' => $i + 1,
+                        'dod_prdt_productresult' => $request->prdt_productresult[$i],
+                        'dod_prdt_detail' => $request->prdt_detail[$i],
+                        'dod_item' => $request->prdt_item[$i],
+                        'dod_qty_send' => $request->prdt_qtyKirim[$i],
+                        'dod_date_send' => Carbon::now(),
+                        'dod_time_send' => Carbon::now(),
+                        'dod_qty_received' => 0,
+                        'dod_status' => 'WT'
                     ]);
-                
-                // $compp = $request->comp;
-                $gc_id = d_gudangcabang::select('gc_id')
-                      ->where('gc_gudang','GUDANG PRODUKSI')
-                      // ->where('gc_comp',$compp)
-                      ->first();
-
-                if (mutasi::mutasiStok(
-                    $request->prdt_item[$i],
-                    $request->prdt_qty[$i],
-                    $comp = $gc_id->gc_id,
-                    $position = $gc_id->gc_id,
-                    $flag = 'MENGURANGI',
-                    $nota_do,
-                    'MENGURANGI',
-                    Carbon::now(),
-                    8)) {
+    
+                    $cek = d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
+                        ->where('prdt_detail', $request->prdt_detail[$i])
+                        ->first();
+    
+                    d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
+                        ->where('prdt_detail', $request->prdt_detail[$i])
+                        ->update([
+                            'prdt_kirim' => $request->prdt_qtyKirim[$i] + $cek->prdt_kirim, 
+                            'prdt_sisa' =>$cek->prdt_sisa - $request->prdt_qtyKirim[$i], 
+                        ]);
+                    
+                    // $compp = $request->comp;
+                    $gc_id = d_gudangcabang::select('gc_id')
+                          ->where('gc_gudang','GUDANG PRODUKSI')
+                          // ->where('gc_comp',$compp)
+                          ->first();
+    
+                    if (mutasi::mutasiStok(
+                        $request->prdt_item[$i],
+                        $request->prdt_qty[$i],
+                        $comp = $gc_id->gc_id,
+                        $position = $gc_id->gc_id,
+                        $flag = 'MENGURANGI',
+                        $nota_do,
+                        'MENGURANGI',
+                        Carbon::now(),
+                        8)) {
+                    }
+    
+                    $maxidd_stock = d_stock::select('s_id')->max('s_id') + 1;
+                    //end add id d_stock
+                    $gc_sending = d_gudangcabang::select('gc_id')
+                          ->where('gc_gudang','GUDANG SENDING')
+                          // ->where('gc_comp',$compp)
+                          ->first();
+                          // dd($gc_sending);
+                    $stock = d_stock::where('s_item', $request->prdt_item[$i])
+                        ->where('s_comp', $gudTujuan->gc_id)
+                        ->where('s_position', $gc_sending->gc_id)
+                        ->first();
+    
+                    if ($stock == null) 
+                    {
+                        d_stock::insert([
+                            's_id' => $maxidd_stock,
+                            's_comp' => $gudTujuan->gc_id,
+                            's_position' => $gc_sending->gc_id,
+                            's_item' => $request->prdt_item[$i],
+                            's_qty' => $request->prdt_qtyKirim[$i]
+                        ]);
+    
+                        d_stock_mutation::create([
+                            'sm_stock' => $maxidd_stock,
+                            'sm_detailid' => 1,
+                            'sm_date' => Carbon::now(),
+                            'sm_comp' => $gudTujuan->gc_id,
+                            'sm_position' => $gc_sending->gc_id,
+                            'sm_mutcat' => 9,
+                            'sm_item' => $request->prdt_item[$i],
+                            'sm_qty' => $request->prdt_qtyKirim[$i],
+                            'sm_qty_used' => 0,
+                            'sm_qty_sisa' => $request->prdt_qtyKirim[$i],
+                            'sm_qty_expired' => 0,
+                            'sm_detail' => 'PENAMBAHAN',
+                            'sm_reff' => $nota_do,
+                            'sm_insert' => Carbon::now()
+                        ]);
+    
+                    } 
+                    else 
+                    {
+    
+                        $stockUpdate = $stock->s_qty + $request->prdt_qtyKirim[$i];
+    
+                        $stock->update([
+                            's_qty' => $stockUpdate
+                        ]);
+    
+                        $sm_detailid = d_stock_mutation::select('sm_detailid')
+                                ->where('sm_item', $request->prdt_item[$i])
+                                ->where('sm_comp', $gudTujuan->gc_id)
+                                ->where('sm_position', $gc_sending->gc_id)
+                                ->max('sm_detailid') + 1;
+    
+                        d_stock_mutation::create([
+                            'sm_stock' => $stock->s_id,
+                            'sm_detailid' => $sm_detailid,
+                            'sm_date' => Carbon::now(),
+                            'sm_comp' => $gudTujuan->gc_id,
+                            'sm_position' => $gc_sending->gc_id,
+                            'sm_mutcat' => 9,
+                            'sm_item' => $request->prdt_item[$i],
+                            'sm_qty' => $request->prdt_qtyKirim[$i],
+                            'sm_qty_used' => 0,
+                            'sm_qty_sisa' => $request->prdt_qtyKirim[$i],
+                            'sm_qty_expired' => 0,
+                            'sm_detail' => 'PENAMBAHAN',
+                            'sm_reff' => $nota_do,
+                            'sm_insert' => Carbon::now()
+                        ]);
+                    }
+    
+                    $status = d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
+                        ->where('prdt_detail', $request->prdt_detail[$i])
+                        ->first();
+    
+                    if ($status->prdt_qty == $status->prdt_kirim) {
+                        $status->update([
+                            'prdt_status' => 'FN'
+                        ]);
+                    }
                 }
-
-                $maxidd_stock = d_stock::select('s_id')->max('s_id') + 1;
-                //end add id d_stock
-                $gc_sending = d_gudangcabang::select('gc_id')
-                      ->where('gc_gudang','GUDANG SENDING')
-                      // ->where('gc_comp',$compp)
-                      ->first();
-                      // dd($gc_sending);
-                $stock = d_stock::where('s_item', $request->prdt_item[$i])
-                    ->where('s_comp', $gudTujuan->gc_id)
-                    ->where('s_position', $gc_sending->gc_id)
-                    ->first();
-
-                if ($stock == null) {
-                    d_stock::insert([
-                        's_id' => $maxidd_stock,
-                        's_comp' => $gudTujuan->gc_id,
-                        's_position' => $gc_sending->gc_id,
-                        's_item' => $request->prdt_item[$i],
-                        's_qty' => $request->prdt_qtyKirim[$i]
-                    ]);
-
-                    d_stock_mutation::create([
-                        'sm_stock' => $maxidd_stock,
-                        'sm_detailid' => 1,
-                        'sm_date' => Carbon::now(),
-                        'sm_comp' => $gudTujuan->gc_id,
-                        'sm_position' => $gc_sending->gc_id,
-                        'sm_mutcat' => 9,
-                        'sm_item' => $request->prdt_item[$i],
-                        'sm_qty' => $request->prdt_qtyKirim[$i],
-                        'sm_qty_used' => 0,
-                        'sm_qty_sisa' => $request->prdt_qtyKirim[$i],
-                        'sm_qty_expired' => 0,
-                        'sm_detail' => 'PENAMBAHAN',
-                        'sm_reff' => $nota_do,
-                        'sm_insert' => Carbon::now()
-                    ]);
-
-                } else {
-
-                    $stockUpdate = $stock->s_qty + $request->prdt_qtyKirim[$i];
-
-                    $stock->update([
-                        's_qty' => $stockUpdate
-                    ]);
-
-                    $sm_detailid = d_stock_mutation::select('sm_detailid')
-                            ->where('sm_item', $request->prdt_item[$i])
-                            ->where('sm_comp', $gudTujuan->gc_id)
-                            ->where('sm_position', $gc_sending->gc_id)
-                            ->max('sm_detailid') + 1;
-
-                    d_stock_mutation::create([
-                        'sm_stock' => $stock->s_id,
-                        'sm_detailid' => $sm_detailid,
-                        'sm_date' => Carbon::now(),
-                        'sm_comp' => $gudTujuan->gc_id,
-                        'sm_position' => $gc_sending->gc_id,
-                        'sm_mutcat' => 9,
-                        'sm_item' => $request->prdt_item[$i],
-                        'sm_qty' => $request->prdt_qtyKirim[$i],
-                        'sm_qty_used' => 0,
-                        'sm_qty_sisa' => $request->prdt_qtyKirim[$i],
-                        'sm_qty_expired' => 0,
-                        'sm_detail' => 'PENAMBAHAN',
-                        'sm_reff' => $nota_do,
-                        'sm_insert' => Carbon::now()
-                    ]);
-                }
-
-                $status = d_productresult_dt::where('prdt_productresult', $request->prdt_productresult[$i])
-                    ->where('prdt_detail', $request->prdt_detail[$i])
-                    ->first();
-
-                if ($status->prdt_qty == $status->prdt_kirim) {
-                    $status->update([
-                        'prdt_status' => 'FN'
-                    ]);
-                }
-
             }
 
             DB::commit();

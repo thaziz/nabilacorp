@@ -173,7 +173,7 @@
 
     return text;
   } 
-
+daftarTabelOrder() ;
   function daftarTabelOrder() 
   {
     $('#tbl-order').dataTable({
@@ -187,7 +187,7 @@
         "columns" : [
           {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
           {"data" : "tglBuat", "width" : "10%"},
-          {"data" : "m_name", "width" : "10%"},
+          {"data" : "po_code", "width" : "10%"},
           {"data" : "m_name", "width" : "10%"},
           {"data" : "s_company", "width" : "25%"},
           {"data" : "tglConfirm", "width" : "10%"},

@@ -296,7 +296,7 @@
        var unit;
        for(x = 0;x < d_salesplan_dt.length;x++) {
             unit = d_salesplan_dt[x];
-             var spdt_item = "<input type='hidden' name='spdt_unit[]' value='" + unit.i_id + "'>" + unit.i_name;
+             var spdt_item = "<input type='hidden' name='spdt_item[]' value='" + unit.i_id + "'>" + unit.i_name;
              var spdt_qty = "<input type='number' class='form-control' name='spdt_qty[]' value='" + unit.spdt_qty + "'>";
              var stok = '-';
              var satuan = unit.s_name;

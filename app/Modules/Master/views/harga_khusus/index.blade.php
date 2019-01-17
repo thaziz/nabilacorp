@@ -61,16 +61,34 @@ tr.details td.details-control {
                         <div class="form-group">
                           <select class="form-control input-sm select2" name="group" id="idGroup" onchange="pilihGroup()" >
                             @foreach ($group as $grup)
-                              <option value="{{ $grup->pg_id }}">{{ $grup->pg_name }}</option>
+                              <option value="{{ $grup->pg_id }}" data-type="{{ $grup->pg_type}}" >{{ $grup->pg_name }}</option>
                             @endforeach
                           </select>
                         </div>
                       </div>
 
+
+                      <div class="col-md-2 col-sm-4 col-xs-12">
+                        <label class="tebal">Type :</label>
+                      </div>
+
+                      <div class="col-md-3 col-sm-8 col-xs-12">
+                        <div class="form-group">
+                        <input type="" name=""  id="type-group" class="form-group" disabled="">                        
+                        </div>
+                      </div>
+
+
                       <div class="col-md-12">
                         <div class="col-md-12 tamma-bg"  style="margin-top: 5px;margin-bottom: 5px;
                         margin-bottom: 40px; padding-bottom:20px;padding-top:20px;">
-                          <div class="col-md-6">
+                          <div class="col-md-2 col-sm-3 col-xs-12">
+                              <label class="control-label tebal">Edit Harga</label>
+                              <div class="input-group input-group-sm" style="width: 100%;">
+                                <input type="checkbox" name="editprice" class="form-control" id="edit" name="edit">
+                              </div>
+                          </div>
+                          <div class="col-md-4">
                               <label class="control-label tebal" for="">Masukan Kode / Nama</label>
                               <div class="input-group input-group-sm" style="width: 100%;">
                                   <input type="text" id="bahan_baku" name="bahan_baku" class="form-control">
@@ -85,13 +103,15 @@ tr.details td.details-control {
                                   <input type="number" id="qty" name="price" class="form-control text-right">
                               </div>
                           </div>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
+                          <div class="col-md-2 col-sm-3 col-xs-12">
                            <label class="control-label tebal">Satuan</label>
                               <div class="input-group input-group-sm" style="width: 100%;">
                                 <select class="form-control" id="satuan" name="satuan">
                                 </select>
                               </div>
                           </div>
+                  
+
                         </div>
                       </div>
                       <div class="panel-body">
@@ -171,8 +191,19 @@ tr.details td.details-control {
       $('.select2').select2();
       pilihGroup();
 
-      function pilihGroup(){
+      function pilihGroup(){        
+        var type=$('#idGroup').find(':selected').data('type');        
+        $('#type').val(type);
+        if(type=='M'){
+            $('#type-group').val('Moslem');            
+        }
+        if(type=='B'){
+            $('#type-group').val('Bakery');
+        }
+        
+
         var x = document.getElementById("idGroup").value;
+
         if(x==''){
           x='kosong';
         }
@@ -267,6 +298,7 @@ tr.details td.details-control {
 
         }
     });
+
 
     function tambahItemHarga(){
       $.ajaxSetup({

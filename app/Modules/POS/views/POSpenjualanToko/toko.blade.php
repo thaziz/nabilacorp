@@ -56,7 +56,7 @@
            </div>     
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">             
-               <select class="move up1 form-control input-sm" id="harga" onchange="harga()">
+               <select class="move up1 form-control input-sm" id="harga" onchange="harga()" name="s_type_price">
                 @foreach($daftarHarga as $daftar)
                  <option value="{{$daftar->pg_id}}">
                    {{$daftar->pg_name}}
@@ -71,9 +71,13 @@
           </div>
 
 
-
-
- <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
+    
+             
+        
+      </div>
+  </form>
+  <form method="post" id="dataPos" class="container-fluid">
+  <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 20px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
          <div class="col-md-6">
            <label class="control-label tebal" for="">Masukan Kode / Nama</label>
               <div class="input-group input-group-sm" style="width: 100%;">
@@ -101,14 +105,14 @@
                  <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="validationForm();">   
               </div>
           </div>
-    </div>
-
+  </div>
 
         </div>
- 
-        <div class="col-md-12 col-sm-12 col-xs-12">      
-          <div style="padding-top: 20px;padding-bottom: 20px;">     
-            <div class="table-responsive" style="overflow-y : auto;height : 350px; border: solid 1.5px #bb936a">
+        <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:white;">      
+          <div style="padding-top: 20px;padding-bottom: 20px;">   
+          <br>  
+            <div class="table-responsive" style="overflow-y : auto;height : 350px; border: solid 1.5px #bb936a; background-color:white;">
               <table class="table tabelan table-bordered table-hover dt-responsive" id="tSalesDetail">
                <thead align="right">
                 <tr>                 
@@ -207,6 +211,7 @@
                           <input type="text" id="grand_biaya" name="s_net" class="form-control form-control-xl input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
                         </div>
                   </div>
+                  
 
              <!--      <div class="col-md-6 col-sm-6 col-xs-12">
                         <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
@@ -293,30 +298,30 @@
                                 </div>
                                 <div class="col-md-12" style="border-bottom: 4px solid #9e5a2e; padding-top:8px ">                                  
                                 </div>                         
-<table style="width: 100%" class="table c">
-  <thead>
-    <th>Cara Bayar</th>
-    <th>Jumlah</th>
-    <td class="hutang" style="display: none;">Jatuh Tempo</th>
-  </thead>
-  <tbody class="tr_clone">
-      <tr>
-        <td>
-          <select style="width:90%" class="minu mx" name="sp_method[]" >
-              @foreach($paymentmethod as $pm)
-                <option value="{{$pm->pm_id}}">{{$pm->pm_name}}</option>
-              @endforeach
-          </select>
-      </td>
-      <td>
-    <input class="minu mx f2 nominal alignAngka nominal" style="width:90%" type="" name="sp_nominal[]"
-     id="nominal" 
-     onkeyup="totalPembayaran('nominal');rege(event,'nominal');"      
-     onblur="setRupiah(event,'nominal')" onclick="setAwal(event,'nominal')
-    autocomplete="off">
-      </td>
-  </tbody>
-</table>
+                              <table style="width: 100%" class="table c">
+                                <thead>
+                                  <th>Cara Bayar</th>
+                                  <th>Jumlah</th>
+                                  <td class="hutang" style="display: none;">Jatuh Tempo</th>
+                                </thead>
+                                <tbody class="tr_clone">
+                                    <tr>
+                                      <td>
+                                        <select style="width:90%" class="minu mx" name="sp_method[]" >
+                                            @foreach($paymentmethod as $pm)
+                                              <option value="{{$pm->pm_id}}">{{$pm->pm_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                  <input class="minu mx f2 nominal alignAngka nominal" style="width:90%" type="" name="sp_nominal[]"
+                                  id="nominal" 
+                                  onkeyup="totalPembayaran('nominal');rege(event,'nominal');"      
+                                  onblur="setRupiah(event,'nominal')" onclick="setAwal(event,'nominal')
+                                  autocomplete="off">
+                                    </td>
+                                </tbody>
+                              </table>
                                 <div class="col-md-12" style="border-bottom: 4px solid #9e5a2e; padding-top:8px ">
                                 </div>
 
@@ -381,9 +386,7 @@
                     <button onclick="modalShow()"
                      type="button" class="move btn-primary btn btn-disabled final" data-toggle="modal" disabled="" >Proses</button>
                   </div>
-             
-        
-      </div>
   </form>
+  </div>
 </div>
 

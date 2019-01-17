@@ -102,6 +102,24 @@
 
 
 
+function tglf(){
+    var start = $('#s_date').val();
+    var end = $('#s_finishdate').val();
+    var start = start.split("-").reverse().join("-");
+    var end = end.split("-").reverse().join("-");
+    var start=new Date(start);
+    var end =new Date(end);
+    var diff = new Date(end - start);
+    var days = diff/1000/60/60/24;
+    
+    if($('#s_finishdate').val()==''){
+        $('#s_duedate').val('0 Hari');  
+    }
+    if($('#s_finishdate').val()!=''){
+        $('#s_duedate').val(days +' Hari');  
+    }
+    
+}
 $(document).ready(function(){      
 
 
@@ -255,6 +273,9 @@ alert(diffDays);
   
   
      fQty.keypress(function(e) {        
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ // some code..
+}
       if(e.which == 13 || e.keyCode == 13){  
           setFormDetail();
           totalPerItem();
@@ -992,7 +1013,7 @@ $('#serah_terima').css('display','');
               $('#serah_terima').css('display','none');
             }
             
-
+$('#sid').val(s_id);
 
   $('#idTerima').val(s_id);
   var status='';
