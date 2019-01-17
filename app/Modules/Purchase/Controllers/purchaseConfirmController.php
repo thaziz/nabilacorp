@@ -36,8 +36,8 @@ class purchaseConfirmController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
-   
+
+
    public function seachItemPurchase(Request $request){
          return   m_item::seachItemPurchase($request);
    }
@@ -45,17 +45,17 @@ class purchaseConfirmController extends Controller
       d_purchase_plan::simpan($request);
 
    }
-   public function confirmIndex(){         
-     $tbh =view('Purchase::konfirmasipembelian/tab-belanjaharian');   
-     $td =view('Purchase::konfirmasipembelian/tab-daftar');   
-     $to =view('Purchase::konfirmasipembelian/tab-order');   
-     $tr =view('Purchase::konfirmasipembelian/tab-return');   
+   public function confirmIndex(){
+     $tbh =view('Purchase::konfirmasipembelian/tab-belanjaharian');
+     $td =view('Purchase::konfirmasipembelian/tab-daftar');
+     $to =view('Purchase::konfirmasipembelian/tab-order');
+     $tr =view('Purchase::konfirmasipembelian/tab-return');
 
-     $mcb =view('Purchase::konfirmasipembelian/modal-confirm-belanjaharian');   
-     $mco =view('Purchase::konfirmasipembelian/modal-confirm-order');   
-     $mcr =view('Purchase::konfirmasipembelian/modal-confirm-return');   
-     $mc =view('Purchase::konfirmasipembelian/modal-confirm');   
-     
+     $mcb =view('Purchase::konfirmasipembelian/modal-confirm-belanjaharian');
+     $mco =view('Purchase::konfirmasipembelian/modal-confirm-order');
+     $mcr =view('Purchase::konfirmasipembelian/modal-confirm-return');
+     $mc =view('Purchase::konfirmasipembelian/modal-confirm');
+
      return view('Purchase::konfirmasipembelian/index',compact('tbh','td','to','tr','mcb','mco','mcr','mc'));
    }
 public function getDataRencanaPembelian(Request $request)
@@ -65,63 +65,63 @@ public function getDataRencanaPembelian(Request $request)
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
             // ->orderBy('d_pcsp_datecreated', 'DESC')
             ->get();
-    // return $data;    
+    // return $data;
     return DataTables::of($data)
     ->addIndexColumn()
     ->editColumn('status', function ($data)
       {
-      if ($data->p_status == "WT") 
+      if ($data->p_status == "WT")
       {
         return '<span class="label label-info">Waiting</span>';
       }
-      elseif ($data->p_status == "DE") 
+      elseif ($data->p_status == "DE")
       {
         return '<span class="label label-warning">Dapat diedit</span>';
       }
-      elseif ($data->p_status == "FN") 
+      elseif ($data->p_status == "FN")
       {
         return '<span class="label label-success">Finish</span>';
       }
     })
-    ->editColumn('tglBuat', function ($data) 
+    ->editColumn('tglBuat', function ($data)
     {
-        if ($data->p_date == null) 
+        if ($data->p_date == null)
         {
             return '-';
         }
-        else 
+        else
         {
             return $data->p_date ? with(new Carbon($data->p_date))->format('d M Y') : '';
         }
     })
-    ->editColumn('tglConfirm', function ($data) 
+    ->editColumn('tglConfirm', function ($data)
     {
-        if ($data->p_confirm == null) 
+        if ($data->p_confirm == null)
         {
             return '-';
         }
-        else 
+        else
         {
             return $data->p_confirm ? with(new Carbon($data->p_confirm))->format('d M Y') : '';
         }
     })
     ->addColumn('action', function($data)
       {
-        if ($data->p_status == "WT") 
+        if ($data->p_status == "WT")
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
                           onclick=konfirmasiPlanAll("'.$data->p_id.'")><i class="fa fa-check"></i>
                       </button>
-                  </div>'; 
+                  </div>';
         }
-        else 
+        else
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
                           onclick=konfirmasiPlan("'.$data->p_id.'")><i class="fa fa-check"></i>
                       </button>
-                  </div>'; 
+                  </div>';
         }
       })
     ->rawColumns(['status', 'action'])
@@ -133,20 +133,20 @@ public function getDataRencanaPembelian(Request $request)
       return d_purchase_plan::confirmRencanaPembelian($id,$type);
    }
 
-   public function konfirmasiPurchasePlan(Request $request){  
+   public function konfirmasiPurchasePlan(Request $request){
    /*dd($request->all());   */
       return d_purchase_plan::konfirmasiPurchasePlan($request);
    }
 
-   public function konfirmasiOrder(Request $request,$id,$type){  
-   // dd($request->all());   
+   public function konfirmasiOrder(Request $request,$id,$type){
+   // dd($request->all());
    $dataHeader = d_purchase_order::join('m_supplier','po_supplier','=','s_id')
                             ->leftjoin('d_mem','po_mem','=','m_id')
                             ->select(
                                 'po_id',
                                 'po_code',
                                 's_company',
-                                'po_date', 
+                                'po_date',
                                 'po_status',
                                 DB::raw('IFNULL(po_date_confirm, "") AS p_confirm'),
                                 DB::raw('IFNULL(m_id, "") AS m_id'),
@@ -154,9 +154,9 @@ public function getDataRencanaPembelian(Request $request)
                             ->where('po_id', '=', $id)
                             ->orderBy('po_date', 'DESC')
                             ->get();
-    $statusLabel = $dataHeader[0]->p_status;
+    return $statusLabel = $dataHeader[0]->p_status;
     $dataHeader[0]->p_date=date('d-m-Y',strtotime($dataHeader[0]->p_date));
-    if ($statusLabel == "WT") 
+    if ($statusLabel == "WT")
     {
         $spanTxt = 'Waiting';
         $spanClass = 'label-info';
@@ -166,21 +166,21 @@ public function getDataRencanaPembelian(Request $request)
         $spanTxt = 'Dapat Diedit';
         $spanClass = 'label-warning';
     }
-    else
+    elseif ($statusLabel == 'FN')
     {
         $spanTxt = 'Di setujui';
         $spanClass = 'label-success';
     }
-    if ($type == "all") 
+    if ($type == "all")
     {
-      
+
       $dataIsi = d_purchaseorder_dt::join('m_item','ppdt_item','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'i_satuan')
                                 ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
-                                         's_name',                                         
+                                         's_name',
                                          'podt_qty',
                                          'podt_qtyconfirm',
                                          DB::raw('IFNULL(s_qty, 0) AS s_qty'),
@@ -191,7 +191,7 @@ public function getDataRencanaPembelian(Request $request)
                                 ->where('ppdt_pruchaseplan', '=', $id)
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
-      
+
     }
     else
     {
@@ -202,7 +202,7 @@ public function getDataRencanaPembelian(Request $request)
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
-                                         's_name',                                         
+                                         's_name',
                                          'podt_qty',
                                          'podt_qtyconfirm',
                                          's_qty',
@@ -214,14 +214,14 @@ public function getDataRencanaPembelian(Request $request)
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_created', 'DESC')
                                 ->get();
-      
+
 
     }
-   
+
     return Response()->json([
         'status' => 'sukses',
         'header' => $dataHeader,
-        'data_isi' => $dataIsi,      
+        'data_isi' => $dataIsi,
         'spanTxt' => $spanTxt,
         'spanClass' => $spanClass,
     ]);
@@ -229,69 +229,68 @@ public function getDataRencanaPembelian(Request $request)
    }
    public function getdatatableOrder()
    {
-    // return 'a';
+      // return 'a';
      $data = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
               ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
             // ->select('d_pcsp_id','d_pcsp_code','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
             // ->orderBy('d_pcsp_datecreated', 'DESC')
             ->get();
-    // return $data;    
+    // return $data;
     return DataTables::of($data)
     ->addIndexColumn()
-    ->editColumn('status', function ($data)
-      {
-      if ($data->po_status == "WT") 
+    ->editColumn('status', function ($data){
+      if ($data->po_status == "WT")
       {
         return '<span class="label label-info">Waiting</span>';
       }
-      elseif ($data->po_status == "DE") 
+      elseif ($data->po_status == "DE")
       {
         return '<span class="label label-warning">Dapat diedit</span>';
       }
-      elseif ($data->po_status == "FN") 
+      elseif ($data->po_status == "FN")
       {
         return '<span class="label label-success">Finish</span>';
       }
     })
-    ->editColumn('tglBuat', function ($data) 
+    ->editColumn('tglBuat', function ($data)
     {
-        if ($data->po_date == null) 
+        if ($data->po_date == null)
         {
             return '-';
         }
-        else 
+        else
         {
             return $data->po_date ? with(new Carbon($data->po_date))->format('d M Y') : '';
         }
     })
-    ->editColumn('tglConfirm', function ($data) 
+    ->editColumn('tglConfirm', function ($data)
     {
-        if ($data->po_date_confirm == null) 
+        if ($data->po_date_confirm == null)
         {
             return '-';
         }
-        else 
+        else
         {
             return $data->po_date_confirm ? with(new Carbon($data->po_date_confirm))->format('d M Y') : '';
         }
     })
     ->addColumn('action', function($data)
       {
-        if ($data->po_status == "WT") 
+        if ($data->po_status == "WT")
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
                           onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
                       </button>
-                  </div>'; 
+                  </div>';
         }
-        else 
+        else
         {
             return '<div class="text-center">
                       <button class="btn btn-sm btn-primary" title="Ubah Status"
                           onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
                       </button>
-                  </div>'; 
+                  </div>';
         }
       })
     ->rawColumns(['status', 'action'])
@@ -299,9 +298,9 @@ public function getDataRencanaPembelian(Request $request)
    }
 
 
-   
+
    public function formPlan()
-    {        
+    {
          return view('Purchase::rencanapembelian/create');
     }
 
@@ -309,7 +308,7 @@ public function getDataRencanaPembelian(Request $request)
     {
         return view('/purchasing/rencanapembelian/rencana');
     }
-    
+
     public function belanja()
     {
         return view('/purchasing/belanjaharian/belanja');
@@ -353,7 +352,7 @@ public function getDataRencanaPembelian(Request $request)
     }
     public function tambah_order()
     {
-        
+
     }
     public function bahan()
     {
@@ -367,13 +366,14 @@ public function getDataRencanaPembelian(Request $request)
 
     $dataHeader = d_purchase_order::join('m_supplier','d_purchase_order.po_supplier','=','m_supplier.s_id')
                 ->join('d_mem','d_purchase_order.po_mem','=','d_mem.m_id')
-                ->select('po_created','s_company','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id')
+                ->select('po_created','s_company','po_id','po_code', 'po_duedate','d_mem.m_name','d_mem.m_id','po_status')
                 ->where('po_id', '=', $id)
                 // ->orderBy('d_pcs_date_created', 'DESC')
                 ->get();
+    // return $dataHeader;
 
-    $statusLabel = $dataHeader[0]->d_pcs_status;
-    if ($statusLabel == "WT") 
+    $statusLabel = $dataHeader[0]->po_status;
+    if ($statusLabel == "WT")
     {
         $spanTxt = 'Waiting';
         $spanClass = 'label-info';
@@ -383,13 +383,13 @@ public function getDataRencanaPembelian(Request $request)
         $spanTxt = 'Dapat Diedit';
         $spanClass = 'label-warning';
     }
-    else
+    elseif ($statusLabel == "CF")
     {
         $spanTxt = 'Di setujui';
         $spanClass = 'label-success';
     }
 
-    if ($type == "all") 
+    if ($type == "all")
     {
       $dataIsi = d_purchaseorder_dt::join('m_item', 'd_purchaseorder_dt.i_id', '=', 'm_item.i_id')
                 ->join('m_satuan', 'd_purchaseorder_dt.d_pcsdt_sat', '=', 'm_satuan.m_sid')
@@ -409,7 +409,7 @@ public function getDataRencanaPembelian(Request $request)
                 ->get();
     }
     // return $dataIsi;
-    foreach ($dataIsi as $val) 
+    foreach ($dataIsi as $val)
     {
       //cek item type
       $itemType[] = DB::table('m_item')->select('i_type', 'i_id')->where('i_id','=', $val->i_id)->first();
@@ -418,7 +418,7 @@ public function getDataRencanaPembelian(Request $request)
     }
     // return $sat1;
     // return $itemType;
-    for ($i=0; $i <count($itemType) ; $i++) { 
+    for ($i=0; $i <count($itemType) ; $i++) {
        $dataStok = DB::table('d_stock')->where('s_item',$itemType[$i]->i_id)->get();
     }
     // return $dataStok;
@@ -426,7 +426,7 @@ public function getDataRencanaPembelian(Request $request)
     $counter = 0;
     //ambil value stok by item type
     // $dataStok = $this->getStokByType($itemType, $sat1, $counter);
-    // return 
+    // return
     return Response()->json([
         'status' => 'sukses',
         'header' => $dataHeader,
@@ -441,19 +441,19 @@ public function getDataRencanaPembelian(Request $request)
   public function confirmOrderSubmit(Request $request)
   {
 
-dd($request->statusOrderConfirm);
-    if ($request->statusOrderConfirm == 'WT') {        
+// dd($request->all());
+    if ($request->statusOrderConfirm == 'CF') {
         $dataHeader = DB::table('d_purchase_order')->where('po_id',$request->idOrder)->update([
-          'po_status'=>'FN'
+          'po_status'=>'CF'
         ]);
 
-        for ($i=0; $i <count($request->fieldConfirmOrder) ; $i++) { 
+        for ($i=0; $i <count($request->fieldConfirmOrder) ; $i++) {
           $dataisi = DB::table('d_purchaseorder_dt')->where('podt_purchaseorder',$request->idOrder)->where('podt_detailid',$request->fieldIdDtOrder[$i])->update([
             'podt_qtyconfirm'=>$request->fieldConfirmOrder[$i]
           ]);
         }
     }else{
-      return 'ini belum ';
+      // return 'ini belum ';
     }
 
     return response()->json(['status'=>'sukses']);

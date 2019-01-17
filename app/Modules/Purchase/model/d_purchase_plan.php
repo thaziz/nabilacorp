@@ -31,7 +31,7 @@ class d_purchase_plan extends Model
     const CREATED_AT = 'p_created';
     const UPDATED_AT = 'p_updated';
     
-     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_mem','p_confirm','p_status','p_status_date','p_comp','p_gudang'];
+     protected $fillable = ['p_id','p_date','p_code','p_supplier','p_position','p_mem','p_confirm','p_status','p_status_date','p_comp','p_gudang'];
 
      static function simpan ($request){      
       // return DB::transaction(function () use ($request) {     
@@ -56,11 +56,13 @@ class d_purchase_plan extends Model
         $kd = "00001";
       }
       
+       // dd($request->all());
       $p_code = "PO-".date('ym')."-".$kd;
 
       d_purchase_plan::create([
               'p_id'=>$p_id,
-              'p_comp'=>Session::get('user_comp'),
+              'p_comp'=>$request->gudang,
+              'p_position'=>$request->gudang,
               'p_gudang'=>$request->gudang,
               'p_date'=>date('Y-m-d',strtotime($request->p_date)),
               'p_code'=>$p_code,
@@ -428,6 +430,7 @@ class d_purchase_plan extends Model
                                          'm_item.i_name',
                                          's_name',                                         
                                          'ppdt_qty',
+
                                          'ppdt_qtyconfirm',
                                          DB::raw('IFNULL(s_qty, 0) AS s_qty'),
                                          'ppdt_prevcost',

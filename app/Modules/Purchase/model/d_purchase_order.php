@@ -46,7 +46,9 @@ class d_purchase_order extends Model
                               'po_date_confirm',
                               'po_duedate',
                               'po_status',
-                              'po_created',
+                              'po_mpo',
+                              'po_status',
+                              'po_position',
                               'po_updated'];
 
     static function dataOrder($request)

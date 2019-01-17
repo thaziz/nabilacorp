@@ -43,6 +43,7 @@ class PenerimaanBrgSupController extends Controller
             // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
             // ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
             ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
+            ->where('d_purchase_order.po_status','=','CF')
             ->orderBy('d_purchase_order.po_code', 'DESC')
             ->limit(5)
             ->groupBy('po_code')->get();
@@ -143,7 +144,6 @@ class PenerimaanBrgSupController extends Controller
         
          for ($i=0; $i <count($request->fieldNamaItem); $i++) {
             $check[$i] = DB::table('d_stock')->where('s_item','=',$request->fieldItemId[$i])->get();
-            // $check_po[$i] = DB::table('d_purchaseorder_dt')->where('s_item','=',$request->fieldItemId[$i])->get();
             $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
             if(count($check[$i]) == 0) 
               {   
@@ -163,6 +163,30 @@ class PenerimaanBrgSupController extends Controller
                 ]);
             }
          }
+
+         for ($i=0; $i <count($request->fieldNamaItem); $i++) {
+            $check[$i] = DB::table('d_stock')->where('s_item','=',$request->fieldItemId[$i])->get();
+            $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
+            if(count($check[$i]) == 0) 
+              {   
+                $insert_stock = DB::table('d_stock')->insert([
+                  's_comp'=>1,
+                  's_position'=>1,
+                  's_qty'=>$request->fieldQtyterima[$i],
+                  's_item'=>$request->fieldItemId[$i],
+                  's_insert'=>date('Y-m-d h:i:s'),
+                ]);
+              }else{
+                $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
+                  's_comp'=>1,
+                  's_position'=>1,
+                  's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
+                  's_update'=>date('Y-m-d h:i:s'),
+                ]);
+            }
+         }
+
+         
        // dd($request->all());
       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
           $data_detail_check[$i] = DB::table('d_purchaseorder_dt')

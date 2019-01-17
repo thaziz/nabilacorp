@@ -54,9 +54,8 @@
     <script type="text/javascript">
         var baseUrl = '{{url('/')}}';
     </script>
-    <!-- set rupiah -->
     <script src="{{ asset('assets/inputmask/inputmask.jquery.js') }}"></script>
-
+    <script src="{{ asset ('assets/script/timepicker.min.js') }}"></script>
     <script type="text/javascript">
 
         function numberOnly(){
