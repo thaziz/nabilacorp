@@ -21,6 +21,8 @@
               <div class="form-group" id="divSelectNota">
                 <select class="form-control input-sm select2" id="head_nota_purchase" name="headNotaPurchase" style="width: 100% !important;">
                 </select>
+                <input type="text" name="head_po_comp" id="head_po_comp" class="form-control input-sm">
+                <input type="text" name="head_po_position" id="head_po_position" class="form-control input-sm">
                 <input type="hidden" name="headNotaTxt" id="head_nota_txt" class="form-control input-sm">
                 <input type="hidden" name="headMethod" id="head_method" class="form-control input-sm">
               </div>  

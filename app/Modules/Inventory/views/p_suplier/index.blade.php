@@ -149,6 +149,9 @@
             var newDueDate = date.split("-").reverse().join("-");
           }
           // //console.log(totalDisc);
+          $('#head_po_comp').val(data.data_header.po_comp);
+          $('#head_po_position').val(data.data_header.po_position);
+
           $('#head_nota_txt').val($('#head_nota_purchase').text());
           $('#head_supplier').val(data.data_header.s_company);
           $('#head_supplier_id').val(data.data_header.s_id);
@@ -193,8 +196,8 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].i_id+'" name="fieldItemId[]" class="form-control input-sm"/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_item+'" name="fieldIdPurchaseDet[]" class="form-control input-sm"/></td>'
                             +'<td><input type="text" value="'+qtyCost+'" name="fieldQty[]" class="form-control numberinput input-sm field_qty" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldQtyterima[]" class="form-control numberinput input-sm field_qty_terima" id="'+i+'"/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldQtysendHidden[]" class="form-control numberinput input-sm" id="qtymskhidden_'+i+'"/></td>'
+                            +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtysend+'" name="fieldQtyterima[]" class="form-control numberinput input-sm field_qty_terima" id="'+i+'"/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_qtysend+'" name="fieldQtysendHidden[]" class="form-control numberinput input-sm" id="qtymskhidden_'+i+'"/></td>'
                             +'<td><input type="hidden" value="'+data.data_isi[key-1].s_name+'" name="fieldSatuanTxt[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].s_id+'" name="fieldSatuanId[]" class="form-control input-sm" readonly/>'
                             +'<input type="text" value="'+convertDecimalToRupiah(data.data_isi[key-1].podt_price)+'" name="fieldHarga[]" id="cost_'+i+'" class="form-control input-sm field_harga numberinput" readonly/>'

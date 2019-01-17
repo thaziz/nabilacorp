@@ -61,6 +61,11 @@
                     <form method="POST" id="form_create_po" name="formCreatePo">
                       {{ csrf_field() }}
                       
+                      <input type="hidden" name="p_comp" id="p_comp">
+                      <input type="hidden" name="p_position" id="p_position">
+                      <input type="hidden" name="p_gudang" id="p_gudang">
+
+
                       <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-bottom: 10px;padding-top: 20px;margin-bottom: 15px;">
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -283,6 +288,9 @@
         $('#kodePlan').val(ui.item.p_id);
         $('#cari_sup').val(ui.item.s_company);
         $('#id_supplier').val(ui.item.s_id);
+        $('#p_comp').val(ui.item.p_comp);
+        $('#p_position').val(ui.item.p_position);
+        $('#p_gudang').val(ui.item.p_gudang);
         setPlan();
         }
       });

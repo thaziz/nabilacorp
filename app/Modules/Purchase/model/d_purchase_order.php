@@ -280,7 +280,7 @@ class d_purchase_order extends Model
 
         if (empty($term)) {
             $sup = DB::table('d_purchase_plan')
-                     ->select('p_code', 'p_id','s_id','s_company')
+                     ->select('p_code', 'p_id','s_id','s_company','p_comp','p_position','p_gudang')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
@@ -297,7 +297,7 @@ class d_purchase_order extends Model
           // return 'a';
             $sup = DB::table('d_purchase_plan')
                     
-                     ->select('p_code', 'p_id','s_id','s_company')
+                     ->select('p_code', 'p_id','s_id','s_company','p_comp','p_position','p_gudang')
                      ->join('d_purchaseplan_dt','ppdt_pruchaseplan','=','p_id')
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
@@ -308,7 +308,7 @@ class d_purchase_order extends Model
                      ->get();
             // return $sup;
             foreach ($sup as $val) {
-                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id];
+                $formatted_tags[] = ['p_id' => $val->p_id, 'label' => $val->p_code,'s_company'=>$val->s_company,'s_id'=>$val->s_id,'p_comp'=>$val->p_comp,'p_position'=>$val->p_position,'p_gudang'=>$val->p_gudang];
             }
             return Response::json($formatted_tags);
         }
@@ -379,7 +379,9 @@ class d_purchase_order extends Model
       $dataHeader->po_status = 'WT';
       $dataHeader->po_created = date('Y-m-d h:i:s');
       $dataHeader->po_updated =  date('Y-m-d h:i:s');
-      $dataHeader->po_comp = Session::get('user_comp');
+      $dataHeader->po_comp = $request->p_comp;
+      $dataHeader->po_position = $request->p_position;
+      // $dataHeader->po_gudang = $request->p_gudang;
       $dataHeader->save();
 
 
