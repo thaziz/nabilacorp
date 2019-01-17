@@ -127,7 +127,7 @@ setTimeout(function () {
                             '<tr class="tbl_form_row" id="row'+i_id+'">'
                             +'<td style="text-align:center">'+key+'</td>'
                             +'<td><input type="text" value="'+response.data_isi[key-1].i_code+' | '+response.data_isi[key-1].i_name+'" class="form-control input-sm" readonly/></td>'
-                            +'<td><input type="text" value="'+accounting.formatMoney(response.data_isi[key-1].s_qty,"",0,'.',',')+'" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+accounting.formatMoney(response.data_stock[key-1],"",0,'.',',')+'" class="form-control input-sm" readonly/></td>'
                             +'<td><input type="text" value="'+response.data_isi[key-1].ppdt_qty+'" class="form-control input-sm" readonly/></td>'
                             +'<td><input type="text" value="'+response.data_isi[key-1].s_name+'" class="form-control input-sm" readonly/></td>'
                             +'</tr>');

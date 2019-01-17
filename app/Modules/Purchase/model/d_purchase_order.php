@@ -194,7 +194,7 @@ class d_purchase_order extends Model
                                 ->leftjoin('d_item_supplier','is_item','=','i_id')
                                 ->leftjoin('m_price','m_pitem','=','i_id')
                                 ->join('m_satuan', 's_id', '=', 'ppdt_satuan')
-                                ->leftjoin('d_stock','s_item','=','i_id')
+                                // ->leftjoin('d_stock','s_item','=','i_id')
                                 ->select('i_id',
                                          'm_item.i_code',
                                          'm_item.i_name',
@@ -203,16 +203,17 @@ class d_purchase_order extends Model
                                          'ppdt_qty',
                                          'ppdt_qtyconfirm',
                                          'ppdt_prevcost',
-                                         's_qty',
+                                         // 's_qty',
                                          'ppdt_pruchaseplan',
                                          'ppdt_detailid',
                                          'p_comp',
+                                         'p_position',
                                          'ppdt_satuan_position as satuan_position',
                                          'ppdt_satuan as satuan',
                                          'i_sat1',
                                          'i_sat2',
                                          'i_sat3',
-                                         'p_gudang',
+                                         // 'p_gudang',
                                          'is_price1',
                                          'is_price2',
                                          'is_price3',
@@ -221,14 +222,29 @@ class d_purchase_order extends Model
                                          'm_pbuy3'
                                 )
                                 ->where('ppdt_pruchaseplan', '=', $id)
-                                ->where('p_comp',$gudang->p_comp)
-                                ->where('p_gudang',$gudang->p_gudang)
+                                // ->where('p_comp',$gudang->p_comp)
+                                // ->where('p_gudang',$gudang->p_gudang)
                                 ->where('ppdt_ispo', '=', "FALSE")
+                                ->where('p_status', '=', "WT")
                                 ->where('ppdt_isconfirm', '=', "TRUE")
                                 ->orderBy('ppdt_detailid', 'ASC')
                                 ->get();
             // $prev_harga = [];
             $harga = [];
+
+            for ($i=0; $i <count($dataIsi) ; $i++) { 
+              $dataStock[$i] = DB::table('d_stock')
+                                ->where('s_comp',$dataIsi[$i]->p_comp)
+                                ->where('s_position',$dataIsi[$i]->p_position)
+                                ->where('s_item',$dataIsi[$i]->i_id)
+                                ->get(); 
+              if(count($dataStock[$i]) != 0){
+                $qty[$i] = $dataStock[$i][0]->s_qty;
+              }else{
+                $qty[$i] = 0;
+              }
+              
+            }
 
             for ($i=0; $i <count($dataIsi) ; $i++) {
               // $prev_harga = '';
@@ -265,6 +281,7 @@ class d_purchase_order extends Model
             'status' => 'sukses',
             'data_isi' => $dataIsi,
             'data_prev' => $harga,
+            'data_stock' => $qty,
         ]);
     }
 
