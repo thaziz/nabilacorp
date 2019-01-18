@@ -3,8 +3,8 @@
     border: none;
   }
 </style>
-<div id="toko" class="tab-pane fade in active">
-  <form method="post" id="dataPos">
+<div id="toko" class="tab-pane fade in active">  
+  <form id="dataPos">  
       <div class="row">
         {{ csrf_field() }}
         <div class="col-md-12">
