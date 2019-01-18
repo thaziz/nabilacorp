@@ -117,6 +117,10 @@ Route::group(['namespace' => 'App\Modules\Hrd\Controllers', 'middleware'=>['web'
     Route::post('/hrd/recruitment/simpan-pegawai-baru', 'RecruitmentController@simpanPegawaiBaru');
     Route::post('/hrd/recruitment/delete-data-pelamar', 'RecruitmentController@deleteDataPelamar');
     Route::get('/hrd/recruitment/buat_pdf', 'RecruitmentController@buat_pdf');
+// print KPI
+    Route::get('/hrd/manscorekpi/print_kpi/{id}', 'ManscorekpiController@print_pki')->name('print_kpi');
+// print payroll
+    Route::get('/hrd/payrollman/print-payroll/{id}', 'Hrd\PayrollmanController@print_payroll');
 });
 
 
