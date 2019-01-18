@@ -39,7 +39,7 @@ class purchaseConfirmController extends Controller
 
 
    public function seachItemPurchase(Request $request){
-         return   m_item::seachItemPurchase($request);
+         return m_item::seachItemPurchase($request);
    }
    public function storePlan(Request $request){
       d_purchase_plan::simpan($request);
@@ -154,7 +154,7 @@ public function getDataRencanaPembelian(Request $request)
                             ->where('po_id', '=', $id)
                             ->orderBy('po_date', 'DESC')
                             ->get();
-    return $statusLabel = $dataHeader[0]->p_status;
+    $statusLabel = $dataHeader[0]->p_status;
     $dataHeader[0]->p_date=date('d-m-Y',strtotime($dataHeader[0]->p_date));
     if ($statusLabel == "WT")
     {
@@ -166,7 +166,7 @@ public function getDataRencanaPembelian(Request $request)
         $spanTxt = 'Dapat Diedit';
         $spanClass = 'label-warning';
     }
-    elseif ($statusLabel == 'FN')
+    elseif ($statusLabel == 'CF')
     {
         $spanTxt = 'Di setujui';
         $spanClass = 'label-success';
@@ -247,7 +247,7 @@ public function getDataRencanaPembelian(Request $request)
       {
         return '<span class="label label-warning">Dapat diedit</span>';
       }
-      elseif ($data->po_status == "FN")
+      elseif ($data->po_status == "CF")
       {
         return '<span class="label label-success">Finish</span>';
       }

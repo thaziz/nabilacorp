@@ -206,6 +206,7 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_total+'" name="fieldHargaTotalRaw[]" id="totalRaw_'+i+'" class="form-control input-sm field_hargatotal_raw numberinput" readonly/></td>'
                             +'<td><input type="text" value="'+data.data_stock[key-1]+'" name="fieldStokTxt[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_stock[key-1]+'" name="fieldStokVal[]" class="form-control input-sm" readonly/>'
+                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_satuan_position+'" name="satuan_position[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="order_id[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');

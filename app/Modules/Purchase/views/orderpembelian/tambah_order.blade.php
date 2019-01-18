@@ -397,7 +397,9 @@
 
                             +'<td hidden><input type="hidden" name="podt_disc_detail[]" class="alignAngka disc_detail form-control input-sm disc_detail_'+key+'" id="disc_'+i+'" readonly/></td>'
 
-                            +'<td><input type="text" value="'+data.data_stock[key-1]+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+data.data_stock[key-1]+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            
+                            +'<td hidden><input type="hidden" value="'+data.data_isi[key-1].ppdt_satuan_position+'" name="satuan_position[]" class="form-control input-sm" readonly/></td>'
                             
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             

@@ -4,14 +4,13 @@ namespace App\Modules\Inventory\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Lib\mutasi;
 use App\mMember;
 use DB;
 use Carbon\Carbon;
 use DateTime;
 use Yajra\Datatables\Datatables;
 use Session;
-use App\Lib\mutasi;
 use App\d_delivery_orderdt;
 use App\d_delivery_order;
 use App\d_gudangcabang;
@@ -114,6 +113,7 @@ class PenerimaanBrgSupController extends Controller
           }
           
         }
+
           
         return response()->json([
             'data_header'=>$data_header,
@@ -133,24 +133,49 @@ class PenerimaanBrgSupController extends Controller
        }else{
          $increment += 1;
        }
+       $query = DB::select(DB::raw("SELECT MAX(RIGHT(d_tb_code,4)) as kode_max from d_terima_pembelian WHERE DATE_FORMAT(d_tb_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+     
+        $kd = "";
+
+        if(count($query)>0)
+        {
+          foreach($query as $k)
+          {
+            $tmp = ((int)$k->kode_max)+1;
+            $kd = sprintf("%05s", $tmp);
+          }
+        }
+        else
+        {
+          $kd = "00001";
+        }
+        
+
+      $p_code = "TP-".date('ym')."-".$kd;
+
+         // return response()->json([$request->all(),$p_code]);
+
+
+      $data_header = DB::table('d_terima_pembelian')->insert([
+            'd_tb_code'=>$request->headSupplierId,
+            'd_tb_sup'=>$request->headSupplierId,
+            'd_tb_staff'=>$request->headStaffId,
+            'd_tb_noreff'=>$request->headNotaTxt,
+            'd_tb_totalnett'=>$request->headTotalNett,
+            'd_tb_date'=>date('Y-m-d',strtotime($request->headTglTerima)),
+            'd_tb_duedate'=>date('Y-m-d'),
+            'd_tb_created'=>date('Y-m-d'),
+            'd_tb_comp'=>$request->head_po_comp
+      ]);
+
        // return $increment;
        date_default_timezone_set("Asia/Jakarta"); 
-      // return date('d/m/Y h:i:s');
-       $data_header = DB::table('d_terima_pembelian')->insert([
-          'd_tb_id'=>$increment,
-          'd_tb_pid'=>$request->headNotaPurchase,
-          'd_tb_sup'=>$request->headSupplierId,
-          'd_tb_staff'=>$request->headStaffId,
-          'd_tb_noreff'=>$request->headNotaTxt,
-          'd_tb_totalnett'=>$request->headTotalNett,
-          'd_tb_totalbyr'=>$request->headTotalTerima,
-          'd_tb_date'=>$request->headTglTerima,
-          'd_tb_created'=>date('d/m/Y h:i:s'),
-          'd_tb_comp'=>Session::get('user_comp'),
-       ]);
-
        for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
-           $data_detail = DB::table('d_terima_pembelian_dt')->insert([
+          $request->satuan_position[$i];
+        
+          $check_satuan_position[$i] = DB::table('m_item')->where('i_id',$request->fieldItemId[$i])->get();
+        
+          $data_detail = DB::table('d_terima_pembelian_dt')->insert([
               'd_tbdt_idtb'=>$increment,
               'd_tbdt_item'=>$request->fieldItemId[$i],
               'd_tbdt_sat'=>$request->fieldSatuanId[$i],
@@ -159,13 +184,33 @@ class PenerimaanBrgSupController extends Controller
               'd_tbdt_comp'=>Session::get('user_comp'),
               'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
               'd_tbdt_date_received'=>date('Y-m-d',strtotime($request->headTglTerima)),
-           ]);
+          ]);
        }
+       // return $check_satuan_position;
         
+        for ($i=0; $i <count($request->fieldNamaItem) ; $i++) { 
+          // if ($request->fieldNamaItem[$i] == null) {
+            mutasi::tambahmutasi(
+              $request->fieldNamaItem[$i],
+              $request->fieldQtyterima[$i],
+              $request->head_po_comp,
+              $request->head_po_position,
+              'Penerimaan Supplier',
+              1,
+              $request->headNotaPurchase,
+              '',
+              '',
+              $request->fieldHargaTotal[$i],
+              date('Y-m-d h:i:s') 
+            );
+          // }
+        }
+
+
          for ($i=0; $i <count($request->fieldNamaItem); $i++) {
             $check[$i] = DB::table('d_stock')
                             ->where('s_comp',$request->head_po_comp)
-                            ->where('s_position',$request->head_po_comp)
+                            ->where('s_position',$request->head_po_position)
                             ->where('s_item','=',$request->fieldItemId[$i])
                             ->get();
 
@@ -184,23 +229,11 @@ class PenerimaanBrgSupController extends Controller
                             ->where('s_comp',$request->head_po_comp)
                             ->where('s_position',$request->head_po_comp)
                             ->where('s_item',$check[$i][0]->s_item)->update([
-                  // 's_comp'=>1,
-                  // 's_position'=>1,
                   's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
                   's_update'=>date('Y-m-d h:i:s'),
                 ]);
             }
          }
-
-         // for ($i=0; $i <count($request->fieldNamaItem); $i++) {
-         //    $check[$i] = DB::table('d_stock')->where('s_item','=',$request->fieldItemId[$i])->get();
-         //    $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
-         //    $update_stock = DB::table('d_stock')->where('s_item',$check[$i][0]->s_item)->update([
-         //      's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
-         //      's_update'=>date('Y-m-d h:i:s'),
-         //    ]);
-         // }
-
          
        // dd($request->all());
       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
@@ -210,13 +243,18 @@ class PenerimaanBrgSupController extends Controller
                   ->get();
           // $data_detail_check[$i]->podt_qtysend;
           $send[$i] =  $data_detail_check[$i][0]->podt_qtyreceive+($request->fieldQty[$i] - $request->fieldQtyterima[$i]);
+          
           $data_detail_order = DB::table('d_purchaseorder_dt')
               ->where('podt_detailid',$request->order_id[$i])
               ->where('podt_purchaseorder',$request->headNotaPurchase)
               ->update([
                  'podt_qtysend'=>$data_detail_check[$i][0]->podt_qtysend-$request->fieldQtyterima[$i],
                  'podt_qtyreceive'=>$data_detail_check[$i][0]->podt_qtyreceive+$request->fieldQtyterima[$i],
-           ]);
+          ]);
+
+          // terima barang
+
+
        }
        // return $chek;
        // return $data_detail_order;
