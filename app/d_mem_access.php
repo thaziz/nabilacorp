@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class d_mem_access extends Model
 {
-
-
-
-
     protected $table = 'd_mem_access';
     protected $primaryKey = 'ma_id';
     protected $fillable = ['ma_id',
