@@ -402,6 +402,21 @@ class d_purchase_order extends Model
       $dataHeader->save();
 
 
+      if ($request->methodBayar == 'CREDIT') {
+         
+         $save_dp_header = DB::table('d_payable')->insert([
+            'p_comp' => $request->p_comp,
+            'p_chanel' => 'Pembelian',
+            'p_ref'=>$p_id,
+            'p_supplier'=>$request->supplier,
+            'p_date'=>date('Y-m-d',strtotime($request->apdTgl)),
+            'p_duedate'=>date('Y-m-d h:i:s'),
+            'p_value'=>$request->apdDp,
+            'p_outstanding'=>(str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett_after_disc))-$request->apdDp,
+         ]); 
+
+      }
+
       for ($i=0; $i <count($request->fieldNamaItem) ; $i++) {
         $dataDetail = new d_purchaseorder_dt;
         $dataDetail->podt_purchaseorder = $p_id;
@@ -426,8 +441,6 @@ class d_purchase_order extends Model
         $dataBrg = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
           'i_price'=> str_replace('.', '', $request->podt_prevprice[$i]),
         ]);
-
-
 
         $update = DB::table('d_purchase_plan')->where('p_id',$request->cariKodePlan)->update([
             'p_status'=>'FN',

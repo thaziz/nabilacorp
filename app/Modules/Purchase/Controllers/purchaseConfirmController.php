@@ -286,11 +286,11 @@ public function getDataRencanaPembelian(Request $request)
         }
         else
         {
-            return '<div class="text-center">
-                      <button class="btn btn-sm btn-primary" title="Ubah Status"
-                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
-                      </button>
-                  </div>';
+            // return '<div class="text-center">
+            //           <button class="btn btn-sm btn-primary" title="Ubah Status"
+            //               onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
+            //           </button>
+            //       </div>';
         }
       })
     ->rawColumns(['status', 'action'])
@@ -443,16 +443,18 @@ public function getDataRencanaPembelian(Request $request)
 
 // dd($request->all());
     if ($request->statusOrderConfirm == 'CF') {
+     
         $dataHeader = DB::table('d_purchase_order')->where('po_id',$request->idOrder)->update([
           'po_status'=>'CF'
         ]);
 
         for ($i=0; $i <count($request->fieldConfirmOrder) ; $i++) {
           $dataisi = DB::table('d_purchaseorder_dt')->where('podt_purchaseorder',$request->idOrder)->where('podt_detailid',$request->fieldIdDtOrder[$i])->update([
-            'podt_qtyconfirm'=>$request->fieldConfirmOrder[$i]
+            'podt_qtyconfirm'=>$request->fieldConfirmOrder[$i],
+            'podt_qtysend'=>$request->fieldConfirmOrder[$i]
           ]);
         }
-    }else{
+    // }else{
       // return 'ini belum ';
     }
 
