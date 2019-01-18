@@ -10,7 +10,7 @@ use App\Modules\POS\model\d_receivable;
 
 use App\Modules\POS\model\d_item_titipan;
 
-use App\Lib\mutasi;
+use App\Lib\mutasiStok;
 
 use App\Lib\format;
 
