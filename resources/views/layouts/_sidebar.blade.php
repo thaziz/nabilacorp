@@ -92,6 +92,8 @@
                         <ul class="nav nav-second-level">
                             <li class="menu-sekunder {{ Request::is('master/datasuplier/suplier') ? 'active' : '' || Request::is('master/datasuplier/*') ? 'active' : '' }}"><a href="{{ url('/master/datasuplier/suplier') }}"><span class="submenu-title">Master Data Suplier</span></a>
                             </li>
+                            <li class="menu-sekunder {{ Request::is('master/datasuplier/suplier') ? 'active' : '' || Request::is('master/datasuplier/*') ? 'active' : '' }}"><a href="{{ url('/master/membership/member') }}"><span class="submenu-title">Master Member</span></a>
+                            </li>
                             <li class="menu-sekunder {{ Request::is('master/datacust/cust') ? 'active' : '' || Request::is('master/datacust/*') ? 'active' : '' }}"><a href="{{ url('/master/datacust/cust') }}"><span class="submenu-title">Master Data Customer</span></a>
                             </li>
                           <!--   <li class="menu-sekunder {{ Request::is('master/databaku/baku') ? 'active' : '' || Request::is('master/databaku/*') ? 'active' : '' }}"><a href="{{ url('/master/databaku/baku') }}"><span class="submenu-title">Master Data Item Bahan Baku</span></a>
@@ -508,13 +510,13 @@
 
 
                         <ul class="nav nav-second-level">
-                            <li class="menu-sekunder {{ Request::is('nabila/membership/member') ? 'active' : '' || Request::is('nabila/membership/*') ? 'active' : '' }}"><a href="{{ url('/nabila/membership/member') }}"><span class="submenu-title">Membership</span><span class="hidden">Nabila Moslem</span></a>
+                            <li class="menu-sekunder {{ Request::is('nabila/belanjamember/index') ? 'active' : '' || Request::is('nabila/membership/*') ? 'active' : '' }}"><a href="{{ url('/nabila/belanjamember/index') }}"><span class="submenu-title">Membership</span><span class="hidden">Nabila Moslem</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('nabila/belanjakaryawan/index') ? 'active' : '' || Request::is('nabila/belanjakaryawan/*') ? 'active' : '' }}"><a href="{{ url('/nabila/belanjakaryawan/index') }}"><span class="submenu-title">Belanja Karyawan</span><span class="hidden">Nabila Moslem</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('nabila/voucherbelanja/voucher') ? 'active' : '' || Request::is('nabila/voucherbelanja/*') ? 'active' : '' }}"><a href="{{ url('/nabila/voucherbelanja/voucher') }}"><span class="submenu-title">Voucher Belanja</span><span class="hidden">Nabila Moslem</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('nabila/reseller/reseller') ? 'active' : '' || Request::is('nabila/reseller/*') ? 'active' : '' }}"><a href="{{ url('/nabila/reseller/reseller') }}"><span class="submenu-title">Reseller</span><span class="hidden">Nabila Moslem</span></a>
+                            <li class="menu-sekunder {{ Request::is('nabila/belanjareseller/index') ? 'active' : '' || Request::is('nabila/belanjareseller/*') ? 'active' : '' }}"><a href="{{ url('/nabila/belanjareseller/index') }}"><span class="submenu-title">Reseller</span><span class="hidden">Nabila Moslem</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('nabila/marketer/marketer') ? 'active' : '' || Request::is('nabila/marketer/*') ? 'active' : '' }}"><a href="{{ url('/nabila/marketer/marketer') }}"><span class="submenu-title">Marketer Online</span><span class="hidden">Nabila Moslem</span></a>
                             </li>

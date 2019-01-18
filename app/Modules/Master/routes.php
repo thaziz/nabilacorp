@@ -151,4 +151,16 @@ Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
     Route::get('/master/datakpi/edit-kpi', 'KpiController@editKpi');
     Route::post('/master/datakpi/update-kpi', 'KpiController@updateKpi');
     Route::post('/master/datakpi/delete-kpi', 'KpiController@deleteKpi');
+
+    // Section membership
+    Route::get('/masterw/membership/member', 'MemberController@index')->middleware('auth')->name('customer');
+    Route::get('/master/membership/get_data_all', 'MemberController@get_data_all')->middleware('auth');
+    Route::get('/master/membership/get_data_active', 'MemberController@get_data_active')->middleware('auth');
+    Route::get('/master/membership/get_data_nonactive', 'MemberController@get_data_nonactive')->middleware('auth');
+    Route::post('/master/membership/simpan_tambah', 'MemberController@simpan_tambah')->middleware('auth')->name('insert_m_customer');
+    Route::post('/master/membership/simpan_edit', 'MemberController@simpan_edit')->middleware('auth')->name('update_m_customer');
+    Route::get('/master/membership/form_insert', 'MemberController@form_insert')->middleware('auth')->name('form_insert_customer');
+    Route::get('/master/membership/form_alter/{id}', 'MemberController@form_alter')->middleware('auth')->name('form_alter_customer');
+    Route::get('/master/membership/preview/{id}', 'MemberController@preview')->middleware('auth')->name('preview_customer');
+    Route::get('/master/membership/delete/{id}', 'MemberController@delete')->middleware('auth')->name('delete_m_customer');
 });

@@ -81,6 +81,7 @@ class loginController extends Controller {
                     Auth::login($user);
 
                     Session::put('user_comp', mMember::perusahaan()[0]->c_id);
+                    Session::put('code_comp', mMember::perusahaan()[0]->c_code);
                     Session::put('kasir', $req->akses);
                     
                     
