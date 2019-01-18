@@ -18,7 +18,7 @@
             <div class="col-md-3 col-sm-12 col-xs-12">
               <label class="tebal">Kode Order Pembelian</label>
             </div>
-
+            <div class="drop_here" hidden=""></div>
             <div class="col-md-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblCodeOrderConfirm"></label>

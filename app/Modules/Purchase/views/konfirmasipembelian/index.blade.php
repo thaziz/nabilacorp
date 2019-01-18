@@ -100,7 +100,15 @@
     $(document).on('click', '.btn_remove_row_order', function(event){
         event.preventDefault();
         var button_id = $(this).attr('id');
+        var button_podt_purchaseorder = $(this).data('podt_purchaseorder');
+        var button_detailkode = $(this).data('detailkode');
+        var button_value = $(this).val();
+        $('.drop_here').append('<input value="'+button_podt_purchaseorder+'" name="podt_purchaseorder_delete[]">'+
+                               '<input value="'+button_detailkode+'" name="detailkode_delete[]">'+
+                               '<input value="'+button_value+'" name="item_delete[]">');
         $('#row'+button_id+'').remove();
+
+
     });
 
     //event change, apabila status !fn = maka btn_remove disabled
@@ -247,41 +255,6 @@ daftarTabelOrder() ;
     });
   }
 
-  function daftarTabelBelanja() 
-  {
-    $('#tbl-belanjaharian').dataTable({
-        "destroy": true,
-        "processing" : true,
-        "serverside" : true,
-        "ajax" : {
-          url: baseUrl + "/keuangan/konfirmasipembelian/get-data-tabel-belanjaharian",
-          type: 'GET'
-        },
-        "columns" : [
-          {"data" : "DT_Row_Index", orderable: true, searchable: false, "width" : "5%"}, //memanggil column row
-          {"data" : "tglBelanja", "width" : "10%"},
-          {"data" : "d_pcsh_code", "width" : "10%"},
-          {"data" : "m_name", "width" : "10%"},
-          {"data" : "s_company", "width" : "15%"},
-          {"data" : "tglConfirm", "width" : "10%"},
-          {"data" : "hargaTotal", "width" : "15%"},
-          {"data" : "status", "width" : "10%"},
-          {"data" : "action", orderable: false, searchable: false, "width" : "10%"}
-        ],
-        "language": {
-          "searchPlaceholder": "Cari Data",
-          "emptyTable": "Tidak ada data",
-          "sInfo": "Menampilkan _START_ - _END_ Dari _TOTAL_ Data",
-          "sSearch": '<i class="fa fa-search"></i>',
-          "sLengthMenu": "Menampilkan &nbsp; _MENU_ &nbsp; Data",
-          "infoEmpty": "",
-          "paginate": {
-                "previous": "Sebelumnya",
-                "next": "Selanjutnya",
-             }
-        }
-    });
-  }
 
   function konfirmasiOrder(id,type) 
   {
@@ -304,35 +277,6 @@ daftarTabelOrder() ;
         $('#lblTglOrderConfirm').text(data.header[0].po_duedate);
         $('#lblStaffOrderConfirm').text(data.header[0].m_name);
         $('#lblSupplierOrderConfirm').text(data.header[0].s_company);
-        if (data.header[0].d_pcs_method != "CASH") 
-        {
-          $('#append-modal-order div').remove();
-          var metode = data.header[0].d_pcs_method;
-          if (metode == "DEPOSIT") 
-          {
-            $('#append-modal-order div').remove();
-            $('#append-modal-order').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                      +'<label class="tebal">Batas Terakhir Pengiriman</label>'
-                                  +'</div>'
-                                  +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                    +'<div class="form-group">'
-                                      +'<label id="dueDate">'+data.header[0].d_pcs_duedate+'</label>'
-                                    +'</div>'
-                                  +'</div>');
-          }
-          else if(metode == "CREDIT")
-          {
-            $('#append-modal-order div').remove();
-            $('#append-modal-order').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                      +'<label class="tebal">TOP (Termin Of Payment)</label>'
-                                  +'</div>'
-                                  +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                    +'<div class="form-group">'
-                                      +'<label id="dueDate">'+data.header[0].d_pcs_duedate+'</label>'
-                                    +'</div>'
-                                  +'</div>');
-          }
-        }
 
         if ($("#statusOrderConfirm").val() != "CF") 
         {
@@ -340,7 +284,7 @@ daftarTabelOrder() ;
           Object.keys(data.data_isi).forEach(function(){
             $('#tabel-order-confirm').append('<tr class="tbl_modal_detail_row" id="row'+i+'">'
                             +'<td>'+key+'</td>'
-                            +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
+                            +'<td>'+data.data_isi[key-1].i_code+' - '+data.data_isi[key-1].i_name+'</td>'
                             +'<td class="qty_awal_'+data.data_isi[key-1].i_id+'">'+data.data_isi[key-1].podt_qtyconfirm+'</td>'
                             +'<td><input type="text" value="'+data.data_isi[key-1].podt_qtyconfirm+'" name="fieldConfirmOrder[]" id="'+i+'" class="form-control numberinput input-sm  qty_confirm_'+data.data_isi[key-1].i_id+'"  onkeyup="change('+data.data_isi[key-1].i_id+');" />'
                             // +'<td><input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="fieldiddetil[]" id="'+i+'" class="form-control numberinput input-sm field_qty_confirm" />'
@@ -352,7 +296,7 @@ daftarTabelOrder() ;
                             +'<td hidden><input type="hidden" class="price_'+data.data_isi[key-1].i_id+'" value="'+data.data_isi[key-1].podt_price+'"></td>'
                             +'<td hidden><input type="hidden" class="total_'+data.data_isi[key-1].i_id+'" value="'+data.data_isi[key-1].podt_total+'"></td>'
                             // +'<td>'+data.data_stok[key-1].qtyStok+' '+data.data_satuan[key-1]+'</td>'
-                            +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove_row_order btn-sm" disabled>X</button></td>'
+                            +'<td><button name="remove" id="'+i+'" value="'+data.data_isi[key-1].podt_item+'" data-podt_purchaseorder="'+data.data_isi[key-1].podt_purchaseorder+'" data-detailkode="'+data.data_isi[key-1].podt_detailid+'"   class="btn btn-danger btn_remove_row_order btn-sm" >X</button></td>'
                             +'</tr>');
             i = randString(5);
             key++;
@@ -528,7 +472,7 @@ daftarTabelOrder() ;
                 iziToast.success({
                   position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                   title: 'Pemberitahuan',
-                  message: response.pesan,
+                  message: 'Data Telah Tersimpan',
                   onClosing: function(instance, toast, closedBy){
                     $('#modal-confirm-order').modal('hide');
                     $('#button_confirm_order').text('Konfirmasi');

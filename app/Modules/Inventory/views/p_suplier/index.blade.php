@@ -508,14 +508,13 @@
                 data: $('#form-terima-beli').serialize(),
                 success: function(response)
                 {
-                  console.log(response);
-                  if(response.status == "sukses")
+                  if(response.status == "Sukses")
                   {
                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                     iziToast.success({
                       position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                       title: 'Pemberitahuan',
-                      message: 'Data Telah Tersimpan !',
+                      message: response.pesan,
                       onClosing: function(instance, toast, closedBy){
                         $('#btn_simpan').text('Submit'); //change button text
                         $('#btn_simpan').attr('disabled',false); //set button enable

@@ -454,8 +454,13 @@ public function getDataRencanaPembelian(Request $request)
             'podt_qtysend'=>$request->fieldConfirmOrder[$i]
           ]);
         }
-    // }else{
-      // return 'ini belum ';
+        for ($i=0; $i <count($request->podt_purchaseorder_delete) ; $i++) { 
+            $datadelete = DB::table('d_purchaseorder_dt')
+                          ->where('podt_purchaseorder',$request->podt_purchaseorder_delete[$i])
+                          ->where('podt_detailid',$request->detailkode_delete[$i])
+                          ->where('podt_item',$request->item_delete[$i])
+                          ->delete();
+        }
     }
 
     return response()->json(['status'=>'sukses']);

@@ -36,40 +36,52 @@ class PenerimaanBrgSupController extends Controller
         $term = trim($request->q);
         if (empty($term)) 
         {
+            // return 'a';
             $purchase = DB::table('d_purchaseorder_dt')
-            ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
-            ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
-            // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
-            // ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
-            ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
-            ->where('d_purchase_order.po_status','=','CF')
-            ->orderBy('d_purchase_order.po_code', 'DESC')
-            ->limit(5)
-            ->groupBy('po_code')->get();
-            foreach ($purchase as $val) 
-            {
-                $formatted_tags[] = ['id' => $val->podt_purchaseorder, 'text' => $val->po_code];
+                        ->select( DB::raw('SUM(d_purchaseorder_dt.podt_qtysend) as qty_belum_terima'),'d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
+                        ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
+                        // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
+                        // ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
+                        ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
+                        ->where('d_purchase_order.po_status','=','CF')
+                        // ->where('qty_belum_terima','=','0')
+                        ->orderBy('d_purchase_order.po_code', 'DESC')
+                        ->limit(7)
+                        ->groupBy('po_code')
+                        ->get();
+              // return $purchase;
+
+            for ($i=0; $i <count($purchase) ; $i++) { 
+              if ($purchase[$i]->qty_belum_terima != "0") {
+                    $formatted_tags[] = ['id' => $purchase[$i]->podt_purchaseorder, 'text' => $purchase[$i]->po_code];
+              }
             }
-            return Response::json($formatted_tags);
+            // return $formatted_tags;
+
+            return response()->json($formatted_tags);
         }
         else
         { 
             $purchase = DB::table('d_purchaseorder_dt')
-            ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
-            ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
-            // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
-            ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
-            ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
-            ->orderBy('d_purchase_order.po_code', 'DESC')
-            ->limit(5)
-            ->groupBy('po_code')->get();
+                        ->select( DB::raw('SUM(d_purchaseorder_dt.podt_qtysend) as qty_belum_terima'),'d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
+                        ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
+                        // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
+                        // ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
+                        ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
+                        ->where('d_purchase_order.po_status','=','CF')
+                        // ->where('qty_belum_terima','=','0')
+                        ->orderBy('d_purchase_order.po_code', 'DESC')
+                        ->limit(7)
+                        ->groupBy('po_code')
+                        ->get();
 
-            foreach ($purchase as $val) 
-            {
-                $formatted_tags[] = ['id' => $val->podt_purchaseorder, 'text' => $val->po_code];
+            for ($i=0; $i <count($purchase) ; $i++) { 
+              if ($purchase[$i]->qty_belum_terima != "0") {
+                    $formatted_tags[] = ['id' => $purchase[$i]->podt_purchaseorder, 'text' => $purchase[$i]->po_code];
+              
+              }
             }
-
-          return Response::json($formatted_tags);  
+            return Response::json($formatted_tags); 
         }
     }
     public function getdataform($id)
@@ -157,7 +169,7 @@ class PenerimaanBrgSupController extends Controller
 
 
       $data_header = DB::table('d_terima_pembelian')->insert([
-            'd_tb_code'=>$request->headSupplierId,
+            'd_tb_code'=>$p_code,
             'd_tb_sup'=>$request->headSupplierId,
             'd_tb_staff'=>$request->headStaffId,
             'd_tb_noreff'=>$request->headNotaTxt,
@@ -217,21 +229,21 @@ class PenerimaanBrgSupController extends Controller
             $check_satuan[$i] = DB::table('m_item')->where('i_id','=',$request->fieldItemId[$i])->get();
             if(count($check[$i]) == 0) 
               {   
-                $insert_stock = DB::table('d_stock')->insert([
-                  's_comp'=>$request->head_po_comp,
-                  's_position'=>$request->head_po_comp,
-                  's_qty'=>$request->fieldQtyterima[$i],
-                  's_item'=>$request->fieldItemId[$i],
-                  's_insert'=>date('Y-m-d h:i:s'),
-                ]);
+                  $insert_stock = DB::table('d_stock')->insert([
+                    's_comp'=>$request->head_po_comp,
+                    's_position'=>$request->head_po_comp,
+                    's_qty'=>$request->fieldQtyterima[$i],
+                    's_item'=>$request->fieldItemId[$i],
+                    's_insert'=>date('Y-m-d h:i:s'),
+                  ]);
               }else{
-                $update_stock = DB::table('d_stock')
-                            ->where('s_comp',$request->head_po_comp)
-                            ->where('s_position',$request->head_po_comp)
-                            ->where('s_item',$check[$i][0]->s_item)->update([
-                  's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
-                  's_update'=>date('Y-m-d h:i:s'),
-                ]);
+                  $update_stock = DB::table('d_stock')
+                              ->where('s_comp',$request->head_po_comp)
+                              ->where('s_position',$request->head_po_comp)
+                              ->where('s_item',$check[$i][0]->s_item)->update([
+                    's_qty'=>(($check_satuan[$i][0]->i_sat_isi1*$request->fieldQtyterima[$i])+$check[$i][0]->s_qty),
+                    's_update'=>date('Y-m-d h:i:s'),
+                  ]);
             }
          }
          
