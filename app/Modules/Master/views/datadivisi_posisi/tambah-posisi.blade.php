@@ -55,7 +55,8 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px;">
 
-                  <form method="GET" id="divisi">
+                  <form method="POST" id="divisi">
+                    {{csrf_field()}}
                     <table class="table">
                       <div class="col-md-2 col-sm-4 col-xs-12">
                         <label class="tebal">Nama Posisi</label>
