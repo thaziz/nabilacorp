@@ -74,8 +74,9 @@
                                     <table class="table tabelan table-hover table-bordered" width="100%" cellspacing="0" id="data">
                                      <thead>
                                         <tr>
-                                         <th width="20%">kode - Nama Item</th>
-                                         <th>Nota</th>
+                                         <th>Kode Item</th>
+                                         <th width="25%">Nama Item</th>
+                                         <th>No Nota</th>
                                          <th>Jumlah Order</th>
                                          <th>Jumlah Stok</th>
                                          <th>Jumlah Kebutuhan</th>
@@ -172,6 +173,7 @@
       }
       ,
     "columns": [
+        { "data": "pp_item" },
         { "data": "i_name" },
         { "data": "nota" },
         { "data": "jumlahKw" ,"className" : "dt-body-right" },

@@ -219,7 +219,7 @@
 
       function openWaktu(id){
         $.ajax({
-          url : baseUrl + "/hrd/training/wakti-pelatihan",
+          url : baseUrl + "/hrd/training/wakti-pelatihan/",
           type: "get",
           data: {x:id},
           success: function(response){

@@ -12,7 +12,6 @@ use Datatables;
 use URL;
 use App\m_jabatan_pro;
 use App\Jabatan;
-use App\m_jabatan;
 
 class JabatanController extends Controller
 {
@@ -31,7 +30,7 @@ class JabatanController extends Controller
          $data = collect($list);
          return Datatables::of($data)           
                  ->addColumn('action', function ($data) {
-                     if ($data->c_isactive == 'Y') {
+                     if ($data->c_isactive == 'TRUE') {
                          return  '<div class="text-center">'.
                                      '<button id="edit" 
                                          onclick="edit('.$data->c_id.')" 
@@ -111,8 +110,8 @@ class JabatanController extends Controller
      }
      public function tambahJabatan(Request $request)
      {
-         $divisi = DB::table('m_divisi')->where('c_isactive','Y')->get();
-         $subdivisi = DB::table('m_sub_divisi')->where('c_isactive','Y')->get();
+         $divisi = DB::table('m_divisi')->where('c_isactive','TRUE')->get();
+         $subdivisi = DB::table('m_sub_divisi')->where('c_isactive','TRUE')->get();
 
          return view('Master::datajabatan.tambah_jabatan', ['divisi' => $divisi, 'subdivisi' => $subdivisi]);
      }
@@ -162,7 +161,7 @@ class JabatanController extends Controller
          return Datatables::of($produksi) 
          ->addIndexColumn()
          ->addColumn('action', function ($data) {
-             if ($data->c_isactive == 'Y') 
+             if ($data->c_isactive == 'TRUE') 
              {
                  return '<div class="text-center">'.
                              '<button id="edit" 
@@ -267,18 +266,18 @@ class JabatanController extends Controller
              ->where('c_id',$request->id)
              ->first();
  
-         if ($cek->c_isactive == 'Y') 
+         if ($cek->c_isactive == 'TRUE') 
          {
              m_jabatan::where('c_id',$request->id)
                  ->update([
-                     'c_isactive' => 'N'
+                     'c_isactive' => 'FALSE'
                  ]);       
          }
          else
          {
              m_jabatan::where('c_id',$request->id)
                  ->update([
-                     'c_isactive' => 'Y'
+                     'c_isactive' => 'TRUE'
                  ]);
          }
          DB::commit();
@@ -301,18 +300,18 @@ class JabatanController extends Controller
          $cek = m_jabatan_pro::select('c_isactive')
              ->where('c_id',$request->id)
              ->first();
-         if ($cek->c_isactive == 'Y') 
+         if ($cek->c_isactive == 'TRUE') 
          {
              m_jabatan_pro::where('c_id',$request->id)
              ->update([
-                 'c_isactive' => 'N'
+                 'c_isactive' => 'FALSE'
              ]);
          }
          else
          {
              m_jabatan_pro::where('c_id',$request->id)
              ->update([
-                 'c_isactive' => 'Y'
+                 'c_isactive' => 'TRUE'
              ]);
          }
          DB::commit();

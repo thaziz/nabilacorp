@@ -257,18 +257,7 @@ Route::get('/penjualan/POSpenjualanpesanan/POSpenjualanpesanan', 'PenjualanContr
 	Route::get('/penjualan/pembayaranpiutang/laporan_pembayaran_piutang', 'PembayaranPiutangController@laporan_pembayaran_piutang');
 
 
-	Route::get('/penjualan/pos-mobile/index', 'posMobileController@posMobile')->middleware('auth');		
-	Route::get('/penjualan/pos-mobile/create', 'posMobileController@create')->middleware('auth');
-	Route::get('/penjualan/pos-mobile/update', 'posMobileController@update')->middleware('auth');
-	Route::get('/penjualan/pos-mobile/{id}/edit', 'posMobileController@penjualanDtToko')->middleware('auth');
-	Route::get('/penjualan/pos-mobile/detail-view/{id}', 'posMobileController@penjualanViewDtToko')->middleware('auth');
-	Route::post('/penjualan/pos-mobile/listPenjualan', 'posMobileController@listPenjualan')->middleware('auth');
-	Route::post('/penjualan/pos-mobile/listPenjualan/data', 'posMobileController@listPenjualanData')->middleware('auth');
-	Route::get('/penjualan/pos-mobile/listPenjualan/data', 'posMobileController@listPenjualanData')->middleware('auth');
-	Route::get('/penjualan/pos-mobile/printNota/{id}', 'posMobileController@printNota')->middleware('auth');
-
-
-
+	Route::get('/penjualan/pos-mobile/index', 'posMobileController@posMobile')->middleware('auth');
 	
 	// Section return penjualan
 	
