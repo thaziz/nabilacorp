@@ -328,13 +328,19 @@ function table(){
             {data: 's_status', name: 's_status'},
             {
               data : null,
-              render : function() {
-                var btn = '<div class="text-center"><button type="button" class="btn btn-success btn-sm glyphicon glyphicon-check" title="Ubah Status" data-toggle="modal" onclick="form_update_s_status(this)" data-target="#modal_alter_status"></button></div>';
+              render : function(resp) {
+                if(resp.s_status_val == 'draft') {
+                    btn = '-';
+                }
+                else {
+
+                  var btn = '<div class="text-center"><button type="button" class="btn btn-success btn-sm glyphicon glyphicon-check" title="Ubah Status" data-toggle="modal" onclick="form_update_s_status(this)" data-target="#modal_alter_status"></button></div>';
+                }
                 
                 return btn;
               }
 
-            }, 
+            },
             {data: 'action', name: 'action'},
        ],
 'columnDefs': [
@@ -351,6 +357,9 @@ function table(){
 },{
     "targets": 8,
     "className": "text-right",
+},{
+    "targets": 10,
+    "className": "text-center",
 }
 ],
             //responsive: true,

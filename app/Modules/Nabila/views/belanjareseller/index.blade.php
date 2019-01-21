@@ -334,7 +334,7 @@ function table(){
             {
               data : null,
               render : function(resp) {
-                if(res.s_status_val == 'draft') {
+                if(resp.s_status_val == 'draft') {
                     btn = '-';
                 }
                 else {
@@ -361,7 +361,10 @@ function table(){
     "className": "text-right",
 },{
     "targets": 8,
-    "className": "text-right",
+    "className": "text-right"
+},{
+    "targets": 10,
+    "className": "text-center",
 }
 ],
             //responsive: true,

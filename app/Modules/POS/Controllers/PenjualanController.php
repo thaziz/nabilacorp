@@ -171,14 +171,19 @@ class PenjualanController extends Controller
         
     }
     function listPenjualanData(Request $request){
-      if($request->ajax()){
+      /*if($request->ajax()){*/
         return d_sales::listPenjualanData($request);
-      }else{
+      /*}else{
         return 'f';
-      }
+      }*/
       
     }
   function printNota($id, Request $request){
+      /*$jumlah=count(($request->sd_item));     */      
+      
+
+      
+
       $bayar=$request->s_bayar;
       $kembalian=$request->kembalian;
       $data=d_sales::printNota($id);

@@ -35,14 +35,10 @@ class MonitoringProgressController extends Controller
 
       if($request->fil=='A')
       {
-         $comp=Session::get('user_comp');  
-         $mytime = Carbon::now();
-         $mytime = $mytime->toDateString();  
-         $salesPlan=DB::table('d_sales_plan')
-                  ->join('d_salesplan_dt','sp_id','=','spdt_salesplan')   
-                  ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item','sp_date')
-                  ->groupBy('spdt_item');
-         
+         $comp=Session::get('user_comp');    
+         $salesPlan=DB::table('d_sales_plan')->join('d_salesplan_dt','sp_id','=','spdt_salesplan')
+                  ->where('sp_status',DB::raw("'N'"))              
+                  ->select(DB::raw("sum(spdt_qty) as spdt_qty"),'spdt_item')->groupBy('spdt_item');
 
          $pp = DB::Table('d_productplan')
          ->where(function($query){
@@ -51,7 +47,7 @@ class MonitoringProgressController extends Controller
                  ->orwhere('pp_isspk',DB::raw("'P'"));
            })
          ->select(DB::raw("sum(pp_qty) as pp_qty"), 'pp_item')             
-         ->groupBy('pp_item');          
+         ->groupBy('pp_item');
 
          $sales = DB::Table('d_sales')
          ->where('s_channel', DB::raw("'Pesanan'"))
@@ -78,7 +74,7 @@ class MonitoringProgressController extends Controller
          $stock->groupBy('s_item');
 
          $mon = DB::Table('m_item')
-            ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty','sp_date',
+            ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty',
                 DB::raw("sum(sd_qty) as jumlah"), 
                 DB::raw("count(sd_sales) as nota"), 
                 DB::raw("max(s_date) as s_date"))
@@ -99,6 +95,7 @@ class MonitoringProgressController extends Controller
             ->groupBy('i_id')
             ->get();
 
+        //return $mon;
          $dat = array();
          foreach ($mon as $r) 
          {
@@ -109,7 +106,7 @@ class MonitoringProgressController extends Controller
          foreach ($dat as $key) 
          {      
             $data[$i]['pp_item'] = $key['i_code'];
-            $data[$i]['i_name'] = $key['i_code'] .' - '. $key['i_name'];
+            $data[$i]['i_name'] = $key['i_name'];
             if(($key['jumlah']+$key['spdt_qty'])==0)
             {
                $data[$i]['jumlahKw'] = 0; 
@@ -293,20 +290,33 @@ class MonitoringProgressController extends Controller
       ->join('m_item','m_item.i_id','=','sd_item')
       ->where('i_id',$id)
       ->get();
-    // $date = Carbon::now();
-    $mytime = Carbon::now();
-    $mytime = $mytime->toDateString();
-    $rencana = DB::table('d_sales_plan')->select('i_name','sp_code','sp_date','c_name','spdt_qty')
-      ->join('d_salesplan_dt','d_salesplan_dt.spdt_salesplan','=','spdt_salesplan')
-      ->join('m_comp','m_comp.c_id','=','sp_comp')
-      ->join('m_item','m_item.i_id','=','spdt_item')
-      // ->where('sp_date',$mytime)
-      ->where('spdt_item',$id)
-      ->groupBy('spdt_item')
-      ->get();
-
-    return view('Produksi::monitoringprogress.nota',compact('pesanan','rencana'));
+ 
+    return view('Produksi::monitoringprogress.nota',compact('pesanan'));
   }
+
+  // public function nota($id){
+  //   $data = d_sales_dt::
+  //             select( 's_note',
+  //                     'c_name',
+  //                     's_date',
+  //                     'sd_qty'
+  //             )
+  //           ->where('sd_item',$id)
+  //           ->join('d_sales','d_sales.s_id','=','d_sales_dt.sd_sales')
+  //           ->join('m_customer','m_customer.c_id','=','d_sales.s_customer')
+  //           ->where('s_channel','GR')
+  //           ->where('s_status','PR')
+  //           ->orderBy('s_date','asc')
+  //           ->get();
+  
+  //   return DataTables::of($data)
+  //   ->editColumn('s_date', function ($user) {
+  //       return $user->s_date ? with(new Carbon($user->s_date))->format('d M Y') : '';
+  //     })
+  //   ->addIndexColumn()   
+  //   ->make(true);
+
+  // }
 
   public function plan($id){
 
@@ -444,6 +454,15 @@ class MonitoringProgressController extends Controller
 
     $stock = DB::Table('d_stock')
       ->select('s_item',DB::raw("sum(s_qty) as s_qty"));
+      /*->where(function($query){
+          $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'2'"));
+        })
+      ->orWhere(function($query){
+          $query->where('s_comp',DB::raw("'6'"))->where('s_position',DB::raw("'6'"));
+        })
+      ->orWhere(function($query){
+          $query->where('s_comp',DB::raw("'2'"))->where('s_position',DB::raw("'5'"));
+        });*/
 
       for ($i=0; $i <count($position) ; $i++) { 
         $stock->orWhere(function($query) use ($position,$i){

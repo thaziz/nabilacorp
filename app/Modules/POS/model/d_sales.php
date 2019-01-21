@@ -36,8 +36,10 @@ class d_sales extends Model
       protected $fillable = ['s_id','s_comp','s_jenis_bayar','s_channel','s_machine','s_date','s_finishdate','s_duedate','s_note','s_create_by','s_customer','s_gross','s_disc_percent','s_disc_value','s_tax','s_ongkir','s_bulat','s_net','s_status','s_bayar','s_kembalian','s_jurnal','s_nama_cus','s_alamat_cus','s_type_price'];
 
     static function simpan($request){        
-        return DB::transaction(function () use ($request) {                
+        return DB::transaction(function () use ($request) {      
           
+
+
           $s_gross = format::format($request->s_gross);
           $s_ongkir = format::format($request->s_ongkir);          
           $s_disc_value = format::format($request->s_disc_value);
@@ -47,10 +49,8 @@ class d_sales extends Model
           $bayar= format::format($request->s_bayar);
           $s_bulat= format::format($request->s_bulat);
 
-          $cc=Session::get('code_comp');
-
           $s_id=d_sales::max('s_id')+1;             
-          $note='TK-'.$cc.'/'.$s_id.'/'.date('Y.m.d');
+          $note='TOKO-'.$s_id.'/'.date('Y.m.d');
           if($request->s_customer==''){
             $request->s_customer=0;
           }
@@ -601,199 +601,12 @@ class d_sales extends Model
     }
 
 
-  static function simpanMobile($request){        
-        return DB::transaction(function () use ($request) {                
-          $s_gross = format::format($request->s_gross);
-          $s_ongkir = format::format($request->s_ongkir);          
-          $s_disc_value = format::format($request->s_disc_value);
-          $s_disc_percent = format::format($request->s_disc_percent);
-          $s_net= format::format($request->s_net);
-          $kembalian= format::format($request->kembalian);
-          $bayar= format::format($request->s_bayar);
-          $s_bulat= format::format($request->s_bulat);
-          $code_comp=Session::put('code_comp');
-
-          $s_id=d_sales::max('s_id')+1;             
-          $note='MB-'.$code_comp.'/'.$s_id.'/'.date('Y.m.d');
-          if($request->s_customer==''){
-            $request->s_customer=0;
-          }
-          $s_date=date('Y-m-d',strtotime($request->s_date));
-          d_sales::create([
-                    's_id' =>$s_id ,
-                    's_comp'=>Session::get('user_comp'),
-                    's_channel'=>'Mobile',                    
-                    's_date'=>$s_date,
-                    's_note'=>$note,
-                    's_machine'=>Session::get('kasir'),
-                    's_create_by'=>Auth::user()->m_id,
-                    's_type_price'=>$request->s_type_price,
-                    /*'s_customer'=>$request->s_customer,*/
-                    's_nama_cus'=>$request->s_nama_cus,
-                    's_alamat_cus'=>$request->s_alamat_cus,
-                    's_gross' =>$s_gross,
-                    's_disc_percent'=>$s_disc_percent,
-                    's_disc_value'=>$s_disc_value,
-                    's_tax'=>0,
-                    's_ongkir'=>$s_ongkir,
-                    's_net'=>$s_net,
-                    's_bayar'=>$bayar,
-                    's_status'=>$request->status,
-                    /*'s_kembalian'=>$kembalian,*/
-                    's_bulat'=>$s_bulat,
-            ]);
-
-          $jumlahJurnalHpp=0;
-          for ($i=0; $i <count($request->sd_item); $i++) {  
-              if($request->status=='final'){
-                  $sd_qty = format::format($request->sd_qty[$i]); 
-                  $comp=$request->comp[$i];
-                  $position=$request->position[$i];                  
-                  $simpanMutasi=mutasi::mutasiStok($request->sd_item[$i],$sd_qty,$comp,$position,$flag='Penjualan Toko',$note,$ket='',$s_date);   
-
-                  
-                  if($simpanMutasi['true']){
-                  $sd_detailid=d_sales_dt::
-                              where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
-
-                  $sd_price = format::format($request->sd_price[$i]);
-
-                  $sd_total = format::format($request->sd_total[$i]);
-
-                  $sd_disc_value = format::format($request->sd_disc_value[$i]);              
-
-                  $sd_disc_percentvalue = format::format($request->sd_disc_percentvalue[$i]);
-
-                  $comp = $request->comp[$i];
-
-                  $position = $request->position[$i];
-
-
-                  $item_titipan_qty=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i])->select('idt_terjual','idt_sisa')->first();
-                  if($item_titipan_qty){
-                  $item_titipan=d_item_titipan::join('d_itemtitipan_dt','it_id','=','idt_itemtitipan')->where('it_comp',Session::get('user_comp'))->where('it_status','!=','lunas')->where('idt_item',$request->sd_item[$i]);
-                  
-                  $item_titipan->update([
-                                  'idt_terjual'=>$item_titipan_qty->idt_terjual+$sd_qty,
-                                  'idt_sisa'=>$item_titipan_qty->idt_sisa-$sd_qty
-                                  ]);
-                }
-
-                  
-
-
-                  d_sales_dt::create([
-                            'sd_sales' =>$s_id ,
-                            'sd_detailid'=>$sd_detailid,
-                            'sd_date'    =>date('Y-m-d',strtotime($request->s_date)),                            
-                            'sd_comp'=>$comp,                    
-                            'sd_position'=>$position,                    
-                            'sd_item'=>$request->sd_item[$i],
-                            'sd_qty'=>$sd_qty,                    
-                            'sd_price' =>$sd_price,
-                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
-                            'sd_disc_percent'=>$request->sd_disc_percent[$i],
-                            'sd_disc_value'=>$sd_disc_value,
-                            'sd_disc_percentvalue'=>$sd_disc_percentvalue,
-                            'sd_total'=>$sd_total-$sd_disc_value-$sd_disc_percentvalue,
-                  ]);
-
-
-                  
-                              $jumlahJurnalHpp+=$simpanMutasi['totalHpp'];
-                              
-
-          }else{
-              DB::rollBack();
-               $data=['status'=>'gagal','data'=>'gagal'];
-              return json_encode($data);
-            }
-          }else if($request->status=='draft'){
-               $sd_detailid=d_sales_dt::
-                              where('sd_sales','=',$s_id)->max('sd_detailid')+1;      
-
-                  $sd_price = format::format($request->sd_price[$i]);
-
-                  $sd_total = format::format($request->sd_total[$i]);
-
-                  $sd_disc_value = format::format($request->sd_disc_value[$i]);              
-
-                  $sd_disc_percentvalue = format::format($request->sd_disc_percentvalue[$i]);
-
-                  $sd_qty = format::format($request->sd_qty[$i]);
-
-
-                  $comp = $request->comp[$i];
-
-                  $position = $request->position[$i];
-
-                  d_sales_dt::create([
-                            'sd_sales' =>$s_id ,
-                            'sd_detailid'=>$sd_detailid,   
-                            'sd_date'    =>date('Y-m-d',strtotime($request->s_date)), 
-                            'sd_comp'=>$comp,                    
-                            'sd_position'=>$position,                                                        
-                            'sd_item'=>$request->sd_item[$i],
-                            'sd_qty'=>$sd_qty,                    
-                            'sd_price' =>$sd_price,
-                            'sd_price_disc' =>$sd_price-$sd_disc_value-$sd_disc_percentvalue,
-                            'sd_disc_percent'=>$request->sd_disc_percent[$i],
-                            'sd_disc_value'=>$sd_disc_value,
-                            'sd_disc_percentvalue'=>$sd_disc_percentvalue,
-                            'sd_total'=>$sd_total-$sd_disc_value-$sd_disc_percentvalue,
-                  ]);
-
-          }
-        }
-
-        $jurnalSales=d_sales::where('s_id',$s_id);               
-        $jurnalSales->update([
-             's_jurnal'=>$jumlahJurnalHpp
-        ]);
-/*kembalian*/
-          $totalBayar=0;
-          $bayar=count($request->sp_nominal);
-          for ($n=0; $n <$bayar; $n++) {  
-            $jmlBayar=$bayar-1;            
-            $sp_paymentid=d_sales_payment::
-                          where('sp_sales','=',$s_id)->max('sp_paymentid')+1;  
-            $sp_nominal = format::format($request->sp_nominal[$n]);    
-            $s_kembalian = format::format($request->kembalian);
-            if($jmlBayar==$n && $s_kembalian>0){              
-              $sp_nominal=$sp_nominal-$s_kembalian;
-            }            
-            if($request->sp_date[$n]==0){
-              $sp_date=date('Y-m-d');
-            }else{
-              $sp_date=$request->sp_date[$n];
-            }
-              d_sales_payment::create([
-                  'sp_sales'=>$s_id,
-                  'sp_paymentid'=>$sp_paymentid,
-                  'sp_comp'=>Session::get('user_comp'),                    
-                  'sp_method'=>$request->sp_method[$n],
-                  'sp_nominal'=>$sp_nominal,
-                  'sp_date'=>$sp_date,
-                ]);
-              $totalBayar+=$sp_nominal;
-
-          }          
-          $salesUpdate=d_sales::where('s_id',$s_id);
-          $salesUpdate->update([
-                  's_bayar'=>$totalBayar
-            ]);
-          $data=['status'=>'sukses','data'=>'sukses' ,'s_id'=>$s_id,'s_status'=>$request->status];
-          return json_encode($data);
-      });
-    }
 
 
 
 
 
-
-
-      static function simpanPesanan($request){                
+      static function simpanPesanan($request){        
         return DB::transaction(function () use ($request) {   
           if($request->s_nama_cus==""){
             $data=['status'=>'gagal','data'=>'Nama pelanggan harus di isi'];
@@ -830,9 +643,9 @@ $r_code = "DPR-".date('ym')."-".$kd;
            $kembalian= format::format($request->kembalian);
           $bayar= format::format($request->s_bayar);
           $s_bulat= format::format($request->s_bulat);
-          $cc=Session::get('code_comp');
+
           $s_id=d_sales::max('s_id')+1;             
-          $note='PSN-'.$cc.'/'.$s_id.'/'.date('Y.m.d');
+          $note='PESANAN-'.$s_id.'/'.date('Y.m.d');
           if($request->s_customer==''){
             $request->s_customer=0;
           }
@@ -987,10 +800,7 @@ $totalBayar=0;
      static function perbaruiPesanan ($request){
       
       return DB::transaction(function () use ($request) {           
-         $updateSales=d_sales::where('s_id',$request->s_id);         
-      $query = DB::select(DB::raw("SELECT MAX(RIGHT(r_code,4)) as kode_max from d_receivable WHERE DATE_FORMAT(r_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
-      $kd = "";
-      
+         $updateSales=d_sales::where('s_id',$request->s_id);
          /*dd($request->all());*/
 /*dd($request->all());*/
           $s_gross = format::format($request->s_gross);
@@ -1018,45 +828,6 @@ $totalBayar=0;
                     's_bulat'=>$s_bulat,
                     's_status'=>'final',
                     ]);
-
-
-              $r_id=d_receivable::max('r_id')+1;   
-              $r_code = "DPR-".date('ym')."-".$kd;       
-          if($s_net-$bayar<0){
-            $p_outstanding=0;
-            $r_pay=$s_net;            
-            }else{
-            $p_outstanding=$s_net-$bayar;
-            $r_pay=$bayar;
-          }
-
-          
-          d_receivable::create([
-                'r_id'=>$r_id,
-                'r_date'=>date('Y-m-d',strtotime($request->s_date)),
-                'r_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
-                'r_type' =>'Penjualan Pesanan',
-                'r_code'=>$r_code,
-                /*'r_mem',*/
-                'r_customer_name'=>$request->s_nama_cus,
-                'r_alamat_cus'=>$request->s_alamat_cus,
-                'r_ref'=>$updateSales->first()->s_note,
-                'r_value'=>$s_net,
-                'r_pay'=>$r_pay,
-                'r_outstanding'=>$p_outstanding,              
-
-            ]);
-        if($bayar!=0){
-          d_receivable_dt::create([
-              'rd_receivable' =>$r_id,
-              'rd_detailid'   =>1,
-              'rd_datepay'    =>date('Y-m-d',strtotime($request->s_date)),             
-              'rd_value'      =>$r_pay,
-              'rd_status'     =>'Y'
-          ]);
-        }
-
-
 
        for ($i=0; $i <count($request->sd_item); $i++) {  
         //update

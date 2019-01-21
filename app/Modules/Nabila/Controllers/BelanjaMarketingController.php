@@ -391,7 +391,10 @@ $totalBayar=0;
                                                 
                                                 \''.$d_sales->s_alamat_cus.'\',
                             ) class="btn btn-outlined btn-info btn-xs" type="button"        data-target="#detail" data-toggle="modal">Detail</button>';
-                        })                         
+                        })                       
+                      ->addColumn('s_status_val', function ($d_sales) {
+                            return $d_sales->s_status ;
+                        })  
                       ->editColumn('s_status', function ($d_sales) {
                             if ($d_sales->s_status == 'draft')
                                 return '<span class="label label-warning">Draft</span>';

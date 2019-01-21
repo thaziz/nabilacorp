@@ -6,9 +6,11 @@
         {{ csrf_field() }}
         <div class="col-md-12">
           <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="padding-top: 15px;" no>
+           
            <div class="col-md-2 col-sm-6 col-xs-12">
              <label>Tanggal</label>
-           </div>    
+           </div>     
+
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
                <input type="text" class="move up1 form-control input-sm reset "  name="s_date" id="s_date" value="{{date('d-m-Y')}}" autocomplete="off" readonly="">
@@ -20,27 +22,35 @@
           <div class="col-md-2 col-sm-6 col-xs-12">
              <label>No Nota</label>
            </div>     
+
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
                <input type="text" class="form-control input-sm reset" name="s_note" id="s_note" placeholder="(Auto)" disabled="">
              </div>
            </div>
+
            <div class="col-md-2 col-sm-6 col-xs-12">
              <label>Pengguna</label>
            </div>     
+
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
                <input type="text" id="s_created_by" class="form-control input-sm reset" name="s_created_by" readonly="" value="{{Auth::user()->m_name}}">
              </div>
            </div>
+
            <div class="col-md-2 col-sm-6 col-xs-12">
              <label>Kasir</label>
            </div>     
+
            <div class="col-md-4 col-sm-6 col-xs-12">
              <div class="form-group">
                <input class="form-control" type="" name="" value="{{$machine->m_name}}" disabled="">
              </div>
            </div>
+
+
+
            <div class="col-md-2 col-sm-6 col-xs-12">
              <label>Pilih Harga</label>
            </div>     
@@ -55,10 +65,18 @@
                </select>
              </div>
            </div>
+
+
+          
           </div>
+
+
+    
+             
+        
       </div>
   </form>
-  
+  <form method="post" id="dataPos" class="container-fluid">
   <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 20px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
          <div class="col-md-6">
            <label class="control-label tebal" for="">Masukan Kode / Nama</label>
@@ -87,9 +105,9 @@
                  <input type="hidden" class="form-control input-sm alignAngka reset reset-seach" name="cQty" id="cQty" onclick="validationForm();">   
               </div>
           </div>
-    </div>
   </div>
-  <form method="post" id="dts">
+
+        </div>
         <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:white;">      
           <div style="padding-top: 20px;padding-bottom: 20px;">   
@@ -120,10 +138,17 @@
         </div>
 
 
-<div class="col-md-12 col-sm-12 col-xs-12" >              
-     <div class="col-md-5 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top: 10px;">
-                  <div class="col-md-12 col-sm-12 col-xs-12">                    
+
+
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+              
+              <div class="col-md-5 col-md-offset-7 col-sm-6 col-sm-offset-6 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:5px;padding-top: 10px;">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    
                       <label class="control-label tebal" for="penjualan">Sub Total</label>
+
                   </div>
                   <div class="col-md-12 col-sm-12 col-xs-12">
                       <div class="form-group">
@@ -162,6 +187,8 @@
                         <input type="text" id="grand" name="" readonly="true" class="form-control input-sm reset" style="text-align: right;font-weight: bold;">
                       </div>
                   </div>
+
+
                   <div class="col-md-12 col-sm-12 col-xs-12">
                       <label class="control-label tebal" for="grand">Biaya Kirim</label>
                   </div>
@@ -170,6 +197,12 @@
                    <input type="text" id="vbiaya_kirim" name="s_ongkir" class="form-control input-sm vbiaya_kirim reset" style="text-align: right;" autocomplete="off" readonly="">
                       </div>
                   </div>
+
+
+                      
+
+
+                
                   <div class="col-md-12 col-sm-12 col-xs-12">
                         <label class="control-label tebal" for="jumlah">Grand Total + Biaya Kirim</label>
                   </div>
@@ -178,6 +211,23 @@
                           <input type="text" id="grand_biaya" name="s_net" class="form-control form-control-xl input-sm reset" style="text-align: right;" readonly="" autocomplete="off">
                         </div>
                   </div>
+                  
+
+             <!--      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label class="control-label tebal" for="jumlah">Jumlah Pembayaran</label>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                          <input type="text" id="jml_bayar" name="" class="form-control input-sm jml_bayar reset" style="text-align: right;" onkeyup="numberOnly()" disabled="">
+                        </div>
+                  </div> -->
+
+                      
+                
+                    
+                         
+                 
+
               </div>
 
                <!-- Start Modal Proses -->
@@ -191,8 +241,27 @@
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
                               <h4 class="modal-title" style="color: white;">Proses Form Penjualan Toko</h4>
                             </div>
-                            <div class="modal-body">                              
-                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:15px;padding-top:15px; ">                              
+
+                            <div class="modal-body">
+                              
+                              <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-bottom: 20px; padding-bottom:15px;padding-top:15px; ">
+
+                               <!--   <div class="col-md-5 col-sm-6 col-xs-12"> 
+                                  <label class="control-label tebal" >Nama Pelangan</label>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12">
+                                  <div class="form-group">
+                                    <div class="input-group input-group-sm pull-right" style="width: 93%;">
+                                      <input  class="minu mx  form-control input-sm reset" id="customer" >
+                                      <input type="hidden"  class="form-control input-sm reset" id="s_customer" name="s_customer">
+                                    </div>
+                                  </div>
+                                </div> -->
+
+
+                             
+
+
                                  <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <label class="control-label tebal" for="ongkos_kirim">Biaya Kirim</label>
                                 </div>
@@ -203,6 +272,8 @@
                                     </div>
                                   </div>
                                 </div>
+
+
    <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <label class="control-label tebal" for="ongkos_kirim">Pembulatan</label>
                                 </div>
@@ -213,6 +284,8 @@
                                     </div>
                                   </div>
                                 </div>
+
+
                                 <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <label class="control-label tebal" for="ongkos_kirim">Grand Total + Biaya Kirim</label>
                                 </div>
@@ -251,6 +324,19 @@
                               </table>
                                 <div class="col-md-12" style="border-bottom: 4px solid #9e5a2e; padding-top:8px ">
                                 </div>
+
+                              <!--    <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
+                                  <label class="control-label tebal" for="ongkos_kirim">Pembulatan</label>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12" style="padding-top: 8px"> 
+                                  <div class="form-group">
+                                    <div class="input-group input-group-sm pull-right" style="width: 93%;">
+                                       <input type="text" id="s_bulat" name="s_bulat" class="minu mx form-control input-sm s_bulat reset" style="text-align: right;" onkeyup="hitungTotal();rege(event,'s_bulat')"  onblur="setRupiah(event,'s_bulat')" onclick="setAwal(event,'s_bulat')"  autocomplete="off">
+                                    </div>
+                                  </div>
+                                </div>
+ -->
+
                                 <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <label class="control-label tebal" for="ongkos_kirim">Jumlah Bayar</label>
                                 </div>
@@ -261,6 +347,7 @@
                                     </div>
                                   </div>
                                 </div>
+
                                 <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <label class="control-label tebal">Kembalian</label>
                                 </div>
@@ -271,6 +358,8 @@
                                     </div>
                                   </div>
                                 </div>
+
+                                          
                               </div>
                             </div>
                         
