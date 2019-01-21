@@ -259,8 +259,8 @@
                             </li> -->
                             <li class="menu-sekunder {{ Request::is('produksi/hasil-produksi') ? 'active' : '' }}"><a href="{{ url('produksi/hasil-produksi/index') }}"><span class="submenu-title">Manajemen Output Produksi</span><span class="hidden">Produksi</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('produksi/waste/waste') ? 'active' : '' || Request::is('produksi/waste/*') ? 'active' : '' }}"><a href="{{ url('/produksi/waste/waste') }}"><span class="submenu-title">Manajemen Sampah (Waste)</span><span class="hidden">Produksi</span></a>
-                            </li>
+                            <!-- <li class="menu-sekunder {{ Request::is('produksi/waste/waste') ? 'active' : '' || Request::is('produksi/waste/*') ? 'active' : '' }}"><a href="{{ url('/produksi/waste/waste') }}"><span class="submenu-title">Manajemen Sampah (Waste)</span><span class="hidden">Produksi</span></a>
+                            </li> -->
                         </ul>
                     </li>
 
@@ -471,29 +471,58 @@
                         </ul>
                     </li>
 
-                    <li  class="menu-primer {{Request::is('system') ? 'active' : '' || Request::is('system/*') ? 'active' : '' }}"><a href="#"><i class="fa fa-cog fa-fw fa-spin">
-                        <div class="icon-bg bg-green"></div>
-                        </i><span class="menu-title">System</span><span class="fa arrow"></span>
+                    @if(Auth::user()->punyaAkses('System','ma_read'))
+                    <li  class="menu-primer {{Request::is('system') ? 'active' : '' || Request::is('system/*') ? 'active' : '' }}">
+                        <a href="#"><i class="fa fa-cog fa-fw fa-spin">
+                        <div class="icon-bg bg-green"></div></i>
+                        <span class="menu-title">System</span><span class="fa arrow"></span>
                         <span class="hidden">
-                            Manajemen User
-                    Manajemen Hak Akses
-                    Profil Perusahaan
-                    Tahun Finansial
+                            @if(Auth::user()->punyaAkses('Manajemen User','ma_read'))
+                                Manajemen User
+                            @endif
+                    {{--       @if(Auth::user()->punyaAkses('Manajemen Hak Akses','ma_read'))
+                                Manajemen Hak Akses
+                            @endif --}}
+
+                            @if(Auth::user()->punyaAkses('Profil Perusahaan','ma_read'))
+                                Profil Perusahaan
+                            @endif
+
+                            @if(Auth::user()->punyaAkses('Tahun Finansial','ma_read'))
+                                Tahun Finansial
+                            @endif
                         </span>
-                    </a>
+                        </a>
 
 
                         <ul class="nav nav-second-level">
-                            <li class="menu-sekunder {{ Request::is('system/hakuser/index') ? 'active' : '' || Request::is('system/hakuser/*') ? 'active' : '' }}"><a href="{{ url('/system/hakuser/index') }}"><span class="submenu-title">Manajemen User</span><span class="hidden">System</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('system/hakakses/akses') ? 'active' : '' || Request::is('system/hakakses/*') ? 'active' : '' }}"><a href="{{ url('/system/hakakses/akses') }}"><span class="submenu-title">Manajemen Hak Akses</span><span class="hidden">System</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('system/profilperusahaan/profil') ? 'active' : '' || Request::is('system/profilperusahaan/*') ? 'active' : '' }}"><a href="{{ url('/system/profilperusahaan/profil') }}"><span class="submenu-title">Profil Perusahaan</span><span class="hidden">System</span></a>
-                            </li>
-                            <li class="menu-sekunder {{ Request::is('system/thnfinansial/finansial') ? 'active' : '' || Request::is('system/thnfinansial/*') ? 'active' : '' }}"><a href="{{ url('/system/thnfinansial/finansial') }}"><span class="submenu-title">Tahun Finansial</span><span class="hidden">System</span></a>
-                            </li>
+                                @if(Auth::user()->punyaAkses('Manajemen User','ma_read'))
+                                <li class="{{ Request::is('system/hakuser/index') ? 'active' : '' || Request::is('system/hakuser/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/system/hakuser/index') }}"><span class="submenu-title">Manajemen User</span><span
+                                                class="hidden">System</span></a>
+                                </li>
+                            @endif
+                       {{--      @if(Auth::user()->punyaAkses('Manajemen Hak Akses','ma_read'))
+                                <li class="{{ Request::is('system/hakakses/akses') ? 'active' : '' || Request::is('system/hakakses/*') ? 'active' : '' }}">
+                                    <a href="{{ url('/system/hakakses/akses') }}"><span class="submenu-title">Manajemen Hak Akses</span><span
+                                                class="hidden">System</span></a>
+                                </li>
+                            @endif --}}
+                            @if(Auth::user()->punyaAkses('Profil Perusahaan','ma_read'))
+                                <li class="{{ Request::is('profil-perusahaan') ? 'active' : '' || Request::is('profil-perusahaan/*') ? 'active' : '' }}">
+                                    <a href="{{ url('profil-perusahaan') }}"><span class="submenu-title">Profil Perusahaan</span>
+                                        <span class="hidden">System</span></a>
+                                </li>
+                            @endif
+                            @if(Auth::user()->punyaAkses('Tahun Finansial','ma_read'))
+                                <li class="{{ Request::is('system/periode_keuangan') ? 'active' : '' || Request::is('system/periode_keuangan/*') ? 'active' : '' }}">
+                                    <a href="{{ url('system/periode_keuangan') }}"><span
+                                                class="submenu-title">Bulan Finansial</span><span class="hidden">System</span></a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
+                    @endif
                     <li  class="menu-primer {{Request::is('nabila') ? 'active' : '' || Request::is('nabila/*') ? 'active' : '' }}"><a href="#"><i class="fa fa-fw">N
                         <div class="icon-bg bg-green"></div>
                         </i><span class="menu-title">Nabila Moslem</span><span class="fa arrow"></span>

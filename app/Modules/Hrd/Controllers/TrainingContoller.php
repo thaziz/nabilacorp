@@ -254,7 +254,7 @@ class TrainingContoller extends Controller
       'fpd_type')
       ->get();
 
-    return view('hrd/training/isi-pelatihan',compact('pegawai','soal','jawab'));
+    return view('Hrd::training/isi-pelatihan',compact('pegawai','soal','jawab'));
   }
 
   public function savePengajuanForm(Request $request){
@@ -318,7 +318,7 @@ class TrainingContoller extends Controller
       ->where('ppd_fpd_fp',8)
       ->get();
     // dd($pengajuan);
-    return view('hrd.training.view-waktu',compact('pengajuan'));
+    return view('Hrd::training.view-waktu',compact('pengajuan'));
   }
 
   public function printDoc($id)
@@ -343,6 +343,6 @@ class TrainingContoller extends Controller
     $jawab = d_pengajuan_pelatihandt::where('ppd_pp',$id)
       ->get();
       // dd($jawab);
-    return view('hrd/training/print_doc',compact('pegawai','soal','jawab'));
+    return view('Hrd::training/print_doc',compact('pegawai','soal','jawab'));
   }
 }

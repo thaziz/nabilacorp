@@ -6,14 +6,22 @@
 			<thead>
 			<tr>
 				<th>No</th>
-				<th>No Nota</th>
-				<th>Nama</th>
+				<th>Nota</th>
+				<th>Cabang</th>
 				<th>Tanggal</th>
-				<th style="width:13%;">Jumlah Order</th>
+				<th style="width:13%;">Jumlah Rencana</th>
 			</tr>
 			</thead>
 			<tbody>
-
+			@foreach ($rencana as $index => $item)
+				<tr>
+					<td>{{$index+1}}</td>
+					<td>{{$item->sp_code}}</td>
+					<td>{{$item->c_name}}</td>
+					<td>{{date('d M Y', strtotime($item->sp_date))}}</td>
+					<td class="text-right">{{$item->spdt_qty}}</td>
+				</tr>
+			@endforeach
 			</tbody>
 		</table>
 	</div>
