@@ -81,7 +81,7 @@
                     @endsection
 @section("extra_scripts")
 
-@include('Nabila::belanjamember/js/commander')
+@include('Nabila::belanjamember/js/functions')
 @include('Nabila::belanjamember/js/format_currency')
 <script type="text/javascript">
 
@@ -129,7 +129,7 @@ function tglf(){
 
 $(document).ready(function(){      
   $("[name='s_nama_cus']").select2({
-      placeholder: "Pilih Karyawan",
+      placeholder: "Pilih Member",
       ajax: {
         url: '{{ url("/nabila/belanjamember/find_customer") }}',
         dataType: 'json',
