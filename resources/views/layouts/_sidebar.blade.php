@@ -518,7 +518,7 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('nabila/belanjareseller/index') ? 'active' : '' || Request::is('nabila/belanjareseller/*') ? 'active' : '' }}"><a href="{{ url('/nabila/belanjareseller/index') }}"><span class="submenu-title">Reseller</span><span class="hidden">Nabila Moslem</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('nabila/marketer/marketer') ? 'active' : '' || Request::is('nabila/marketer/*') ? 'active' : '' }}"><a href="{{ url('/nabila/marketer/marketer') }}"><span class="submenu-title">Marketer Online</span><span class="hidden">Nabila Moslem</span></a>
+                            <li class="menu-sekunder {{ Request::is('nabila/belanjamarketing/index') ? 'active' : '' || Request::is('nabila/belanjamarketing/*') ? 'active' : '' }}"><a href="{{ url('/nabila/belanjamarketing/index') }}"><span class="submenu-title">Marketer Online</span><span class="hidden">Nabila Moslem</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('nabila/return/return') ? 'active' : '' || Request::is('nabila/return/*') ? 'active' : '' }}"><a href="{{ url('/nabila/return/return') }}"><span class="submenu-title">Return</span><span class="hidden">Nabila Moslem</span></a>
                             </li>

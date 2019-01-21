@@ -270,8 +270,7 @@ class ManajemenReturnPenjualanController extends Controller
       $term = trim($request->q);
 
       $condition = [
-        ['s_status', '=', 'final'],
-        ['s_channel', '=', 'Toko']
+        ['s_status', '=', 'terima']
       ];
       $d_sales = d_sales::where($condition);
       if($term != '') {
