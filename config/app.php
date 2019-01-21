@@ -180,7 +180,7 @@ return [
         //tambahan
         Yajra\Datatables\DatatablesServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        Swamsid\Keuangan\KeuanganServiceProvider::class,
     ],
 
     /*
@@ -229,7 +229,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'keuangan' => Swamsid\Keuangan\Facades\keuangan::class
 
 
     ],

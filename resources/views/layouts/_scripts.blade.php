@@ -12,6 +12,7 @@
     <script src="{{ asset ('assets/script/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.slimscroll.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.cookie.js') }}"></script>
+    <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
     <script src="{{ asset ('assets/script/custom.min.js') }}"></script>
     <script src="{{ asset ('assets/script/accounting/accounting.js') }}"></script>   
     <script src="{{ asset ('assets/script/jquery.menu.js') }}"></script>
@@ -55,6 +56,32 @@
     </script>
     <script src="{{ asset('assets/inputmask/inputmask.jquery.js') }}"></script>
     <script src="{{ asset ('assets/script/timepicker.min.js') }}"></script>
+
+    {{-- Script Modul Keuangan Wajib Di Main --}}
+
+    {{-- ez popup script --}}
+    <script src="{{asset('modul_keuangan/js/vendor/ez_popup_v_1_1/ez.popup.js')}}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#trial-popup').ezPopup('show', {
+                closable: false,
+            });
+
+            @if(Session::has('message'))
+                alert('{{ Session::get('message') }}');
+            @endif
+
+            $('#modul_keuangan_proses_periode').click(function(e){
+                e.stopImmediatePropagation();
+
+                $(this).attr('disabled', 'disabled');
+                $('#modul_keuangan_status_periode').fadeIn(200);
+                $('#modul_keuangan_form_periode').submit();
+            })
+        })
+    </script>
+    
     <script type="text/javascript">
 
         function numberOnly(){
