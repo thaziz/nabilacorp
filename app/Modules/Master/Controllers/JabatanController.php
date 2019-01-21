@@ -111,8 +111,8 @@ class JabatanController extends Controller
      }
      public function tambahJabatan(Request $request)
      {
-         $divisi = DB::table('m_divisi')->where('c_isactive','TRUE')->get();
-         $subdivisi = DB::table('m_sub_divisi')->where('c_isactive','TRUE')->get();
+         $divisi = DB::table('m_divisi')->where('c_isactive','Y')->get();
+         $subdivisi = DB::table('m_sub_divisi')->where('c_isactive','Y')->get();
 
          return view('Master::datajabatan.tambah_jabatan', ['divisi' => $divisi, 'subdivisi' => $subdivisi]);
      }
