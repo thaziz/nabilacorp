@@ -158,7 +158,7 @@
                   </tr>
                   </thead>
                      <tbody class="bplanDetail">
-                        @foreach ($dataIsi as $index => $element)
+                        @foreach ($dataIsi as $element)
                           <tr class="detail{{ $element->i_id }}">
                             <td width="23%">
                               <input type="hidden" name="ppdt_detailid_old[]" class="ppdt_detailid_old{{ $element->i_id }}" value="{{ $element->ppdt_detailid }}" >
@@ -169,9 +169,9 @@
                             </td>
                             <td width="4%">
                               
-                              <div style="padding-top:6px">{{ number_format($qty[$index],0,'','.') }}</div>
+                              <div style="padding-top:6px">{{ number_format($element->s_qty,0,'','.') }} - {{ $element->satuan_awal }}</div>
                               
-                              {{-- <input type="hidden" class="stock{{ $element->i_id }} form-control" style="width:100%;text-align:right;border:none" value='{{ $element->s_qty }}' readonly> --}}
+                              <input type="hidden" class="stock{{ $element->i_id }} form-control" style="width:100%;text-align:right;border:none" value='{{ $element->s_qty }}' readonly>
 
                             </td>
                             <td width="4%">

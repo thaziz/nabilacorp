@@ -43,6 +43,7 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/belanjareseller/listPenjualan/data', 'BelanjaResellerController@listPenjualanDataPesanan')->middleware('auth');
 	Route::get('/nabila/belanjareseller/printNota/{id}', 'BelanjaResellerController@printNotaPesanan')->middleware('auth');
 	Route::get('/nabila/belanjareseller/find_pegawai', 'BelanjaResellerController@find_pegawai')->middleware('auth');
+	Route::get('/nabila/belanjareseller/update_s_status', 'BelanjaResellerController@update_s_status')->middleware('auth')->name('update_s_status_belanjareseller');
 	Route::get('/nabila/belanjareseller/delete/{id}', 'BelanjaResellerController@delete')->middleware('auth')->name('delete_belanjareseller');
 
 
@@ -59,6 +60,7 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/belanjamarketing/printNota/{id}', 'BelanjaMarketingController@printNotaPesanan')->middleware('auth');
 	Route::get('/nabila/belanjamarketing/find_pegawai', 'BelanjaMarketingController@find_pegawai')->middleware('auth');
 	Route::get('/nabila/belanjamarketing/delete/{id}', 'BelanjaMarketingController@delete')->middleware('auth')->name('delete_belanjamarketing');
+	Route::get('/nabila/belanjamarketing/update_s_status', 'BelanjaMarketingController@update_s_status')->middleware('auth')->name('update_s_status_belanjamarketing');
 
 
 });

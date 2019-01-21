@@ -659,9 +659,8 @@ function simpanPos(status=''){
 
   
 if($status==true){ 
-  $status=false;     
-  var formPos=$('#dataPos,#dts').serialize();
-  
+  $status=false;   
+  var formPos=$('#dataPos').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-toko/create',
           type    : 'GET', 
@@ -768,13 +767,11 @@ function perbaruiData(){
   $('#totalBayar').removeAttr('disabled');
   $('#btn-disabled').attr('disabled','disabled');
 
-  
   var formPos=$('#dataPos').serialize();
-  var formPos1=$('#dataPos1').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-toko/update',
           type    : 'GET', 
-          data    :  formPos+'&hapusdt='+hapusSalesDt+formPos1,
+          data    :  formPos+'&hapusdt='+hapusSalesDt,
           dataType: 'json',
           success : function(response){    
                     $('.tr_clone').html('');    

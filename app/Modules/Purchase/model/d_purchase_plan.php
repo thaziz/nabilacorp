@@ -215,7 +215,6 @@ class d_purchase_plan extends Model
      static function getDetailPlan($id)
     {
 
-      // return Session::all();
       $data_header = d_purchase_plan::join('d_mem','m_id','=','p_mem')
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
@@ -223,43 +222,28 @@ class d_purchase_plan extends Model
                                 
       $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
                             ->join('d_purchase_plan','p_id','=','ppdt_pruchaseplan')
-                            ->join('m_satuan', 's_id', '=', 'i_satuan')
+                            ->leftjoin('m_satuan', 's_id', '=', 'i_satuan')
+                            ->leftjoin('d_stock','s_item','=','i_id')
                             ->select('i_id',
                                      'm_item.i_code',
                                      'm_item.i_name',
                                      's_name',                                         
                                      'ppdt_qty',
                                      'ppdt_qtyconfirm',
+                                     's_qty',
                                      'ppdt_pruchaseplan',
-                                     'ppdt_detailid',
-                                     'p_comp',
-                                     'p_position'
+                                     'ppdt_detailid'
                             )
                             ->where('ppdt_pruchaseplan', '=', $id)
+                            ->where('p_comp', '=', Session::get('user_comp'))
                             ->where('ppdt_isconfirm', '=', "TRUE")
+                            ->orderBy('ppdt_created', 'DESC')
                             ->get();
-
-      for ($i=0; $i <count($dataIsi) ; $i++) { 
-        $dataStock[$i] = DB::table('d_stock')
-                          ->where('s_comp',$dataIsi[$i]->p_comp)
-                          ->where('s_position',$dataIsi[$i]->p_position)
-                          ->where('s_item',$dataIsi[$i]->i_id)
-                          ->get(); 
-        if(count($dataStock[$i]) != 0){
-          $qty[$i] = $dataStock[$i][0]->s_qty;
-        }else{
-          $qty[$i] = 0;
-        }
-        
-      }
-
-      // return $qty;
 
       return Response()->json([
           'status' => 'sukses',          
-          'data_header' => $data_header,
           'data_isi' => $dataIsi,
-          'data_stock' => $qty,
+          'data_header' => $data_header,
       ]);
     }
 
@@ -272,48 +256,31 @@ class d_purchase_plan extends Model
                                 ->join('m_supplier','p_supplier','=','s_id')
                                 ->where('p_id', '=', $id)
                                 ->first();
-     
-        $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+       $dataIsi = d_purchaseplan_dt::join('m_item','ppdt_item','=','i_id')
+                            ->join('m_satuan', 's_id', '=', 'i_sat1')
                             ->join('m_satuan as ms', 'ms.s_id', '=', 'ppdt_satuan')
                             ->join('d_purchase_plan','p_id','=','ppdt_pruchaseplan')
+                            ->leftjoin('d_stock','s_item','=','i_id')
                             ->select('i_id',
                                      'm_item.i_sat1',
                                      'ms.s_name as satuan_pilih',
                                      'm_item.i_code',
                                      'm_item.i_name',
+                                     'm_satuan.s_name as satuan_awal',                                         
                                      'ppdt_qty',
                                      'ppdt_qtyconfirm',
-                                     // 's_qty',
+                                     's_qty',
                                      'ppdt_pruchaseplan',
                                      'ppdt_detailid',
                                      'ppdt_prevcost',
-                                     'ppdt_totalcost',
-                                     'p_comp',
-                                     'p_position'
+                                     'ppdt_totalcost'
                             )
                             ->where('ppdt_pruchaseplan', '=', $id)
+                            ->where('p_comp', '=', Session::get('user_comp'))
                             ->where('ppdt_isconfirm', '=', "TRUE")
                             ->get();
 
-        for ($i=0; $i <count($dataIsi) ; $i++) { 
-          $dataStock[$i] = DB::table('d_stock')
-                            // ->join('m_item','ppdt_item','=','i_id')
-                            // ->join('m_satuan as ms', 'ms.s_id', '=', 'ppdt_satuan')
-                            ->where('s_comp',$dataIsi[$i]->p_comp)
-                            ->where('s_position',$dataIsi[$i]->p_position)
-                            ->where('s_item',$dataIsi[$i]->i_id)
-                            ->get(); 
-          if(count($dataStock[$i]) != 0){
-            $qty[$i] = $dataStock[$i][0]->s_qty;
-            // $qty[$i] = $dataStock[$i][0]->s_qty;
-          }else{
-            $qty[$i] = 0;
-          }
-          
-        }
-        // return $dataStock;
-
-        // return $qty;
+        
         $tamp=[];
         foreach ($dataIsi as $key => $value) {
           $tamp[$key]=$value->i_id;
@@ -332,7 +299,7 @@ class d_purchase_plan extends Model
       //     'data_header' => $data_header,
       //     'gudang' => $gudang,
       // ]);
-      return view('Purchase::rencanapembelian/edit',compact('data_header','dataIsi','qty','gudang','tamp','urut_index'));
+      return view('Purchase::rencanapembelian/edit',compact('data_header','dataIsi','gudang','tamp','urut_index'));
 
     }
 
