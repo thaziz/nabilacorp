@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7585322fb3d97bc20cc09634ebc3f7e7",
+    "content-hash": "1c00bb84b52cdc5f66afe04b8927e28a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1588,6 +1588,39 @@
                 "text"
             ],
             "time": "2017-04-19T22:01:50+00:00"
+        },
+        {
+            "name": "swamsid/keuangan",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swamsid/keuangan.git",
+                "reference": "b9233ea8383c35a5e9cd87702c6946e933d915ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swamsid/keuangan/zipball/b9233ea8383c35a5e9cd87702c6946e933d915ac",
+                "reference": "b9233ea8383c35a5e9cd87702c6946e933d915ac",
+                "shasum": ""
+            },
+            "type": "laravel",
+            "autoload": {
+                "psr-4": {
+                    "Swamsid\\Keuangan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dirga",
+                    "email": "swamsid@gmail.com"
+                }
+            ],
+            "description": "Package Laravel Untuk Modul Keuangan Di Aplikasi-Aplikasi Alamraya.",
+            "time": "2019-01-21T06:39:52+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4269,7 +4302,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "swamsid/keuangan": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
