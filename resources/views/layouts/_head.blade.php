@@ -31,6 +31,18 @@
 <link href="{{ asset('assets/vendors/sweetalert/sweetalert.css') }}" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="{{ asset ('assets/styles/timepicker.min.css') }}">
 
+{{-- keuangan --}}
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ asset('modul_keuangan/font-awesome_4_7_0/css/font-awesome.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('modul_keuangan/css/style.css') }}">
+
+{{-- Style Modul Keuangan Wajib Di Main --}}
+
+{{-- ez popup style --}}
+<link rel="stylesheet" type="text/css" href="{{asset('modul_keuangan/js/vendor/ez_popup_v_1_1/ez.popup.css')}}">
+
 <style type="text/css">
     .alignAngka {
         text-align: right;

@@ -100,7 +100,11 @@
                             </li> -->
                             <!-- <li class="menu-sekunder {{ Request::is('master/datajenis/jenis') ? 'active' : '' || Request::is('master/datajenis/*') ? 'active' : '' }}"><a href="{{ url('/master/datajenis/jenis') }}"><span class="submenu-title">Master Data Jenis Produksi</span></a>
                             </li> -->
-                            <li class="menu-sekunder {{ Request::is('master/datakeuangan/keuangan') ? 'active' : '' || Request::is('master/datakeuangan/*') ? 'active' : '' }}"><a href="{{ url('/master/datakeuangan/keuangan') }}"><span class="submenu-title">Master Data Akun Keuangan</span></a>
+
+                            <li class="menu-sekunder {{ Request::is('master/modul/keuangan/master/group-akun') ? 'active' : '' || Request::is('master/modul/keuangan/master/group-akun/*') ? 'active' : '' }}"><a href="{{ url('master/modul/keuangan/master/group-akun') }}"><span class="submenu-title">Master Data Group Keuangan</span></a>
+                            </li>
+
+                            <li class="menu-sekunder {{ Request::is('master/modul/keuangan/master/akun') ? 'active' : '' || Request::is('master/modul/keuangan/master/akun/*') ? 'active' : '' }}"><a href="{{ url('master/modul/keuangan/master/akun') }}"><span class="submenu-title">Master Data Akun Keuangan</span></a>
                             </li>
                           <!--   <li class="menu-sekunder {{ Request::is('master/datatransaksi/transaksi') ? 'active' : '' || Request::is('master/datatransaksi/*') ? 'active' : '' }}"><a href="{{ url('/master/datatransaksi/transaksi') }}"><span class="submenu-title">Master Data Transaksi Keuangan</span></a>
                             </li> -->
@@ -446,7 +450,7 @@
                             </li>
                             <li class="menu-sekunder {{ Request::is('keuangan/spk/spk') ? 'active' : '' || Request::is('keuangan/spk/*') ? 'active' : '' }}"><a href="{{ url('/keuangan/spk/spk') }}"><span class="submenu-title">Manajemen SPK</span><span class="hidden">Keuangan</span></a>
                             </li>
-                            <li class="menu-sekunder {{ Request::is('keuangan/p_inputtransaksi/transaksi') ? 'active' : '' || Request::is('keuangan/p_inputtransaksi/*') ? 'active' : '' }}"><a href="{{ url('/keuangan/p_inputtransaksi/transaksi') }}"><span class="submenu-title">Proses Input Transaksi</span><span class="hidden">Keuangan</span></a>
+                            <li class="menu-sekunder {{ Request::is('keuangan/modul/keuangan/transaksi/') ? 'active' : '' || Request::is('keuangan/modul/keuangan/transaksi/*') ? 'active' : '' }}"><a href="{{ url('/keuangan/p_inputtransaksi/transaksi') }}"><span class="submenu-title">Proses Input Transaksi</span><span class="hidden">Keuangan</span></a>
                             </li>
                             <li class="menu-sekunder {{ Request::is('keuangan/l_hutangpiutang/hutang') ? 'active' : '' || Request::is('keuangan/l_hutangpiutang/*') ? 'active' : '' }}"><a href="{{ url('/keuangan/l_hutangpiutang/hutang') }}"><span class="submenu-title">Laporan Hutang Piutang</span><span class="hidden">Keuangan</span></a>
                             </li>
