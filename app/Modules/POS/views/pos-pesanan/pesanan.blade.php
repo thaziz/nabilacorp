@@ -73,15 +73,6 @@
                
              </div>
            </div>
-            <!-- 
-           <div class="col-md-3 col-sm-6 col-xs-12">
-             <div class="form-group">
-               <input class="move up2 form-control input-sm reset ui-autocomplete-input" id="customer" autocomplete="off">
-               <input type="hidden" class="form-control input-sm reset" id="s_customer" name="s_customer" value="0">
-               
-             </div>
-           </div> -->
-
            <div class="col-md-3 col-sm-6 col-xs-12">
              <label>Pembayaran</label>
            </div>     
@@ -106,10 +97,6 @@
              </div>
            </div>
 
-
-
-
-
            <div class="col-md-3 col-sm-6 col-xs-12">
              <label>Tanggal Jadi</label>
            </div>     
@@ -119,9 +106,6 @@
                <input onblur="jatuhTempo()" type="text" class="move up1 form-control input-sm s_finishdate" name="s_finishdate" id="s_finishdate" onchange="tglf()">
              </div>
            </div>
-
-
-        
 
 
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -138,19 +122,7 @@
                </select>
              </div>
            </div>
-
-
-
-
-
-
-
-          
           </div>
-
-
-
-
            <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 5px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
                <div class="col-md-6">
                  <label class="control-label tebal" for="">Masukan Kode / Nama</label>
@@ -183,7 +155,8 @@
 
 
         </div>
- 
+</form>
+ <form method="post" id="dts">
         <div class="col-md-12 col-sm-12 col-xs-12">      
           <div style="padding-top: 20px;padding-bottom: 20px;">     
             <div class="table-responsive" style="overflow-y : auto;height : 350px; border: solid 1.5px #bb936a">
@@ -388,17 +361,7 @@
                                 <div class="col-md-12" style="border-bottom: 4px solid #9e5a2e; padding-top:8px ">
                                 </div>
 
-                              <!--    <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
-                                  <label class="control-label tebal" for="ongkos_kirim">Pembulatan</label>
-                                </div>
-                                <div class="col-md-7 col-sm-6 col-xs-12" style="padding-top: 8px"> 
-                                  <div class="form-group">
-                                    <div class="input-group input-group-sm pull-right" style="width: 93%;">
-                                       <input type="text" id="s_bulat" name="s_bulat" class="minu mx form-control input-sm s_bulat reset" style="text-align: right;" onkeyup="hitungTotal();rege(event,'s_bulat')"  onblur="setRupiah(event,'s_bulat')" onclick="setAwal(event,'s_bulat')"  autocomplete="off">
-                                    </div>
-                                  </div>
-                                </div>
- -->
+                              
 
                                 <div class="col-md-5 col-sm-6 col-xs-12" style="padding-top: 8px"> 
                                   <label class="control-label tebal" for="ongkos_kirim">Jumlah Bayar</label>

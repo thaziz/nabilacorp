@@ -140,6 +140,7 @@
       </tr>
 
       <tr>
+
           @foreach($piutang as $dtp)
                 <td style="">{{$dtp->rd_datepay}}</td>
                 <td class="text-right bold" style=""></td>
@@ -154,6 +155,7 @@
         </td>
         </tr>
       <tr>
+
         <td width="45"></td>
         <td class="text-right bold" width="25%" style="">Bayar</td>
         <td width="30%"><div style="text-align: right;">{{number_format($data['sales']->s_bayar,0,',','.')}}</div></td>        
@@ -161,8 +163,8 @@
 
       <tr>
         <td width="45"></td>
-        <td class="text-right bold" width="25%">Sisa Hutang</td>
-        <td width="30%"><div style="text-align: right;">{{number_format($piutang[0]->r_outstanding,0,',','.')}}</div></td>        
+        <td class="text-right bold" width="25%">Sisa Hutang</td>                        
+        <td width="30%"><div style="text-align: right;">{{number_format($piutang[0]->r_outstanding,0,',','.')}}</div></td>
       </tr>
       
     </table>

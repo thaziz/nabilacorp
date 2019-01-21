@@ -77,7 +77,7 @@ class PenjualanPesananController extends Controller
 
       $printPl=view('Produksi::sam');
       $flag='Pesanan';
-      $daftarHarga=DB::table('m_price_group')->where('pg_active','=','TRUE')->get();  
+      $daftarHarga=DB::table('m_price_group')->where('pg_active','=','TRUE')->where('pg_type','=','B')->get();  
       $paymentmethod=m_paymentmethod::pm();       
       $pm =view('POS::paymentmethod/paymentmethod',compact('paymentmethod'));    
       $machine=m_machine::showMachineActive();      

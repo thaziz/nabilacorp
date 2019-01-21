@@ -769,12 +769,12 @@ function perbaruiData(){
   $('#btn-disabled').attr('disabled','disabled');
 
   
-  var formPos=$('#dataPos').serialize();
-  var formPos1=$('#dataPos1').serialize();
+  var formPos=$('#dataPos, #dst').serialize();
+  
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-toko/update',
           type    : 'GET', 
-          data    :  formPos+'&hapusdt='+hapusSalesDt+formPos1,
+          data    :  formPos+'&hapusdt='+hapusSalesDt,
           dataType: 'json',
           success : function(response){    
                     $('.tr_clone').html('');    

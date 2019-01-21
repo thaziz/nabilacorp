@@ -47,8 +47,10 @@ class d_sales extends Model
           $bayar= format::format($request->s_bayar);
           $s_bulat= format::format($request->s_bulat);
 
+          $cc=Session::get('code_comp');
+
           $s_id=d_sales::max('s_id')+1;             
-          $note='TOKO-'.$s_id.'/'.date('Y.m.d');
+          $note='TK-'.$cc.'/'.$s_id.'/'.date('Y.m.d');
           if($request->s_customer==''){
             $request->s_customer=0;
           }
@@ -612,7 +614,7 @@ class d_sales extends Model
           $code_comp=Session::put('code_comp');
 
           $s_id=d_sales::max('s_id')+1;             
-          $note='Mobile-'.$code_comp.'/'.$s_id.'/'.date('Y.m.d');
+          $note='MB-'.$code_comp.'/'.$s_id.'/'.date('Y.m.d');
           if($request->s_customer==''){
             $request->s_customer=0;
           }
@@ -791,7 +793,7 @@ class d_sales extends Model
 
 
 
-      static function simpanPesanan($request){        
+      static function simpanPesanan($request){                
         return DB::transaction(function () use ($request) {   
           if($request->s_nama_cus==""){
             $data=['status'=>'gagal','data'=>'Nama pelanggan harus di isi'];
@@ -828,9 +830,9 @@ $r_code = "DPR-".date('ym')."-".$kd;
            $kembalian= format::format($request->kembalian);
           $bayar= format::format($request->s_bayar);
           $s_bulat= format::format($request->s_bulat);
-
+          $cc=Session::get('code_comp');
           $s_id=d_sales::max('s_id')+1;             
-          $note='PESANAN-'.$s_id.'/'.date('Y.m.d');
+          $note='PSN-'.$cc.'/'.$s_id.'/'.date('Y.m.d');
           if($request->s_customer==''){
             $request->s_customer=0;
           }
@@ -985,7 +987,10 @@ $totalBayar=0;
      static function perbaruiPesanan ($request){
       
       return DB::transaction(function () use ($request) {           
-         $updateSales=d_sales::where('s_id',$request->s_id);
+         $updateSales=d_sales::where('s_id',$request->s_id);         
+      $query = DB::select(DB::raw("SELECT MAX(RIGHT(r_code,4)) as kode_max from d_receivable WHERE DATE_FORMAT(r_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+      $kd = "";
+      
          /*dd($request->all());*/
 /*dd($request->all());*/
           $s_gross = format::format($request->s_gross);
@@ -1013,6 +1018,45 @@ $totalBayar=0;
                     's_bulat'=>$s_bulat,
                     's_status'=>'final',
                     ]);
+
+
+              $r_id=d_receivable::max('r_id')+1;   
+              $r_code = "DPR-".date('ym')."-".$kd;       
+          if($s_net-$bayar<0){
+            $p_outstanding=0;
+            $r_pay=$s_net;            
+            }else{
+            $p_outstanding=$s_net-$bayar;
+            $r_pay=$bayar;
+          }
+
+          
+          d_receivable::create([
+                'r_id'=>$r_id,
+                'r_date'=>date('Y-m-d',strtotime($request->s_date)),
+                'r_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
+                'r_type' =>'Penjualan Pesanan',
+                'r_code'=>$r_code,
+                /*'r_mem',*/
+                'r_customer_name'=>$request->s_nama_cus,
+                'r_alamat_cus'=>$request->s_alamat_cus,
+                'r_ref'=>$updateSales->first()->s_note,
+                'r_value'=>$s_net,
+                'r_pay'=>$r_pay,
+                'r_outstanding'=>$p_outstanding,              
+
+            ]);
+        if($bayar!=0){
+          d_receivable_dt::create([
+              'rd_receivable' =>$r_id,
+              'rd_detailid'   =>1,
+              'rd_datepay'    =>date('Y-m-d',strtotime($request->s_date)),             
+              'rd_value'      =>$r_pay,
+              'rd_status'     =>'Y'
+          ]);
+        }
+
+
 
        for ($i=0; $i <count($request->sd_item); $i++) {  
         //update
