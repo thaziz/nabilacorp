@@ -204,9 +204,8 @@
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_price+'" name="fieldHargaRaw[]" id="costRaw_'+i+'" class="form-control input-sm field_harga_raw numberinput" readonly/>'
                             +'<input type="hidden" value="'+convertDecimalToRupiah(data.data_isi[key-1].podt_total)+'" name="fieldHargaTotal[]" class="form-control input-sm hargaTotalItem" id="total_'+i+'" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_total+'" name="fieldHargaTotalRaw[]" id="totalRaw_'+i+'" class="form-control input-sm field_hargatotal_raw numberinput" readonly/></td>'
-                            +'<td><input type="text" value="'+data.data_stock[key-1]+'" name="fieldStokTxt[]" class="form-control input-sm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_stock[key-1]+'" name="fieldStokVal[]" class="form-control input-sm" readonly/>'
-                            +'<input type="hidden" value="'+data.data_isi[key-1].podt_satuan_position+'" name="satuan_position[]" class="form-control input-sm" readonly/>'
+                            +'<td><input type="text" value="'+/*data.data_stock[key-1].s_qty+*/'" name="fieldStokTxt[]" class="form-control input-sm" readonly/>'
+                            +'<input type="hidden" value="'+/*data.data_stock[key-1].s_qty+*/'" name="fieldStokVal[]" class="form-control input-sm" readonly/>'
                             +'<input type="hidden" value="'+data.data_isi[key-1].podt_detailid+'" name="order_id[]" class="form-control input-sm" readonly/></td>'
                             +'<td><button name="remove" id="'+i+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             +'</tr>');
@@ -508,7 +507,7 @@
                 data: $('#form-terima-beli').serialize(),
                 success: function(response)
                 {
-                  if(response.status == "Sukses")
+                  if(response.status == "sukses")
                   {
                     instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                     iziToast.success({

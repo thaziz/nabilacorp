@@ -18,12 +18,12 @@
             <div class="col-md-3 col-sm-12 col-xs-12">
               <label class="tebal">Kode Order Pembelian</label>
             </div>
-            <div class="drop_here" hidden=""></div>
+
             <div class="col-md-3 col-sm-12 col-xs-12">
               <div class="form-group">
                 <label id="lblCodeOrderConfirm"></label>
-                <input type="hidden" name="comp_gudang" class="comp_gudang">
-                <input type="hidden" name="position_gudang" class="position_gudang">
+                <input type="text" name="comp_gudang" class="comp_gudang">
+                <input type="text" name="position_gudang" class="position_gudang">
               </div>  
             </div>
 
