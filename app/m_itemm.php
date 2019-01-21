@@ -72,9 +72,9 @@ class m_itemm extends Model
                   $query->where('pg_id',$harga);                                    
                   $query->whereIn('i_type',$groupName);                                     
 
-                  $query->orWhere('i_code','like','%'.$search.'%');                 
                   $query->where('pg_id',$harga);                                                       
                   $query->whereIn('i_type',$groupName); 
+                  $query->orWhere('i_code','like','%'.$search.'%');                 
                   });
                   }                                  
         else{

@@ -12,7 +12,6 @@
     <script src="{{ asset ('assets/script/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.slimscroll.js') }}"></script>
     <script src="{{ asset ('assets/script/jquery.cookie.js') }}"></script>
-    <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
     <script src="{{ asset ('assets/script/custom.min.js') }}"></script>
     <script src="{{ asset ('assets/script/accounting/accounting.js') }}"></script>   
     <script src="{{ asset ('assets/script/jquery.menu.js') }}"></script>

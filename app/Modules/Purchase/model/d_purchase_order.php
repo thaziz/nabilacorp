@@ -208,7 +208,7 @@ class d_purchase_order extends Model
                                          'ppdt_detailid',
                                          'p_comp',
                                          'p_position',
-                                         'ppdt_satuan_position as satuan_position',
+                                         'ppdt_satuan_position',
                                          'ppdt_satuan as satuan',
                                          'i_sat1',
                                          'i_sat2',
@@ -252,19 +252,19 @@ class d_purchase_order extends Model
                                 ->where('is_item',$dataIsi[$i]->i_id)
                                 ->get();
 
-                if ($dataIsi[$i]->satuan_position == 1) {
+                if ($dataIsi[$i]->ppdt_satuan_position == 1) {
                   if ($dataIsi[$i]->is_price1 != null) {
                       $harga[$i] = $dataIsi[$i]->is_price1;
                   }else{
                       $harga[$i] = 0;
                   }
-                }elseif ($dataIsi[$i]->satuan_position == 2) {
+                }elseif ($dataIsi[$i]->ppdt_satuan_position == 2) {
                   if ($dataIsi[$i]->is_price2 != null) {
                       $harga[$i] = $dataIsi[$i]->is_price2;
                   }else{
                       $harga[$i] = 0;
                   }
-                }elseif ($dataIsi[$i]->satuan_position == 3) {
+                }elseif ($dataIsi[$i]->ppdt_satuan_position == 3) {
                   if ($dataIsi[$i]->is_price3 != null) {
                       $harga[$i] = $dataIsi[$i]->is_price3;
                   }else{
@@ -402,6 +402,21 @@ class d_purchase_order extends Model
       $dataHeader->save();
 
 
+      if ($request->methodBayar == 'CREDIT') {
+         
+         $save_dp_header = DB::table('d_payable')->insert([
+            'p_comp' => $request->p_comp,
+            'p_chanel' => 'Pembelian',
+            'p_ref'=>$p_id,
+            'p_supplier'=>$request->supplier,
+            'p_date'=>date('Y-m-d',strtotime($request->apdTgl)),
+            'p_duedate'=>date('Y-m-d h:i:s'),
+            'p_value'=>$request->apdDp,
+            'p_outstanding'=>(str_replace(['Rp', '\\', '.', ' '], '', $request->totalNett_after_disc))-$request->apdDp,
+         ]); 
+
+      }
+
       for ($i=0; $i <count($request->fieldNamaItem) ; $i++) {
         $dataDetail = new d_purchaseorder_dt;
         $dataDetail->podt_purchaseorder = $p_id;
@@ -417,6 +432,7 @@ class d_purchase_order extends Model
         $dataDetail->podt_price = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_price[$i]);
         $dataDetail->podt_total = str_replace(['Rp', '\\', '.', ' '], '', $request->podt_total[$i]);
         $dataDetail->podt_gross = $request->podt_total_net[$i];
+        $dataDetail->podt_satuan_position = $request->satuan_position[$i];
         $dataDetail->podt_isconfirm = 'TRUE';
         $dataDetail->podt_created = date('Y-m-d h:i:s');
         $dataDetail->podt_updated = date('Y-m-d h:i:s');
@@ -425,8 +441,6 @@ class d_purchase_order extends Model
         $dataBrg = DB::table('m_item')->where('i_id',$request->podt_item[$i])->update([
           'i_price'=> str_replace('.', '', $request->podt_prevprice[$i]),
         ]);
-
-
 
         $update = DB::table('d_purchase_plan')->where('p_id',$request->cariKodePlan)->update([
             'p_status'=>'FN',

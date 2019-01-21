@@ -107,7 +107,6 @@
                           <div class="form-group">
                               <select class="form-control input-sm" name="methodBayar" id="method_bayar">
                                   <option value="CASH">Tunai</option>
-                                  <option value="DEPOSIT">Deposit</option>
                                   <option value="CREDIT">Tempo</option>
                               </select>
                           </div>
@@ -299,24 +298,7 @@
       //remove child div inside appending-form before appending
       $('#appending div').remove();
       var metode = $(this).val();
-      if (metode == "DEPOSIT")
-      {
-        $('#appending div').remove();
-        $('#appending').append('<div class="col-md-3 col-sm-12 col-xs-12">'
-                                  +'<label class="tebal">Batas Terakhir Pengiriman</label>'
-                              +'</div>'
-                              +'<div class="col-md-3 col-sm-12 col-xs-12">'
-                                +'<div class="form-group">'
-                                  +'<input type="text" id="apd_tgl" name="apdTgl" class="form-control datepicker3 input-sm">'
-                                +'</div>'
-                              +'</div>');
-
-        $('.datepicker3').datepicker({
-          format:"dd-mm-yyyy",
-          autoclose: true
-        });
-      }
-      else if(metode == "CREDIT")
+      if(metode == "CREDIT")
       {
         $('#appending div').remove();
         $('#appending').append('<div class="col-md-3 col-sm-12 col-xs-12">'
@@ -325,6 +307,14 @@
                               +'<div class="col-md-3 col-sm-12 col-xs-12">'
                                 +'<div class="form-group">'
                                   +'<input type="text" id="apd_tgl" name="apdTgl" class="form-control datepicker3 input-sm">'
+                                +'</div>'
+                              +'</div>'
+                              +'<div class="col-md-3 col-sm-12 col-xs-12">'
+                                  +'<label class="tebal">Down Payment</label>'
+                              +'</div>'
+                              +'<div class="col-md-3 col-sm-12 col-xs-12">'
+                                +'<div class="form-group">'
+                                  +'<input type="text" id="apd_dp" name="apdDp" class="form-control input-sm">'
                                 +'</div>'
                               +'</div>');
 
@@ -397,7 +387,9 @@
 
                             +'<td hidden><input type="hidden" name="podt_disc_detail[]" class="alignAngka disc_detail form-control input-sm disc_detail_'+key+'" id="disc_'+i+'" readonly/></td>'
 
-                            +'<td><input type="text" value="'+data.data_stock[key-1]+' '+data.data_isi[key-1].s_name+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            +'<td><input type="text" value="'+data.data_stock[key-1]+'" name="fieldStok[]" class="form-control input-sm" readonly/></td>'
+                            
+                            +'<td hidden><input type="hidden" value="'+data.data_isi[key-1].ppdt_satuan_position+'" name="satuan_position[]" class="form-control input-sm" readonly/></td>'
                             
                             +'<td><button name="remove" id="'+i_id+'" class="btn btn-danger btn_remove btn-sm">X</button></td>'
                             
