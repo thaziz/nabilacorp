@@ -41,7 +41,7 @@
     {{-- Style Modul Keuangan Wajib Di Main --}}
 
     {{-- ez popup style --}}
-    <link rel="stylesheet" type="text/css" href="{{asset('modul_keuangan/js/vendor/ez_popup_v_1_1/ez.popup.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('modul_keuangan/js/vendors/ez_popup_v_1_1/ez.popup.css')}}">
 
     
     <!-- <link rel="icon" href="{{ asset('assets/images/tamma-logo.ico') }}"> -->

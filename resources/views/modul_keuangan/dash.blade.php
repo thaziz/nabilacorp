@@ -21,7 +21,7 @@
 @section(modulSetting()['extraScripts'])
 	
 	<script src="{{ asset('modul_keuangan/js/options.js') }}"></script>
-	<script src="{{ asset('modul_keuangan/js/vendor/chart_js_2_7_3/Chart.bundle.min.js') }}"></script>
+	<script src="{{ asset('modul_keuangan/js/vendors/chart_js_2_7_3/Chart.bundle.min.js') }}"></script>
 
 	<script type="text/javascript">
 
