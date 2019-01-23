@@ -7,6 +7,7 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/belanjamember/update', 'BelanjaMemberController@update')->middleware('auth');
 	Route::get('/nabila/belanjamember/serah-terima', 'BelanjaMemberController@serahTerima')->middleware('auth');
 
+<<<<<<< HEAD
 	Route::get('/nabila/belanjamember/{id}/edit', 'BelanjaMemberController@nabilaDtPesanan')->middleware('auth');
 	Route::get('/nabila/belanjamember/detail-view/{id}', 'BelanjaMemberController@penjualanViewDtPesanan')->middleware('auth');
 	Route::get('/nabila/belanjamember/listPenjualan', 'BelanjaMemberController@listPenjualanPesanan')->middleware('auth');
@@ -62,6 +63,15 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/belanjamarketing/delete/{id}', 'BelanjaMarketingController@delete')->middleware('auth')->name('delete_belanjamarketing');
 	Route::get('/nabila/belanjamarketing/update_s_status', 'BelanjaMarketingController@update_s_status')->middleware('auth')->name('update_s_status_belanjamarketing');
 
+=======
+	Route::get('/nabila/belanjakaryawan/belanja', 'NabilaController@belanja')->middleware('auth');
+	Route::get('/nabila/voucherbelanja/voucher', 'NabilaController@voucher')->middleware('auth');
+	Route::get('/nabila/reseller/reseller', 'NabilaController@reseller')->middleware('auth');
+	Route::get('/nabila/marketer/marketer', 'NabilaController@marketer')->middleware('auth');
+	Route::get('/nabila/return/return', 'NabilaController@return')->middleware('auth');
+	Route::get('/nabila/purchasing/purchasing', 'NabilaController@purchasing')->middleware('auth');
+	
+>>>>>>> parent of 76e9ec2... Perbaikan membership dan belanja karyawan
 
 });
 
