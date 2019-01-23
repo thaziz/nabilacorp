@@ -192,8 +192,6 @@
 
   var hapusPlanDt =[];             
 
-  alert($('#gudang').val());
-
 $(document).ready(function(){      
       $('#date').datepicker({
           format:"dd-mm-yyyy",  
