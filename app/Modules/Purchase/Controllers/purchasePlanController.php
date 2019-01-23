@@ -91,25 +91,18 @@ class purchasePlanController extends Controller
      
       ->editColumn('tglBuat', function ($data) 
       {
-        if ($data->p_status_date == null) 
-        {
-            return '-';
-        }
-        else 
-        {
-            return $data->p_status_date ? with(new Carbon($data->p_status_date))->format('d M Y') : '';
-        }
+        
       })
-      ->editColumn('tglConfirm', function ($data) 
+      ->addColumn('tglConfirm', function ($data) 
       {
-        if ($data->d_dateconfirm == null) 
-        {
-            return '-';
-        }
-        else 
-        {
-            return $data->d_dateconfirm ? with(new Carbon($data->d_dateconfirm))->format('d M Y') : '';
-        }
+            if ($data->p_status_date == null) 
+            {
+                return '-';
+            }
+            else 
+            {
+                return $data->p_status_date ? with(new Carbon($data->p_status_date))->format('d M Y') : '';
+            }
       })
       ->editColumn('hargaTotal', function ($data) 
       {
@@ -160,7 +153,7 @@ class purchasePlanController extends Controller
                   </div>'; 
         }
       })
-      ->rawColumns(['status', 'aksi'])
+      ->rawColumns(['status', 'aksi','tglConfirm'])
       ->make(true);
    }
 

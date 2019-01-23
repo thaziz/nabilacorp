@@ -78,7 +78,7 @@ public function getDataRencanaPembelian(Request $request)
       {
         return '<span class="label label-warning">Dapat diedit</span>';
       }
-      elseif ($data->p_status == "FN")
+      elseif ($data->p_status == "CF")
       {
         return '<span class="label label-success">Finish</span>';
       }
@@ -117,11 +117,7 @@ public function getDataRencanaPembelian(Request $request)
         }
         else
         {
-            return '<div class="text-center">
-                      <button class="btn btn-sm btn-primary" title="Ubah Status"
-                          onclick=konfirmasiPlan("'.$data->p_id.'")><i class="fa fa-check"></i>
-                      </button>
-                  </div>';
+            return ' ';
         }
       })
     ->rawColumns(['status', 'action'])
@@ -166,7 +162,7 @@ public function getDataRencanaPembelian(Request $request)
         $spanTxt = 'Dapat Diedit';
         $spanClass = 'label-warning';
     }
-    elseif ($statusLabel == 'FN')
+    elseif ($statusLabel == 'CF')
     {
         $spanTxt = 'Di setujui';
         $spanClass = 'label-success';
@@ -247,7 +243,7 @@ public function getDataRencanaPembelian(Request $request)
       {
         return '<span class="label label-warning">Dapat diedit</span>';
       }
-      elseif ($data->po_status == "FN")
+      elseif ($data->po_status == "CF")
       {
         return '<span class="label label-success">Finish</span>';
       }
@@ -286,11 +282,7 @@ public function getDataRencanaPembelian(Request $request)
         }
         else
         {
-            return '<div class="text-center">
-                      <button class="btn btn-sm btn-primary" title="Ubah Status"
-                          onclick=konfirmasiOrder("'.$data->po_id.'")><i class="fa fa-check"></i>
-                      </button>
-                  </div>';
+            return ' ';
         }
       })
     ->rawColumns(['status', 'action'])
