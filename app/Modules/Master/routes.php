@@ -153,7 +153,7 @@ Route::get('/master/item_titipan/hapus', 'itemTitipanController@hapus');
     Route::post('/master/datakpi/delete-kpi', 'KpiController@deleteKpi');
 
     // Section membership
-    Route::get('/masterw/membership/member', 'MemberController@index')->middleware('auth')->name('customer');
+    Route::get('/master/membership/member', 'MemberController@index')->middleware('auth')->name('customer');
     Route::get('/master/membership/get_data_all', 'MemberController@get_data_all')->middleware('auth');
     Route::get('/master/membership/get_data_active', 'MemberController@get_data_active')->middleware('auth');
     Route::get('/master/membership/get_data_nonactive', 'MemberController@get_data_nonactive')->middleware('auth');

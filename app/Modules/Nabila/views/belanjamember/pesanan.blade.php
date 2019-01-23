@@ -124,10 +124,10 @@
         
 
 
-            <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12 hidden">
              <label>Pilih Harga</label>
            </div>     
-           <div class="col-md-3 col-sm-6 col-xs-12">
+           <div class="col-md-3 col-sm-6 col-xs-12 hidden">
              <div class="form-group">
                 <select class="move up1 form-control input-sm" id="harga" name="s_type_price" onchange="harga()">
                 @foreach($daftarHarga as $daftar)
