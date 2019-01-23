@@ -171,7 +171,7 @@ class purchaseOrderController extends Controller
      }
      public function getDataEdit($id)
      {    
-        $dataHeader = d_purchase_order::where('po_id',$id)->where('po_status','=','WT')->get();
+        $dataHeader = d_purchase_order::join('m_supplier','s_id','po_supplier')->where('po_id',$id)->where('po_status','=','WT')->get();
         
         $dataIsi = d_purchaseorder_dt::join('m_item','i_id','podt_item')
                             ->join('m_satuan','s_id','podt_satuan')
