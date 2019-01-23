@@ -38,6 +38,8 @@ class laporan_jurnal_controller extends Controller
     						->orderBy('jr_tanggal_trans', 'asc')
     						->get();
 
+        // return $data;
+
     	return json_encode([
     		"data"	=> $data,
     		"requestNama" => $request->nama

@@ -86,7 +86,7 @@ class periode_keuangan_controller extends Controller
                         ]);
                     }else{
                          DB::table('dk_aktiva')->where('at_id', $value->at_id)->update([
-                            "at_nilai_sisa" => $penyusutan,
+                            "at_nilai_sisa" => DB::raw("at_nilai_sisa - ".$penyusutan),
                         ]);
                     }
 

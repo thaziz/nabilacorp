@@ -238,8 +238,8 @@
 
                 <div class="row content-button">
                     <div class="col-md-6">
-                        <a href="{{ route('group.aset.index') }}">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-arrow-left" :disabled="btnDisabled"></i> &nbsp;Kembali Ke Halaman Data Group Aset</button>
+                        <a href="{{ route('aset.index') }}">
+                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-arrow-left" :disabled="btnDisabled"></i> &nbsp;Kembali Ke Halaman Data Aset</button>
                         </a>
                     </div>
 
@@ -848,9 +848,48 @@
                     evt.preventDefault();
                     evt.stopImmediatePropagation();
 
-                    this.stat = 'loading';
-                    this.statMessage = 'Sedang Memproses Penjualan Data ..'
-                    this.btnDisabled = true;
+                    var cfrm = confirm('Aset Anda Akan Ditandai Sebagai Aset Yang Terjual. Lanjutkan ?');
+
+                    if(cfrm){
+                        this.stat = 'loading';
+                        this.statMessage = 'Sedang Memproses Penjualan Data ..'
+                        this.btnDisabled = true;
+
+                        axios.post('{{ route('aset.update') }}', { at_id: this.singleData.at_id, _token: '{{ csrf_token() }}' })
+                                .then((response) => {
+                                    console.log(response.data);
+                                    
+                                    if(response.data.status == 'berhasil'){
+                                        $.toast({
+                                            text: response.data.message,
+                                            showHideTransition: 'slide',
+                                            position: 'top-right',
+                                            icon: 'success',
+                                            hideAfter: 5000
+                                        });
+
+                                        this.formReset();
+                                        $('#jual-confirmation-popup').ezPopup('close');
+                                    }else{
+                                        $.toast({
+                                            text: response.data.message,
+                                            showHideTransition: 'slide',
+                                            position: 'top-right',
+                                            icon: 'error',
+                                            hideAfter: false
+                                        });
+
+                                        this.stat = 'standby';
+                                    }
+
+                                })
+                                .catch((err) => {
+                                    alert('Ups. Sistem Mengalami kesalahan. Message: '+err);
+                                })
+                                .then(() => {
+                                    this.btnDisabled = false;
+                                })
+                    }
                 },
 
                 confirmDelete: function(evt){

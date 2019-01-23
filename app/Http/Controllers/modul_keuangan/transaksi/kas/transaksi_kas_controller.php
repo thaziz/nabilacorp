@@ -41,8 +41,9 @@ class transaksi_kas_controller extends Controller
         // return json_encode($request->all());
         $tanggal = explode('/', $request->tanggal)[2].'-'.explode('/', $request->tanggal)[1].'-01';
         $tanggalNext = date('Y-m-d', strtotime('+1 months', strtotime($tanggal)));
+        $type = substr($request->type, 0, 1);
 
-        $data = transaksi::with('detail')->get();
+        $data = transaksi::with('detail')->where(DB::raw('substring(tr_type, 1, 1)'), $type)->get();
 
         return json_encode($data);
     }
@@ -157,7 +158,7 @@ class transaksi_kas_controller extends Controller
 
             DB::table('dk_transaksi_detail')->insert($detail);
 
-            return keuangan::jurnal()->addJurnal($jurnalDetail, $date, $tr_number, $request->tr_nama, $request->tr_type, jurnal()->comp, true);
+            keuangan::jurnal()->addJurnal($jurnalDetail, $date, $tr_number, $request->tr_nama, $request->tr_type, jurnal()->comp, true);
 
             DB::commit();
 

@@ -36,6 +36,7 @@
                         <th width="15%">Harga Beli</th>
                         <th width="15%">Nilai Sisa</th>
                         <th width="15%">Tanggal Habis</th>
+                        <th width="15%">Status</th>
     				</tr>
     			</thead>
 
@@ -53,6 +54,18 @@
                             <td class="text-right" style="cursor: alias; color: #0099CC;">{{ number_format($group->at_nilai_sisa, 2) }}</td>
                             <td class="text-center" style="cursor: alias;">
                                 {{ date('d/m/Y', strtotime($group->at_tanggal_habis)) }}
+                            </td>
+                            <?php
+                                $status = "Habis";
+
+                                if($group->at_status == 'SL')
+                                    $status = "Terjual";
+                                else if($group->at_status == "ST")
+                                    $status = "Dalam Penyusutan"
+                             ?>
+
+                            <td class="text-center" style="font-weight: 600;">
+                                {{ $status }}
                             </td>
                         </tr>
                         
