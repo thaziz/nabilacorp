@@ -14,6 +14,9 @@ use App\Http\Inventory\model\d_mutasi_item;
 use Session;
 
 use App\Lib\format;
+	
+
+use App\Lib\mutasi;
 
 use App\Modules\POS\Controllers\mutasiItemController;
 
@@ -78,8 +81,12 @@ $query = DB::select(DB::raw("SELECT MAX(RIGHT(mi_code,4)) as kode_max from d_mut
 
  $jumlah=count($request->mm_item);
 for ($i=0; $i <$jumlah ; $i++) {
-	 $mm_comp=$request->mm_comp[$i];
-	 $mm_position=$request->mm_position[$i];
+
+	     $mm_comp=$request->mm_comp[$i];
+        $mm_position=$request->mm_position[$i];
+
+        if(mutasi::mutasiStok($request->mm_item[$i],format::format($request->mm_qty[$i]),$mm_comp,$mm_position,$flag='',$mi_id,$flagTujuan='Mutasi Item Bahan Baku Pengeluaran',$idMutasiTujuan='')){
+
 
 			 $mm_detailid=DB::table('d_mutationitem_material')->where('mm_mutationitem',$mi_id)
 													->max('mm_detailid')+1;
@@ -93,19 +100,14 @@ for ($i=0; $i <$jumlah ; $i++) {
 					 'mm_qty'=>$mm_qty
 			 ]);
 
-		$stock = DB::table('d_stock')
-								->where('s_comp', $mm_comp)
-								->where('s_position', $mm_position)
-								->where('s_item', $request->mm_item[$i])
-								->first();
+	}
+      else{
 
-			DB::table('d_stock')
-					->where('s_comp', $mm_comp)
-					->where('s_position', $mm_position)
-					->where('s_item', $request->mm_item[$i])
-					->update([
-						's_qty' => $stock->s_qty - $request->mm_qty[$i]
-					]);
+
+            $data=['status'=>'gagal','data'=>'Stok tidak mencukupi.'];
+            DB::rollBack();
+            return $data;
+      }
 }
 
 
@@ -127,19 +129,9 @@ for ($s=0; $s <$jumlah ; $s++) {
 							 'mp_hpp'=>$mp_hpp,
 				 ]);
 
-				 $stock = DB::table('d_stock')
-										 ->where('s_comp', $mp_comp)
-										 ->where('s_position', $mp_position)
-										 ->where('s_item', $request->mp_item[$s])
-										 ->first();
+			  
 
-					 DB::table('d_stock')
-							 ->where('s_comp', $mp_comp)
-							 ->where('s_position', $mp_position)
-							 ->where('s_item', $request->mp_item[$s])
-							 ->update([
-								 's_qty' => $stock->s_qty + $request->mp_qty[$s]
-							 ]);
+	mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,$mp_comp,$mp_position,'Mutasi Item Bahan Baku Penambahan',15,$mi_code,'','',$mp_hpp,date('Y-m-d',strtotime($request->mi_date)));
 
 	 }
 
@@ -147,6 +139,7 @@ for ($s=0; $s <$jumlah ; $s++) {
 		 return json_encode($data);
  });
 }
+
 
 	public function perbarui(Request $request,$id){
 		return DB::transaction(function () use ($request, $id) {
@@ -274,7 +267,7 @@ for ($s=0; $s <$jumlah ; $s++) {
 
 		$cabang=Session::get('user_comp');
 		$position=DB::table('d_gudangcabang')
-									->where('gc_gudang','GUDANG PRODUKSI')
+									->where('gc_gudang','GUDANG BAHAN BAKU')
 									->where('gc_comp',$cabang)
 									->select('gc_id')->first();
 

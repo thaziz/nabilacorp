@@ -101,7 +101,7 @@
                                           {{-- <label id="lTgl"></label> --}}
                                              <input type="hidden" class="form-control input-sm sid" readonly="" id="sid" name="">
                                   
-                                          <input type="text" readonly="" class="form-control input-sm" id="" name="">
+                                          <input type="text" readonly="" class="form-control input-sm" id="lTgl" name="">
                                         </div>  
                                       </div>
 
@@ -285,8 +285,7 @@
           <script type="text/javascript">
 
 function cetak(){
-   var xxx = $('.sid').val();
-   alert(xxx);
+   var xxx = $('.sid').val();   
    $.ajax({
     url : baseUrl+'/penjualan/pos-pesanan/printNota/'+xxx,
     type: 'get',

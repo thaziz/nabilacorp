@@ -734,6 +734,8 @@ function printElement(elem) {
     $printSection.appendChild(domClone);
     window.print();
     $('#div_print').html('');
+    $('#div_prints').html('');
+    
 }
   
 
