@@ -233,7 +233,12 @@ class m_itemm extends Model
         // return json_encode($position);
         $comp=$position->gc_id;
         $position=$position->gc_id;
-
+        $type = $item->gudang;
+        if ($type == 'GUDANG PENJUALAN') {
+          $tp = 'BJ';
+        }elseif ($type == 'GUDANG BAHAN BAKU') {
+          $tp = 'BB';
+        }
 
         $sql=DB::table('m_item')
             ->leftjoin('d_item_supplier',function($join) use ($id_supplier) {
@@ -267,7 +272,7 @@ class m_itemm extends Model
         }
 
                
-        $sql=$sql->limit(10)->get();
+        $sql=$sql->where('i_type',$tp)->limit(10)->get();
 
         // return $sql;
 

@@ -124,7 +124,8 @@ class d_purchase_plan extends Model
                     'ppdt_prevcost'=>$request->harga_awal[$i],
                     'ppdt_satuan'=>$request->satuan_pilih[$i],
                     'ppdt_isconfirm'=>'TRUE',
-                    'ppdt_qtyconfirm'=>'insert'
+                    'ppdt_qtyconfirm'=>0,
+                    'ppdt_satuan_position'=>$request->index_satuan[$i],
                      ]);
        }
 

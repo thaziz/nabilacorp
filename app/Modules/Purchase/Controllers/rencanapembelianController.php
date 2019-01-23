@@ -26,21 +26,22 @@ class rencanapembelianController extends Controller
     {
       // return Auth::user();
        // return Session::get('user_comp');
-        if ( Session::get('user_comp') == 1) {
+        // if ( Session::get('user_comp') == 1) {
             $gudang = DB::table('d_gudangcabang')
             ->join('m_comp','m_comp.c_id','=','gc_comp')
             ->where('gc_comp',Session::get('user_comp'))
             ->where('gc_gudang', '=', 'GUDANG PENJUALAN')
             ->orWhere('gc_gudang', '=', 'GUDANG BAHAN BAKU')
             ->get();
-        }else{
+        // }else{
             $gudang = DB::table('d_gudangcabang')
             ->join('m_comp','m_comp.c_id','=','gc_comp')
             ->where('gc_comp',Session::get('user_comp'))
             ->where('gc_gudang', '=', 'GUDANG PENJUALAN')
             ->orWhere('gc_gudang', '=', 'GUDANG BAHAN BAKU')
             ->get();
-        }
+        // }
+            // return Session::get('user_comp')
         
             // dd($gudang);
         return view('Purchase::rencanapembelian/create',compact('gudang'));

@@ -263,7 +263,7 @@ $(document).ready(function(){
 
        $("#searchitem").autocomplete({
         source: function(request, response) {
-            $.getJSON(baseUrl+"/seach-item-purchase", {term:$('#searchitem').val(),id_supplier: $('#id_supplier').val() }, 
+            $.getJSON(baseUrl+"/seach-item-purchase", {term:$('#searchitem').val(),id_supplier: $('#id_supplier').val(),gudang: $('#gudang').find(':selected').data('name') }, 
               response);
         },
         /*source: baseUrl+'/seach-item-purchase?id_supplier='+$('#id_supplier').val(),*/

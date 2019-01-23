@@ -200,7 +200,7 @@ $(document).ready(function(){
 
        $("#searchitem").autocomplete({
         source: function(request, response) {
-            $.getJSON(baseUrl+"/seach-item-purchase", {term:$('#searchitem').val(),id_supplier: $('#id_supplier').val() }, 
+            $.getJSON(baseUrl+"/seach-item-purchase", {term:$('#searchitem').val(),id_supplier: $('#id_supplier').val(),gudang: $('#gudang').find(':selected').data('name') }, 
               response);
         },
         /*source: baseUrl+'/seach-item-purchase?id_supplier='+$('#id_supplier').val(),*/
@@ -270,7 +270,10 @@ $(document).ready(function(){
      });
 
  $('#searchitem').keypress(function(e) {        
+
       if(e.which == 13 || e.keyCode == 13){   
+      var code = $('#searchitem').val();
+      var code = $('#searchitem').val();
       var code = $('#searchitem').val();
       $.ajax({
         source: baseUrl+'/seach-item-purchase?id_supplier='+$('#id_supplier').val(),

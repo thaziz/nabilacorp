@@ -232,7 +232,7 @@ class d_purchase_order extends Model
 
             for ($i=0; $i <count($dataIsi) ; $i++) {
               // $prev_harga = '';
-              $prev_harga[$i] = DB::table('d_item_supplier')
+                $prev_harga[$i] = DB::table('d_item_supplier')
                                 ->where('is_item',$dataIsi[$i]->i_id)
                                 ->get();
 
@@ -257,7 +257,7 @@ class d_purchase_order extends Model
                 }
             }
 
-            // return $prev_harga;
+            // return [$prev_harga,$dataIsi];
             // return $harga;
 
 
