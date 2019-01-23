@@ -192,7 +192,7 @@
 
   var hapusPlanDt =[];             
 
-  alert();
+  alert($('#gudang').val());
 
 $(document).ready(function(){      
       $('#date').datepicker({
