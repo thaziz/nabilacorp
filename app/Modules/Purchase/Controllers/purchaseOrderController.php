@@ -171,9 +171,25 @@ class purchaseOrderController extends Controller
      }
      public function getDataEdit($id)
      {    
-        $dataHeader = d_purchase_order::where('po_id',$id)->get();
-        $dataDetail = d_purchaseorder_dt::where('podt_purchaseorder',$id)->get();
-        return view('Purchase::orderpembelian/edit_order',compact('data'));
+        $dataHeader = d_purchase_order::where('po_id',$id)->where('po_status','=','WT')->get();
+        
+        $dataIsi = d_purchaseorder_dt::join('m_item','i_id','podt_item')
+                            ->join('m_satuan','s_id','podt_satuan')
+                            ->leftjoin('d_stock','s_item','=','i_id')
+                            ->where('podt_purchaseorder',$id)
+                            ->orderBy('i_id','ASC')
+                            ->get();
+
+
+        $tamp=[];
+        foreach ($dataIsi as $key => $value) {
+          $tamp[$key]=$value->podt_item;
+        }     
+        $urut_index = count($tamp);
+        $tamp=array_map("strval",$tamp); 
+
+
+        return view('Purchase::orderpembelian/edit_order',compact('data','tamp','urut_index','dataIsi','dataHeader'));
      }
 
 }

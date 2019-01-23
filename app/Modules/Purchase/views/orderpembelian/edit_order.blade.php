@@ -112,9 +112,8 @@
                         </div>
 
                         <div class="col-md-3 col-sm-12 col-xs-12">
-                          <div class="form-group" id="divSelectPlan">
-                            <input class="form-control input-sm" id="cari_kode_plan" name="cariKodePlan" style="width: 100%;">
-                            <input type="hidden" class="form-control input-sm" id="kodePlan" name="cariKodePlan" style="width: 100%;">
+                          <div class="form-group">
+                            <input class="form-control input-sm kode_rencana" name="kode_rencana" type="text" readonly="" value="{{ $dataHeader[0]->po_code }}">
                           </div>
                         </div>
 
@@ -151,6 +150,29 @@
                               </tr>
                             </thead>
                             <tbody class="drop_here">
+                              @foreach ($dataIsi as $index => $element)
+                              <tr class="tbl_form_row" id="row{{ $element->i_id }}">
+                                  <td style="text-align:center">{{ $index+1    }}</td>
+                                  <td><input type="text" value="{{ $element->i_code }}  -  {{ $element->i_name }}" name="fieldNamaItem[]" class="form-control input-sm" readonly/>
+                                  <input type="hidden" value="{{ $element->i_id }}" name="podt_item[]" class="form-control input-sm"/>
+                                  <input type="hidden" value="" name="podt_purchaseorder[]" class="form-control input-sm"/>
+                                  <input type="hidden" value="{{ $element->podt_detailid }}" name="podt_detailid[]" class="form-control input-sm"/>
+                                  </td>
+                                  <td><input type="text" value="{{ $element->podt_qty }}" name="fieldQty[]" class="form-control numberinput input-sm fQtyi_id fQty_awali_id" id="qty_i" readonly/></td>
+
+                                  <td><input type="text" value="{{ $element->podt_qty }}" onkeyup="fieldQtyconfirm(i_id)" name="fieldQtyconfirm[]" class="form-control numberinput input-sm fQtyi_id fQty_confirmi_id" id="qty_i" /></td>
+                                  <td><input type="hidden" value="{{ $element->i_satuan }}" name="fieldSatuan[]" class="form-control input-sm alignAngka" readonly/>{{ $element->s_name }}
+                                  <td>
+                                    <input type="text" value="{{ $element->podt_prevcost }}" name="podt_price[]" id="i" class="form-control field_harga input-sm hargai_id numberinput alignAngka" onclick="setAwal(event,\'harga' + $element->i_id + '\')" onblur="setRupiah(event,\'harga' + $element->i_id+ '\')" onkeyup="rege(event,\'harga' + $element->i_id+ '\');hitungPurchaseItem(\'' + $element->i_id+ '\')"  /></td>
+                                  <td>
+                                    <input type="text" value="{{ $element->podt_prevcost }}" readonly name="podt_prevprice[]" id="i" class="form-control field_harga input-sm harga_previ_id numberinput alignAngka" onclick="setAwal(event,\'harga_prev' + i_id + '\')" onblur="setRupiah(event,\'harga_prev' + i_id+ '\')" onkeyup="rege(event,\'harga_prev' + i_id+ '\');" /></td>
+                                    <td><input type="text" value="{{ $element->podt_price*$element->podt_qty }}" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItemi_id" id="total_i" readonly/></td>
+                                    <td hidden><input type="hidden" name="podt_total_net[]" class="alignAngka totalPerItem_net form-control input-sm hargaTotalItem_net_key" id="total_net_i" readonly/></td>
+                                    <td hidden><input type="hidden" name="podt_disc_detail[]" class="alignAngka disc_detail form-control input-sm disc_detail_key" id="disc_i" readonly/></td>
+                                    <td><input type="text" value="{{ $element->s_qty or 0 }}" name="fieldStok[]" class="form-control input-sm" readonly/></td>
+                                    <td><button name="remove" id="i_id" class="btn btn-danger btn_remove btn-sm">X</button></td>
+                              </tr>
+                              @endforeach
                             </tbody>
                           </table>
                       </div>
@@ -234,6 +256,13 @@
 @section("extra_scripts")
 <script src="{{ asset ('assets/script/icheck.min.js') }}"></script>
 <script type="text/javascript">
+
+    var tamp  = [];
+    tamp=<?php echo json_encode($tamp); ?>;
+
+    cunt = <?php echo $urut_index ?>; 
+    console.log(tamp);
+
   $(document).ready(function() {
     //fix to issue select2 on modal when opening in firefox
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
@@ -541,7 +570,7 @@
         if(input.value == '') input.value = 0;
         return input.value;
     });
-    console.log(hasil);
+    // console.log(hasil);
     var total = 0;
     for (var i = hasil.length - 1; i >= 0; i--){
 

@@ -271,10 +271,7 @@ class d_purchase_order extends Model
 
      static function getDataCodePlan($request)
     {
-      // return 'a'; 
-      // return Session::get('user_comp');
-      // return $request->session()->all();
-        // return $dt = DB::table('')->get();
+      
         $formatted_tags = array();
         $term = $request->term;
 

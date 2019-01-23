@@ -182,7 +182,7 @@
           // //loop data
           Object.keys(data.data_isi).forEach(function(){
             var hargaTotalItemGross = data.data_isi[key-1].po_total_gross;
-            var qtyCost = data.data_isi[key-1].podt_qtyconfirm;
+            var qtyCost = data.data_isi[key-1].podt_qtysend;
             var qtyTerima = data.data_isi[key-1].podt_send;
             // harga total per item setelah kena diskon & pajak
             var hargaTotalItemNet = Math.round(parseFloat(hargaTotalItemGross - (hargaTotalItemGross * percentDiscTotalGross/100) + ((hargaTotalItemGross - (hargaTotalItemGross * percentDiscTotalGross/100)) * taxPercent/100)).toFixed(2));

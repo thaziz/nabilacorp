@@ -42,6 +42,7 @@ class PenerimaanBrgSupController extends Controller
             ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
             // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
             // ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
+            ->where('d_purchaseorder_dt.podt_qtysend','!=','0')
             ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
             ->where('d_purchase_order.po_status','=','CF')
             ->orderBy('d_purchase_order.po_code', 'DESC')
@@ -59,6 +60,7 @@ class PenerimaanBrgSupController extends Controller
             ->select('d_purchaseorder_dt.podt_purchaseorder', 'd_purchase_order.po_id','d_purchase_order.po_code')
             ->join('d_purchase_order', 'd_purchaseorder_dt.podt_purchaseorder', '=', 'd_purchase_order.po_id')
             // ->where('d_purchaseorder_dt.d_pcsdt_isreceived','=','FALSE')
+            ->where('d_purchaseorder_dt.podt_qtysend','!=','0')
             ->where('d_purchase_order.po_code', 'LIKE', '%'.$term.'%')
             ->where('d_purchaseorder_dt.podt_isconfirm','=','TRUE')
             ->orderBy('d_purchase_order.po_code', 'DESC')
@@ -105,7 +107,6 @@ class PenerimaanBrgSupController extends Controller
     public function simpan_penerimaan(Request $request)
     {
        // dd($request->all());
-      // return $request->session()->all();
       // session::get()->all();
        $increment = DB::table('d_terima_pembelian')->max('d_tb_id');
        if ($increment == null) {
@@ -113,19 +114,41 @@ class PenerimaanBrgSupController extends Controller
        }else{
          $increment += 1;
        }
+
+
+      $query = DB::select(DB::raw("SELECT MAX(RIGHT(d_tb_code,4)) as kode_max from d_terima_pembelian WHERE DATE_FORMAT(d_tb_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
+
+      $kd = "";
+
+      if(count($query)>0)
+      {
+        foreach($query as $k)
+        {
+          $tmp = ((int)$k->kode_max)+1;
+          $kd = sprintf("%05s", $tmp);
+        }
+      }
+      else
+      {
+        $kd = "00001";
+      }
+
+      $tb_code = "TB-".date('ym')."-".$kd;
        // return $increment;
        date_default_timezone_set("Asia/Jakarta"); 
       // return date('d/m/Y h:i:s');
        $data_header = DB::table('d_terima_pembelian')->insert([
           'd_tb_id'=>$increment,
           'd_tb_pid'=>$request->headNotaPurchase,
+          'd_tb_code'=>$tb_code,
           'd_tb_sup'=>$request->headSupplierId,
           'd_tb_staff'=>$request->headStaffId,
           'd_tb_noreff'=>$request->headNotaTxt,
           'd_tb_totalnett'=>$request->headTotalNett,
           'd_tb_totalbyr'=>$request->headTotalTerima,
-          'd_tb_date'=>$request->headTglTerima,
-          'd_tb_created'=>date('d/m/Y h:i:s'),
+          'd_tb_date'=>date('Y-m-d',strtotime($request->headTglTerima)),
+          'd_tb_created'=>date('Y-m-d h:i:s'),
+          'd_tb_duedate'=>date('Y-m-d'),
           'd_tb_comp'=>Session::get('user_comp'),
        ]);
 
