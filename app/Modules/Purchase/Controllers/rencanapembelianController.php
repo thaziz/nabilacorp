@@ -37,8 +37,8 @@ class rencanapembelianController extends Controller
             $gudang = DB::table('d_gudangcabang')
             ->join('m_comp','m_comp.c_id','=','gc_comp')
             ->where('gc_comp',Session::get('user_comp'))
-            // ->where('gc_gudang', '=', 'GUDANG PENJUALAN')
-            // ->orWhere('gc_gudang', '=', 'GUDANG BAHAN BAKU')
+            ->where('gc_gudang', '=', 'GUDANG PENJUALAN')
+            ->orWhere('gc_gudang', '=', 'GUDANG BAHAN BAKU')
             ->get();
         }
         

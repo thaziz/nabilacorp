@@ -192,7 +192,7 @@
 
   var hapusPlanDt =[];             
 
-
+  alert();
 
 $(document).ready(function(){      
       $('#date').datepicker({

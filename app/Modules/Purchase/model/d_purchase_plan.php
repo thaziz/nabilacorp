@@ -61,8 +61,8 @@ class d_purchase_plan extends Model
 
       d_purchase_plan::create([
               'p_id'=>$p_id,
-              'p_comp'=>$request->gudang,
-              'p_position'=>$request->gudang,
+              'p_comp'=>Session::get('user_comp'),
+              'p_position'=>Session::get('user_comp'),
               'p_gudang'=>$request->gudang,
               'p_date'=>date('Y-m-d',strtotime($request->p_date)),
               'p_code'=>$p_code,

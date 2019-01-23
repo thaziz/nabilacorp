@@ -47,6 +47,7 @@ class m_itemm extends Model
                       ->where('gc_gudang',DB::raw("'GUDANG PENJUALAN'"))
                       ->where('gc_comp',$cabang)
                       ->select('gc_id')->first();   
+        
         $comp=$position->gc_id;
         $position=$position->gc_id;
 

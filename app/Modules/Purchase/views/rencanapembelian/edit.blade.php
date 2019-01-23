@@ -75,7 +75,7 @@
                                                             </div>
                                                             <div class="col-md-9 col-sm-12 col-xs-12">
                                                                 <div class="form-group">
-                                                                    <input type="" value="{{ $data_header->s_company }}" name="" class="form-control input-sm"  
+                                                                    <input type="" readonly="" value="{{ $data_header->s_company }}" name="" class="form-control input-sm"  
                                                                     id="supplier" onkeyup="clearSupplier()">
                                                                     <input type="hidden" name="id_supplier" class="form-control input-sm" id="id_supplier" value="{{ $data_header->p_supplier }}">
                                                                 </div>
@@ -86,7 +86,7 @@
                                                             </div>
                                                             <div class="col-md-9 col-sm-12 col-xs-12">
                                                                <div class="input-group input-group-sm" style="width: 100%;">
-                                                                    <select name="gudang" id="gudang" class="form-control">
+                                                                    <select name="gudang"readonly="" style="pointer-events: none" id="gudang" class="form-control">
                                                                        @foreach ($gudang as $element)
                                                                         @if ($element->gc_id == $data_header->p_gudang)
                                                                          <option selected="" value="{{ $element->gc_id }}" data-name="{{ $element->gc_gudang }}">{{ $element->c_name }} - {{ $element->gc_gudang }}</option>
