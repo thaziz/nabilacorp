@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['web','auth']], function () {
 	// Nabila Moslem
 
@@ -73,5 +74,10 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	
 >>>>>>> parent of 76e9ec2... Perbaikan membership dan belanja karyawan
 
+=======
+
+Route::group(['namespace' => 'App\Modules\Contoh\Controllers', 'middleware'=>['web','auth']], function () {
+	Route::get('/contoh', 'ContohController@index');
+>>>>>>> parent of 25cc2a5... Pembuatan fitur membership
 });
 
