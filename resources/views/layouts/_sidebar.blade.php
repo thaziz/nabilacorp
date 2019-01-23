@@ -165,7 +165,7 @@
                         </ul>
                     </li>
 
-                    <li class="menu-primer {{Request::is('purchasing') ? 'active' : '' || Request::is('purcahse-plan/*') ? 'active' : '' }}"><a href="#"><i class="fa fa-credit-card fa-fw">
+                    <li class="menu-primer {{Request::is('purchasing') ? 'active' : '' || Request::is('purcahse-plan/*') ? 'active' : '' || Request::is('purcahse-order/*') ? 'active' : ''  }}"><a href="#"><i class="fa fa-credit-card fa-fw">
                         <div class="icon-bg bg-green"></div>
                         </i><span class="menu-title">Purchasing</span><span class="fa arrow"></span>
                         <!-- for filter -->

@@ -17,6 +17,8 @@ use App\Modules\Purchase\model\d_purchase_plan;
 
 use Datatables;
 
+use Session;
+
 
 
 
@@ -65,6 +67,7 @@ class purchasePlanController extends Controller
               ->join('d_mem','d_purchase_plan.p_mem','=','d_mem.m_id')
               // ->select('d_pcsp_id','d_pcsp_code','s_company','d_pcsp_status','d_pcsp_datecreated','d_pcsp_dateconfirm', 'd_mem.m_id', 'd_mem.m_name')
               ->whereBetween('d_purchase_plan.p_date', [$tanggal1, $tanggal2])
+              ->where('p_comp','=',Session::get('user_comp'))
               ->orderBy('p_created', 'DESC')
               ->get();
       // return $data;

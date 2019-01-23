@@ -584,8 +584,13 @@ class d_sales extends Model
                         ->rawColumns(['item','action','s_status'])
                         ->make(true);            
     }
-                                              
+    
 
+
+
+
+
+    
     static function printNota($s_id){
           $sales=DB::table('d_sales')->leftJoin('m_customer','s_customer','=','c_id')
                  ->where('s_id',$s_id)->first();

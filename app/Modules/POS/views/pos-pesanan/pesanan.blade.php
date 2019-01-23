@@ -16,7 +16,7 @@
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
-               <input type="text" class="move up1 form-control input-sm reset "  name="s_date" id="s_date" value="{{date('d-m-Y')}}" autocomplete="off">
+               <input type="text" class="move up1 form-control input-sm reset "  name="s_date" id="s_date" value="{{date('d-m-Y')}}" autocomplete="off" readonly="">
                <input type="hidden" class="form-control input-sm reset"  name="s_id" id="s_id" readonly="">
                <input type="hidden" class="form-control input-sm reset"  name="s_status" id="s_status" readonly="">
              </div>

@@ -69,7 +69,7 @@
   });
 
 
- resetData();
+date(); 
 function resetData(){  
   date();
   table();
@@ -99,6 +99,56 @@ setTimeout(function () {
   function editPlanAll (argument){
     window.location.href=(baseUrl+'/purcahse-plan/get-edit-plan/'+argument);
   }
+
+
+function table(){
+    $('#tablePlan').dataTable().fnDestroy();
+    tablex = $("#tablePlan").DataTable({        
+         responsive: true,
+        "language": dataTableLanguage,
+    processing: true,
+            serverSide: true,
+            ajax: {
+              "url": "{{ url("/purcahse-plan/data-plan") }}",
+              "type": "get",
+              data: {
+                    "_token": "{{ csrf_token() }}",                    
+                    "tanggal1" :$('#tanggal1').val(),
+                    "tanggal2" :$('#tanggal2').val(),
+                    },
+              },
+            columns: [
+            {data: 'p_date', name: 'p_date'},
+            {data: 'p_code', name: 'p_code'},            
+            {data: 's_company', name: 's_company'},                        
+            {data: 'status', name: 'status'}, 
+            {data: 'tglConfirm', name: 'tglConfirm'},                         
+            {data: 'aksi', name: 'aksi'},
+           
+            ],
+             'columnDefs': [
+                
+               {
+                    "targets": 3,
+                    "className": "text-center",
+               }
+               ],
+            //responsive: true,
+
+            "pageLength": 10,
+            "lengthMenu": [[10, 20, 50, - 1], [10, 20, 50, "All"]],
+            
+             "rowCallback": function( row, data, index ) {
+                    
+                    
+
+                if (data['s_status']=='draft') {
+                     $('td', row).addClass('warning');
+                } 
+              }   
+           
+    });
+}
   function detailPlanAll(argument) {
     $.ajax({
           url     :  baseUrl+'/purcahse-plan/get-detail-plan/'+argument,

@@ -29,6 +29,7 @@ class mMember extends Model implements AuthenticatableContract, CanResetPassword
     public function getUpdatedAtAttribute() {
         return $this->attributes['m_update'];
     }
+   
 
     public function setUpdatedAtAttribute($value) {
         //$this->attributes['a_updated'] = $value;

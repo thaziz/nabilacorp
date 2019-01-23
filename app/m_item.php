@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 
 use Response;
-
+ use Session;
 class m_item extends Model
 {
 	protected $table = 'm_item';
@@ -19,6 +19,10 @@ class m_item extends Model
     //public $timestamps = false;
     const CREATED_AT = 'i_insert';
     const UPDATED_AT = 'i_update';
+    static function perusahaan(){                                            
+        $comp=DB::table('m_comp')->where('c_id','=',Session::get('user_comp'))->first();
+        return $comp;
+    }
 
      public static function seachItem($item) {      
 
