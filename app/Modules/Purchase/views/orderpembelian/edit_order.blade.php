@@ -130,6 +130,7 @@
                         </div>
 
                         <div id="appending"></div>
+                        <div class="drop_here_remove"></div>
 
                       </div>
 
@@ -156,7 +157,7 @@
                                   <td style="text-align:center">{{ $index+1    }}</td>
                                   <td><input type="text" value="{{ $element->i_code }}  -  {{ $element->i_name }}" name="fieldNamaItem[]" class="form-control input-sm " readonly/>
                                   <input type="hidden" value="{{ $element->i_id }}" name="podt_item[]" class="form-control input-sm"/>
-                                  <input type="hidden" value="" name="podt_purchaseorder[]" class="form-control input-sm"/>
+                                  <input type="hidden" value="{{ $element->podt_purchaseorder }}" name="podt_purchaseorder[]" class="form-control input-sm"/>
                                   <input type="hidden" value="{{ $element->podt_detailid }}" name="podt_detailid[]" class="form-control input-sm"/>
                                   </td>
                                   <td><input type="text" value="{{ $element->podt_qtysend }}" name="fieldQty[]" class="form-control numberinput input-sm fQtyi_id fQty_awal{{ $element->i_id }} alignAngka" id="qty_i" readonly/></td>
@@ -167,12 +168,12 @@
                                     <input type="text" value="{{ $element->podt_price }}" name="podt_price[]" id="i" class="form-control field_harga input-sm harga{{ $element->i_id }} i_id numberinput alignAngka" onclick="setAwal(event,\'harga' + $element->i_id + '\')" onblur="setRupiah(event,\'harga' + $element->i_id+ '\')" onkeyup="rege(event,\'harga' + $element->i_id+ '\');hitungPurchaseItem(\'' + $element->i_id+ '\')"  /></td>
                                   <td>
                                     <input type="text" value="{{ $element->podt_prevcost }}" readonly name="podt_prevprice[]" id="i" class="form-control field_harga input-sm harga_previ_id numberinput alignAngka" onclick="setAwal(event,\'harga_prev' + $element->i_id + '\')" onblur="setRupiah(event,\'harga_prev' + $element->i_id+ '\')" onkeyup="rege(event,\'harga_prev' + $element->i_id+ '\');" /></td>
-                                    <td><input type="text" value="{{ $element->podt_price*$element->podt_qty }}" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem{{ $element->i_id }}" id="total_i" readonly/></td>
+                                    <td><input type="text" value="{{ $element->podt_total }}" name="podt_total[]" class="alignAngka totalPerItem form-control input-sm hargaTotalItem{{ $element->i_id }}" id="total_i" readonly/></td>
                                     <td hidden><input type="hidden" name="podt_total_net[]" class="alignAngka totalPerItem_net form-control input-sm   TotalItem_net_key" id="total_net_i" readonly/></td>
                                     <td hidden><input type="hidden" name="podt_disc_detail[]" class="alignAngka disc_detail form-control input-sm disc_detail_key" id="disc_i" readonly/></td>
                                     <td><input type="text" value="{{ $element->s_qty or 0 }}" name="fieldStok[]" class="form-control input-sm" readonly/></td>
                                     <td>
-                                      <button name="remove" id="{{ $element->i_id }}" class="btn btn-danger btn_remove btn-sm">X</button>
+                                      <button name="remove" id="{{ $element->i_id }}" data-id_header="{{ $element->podt_purchaseorder }}" data-id_detail="{{ $element->podt_detailid }}" class="btn btn-danger btn_remove btn-sm">X</button>
                                     </td>
                               </tr>
                               @endforeach
@@ -291,6 +292,7 @@
     });
 
     //autocomplete
+
 
     $("#cari_sup").autocomplete({
         source: baseUrl+'/purcahse-order/seach-supplier',
@@ -449,7 +451,10 @@
 
     $(document).on('click', '.btn_remove', function(){
         var button_id = $(this).attr('id');
+        var id_header = $(this).data('id_header');
+        var id_detail = $(this).data('id_detail');
         $('#row'+button_id+'').remove();
+        $('.drop_here_remove').append('<input value="'+id_header+'" type="hidden" name=id_header_remove[]><input value="'+id_detail+'" type="hidden" name=id_detail_remove[]>')
       hitungTotalPurchase();
     });
 
@@ -624,7 +629,7 @@
         $('#button_save').text('Menyimpan...');
         $('#button_save').attr('disabled',true);
         $.ajax({
-            url : baseUrl + "/purcahse-order/save-po",
+            url : baseUrl + "/purcahse-order/update-po",
             type: "get",
             dataType: "JSON",
             data: $('#form_create_po').serialize(),

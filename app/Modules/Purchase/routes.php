@@ -43,6 +43,7 @@ Route::get('/purcahse-order/get-data-code-plan', 'purchaseOrderController@getDat
 Route::get('/purcahse-order/seach-supplier', 'purchaseOrderController@seachSupplier')->middleware('auth');
 Route::get('/purcahse-order/delete-data-order', 'purchaseOrderController@deleteDataOrder')->middleware('auth');
 Route::get('/purcahse-order/save-po', 'purchaseOrderController@savePo')->middleware('auth');
+Route::get('/purcahse-order/update-po', 'purchaseOrderController@updatePo')->middleware('auth');
 
 Route::get('/purcahse-plan/store-plan', 'purchasePlanController@storePlan')->middleware('auth');
 

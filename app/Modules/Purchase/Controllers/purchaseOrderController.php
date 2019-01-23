@@ -79,7 +79,7 @@ class purchaseOrderController extends Controller
     {
          return d_purchase_order::getDataForm($id);
     }
-    public function getDataCodePlan(Request $request)
+        public function getDataCodePlan(Request $request)
     {
 
          return d_purchase_order::getDataCodePlan($request);
@@ -190,6 +190,30 @@ class purchaseOrderController extends Controller
 
 
         return view('Purchase::orderpembelian/edit_order',compact('data','tamp','urut_index','dataIsi','dataHeader'));
+     }
+     public function updatePo(Request $request)
+     {
+       // dd($request->all());
+      for ($i=0; $i <count($request->id_header_remove) ; $i++) { 
+        $delete = DB::table('d_purchaseorder_dt')
+                            ->where('podt_detailid',$request->id_detail_remove[$i])
+                            ->where('podt_purchaseorder',$request->id_header_remove[$i])
+                            ->delete();
+      }
+      for ($i=0; $i <count($request->podt_purchaseorder) ; $i++) { 
+        $update = DB::table('d_purchaseorder_dt')
+                            ->where('podt_detailid',$request->podt_detailid[$i])
+                            ->where('podt_purchaseorder',$request->podt_purchaseorder[$i])
+                            ->update([
+                                'podt_qtysend'=>$request->fieldQtyconfirm[$i],
+                                'podt_qty'=>$request->fieldQtyconfirm[$i],
+                                'podt_price'=>$request->podt_price[$i],
+                                'podt_total'=>$request->podt_total[$i],
+                            ]);
+      }
+
+      return response()->json(['status'=>'sukses']);
+
      }
 
 }
