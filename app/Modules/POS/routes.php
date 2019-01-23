@@ -22,9 +22,9 @@ Route::get('/penjualan/pos-pesanan/detail-view/{id}', 'PenjualanPesananControlle
 Route::get('/penjualan/pos-pesanan/listPenjualan', 'PenjualanPesananController@listPenjualanPesanan')->middleware('auth');
 Route::post('/penjualan/pos-pesanan/listPenjualan', 'PenjualanPesananController@listPenjualanPesanan')->middleware('auth');
 Route::get('/penjualan/pos-pesanan/listPenjualan/data', 'PenjualanPesananController@listPenjualanDataPesanan')->middleware('auth');
-Route::get('/penjualan/pos-pesanan/printNota/{id}', 'PenjualanPesananController@printNotaPesanan')->middleware('auth');
+/*Route::get('/penjualan/pos-pesanan/printNota/{id}', 'PenjualanPesananController@printNotaPesanan')->middleware('auth');
 
-
+*/
 
 //mutasi item
 //update mi

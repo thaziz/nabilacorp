@@ -145,7 +145,7 @@ class d_mutasi_item extends Model
                     'mp_qty'=>$mp_qty,
                     'mp_hpp'=>$mp_hpp,
               ]);
-          mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,$mp_comp,$mp_position,'Mutasi Item',15,$mi_id,'','',$mp_hpp);
+      mutasi::tambahmutasi($request->mp_item[$s],$mp_qty,$mp_comp,$mp_position,'Mutasi Item',15,$mi_id,'','',$mp_hpp);
         }
 
           $data=['status'=>'sukses','data'=>'sukses'];
