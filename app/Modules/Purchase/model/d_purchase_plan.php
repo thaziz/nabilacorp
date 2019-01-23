@@ -96,17 +96,15 @@ class d_purchase_plan extends Model
 
 
     static function perbaruiPlan ($request){
-
-    // dd($request->all());      
-
-
+      // dd($request->all());
       for ($i=0; $i <count($request->ppdt_detailid_old) ; $i++) { 
+        $total_price_old = str_replace(['Rp', '\\', '.', ' '], '', $request->total_price_old);
+
         $update_data = d_purchaseplan_dt::where('ppdt_pruchaseplan','=',$request->id_purchaseplan)
                     ->where('ppdt_detailid','=',$request->ppdt_detailid_old[$i])
                     ->update([
-                      'ppdt_qty'=>$request->ppdt_qty[$i],  
-                      'ppdt_totalcost'=>$request->harga_total[$i],
-                      'ppdt_qtyconfirm'=>'update'
+                      'ppdt_qty'=>$request->ppdt_qty_old[$i],  
+                      'ppdt_totalcost'=>$total_price_old[$i],
                     ]);
       }
       for ($i=0; $i <count($request->ppdt_detailid_remove) ; $i++) { 
@@ -132,12 +130,7 @@ class d_purchase_plan extends Model
 
         $data=['status'=>'sukses'];
         return json_encode($data);
-
-
       }
-        
-
-     
     
     static function dataPlan($request){   
     // return 'a';                   

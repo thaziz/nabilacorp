@@ -61,10 +61,10 @@
           <div class="float-left">
             <img src="{{ asset('/assets/logo.png') }}"  width="50px" height="50px">
           </div>
-          <div class="float-left" style="margin-left: 5px;">
-            
-              Nabila Cake Bakery & Pastry<br>
-              Jl. Gajah Mada No.22 Ponorogo<br>
+          <div class="float-left" style="margin-left: 5px;">            
+               
+          {{$comp->c_name}}<br>
+          {{$comp->c_address}}<br>
               uuenaknya pake buuanget
             
           </div>
