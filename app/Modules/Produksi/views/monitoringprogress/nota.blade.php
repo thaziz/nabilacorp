@@ -13,7 +13,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			@for
 		</tbody>
 	</table>
 </div>

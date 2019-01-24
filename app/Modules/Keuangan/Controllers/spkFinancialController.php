@@ -232,18 +232,12 @@ class spkFinancialController extends Controller
   public function tabelFormula( $id, $qty, $comp){
     $gc_id = d_gudangcabang::select('gc_id')
       ->where('gc_gudang','GUDANG BAHAN BAKU')
-      // ->where('gc_comp',$comp)
       ->first();
     $gudang = $gc_id->gc_id;
-    // dd($gudang);
-    $hasil = d_formula_result::
-        where('fr_adonan',$id)
-        ->first();
-
+    $hasil = d_formula_result::where('fr_adonan',$id)
+      ->first();
     $x = $hasil->fr_result;
-
     $butuh = $qty / $x;
-
     $formula = d_formula::
         select( 'i_id',
                 'i_name',
