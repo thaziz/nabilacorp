@@ -266,20 +266,20 @@ class JabatanController extends Controller
              ->where('c_id',$request->id)
              ->first();
  
-         if ($cek->c_isactive == 'TRUE') 
-         {
-             m_jabatan::where('c_id',$request->id)
-                 ->update([
+        if ($cek->c_isactive == 'TRUE') 
+        {
+            m_jabatan::where('c_id',$request->id)
+                ->update([
                      'c_isactive' => 'FALSE'
-                 ]);       
-         }
-         else
-         {
-             m_jabatan::where('c_id',$request->id)
-                 ->update([
+                ]);       
+        } 
+        else
+        {
+            m_jabatan::where('c_id',$request->id)
+                ->update([
                      'c_isactive' => 'TRUE'
-                 ]);
-         }
+                ]);
+        }
          DB::commit();
          return response()->json([
              'status' => 'sukses'
