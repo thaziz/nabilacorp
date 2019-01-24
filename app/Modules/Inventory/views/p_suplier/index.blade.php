@@ -357,13 +357,46 @@
     });
   }
 
-  function ubahStatus(argument) {
-    alert('aa');
+  function lihatStatus(argument) {
+    $.ajax({
+      url : baseUrl + "/inventory/p_suplier/get-data-detail/" + argument,
+      type: "GET",
+      dataType: "JSON",
+      success: function(data)
+      {
+      $('#modal_detail').modal('show');
+        var key = 1;
+        var date = data.data_header[0].d_pcs_duedate;
+        if(date != null) { var newDueDate = date.split("-").reverse().join("-"); }
+        
+        //ambil data ke json->modal
+        $('#lblNotaPembelian').text(data.data_header[0].d_tb_noreff);
+        $('#lblNotaPenerimaan').text(data.data_header[0].d_tb_code);
+        $('#lblTglPenerimaan').text(data.data_header[0].d_tb_date);
+        $('#lblStaff').text(data.data_header[0].m_name);
+        $('#lblSupplier').text(data.data_header[0].s_company);
+        console.log(data.data_isi);
+        //loop data
+        Object.keys(data.data_isi).forEach(function(){
+          $('#div_item').append('<tr class="tbl_modal_detail_row">'
+                          +'<td>'+key+'</td>'
+                          +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
+                          +'<td class="text-center">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].d_pcsdt_qtyconfirm,"",2,'.',','))+'</td>'
+                          +'<td class="text-center">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].d_tbdt_qty,"",2,'.',','))+'</td>'
+                          +'<td>'+data.data_isi[key-1].m_sname+'</td>'
+                          +'<td class="text-right">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].s_qty,"",2,'.',','))+' '+data.data_satuan[key-1]+'</td>'
+                          +'</tr>');
+          key++;
+        });
+        $('#apdsfs').html('<a href="'+ baseUrl +'/inventory/p_suplier/print/'+ id +'" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i>&nbsp;Print</a>'+
+        '<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>');
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+          alert('Error get data from ajax');
+      }
+    });
   }
-  function editStatus(argument) {
-    alert('bb');
-  }
-
   function totalNilaiPenerimaan()
   {
     var inputs = document.getElementsByClassName( 'hargaTotalItem' ),

@@ -66,6 +66,7 @@ Route::group(['namespace' => 'App\Modules\Inventory\Controllers', 'middleware'=>
 	Route::get('/inventory/p_suplier/get-penerimaan-by-tgl/{tgl1}/{tgl2}/{akses}/{comp}', 'PenerimaanBrgSupController@get_penerimaan_by_tgl');
 	Route::get('/inventory/p_suplier/lookup-data-pembelian', 'PenerimaanBrgSupController@lookupDataPembelian');
 	Route::get('/inventory/p_suplier/get-data-form/{id}', 'PenerimaanBrgSupController@getdataform');
+	Route::get('/inventory/p_suplier/get-data-detail/{id}', 'PenerimaanBrgSupController@getdatadetail');
 	Route::get('/inventory/p_suplier/simpan-penerimaan', 'PenerimaanBrgSupController@simpan_penerimaan');
 
 

@@ -508,10 +508,7 @@ class PenerimaanBrgSupController extends Controller
             {
                 return '<div class="text-center">
                             <a class="btn btn-sm btn-success" href="javascript:void(0)" title="Ubah Status"
-                                onclick=ubahStatus("'.$data->po_id.'")><i class="fa fa-eye"></i>
-                            </a>
-                             <a class="btn btn-sm btn-info" href="javascript:void(0)" title="Ubah Status"
-                                onclick=editStatus("'.$data->po_id.'")><i class="fa fa-pencil"></i>
+                                onclick=lihatStatus("'.$data->d_tb_code.'")><i class="fa fa-eye"></i>
                             </a>
                         </div>
                         ';
@@ -543,5 +540,32 @@ class PenerimaanBrgSupController extends Controller
             ->make(true);
         
               
+    }
+
+    public function getdatadetail($id)
+    {
+
+       $data_header = DB::table('d_terima_pembelian')
+                  ->join('d_mem','d_terima_pembelian.d_tb_staff','=','d_mem.m_id')
+                  ->join('m_supplier','d_terima_pembelian.d_tb_sup','=','m_supplier.s_id')
+                  ->where('d_tb_code',$id)
+                  ->get();
+       
+       $data_isi = DB::table('d_terima_pembelian')
+                ->join('d_terima_pembelian_dt','d_tb_id','d_tbdt_idtb')
+                ->join('m_item','i_id','d_tbdt_item')
+                ->join('d_mem','d_terima_pembelian.d_tb_staff','=','d_mem.m_id')
+                ->join('m_supplier','d_terima_pembelian.d_tb_sup','=','m_supplier.s_id')
+                ->leftjoin('d_stock','d_stock.s_item','=','m_item.i_id')
+                ->leftjoin('d_purchase_order','d_purchase_order.po_code','=','d_terima_pembelian.d_tb_noreff')
+                ->where('d_tb_code',$id)
+                ->get();
+     
+     return response()
+            ->json([
+                'data_isi'=>$data_isi,
+                'data_header'=>$data_header,
+            ]);
+        
     }
 }

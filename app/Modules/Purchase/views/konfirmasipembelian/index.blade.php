@@ -632,6 +632,7 @@ daftarTabelOrder() ;
             {
               if(response.status == "sukses")
               {
+                alert('sukses');
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                 iziToast.success({
                   position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
