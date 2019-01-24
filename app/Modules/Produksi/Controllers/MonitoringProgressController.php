@@ -71,7 +71,7 @@ class MonitoringProgressController extends Controller
                         $query->where('s_comp',DB::raw("'1'"))->where('s_position',DB::raw($position[$i]->gc_id));
                     }); 
          }
-         $stock->groupBy('s_item');
+                                        $stock->groupBy('s_item');
 
          $mon = DB::Table('m_item')
             ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty',
