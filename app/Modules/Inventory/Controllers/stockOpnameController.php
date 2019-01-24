@@ -41,7 +41,7 @@ class stockOpnameController extends Controller
                's_name',
                's_qty')
         ->where('m_item.i_name', 'LIKE', '%'.$term.'%')
-        ->where('i_isactive','TRUE')
+        ->where('i_active','Y')
         ->leftJoin('d_stock',function($join)use($comp){
         	$join->on('i_id','=','s_item');
         	$join->on('s_comp','=',DB::raw($comp));

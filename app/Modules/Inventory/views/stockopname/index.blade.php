@@ -135,7 +135,7 @@
             $("#namaitem").focus(function () {
                 var key = 1;
                 var comp = $('#pemilik').val();
-                var position = $('.mem_comp').val();
+                var position = $('#posisi').val();
                 $("#namaitem").autocomplete({
                     source: baseUrl + '/inventory/namaitem/autocomplite/'+comp+'/'+position,
                     minLength: 1,
@@ -145,12 +145,16 @@
                         $('#i_code').val(ui.item.i_code);
                         $('#i_name').val(ui.item.i_name);
                         $('#m_sname').val(ui.item.m_sname);
-                        var s_qty = ui.item.s_qty;
-                        if (ui.item.s_qty == null) {
-                          s_qty = 0;
+                        if(ui.item.s_qty == null)
+                        {
+                            $('#s_qty').val('0');
                         }
-                        $('#s_qty').val(s_qty);
+                        else
+                        {
+                            $('#s_qty').val(ui.item.s_qty);
+                        }
                         $('#s_qtykw').val(ui.item.s_qtykw);
+                        $('#satuan').val(ui.item.m_sname);
                         $("input[name='qtyReal']").focus();
                     }
                 });
@@ -161,6 +165,7 @@
                 $("#m_sname").val('');
                 $("#s_qty").val('');
                 $("#s_qtykw").val('');
+                $('#satuan').val('');
                 $("#qtyReal").val('');
               });
             });
@@ -206,7 +211,6 @@
           opname = opname.toFixed(2);
           var opnameKw = parseFloat(qtyReal) - parseFloat(s_qty);
           opnameKw = opnameKw;
-          // opnameKw = parseInt(opname);
           opnameKw = convertToRupiah(opnameKw);
           var Hapus = '<div class="text-center"><button type="button" class="btn btn-danger hapus" onclick="hapus(this)"><i class="fa fa-trash-o"></i></button></div>';
           var index = tamp.indexOf(i_id);

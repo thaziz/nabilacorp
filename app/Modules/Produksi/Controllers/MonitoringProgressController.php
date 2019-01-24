@@ -71,7 +71,7 @@ class MonitoringProgressController extends Controller
                         $query->where('s_comp',DB::raw("'1'"))->where('s_position',DB::raw($position[$i]->gc_id));
                     }); 
          }
-                                        $stock->groupBy('s_item');
+         $stock->groupBy('s_item');
 
          $mon = DB::Table('m_item')
             ->select('i_id','i_code','i_name','s_qty','pp_qty','spdt_qty',
@@ -91,11 +91,11 @@ class MonitoringProgressController extends Controller
                 $join->on('i_id','=','sd_item');
               })
             ->where('i_type','BP')
-            ->where('i_isactive','TRUE')
+            ->where('i_active','Y')
             ->groupBy('i_id')
             ->get();
 
-        //return $mon;
+
          $dat = array();
          foreach ($mon as $r) 
          {
@@ -217,7 +217,7 @@ class MonitoringProgressController extends Controller
                $join->on('i_id','=','sd_item');
              })
             ->where('i_type','BP')
-            ->where('i_isactive','TRUE')
+            ->where('i_active','Y')
             ->groupBy('i_id')
             ->get();
 
@@ -284,7 +284,6 @@ class MonitoringProgressController extends Controller
   }
 
   public function bukaNota($id){
-    // $data = m_itemm::where('i_id',$id)->first();
     $pesanan = d_sales::select('s_note','s_finishdate','s_date','sd_qty')
       ->join('d_sales_dt','d_sales_dt.sd_sales','=','s_id')
       ->join('m_item','m_item.i_id','=','sd_item')
@@ -293,30 +292,6 @@ class MonitoringProgressController extends Controller
  
     return view('Produksi::monitoringprogress.nota',compact('pesanan'));
   }
-
-  // public function nota($id){
-  //   $data = d_sales_dt::
-  //             select( 's_note',
-  //                     'c_name',
-  //                     's_date',
-  //                     'sd_qty'
-  //             )
-  //           ->where('sd_item',$id)
-  //           ->join('d_sales','d_sales.s_id','=','d_sales_dt.sd_sales')
-  //           ->join('m_customer','m_customer.c_id','=','d_sales.s_customer')
-  //           ->where('s_channel','GR')
-  //           ->where('s_status','PR')
-  //           ->orderBy('s_date','asc')
-  //           ->get();
-  
-  //   return DataTables::of($data)
-  //   ->editColumn('s_date', function ($user) {
-  //       return $user->s_date ? with(new Carbon($user->s_date))->format('d M Y') : '';
-  //     })
-  //   ->addIndexColumn()   
-  //   ->make(true);
-
-  // }
 
   public function plan($id){
 
@@ -489,7 +464,7 @@ class MonitoringProgressController extends Controller
             $join->on('i_id','=','sd_item');
           })
         ->where('i_type','BP')
-        ->where('i_isactive','TRUE')
+        ->where('i_active','Y')
         ->groupBy('i_id')
         ->get();
 
