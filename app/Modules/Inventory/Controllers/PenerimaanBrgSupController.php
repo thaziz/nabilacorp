@@ -211,6 +211,7 @@ class PenerimaanBrgSupController extends Controller
       $data_po_header = DB::table('d_purchase_order')
                       ->where('po_id',$request->headNotaPurchase)
                       ->update(['po_received'=>date('Y-m-d')]);
+                      
       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
           $data_detail_check[$i] = DB::table('d_purchaseorder_dt')
                   ->where('podt_detailid',$request->order_id[$i])
