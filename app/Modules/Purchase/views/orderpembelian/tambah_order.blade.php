@@ -257,7 +257,7 @@
         format: "mm-yyyy",
         viewMode: "months",
         minViewMode: "months"
-    });
+      });
 
     $('.datepicker2').datepicker({
         format:"dd-mm-yyyy",
@@ -413,6 +413,7 @@
 
           //set readonly to enabled
           $('#potongan_harga').attr('readonly',false);
+          $('#potongan_harga').val(0);
           $('#diskon_harga').attr('readonly',false);
           $('#ppn_harga').attr('readonly',false);
           /*totalPembelianGross();
@@ -505,6 +506,16 @@
   // console.log(ck);
   var hitung = parseInt(ck)*parseInt(res);
   var hit =$('.hargaTotalItem'+argument).val(accounting.formatMoney(hitung,"",0,'.',','));
+  var total_gross = 0; 
+    $('.totalPerItem').each(function(index){
+        var hit = $(this).val();
+        var res = hit.replace(/\./g, "");
+        total_gross += parseInt(res);      
+    });
+  $('#total_gross').val(accounting.formatMoney(total_gross,"",0,'.',','));
+
+
+
   }
 
   function convertDecimalToRupiah(decimal)

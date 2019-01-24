@@ -282,6 +282,7 @@ class d_purchase_order extends Model
                      ->join('m_supplier','s_id','=','p_supplier')
                      ->where('ppdt_isconfirm', '=', "TRUE")
                      ->where('ppdt_ispo', '=', "FALSE")
+                     ->where('p_comp', '=', Session::get('user_comp'))
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
             foreach ($sup as $val) {
@@ -301,6 +302,7 @@ class d_purchase_order extends Model
                      ->where('ppdt_ispo', '=', "FALSE")
                      ->where('p_status', '=', "WT")
                      ->where('p_code', 'LIKE', '%'.$term.'%')
+                     ->where('p_comp', '=', Session::get('user_comp'))
                      ->groupBy('p_code','p_id','s_id','s_company')
                      ->get();
             // return $sup;
