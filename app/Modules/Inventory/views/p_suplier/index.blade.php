@@ -378,18 +378,18 @@
         console.log(data.data_isi);
         //loop data
         Object.keys(data.data_isi).forEach(function(){
-          $('#div_item').append('<tr class="tbl_modal_detail_row">'
+          $('#tabel-detail').append('<tr class="tbl_modal_detail_row">'
                           +'<td>'+key+'</td>'
                           +'<td>'+data.data_isi[key-1].i_code+' '+data.data_isi[key-1].i_name+'</td>'
-                          +'<td class="text-center">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].d_pcsdt_qtyconfirm,"",2,'.',','))+'</td>'
+                          +'<td class="text-center">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].d_tbdt_totalqty,"",2,'.',','))+'</td>'
                           +'<td class="text-center">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].d_tbdt_qty,"",2,'.',','))+'</td>'
-                          +'<td>'+data.data_isi[key-1].m_sname+'</td>'
-                          +'<td class="text-right">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].s_qty,"",2,'.',','))+' '+data.data_satuan[key-1]+'</td>'
+                          +'<td>'+data.data_isi[key-1].s_name+'</td>'
+                          +'<td class="text-right">'+('Rp. '+accounting.formatMoney(data.data_isi[key-1].s_qty,"",2,'.',','))+'</td>'
                           +'</tr>');
           key++;
         });
-        $('#apdsfs').html('<a href="'+ baseUrl +'/inventory/p_suplier/print/'+ id +'" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i>&nbsp;Print</a>'+
-        '<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>');
+        // $('#apdsfs').html('<a href="'+ baseUrl +'/inventory/p_suplier/print/'+ id +'" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i>&nbsp;Print</a>'+
+        // '<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>');
       },
       error: function (jqXHR, textStatus, errorThrown)
       {

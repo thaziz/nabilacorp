@@ -152,12 +152,14 @@ class PenerimaanBrgSupController extends Controller
           'd_tb_comp'=>Session::get('user_comp'),
        ]);
 
+
        for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
            $data_detail = DB::table('d_terima_pembelian_dt')->insert([
               'd_tbdt_idtb'=>$increment,
               'd_tbdt_item'=>$request->fieldItemId[$i],
               'd_tbdt_sat'=>$request->fieldSatuanId[$i],
               'd_tbdt_qty'=>$request->fieldQtyterima[$i],
+              'd_tbdt_totalqty'=>$request->fieldQty[$i],
               'd_tbdt_price'=>$request->fieldHargaRaw[$i],
               'd_tbdt_comp'=>Session::get('user_comp'),
               'd_tbdt_pricetotal'=>$request->fieldHargaTotalRaw[$i],
@@ -206,6 +208,9 @@ class PenerimaanBrgSupController extends Controller
 
          
        // dd($request->all());
+      $data_po_header = DB::table('d_purchase_order')
+                      ->where('po_id',$request->headNotaPurchase)
+                      ->update(['po_received'=>date('Y-m-d')]);
       for ($i=0; $i <count($request->fieldNamaItem); $i++) { 
           $data_detail_check[$i] = DB::table('d_purchaseorder_dt')
                   ->where('podt_detailid',$request->order_id[$i])
@@ -221,6 +226,7 @@ class PenerimaanBrgSupController extends Controller
                  'podt_qtyreceive'=>$data_detail_check[$i][0]->podt_qtyreceive+$request->fieldQtyterima[$i],
            ]);
        }
+
        // return $chek;
        // return $data_detail_order;
        return response()->json([
@@ -552,11 +558,13 @@ class PenerimaanBrgSupController extends Controller
                   ->get();
        
        $data_isi = DB::table('d_terima_pembelian')
+                ->select('s_qty','d_tbdt_qty','d_tbdt_qty','d_tbdt_totalqty','i_code','i_name','ms.s_name')
                 ->join('d_terima_pembelian_dt','d_tb_id','d_tbdt_idtb')
                 ->join('m_item','i_id','d_tbdt_item')
                 ->join('d_mem','d_terima_pembelian.d_tb_staff','=','d_mem.m_id')
                 ->join('m_supplier','d_terima_pembelian.d_tb_sup','=','m_supplier.s_id')
                 ->leftjoin('d_stock','d_stock.s_item','=','m_item.i_id')
+                ->join('m_satuan as ms','ms.s_id','=','d_terima_pembelian_dt.d_tbdt_sat')
                 ->leftjoin('d_purchase_order','d_purchase_order.po_code','=','d_terima_pembelian.d_tb_noreff')
                 ->where('d_tb_code',$id)
                 ->get();

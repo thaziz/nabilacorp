@@ -630,9 +630,11 @@ daftarTabelOrder() ;
             data: $('#form-confirm-plan').serialize(),
             success: function(response)
             {
+              alert('sukses');
+
               if(response.status == "sukses")
               {
-                alert('sukses');
+                alert('ss');
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                 iziToast.success({
                   position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
@@ -654,6 +656,7 @@ daftarTabelOrder() ;
                   title: 'Pemberitahuan',
                   message: response.pesan,
                   onClosing: function(instance, toast, closedBy){
+                    alert('dd');
                     $('#modal-confirm').modal('hide');
                     $('#button_confirm').text('Konfirmasi'); //change button text
                     $('#button_confirm').attr('disabled',false); //set button enable 
@@ -699,14 +702,15 @@ daftarTabelOrder() ;
             data: $('#form-confirm-order').serialize(),
             success: function(response)
             {
-              console.log(response);
+              alert(response.status);
               if(response.status == "sukses")
               {
+                alert(response.status+'11');
                 instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                 iziToast.success({
                   position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                   title: 'Pemberitahuan',
-                  message: response.pesan,
+                  message: response.status,
                   onClosing: function(instance, toast, closedBy){
                     $('#modal-confirm-order').modal('hide');
                     $('#button_confirm_order').text('Konfirmasi');
@@ -721,7 +725,7 @@ daftarTabelOrder() ;
                 iziToast.error({
                   position: 'center', //center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                   title: 'Pemberitahuan',
-                  message: response.pesan,
+                  message: response.status,
                   onClosing: function(instance, toast, closedBy){
                     $('#modal-confirm-order').modal('hide');
                     $('#button_confirm_order').text('Konfirmasi');
