@@ -172,8 +172,7 @@ class itemController extends Controller
             'i_sat_isi2' => $i_sat_isi2,
             'i_sat_isi3' => $i_sat_isi3,
             'i_min_stock' => $i_min_stock,
-            'i_det' => $i_det,
-            'i_status' => 'Y',
+            'i_det' => $i_det,            
             'i_active' => 'Y',
             'i_insert' => Carbon::now('Asia/Jakarta')
           ]);
@@ -349,8 +348,7 @@ class itemController extends Controller
         DB::table('m_item')
           ->where('i_id', $request->id)
           ->update([
-            'i_active' => 'N',
-            'i_status' => 'N'
+            'i_active' => 'N',            
           ]);
 
         DB::commit();
