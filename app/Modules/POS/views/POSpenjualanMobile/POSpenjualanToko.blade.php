@@ -661,6 +661,7 @@ function simpanPos(status=''){
 if($status==true){ 
   $status=false;     
   var formPos=$('#dataPos,#dst').serialize();  
+  
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-mobile/create',
           type    : 'GET', 

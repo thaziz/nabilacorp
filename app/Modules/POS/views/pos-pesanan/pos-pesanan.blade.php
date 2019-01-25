@@ -625,7 +625,7 @@ function simpanPos(status=''){
   $('.btn-disabled').attr('disabled','disabled');
   if($status==true){ 
   $status=false;   
-  var formPos=$('#dataPos').serialize();
+  var formPos=$('#dataPos,#sdt').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-pesanan/create',
           type    : 'GET', 
@@ -746,7 +746,8 @@ function perbaruiData(){
   $('#totalBayar').removeAttr('disabled');
   $('#btn-disabled').attr('disabled','disabled');
 
-  var formPos=$('#dataPos').serialize();
+  
+  var formPos=$('#dataPos,#sdt').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-pesanan/update',
           type    : 'GET', 
@@ -832,8 +833,8 @@ function serahTerima(){
      $('#kembalian').removeAttr('disabled');
   $('#totalBayar').removeAttr('disabled');
   $('#btn-disabled').attr('disabled','disabled');
-  var idTerima=$('#idTerima').val()
-  var formPos=$('#dataPos').serialize();
+  var idTerima=$('#idTerima').val()  
+  var formPos=$('#dataPos,#sdt').serialize();
      $.ajax({
           url     :  baseUrl+'/penjualan/pos-pesanan/serah-terima',
           type    : 'GET', 

@@ -10,7 +10,7 @@ use App\Modules\POS\model\d_receivable;
 
 use App\Modules\POS\model\d_item_titipan;
 
-use App\Lib\mutasiStok;
+use App\Lib\mutasi;
 
 use App\Lib\format;
 
@@ -26,7 +26,7 @@ use Datatables;
 
 use Session;
 
-class d_sales extends Model
+class d_salesb extends Model
 {  
     protected $table = 'd_sales';
     protected $primaryKey = 's_id';

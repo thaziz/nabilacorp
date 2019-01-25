@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 
 use App\mMember;
 use App\Modules\POS\model\m_paymentmethod;
-use App\Modules\POS\model\d_sales;
+use App\Modules\POS\model\d_salesb;
 use App\Modules\POS\model\d_sales_dt;
 
 use Datatables;
@@ -74,12 +74,12 @@ class PenjualanPesananController extends Controller
     }
 
     function create(Request $request){      
-      return d_sales::simpanPesanan($request);
+      return d_salesb::simpanPesanan($request);
     }
 
      function update(Request $request){
       
-      return d_sales::perbaruiPesanan($request);
+      return d_salesb::perbaruiPesanan($request);
     }
 
     function penjualanDtPesanan($id,Request $request){      
@@ -104,14 +104,14 @@ class PenjualanPesananController extends Controller
     }
     function listPenjualanDataPesanan(Request $request){
       /*if($request->ajax()){*/
-        return d_sales::listPenjualanData($request);
+        return d_salesb::listPenjualanData($request);
       /*}else{
         return 'f';
       }*/
       
     }
   function printNota($id){
-      $data=d_sales::printNota($id);
+      $data=d_salesb::printNota($id);
       return view('POS::pos-pesanan/printNota',compact('data'));
    
   }

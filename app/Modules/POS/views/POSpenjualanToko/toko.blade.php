@@ -75,8 +75,8 @@
              
         
       </div>
-  </form>
-  <form method="post" id="dataPos" class="container-fluid">
+  
+  
   <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 20px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
          <div class="col-md-6">
            <label class="control-label tebal" for="">Masukan Kode / Nama</label>
@@ -106,8 +106,10 @@
               </div>
           </div>
   </div>
+  </form>
 
         </div>
+        <form method="post" id="sdt">
         <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:white;">      
           <div style="padding-top: 20px;padding-bottom: 20px;">   

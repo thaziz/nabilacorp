@@ -75,7 +75,7 @@
              
         
       </div>
-  </form>
+  
   
   <div class="col-md-12 col-sm-12 col-xs-12 tamma-bg" style="margin-top: 20px;margin-bottom: 5px;margin-bottom: 20px; padding-bottom:20px;padding-top:20px;">
          <div class="col-md-6">
@@ -106,10 +106,11 @@
               </div>
           </div>
   </div>
+  </form>
 
         </div>
+        <form method="post" id="dst">
         <div class="row">
-        <form id="dts">
         <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:white;">      
           <div style="padding-top: 20px;padding-bottom: 20px;">   
           <br>  
@@ -138,7 +139,7 @@
           </div>
         </div>
 
-</form>
+
 
 
 
@@ -387,7 +388,7 @@
                     <button onclick="modalShow()"
                      type="button" class="move btn-primary btn btn-disabled final" data-toggle="modal" disabled="" >Proses</button>
                   </div>
-  
+  </form>
   </div>
 </div>
 

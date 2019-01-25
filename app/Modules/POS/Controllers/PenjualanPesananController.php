@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 
 use App\mMember;
 use App\Modules\POS\model\m_paymentmethod;
-use App\Modules\POS\model\d_sales;
+use App\Modules\POS\model\d_salesb;
 use App\Modules\POS\model\d_sales_dt;
 use App\Modules\POS\model\m_machine;
 use Datatables;
@@ -91,16 +91,16 @@ class PenjualanPesananController extends Controller
     }
 
     function create(Request $request){      
-      return d_sales::simpanPesanan($request);
+      return d_salesb::simpanPesanan($request);
     }
 
      function update(Request $request){
       
-      return d_sales::perbaruiPesanan($request);
+      return d_salesb::perbaruiPesanan($request);
     }
 
      function serahTerima(Request $request){      
-      return d_sales::serahTerima($request); 
+      return d_salesb::serahTerima($request); 
     }
 
 
@@ -140,7 +140,7 @@ class PenjualanPesananController extends Controller
     }
     function listPenjualanDataPesanan(Request $request){
       /*if($request->ajax()){*/        
-        return d_sales::listPenjualanData($request);
+        return d_salesb::listPenjualanData($request);
       /*}else{
         return 'f';
       }*/
@@ -164,7 +164,7 @@ class PenjualanPesananController extends Controller
       $comp=m_item::perusahaan();
       
 
-      $data=d_sales::printNota($id);
+      $data=d_salesb::printNota($id);
       
       
       $dt=d_sales_dt::where('sd_sales',$id)->select('sd_sales')->get();

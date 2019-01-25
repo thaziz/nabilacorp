@@ -183,7 +183,8 @@
 
 
         </div>
- 
+</form>
+<form method="post" id="sdt"> 
         <div class="col-md-12 col-sm-12 col-xs-12">      
           <div style="padding-top: 20px;padding-bottom: 20px;">     
             <div class="table-responsive" style="overflow-y : auto;height : 350px; border: solid 1.5px #bb936a">
