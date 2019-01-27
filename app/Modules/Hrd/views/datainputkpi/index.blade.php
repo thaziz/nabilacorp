@@ -134,25 +134,7 @@
         $('.kode_jabatan').empty().attr('disabled', false);
         var jenis = $(this).val();
 
-        $(".kode_divisi").select2({
-          placeholder: "Pilih Divisi",
-          ajax: {
-            url: baseUrl + '/hrd/datalembur/lookup-data-divisi',
-            dataType: 'json',
-            data: function (params) {
-              return {
-                  q: $.trim(params.term),
-                  jenis : jenis
-              };
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-          }, 
-        });
+        $(".kode_divisi").select2(w);
       });
 
       //validasi

@@ -51,6 +51,24 @@ class itemController extends Controller
 
     }*/
 
+    public function find_m_item(Request $req) {
+      
+      $keyword = $req->term;
+      $keyword = $keyword != null ? $keyword : '';
+
+      $m_item = m_itemm::leftJoin('m_satuan', 'i_satuan', '=', 's_id');
+      if($keyword != '') {
+         $m_item = $m_item->where([['i_name', 'LIKE', DB::raw("'%$keyword%'")]]);
+      }
+      $m_item = $m_item->select('i_id', 'i_code', 'i_name', 'i_sat1', 'i_sat2', 'i_sat3', 'i_price', 's_name', DB::raw('IFNULL((SELECT s_qty FROM d_stock WHERE s_item = m_item.i_id), 0) AS s_qty'));
+
+      $res = [
+        'm_item' => $m_item->get()
+      ];
+      
+      return response()->json($res);
+    }
+
     public function contoh_dokumen() {
       $filename = public_path('print_queue.txt');
       $content = File::get($filename);

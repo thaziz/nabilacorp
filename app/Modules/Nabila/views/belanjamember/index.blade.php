@@ -127,9 +127,34 @@ function tglf(){
     
 }
 
-$(document).ready(function(){      
-  $("[name='s_nama_cus']").select2({
+$(document).ready(function(){
+  $('[name="is_member"]').change(function(){
+    var is_member = $(this).val();
+    var member_exists = $('[is-member="1"]');
+    var member_non_exists = $('[is-member="0"]');
+    if(is_member == 1) {
+      if( member_exists.hasClass('hidden') ) {
+          member_exists.removeClass('hidden');
+      }
+      
+      if( !member_non_exists.hasClass('hidden') ) {
+          member_non_exists.addClass('hidden');
+      }
+    }
+    else {
+      if( member_non_exists.hasClass('hidden') ) {
+          member_exists.removeClass('hidden');
+      }
+      
+      if( !member_exists.hasClass('hidden') ) {
+          member_non_exists.addClass('hidden');
+      } 
+    }
+  });
+
+  $("[is-member='1'] [name='s_nama_cus']").select2({
       placeholder: "Pilih Member",
+      width : '100%',
       ajax: {
         url: '{{ url("/nabila/belanjamember/find_customer") }}',
         dataType: 'json',
@@ -155,7 +180,7 @@ $(document).ready(function(){
 
 $("#searchitem").autocomplete({        
     source: function(request, response) {
-        $.getJSON(baseUrl+"/item", {term:$('#searchitem').val(),harga: $('#harga').val() }, 
+        $.getJSON( "{{ route('item_belanjamember') }}" , {term:$('#searchitem').val(),s_nama_cus: $('[is-member="1"] #s_nama_cus').val() }, 
           response);
     },
     minLength: 1,
@@ -338,7 +363,7 @@ function table(){
        columns: [
             {data: 's_date', name: 's_date'},
             {data: 's_note', name: 's_note'},            
-            {data: 'c_nama', name: 'c_nama'},            
+            {data: 'c_name', name: 'c_name'},            
             {data: 's_alamat_cus', name: 's_alamat_cus'},            
             {data: 's_kasir', name: 's_kasir'},            
             /*{data: 'item', name: 'item'}, */

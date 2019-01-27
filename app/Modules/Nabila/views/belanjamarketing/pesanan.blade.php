@@ -73,6 +73,16 @@
                
              </div>
            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+             <label>Komisi</label>
+           </div>     
+
+           <div class="col-md-3 col-sm-6 col-xs-12">
+             <div class="form-group">               
+               <input type="text" class="move up2 form-control input-sm reset" id="s_komisi" name="s_komisi">
+               
+             </div>
+           </div>
             <!-- 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <div class="form-group">
@@ -94,21 +104,6 @@
                </select>
              </div>
            </div>
-
-
-          <div class="col-md-3 col-sm-6 col-xs-12">
-             <label>Jatuh Tempo</label>
-           </div>     
-
-           <div class="col-md-3 col-sm-6 col-xs-12">
-             <div class="form-group">
-               <input type="text" class="move up2 form-control input-sm s_duedate" name="s_duedate" id="s_duedate" disabled="">
-             </div>
-           </div>
-
-
-
-
 
            <div class="col-md-3 col-sm-6 col-xs-12">
              <label>Tanggal Jadi</label>

@@ -7,6 +7,7 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/belanjamember/update', 'BelanjaMemberController@update')->middleware('auth');
 	Route::get('/nabila/belanjamember/serah-terima', 'BelanjaMemberController@serahTerima')->middleware('auth');
 
+	Route::get('/nabila/belanjamember/item', 'BelanjaMemberController@item')->middleware('auth')->name('item_belanjamember');
 	Route::get('/nabila/belanjamember/{id}/edit', 'BelanjaMemberController@nabilaDtPesanan')->middleware('auth');
 	Route::get('/nabila/belanjamember/detail-view/{id}', 'BelanjaMemberController@penjualanViewDtPesanan')->middleware('auth');
 	Route::get('/nabila/belanjamember/listPenjualan', 'BelanjaMemberController@listPenjualanPesanan')->middleware('auth');
@@ -61,6 +62,15 @@ Route::group(['namespace' => 'App\Modules\Nabila\Controllers', 'middleware'=>['w
 	Route::get('/nabila/belanjamarketing/find_pegawai', 'BelanjaMarketingController@find_pegawai')->middleware('auth');
 	Route::get('/nabila/belanjamarketing/delete/{id}', 'BelanjaMarketingController@delete')->middleware('auth')->name('delete_belanjamarketing');
 	Route::get('/nabila/belanjamarketing/update_s_status', 'BelanjaMarketingController@update_s_status')->middleware('auth')->name('update_s_status_belanjamarketing');
+
+	Route::get('/nabila/rencanapembelian/index', 'RencanaPembelianController@index')->middleware('auth')->name('index_shop_rencanapembelian');
+	Route::get('/nabila/rencanapembelian/form_insert', 'RencanaPembelianController@form_insert')->middleware('auth')->name('form_insert_shop_rencanapembelian');
+	Route::get('/nabila/rencanapembelian/form_update', 'RencanaPembelianController@form_update')->middleware('auth')->name('form_update_shop_rencanapembelian');
+	Route::get('/nabila/rencanapembelian/find_d_shop_purchase_plan', 'RencanaPembelianController@find_d_shop_purchase_plan')->middleware('auth')->name('find_d_shop_purchase_plan');
+	Route::get('/nabila/rencanapembelian/find_d_shop_purchase_plan', 'RencanaPembelianController@find_d_shop_purchase_plan')->middleware('auth')->name('find_d_shop_purchase_plan');
+	Route::get('/nabila/rencanapembelian/delete_d_shop_purchase_plan', 'RencanaPembelianController@hapus')->middleware('auth')->name('delete_d_shop_purchase_plan');
+	Route::post('/nabila/rencanapembelian/insert_d_shop_purchase_plan', 'RencanaPembelianController@insert_d_shop_purchase_plan')->middleware('auth')->name('insert_d_shop_purchase_plan');
+	Route::post('/nabila/rencanapembelian/update_d_shop_purchase_plan', 'RencanaPembelianController@update_d_shop_purchase_plan')->middleware('auth')->name('update_d_shop_purchase_plan');
 
 
 });

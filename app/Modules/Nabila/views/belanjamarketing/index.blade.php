@@ -130,7 +130,8 @@ function tglf(){
 }
 
 $(document).ready(function(){      
-  
+
+$('#s_komisi').maskMoney({prefix:'Rp. ', thousands:'.', decimal:',', precision:0});
 
 $("#searchitem").autocomplete({        
     source: function(request, response) {
