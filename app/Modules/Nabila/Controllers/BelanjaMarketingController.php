@@ -130,14 +130,10 @@ class BelanjaMarketingController extends Controller
 
     function create(Request $request){      
      return DB::transaction(function () use ($request) {   
-          if($request->s_nama_cus==""){
-            $data=['status'=>'gagal','data'=>'Nama pelanggan harus di isi'];
-            return $data;
-          }
-          if($request->s_alamat_cus==""){
-            $data=['status'=>'gagal','data'=>'Alamat pelanggan harus di isi'];
-            return $data;
-          }
+      if($request->s_nama_cus==""){
+        $data=['status'=>'gagal','data'=>'Nama pelanggan harus di isi'];
+        return $data;
+      }
 
       $query = DB::select(DB::raw("SELECT MAX(RIGHT(r_code,4)) as kode_max from d_receivable WHERE DATE_FORMAT(r_created, '%Y-%m') = DATE_FORMAT(CURRENT_DATE(), '%Y-%m')"));
       $kd = "";
@@ -155,7 +151,12 @@ class BelanjaMarketingController extends Controller
         $kd = "00001";
       }
 
-$r_code = "DPR-".date('ym')."-".$kd;
+          $r_code = "DPR-".date('ym')."-".$kd;
+
+          $s_komisi = format::format($request->s_komisi);
+          $s_komisi = preg_replace('/[\D\.]+(\d.+)/', '$2', $s_komisi);
+          $s_komisi = str_replace('.', '', $s_komisi);
+
 
           $s_gross = format::format($request->s_gross);
           $s_ongkir = format::format($request->s_ongkir);          
@@ -172,7 +173,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
             $request->s_customer=0;
           }
           
-          d_sales::create([
+          $inputs = [
                     's_id' =>$s_id ,
                     's_comp'=>Session::get('user_comp'),                    
                     's_channel'=>'marketing',
@@ -187,7 +188,8 @@ $r_code = "DPR-".date('ym')."-".$kd;
                     /*'s_customer'=>$request->s_customer,*/
                     's_nama_cus'=>$request->s_nama_cus,
                     's_alamat_cus'=>$request->s_alamat_cus,
-                    's_gross' =>$s_gross,
+                    's_komisi' => $s_komisi,
+                    's_gross' => $s_gross,
                     's_disc_percent'=>$s_disc_percent,
                     's_disc_value'=>$s_disc_value,
                     's_tax'=>0,
@@ -197,7 +199,11 @@ $r_code = "DPR-".date('ym')."-".$kd;
                     's_bayar'=>$bayar,
                     /*'s_kembalian'=>$kembalian,*/
                     's_bulat'=>$s_bulat
-           ]);
+           ];
+
+
+
+          d_sales::insert($inputs);
 
           $r_id=d_receivable::max('r_id')+1;          
           if($s_net-$bayar<0){
@@ -213,7 +219,7 @@ $r_code = "DPR-".date('ym')."-".$kd;
                 'r_id'=>$r_id,
                 'r_date'=>date('Y-m-d',strtotime($request->s_date)),
                 'r_duedate'=>date('Y-m-d',strtotime($request->s_duedate)),
-                'r_type' =>'Penjualan Pesanan',
+                'r_type' =>'marketing',
                 'r_code'=>$r_code,
                 /*'r_mem',*/
                 'r_customer_name'=>$request->s_nama_cus,
